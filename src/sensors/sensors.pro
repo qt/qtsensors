@@ -9,7 +9,7 @@ CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
 
 MOUDLUE_PRI = ../../modules/qt_sensors.pri
 
-QT = core 
+QT = core
 
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
 

@@ -49,7 +49,7 @@ IMPLEMENT_READING(QLightReading)
 /*!
     \class QLightReading
     \ingroup sensors_reading
-    
+
     \since 1.2
 
     \preliminary
