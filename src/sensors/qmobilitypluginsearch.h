@@ -147,7 +147,7 @@ inline QStringList mobilityPlugins(const QString& plugintype)
 
     /* Add application path + plugintype */
     QDir appldir(QCoreApplication::applicationDirPath());
-    if(appldir.cd(plugintype)){
+    if (appldir.cd(plugintype)) {
         if (!processed.contains(appldir.absolutePath())){
             processed.insert(appldir.absolutePath());
             QStringList files = appldir.entryList(QDir::Files);
