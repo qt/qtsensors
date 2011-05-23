@@ -8,7 +8,7 @@ include(../qimportbase.pri)
 
 QT += declarative sensors
 
-SOURCES += sensors.cpp 
+SOURCES += sensors.cpp
 
 DESTDIR = $$QT.sensors.imports/$$TARGETPATH
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
@@ -26,7 +26,7 @@ symbian {
     # Target UID, makes every Symbian app unique
     TARGET.UID3 = 0x20021324
     # Specifies what files shall be deployed: the plugin itself and the qmldir file.
-    importFiles.sources = $$DESTDIR/declarative_sensors$${QT_LIBINFIX}.dll qmldir 
+    importFiles.sources = $$DESTDIR/declarative_sensors$${QT_LIBINFIX}.dll qmldir
     importFiles.path = $$QT_IMPORTS_BASE_DIR/$$TARGETPATH
     DEPLOYMENT = importFiles
  }
