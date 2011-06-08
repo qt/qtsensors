@@ -13,7 +13,7 @@ QT = core
 
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
 
-include($$QT_SOURCE_TREE/src/qbase.pri)
+load(qt_module_config)
 HEADERS += qtsensorsversion.h
 
 
