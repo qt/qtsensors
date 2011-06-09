@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 CONFIG+=ordered
-SUBDIRS += sensors imports
+SUBDIRS += sensors imports plugins
