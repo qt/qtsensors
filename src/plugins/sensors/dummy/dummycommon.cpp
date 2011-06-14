@@ -47,6 +47,9 @@
 // the function isn't actually implemented.
 #else
 #include <time.h>
+#ifdef Q_OS_MAC
+#include <mach/mach_time.h>
+#endif
 #endif
 
 dummycommon::dummycommon(QSensor *sensor)
@@ -88,6 +91,18 @@ void dummycommon::timerEvent(QTimerEvent * /*event*/)
     poll();
 }
 
+#ifdef Q_OS_MAC
+//taken from qelapsedtimer_mac.cpp
+static mach_timebase_info_data_t info = {0,0};
+static qint64 absoluteToNSecs(qint64 cpuTime)
+{
+    if (info.denom == 0)
+        mach_timebase_info(&info);
+    qint64 nsecs = cpuTime * info.numer / info.denom;
+    return nsecs;
+}
+#endif
+
 quint64 dummycommon::getTimestamp()
 {
 #ifdef Q_OS_WINCE
@@ -102,10 +117,15 @@ quint64 dummycommon::getTimestamp()
     uli.HighPart = userTime.dwHighDateTime;
     ULONGLONG systemTimeInMS = uli.QuadPart/10000;
     return static_cast<quint64>(systemTimeInMS);
+#elif Q_OS_MAC
+    uint64_t cpu_time = mach_absolute_time();
+    uint64_t nsecs = absoluteToNSecs(cpu_time);
+
+    quint64 result = (nsecs * 0.001); //scale to microseconds
+    return result;
 #else
     struct timespec tv;
     int ok;
-
     ok = clock_gettime(CLOCK_MONOTONIC, &tv);
     Q_ASSERT(ok == 0);
 
