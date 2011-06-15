@@ -117,7 +117,7 @@ quint64 dummycommon::getTimestamp()
     uli.HighPart = userTime.dwHighDateTime;
     ULONGLONG systemTimeInMS = uli.QuadPart/10000;
     return static_cast<quint64>(systemTimeInMS);
-#elif Q_OS_MAC
+#elif defined(Q_OS_MAC)
     uint64_t cpu_time = mach_absolute_time();
     uint64_t nsecs = absoluteToNSecs(cpu_time);
 
