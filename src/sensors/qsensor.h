@@ -241,11 +241,12 @@ private:
     }
 
 
+QT_END_NAMESPACE
+
 Q_DECLARE_METATYPE(qtimestamp)
 Q_DECLARE_METATYPE(qrange)
 Q_DECLARE_METATYPE(qrangelist)
 Q_DECLARE_METATYPE(qoutputrangelist)
 
-QT_END_NAMESPACE
 #endif
 
