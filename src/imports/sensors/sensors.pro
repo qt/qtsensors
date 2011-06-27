@@ -4,7 +4,7 @@ TARGETPATH = Qt/sensors
 # Compatibility demands old path too.
 #TARGETPATH = QtMobility/sensors
 
-include(../qimportbase.pri)
+include(qsensorsimport.pri)
 
 QT += declarative sensors
 
