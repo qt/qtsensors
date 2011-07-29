@@ -74,6 +74,7 @@ void QSensorPluginLoader::load()
         return;
 
     QStringList plugins = mobilityPlugins(QLatin1String("sensors"));
+    bool reportErrors = (qgetenv("QT_DEBUG_PLUGINS") == "1");
 
     /* Now discover the dynamic plugins */
     for (int i = 0; i < plugins.count(); i++) {
@@ -86,11 +87,18 @@ void QSensorPluginLoader::load()
                 m_plugins << o;
                 m_loaders << loader;
             } else {
+                if (reportErrors) {
+                    qWarning() << plugins.at(i) << "is not a QSensorPluginInterface";
+                }
                 loader->unload();
                 delete loader;
             }
 
             continue;
+        } else {
+            if (reportErrors) {
+                qWarning() << loader->errorString();
+            }
         }
         delete o;
         loader->unload();
