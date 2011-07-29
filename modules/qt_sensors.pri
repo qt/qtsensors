@@ -11,7 +11,7 @@ QT.sensors.sources = $$QT_MODULE_BASE/src/sensors
 QT.sensors.libs = $$QT_MODULE_LIB_BASE
 QT.sensors.plugins = $$QT_MODULE_PLUGIN_BASE
 QT.sensors.imports = $$QT_MODULE_IMPORT_BASE
-QT.sensors.depends = gui sql network
+QT.sensors.depends = core
 QT.sensors.DEFINES = QT_SENSORS_LIB
 
 QT_CONFIG += sensors
