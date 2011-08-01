@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = tst_qsensor
 
 CONFIG += testcase
-QT += testlib sensors-private
+QT = core testlib sensors-private
 
 SOURCES += \
     tst_qsensor.cpp
