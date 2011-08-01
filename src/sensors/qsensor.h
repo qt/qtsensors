@@ -56,20 +56,6 @@ class QSensorReading;
 class QSensorReadingPrivate;
 class QSensorFilter;
 
-#ifdef Q_QDOC
-typedef quint64 qtimestamp;
-#else
-class qtimestamp
-{
-public:
-    qtimestamp() : value() {}
-    qtimestamp(quint64 timestamp) : value(timestamp) {}
-    operator quint64() const { return value; }
-private:
-    quint64 value;
-};
-#endif
-
 typedef QPair<int,int> qrange;
 typedef QList<qrange> qrangelist;
 struct qoutputrange
@@ -186,12 +172,12 @@ class Q_SENSORS_EXPORT QSensorReading : public QObject
     friend class QSensorBackend;
 
     Q_OBJECT
-    Q_PROPERTY(qtimestamp timestamp READ timestamp)
+    Q_PROPERTY(quint64 timestamp READ timestamp)
 public:
     virtual ~QSensorReading();
 
-    qtimestamp timestamp() const;
-    void setTimestamp(qtimestamp timestamp);
+    quint64 timestamp() const;
+    void setTimestamp(quint64 timestamp);
 
     // Access properties of sub-classes by numeric index
     // For name-based access use QObject::property()
@@ -243,7 +229,6 @@ private:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_METATYPE(qtimestamp)
 Q_DECLARE_METATYPE(qrange)
 Q_DECLARE_METATYPE(qrangelist)
 Q_DECLARE_METATYPE(qoutputrangelist)

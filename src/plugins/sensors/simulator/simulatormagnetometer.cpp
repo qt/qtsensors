@@ -54,7 +54,7 @@ SimulatorMagnetometer::SimulatorMagnetometer(QSensor *sensor)
 void SimulatorMagnetometer::poll()
 {
     QtMobility::QMagnetometerReadingData data = get_qtMagnetometerData();
-    qtimestamp newTimestamp;
+    quint64 newTimestamp;
     if (!data.timestamp.isValid())
         newTimestamp = QDateTime::currentDateTime().toTime_t();
     else

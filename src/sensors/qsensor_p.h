@@ -110,7 +110,7 @@ public:
     }
 
     // sensor data cache
-    qtimestamp timestamp;
+    quint64 timestamp;
 };
 
 QT_END_NAMESPACE

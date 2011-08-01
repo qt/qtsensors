@@ -175,7 +175,7 @@ QSensorReading *QSensorBackend::reading() const
 
         void poll()
         {
-            qtimestamp timestamp;
+            quint64 timestamp;
             qreal x, y, z;
             ...
             QAccelerometerReading *reading = static_cast<QAccelerometerReading*>(reading());

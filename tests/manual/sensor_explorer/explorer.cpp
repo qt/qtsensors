@@ -389,9 +389,7 @@ bool Explorer::filter(QSensorReading *reading)
         QLatin1String name(mo->property(i).name());
         QTableWidgetItem *value = ui.reading->item(row, 3);
         QVariant val = mo->property(i).read(reading);
-        if (typeName == "qtimestamp") {
-            value->setText(QString("%1").arg(val.value<qtimestamp>()));
-        } else if (typeName == "LightLevel") {
+        if (typeName == "LightLevel") {
             QString text;
             switch (val.toInt()) {
             case 1:

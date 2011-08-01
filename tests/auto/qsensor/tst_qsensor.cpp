@@ -272,7 +272,7 @@ private slots:
         sensor.connectToBackend();
         QVERIFY(sensor.reading() != 0);
         quint64 timestamp = sensor.reading()->timestamp();
-        QVERIFY(timestamp == qtimestamp());
+        QVERIFY(timestamp == quint64());
         sensor.setProperty("doThis", "setOne");
         sensor.start();
         timestamp = sensor.reading()->timestamp();
@@ -509,13 +509,13 @@ private slots:
 
         sensor.setProperty("doThis", "setOne");
         sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), qtimestamp(1));
+        QCOMPARE(sensor.reading()->timestamp(), quint64(1));
         QCOMPARE(sensor.reading()->test(), 1);
         sensor.stop();
 
         sensor.setProperty("doThis", "setTwo");
         sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), qtimestamp(2));
+        QCOMPARE(sensor.reading()->timestamp(), quint64(2));
         QCOMPARE(sensor.reading()->test(), 2);
         sensor.stop();
     }
@@ -889,13 +889,13 @@ private slots:
 
         sensor.setProperty("doThis", "setOne");
         sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), qtimestamp(1));
+        QCOMPARE(sensor.reading()->timestamp(), quint64(1));
         QCOMPARE(sensor.reading()->test(), 1);
         sensor.stop();
 
         sensor.setProperty("doThis", "setTwo");
         sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), qtimestamp(2));
+        QCOMPARE(sensor.reading()->timestamp(), quint64(2));
         QCOMPARE(sensor.reading()->test(), 2);
         sensor.stop();
     }

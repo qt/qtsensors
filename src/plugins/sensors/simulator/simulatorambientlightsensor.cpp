@@ -54,7 +54,7 @@ SimulatorAmbientLightSensor::SimulatorAmbientLightSensor(QSensor *sensor)
 void SimulatorAmbientLightSensor::poll()
 {
     QAmbientLightReadingData data = get_qtAmbientLightData();
-    qtimestamp newTimestamp;
+    quint64 newTimestamp;
     if (!data.timestamp.isValid())
         newTimestamp = QDateTime::currentDateTime().toTime_t();
     else

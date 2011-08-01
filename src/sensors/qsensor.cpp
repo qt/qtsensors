@@ -50,24 +50,6 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-    \typedef qtimestamp
-    \relates QSensor
-
-    Sensor timestamps are represented by this typedef which is a 64 bit unsigned integer.
-
-    Timestamps values are microseconds since a fixed point.
-    You can use timestamps to see how far apart two sensor readings are.
-
-    Note that sensor timestamps from different sensors may not be directly
-    comparable (as they may choose different fixed points for their reference).
-
-    \bold{Note that some platforms do not deliver timestamps correctly}.
-    Applications should be prepared for occasional issues that cause timestamps to jump
-    forwards or backwards. The \l{sensors-api.html#platform-notes}{platform notes} have
-    more details.
-*/
-
-/*!
     \typedef qrange
     \relates QSensor
 
@@ -161,7 +143,6 @@ QT_BEGIN_NAMESPACE
 */
 
 // A bit of a hack to call qRegisterMetaType when the library is loaded.
-static int qtimestamp_id = qRegisterMetaType<qtimestamp>("qtimestamp");
 static int qrange_id = qRegisterMetaType<qrange>("qrange");
 static int qrangelist_id = qRegisterMetaType<qrangelist>("qrangelist");
 static int qoutputrangelist_id = qRegisterMetaType<qoutputrangelist>("qoutputrangelist");
@@ -837,13 +818,22 @@ QSensorReading::~QSensorReading()
     \property QSensorReading::timestamp
     \brief the timestamp of the reading.
 
-    \sa qtimestamp
+    Timestamps values are microseconds since a fixed point.
+    You can use timestamps to see how far apart two sensor readings are.
+
+    Note that sensor timestamps from different sensors may not be directly
+    comparable (as they may choose different fixed points for their reference).
+
+    \bold{Note that some platforms do not deliver timestamps correctly}.
+    Applications should be prepared for occasional issues that cause timestamps to jump
+    forwards or backwards. The \l{sensors-api.html#platform-notes}{platform notes} have
+    more details.
 */
 
 /*!
     Returns the timestamp of the reading.
 */
-qtimestamp QSensorReading::timestamp() const
+quint64 QSensorReading::timestamp() const
 {
     return d->timestamp;
 }
@@ -851,7 +841,7 @@ qtimestamp QSensorReading::timestamp() const
 /*!
     Sets the \a timestamp of the reading.
 */
-void QSensorReading::setTimestamp(qtimestamp timestamp)
+void QSensorReading::setTimestamp(quint64 timestamp)
 {
     d->timestamp = timestamp;
 }
