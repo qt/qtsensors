@@ -56,6 +56,9 @@ class QSensorReading;
 class QSensorReadingPrivate;
 class QSensorFilter;
 
+// This type is no longer used in the API but third party apps may be using it
+typedef quint64 qtimestamp;
+
 typedef QPair<int,int> qrange;
 typedef QList<qrange> qrangelist;
 struct qoutputrange
