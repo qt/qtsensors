@@ -39,28 +39,70 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QTAPSENSOR_H
+#define QTM_QTAPSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QTapReadingPrivate;
+
+class QTM_SENSORS_EXPORT QTapReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_ENUMS(TapDirection)
+    Q_PROPERTY(TapDirection tapDirection READ tapDirection)
+    Q_PROPERTY(bool doubleTap READ isDoubleTap)
+    DECLARE_READING(QTapReading)
+public:
+    enum TapDirection {
+        Undefined = 0,
+        X      = 0x0001,
+        Y      = 0x0002,
+        Z      = 0x0004,
+        X_Pos  = 0x0011,
+        Y_Pos  = 0x0022,
+        Z_Pos  = 0x0044,
+        X_Neg  = 0x0101,
+        Y_Neg  = 0x0202,
+        Z_Neg  = 0x0404,
+        X_Both = 0x0111,
+        Y_Both = 0x0222,
+        Z_Both = 0x0444
+    };
+
+    TapDirection tapDirection() const;
+    void setTapDirection(TapDirection tapDirection);
+
+    bool isDoubleTap() const;
+    void setDoubleTap(bool doubleTap);
+};
+
+class QTM_SENSORS_EXPORT QTapFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QTapReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QTapReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QTapSensor : public QSensor
+{
+    Q_OBJECT
+#ifdef Q_QDOC
+    Q_PROPERTY(bool returnDoubleTapEvents)
+#endif
+public:
+    explicit QTapSensor(QObject *parent = 0) : QSensor(QTapSensor::type, parent) {}
+    virtual ~QTapSensor() {}
+    QTapReading *reading() const { return static_cast<QTapReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

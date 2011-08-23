@@ -39,28 +39,57 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QORIENTATIONSENSOR_H
+#define QTM_QORIENTATIONSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QOrientationReadingPrivate;
+
+class QTM_SENSORS_EXPORT QOrientationReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_ENUMS(Orientation)
+    Q_PROPERTY(Orientation orientation READ orientation)
+    DECLARE_READING(QOrientationReading)
+public:
+    enum Orientation {
+        Undefined = 0,
+        TopUp,
+        TopDown,
+        LeftUp,
+        RightUp,
+        FaceUp,
+        FaceDown,
+    };
+
+    Orientation orientation() const;
+    void setOrientation(Orientation orientation);
+};
+
+class QTM_SENSORS_EXPORT QOrientationFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QOrientationReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QOrientationReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QOrientationSensor : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QOrientationSensor(QObject *parent = 0) : QSensor(QOrientationSensor::type, parent) {}
+    virtual ~QOrientationSensor() {}
+    QOrientationReading *reading() const { return static_cast<QOrientationReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

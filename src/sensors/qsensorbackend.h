@@ -42,10 +42,12 @@
 #ifndef QSENSORBACKEND_H
 #define QSENSORBACKEND_H
 
-#include "qsensor.h"
-#include "qsensormanager.h"
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
+
+class QSensor;
+class QSensorReading;
 
 class Q_SENSORS_EXPORT QSensorBackend : public QObject
 {

@@ -39,28 +39,86 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QSENSOR_P_H
+#define QTM_QSENSOR_P_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-class dummycommon : public QSensorBackend
+#include "qsensor.h"
+
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+typedef QList<QSensorFilter*> QFilterList;
+typedef QPair<QString,QVariant> PendingProperty;
+class QSensorBackend;
+
+class QSensorPrivate
 {
 public:
-    dummycommon(QSensor *sensor);
+    QSensorPrivate()
+        : identifier()
+        , type()
+        , outputRange(-1)
+        , dataRate(0)
+        , backend(0)
+        , active(false)
+        , busy(false)
+        , device_reading(0)
+        , filter_reading(0)
+        , cache_reading(0)
+        , error(0)
+    {
+    }
 
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
+    // meta-data
+    QByteArray identifier;
+    QByteArray type;
 
-protected:
-    quint64 getTimestamp();
+    QString description;
 
-private:
-    int m_timerid;
+    qoutputrangelist outputRanges;
+    int outputRange;
+
+    // policy
+    qrangelist availableDataRates;
+    int dataRate;
+
+    QSensorBackend *backend;
+    QFilterList filters;
+    bool active;
+    bool busy;
+    QSensorReading *device_reading;
+    QSensorReading *filter_reading;
+    QSensorReading *cache_reading;
+
+    int error;
+    QList<PendingProperty> pendingProperties;
 };
+
+class QSensorReadingPrivate
+{
+public:
+    QSensorReadingPrivate()
+        : timestamp(0)
+    {
+    }
+
+    // sensor data cache
+    quint64 timestamp;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

@@ -39,28 +39,61 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QSENSORBACKEND_P_H
+#define QTM_QSENSORBACKEND_P_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include <QObject>
+#include "qtmsensorsglobal.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QSensor;
+class QSensorReading;
+
+class QTM_SENSORS_EXPORT QSensorBackend : public QObject
 {
+    Q_OBJECT
 public:
-    dummycommon(QSensor *sensor);
+    QSensorBackend(QSensor *sensor);
+    virtual ~QSensorBackend();
 
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
+    virtual void start() = 0;
+    virtual void stop() = 0;
 
-protected:
-    quint64 getTimestamp();
+    // used by the backend to set metadata properties
+    void addDataRate(qreal min, qreal max);
+    void setDataRates(const QSensor *otherSensor);
+    void addOutputRange(qreal min, qreal max, qreal accuracy);
+    void setDescription(const QString &description);
+
+    template <typename T>
+    T *setReading(T *reading)
+    {
+        if (!reading)
+            reading = new T(this);
+        setReadings(reading, new T(this), new T(this));
+        return reading;
+    }
+
+    QSensorReading *reading() const;
+    QSensor *sensor() const { return m_sensor; }
+
+    // used by the backend to inform us of events
+    void newReadingAvailable();
+    void sensorStopped();
+    void sensorBusy();
+    void sensorError(int error);
 
 private:
-    int m_timerid;
+    void setReadings(QSensorReading *device, QSensorReading *filter, QSensorReading *cache);
+
+    QSensor *m_sensor;
+    Q_DISABLE_COPY(QSensorBackend)
 };
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

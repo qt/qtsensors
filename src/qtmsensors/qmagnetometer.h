@@ -39,28 +39,61 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QMAGNETOMETER_H
+#define QTM_QMAGNETOMETER_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QMagnetometerReadingPrivate;
+
+class QTM_SENSORS_EXPORT QMagnetometerReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal x READ x)
+    Q_PROPERTY(qreal y READ y)
+    Q_PROPERTY(qreal z READ z)
+    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel)
+    DECLARE_READING(QMagnetometerReading)
+public:
+    qreal x() const;
+    void setX(qreal x);
+
+    qreal y() const;
+    void setY(qreal y);
+
+    qreal z() const;
+    void setZ(qreal z);
+
+    qreal calibrationLevel() const;
+    void setCalibrationLevel(qreal calibrationLevel);
+};
+
+class QTM_SENSORS_EXPORT QMagnetometerFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QMagnetometerReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QMagnetometerReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QMagnetometer : public QSensor
+{
+    Q_OBJECT
+#ifdef Q_QDOC
+    Q_PROPERTY(bool returnGeoValues)
+#endif
+public:
+    explicit QMagnetometer(QObject *parent = 0) : QSensor(QMagnetometer::type, parent) {}
+    virtual ~QMagnetometer() {}
+    QMagnetometerReading *reading() const { return static_cast<QMagnetometerReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

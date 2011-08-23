@@ -39,28 +39,46 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QPROXIMITYSENSOR_H
+#define QTM_QPROXIMITYSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QProximityReadingPrivate;
+
+class QTM_SENSORS_EXPORT QProximityReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(bool close READ close)
+    DECLARE_READING(QProximityReading)
+public:
+    bool close() const;
+    void setClose(bool close);
+};
+
+class QTM_SENSORS_EXPORT QProximityFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QProximityReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QProximityReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QProximitySensor : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QProximitySensor(QObject *parent = 0) : QSensor(QProximitySensor::type, parent) {}
+    virtual ~QProximitySensor() {}
+    QProximityReading *reading() const { return static_cast<QProximityReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

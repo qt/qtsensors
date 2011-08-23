@@ -60,7 +60,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_AUTOTEST_EXPORT QSensorPluginLoader
+class QSensorPluginLoader
 {
 public:
     QSensorPluginLoader();

@@ -39,28 +39,54 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QGYROSCOPE_H
+#define QTM_QGYROSCOPE_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QGyroscopeReadingPrivate;
+
+class QTM_SENSORS_EXPORT QGyroscopeReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal x READ x)
+    Q_PROPERTY(qreal y READ y)
+    Q_PROPERTY(qreal z READ z)
+    DECLARE_READING(QGyroscopeReading)
+public:
+    qreal x() const;
+    void setX(qreal x);
+
+    qreal y() const;
+    void setY(qreal y);
+
+    qreal z() const;
+    void setZ(qreal z);
+};
+
+class QTM_SENSORS_EXPORT QGyroscopeFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QGyroscopeReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QGyroscopeReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QGyroscope : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QGyroscope(QObject *parent = 0) : QSensor(QGyroscope::type, parent) {}
+    virtual ~QGyroscope() {}
+    QGyroscopeReading *reading() const { return static_cast<QGyroscopeReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

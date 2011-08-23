@@ -42,7 +42,7 @@
 #ifndef QSENSORMANAGER_H
 #define QSENSORMANAGER_H
 
-#include "qsensor.h"
+#include <QtSensors/QSensor>
 
 QT_BEGIN_NAMESPACE
 

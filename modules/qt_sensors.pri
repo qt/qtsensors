@@ -15,3 +15,21 @@ QT.sensors.depends = core
 QT.sensors.DEFINES = QT_SENSORS_LIB
 
 QT_CONFIG += sensors
+
+QT.qtmsensors.VERSION = 5.0.0
+QT.qtmsensors.MAJOR_VERSION = 5
+QT.qtmsensors.MINOR_VERSION = 0
+QT.qtmsensors.PATCH_VERSION = 0
+
+QT.qtmsensors.name = QtmSensors
+QT.qtmsensors.bins = $$QT_MODULE_BIN_BASE
+QT.qtmsensors.includes = $$QT_MODULE_INCLUDE_BASE $$QT_MODULE_INCLUDE_BASE/QtmSensors
+QT.qtmsensors.private_includes = $$QT_MODULE_INCLUDE_BASE/QtmSensors/$$QT.qtmsensors.VERSION
+QT.qtmsensors.sources = $$QT_MODULE_BASE/src/qtmsensors
+QT.qtmsensors.libs = $$QT_MODULE_LIB_BASE
+QT.qtmsensors.plugins = $$QT_MODULE_PLUGIN_BASE
+QT.qtmsensors.imports = $$QT_MODULE_IMPORT_BASE
+QT.qtmsensors.depends = sensors
+QT.qtmsensors.DEFINES = QTM_SENSORS_LIB
+
+QT_CONFIG += qtmsensors

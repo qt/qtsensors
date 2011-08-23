@@ -39,28 +39,56 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QAMBIENTLIGHTSENSOR_H
+#define QTM_QAMBIENTLIGHTSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QAmbientLightReadingPrivate;
+
+class QTM_SENSORS_EXPORT QAmbientLightReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_ENUMS(LightLevel)
+    Q_PROPERTY(LightLevel lightLevel READ lightLevel)
+    DECLARE_READING(QAmbientLightReading)
+public:
+    enum LightLevel {
+        Undefined = 0,
+        Dark,
+        Twilight,
+        Light,
+        Bright,
+        Sunny
+    };
+
+    LightLevel lightLevel() const;
+    void setLightLevel(LightLevel lightLevel);
+};
+
+class QTM_SENSORS_EXPORT QAmbientLightFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QAmbientLightReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QAmbientLightReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QAmbientLightSensor : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QAmbientLightSensor(QObject *parent = 0) : QSensor(QAmbientLightSensor::type, parent) {}
+    virtual ~QAmbientLightSensor() {}
+    QAmbientLightReading *reading() const { return static_cast<QAmbientLightReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

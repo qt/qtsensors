@@ -39,35 +39,69 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORPLUGIN_H
-#define QSENSORPLUGIN_H
+#ifndef QTM_QSENSORMANAGER_P_H
+#define QTM_QSENSORMANAGER_P_H
 
-#include <QtCore/qstringlist.h>
-#include <QtCore/qplugin.h>
-#include <QtCore/qfactoryinterface.h>
+#include "qsensor.h"
 
 QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
 
-class Q_SENSORS_EXPORT QSensorPluginInterface
+class QSensorBackend;
+class QSensorBackendFactory;
+
+typedef QObject *(*CreatePluginFunc)();
+
+class QTM_SENSORS_EXPORT QSensorManager
 {
+public:
+    // Register a backend (call this from a plugin)
+    static void registerBackend(const QByteArray &type, const QByteArray &identifier, QSensorBackendFactory *factory);
+    static void unregisterBackend(const QByteArray &type, const QByteArray &identifier);
+
+    static bool isBackendRegistered(const QByteArray &type, const QByteArray &identifier);
+
+    // Create a backend (uses the type and identifier set in the sensor)
+    static QSensorBackend *createBackend(QSensor *sensor);
+
+    // For the unit test
+    static void registerStaticPlugin(CreatePluginFunc func);
+};
+
+class QTM_SENSORS_EXPORT QSensorPluginInterface : public QObject
+{
+    Q_OBJECT
 public:
     virtual void registerSensors() = 0;
 protected:
     ~QSensorPluginInterface() {}
 };
 
-class Q_SENSORS_EXPORT QSensorChangesInterface
+class QTM_SENSORS_EXPORT QSensorBackendFactory
 {
 public:
-    virtual void sensorsChanged() = 0;
+    virtual QSensorBackend *createBackend(QSensor *sensor) = 0;
 protected:
-    ~QSensorChangesInterface() {}
+    ~QSensorBackendFactory() {}
 };
 
-QT_END_NAMESPACE
+// Legacy static plugins have their own registration methods.
+// They can only register types. They cannot use the changes interface.
+#define REGISTER_STATIC_PLUGIN_V1(pluginname) \
+    static QObject *create_static_plugin_ ## pluginname()\
+    {\
+        return new pluginname;\
+    }\
+    static bool side_effect_sensor_backend_ ## pluginname ()\
+    {\
+        QSensorManager::registerStaticPlugin(create_static_plugin_ ## pluginname);\
+        return false;\
+    }\
+    /* This assignment calls the function above */\
+    static bool dummy_sensor_backend_ ## pluginname = side_effect_sensor_backend_ ## pluginname();
 
-Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.nokia.Qt.QSensorPluginInterface/1.0");
-Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/1.0");
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

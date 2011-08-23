@@ -39,28 +39,38 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QTAPSENSOR_P_H
+#define QTM_QTAPSENSOR_P_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QTapReadingPrivate
 {
 public:
-    dummycommon(QSensor *sensor);
+    QTapReadingPrivate()
+        : tapDirection(0)
+        , doubleTap(false)
+    {
+    }
 
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
-private:
-    int m_timerid;
+    int tapDirection;
+    bool doubleTap;
 };
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

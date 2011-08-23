@@ -39,28 +39,50 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QCOMPASS_H
+#define QTM_QCOMPASS_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QCompassReadingPrivate;
+
+class QTM_SENSORS_EXPORT QCompassReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal azimuth READ azimuth)
+    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel)
+    DECLARE_READING(QCompassReading)
+public:
+    qreal azimuth() const;
+    void setAzimuth(qreal azimuth);
+
+    qreal calibrationLevel() const;
+    void setCalibrationLevel(qreal calibrationLevel);
+};
+
+class QTM_SENSORS_EXPORT QCompassFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QCompassReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QCompassReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QCompass : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QCompass(QObject *parent = 0) : QSensor(QCompass::type, parent) {}
+    virtual ~QCompass() {}
+    QCompassReading *reading() const { return static_cast<QCompassReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 

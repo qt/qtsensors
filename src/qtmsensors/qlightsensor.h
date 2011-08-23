@@ -39,28 +39,49 @@
 **
 ****************************************************************************/
 
-#ifndef DUMMYCOMMON_H
-#define DUMMYCOMMON_H
+#ifndef QTM_QLIGHTSENSOR_H
+#define QTM_QLIGHTSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
+#include "qsensor.h"
 
-class dummycommon : public QSensorBackend
+QT_BEGIN_NAMESPACE
+QTM_BEGIN_NAMESPACE
+
+class QLightReadingPrivate;
+
+class QTM_SENSORS_EXPORT QLightReading : public QSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal lux READ lux)
+    DECLARE_READING(QLightReading)
+public:
+    qreal lux() const;
+    void setLux(qreal lux);
+};
+
+class QTM_SENSORS_EXPORT QLightFilter : public QSensorFilter
 {
 public:
-    dummycommon(QSensor *sensor);
-
-    void start();
-    void stop();
-    virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
-
-protected:
-    quint64 getTimestamp();
-
+    virtual bool filter(QLightReading *reading) = 0;
 private:
-    int m_timerid;
+    bool filter(QSensorReading *reading) { return filter(static_cast<QLightReading*>(reading)); }
 };
+
+class QTM_SENSORS_EXPORT QLightSensor : public QSensor
+{
+    Q_OBJECT
+#ifdef Q_QDOC
+    Q_PROPERTY(qreal fieldOfView)
+#endif
+public:
+    explicit QLightSensor(QObject *parent = 0) : QSensor(QLightSensor::type, parent) {}
+    virtual ~QLightSensor() {}
+    QLightReading *reading() const { return static_cast<QLightReading*>(QSensor::reading()); }
+    static char const * const type;
+};
+
+QTM_END_NAMESPACE
+QT_END_NAMESPACE
 
 #endif
 
