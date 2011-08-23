@@ -12,7 +12,7 @@ qtmsensors.depends = sensors
 SUBDIRS += imports
 imports.subdir = imports
 imports.target = sub-imports
-imports.depends = sensors
+imports.depends = sensors qtmsensors
 
 SUBDIRS += plugins
 plugins.subdir = plugins

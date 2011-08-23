@@ -1,12 +1,9 @@
-TARGET  = declarative_sensors
-TARGETPATH = Qt/sensors
-
-# Compatibility demands old path too.
-#TARGETPATH = QtMobility/sensors
+TARGET  = declarative_qtmsensors
+TARGETPATH = QtMobility/sensors
 
 include(qsensorsimport.pri)
 
-QT = declarative sensors
+QT = declarative qtmsensors
 
 SOURCES += sensors.cpp
 
