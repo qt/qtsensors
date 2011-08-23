@@ -12,3 +12,11 @@ module_qtsensors_tests.depends = module_qtsensors_src
     module_qtsensors_tests.CONFIG = no_default_target no_default_install
 }
 
+SUBDIRS += module_qtsensors_examples
+module_qtsensors_examples.subdir = examples
+module_qtsensors_examples.target = module-qtsensors-examples
+module_qtsensors_examples.depends = module_qtsensors_src
+!contains(QT_BUILD_PARTS,examples) {
+    module_qtsensors_examples.CONFIG = no_default_target no_default_install
+}
+
