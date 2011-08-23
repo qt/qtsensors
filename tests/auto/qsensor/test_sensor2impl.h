@@ -42,7 +42,7 @@
 #ifndef TEST_SENSOR2IMPL_H
 #define TEST_SENSOR2IMPL_H
 
-#include <qsensorbackend.h>
+#include <QtSensors/qsensorbackend.h>
 #include "test_sensor2.h"
 
 class testsensor2impl : public QSensorBackend

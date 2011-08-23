@@ -48,16 +48,31 @@
 #include <QFile>
 #include <QSignalSpy>
 
-#include "qsensor.h"
-#include "qsensormanager.h"
-#include "test_sensor.h"
-#include "test_sensor2.h"
-#include "test_sensorimpl.h"
-#include "test_backends.h"
+#include <qaccelerometer.h>
+#include <qambientlightsensor.h>
+#include <qcompass.h>
+#include <qgyroscope.h>
+#include <qlightsensor.h>
+#include <qmagnetometer.h>
+#include <qorientationsensor.h>
+#include <qproximitysensor.h>
+#include <qrotationsensor.h>
+#include <qtapsensor.h>
 
-// The unit test needs to change the behaviour of the library. It does this
-// through an exported but undocumented function.
-Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
+#include "test_sensor_qtm.h"
+#include "test_backends_qtm.h"
+#include <private/qsensormanager_p.h>
+
+static char const * const testsensorimpl_id("test sensor impl");
+
+Q_SENSORS_EXPORT void sensors_unit_test_hook(int);
+
+QTM_BEGIN_NAMESPACE
+QTM_SENSORS_EXPORT void qtm_sensors_unit_test_hook(int);
+QTM_END_NAMESPACE
+
+QTM_USE_NAMESPACE
+
 bool operator==(const qoutputrange &orl1, const qoutputrange &orl2)
 {
     return (orl1.minimum == orl2.minimum &&
@@ -98,25 +113,18 @@ class ModFilter : public TestSensorFilter
     }
 };
 
-class MyFactory : public QSensorBackendFactory
-{
-    QSensorBackend *createBackend(QSensor * /*sensor*/)
-    {
-        return 0;
-    }
-};
-
 /*
-    Unit test for QSensor class.
+    Unit test for QtmSensor class.
 */
-class tst_QSensor : public QObject
+class tst_QtmSensor : public QObject
 {
     Q_OBJECT
 
 public:
-    tst_QSensor()
+    tst_QtmSensor()
     {
         sensors_unit_test_hook(0); // change some flags the library uses
+        qtm_sensors_unit_test_hook(0); // change some flags the library uses
     }
 
 private slots:
@@ -144,7 +152,7 @@ private slots:
         TestSensor sensor;
 
         // This confirms that legacy static plugins can still be registered
-        QTest::ignoreMessage(QtWarningMsg, "Loaded the LegacySensorPlugin ");
+        //QTest::ignoreMessage(QtWarningMsg, "Loaded the LegacySensorPlugin ");
 
         // The logic for the test is in test_sensorplugin.cpp (which warns and aborts if the test fails)
         (void)QSensor::sensorTypes();
@@ -156,7 +164,7 @@ private slots:
     void testTypeRegistered()
     {
         QList<QByteArray> expected;
-        expected << TestSensor::type << TestSensor2::type;
+        expected << TestSensor::type;
         QList<QByteArray> actual = QSensor::sensorTypes();
         qSort(actual); // The actual list is not in a defined order
         QCOMPARE(actual, expected);
@@ -165,7 +173,7 @@ private slots:
     void testSensorRegistered()
     {
         QList<QByteArray> expected;
-        expected << "test sensor 2" << "test sensor 3" << testsensorimpl::id;
+        expected << "test sensor 2" << "test sensor 3" << testsensorimpl_id;
         QList<QByteArray> actual = QSensor::sensorsForType(TestSensor::type);
         qSort(actual); // The actual list is not in a defined order
         QCOMPARE(actual, expected);
@@ -173,7 +181,7 @@ private slots:
 
     void testSensorDefault()
     {
-        QByteArray expected = testsensorimpl::id;
+        QByteArray expected = testsensorimpl_id;
         QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
         QCOMPARE(actual, expected);
     }
@@ -184,7 +192,7 @@ private slots:
         settings.setValue(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(TestSensor::type)), QByteArray("bogus id"));
         settings.sync();
 
-        QByteArray expected = testsensorimpl::id;
+        QByteArray expected = testsensorimpl_id;
         QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
         QCOMPARE(actual, expected);
     }
@@ -192,10 +200,10 @@ private slots:
     void testGoodDefaultFromConfig()
     {
         QSettings settings(QLatin1String("Nokia"), QLatin1String("Sensors"));
-        settings.setValue(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(TestSensor::type)), QByteArray(testsensorimpl::id));
+        settings.setValue(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(TestSensor::type)), QByteArray(testsensorimpl_id));
         settings.sync();
 
-        QByteArray expected = testsensorimpl::id;
+        QByteArray expected = testsensorimpl_id;
         QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
         QCOMPARE(actual, expected);
 
@@ -220,7 +228,7 @@ private slots:
     {
         TestSensor sensor;
         sensor.connectToBackend();
-        QByteArray expected = testsensorimpl::id;
+        QByteArray expected = testsensorimpl_id;
         QByteArray actual = sensor.identifier();
         QCOMPARE(actual, expected);
     }
@@ -228,16 +236,16 @@ private slots:
     void testSetIdentifierFail()
     {
         TestSensor sensor;
-        sensor.setIdentifier(testsensorimpl::id);
+        sensor.setIdentifier(testsensorimpl_id);
         sensor.connectToBackend();
         QVERIFY(sensor.isConnectedToBackend());
-        QByteArray expected = testsensorimpl::id;
+        QByteArray expected = testsensorimpl_id;
         QByteArray actual = sensor.identifier();
         QCOMPARE(actual, expected);
 
         QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensor::setIdentifier while connected to a backend! ");
         sensor.setIdentifier("dummy.accelerometer");
-        expected = testsensorimpl::id;
+        expected = testsensorimpl_id;
         actual = sensor.identifier();
         QCOMPARE(actual, expected);
     }
@@ -251,7 +259,7 @@ private slots:
         TestSensor sensor;
         QTest::ignoreMessage(QtWarningMsg, "Can't create backend \"test sensor 2\" ");
         sensor.connectToBackend();
-        QByteArray expected = testsensorimpl::id;
+        QByteArray expected = testsensorimpl_id;
         QByteArray actual = sensor.identifier();
         QCOMPARE(actual, expected);
 
@@ -272,8 +280,8 @@ private slots:
         TestSensor sensor;
         sensor.connectToBackend();
         QVERIFY(sensor.reading() != 0);
-        quint64 timestamp = sensor.reading()->timestamp();
-        QVERIFY(timestamp == quint64());
+        qtimestamp timestamp = sensor.reading()->timestamp();
+        QVERIFY(timestamp == qtimestamp());
         sensor.setProperty("doThis", "setOne");
         sensor.start();
         timestamp = sensor.reading()->timestamp();
@@ -510,13 +518,13 @@ private slots:
 
         sensor.setProperty("doThis", "setOne");
         sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), quint64(1));
+        QCOMPARE(sensor.reading()->timestamp(), qtimestamp(1));
         QCOMPARE(sensor.reading()->test(), 1);
         sensor.stop();
 
         sensor.setProperty("doThis", "setTwo");
         sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), quint64(2));
+        QCOMPARE(sensor.reading()->timestamp(), qtimestamp(2));
         QCOMPARE(sensor.reading()->test(), 2);
         sensor.stop();
     }
@@ -635,160 +643,6 @@ private slots:
         }
     }
 
-    void testDynamicDefaultsAndGenericHandling()
-    {
-        QByteArray expected;
-        QByteArray actual;
-        MyFactory factory;
-
-        // The default for this type is null
-        expected = QByteArray();
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-
-        // Register a bogus backend
-        QSensorManager::registerBackend("random", "generic.random", &factory);
-
-        // The default for this type is the newly-registered backend
-        expected = "generic.random";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-
-        // Register a non-generic bogus backend
-        QSensorManager::registerBackend("random", "not.generic.random", &factory);
-
-        // The default for this type is the newly-registered backend
-        expected = "not.generic.random";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-
-        // Unregister the non-generic bogus backend
-        QSensorManager::unregisterBackend("random", "not.generic.random");
-
-        // The default for this type is the generic backend
-        expected = "generic.random";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-
-        // Unregister a bogus backend
-        QSensorManager::unregisterBackend("random", "generic.random");
-
-        // The default for this type is null again
-        expected = QByteArray();
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-
-
-        // Now test out some more of the logic
-        // Register 2 backends and unregister the first.
-        QSensorManager::registerBackend("random", "random.1", &factory);
-        expected = "random.1";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::registerBackend("random", "random.2", &factory);
-        expected = "random.1";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::unregisterBackend("random", "random.1");
-        expected = "random.2";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::unregisterBackend("random", "random.2");
-        expected = QByteArray();
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-
-        // Now stick a generic backend into the mix and ensure the correct thing happens
-        QSensorManager::registerBackend("random", "random.1", &factory);
-        expected = "random.1";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::registerBackend("random", "generic.random.2", &factory);
-        expected = "random.1";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::registerBackend("random", "random.2", &factory);
-        expected = "random.1";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::unregisterBackend("random", "random.1");
-        expected = "random.2";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::unregisterBackend("random", "generic.random.2");
-        expected = "random.2";
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-        QSensorManager::unregisterBackend("random", "random.2");
-        expected = QByteArray();
-        actual = QSensor::defaultSensorForType("random");
-        QCOMPARE(expected, actual);
-    }
-
-    void testCreation2()
-    {
-        MyFactory factory;
-
-        QSensorManager::registerBackend("random", "random.1", &factory);
-        QSensorManager::registerBackend("random", "random.2", &factory);
-        QSensor random("random");
-        // This is a sensorlog, not a warning
-        //QTest::ignoreMessage(QtWarningMsg, "no suitable backend found for requested identifier \"\" and type \"random\" ");
-        random.connectToBackend();
-        QVERIFY(!random.isConnectedToBackend());
-        random.setIdentifier("random.3");
-        // This is a sensorlog, not a warning
-        //QTest::ignoreMessage(QtWarningMsg, "no backend with identifier \"random.3\" for type \"random\" ");
-        random.connectToBackend();
-        QVERIFY(!random.isConnectedToBackend());
-        random.setIdentifier("random.1");
-        random.connectToBackend();
-        QVERIFY(!random.isConnectedToBackend());
-        QSensorManager::unregisterBackend("random", "random.1");
-        QSensorManager::unregisterBackend("random", "random.2");
-    }
-
-    void testSensorsChangedSignal()
-    {
-        TestSensor sensor;
-        MyFactory factory;
-
-        // Register a bogus backend
-        sensor.sensorsChangedEmitted = 0;
-        QSensorManager::registerBackend("a random type", "a random id", &factory);
-        QCOMPARE(sensor.sensorsChangedEmitted, 1);
-
-        // Register it again (creates a warning)
-        sensor.sensorsChangedEmitted = 0;
-        QTest::ignoreMessage(QtWarningMsg, "A backend with type \"a random type\" and identifier \"a random id\" has already been registered! ");
-        QSensorManager::registerBackend("a random type", "a random id", &factory);
-        QCOMPARE(sensor.sensorsChangedEmitted, 0);
-
-        // Unregister a bogus backend
-        sensor.sensorsChangedEmitted = 0;
-        QSensorManager::unregisterBackend("a random type", "a random id");
-        QCOMPARE(sensor.sensorsChangedEmitted, 1);
-
-        // Unregister an unknown identifier
-        sensor.sensorsChangedEmitted = 0;
-        QTest::ignoreMessage(QtWarningMsg, "Identifier \"a random id\" is not registered ");
-        QSensorManager::unregisterBackend(TestSensor::type, "a random id");
-        QCOMPARE(sensor.sensorsChangedEmitted, 0);
-
-        // Unregister for an unknown type
-        sensor.sensorsChangedEmitted = 0;
-        QTest::ignoreMessage(QtWarningMsg, "No backends of type \"foo\" are registered ");
-        QSensorManager::unregisterBackend("foo", "bar");
-        QCOMPARE(sensor.sensorsChangedEmitted, 0);
-
-        // Make sure we've cleaned up the list of available types
-        QList<QByteArray> expected;
-        expected << TestSensor::type << TestSensor2::type;
-        QList<QByteArray> actual = QSensor::sensorTypes();
-        qSort(actual); // The actual list is not in a defined order
-        QCOMPARE(actual, expected);
-    }
-
     void testSetActive()
     {
         TestSensor sensor;
@@ -811,7 +665,7 @@ private slots:
         bool actual;
 
         expected = true;
-        actual = QSensorManager::isBackendRegistered(TestSensor::type, testsensorimpl::id);
+        actual = QSensorManager::isBackendRegistered(TestSensor::type, testsensorimpl_id);
         QCOMPARE(expected, actual);
 
         expected = false;
@@ -881,26 +735,6 @@ private slots:
         unregister_test_backends();
     }
 
-    void testReadingBC()
-    {
-        // QSensorReading changed in 1.0.1 due to QTMOBILITY-226
-        // This test verifies that a backend built against the 1.0.0
-        // version of qsensor.h still runs.
-        TestSensor2 sensor;
-
-        sensor.setProperty("doThis", "setOne");
-        sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), quint64(1));
-        QCOMPARE(sensor.reading()->test(), 1);
-        sensor.stop();
-
-        sensor.setProperty("doThis", "setTwo");
-        sensor.start();
-        QCOMPARE(sensor.reading()->timestamp(), quint64(2));
-        QCOMPARE(sensor.reading()->test(), 2);
-        sensor.stop();
-    }
-
     void testBusyChanged()
     {
         // Start an exclusive sensor
@@ -925,19 +759,8 @@ private slots:
         sensor2.start();
         QVERIFY(sensor2.isActive());
     }
-
-    // This test must be LAST or it will interfere with the other tests
-    void testLoadingPlugins()
-    {
-        // Go ahead and load the actual plugins (as a test that plugin loading works)
-        sensors_unit_test_hook(1);
-
-        // Hmm... There's no real way to tell if this worked or not.
-        // If it doesn't work the unit test will probably crash.
-        // That's what it did on Symbian before plugin loading was fixed.
-    }
 };
 
-QTEST_MAIN(tst_QSensor)
+QTEST_MAIN(tst_QtmSensor)
 
-#include "tst_qsensor.moc"
+#include "tst_qtmsensor.moc"

@@ -39,52 +39,66 @@
 **
 ****************************************************************************/
 
-#ifndef TEST_SENSOR_H
-#define TEST_SENSOR_H
+#include <QList>
 
-#include <QtSensors/qsensor.h>
+#include <private/qsensorbackend_p.h>
+#include <private/qsensormanager_p.h>
 
-class TestSensorReadingPrivate;
+QTM_BEGIN_NAMESPACE
 
-class TestSensorReading : public QSensorReading
+typedef QSensorBackend* (*CreateFunc) (QSensor *sensor);
+
+class Record
 {
-    Q_OBJECT
-    Q_PROPERTY(int test READ test)
-    DECLARE_READING(TestSensorReading)
 public:
-    int test() const;
-    void setTest(int test);
+    QByteArray type;
+    CreateFunc func;
 };
+static QList<Record> records;
 
-class TestSensorFilter : public QSensorFilter
+static bool registerTestBackend(const char *className, CreateFunc func)
 {
-public:
-    virtual bool filter(TestSensorReading *reading) = 0;
-private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<TestSensorReading*>(reading)); }
-};
+    Record record;
+    record.type = className;
+    record.func = func;
+    records << record;
+    return true;
+}
 
-class TestSensor : public QSensor
+QTM_END_NAMESPACE
+
+#define REGISTER_TOO
+#include "test_backends_qtm.h"
+#include <QDebug>
+
+QTM_BEGIN_NAMESPACE
+
+class BackendFactory : public QSensorBackendFactory
 {
-    Q_OBJECT
-public:
-    explicit TestSensor(QObject *parent = 0)
-        : QSensor(TestSensor::type, parent)
-        , sensorsChangedEmitted(0)
+    QSensorBackend *createBackend(QSensor *sensor)
     {
-        connect(this, SIGNAL(availableSensorsChanged()), this, SLOT(s_availableSensorsChanged()));
-    }
-    virtual ~TestSensor() {}
-    TestSensorReading *reading() const { return static_cast<TestSensorReading*>(QSensor::reading()); }
-    static const char *type;
-
-    // used by the testSensorsChangedSignal test function
-    int sensorsChangedEmitted;
-private slots:
-    void s_availableSensorsChanged()
-    {
-        sensorsChangedEmitted++;
-    }
+        foreach (const Record &record, records) {
+            if (sensor->identifier() == record.type) {
+                return record.func(sensor);
+            }
+        }
+        return 0;
+    };
 };
+static BackendFactory factory;
 
-#endif
+void register_test_backends()
+{
+    foreach (const Record &record, records) {
+        QSensorManager::registerBackend(record.type, record.type, &factory);
+    }
+}
+
+void unregister_test_backends()
+{
+    foreach (const Record &record, records) {
+        QSensorManager::unregisterBackend(record.type, record.type);
+    }
+}
+
+QTM_END_NAMESPACE

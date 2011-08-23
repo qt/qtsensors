@@ -39,10 +39,12 @@
 **
 ****************************************************************************/
 
-#ifndef TEST_SENSOR_H
-#define TEST_SENSOR_H
+#ifndef TEST_SENSOR_QTM_H
+#define TEST_SENSOR_QTM_H
 
-#include <QtSensors/qsensor.h>
+#include <qsensor.h>
+
+QTM_BEGIN_NAMESPACE
 
 class TestSensorReadingPrivate;
 
@@ -86,5 +88,7 @@ private slots:
         sensorsChangedEmitted++;
     }
 };
+
+QTM_END_NAMESPACE
 
 #endif

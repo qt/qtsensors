@@ -39,52 +39,33 @@
 **
 ****************************************************************************/
 
-#ifndef TEST_SENSOR_H
-#define TEST_SENSOR_H
+#ifndef TEST_SENSOR_QTM_P_H
+#define TEST_SENSOR_QTM_P_H
 
-#include <QtSensors/qsensor.h>
+QTM_BEGIN_NAMESPACE
 
-class TestSensorReadingPrivate;
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-class TestSensorReading : public QSensorReading
+class TestSensorReadingPrivate
 {
-    Q_OBJECT
-    Q_PROPERTY(int test READ test)
-    DECLARE_READING(TestSensorReading)
 public:
-    int test() const;
-    void setTest(int test);
-};
-
-class TestSensorFilter : public QSensorFilter
-{
-public:
-    virtual bool filter(TestSensorReading *reading) = 0;
-private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<TestSensorReading*>(reading)); }
-};
-
-class TestSensor : public QSensor
-{
-    Q_OBJECT
-public:
-    explicit TestSensor(QObject *parent = 0)
-        : QSensor(TestSensor::type, parent)
-        , sensorsChangedEmitted(0)
+    TestSensorReadingPrivate()
+        : test(0)
     {
-        connect(this, SIGNAL(availableSensorsChanged()), this, SLOT(s_availableSensorsChanged()));
     }
-    virtual ~TestSensor() {}
-    TestSensorReading *reading() const { return static_cast<TestSensorReading*>(QSensor::reading()); }
-    static const char *type;
 
-    // used by the testSensorsChangedSignal test function
-    int sensorsChangedEmitted;
-private slots:
-    void s_availableSensorsChanged()
-    {
-        sensorsChangedEmitted++;
-    }
+    int test;
 };
+
+QTM_END_NAMESPACE
 
 #endif

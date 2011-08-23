@@ -42,21 +42,23 @@
 #ifndef TEST_BACKENDS_H
 #define TEST_BACKENDS_H
 
-#include <QtSensors/qsensorbackend.h>
+#include <private/qsensorbackend_p.h>
+
+#include <qaccelerometer.h>
+#include <qambientlightsensor.h>
+#include <qcompass.h>
+#include <qgyroscope.h>
+#include <qlightsensor.h>
+#include <qmagnetometer.h>
+#include <qorientationsensor.h>
+#include <qproximitysensor.h>
+#include <qrotationsensor.h>
+#include <qtapsensor.h>
+
+QTM_BEGIN_NAMESPACE
 
 void register_test_backends();
 void unregister_test_backends();
-
-#include <QtSensors/qaccelerometer.h>
-#include <QtSensors/qambientlightsensor.h>
-#include <QtSensors/qcompass.h>
-#include <QtSensors/qgyroscope.h>
-#include <QtSensors/qlightsensor.h>
-#include <QtSensors/qmagnetometer.h>
-#include <QtSensors/qorientationsensor.h>
-#include <QtSensors/qproximitysensor.h>
-#include <QtSensors/qrotationsensor.h>
-#include <QtSensors/qtapsensor.h>
 
 #define PREPARE_SENSORINTERFACE_DECLS(SensorClass, ReadingClass, FilterClass, readingcode)\
     class SensorClass ## _impl : public QSensorBackend\
@@ -137,8 +139,13 @@ PREPARE_SENSORINTERFACE(QTapSensor, QTapReading, QTapFilter, {
         SensorClass ## _testfilter filter;\
         sensor.addFilter(&filter);\
         sensor.start();\
+        QVERIFY(sensor.isConnectedToBackend());\
+        QVERIFY(sensor.isActive());\
         ReadingClass *reading = sensor.reading();\
+        QVERIFY(reading != 0);\
         readingcode\
     } while (0);
 
 #endif
+
+QTM_END_NAMESPACE

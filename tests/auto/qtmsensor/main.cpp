@@ -39,52 +39,38 @@
 **
 ****************************************************************************/
 
-#ifndef TEST_SENSOR_H
-#define TEST_SENSOR_H
+#include "gruesensorimpl.h"
+#include <qsensorplugin.h>
+#include <qsensorbackend.h>
+#include <qsensormanager.h>
+#include <QFile>
+#include <QDebug>
 
-#include <QtSensors/qsensor.h>
-
-class TestSensorReadingPrivate;
-
-class TestSensorReading : public QSensorReading
+class GrueSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_PROPERTY(int test READ test)
-    DECLARE_READING(TestSensorReading)
+    Q_INTERFACES(QtMobility::QSensorPluginInterface)
 public:
-    int test() const;
-    void setTest(int test);
-};
-
-class TestSensorFilter : public QSensorFilter
-{
-public:
-    virtual bool filter(TestSensorReading *reading) = 0;
-private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<TestSensorReading*>(reading)); }
-};
-
-class TestSensor : public QSensor
-{
-    Q_OBJECT
-public:
-    explicit TestSensor(QObject *parent = 0)
-        : QSensor(TestSensor::type, parent)
-        , sensorsChangedEmitted(0)
+    void registerSensors()
     {
-        connect(this, SIGNAL(availableSensorsChanged()), this, SLOT(s_availableSensorsChanged()));
+        qDebug() << "loaded the grue plugin";
+        QSensorManager::registerBackend(GrueSensor::type, gruesensorimpl::id, this);
     }
-    virtual ~TestSensor() {}
-    TestSensorReading *reading() const { return static_cast<TestSensorReading*>(QSensor::reading()); }
-    static const char *type;
 
-    // used by the testSensorsChangedSignal test function
-    int sensorsChangedEmitted;
-private slots:
-    void s_availableSensorsChanged()
+    QSensorBackend *createBackend(QSensor *sensor)
     {
-        sensorsChangedEmitted++;
+        if (sensor->identifier() == gruesensorimpl::id) {
+            // Can't make this unless we have an ambient light sensor
+            if (!QSensor::defaultSensorForType(QAmbientLightSensor::type).isEmpty())
+                return new gruesensorimpl(sensor);
+            qDebug() << "can't make" << sensor->identifier() << "because no" << QAmbientLightSensor::type << "sensors exist";
+        }
+
+        return 0;
     }
 };
 
-#endif
+Q_EXPORT_PLUGIN2(libsensors_grueplugin, GrueSensorPlugin);
+
+#include "main.moc"
+

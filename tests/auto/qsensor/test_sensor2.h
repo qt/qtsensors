@@ -42,7 +42,7 @@
 #ifndef TEST_SENSOR2_H
 #define TEST_SENSOR2_H
 
-#include "qsensor.h"
+#include <QtSensors/qsensor.h>
 
 #undef DECLARE_READING
 #undef DECLARE_READING_D

@@ -39,52 +39,46 @@
 **
 ****************************************************************************/
 
-#ifndef TEST_SENSOR_H
-#define TEST_SENSOR_H
+#include "test_sensor_wrapper.h"
+#include <private/qsensormanager_p.h>
+#include <QDebug>
 
-#include <QtSensors/qsensor.h>
+QTM_BEGIN_NAMESPACE
 
-class TestSensorReadingPrivate;
-
-class TestSensorReading : public QSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(int test READ test)
-    DECLARE_READING(TestSensorReading)
-public:
-    int test() const;
-    void setTest(int test);
-};
-
-class TestSensorFilter : public QSensorFilter
+class WrapperFactory : public QSensorPluginInterface,
+                       public QSensorBackendFactory
 {
 public:
-    virtual bool filter(TestSensorReading *reading) = 0;
-private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<TestSensorReading*>(reading)); }
-};
-
-class TestSensor : public QSensor
-{
-    Q_OBJECT
-public:
-    explicit TestSensor(QObject *parent = 0)
-        : QSensor(TestSensor::type, parent)
-        , sensorsChangedEmitted(0)
+    void registerSensors()
     {
-        connect(this, SIGNAL(availableSensorsChanged()), this, SLOT(s_availableSensorsChanged()));
+        QList<QByteArray> types;
+        types << TestSensor::type;
+        foreach (const QByteArray &type, types) {
+            foreach (const QByteArray &identifier, NEW_NAMESPACE(QSensor)::sensorsForType(type)) {
+                //qDebug() << "Registerbackend" << type << identifier;
+                QSensorManager::registerBackend(type, identifier, this);
+            }
+        }
     }
-    virtual ~TestSensor() {}
-    TestSensorReading *reading() const { return static_cast<TestSensorReading*>(QSensor::reading()); }
-    static const char *type;
 
-    // used by the testSensorsChangedSignal test function
-    int sensorsChangedEmitted;
-private slots:
-    void s_availableSensorsChanged()
+    QSensorBackend *createBackend(QSensor *sensor)
     {
-        sensorsChangedEmitted++;
+        if (sensor->identifier() == "test sensor impl") {
+            return new TestSensorWrapper(sensor);
+        }
+
+        qWarning() << "Can't create backend" << sensor->identifier();
+        return 0;
     }
 };
 
-#endif
+REGISTER_STATIC_PLUGIN_V1(WrapperFactory)
+
+IMPLEMENT_WRAPPER(TestSensor, TestSensorReading, {
+                  //qDebug() << "fetchData" << sensor->reading()->timestamp();
+                  m_reading.setTimestamp(sensor->reading()->timestamp());
+                  m_reading.setTest(sensor->reading()->test());
+                  newReadingAvailable();
+                  })
+
+QTM_END_NAMESPACE
