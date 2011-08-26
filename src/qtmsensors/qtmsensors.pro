@@ -19,9 +19,8 @@ load(qt_module_config)
 HEADERS += \
     qtmsensorsversion.h\
     qtmsensorsglobal.h\
-    qsensorbackend.h\
-    qsensormanager_p.h\
     qsensorbackend_p.h\
+    qsensormanager_p.h\
     backendwrapper_p.h
 
 SOURCES += \
