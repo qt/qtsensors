@@ -62,6 +62,7 @@ SENSORS=\
     qmagnetometer\
     qorientationsensor\
     qproximitysensor\
+    qirproximitysensor\
     qrotationsensor\
     qtapsensor\
     qgyroscope\
