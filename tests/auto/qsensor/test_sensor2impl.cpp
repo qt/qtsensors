@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "test_sensor2impl.h"
+#include <qaccelerometer.h>
 #include <QDebug>
 
 char const * const testsensor2impl::id("test sensor 2 impl");

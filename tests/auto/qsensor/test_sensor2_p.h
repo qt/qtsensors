@@ -53,7 +53,7 @@
 // We mean it.
 //
 
-#include <5.0.0/QtSensors/private/qsensor_p.h>
+#include "private/qsensor_p.h"
 
 class TestSensor2ReadingPrivate : public QSensorReadingPrivate
 {

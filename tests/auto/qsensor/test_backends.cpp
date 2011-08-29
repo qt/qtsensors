@@ -41,8 +41,7 @@
 
 #include <QList>
 
-#include <QtSensors/qsensorbackend.h>
-#include <QtSensors/qsensormanager.h>
+#include "qsensorbackend.h"
 
 typedef QSensorBackend* (*CreateFunc) (QSensor *sensor);
 class Record

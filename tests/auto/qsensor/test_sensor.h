@@ -42,7 +42,7 @@
 #ifndef TEST_SENSOR_H
 #define TEST_SENSOR_H
 
-#include <QtSensors/qsensor.h>
+#include <qsensor.h>
 
 class TestSensorReadingPrivate;
 

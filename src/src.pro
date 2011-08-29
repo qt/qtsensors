@@ -4,15 +4,10 @@ SUBDIRS += sensors
 sensors.subdir = sensors
 sensors.target = sub-sensors
 
-SUBDIRS += qtmsensors
-qtmsensors.subdir = qtmsensors
-qtmsensors.target = sub-qtmsensors
-qtmsensors.depends = sensors
-
 SUBDIRS += imports
 imports.subdir = imports
 imports.target = sub-imports
-imports.depends = sensors qtmsensors
+imports.depends = sensors
 
 SUBDIRS += plugins
 plugins.subdir = plugins

@@ -41,8 +41,6 @@
 #include <QtCore>
 #include <qaccelerometer.h>
 
-QTM_USE_NAMESPACE
-
 QAccelerometer *accelerometer;
 
 class AccelerometerFilter : public QAccelerometerFilter

@@ -1,7 +1,7 @@
 TEMPLATE=app
 TARGET=accel
 
-QT=core qtmsensors
+QT=core sensors
 
 SOURCES=main.cpp
 

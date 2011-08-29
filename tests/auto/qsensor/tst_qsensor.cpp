@@ -49,7 +49,6 @@
 #include <QSignalSpy>
 
 #include "qsensor.h"
-#include "qsensormanager.h"
 #include "test_sensor.h"
 #include "test_sensor2.h"
 #include "test_sensorimpl.h"

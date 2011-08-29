@@ -41,9 +41,9 @@
 
 #include "test_sensorimpl.h"
 #include "test_sensor2impl.h"
-#include <QtSensors/qsensorplugin.h>
-#include <QtSensors/qsensorbackend.h>
-#include <QtSensors/qsensormanager.h>
+#include <qsensorplugin.h>
+#include <qsensorbackend.h>
+#include <qsensormanager.h>
 #include <QFile>
 #include <QDebug>
 #include <QTest>
