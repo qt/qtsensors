@@ -20,3 +20,8 @@ module_qtsensors_examples.depends = module_qtsensors_src
     module_qtsensors_examples.CONFIG = no_default_target no_default_install
 }
 
+SUBDIRS += module_qtsensors_snippets
+module_qtsensors_snippets.subdir = doc/src/snippets
+module_qtsensors_snippets.target = module-qtsensors-snippets
+module_qtsensors_snippets.depends = module_qtsensors_src
+

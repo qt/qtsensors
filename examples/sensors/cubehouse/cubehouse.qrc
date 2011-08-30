@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>qtlogo.png</file>
+    <file>lighting.vsh</file>
+    <file>material.fsh</file>
+    <file>texture.fsh</file>
+</qresource>
+</RCC>
