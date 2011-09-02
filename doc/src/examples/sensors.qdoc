@@ -79,13 +79,13 @@
     light sensor. In the start method, the backend should be sure to call the
     sensorStopped() or sensorBusy() methods if it cannot start.
 
-    \snippet ../../examples/sensors/grueplugin/gruesensorimpl.cpp start
+    \snippet ../examples/sensors/grueplugin/gruesensorimpl.cpp start
 
     The setReading method is needed so that the sensors library knows where the
     readings are coming from. This backend has a local copy of the reading so
     it passes a pointer to the function.
 
-    \snippet ../../examples/sensors/grueplugin/gruesensorimpl.cpp setReading
+    \snippet ../examples/sensors/grueplugin/gruesensorimpl.cpp setReading
 
     However it is also possible to pass null to the setReading method in which
     case the sensors library will create an instance and return a pointer.
@@ -142,15 +142,15 @@
 
     The accelerometer is created and the filter is added.
 
-    \snippet ../../examples/sensors/cubehouse/view.cpp accelerometer
+    \snippet ../examples/sensors/cubehouse/view.cpp accelerometer
 
     When new values are available, the view is recalculated.
 
-    \snippet ../../examples/sensors/cubehouse/view.cpp accelerometer2
+    \snippet ../examples/sensors/cubehouse/view.cpp accelerometer2
 
     The filter is defined like this.
 
-    \snippet ../../examples/sensors/cubehouse/view.cpp smoothed
+    \snippet ../examples/sensors/cubehouse/view.cpp smoothed
 */
 
 

@@ -49,10 +49,10 @@
     example simply displays text on-screen to show the current orientation.
 
     The QML code that reads the value is quite simple. Here we see a QML component
-    \e orientation declared which is an \l OrientationSensor element. First
+    \i orientation declared which is an \l OrientationSensor element. First
     the sensor is started by setting the \l {Sensor::active}{active} property
-    to \e true. The element receives a signal when the reading changes and it
-    is picked up by the \e onReadingChanged slot. Now the
+    to \i true. The element receives a signal when the reading changes and it
+    is picked up by the \i onReadingChanged slot. Now the
     \l {OrientationSensor::reading}{reading} property of this element can be
     used to extract the current orientation so that it can be compared against
     the defined values of various orientations in the \l OrientationReading

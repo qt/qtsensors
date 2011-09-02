@@ -1,0 +1,14 @@
+{
+    "info-version": "1.0",
+    "dict": {
+        "Category": "application",
+        "Runtime": "qml",
+        "DisplayName": "Sensors2",
+        "Subcategory": "utility",
+        "MainQML": "main.qml",
+        "Version": "1.0",
+        "Identifier": "com.noklab.nrcc.qmlsensors2.demo",
+        "Summary": "QML Sensors2 demo",
+        "Author": "Qt"
+    }
+}
