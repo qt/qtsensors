@@ -52,6 +52,7 @@
 #include <qtapsensor.h>
 #include <qlightsensor.h>
 #include <qgyroscope.h>
+#include <qirproximitysensor.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -92,6 +93,8 @@ public:
         qmlRegisterUncreatableType<QLightReading        >(package, major, minor, "LightReading",         QLatin1String("Cannot create LightReading"));
         qmlRegisterType           <QGyroscope           >(package, major, minor, "Gyroscope");
         qmlRegisterUncreatableType<QGyroscopeReading    >(package, major, minor, "GyroscopeReading",     QLatin1String("Cannot create GyroscopeReading"));
+        qmlRegisterType           <QIRProximitySensor   >(package, major, minor, "IRProximitySensor");
+        qmlRegisterUncreatableType<QIRProximityReading  >(package, major, minor, "IRProximityReading",   QLatin1String("Cannot create IRProximityReading"));
     }
 };
 
