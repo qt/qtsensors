@@ -1,0 +1,204 @@
+/****************************************************************************
+**
+** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+** All rights reserved.
+** Contact: Nokia Corporation (qt-info@nokia.com)
+**
+** This file is part of the Qt Mobility Components.
+**
+** $QT_BEGIN_LICENSE:LGPL$
+** GNU Lesser General Public License Usage
+** This file may be used under the terms of the GNU Lesser General Public
+** License version 2.1 as published by the Free Software Foundation and
+** appearing in the file LICENSE.LGPL included in the packaging of this
+** file. Please review the following information to ensure the GNU Lesser
+** General Public License version 2.1 requirements will be met:
+** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+** In addition, as a special exception, Nokia gives you certain additional
+** rights. These rights are described in the Nokia Qt LGPL Exception
+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU General
+** Public License version 3.0 as published by the Free Software Foundation
+** and appearing in the file LICENSE.GPL included in the packaging of this
+** file. Please review the following information to ensure the GNU General
+** Public License version 3.0 requirements will be met:
+** http://www.gnu.org/copyleft/gpl.html.
+**
+** Other Usage
+** Alternatively, this file may be used in accordance with the terms and
+** conditions contained in a signed written agreement between you and Nokia.
+**
+**
+**
+**
+**
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+//TESTED_COMPONENT=src/sensors
+
+testcase = {
+
+// As a QML Application developer I need information about the position of the device (rotation angles from X and Y Axis)
+    Device_Rotational_Position: function()
+    {
+        // Test meta data
+        testApplication = "qmlsensors2";
+        testBinary = "test binary name to be announced"; // Running QML using qmlrunner will insert test app binary name when compiled
+        testGoal = "Verify that the values of the X and Y axis are returned from the application and match those of the actual phone";
+        testPreconditions = "Nil.";
+        testGroups = "BAT";
+
+        // Test steps
+        prompt(twiki("---+++ " + testApplication + "<br><br>
+            *Goal:* " + testGoal + "<br>
+            *Pre-Requisites:* " + testPreconditions + "<br>
+            *Tested Binary:* " + testBinary + "<br>
+
+            | *Step* | *Verification* |
+            | Launch " + testBinary + " | App launches normally |
+            | Hold the device with the screen facing up in portrait | Verfy the x, y rotation values are approximatly 0,0 |
+            | Rotate the device toward you along the x axis | Verify that the x rotation values increase from zero as the device is rotated and the y values remain at approximatly 0 |
+            | Return the device to the screen facing up in portrait position | Verfy the x, y rotation values are approximatly 0,0 |
+            | Rotate the device away from you along the x axis | Verify that the x rotation values decrease from zero (become negitive) as the device is rotated and the y values remain at approximatly 0 |
+            | Return the device to the screen facing up in portrait position | Verfy the x, y rotation values are approximatly 0,0 |
+            | Rotate the device to the right along the y axis | Verify that the y rotation values increase from zero as the device is rotated and the x values remain at approximatly 0 |
+            | Return the device to the screen facing up in portrait position | Verfy the x, y rotation values are approximatly 0,0 |
+            | Rotate the device to the left along the y axis | Verify that the y rotation values decrease from zero (become negitive) as the device is rotated and the x values remain at approximatly 0 |
+
+        "));
+    },
+
+// As a QML Application developer I want to calibrate the current device position
+    Calibrate_Current_Device_Position: function()
+    {
+        // Test meta data
+        testApplication = "qmlsensors2";
+        testBinary = "";
+        testGoal = "Verify that the application can be set to read an X and Y value of zero for the current phone position";
+        testPreconditions = "Nil.";
+        testGroups = "BAT";
+
+        // Test steps
+        prompt(twiki("---+++ " + testApplication + "<br><br>
+           *Goal:* " + testGoal + "<br>
+           *Pre-Requisites:* " + testPreconditions + "<br>
+           *Tested Binary:* " + testBinary + "<br>
+
+           | *Step* | *Verification* |
+           | Launch " + testBinary + " | App launches normally |
+           | Select the *Facing Up* radio button | Verify that when the device is orientated with the screen facing up the x, y rotation shows approximatly 0,0 |
+           | Select the *Left Up* radio button | Verify that when the device is orientated with the left up up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+           | Select the *Top Down* radio button | Verify that when the device is orientated with the top edge down (starting from portrait) the x, y rotation shows approximatly 0,0 |
+           | Select the *Face Down* radio button | Verify that when the device is orientated with the face down the x, y rotation shows approximatly 0,0 |
+           | Select the *Right Up* radio button | Verify that when the device is orientated with the right edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+           | Select the *Top Up* radio button | Verify that when the device is orientated with the top edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+       "));
+    },
+
+// As a QML Application developer I would like to have one QML element per sensor type
+    Display_All_Sensor_Types: function()
+    {
+          // Test meta data
+          testApplication = "qmlsensors2";
+          testBinary = "";
+          testGoal = "Verify that all sensor types are shown by the application";
+          testPreconditions = "Nil.";
+          testGroups = "BAT";
+
+          // Test steps
+          prompt(twiki("---+++ " + testApplication + "<br><br>
+              *Goal:* " + testGoal + "<br>
+              *Pre-Requisites:* " + testPreconditions + "<br>
+              *Tested Binary:* " + testBinary + "<br>
+
+              | *Step* | *Verification* |
+              | Launch " + testBinary + " | App launches normally |
+              | Each sensor button will display *start*, press each of the sensor buttons | Verify that each sensor button displays *running* and operates as expected |
+              | Press each of the sensor buttons | Verify that each button no longer says *running* and now displays *stopped* |
+              | Press each sensor button again | Verify that each button now says *running* |
+        "));
+    },
+
+// As a QML Application developer I would like to receive the rotation angles in Radian or Degree
+    Display_Angles_Radian_Degrees: function()
+    {
+          // Test meta data
+          testApplication = "qmlsensors2";
+          testBinary = "";
+          testGoal = "Verify that the read values for the X and Y axis can be displayed in radians and degrees";
+          testPreconditions = "Nil.";
+          testGroups = "BAT";
+
+          // Test steps
+          prompt(twiki("---+++ " + testApplication + "<br><br>
+              *Goal:* " + testGoal + "<br>
+              *Pre-Requisites:* " + testPreconditions + "<br>
+              *Tested Binary:* " + testBinary + "<br>
+
+              | *Step* | *Verification* |
+              | Launch " + testBinary + " | App launches normally |
+              | Hold the device in portrait face up horizontal | Verify the x, y rotation values display 0,0 |
+              | While holding the device in this position press the button marked *degree* | Verify the button now reads *radian* and the x, y rotation values display approximatly 0,0 |
+              | Still holding the device in portrait tilt the device at right angles toward you (screen facing you) | Verify the x, y rotation values display approximatly 1.57,0|
+              | While holding the device in this position press the button marked *radian* | Verify the button now reads *radian* and the x, y rotation values display approximatly 90,0 |
+        "));
+    },
+
+// As a QML Application developer I would like to change my UI dependent of the ambient light
+    Ambient_Light_Detection: function()
+    {
+          // Test meta data
+          testApplication = "qmlsensors2";
+          testBinary = "";
+          testGoal = "Verify that the ambient light values can be read";
+          testPreconditions = "Nil.";
+          testGroups = "BAT";
+
+          // Test steps
+          prompt(twiki("---+++ " + testApplication + "<br><br>
+              *Goal:* " + testGoal + "<br>
+              *Pre-Requisites:* " + testPreconditions + "<br>
+              *Tested Binary:* " + testBinary + "<br>
+
+              | *Step* | *Verification* |
+              | Launch " + testBinary + " | App launches normally |
+              | Confirm that the operational status of the Ambient Light display on the program is *Running* | |
+              | Place the device under normal room lighting | Verify that the Ambient Light is reported as *Bright* |
+              | Place the light sensor element under a partial shadow, i.e. by holding your hand above the device | Verify that the Ambient Light is reported as *Light*, note that the amount of shadow may need to be adjusted by moving your hand to achieve this |
+              | Make the shadow darker by moving your hand closer to the sensor | Verify that the Ambient Light now reads *Twilight* |
+              | Place your finger over the sensor element | Verify that the Ambient Light now reads as *Dark* |
+        "));
+    },
+
+// As a QML Application developer I would like to deactivate the touchscreen as soon the proximity of the user is close
+// Note: no need for test app to lock screen, testing that the proximity is detected is sufficient
+    Proximity_Detection: function()
+    {
+          // Test meta data
+          testApplication = "qmlsensors2";
+          testBinary = "";
+          testGoal = "Verify that the touch screen deactivates when the proximity of the user is less than a predefined value";
+          testPreconditions = "Nil.";
+          testGroups = "BAT";
+
+          // Test steps
+          prompt(twiki("---+++ " + testApplication + "<br><br>
+              *Goal:* " + testGoal + "<br>
+              *Pre-Requisites:* " + testPreconditions + "<br>
+              *Tested Binary:* " + testBinary + "<br>
+
+              | *Step* | *Verification* |
+              | Launch " + testBinary + " | App launches normally |
+              | Confirm that the operational status of the Proximity sensor display on the program is *Running* | |
+              | Confirm that nothing is close to the proximity detector | Verify that the Proximity reads *false* |
+              | Bring your hand to within 1 cm of the proximity sensor | Verify that the Proximity now reads *true* |
+              | Move your hand away from the proximity sensor | Verify that the Proximity now reads *false* |
+        "));
+    },
+
+}
