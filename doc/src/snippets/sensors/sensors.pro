@@ -7,3 +7,4 @@ SOURCES+=main.cpp\
     plugin.cpp
 HEADERS+=mybackend.h
 LIBS+=-rdynamic
+QT+=widgets
