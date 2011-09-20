@@ -39,16 +39,16 @@
 **
 ****************************************************************************/
 
-#include <QWidget>
+#include <QObject>
 #include <qaccelerometer.h>
 #include <qorientationsensor.h>
 
-class MyWidget : public QWidget
+class MyObject : public QObject
 {
     void create();
 };
 
-void MyWidget::create()
+void MyObject::create()
 {
 //! [Creating a sensor]
 // On the heap (deleted when this object is deleted)
