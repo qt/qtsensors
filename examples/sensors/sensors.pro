@@ -4,6 +4,7 @@ SUBDIRS += \
     accel\
     cubehouse\
     grueapp\
-    grueplugin\
-    sensor_explorer
+    grueplugin
 
+contains(QT_CONFIG,widgets):SUBDIRS += \
+    sensor_explorer
