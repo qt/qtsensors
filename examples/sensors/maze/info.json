@@ -1,0 +1,14 @@
+{
+    "info-version": "1.0",
+    "dict": {
+        "Category": "application",
+        "Runtime": "qml",
+        "DisplayName": "Maze",
+        "Subcategory": "utility",
+        "MainQML": "Maze.qml",
+        "Version": "1.0",
+        "Identifier": "com.noklab.nrcc.maze.demo",
+        "Summary": "Labyrinth game using TitlSensor",
+        "Author": "Qt"
+    }
+}

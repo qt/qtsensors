@@ -38,6 +38,12 @@
 */
 
 /*!
+    \page maze.html
+    \title Sensors 5 QML TiltSensor example
+    \example maze
+*/
+
+/*!
     \page qml-sensors5.html
     \title Sensors 5 QML Plugin
 
@@ -95,6 +101,9 @@
 
     \section1 QML QtSensors Example
     The \l {qmlqtsensors5}{qmlqtsensors5} example shows you how to use all those diferent QML elements.
+
+    \section1 Maze QML TiltSensor Example
+    The \l {maze}{maze} example shows you how to use the TiltSeonsor QML element.
 */
 
 
