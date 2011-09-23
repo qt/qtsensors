@@ -1,8 +1,5 @@
 TARGET  = declarative_sensors
-TARGETPATH = Qt/sensors
-
-# Compatibility demands old path too.
-#TARGETPATH = QtMobility/sensors
+TARGETPATH = QtMobility/sensors
 
 include(qsensorsimport.pri)
 
@@ -29,4 +26,5 @@ symbian {
     importFiles.sources = $$DESTDIR/declarative_sensors$${QT_LIBINFIX}.dll qmldir
     importFiles.path = $$QT_IMPORTS_BASE_DIR/$$TARGETPATH
     DEPLOYMENT = importFiles
- }
+}
+
