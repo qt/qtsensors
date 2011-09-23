@@ -54,6 +54,7 @@ public:
         , _active(false)
         , _sensor(sensor)
     {
+        this->addDataRate(10, 50);
     }
     virtual ~QDeclAccelerometer() {}
 

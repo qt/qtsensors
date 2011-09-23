@@ -211,8 +211,6 @@ void tst_Sensors2QMLAPI::testTilt()
     QFETCH(int, xRotation);
     QFETCH(int, yRotation);
 
-    qDebug() << "check pos: " << pos << " x: " << x << " y: " << y << " z: " << z << " xRot: " << xRotation << " yRot: " << yRotation;
-
     if (!_tilt)
         _tilt = new QSensor2Tilt(this);
 
