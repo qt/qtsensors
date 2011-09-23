@@ -93,15 +93,17 @@ void tst_Sensors2QMLAPI::testProximity()
     TestSensorPlugin plugin;
     QDeclProximitySensor* proxi = plugin.stProxi;
 
-    qDebug() << "Check close = true";
     proxi->test(true);
-    QVERIFY((bool)prox.property("close").toBool() == true);
+    bool expected = true;
+    bool actual = prox.property("close").toBool();
+    QCOMPARE(expected, actual);
 
-    qDebug() << "Check close = false";
     QSignalSpy spy1(&prox, SIGNAL(closeChanged()));
     proxi->test(false);
     QCOMPARE(spy1.count() , 1);
-    QVERIFY((bool)prox.property("close").toBool() == false);
+    expected = false;
+    actual = prox.property("close").toBool();
+    QCOMPARE(expected, actual);
 
     spy1.clear();
     proxi->test(false);
@@ -124,21 +126,13 @@ void tst_Sensors2QMLAPI::testAmbientLight()
     QDeclAmbientLightSensor* abl = plugin.stAbl;
 
     for (int en = 5; en >= 0; en--){
-        QString enumname = "";
-        switch (en)
-        {
-        case 0: enumname = "Undefined"; break;
-        case 1: enumname = "Dark"; break;
-        case 2: enumname = "Twilight"; break;
-        case 3: enumname = "Light"; break;
-        case 4: enumname = "Bright"; break;
-        case 5: enumname = "Sunny"; break;
-        }
-        qDebug() << "Check " << enumname;
         QSignalSpy spy1(&als, SIGNAL(lightLevelChanged()));
         abl->test((QSensor2AmbientLight::LightLevel)en);
         QCOMPARE(spy1.count() , 1);
-        QVERIFY((int)als.property("lightLevel").toInt() == en);
+        int expected = en;
+        int actual = als.property("lightLevel").toInt();
+        if (expected != actual)
+        QCOMPARE(expected, actual);
 
         spy1.clear();
         abl->test((QSensor2AmbientLight::LightLevel)en);
@@ -258,9 +252,7 @@ void tst_Sensors2QMLAPI::testTilt()
 
 void tst_Sensors2QMLAPI::testTilt_receivedSignalsCount()
 {
-    qDebug() << "Check xRotation changed: " << xrotch;
     QCOMPARE(xrotch , 9);
-    qDebug() << "Check yRotation changed: " << yrotch;
     QCOMPARE(yrotch , 23);
 }
 
