@@ -1,5 +1,5 @@
 TARGET  = declarative_qtsensors5
-TARGETPATH = Qt/QtSensors
+TARGETPATH = QtSensors
 
 include(qsensors2import.pri)
 

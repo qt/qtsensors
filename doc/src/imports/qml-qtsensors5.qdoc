@@ -45,7 +45,7 @@
 
     \section1 Overview
 
-    The identifying string for this component is \i {"Qt.QtSensors"}.
+    The identifying string for this component is \i {"QtSensors"}.
     Use this in the QML \i {import} statement.
 
     The QML Sensors 5 Plugin provides an easy to use interface to the Sensors API.

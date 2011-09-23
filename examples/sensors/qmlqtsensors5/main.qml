@@ -1,6 +1,6 @@
 //Import the declarative plugins
 import QtQuick 2.0
-import Qt.QtSensors 5.0
+import QtSensors 5.0
 
 /* Layout
                                 tiltrect
