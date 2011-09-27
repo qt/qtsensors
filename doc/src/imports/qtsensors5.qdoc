@@ -27,32 +27,14 @@
 
 /*!
     \qmlmodule QtSensors 5
-    \title Sensors QML Plugin for Qt 5
-    \brief A QML plugin for the Qt 5 Project Sensors API.
-*/
-
-/*!
-    \page qmlqtsensors5.html
-    \title Sensors 5 QML Plugin example
-    \example qmlqtsensors5
-*/
-
-/*!
-    \page maze.html
-    \title Sensors 5 QML TiltSensor example
-    \example maze
-*/
-
-/*!
-    \page qml-sensors5.html
-    \title Sensors 5 QML Plugin
-
-    \brief A QML plugin for the Qt Project Sensors 5 API.
+    \title QtSensors 5.x
+    \brief The QML import for QtSensors
+    \ingroup qtsensors
 
     \section1 Overview
 
-    The identifying string for this component is \i {"QtSensors"}.
-    Use this in the QML \i {import} statement.
+    The identifying string for this component is \e QtSensors.
+    Use this in the QML \e import  statement.
 
     The QML Sensors 5 Plugin provides an easy to use interface to the Sensors API.
     It enables us to receive sensor events and to read current values from
@@ -97,13 +79,7 @@
     \endqml
 
     \section1 QML Elements
-    \annotatedlist qml-QtSensors5
 
-    \section1 QML QtSensors Example
-    The \l {qmlqtsensors5}{qmlqtsensors5} example shows you how to use all those diferent QML elements.
-
-    \section1 Maze QML TiltSensor Example
-    The \l {maze}{maze} example shows you how to use the TiltSeonsor QML element.
 */
 
 

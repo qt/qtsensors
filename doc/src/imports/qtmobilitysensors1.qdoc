@@ -1,0 +1,73 @@
+/****************************************************************************
+**
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+** All rights reserved.
+** Contact: Nokia Corporation (qt-info@nokia.com)
+**
+** This file is part of the documentation of the Qt Toolkit.
+**
+** $QT_BEGIN_LICENSE:FDL$
+** GNU Free Documentation License
+** Alternatively, this file may be used under the terms of the GNU Free
+** Documentation License version 1.3 as published by the Free Software
+** Foundation and appearing in the file included in the packaging of
+** this file.
+**
+** Other Usage
+** Alternatively, this file may be used in accordance with the terms
+** and conditions contained in a signed written agreement between you
+** and Nokia.
+**
+**
+**
+**
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+/*!
+    \qmlmodule QtMobility.sensors 1
+    \title QtMobility.sensors 1.x
+    \brief Legacy QML import for QtSensors
+    \ingroup qtsensors
+
+    \section1 Overview
+
+    The identifying string for this component is \e {"QtMobility.sensors"}.
+    Use this in the QML \e {import} statement.
+
+    The Sensors QML Plugin registers the C++ Sensors classes directly to the QML environment.
+    This causes some limitations due to the use of types that do not work in the QML environment.
+    See \l{Sensors QML Limitations}{below} for a list of the known limitations.
+
+    See \l QtSensors for more information about the Sensors API.
+
+    \section1 Sensors QML Limitations
+
+    The following limitations affect the Sensors QML bindings for Qt Mobility 1.1 and 1.2.
+
+    \list 1
+    \o The QSensor::sensorid property cannot be set because QML does not support QByteArray.
+       This means that it is not possible to specify a particular sensor when two or more have
+       been registered with the same type.
+    \o The QSensor::availableDataRates property cannot be used because QML does not support \l qrangelist.
+    \o The QSensor::outputRanges property cannot be used because QML does not support \l qoutputrangelist.
+    \o The QLightSensor::fieldOfView property cannot be used because QML cannot access dynamic properties.
+    \o The QMagnetometer::returnGeoValues property cannot be used because QML cannot access dynamic properties.
+    \o The QRotationSensor::hasZ property cannot be used because QML cannot access dynamic properties.
+    \o The QTapSensor::returnDoubleTapEvents property cannot be used because QML cannot access dynamic properties.
+    \endlist
+
+    \section1 QML Sensor Elements
+
+    These elements represent specific types of sensors.
+
+    \annotatedlist qml-sensors_type
+
+    \section1 QML Reading Elements
+
+    The data from a sensor comes through a reading class.
+
+    \annotatedlist qml-sensors_reading
+*/
+

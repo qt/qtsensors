@@ -26,8 +26,22 @@
 ****************************************************************************/
 
 /*!
+    \group qtsensors-examples
+    \title QtSensors Examples
+    \brief Examples for the QtSensors module
+    \ingroup all-examples
+    \ingroup qtsensors
+
+    These are the QtSensors examples.
+
+    \generatelist related
+*/
+
+/*!
     \example sensors/grueplugin
     \title Grue Plugin
+    \brief The Grue Plugin demonstrates creation of a new sensor backend.
+    \ingroup qtsensors-examples
 
     The Grue plugin example demonstrates the creation of a new sensor type,
     a sensor backend and plugin for the sensors library. Related to this example
@@ -119,6 +133,8 @@
 /*!
     \example sensors/grueapp
     \title Grue Application
+    \brief The Grue Application demonstrates use of a new sensor type.
+    \ingroup qtsensors-examples
 
     The Grue application example demonstrates the use of the Grue sensor which
     was defined and implemented by the \l{sensors/grueplugin}{Grue Plugin} example.
@@ -133,6 +149,7 @@
 /*!
     \example sensors/cubehouse
     \title Cube House
+    \ingroup qtsensors-examples
 
     \image cubehouse.png
 
@@ -157,10 +174,30 @@
 /*!
     \example sensors/sensor_explorer
     \title Sensor Explorer
+    \ingroup qtsensors-examples
 
     \image sensor_explorer.png
 
     The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
     It was designed as a debugging aid.
+*/
+
+/*!
+    \example sensors/qmlqtsensors5
+    \title QtSensors 5 QML API example
+    \ingroup qtsensors-examples
+
+    The QtSensors 5 QML API example demonstrates the QML elements in the QtSensors 5 import.
+
+    \sa QtSensors
+*/
+
+/*!
+    \example sensors/maze
+    \title Maze
+    \brief The Maze example demonstrates the TiltSensor QML element
+    \ingroup qtsensors-examples
+
+    The Maze example demonstrates the use of the TiltSensor QML element.
 */
 

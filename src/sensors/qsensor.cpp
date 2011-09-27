@@ -826,8 +826,7 @@ QSensorReading::~QSensorReading()
 
     \bold{Note that some platforms do not deliver timestamps correctly}.
     Applications should be prepared for occasional issues that cause timestamps to jump
-    forwards or backwards. The \l{sensors-api.html#platform-notes}{platform notes} have
-    more details.
+    backwards.
 */
 
 /*!
