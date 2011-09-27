@@ -26,24 +26,497 @@
 ****************************************************************************/
 
 /*!
-\page sensors-api.html
-\title Sensors
+\page qtsensors.html
+\title QtSensors
 \brief The Sensors API provides access to sensors.
 
-The Qt Sensors API is the Sensor API which should primarily used.
-Application which uses the old QtMobility sensor api can still use the QtMobility sensor api
-Read the \l {mobility-sensors-api.html}
-{QtMobility sensor api reference Documentation}.
 
+The Sensors API is primarily concerned with low-level, real-time sensors such as
+the accelerometer although there are higher-level, event-driven sensors represented too.
 
 \tableofcontents
 
 \section1 Sensor Types
 
+On a device there can be many types of sensors. Not all of the types that the Sensors API
+supports may be available. There may also be types available that are not defined in the
+Sensors API. You can find the sensor types available on a device using the
+\l QSensor::sensorTypes() function.
+
+For a list of built-in sensor types, see the \l{Sensor Classes} section below.
+
 \section1 Common Conventions
 
-\section1 QML Elements
-The new QtSensor API provides a bundle of QML Elements.
-Read the \l {qml-sensors5.html}
-{Sensors QML Plugin for Qt 5 reference Documentation} for more information.
-QtSensorsExample
+Unless otherwise specified, sensors shall use the
+\l{http://en.wikipedia.org/wiki/Cartesian_coordinate_system}{Right Hand Cartesian coordinate system}.
+
+\image sensors-coordinates.jpg
+
+To allow for measurements in all 6 directions, negative values are used.
+
+\image sensors-coordinates2.jpg
+
+Where rotation around an axis is used, the rotation shall be expressed as a Right Hand rotation.
+
+\image sensors-coordinates3.jpg
+
+In general, sensor data is oriented to the top of the device. If values are to be displayed on
+the screen the values may need to be transformed so that they match the user interface orientation. A sensor
+may define its data as being oriented to the UI. This will be noted in the documentation for the
+sensor.
+
+\image sensors-sides2.jpg
+
+\section1 Using a Sensor
+
+The life cycle of a sensor is typically:
+
+\list
+\o Create an instance of QSensor or one of its sub-classes on the stack or heap.
+\o Setup as required by the application.
+\o Start receiving values.
+\o Sensor data is used by the application.
+\o Stop receiving values.
+\endlist
+
+Here is an example of creating a sensor on the heap and on the stack.
+
+\snippet snippets/sensors/creating.cpp Creating a sensor
+
+\section1 Accessing sensor data in a generic fashion
+
+The preferred way to deal with sensor data is via the \l{Reading Classes}.
+However, sometimes this may not be possible. For example, you may be deploying
+an application to a device that has a new sensor type but no C++ header
+describing the reading class is available.
+
+Thanks to Qt's property system you can still access the sensor data. You need to know
+3 pieces of information in order to do this:
+
+\list
+\o The sensor type.
+\o The property name or index.
+\o The property type or a comparable type.
+\endlist
+
+For example, here is an example of how you can access a property of the accelerometer.
+This code does not require any compile-time links to \l QAccelerometer or
+\l QAccelerometerReading.
+
+\snippet snippets/sensors/start.cpp Starting a sensor
+
+You can discover all of this information at runtime too. The sensor_explorer example
+shows you information about available sensors.
+
+\section1 Platform notes
+
+\section2 S60 3rd Edition
+
+Note that support for sensors in S60 3.1 device is extremely limited due to the native API.
+Only the accelerometer is supported and only a few devices.
+
+Some devices running S60 3.2 support a newer native API and therefore support more sensors.
+
+More information about these platforms can be found \l{http://wiki.forum.nokia.com/index.php/Nokia_Sensor_APIs}{here}.
+
+Note that timestamps on this platform come from the system clock.
+Applications need to handle shifts in time caused by the user manually setting the clock or
+from the automatic time synchronization feature setting the clock.
+
+\section2 Symbian
+
+Most Symbian devices have their sensor data read via the Sensor Framework API. Some limitations
+appear in the Sensors API as a result.
+
+Only specific data rates can be selected. Setting an invalid data rate has no effect so applications
+that need to influence the used data rate should connect to the sensor, check the available data rates
+and select one as appropriate.
+
+Readings are delivered to the application via a queue. If the application blocks the event loop or otherwise
+interferes with the ability of the system to deliver readings (eg. by using up too much CPU time), they can
+get blocked in this queue. Since delayed readings are not useful, the system will drop readings as needed
+so that the application is always dealing with the most recent reading available. The application can tweak
+the policy by setting properties on the sensor.
+
+The default policy is to accept up to 100 readings from the system at once and to discard all but the last one.
+
+\code
+QAccelerometer sensor;
+sensor.setProperty("maximumReadingCount", 100);
+sensor.setProperty("processAllReadings", false);
+\endcode
+
+Applications that desire the original behaviour can set the maximumReadingCount to 1. Note that this does not
+guarantee that readings will not be dropped by the system. If the queue fills up, readings will be dropped.
+
+\code
+QAccelerometer sensor;
+sensor.setProperty("maximumReadingCount", 1);
+\endcode
+
+Larger maximumReadingCount values reduce the need for the lower-priority sensor daemon to get CPU timeslices.
+If the application is using lots of CPU but is still able to process readings quickly, it can request that
+all the fetched readings are processed.
+
+\code
+QAccelerometer sensor;
+sensor.setProperty("maximumReadingCount", 10);
+sensor.setProperty("processAllReadings", true);
+\endcode
+
+More information about the native API can be found \l{http://wiki.forum.nokia.com/index.php/Nokia_Sensor_APIs}{here}.
+
+Note that timestamps on this platform come from the system clock.
+Applications need to handle shifts in time caused by the user manually setting the clock or
+from the automatic time synchronization feature setting the clock.
+
+The ambient light sensor can only detect changes. Unlike all other sensors, it cannot report the "current value"
+so it is not possible to determine the current ambient light level.
+
+\section2 Maemo 5
+
+The N900 represents a unique device for the Sensors API. Unlike the Symbian and MeeGo platforms, sensor data is
+retrieved directly from the kernel and this has implications on the API.
+
+Axes are rotated when compared to Symbian or MeeGo devices. While Symbian and MeeGo devices orient their
+hardware sensors towards a portrait orientation, the N900 does not do this. Instead, it orients the hardware sensors
+towards its default landscape orientation. This has portability implications for applications that want to force the
+use of a particular screen orientation and use sensors. The following code shows how accelerometer values can be
+interpreted to ensure consistent results on the N900 as well as Symbian and MeeGo devices.
+
+\code
+#ifdef Q_WS_MAEMO_5
+    qreal x = reading->y();
+    qreal y = -reading->x();
+#else
+    qreal x = reading->x();
+    qreal y = reading->y();
+#endif
+    qreal z = reading->z();
+\endcode
+
+Alternatively, applications can set the environment variable \c N900_PORTRAIT_SENSORS to 1. This must be done
+before any Sensors API calls are made so the beginning of the main function is a good place to do it.
+
+\code
+int main(int argc, char **argv)
+{
+    qputenv("N900_PORTRAIT_SENSORS", "1");
+    ...
+\endcode
+
+Despite hardware that allows for multiple data rates and output ranges, the Sensors API does not allow access to
+these due to permissions issues.
+
+Readings are polled using a timer. If the application blocks the event loop or otherwise interferes with the
+ability of the timer to fire, readings will be missed. There are no queues so applications must ensure that
+they process the readings promptly (possibly saving them into a buffer for later processing if required).
+
+\section2 MeeGo
+
+The data rates offered by MeeGo are not tied to how fast the hardware runs.
+
+The default data rate for a sensor is likely to be low when compared to Symbian or Maemo 5. Applications should
+request a suitable data rate, taking care to avoid selecting invalid rates on other devices.
+
+Sensors may be suspended by the system in order to save power. Applications can avoid this by setting a property
+on the sensor object.
+
+\code
+QAccelerometer *accelerometer = new QAccelerometer(this);
+accelerometer->setProperty("alwaysOn", true);
+accelerometer->start();
+\endcode
+
+Unlike Symbian and N900, MeeGo does not currently provide initial readings. Thus, certain sensors must detect
+a change in value before a value can be reported. Examples include the orientation sensor and ambient light
+sensor.
+
+\section1 Front end, back end
+
+The Sensors API has a front end, for application developers to use and a back end,
+where device implementors write code to access their hardware. As an application
+developer you do not need to access the back end though it may be useful to understand
+how it works.
+
+Commands from the application are delivered through QSensor and then down to the
+device plugin. Data comes back through the QSensorReading class.
+
+\image sensors-overview.png
+
+More information about the back end can be found in \l{Sensors Backend}.
+
+\section1 Main Classes
+
+The primary classes that make up the Sensors API.
+
+\annotatedlist sensors_main
+
+\section1 Reading Classes
+
+The best way to access sensor data is via one of these classes.
+
+\annotatedlist sensors_reading
+
+\section1 Sensor Classes
+
+These classes provide convenience wrappers that reduce the need for casting.
+Each of these classes represents a sensor type that the Sensors API knows
+about. Note that additional types may be made available at run-time. See
+\l{Sensor Types} for more information.
+
+\annotatedlist sensors_type
+
+\section1 Filter Classes
+
+As with the sensor classes, these provide convenience wrappers that reduce
+the need for casting.
+
+\annotatedlist sensors_filter
+
+*/
+
+/*!
+\page sensors-backend.html
+\title Sensors Backend
+\brief The Sensors Backend connects the Sensors API to the platform services or hardware sensors.
+
+The Sensors Backend connects the Sensors API to the platform services or hardware sensors.
+
+\tableofcontents
+
+\section1 Overview
+
+\section1 Backend API
+
+QSensor instances talk to a backend object. Backends are usually supplied
+with the QtSensors library for a specific device although third party
+backends may be used as well. A backend may talk
+directly to hardware or it may talk to a system service. In some instances
+it may even talk to another sensor.
+An example of this is the orientation sensor backend that talks to an
+accelerometer to determine the orientation.
+
+There are also some \l{Sensors Backend Topics}{topics} specific to backend
+implementors.
+
+\section1 Backend Classes
+If you are making sensors available through the Sensors API, these are the
+classes to use.
+\annotatedlist sensors_backend
+
+\sa {Sensors Backend Topics}
+
+*/
+
+/*!
+\group sensors_backend_topics
+\title Sensors Backend Topics
+\generatelist related
+*/
+
+/*!
+\page creating-a-sensor-plugin.html
+\title Creating a sensor plugin
+\ingroup sensors_backend_topics
+
+\section1 How a sensor plugin is loaded
+
+Since sensor backends are created on demand, the sensor plugin is loaded and asked
+to register the sensor backends it handles. The plugin should implement
+QSensorPluginInterface::registerSensors() and call QSensorManager::registerBackend()
+to register available backends. Typically the plugin will also inherit from
+QSensorBackendFactory and implement
+QSensorBackendFactory::createBackend() in order to instantiate backends it has registered.
+
+The simplest plugin will have just once sensor backend although there is no reason
+that multiple sensor backends cannot be in a plugin.
+
+An example follows.
+
+\snippet snippets/sensors/plugin.cpp Plugin
+
+If you would like to build a backend into a library or application you can use the
+REGISTER_STATIC_PLUGIN() macro although it may not work in all situations as it
+uses static initialization.
+
+*/
+
+/*!
+\page determining-the-default-sensor-for-a-type.html
+\title Determining the default sensor for a type
+\ingroup sensors_backend_topics
+
+\section1 Multiple sensors can exist for a type
+
+Sensors was designed so that multiple sensors could exist for a given type. Why?
+Consider this example.
+
+The N900 has an accelerometer built-in. It also features bluetooth and can pair
+with a gaming controller that features an accelerometer. To a developer writing
+a game these two devices are conceptually the same type.
+
+\section1 Default sensor for a type
+
+To avoid the need to know (or check) what the default sensor for a type is, the system will
+use the default sensor for a type. Most of the time this is what the app developer wants to
+do. In cases where the app developer wants to select a specific sensor they must call the
+QSensor::setIdentifier() method before they start the sensor so that the appropriate backend
+is used.
+
+From a system perspective though, selecting which sensor should be the default gets tricky.
+The sensors library uses the first registered identifier as the default. This means that the
+order in which sensor backends are registered is important so the system will allow a config
+file to determine the default instead.
+
+\section1 Sensors.conf
+
+The config file that determines the default sensor for a type is called Sensors.conf. If present,
+it is located in /etc/xdg/Nokia. It is read using QSettings so it has the standard formatting
+of a QSettings .conf file.
+
+The settings live in the Default group and the general format is:
+\code
+type = identifier
+\endcode
+
+An example Sensors.conf that ensures the N900 accelerometer is used as the default no matter the
+order in which backends were registered is presented here.
+
+\code
+[Default]
+QAccelerometer = n900.accelerometer
+\endcode
+
+If Sensors.conf specifies an identifier that is not registered then the system will fall back to
+the first registered identifier as the default.
+
+Note that there is special case logic to prevent the generic plugin's backends from becoming the
+default when another backend is registered for the same type. This logic means that a backend
+identifier starting with \c{generic.} will only be the default if no other backends have been
+registered for that type or if it is specified in \c{Sensors.conf}.
+
+*/
+
+/*!
+\page dynamic-sensor-backend-registration.html
+\title Dynamic Sensor Backend Registration
+\ingroup sensors_backend_topics
+
+\section1 Static Backend Registration
+
+Sensor backends are generally registered statically. The registration happens when the sensors
+library is first used and the registration remains in effect while the program runs.
+
+\image sensors-static.png
+
+Statically registered backends may still exhibit some dynamic behaviour as the
+QSensorBackendFactory is free to return 0 to indicate that a backend cannot be created.
+
+\section1 Dynamic Backend Registration
+
+While static registration is fine for most backends there are some situations where this is
+problematic.
+
+The clearest example is backends that represent non-fixed hardware. As an example, lets consider
+a game controller that is connected via Bluetooth. As there may be more than one game controller
+in range of the phone, the program wants to record that a specific game controller should be used.
+If the backend had been registered statically there would have been no unique information about
+the controller. Instead, the registration is delayed until the controller is seen.
+
+\image sensors-dynamic.png
+
+\section1 Suggested Registration Policy
+
+A backend for fixed hardware should be registered immediately. Applications can see that the
+sensor can be used.
+
+A backend for remote hardware should not be registered immediately. Applications can see that
+the sensor cannot be used. When the remote hardware becomes available the backend should be
+registered. Applications can see that the sensor is now available.
+
+If it is necessary to return 0 from a factory for a backend that was registered, the backend
+should be unregistered. Applications can see that the sensor is no longer available. If the
+factory can create the backend again it should be registered. Applications can see that the
+sensor is available again.
+
+When the underlying hardware is no longer available, the backend should be deregistered.
+Existing instances of the backend should report error states to the application but should
+handle the situation gracefully.
+
+*/
+
+/*!
+\page qml-sensors.html
+\title Sensors QML Plugin
+\brief A QML plugin for the QtMobility Project Sensors API.
+
+\section1 Overview
+
+The identifying string for this component is \e {"QtMobility.sensors"}.
+Use this in the QML \e {import} statement.
+
+The Sensors QML Plugin registers the C++ Sensors classes directly to the QML environment.
+This causes some limitations due to the use of types that do not work in the QML environment.
+See \l{Sensors QML Limitations}{below} for a list of the known limitations.
+
+See \l Sensors for more information about the Sensors API.
+
+\section1 Sensors QML Limitations
+
+The following limitations affect the Sensors QML bindings for Qt Mobility 1.1 and 1.2.
+
+\list 1
+\o The QSensor::sensorid property cannot be set because QML does not support QByteArray.
+   This means that it is not possible to specify a particular sensor when two or more have
+   been registered with the same type.
+\o The QSensor::availableDataRates property cannot be used because QML does not support \l qrangelist.
+\o The QSensor::outputRanges property cannot be used because QML does not support \l qoutputrangelist.
+\o The QLightSensor::fieldOfView property cannot be used because QML cannot access dynamic properties.
+\o The QMagnetometer::returnGeoValues property cannot be used because QML cannot access dynamic properties.
+\o The QRotationSensor::hasZ property cannot be used because QML cannot access dynamic properties.
+\o The QTapSensor::returnDoubleTapEvents property cannot be used because QML cannot access dynamic properties.
+\endlist
+
+\section1 QML Sensor Elements
+
+These elements represent specific types of sensors.
+
+\annotatedlist qml-sensors_type
+
+\section1 QML Reading Elements
+
+The data from a sensor comes through a reading class.
+
+\annotatedlist qml-sensors_reading
+
+*/
+
+/*!
+\page meego-integration-notes.html
+\title MeeGo Integration Notes
+\ingroup sensors_backend_topics
+
+\section1 MeeGo Integration Notes
+
+The implementation of the API builds on top of the MeeGo Sensor Framework
+that provides all the sensors specified in 1.2 API version.
+
+\section2 Available sensors
+
+If HW sensor is missing, the configuration file "Sensors.conf"
+must be updated and sensor removed. The file
+has the following format:
+
+\code
+[Default]
+QAccelerometer=meego.accelerometer
+QAmbientLightSensor=meego.als
+\endcode
+
+It lists sensor types and type's default implementation by giving the sensor id.
+If the type is omitted then the backend does not support it in this device; this
+gives a way of controlling and differentiating the supported sensor set.
+
+*/
+
