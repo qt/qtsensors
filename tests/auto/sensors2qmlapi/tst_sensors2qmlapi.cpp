@@ -114,12 +114,12 @@ void tst_Sensors2QMLAPI::testProximity()
 void tst_Sensors2QMLAPI::testAmbientLight()
 {
     QSensor2AmbientLight als;
-    QSignalSpy spy(&als, SIGNAL(runningChanged()));
-    als.setProperty("running", QVariant(true));
+    QSignalSpy spy(&als, SIGNAL(enabledChanged()));
+    als.setProperty("enabled", QVariant(true));
     QCOMPARE(spy.count() , 1);
 
     spy.clear();
-    als.setProperty("running", QVariant(true));
+    als.setProperty("enabled", QVariant(true));
     QCOMPARE(spy.count() , 0);
 
     TestSensorPlugin plugin;
@@ -138,7 +138,7 @@ void tst_Sensors2QMLAPI::testAmbientLight()
         abl->test((QSensor2AmbientLight::LightLevel)en);
         QCOMPARE(spy1.count() , 0);
     }
-    als.setProperty("running", QVariant(false));
+    als.setProperty("enabled", QVariant(false));
 }
 
 void tst_Sensors2QMLAPI::testTilt_data()

@@ -52,14 +52,14 @@ class QSensor2AmbientLight : public QObject, public QAmbientLightFilter
     Q_OBJECT
     Q_ENUMS(LightLevel)
     Q_PROPERTY(LightLevel lightLevel READ lightLevel NOTIFY lightLevelChanged)
-    Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
 
 public:
     QSensor2AmbientLight(QObject* parent = 0);
     virtual ~QSensor2AmbientLight();
 
     enum LightLevel {
-        Undefined = 0,
+        Unknown = 0,
         Dark,
         Twilight,
         Light,
@@ -69,22 +69,21 @@ public:
 
 Q_SIGNALS:
     void lightLevelChanged();
-    void runningChanged();
+    void enabledChanged();
 
 private:
     // Override of QAmbientLightFilter::filter(QAmbientLightReading*)
     bool filter(QAmbientLightReading *reading);
     LightLevel lightLevel();
-    bool running();
-    void setRunning(bool val);
+    bool enabled();
+    void setEnabled(bool val);
 
     QAmbientLightSensor* _ambientLight;
     LightLevel _lightLevel;
 };
 
-QML_DECLARE_TYPE(QT_PREPEND_NAMESPACE(QSensor2AmbientLight))
-
 QT_END_NAMESPACE
 
+QML_DECLARE_TYPE(QSensor2AmbientLight)
 
 #endif // QSENSOR2AMBIENTLIGHT_H

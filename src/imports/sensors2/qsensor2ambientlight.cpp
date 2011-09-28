@@ -52,37 +52,10 @@ QT_BEGIN_NAMESPACE
     \brief The AmbientLightSensor element provide an easy access to determine the ambient light by using the ambient light sensor.
 
     This element is part of the \bold{QtSensors 5} module.
-
-    \target lightLevelenum
-    \section1 Enums
-    \section2 AmbientLightSensor::LighLevel
-
-    This enum describes the ambient light levels.
-
-    \table
-    \row
-        \o AmbientLightSensor::Undefined
-        \o Ambient light not defined.
-    \row
-        \o AmbientLightSensor::Dark
-        \o Ambient light is dark.
-    \row
-        \o AmbientLightSensor::Twilight
-        \o Ambient light is twilight.
-    \row
-        \o AmbientLightSensor::Light
-        \o Ambient light is light.
-    \row
-        \o AmbientLightSensor::Bright
-        \o Ambient light is bright.
-    \row
-        \o AmbientLightSensor::Sunny
-        \o Ambient light is sunny.
-    \endtable
 */
 QSensor2AmbientLight::QSensor2AmbientLight(QObject* parent)
     : QObject(parent)
-    , _lightLevel(QSensor2AmbientLight::Undefined)
+    , _lightLevel(QSensor2AmbientLight::Unknown)
 {
     _ambientLight = new QAmbientLightSensor(this);
     _ambientLight->addFilter(this);
@@ -94,21 +67,17 @@ QSensor2AmbientLight::~QSensor2AmbientLight()
 }
 
 /*!
-    \qmlproperty bool QtSensors5::AmbientLightSensor::running
-    Holds the identication if the sensor runs or not.
+    \qmlproperty bool QtSensors5::QSensor2AmbientLight::enabled
+    This property can be used to activate or deactivate the sensor.
 */
-/*!
-    \qmlsignal QtSensors5::AmbientLightSensor::onRunningChanged()
-    This signal is emitted whenever the value of the property running has been changed.
-*/
-bool QSensor2AmbientLight::running()
+bool QSensor2AmbientLight::enabled()
 {
     return _ambientLight->isActive();
 }
 
-void QSensor2AmbientLight::setRunning(bool val)
+void QSensor2AmbientLight::setEnabled(bool val)
 {
-    bool active = running();
+    bool active = enabled();
     if (active != val){
         if (val){
             bool ret = _ambientLight->start();
@@ -117,20 +86,35 @@ void QSensor2AmbientLight::setRunning(bool val)
         }
         else
             _ambientLight->stop();
-        emit runningChanged();
+        emit enabledChanged();
     }
 }
 
 /*!
-    \qmlproperty AmbientLightSensor::LightLevel QtSensors5::AmbientLightSensor::lightLevel
-    Holds the ambient light level.
-    \sa {lightLevelenum} {AmbientLightSensor::LighLevel}
-*/
-/*!
-    \qmlsignal QtSensors5::AmbientLightSensor::onLightLevelChanged()
-    This signal is emitted whenever the value of the property lightLevel has been changed.
-*/
+    \qmlproperty enumeration QtSensors5::AmbientLightSensor::lightLevel
+    Holds the ambient light level in the form of the LightLevel enum:
 
+    \table
+    \row
+        \o AmbientLightSensor.Unknown
+        \o Ambient light value is not set yet.
+    \row
+        \o AmbientLightSensor.Dark
+        \o It is dark.
+    \row
+        \o AmbientLightSensor.Twilight
+        \o It is moderately dark.
+    \row
+        \o AmbientLightSensor.Light
+        \o It is light (eg. internal lights).
+    \row
+        \o AmbientLightSensor.Bright
+        \o It is bright (eg. shade).
+    \row
+        \o AmbientLightSensor.Sunny
+        \o It is very bright (eg. direct sunlight).
+    \endtable
+*/
 QSensor2AmbientLight::LightLevel QSensor2AmbientLight::lightLevel()
 {
     return _lightLevel;

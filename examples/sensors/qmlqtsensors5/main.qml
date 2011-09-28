@@ -238,7 +238,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: ablrect
+        id: ambientlightrect
         x: 2
         y: tiltrect.y + tiltrect.height + 10
         width: 315
@@ -246,45 +246,45 @@ Rectangle {
         border.width: 1
 
         AmbientLightSensor {
-            id: abl
-            running: false
+            id: ambientlight
+            enabled: false
             onLightLevelChanged:{
-                if (abl.lightLevel == AmbientLightSensor.Undefined)
-                    abltext.text = "Ambient light: Undefined";
-                else if (abl.lightLevel == AmbientLightSensor.Dark)
-                    abltext.text = "Ambient light: Dark";
-                else if (abl.lightLevel == AmbientLightSensor.Twilight)
-                    abltext.text = "Ambient light: Twilight";
-                else if (abl.lightLevel == AmbientLightSensor.Light)
-                    abltext.text = "Ambient light: Light";
-                else if (abl.lightLevel == AmbientLightSensor.Bright)
-                    abltext.text = "Ambient light: Bright";
-                else if (abl.lightLevel == AmbientLightSensor.Sunny)
-                    abltext.text = "Ambient light: Sunny";
+                if (ambientlight.lightLevel == AmbientLightSensor.Unknown)
+                    ambientlighttext.text = "Ambient light: Unknown";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Dark)
+                    ambientlighttext.text = "Ambient light: Dark";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Twilight)
+                    ambientlighttext.text = "Ambient light: Twilight";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Light)
+                    ambientlighttext.text = "Ambient light: Light";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Bright)
+                    ambientlighttext.text = "Ambient light: Bright";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Sunny)
+                    ambientlighttext.text = "Ambient light: Sunny";
             }
         }
         Text {
-            id: abltext
+            id: ambientlighttext
             x: 5
             y: 10
             text: "Ambient light: -"
         }
         Button{
-            id: ablStart
+            id: ambientlightStart
             x: 5
             y: 35
             text: "start"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
-            checked: abl.running
+            checked: ambientlight.enabled
             color: "lightyellow"
 
             onClicked:{
-                abl.running = ablStart.checked;
-                if (ablStart.checked)
-                    ablStart.text = "running";
+                ambientlight.enabled = ambientlightStart.checked;
+                if (ambientlightStart.checked)
+                    ambientlightStart.text = "running";
                 else
-                    ablStart.text = "stopped";
+                    ambientlightStart.text = "stopped";
             }
         }
     }
@@ -292,7 +292,7 @@ Rectangle {
     Rectangle {
         id: proxirect
         x: 2
-        y: ablrect.y + ablrect.height + 10
+        y: ambientlightrect.y + ambientlightrect.height + 10
         width: 315
         height: 70
         border.width: 1
