@@ -299,13 +299,13 @@ Rectangle {
 
         ProximitySensor {
             id: proxi
-            running: true
+            enabled: true
         }
         Text {
             id: proxitext
             x: 5
             y: 10
-            text: "Proximity: " + proxi.close
+            text: "Proximity: " + proxi.near
         }
         Button{
             id: proxiStart
@@ -314,11 +314,11 @@ Rectangle {
             text: "start"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
-            checked: proxi.running
+            checked: proxi.enabled
             color: "lightyellow"
 
             onClicked:{
-                proxi.running = proxiStart.checked;
+                proxi.enabled = proxiStart.checked;
                 if (proxiStart.checked)
                     proxiStart.text = "running";
                 else

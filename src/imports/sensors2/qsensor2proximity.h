@@ -50,32 +50,31 @@ QT_BEGIN_NAMESPACE
 class QSensor2Proximity : public QObject, public QProximityFilter
 {
     Q_OBJECT
-    Q_PROPERTY(bool close READ close NOTIFY closeChanged)
-    Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
+    Q_PROPERTY(bool near READ near NOTIFY nearChanged)
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
 
 public:
     QSensor2Proximity(QObject* parent = 0);
     virtual ~QSensor2Proximity();
 
 Q_SIGNALS:
-    void closeChanged();
-    void runningChanged();
+    void nearChanged();
+    void enabledChanged();
 
 private:
     // Override of QProximityFilter::filter(QProximityReading*)
     bool filter(QProximityReading *reading);
-    bool close();
-    bool running();
-    void setRunning(bool val);
+    bool near();
+    bool enabled();
+    void setEnabled(bool val);
 
 private:
     QProximitySensor* _proximity;
-    bool _close;
+    bool _near;
 };
-
-QML_DECLARE_TYPE(QT_PREPEND_NAMESPACE(QSensor2Proximity))
 
 QT_END_NAMESPACE
 
+QML_DECLARE_TYPE(QSensor2Proximity)
 
 #endif // QSENSOR2PROXIMITY_H

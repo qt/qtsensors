@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
 
 QSensor2Proximity::QSensor2Proximity(QObject* parent)
     : QObject(parent)
-    , _close(false)
+    , _near(false)
 {
     _proximity = new QProximitySensor(this);
     _proximity->addFilter(this);
@@ -67,21 +67,17 @@ QSensor2Proximity::~QSensor2Proximity()
 }
 
 /*!
-    \qmlproperty bool QtSensors5::ProximitySensor::running
-    Holds the identication if the sensor runs or not.
+    \qmlproperty bool QtSensors5::ProximitySensor::enabled
+    This property can be used to activate or deactivate the sensor.
 */
-/*!
-    \qmlsignal QtSensors5::ProximitySensor::onRunningChanged()
-    This signal is emitted whenever the value of the property running has been changed.
-*/
-bool QSensor2Proximity::running()
+bool QSensor2Proximity::enabled()
 {
     return _proximity->isActive();
 }
 
-void QSensor2Proximity::setRunning(bool val)
+void QSensor2Proximity::setEnabled(bool val)
 {
-    bool active = running();
+    bool active = enabled();
     if (active != val){
         if (val){
             bool ret = _proximity->start();
@@ -90,29 +86,26 @@ void QSensor2Proximity::setRunning(bool val)
         }
         else
             _proximity->stop();
-        emit runningChanged();
+        emit enabledChanged();
     }
 }
 
 /*!
-    \qmlproperty bool QtSensors5::ProximitySensor::close
-    Holds the proximity from the user to the device.
+    \qmlproperty bool QtSensors5::ProximitySensor::near
+    This property holds whether the sensor has detected something in close proximity.
+    Device dependent, but typically 1-2 cm.
 */
-/*!
-    \qmlsignal QtSensors5::ProximitySensor::onCloseChanged()
-    This signal is emitted whenever the value of the close property has been changed.
-*/
-bool QSensor2Proximity::close()
+bool QSensor2Proximity::near()
 {
-    return _close;
+    return _near;
 }
 
 bool QSensor2Proximity::filter(QProximityReading *reading)
 {
     bool cl = reading->close();
-    if (_close != cl){
-        _close = cl;
-        emit closeChanged();
+    if (_near != cl){
+        _near = cl;
+        emit nearChanged();
     }
 
     return false;

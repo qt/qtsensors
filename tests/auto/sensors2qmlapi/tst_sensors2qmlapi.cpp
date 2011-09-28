@@ -82,12 +82,12 @@ void tst_Sensors2QMLAPI::initTestCase()
 void tst_Sensors2QMLAPI::testProximity()
 {
     QSensor2Proximity prox;
-    QSignalSpy spy(&prox, SIGNAL(runningChanged()));
-    prox.setProperty("running", QVariant(true));
+    QSignalSpy spy(&prox, SIGNAL(enabledChanged()));
+    prox.setProperty("enabled", QVariant(true));
     QCOMPARE(spy.count() , 1);
 
     spy.clear();
-    prox.setProperty("running", QVariant(true));
+    prox.setProperty("enabled", QVariant(true));
     QCOMPARE(spy.count() , 0);
 
     TestSensorPlugin plugin;
@@ -95,20 +95,20 @@ void tst_Sensors2QMLAPI::testProximity()
 
     proxi->test(true);
     bool expected = true;
-    bool actual = prox.property("close").toBool();
+    bool actual = prox.property("near").toBool();
     QCOMPARE(expected, actual);
 
-    QSignalSpy spy1(&prox, SIGNAL(closeChanged()));
+    QSignalSpy spy1(&prox, SIGNAL(nearChanged()));
     proxi->test(false);
     QCOMPARE(spy1.count() , 1);
     expected = false;
-    actual = prox.property("close").toBool();
+    actual = prox.property("near").toBool();
     QCOMPARE(expected, actual);
 
     spy1.clear();
     proxi->test(false);
     QCOMPARE(spy1.count() , 0);
-    prox.setProperty("running", QVariant(false));
+    prox.setProperty("enabled", QVariant(false));
 }
 
 void tst_Sensors2QMLAPI::testAmbientLight()
