@@ -28,6 +28,8 @@
 /*!
     \group qtsensors
     \title QtSensors
+    \brief The QtSensors API provides access to sensors via QML and C++ interfaces.
+    \ingroup technology-apis
 
     The QtSensors API provides access to sensors via QML and C++ interfaces.
 
