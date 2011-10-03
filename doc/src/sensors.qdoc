@@ -31,6 +31,8 @@
 
     The QtSensors API provides access to sensors via QML and C++ interfaces.
 
+    \section1 Topics
+
     \generatelist related
 */
 

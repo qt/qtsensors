@@ -166,7 +166,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
 
     This element cannot be directly created. Please use one of the sub-classes instead.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -227,7 +227,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QAccelerometer class. Please see the documentation for
     QAccelerometer for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -284,7 +284,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QAmbientLightSensor class. Please see the documentation for
     QAmbientLightSensor for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -341,7 +341,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QCompass class. Please see the documentation for
     QCompass for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -395,7 +395,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QMagnetometer class. Please see the documentation for
     QMagnetometer for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -457,7 +457,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QOrientationSensor class. Please see the documentation for
     QOrientationSensor for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -514,7 +514,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QProximitySensor class. Please see the documentation for
     QProximitySensor for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -563,7 +563,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QRotationSensor class. Please see the documentation for
     QRotationSensor for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -622,7 +622,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QTapSensor class. Please see the documentation for
     QTapSensor for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -676,6 +676,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass LightSensor QLightSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
+    \since QtMobility.sensors 1.2
     \inherits Sensor
     \brief The LightSensor element reports on light levels using LUX.
 
@@ -684,7 +685,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QLightSensor class. Please see the documentation for
     QLightSensor for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -703,6 +704,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass LightReading QLightReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
+    \since QtMobility.sensors 1.2
     \inherits SensorReading
     \brief The LightReading element holds the most recent LightSensor reading.
 
@@ -723,6 +725,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass Gyroscope QGyroscope
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
+    \since QtMobility.sensors 1.2
     \inherits Sensor
     \brief The Gyroscope element reports on rotational acceleration
            around the X, Y and Z axes.
@@ -730,7 +733,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     This element wraps the QGyroscope class. Please see the documentation for
     QGyroscope for details.
 
-    \sa {Sensors QML Limitations}
+    \sa {QtMobility.sensors QML Limitations}
 */
 
 /*!
@@ -749,6 +752,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass GyroscopeReading QGyroscopeReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
+    \since QtMobility.sensors 1.2
     \inherits SensorReading
     \brief The GyroscopeReading element holds the most recent Gyroscope reading.
 
@@ -775,4 +779,50 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     Please see QGyroscopeReading::z for information about this property.
 */
 
+/*!
+    \qmlclass IRProximitySensor QIRProximitySensor
+    \ingroup qml-sensors_type
+    \inqmlmodule QtMobility.sensors 1
+    \since QtMobility.sensors 1.3
+    \inherits Sensor
+    \brief The IRProximitySensor element reports on infra-red reflectance values.
+
+    This element wraps the QIRProximitySensor class. Please see the documentation for
+    QIRProximitySensor for details.
+
+    \sa {QtMobility.sensors QML Limitations}
+*/
+
+/*!
+    \qmlproperty IRProximityReading QtMobility.sensors1::IRProximitySensor::reading
+    Holds the most recent IR proximity reading.
+    Please see QSensor::reading for information about this property.
+*/
+
+/*!
+    \qmlsignal QtMobility.sensors1::IRProximitySensor::onReadingChanged()
+    Called when the reading object changes.
+    Please see QSensor::readingChanged() for information about this signal.
+*/
+
+/*!
+    \qmlclass IRProximityReading QIRProximityReading
+    \ingroup qml-sensors_reading
+    \inqmlmodule QtMobility.sensors 1
+    \since QtMobility.sensors 1.3
+    \inherits SensorReading
+    \brief The IRProximityReading element holds the most recent IR proximity reading.
+
+    The IRProximityReading element holds the most recent IR proximity reading.
+
+    This element wraps the QIRProximityReading class. Please see the documentation for
+    QIRProximityReading for details.
+
+    This element cannot be directly created.
+*/
+
+/*!
+    \qmlproperty qreal QtMobility.sensors1::IRProximityReading::reflectance
+    Please see QIRProximityReading::reflectance for information about this property.
+*/
 

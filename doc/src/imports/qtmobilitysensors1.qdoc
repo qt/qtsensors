@@ -33,18 +33,18 @@
 
     \section1 Overview
 
-    The identifying string for this component is \e {"QtMobility.sensors"}.
-    Use this in the QML \e {import} statement.
+    This is the legacy QML import. It exists for compatibility with the QtMobiltiy 1.2 release
+    and is not recommended for new applications.
 
-    The Sensors QML Plugin registers the C++ Sensors classes directly to the QML environment.
+    The QtMobility.sensors import has the QtSensors C++ classes directly exported into the QML environment.
     This causes some limitations due to the use of types that do not work in the QML environment.
-    See \l{Sensors QML Limitations}{below} for a list of the known limitations.
+    See \l{QtMobility.sensors QML Limitations}{below} for a list of the known limitations.
 
     See \l QtSensors for more information about the Sensors API.
 
-    \section1 Sensors QML Limitations
+    \section1 QtMobility.sensors QML Limitations
 
-    The following limitations affect the Sensors QML bindings for Qt Mobility 1.1 and 1.2.
+    The following limitations affect all versions of the QtMobility.sensors import.
 
     \list 1
     \o The QSensor::sensorid property cannot be set because QML does not support QByteArray.
@@ -69,5 +69,8 @@
     The data from a sensor comes through a reading class.
 
     \annotatedlist qml-sensors_reading
+
+    \section1 Alphabetical Listing of QML Elements
+
 */
 
