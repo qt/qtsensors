@@ -42,8 +42,8 @@
 #include "qsensor2tilt.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <errno.h>
 #include <QtCore/QDebug>
+#include <QtCore/QStringList>
 
 QT_BEGIN_NAMESPACE
 
@@ -55,53 +55,17 @@ QT_BEGIN_NAMESPACE
     \brief The TiltSensor element provides tilt datas from x and y rotation of the device using the accelerometer sensor.
 
     This element is part of the \bold{QtSensors 5} module.
-
-    \target tiltreferenceenum
-    \section1 Enums
-    \section2 TiltSensor::TiltReference
-
-    This enum describes the orientation of the device.
-
-    \table
-    \row
-        \o TiltSensor::TopUp
-        \o The top of the device points up
-        \o
-        \image TopUp.gif
-    \row
-        \o TiltSensor::TopDown
-        \o The top of the device points down
-        \o
-        \image TopDown.gif
-    \row
-        \o TiltSensor::LeftUp
-        \o The left site of the device points up
-        \o
-        \image LeftUp.gif
-    \row
-        \o TiltSensor::RightUp
-        \o The right site of the device points up
-        \o
-        \image RightUp.gif
-    \row
-        \o TiltSensor::FaceUp
-        \o The screen of the device points up
-        \o
-        \image FaceUp.gif
-    \row
-        \o TiltSensor::FaceDown
-        \o The screen of the device points down
-        \o
-        \image FaceDown.gif
-    \endtable
-
 */
 QSensor2Tilt::QSensor2Tilt(QObject* parent)
     : QObject(parent)
-    , _measureFrom(QSensor2Tilt::FaceUp)
     , _yRotation(0)
     , _xRotation(0)
-    , _useRadian(true)
+    , _radAccuracy(M_PI / 180)
+    , _unit(QSensor2Tilt::Radians)
+    , _pitch(0)
+    , _roll(0)
+    , _calibratedPitch(0)
+    , _calibratedRoll(0)
 {
     _accel = new QAccelerometer(this);
     _accel->addFilter(this);
@@ -114,10 +78,6 @@ QSensor2Tilt::~QSensor2Tilt()
 /*!
     \qmlproperty bool QtSensors5::TiltSensor::dataRate
     Holds the data rate that the sensor should be run at.
-*/
-/*!
-    \qmlsignal QtSensors5::TiltSensor::onDataRateChanged()
-    This signal is emitted whenever the value of the property dataRate has been changed.
 */
 int QSensor2Tilt::dataRate()
 {
@@ -133,21 +93,17 @@ void QSensor2Tilt::setDataRate(int val)
 }
 
 /*!
-    \qmlproperty bool QtSensors5::TiltSensor::running
-    Holds the identication if the sensor runs or not.
+    \qmlproperty bool QtSensors5::QSensor2Tilt::enabled
+    This property can be used to activate or deactivate the sensor.
 */
-/*!
-    \qmlsignal QtSensors5::TiltSensor::onRunningChanged()
-    This signal is emitted whenever the value of the property running has been changed.
-*/
-bool QSensor2Tilt::running()
+bool QSensor2Tilt::enabled()
 {
     return _accel->isActive();
 }
 
-void QSensor2Tilt::setRunning(bool val)
+void QSensor2Tilt::setEnabled(bool val)
 {
-    bool active = running();
+    bool active = enabled();
     if (active != val){
         if (val){
             bool ret = _accel->start();
@@ -156,49 +112,39 @@ void QSensor2Tilt::setRunning(bool val)
         }
         else
             _accel->stop();
-        emit runningChanged();
+        emit enabledChanged();
     }
 }
 
 /*!
-    \qmlproperty QSensor2Tilt::TiltReference QtSensors5::TiltSensor::measureFrom
-    Holds the orientation in which the rotation should be calculated.
-    \sa {tiltreferenceenum} {TiltReference::TiltReference}
+    \target unit_property
+    \qmlproperty enumeration QtSensors5::TiltSensor::unit
+    Returns the unit of the rotation which can be one of:
+    \table
+    \row
+        \o TiltSensor.Radians
+        \o The unit of the rotation angle is radians.
+    \row
+        \o TiltSensor.Degrees
+        \o The unit of the rotation angle is degrees.
+    \endtable
 */
-/*!
-    \qmlsignal QtSensors5::TiltSensor::onMeasureFromChanged()
-    This signal is emitted whenever the value of the property measureFrom has been changed.
-*/
-QSensor2Tilt::TiltReference QSensor2Tilt::measureFrom()
+QSensor2Tilt::Unit QSensor2Tilt::unit()
 {
-    return _measureFrom;
+    return _unit;
 }
 
-void QSensor2Tilt::setMeasureFrom(QSensor2Tilt::TiltReference val)
+void QSensor2Tilt::setUnit(const QSensor2Tilt::Unit val)
 {
-    if (val != _measureFrom){
-        _measureFrom = val;
-        emit measureFromChanged();
+    if (_unit != val){
+        _unit = val;
+        emit unitChanged();
     }
 }
 
-/*!
-    \qmlproperty bool QtSensors5::TiltSensor::radian
-    Holds the unit of the rotation. True is rad otherwise deg. true = report values in radians. false = report values in degrees.
-*/
-bool QSensor2Tilt::radian()
-{
-    return _useRadian;
-}
-
-void QSensor2Tilt::setRadian(bool val)
-{
-    _useRadian = val;
-}
-
 
 /*!
-    \qmlproperty float QtSensors5::TiltSensor::yRotation
+    \qmlproperty qreal QtSensors5::TiltSensor::yRotation
     Holds the rotation arround the y axis.
 
     \table
@@ -209,17 +155,16 @@ void QSensor2Tilt::setRadian(bool val)
         \image YAngleNegative.gif
     \endtable
 */
-/*!
-    \qmlsignal QtSensors5::TiltSensor::onYRotationChanged()
-    This signal is emitted whenever the value of the property yRotation has been changed.
-*/
-float QSensor2Tilt::yRotation()
+qreal QSensor2Tilt::yRotation()
 {
+    if (_unit == QSensor2Tilt::Degrees)
+        return _yRotation * 180 / M_PI;
+
     return _yRotation;
 }
 
 /*!
-    \qmlproperty float QtSensors5::TiltSensor::xRotation
+    \qmlproperty qreal QtSensors5::TiltSensor::xRotation
     Holds the rotation arround the x axis.
     \table
     \row
@@ -229,12 +174,11 @@ float QSensor2Tilt::yRotation()
         \image XAngleNegative.gif
     \endtable
 */
-/*!
-    \qmlsignal QtSensors5::TiltSensor::onXRotationChanged()
-    This signal is emitted whenever the value of the property XRotation has been changed.
-*/
-float QSensor2Tilt::xRotation()
+qreal QSensor2Tilt::xRotation()
 {
+    if (_unit == QSensor2Tilt::Degrees)
+        return _xRotation * 180 / M_PI;
+
     return _xRotation;
 }
 
@@ -244,32 +188,96 @@ float QSensor2Tilt::xRotation()
   pitch = arctan| ----------------------- |
                 |  sqrt(Ay * Ay + Az * Az)|
 */
-inline float calcPitch(double Ax, double Ay, double Az)
+inline qreal calcPitch(double Ax, double Ay, double Az)
 {
-    errno = 0;
-    float ret = (float)-atan(Ax / (sqrt(Ay * Ay + Az * Az)));
-    if (errno == EDOM){
-        ret = 0.0;
-        errno = 0;
-    }
-    return ret;
+    return (float)-atan2(Ax, sqrt(Ay * Ay + Az * Az));
 }
 
 /*
   Angle between Ground and Y
                 |            Ay           |
-  pitch = arctan| ----------------------- |
+   roll = arctan| ----------------------- |
                 |  sqrt(Ax * Ax + Az * Az)|
 */
-inline float calcRoll(double Ax, double Ay, double Az)
+inline qreal calcRoll(double Ax, double Ay, double Az)
 {
-    errno = 0;
-    float ret = (float)atan(Ay / (sqrt(Ax * Ax + Az * Az)));
-    if (errno == EDOM){
-        ret = 0.0;
-        errno = 0;
+    return (float)atan2(Ay, (sqrt(Ax * Ax + Az * Az)));
+}
+
+/*
+  Angle between Z Axis relative to the Gravity
+                |  sqrt(Ax * Ax + Ay* Ay) |
+  theta = arctan| ----------------------- |
+                |            Az           |
+*/
+inline qreal calcTheta(double Ax, double Ay, double Az)
+{
+    return (float)atan2((sqrt(Ax * Ax + Ay * Ay)), Az);
+}
+
+/*!
+    \qmlproperty qreal QtSensors5::TiltSensor::accuracy
+    This property contains the accuracy (in degrees) in which the rotation should be measured.
+    This can be used to minimize signal emiting and therefore saving of performance.
+    Default value is 1 degree.
+*/
+/*!
+    \qmlsignal QtSensors5::TiltSensor::tiltChanged(qreal deltaX, qreal deltaY)
+    This signal is emitted whenever the change from at leat one of the rotation values was higher than the accuracy.
+    The angle value is based on the specified unit (Degree or Radian) \sa {unit_property} {TiltSensor.unit}.
+*/
+qreal QSensor2Tilt::accuracy()
+{
+    //return in degree
+    return 180 * _radAccuracy / M_PI;
+}
+
+void QSensor2Tilt::setAccuracy(qreal val)
+{
+    //save in rad to save convertion calc in filter function
+    _radAccuracy = M_PI * val / 180;
+}
+
+/*!
+    \qmlproperty void QtSensors5::TiltSensor::calibrate
+    The call of this function calibrates the tilt from x and y to the current position.
+*/
+void QSensor2Tilt::calibrate()
+{
+    _calibratedPitch = _pitch;
+    _calibratedRoll = _roll;
+#ifdef LOGCALIBRATION
+    qDebug() << "--------- calibrate --------";
+    qDebug() << "_calibratedPitch: " << _calibratedPitch;
+    qDebug() << "_calibratedRoll: " << _calibratedRoll;
+    qDebug() << "----------------------------";
+#endif
+}
+
+/*!
+    \qmlproperty qreal QtSensors5::TiltSensor::settings
+    This property contains the setting of the current state.
+    It can be used for saving and reloading previously saved calibrations.
+*/
+QByteArray QSensor2Tilt::settings() const
+{
+    QByteArray arr;
+    arr.append(QString::number((double)_calibratedPitch));
+    arr.append(";");
+    arr.append(QString::number((double)_calibratedRoll));
+    return arr;
+}
+
+void QSensor2Tilt::setSettings(const QByteArray val)
+{
+    QString str(val);
+    if (str.indexOf(";") > 0){
+        QStringList strlist = str.split(";");
+        if (strlist.length() == 2){
+            _calibratedPitch = strlist.at(0).toDouble();
+            _calibratedRoll = strlist.at(1).toDouble();
+        }
     }
-    return ret;
 }
 
 bool QSensor2Tilt::filter(QAccelerometerReading* reading)
@@ -280,86 +288,68 @@ bool QSensor2Tilt::filter(QAccelerometerReading* reading)
       |/___ x
     */
 
-    int x = reading->x();
-    int y = reading->y();
-    int z = reading->z();
-    float xrot = 0;
-    float yrot = 0;
-
-    switch (_measureFrom)
-    {
-    case QSensor2Tilt::FaceUp:
-        /*
-          y
-          |        => Ax = x, Ay = y, Az = z
-          |___ x
-        */
-        yrot = calcPitch(x, y, z);
-        xrot = calcRoll(x, y, z);
-        break;
-    case QSensor2Tilt::LeftUp:
-        /*
-          z
-          |        => Ax = y, Ay = z, Az = x
-          |___ y
-        */
-        yrot = calcPitch(y, z, x);
-        xrot = -calcRoll(y, z, x);
-        break;
-    case QSensor2Tilt::TopDown:
-        /*
-          z
-          |        => Ax = -x, Ay = z, Az = y
-          |___ -x
-        */
-        yrot = -calcPitch(x, z, y);
-        xrot = -calcRoll(x, z, y);
-        break;
-    case QSensor2Tilt::FaceDown:
-        /*
-          -y
-          |        => Ax = x, Ay = -y, Az = -z
-          |___ x
-        */
-        yrot = calcPitch(-x, -y, z);
-        xrot = -calcRoll(-x, -y, z);
-        break;
-    case QSensor2Tilt::RightUp:
-        /*
-          z
-          |        => Ax = -y, Ay = z, Az = -x
-          |___ -y
-        */
-        yrot = calcPitch(-y, z, -x);
-        xrot = -calcRoll(-y, z, -x);
-        break;
-    case QSensor2Tilt::TopUp:
-        /*
-          z
-          |        => Ax = x, Ay = z, Az = -y
-          |___ x
-        */
-        yrot = calcPitch(x, z, -y);
-        xrot = -calcRoll(x, z, -y);
-        break;
-    }
+    qreal ax = reading->x();
+    qreal ay = reading->y();
+    qreal az = reading->z();
+#ifdef LOGCALIBRATION
+    qDebug() << "------------ new value -----------";
+    qDebug() << "old _pitch: " << _pitch;
+    qDebug() << "old _roll: " << _roll;
+    qDebug() << "_calibratedPitch: " << _calibratedPitch;
+    qDebug() << "_calibratedRoll: " << _calibratedRoll;
+#endif
+    _pitch = calcPitch(ax, ay, az);
+    _roll  = calcRoll (ax, ay, az);
+#ifdef LOGCALIBRATION
+    qDebug() << "_pitch: " << _pitch;
+    qDebug() << "_roll: " << _roll;
+#endif
+    qreal xrot = _roll - _calibratedRoll;
+    qreal yrot = _pitch - _calibratedPitch;
+    //get angle beteen 0 and 180 or 0 -180
+    qreal aG = 1 * sin(xrot);
+    qreal aK = 1 * cos(xrot);
+    xrot = atan2(aG, aK);
+    if (xrot > M_PI_2)
+        xrot = M_PI - xrot;
+    else if (xrot < -M_PI_2)
+        xrot = -(M_PI + xrot);
+    aG = 1 * sin(yrot);
+    aK = 1 * cos(yrot);
+    yrot = atan2(aG, aK);
+    if (yrot > M_PI_2)
+        yrot = M_PI - yrot;
+    else if (yrot < -M_PI_2)
+        yrot = -(M_PI + yrot);
 
 
+#ifdef LOGCALIBRATION
+    qDebug() << "new xrot: " << xrot;
+    qDebug() << "new yrot: " << yrot;
+    qDebug() << "----------------------------------";
+#endif
+    qreal dxrot = xrot - _xRotation;
+    qreal dyrot = yrot - _yRotation;
+    if (dxrot < 0) dxrot = -dxrot;
+    if (dyrot < 0) dyrot = -dyrot;
 
-    if (!_useRadian){
-        yrot = 180 * yrot / M_PI;
-        xrot = 180 * xrot / M_PI;
-    }
-
-    if (xrot != _xRotation){
+    bool change = false;
+    if (dxrot >= _radAccuracy){
         _xRotation = xrot;
         emit xRotationChanged();
+        change = true;
     }
-    if (yrot != _yRotation){
+    if (dyrot >= _radAccuracy){
         _yRotation = yrot;
         emit yRotationChanged();
+        change = true;
     }
-
+    if (change){
+        if (_unit == QSensor2Tilt::Degrees)
+            emit tiltChanged(dxrot * 180 / M_PI, dyrot * 180 / M_PI);
+        else
+            emit tiltChanged(dxrot, dyrot);
+    }
     return false;
 }
 

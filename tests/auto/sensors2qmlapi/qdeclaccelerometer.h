@@ -62,7 +62,7 @@ public:
     void stop() { _active = false; }
     bool isActive() { return _active; }
 
-    void test(int x, int y, int z)
+    void test(float x, float y, float z)
     {
         if (sensor()->filters().count() > 0){
             QAccelerometerFilter* af = (QAccelerometerFilter*)sensor()->filters().at(0);

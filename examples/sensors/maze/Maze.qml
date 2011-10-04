@@ -155,14 +155,15 @@ Rectangle {
 
             //Start the Tilt reader timer
             tiltTimer.running = true;
+            tiltSensor.calibrate();
         }
     }
 
     TiltSensor{
         id: tiltSensor
-        radian: false
-        measureFrom: TiltSensor.FaceUp
-        running: true
+        unit: TiltSensor.Degrees
+        enabled: true
+        accuracy: 5.0
     }
 
     //Timer to read out the x and y rotation of the TiltSensor
@@ -170,8 +171,8 @@ Rectangle {
         id: tiltTimer
         interval: 50; running: false; repeat: true
         onTriggered: {
-            if (!tiltSensor.running)
-                tiltSensor.running = true;
+            if (!tiltSensor.enabled)
+                tiltSensor.enabled = true;
 
             if (mouseCtrl === null)
                 return;

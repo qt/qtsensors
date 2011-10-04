@@ -45,13 +45,14 @@ import QtSensors 5.0
 /* Layout
                                 tiltrect
                                /
-------------------------------/
-| @ Facing Up  <-------------------- selButtonFacingUp
-| O Left Up    <-------------------- selButtonLeftUp
-| O Top Down   <-------------------- selButtonTopDown
-| O Face Down  <-------------------- selButtonFaceDown
-| O Right Up   <-------------------- selButtonRightUp
-| O Top Up     <-------------------- selButtonTopUp
+-----------------------------------------------------------/
+| Accuracy <----- textAccuracy
+| @ 0 Degree   <- selButton0DegreeAccuracy
+| O 1 Degree   <- selButton1DegreeAccuracy
+| O 5 Degree   <- selButton5DegreeAccuracy
+| -----------
+| |calibrate|    <------------------ calibrate
+| -----------
 | ---------
 | |degree |    <-------------------- useRadian
 | ---------
@@ -72,7 +73,7 @@ import QtSensors 5.0
 | ---------
 | |start  |    <-------------------- proxiStart
 | ---------
-------------------------------
+------------------------------------------------------------
 
 */
 
@@ -90,99 +91,74 @@ Rectangle {
 
         TiltSensor {
             id: tilt
-            radian: false
-            measureFrom: TiltSensor.FaceUp
-            running: false
+            unit: TiltSensor.Degrees
+            enabled: false
+            accuracy: 1.0
         }
-
-        SelectionButton{
-            id: selButtonFacingUp
+        Text{
+            id: textAccuracy
             x: 5
             y: 20
-            checked: true
-            text: "Facing Up"
-            onClicked:{
-                selButtonLeftUp.setCheck(false);
-                selButtonTopDown.setCheck(false);
-                selButtonFaceDown.setCheck(false);
-                selButtonRightUp.setCheck(false);
-                selButtonTopUp.setCheck(false);
-                tilt.measureFrom=TiltSensor.FaceUp;
-            }
+            text: "Accuracy"
         }
         SelectionButton{
-            id: selButtonLeftUp
+            id: selButton0DegreeAccuracy
             x: 5
             y: 45
-            checked: false
-            text: "Left Up"
+            checked: true
+            text: "0 Degree"
             onClicked:{
-                selButtonFacingUp.setCheck(false);
-                selButtonTopDown.setCheck(false);
-                selButtonFaceDown.setCheck(false);
-                selButtonRightUp.setCheck(false);
-                selButtonTopUp.setCheck(false);
-                tilt.measureFrom=TiltSensor.LeftUp;
+                selButton1DegreeAccuracy.setCheck(false);
+                selButton5DegreeAccuracy.setCheck(false);
+                tilt.accuracy = 0.0;
             }
         }
         SelectionButton{
-            id: selButtonTopDown
+            id: selButton1DegreeAccuracy
             x: 5
             y: 70
             checked: false
-            text: "Top Down"
+            text: "1 Degree"
             onClicked:{
-                selButtonFacingUp.setCheck(false);
-                selButtonLeftUp.setCheck(false);
-                selButtonFaceDown.setCheck(false);
-                selButtonRightUp.setCheck(false);
-                selButtonTopUp.setCheck(false);
-                tilt.measureFrom=TiltSensor.TopDown;
+                selButton0DegreeAccuracy.setCheck(false);
+                selButton5DegreeAccuracy.setCheck(false);
+                tilt.accuracy = (tilt.unit == TiltSensor.Degrees ? 1.0 : (3.14 / 180.0));
             }
         }
         SelectionButton{
-            id: selButtonFaceDown
+            id: selButton5DegreeAccuracy
             x: 5
             y: 95
             checked: false
-            text: "Face Down"
+            text: "5 Degree"
             onClicked:{
-                selButtonFacingUp.setCheck(false);
-                selButtonLeftUp.setCheck(false);
-                selButtonTopDown.setCheck(false);
-                selButtonRightUp.setCheck(false);
-                selButtonTopUp.setCheck(false);
-                tilt.measureFrom=TiltSensor.FaceDown;
+                selButton0DegreeAccuracy.setCheck(false);
+                selButton1DegreeAccuracy.setCheck(false);
+                tilt.accuracy = (tilt.unit == TiltSensor.Degrees ? 5.0 : (5.0 * 3.14 / 180.0));
             }
         }
-        SelectionButton{
-            id: selButtonRightUp
-            x: 5
-            y: 120
-            checked: false
-            text: "Right Up"
-            onClicked:{
-                selButtonFacingUp.setCheck(false);
-                selButtonLeftUp.setCheck(false);
-                selButtonTopDown.setCheck(false);
-                selButtonFaceDown.setCheck(false);
-                selButtonTopUp.setCheck(false);
-                tilt.measureFrom=TiltSensor.RightUp;
-            }
-        }
-        SelectionButton{
-            id: selButtonTopUp
+
+        Button{
+            id: calibrate
             x: 5
             y: 145
+            text: "calibrate"
+            checkColor: "lightblue"
+            unCheckColor: "lightyellow"
             checked: false
-            text: "Top Up"
+            color: "lightyellow"
+
             onClicked:{
-                selButtonFacingUp.setCheck(false);
-                selButtonLeftUp.setCheck(false);
-                selButtonTopDown.setCheck(false);
-                selButtonFaceDown.setCheck(false);
-                selButtonRightUp.setCheck(false);
-                tilt.measureFrom=TiltSensor.TopUp;
+                tilt.calibrate();
+                unchecktimer.running = true;
+            }
+            Timer {
+                id: unchecktimer
+                interval: 1000; running: false; repeat: false
+                onTriggered: {
+                    calibrate.checked = false;
+                    calibrate.color = "lightyellow";
+                }
             }
         }
 
@@ -193,11 +169,11 @@ Rectangle {
             text: "degree"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
-            checked: tilt.radian
+            checked: (tilt.unit == TiltSensor.Radians ? true : false)
             color: "lightyellow"
 
             onClicked:{
-                tilt.radian = useRadian.checked;
+                tilt.unit = (useRadian.checked ? TiltSensor.Radians : TiltSensor.Degrees);
                 if (useRadian.checked)
                     useRadian.text = "radian";
                 else
@@ -224,11 +200,11 @@ Rectangle {
             text: "start"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
-            checked: tilt.running
+            checked: tilt.enabled
             color: "lightyellow"
 
             onClicked:{
-                tilt.running = tiltStart.checked;
+                tilt.enabled = tiltStart.checked;
                 if (tiltStart.checked)
                     tiltStart.text = "running";
                 else
@@ -327,4 +303,3 @@ Rectangle {
         }
     }
 }
-

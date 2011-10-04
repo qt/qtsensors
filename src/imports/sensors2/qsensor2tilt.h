@@ -50,59 +50,63 @@ QT_BEGIN_NAMESPACE
 class QSensor2Tilt : public QObject, public QAccelerometerFilter
 {
     Q_OBJECT
-    Q_ENUMS(TiltReference)
-    Q_PROPERTY(TiltReference measureFrom READ measureFrom WRITE setMeasureFrom NOTIFY measureFromChanged)
-    Q_PROPERTY(float yRotation READ yRotation NOTIFY yRotationChanged)
-    Q_PROPERTY(float xRotation READ xRotation NOTIFY xRotationChanged)
-    Q_PROPERTY(bool radian READ radian WRITE setRadian)
+    Q_ENUMS(Unit)
+    Q_PROPERTY(qreal yRotation READ yRotation NOTIFY yRotationChanged)
+    Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged)
+    Q_PROPERTY(Unit unit READ unit WRITE setUnit NOTIFY unitChanged)
     Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
-    Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
+    Q_PROPERTY(qreal accuracy READ accuracy WRITE setAccuracy NOTIFY accuracyChanged)
+    Q_PROPERTY(QByteArray settings READ settings WRITE setSettings)
 
 public:
     QSensor2Tilt(QObject* parent = 0);
     virtual ~QSensor2Tilt();
+    Q_INVOKABLE void calibrate();
 
-    enum TiltReference{
-        TopUp = 0,
-        TopDown,
-        LeftUp,
-        RightUp,
-        FaceUp,
-        FaceDown
+    enum Unit{
+        Radians = 0
+        , Degrees
     };
 
 Q_SIGNALS:
-    void measureFromChanged();
+    void unitChanged();
     void yRotationChanged();
     void xRotationChanged();
     void dataRateChanged();
-    void runningChanged();
+    void enabledChanged();
+    void tiltChanged(qreal deltaX, qreal deltaY);
+    void accuracyChanged();
 
 private:
     // Override of QAcclerometerFilter::filter(QAccelerometerReading*)
     bool filter(QAccelerometerReading* reading);
-
-    TiltReference measureFrom();
-    void setMeasureFrom(TiltReference val);
-    float yRotation();
-    float xRotation();
-    bool radian();
-    void setRadian(bool val);
+    qreal yRotation();
+    qreal xRotation();
+    Unit unit();
+    void setUnit(const Unit val);
     int dataRate();
-    void setDataRate(int val);
-    bool running();
-    void setRunning(bool val);
+    void setDataRate(const int val);
+    bool enabled();
+    void setEnabled(bool val);
+    qreal accuracy();
+    void setAccuracy(const qreal val);
+    QByteArray settings() const;
+    void setSettings(const QByteArray val);
 
     QAccelerometer* _accel;
-    TiltReference _measureFrom;
-    float _yRotation;
-    float _xRotation;
-    bool _useRadian;
-    bool _init;
+    qreal _yRotation;
+    qreal _xRotation;
+    qreal _radAccuracy;
+    Unit _unit;
+    qreal _pitch;
+    qreal _roll;
+    qreal _calibratedPitch;
+    qreal _calibratedRoll;
 };
 
-QML_DECLARE_TYPE(QT_PREPEND_NAMESPACE(QSensor2Tilt))
-
 QT_END_NAMESPACE
+
+QML_DECLARE_TYPE(QSensor2Tilt)
 
 #endif // QSEONSOR2TILT_H
