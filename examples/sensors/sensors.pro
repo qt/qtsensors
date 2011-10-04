@@ -3,8 +3,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
     accel\
     cubehouse\
-    grueapp\
-    grueplugin
+    grue
 
 contains(QT_CONFIG,widgets):SUBDIRS += \
     sensor_explorer
