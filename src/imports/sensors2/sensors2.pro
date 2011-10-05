@@ -3,7 +3,7 @@ TARGETPATH = QtSensors
 
 include(qsensors2import.pri)
 
-QT = declarative sensors
+QT += declarative sensors
 
 SOURCES += sensors2.cpp \
            qsensor2ambientlight.cpp \

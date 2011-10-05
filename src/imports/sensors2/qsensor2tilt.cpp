@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "qsensor2tilt.h"
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <errno.h>
 #include <QtCore/QDebug>

@@ -41,8 +41,8 @@
 
 #include "dummycommon.h"
 
-#ifdef Q_OS_WINCE
-#include <windows.h>
+#ifdef Q_OS_WIN
+#include <QtCore/qt_windows.h>
 // WINCE has <time.h> but using clock() gives a link error because
 // the function isn't actually implemented.
 #else
@@ -101,12 +101,35 @@ static qint64 absoluteToNSecs(qint64 cpuTime)
     qint64 nsecs = cpuTime * info.numer / info.denom;
     return nsecs;
 }
+#elif defined(Q_OS_WIN)
+// Obtain a time stamp from the performance counter,
+// default to tick count.
+static quint64 windowsTimeStamp()
+{
+    static bool hasFrequency =  false;
+    static quint64 frequency = 0;
+    if (!hasFrequency) {
+        LARGE_INTEGER frequencyLI;
+        hasFrequency = true;
+        QueryPerformanceFrequency(&frequencyLI);
+        frequency = frequencyLI.QuadPart;
+    }
+
+    if (frequency) { // Microseconds.
+        LARGE_INTEGER counterLI;
+        if (QueryPerformanceCounter(&counterLI))
+            return 1000000 * counterLI.QuadPart / frequency;
+    }
+    return GetTickCount();
+}
 #endif
 
 quint64 dummycommon::getTimestamp()
 {
-#ifdef Q_OS_WINCE
-    // This implementation is based on code found here:
+#if defined(Q_OS_WIN)
+    return windowsTimeStamp();
+#elif defined(Q_OS_WINCE)
+    //d This implementation is based on code found here:
     // http://social.msdn.microsoft.com/Forums/en/vssmartdevicesnative/thread/74870c6c-76c5-454c-8533-812cfca585f8
     HANDLE currentThread = GetCurrentThread();
     FILETIME creationTime, exitTime, kernalTime, userTime;

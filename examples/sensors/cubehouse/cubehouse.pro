@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = cubehouse
 CONFIG += qt debug warn_on
 requires(contains(QT_CONFIG,opengl))
-QT += opengl sensors
+QT += opengl sensors widgets
 SOURCES = \
     view.cpp \
     main.cpp \
