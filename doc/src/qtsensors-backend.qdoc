@@ -26,148 +26,11 @@
 ****************************************************************************/
 
 /*!
-    \group qtsensors
-    \title QtSensors
-    \brief The QtSensors API provides access to sensors via QML and C++ interfaces.
-    \ingroup technology-apis
+\group sensors_backend_topics
+\title QtSensors Backend
+\brief Information about the QtSensors back end
 
-    The QtSensors API provides access to sensors via QML and C++ interfaces.
-
-    \section1 Topics
-
-    \generatelist related
-*/
-
-/*!
-\page qtsensors-cpp.html
-\title QtSensors C++ API
-\brief Information about the QtSensors C++ API
-\ingroup qtsensors
-
-\tableofcontents
-
-\section1 Sensor Types
-
-On a device there can be many types of sensors. Not all of the types that the Sensors API
-supports may be available. There may also be types available that are not defined in the
-Sensors API. You can find the sensor types available on a device using the
-\l QSensor::sensorTypes() function.
-
-For a list of built-in sensor types, see the \l{Sensor Classes} section below.
-
-\section1 Common Conventions
-
-Unless otherwise specified, sensors shall use the
-\l{http://en.wikipedia.org/wiki/Cartesian_coordinate_system}{Right Hand Cartesian coordinate system}.
-
-\image sensors-coordinates.jpg
-
-To allow for measurements in all 6 directions, negative values are used.
-
-\image sensors-coordinates2.jpg
-
-Where rotation around an axis is used, the rotation shall be expressed as a Right Hand rotation.
-
-\image sensors-coordinates3.jpg
-
-In general, sensor data is oriented to the top of the device. If values are to be displayed on
-the screen the values may need to be transformed so that they match the user interface orientation. A sensor
-may define its data as being oriented to the UI. This will be noted in the documentation for the
-sensor.
-
-\image sensors-sides2.jpg
-
-\section1 Using a Sensor
-
-The life cycle of a sensor is typically:
-
-\list
-\o Create an instance of QSensor or one of its sub-classes on the stack or heap.
-\o Setup as required by the application.
-\o Start receiving values.
-\o Sensor data is used by the application.
-\o Stop receiving values.
-\endlist
-
-Here is an example of creating a sensor on the heap and on the stack.
-
-\snippet snippets/sensors/creating.cpp Creating a sensor
-
-\section1 Accessing sensor data in a generic fashion
-
-The preferred way to deal with sensor data is via the \l{Reading Classes}.
-However, sometimes this may not be possible. For example, you may be deploying
-an application to a device that has a new sensor type but no C++ header
-describing the reading class is available.
-
-Thanks to Qt's property system you can still access the sensor data. You need to know
-3 pieces of information in order to do this:
-
-\list
-\o The sensor type.
-\o The property name or index.
-\o The property type or a comparable type.
-\endlist
-
-For example, here is an example of how you can access a property of the accelerometer.
-This code does not require any compile-time links to \l QAccelerometer or
-\l QAccelerometerReading.
-
-\snippet snippets/sensors/start.cpp Starting a sensor
-
-You can discover all of this information at runtime too. The sensor_explorer example
-shows you information about available sensors.
-
-\section1 Front end, back end
-
-The Sensors API has a front end, for application developers to use and a back end,
-where device implementors write code to access their hardware. As an application
-developer you do not need to access the back end though it may be useful to understand
-how it works.
-
-Commands from the application are delivered through QSensor and then down to the
-device plugin. Data comes back through the QSensorReading class.
-
-\image sensors-overview.png
-
-More information about the back end can be found in \l{Sensors Backend}.
-
-\section1 Main Classes
-
-The primary classes that make up the Sensors API.
-
-\annotatedlist sensors_main
-
-\section1 Reading Classes
-
-The best way to access sensor data is via one of these classes.
-
-\annotatedlist sensors_reading
-
-\section1 Sensor Classes
-
-These classes provide convenience wrappers that reduce the need for casting.
-Each of these classes represents a sensor type that the Sensors API knows
-about. Note that additional types may be made available at run-time. See
-\l{Sensor Types} for more information.
-
-\annotatedlist sensors_type
-
-\section1 Filter Classes
-
-As with the sensor classes, these provide convenience wrappers that reduce
-the need for casting.
-
-\annotatedlist sensors_filter
-
-*/
-
-/*!
-\page sensors-backend.html
-\title Sensors Backend
-\brief The Sensors Backend connects the Sensors API to the platform services or hardware sensors.
-
-The Sensors Backend connects the Sensors API to the platform services or hardware sensors.
+The QtSensors backend connects the QtSensors API to the platform services or hardware sensors.
 
 \tableofcontents
 
@@ -181,24 +44,17 @@ backends may be used as well. A backend may talk
 directly to hardware or it may talk to a system service. In some instances
 it may even talk to another sensor.
 An example of this is the orientation sensor backend that talks to an
-accelerometer to determine the orientation.
-
-There are also some \l{Sensors Backend Topics}{topics} specific to backend
-implementors.
+accelerometer to determine the device orientation.
 
 \section1 Backend Classes
 If you are making sensors available through the Sensors API, these are the
 classes to use.
 \annotatedlist sensors_backend
 
-\sa {Sensors Backend Topics}
+\section1 Backend Topics
 
-*/
-
-/*!
-\group sensors_backend_topics
-\title Sensors Backend Topics
 \generatelist related
+
 */
 
 /*!

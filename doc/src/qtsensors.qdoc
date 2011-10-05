@@ -1,0 +1,89 @@
+/****************************************************************************
+**
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
+** All rights reserved.
+** Contact: Nokia Corporation (qt-info@nokia.com)
+**
+** This file is part of the documentation of the Qt Toolkit.
+**
+** $QT_BEGIN_LICENSE:FDL$
+** GNU Free Documentation License
+** Alternatively, this file may be used under the terms of the GNU Free
+** Documentation License version 1.3 as published by the Free Software
+** Foundation and appearing in the file included in the packaging of
+** this file.
+**
+** Other Usage
+** Alternatively, this file may be used in accordance with the terms
+** and conditions contained in a signed written agreement between you
+** and Nokia.
+**
+**
+**
+**
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+/*!
+    \page qtsensors.html
+    \title QtSensors
+    \brief The QtSensors API provides access to sensors via QML and C++ interfaces.
+    \ingroup technology-apis
+
+    The QtSensors API provides access to sensors via QML and C++ interfaces.
+
+    \section1 Information for Application Writers
+
+    Applications can access QtSensors using QML or C++.
+
+    \table
+        \row
+            \o \l {QtSensors 5.x}{QML API}
+            \o Information about the QtSensors QML API
+        \row
+            \o \l {QtSensors C++ API}{C++ API}
+            \o Information about the QtSensors C++ API
+        \row
+            \o \l {QtSensors Examples}{Examples}
+            \o Examples demonstrating use of the QtSensors APIs
+    \endtable
+
+    \section1 Information for Backend Implementors
+
+    \table
+        \row
+            \o \l {QtSensors Backend}{Backend}
+            \o Information about the QtSensors back end
+        \row
+            \o \l {Grue Sensor Example}
+            \o The Grue Sensor Example demonstrates creation of a sensor backend
+    \endtable
+
+    \section1 Compatibility with QtMobility Sensors API
+
+    QtSensors 5.0 (the initial release) is expected to be source compatible with
+    Mobility Sensors 1.2.
+
+    Applications using the C++ API may need a few minor changes
+    (such as removing QTM_* macros) but should otherwise work the same. The .pro file
+    needs to be updated too. Instead of using:
+    \code
+    CONFIG += mobility
+    MOBILITY += sensors
+    \endcode
+    Applications should now use:
+    \code
+    QT += sensors
+    \endcode
+
+    Applications using the QML API should not need any changes because QtSensors
+    supplies a legacy import.
+
+    \table
+        \row
+            \o \l {QtMobility.sensors 1.x}{Legacy QML API}
+            \o Information about the legacy QtMobility.sensors QML API
+    \endtable
+*/
+

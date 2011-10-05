@@ -29,7 +29,6 @@
     \qmlmodule QtSensors 5
     \title QtSensors 5.x
     \brief The QML import for QtSensors
-    \ingroup qtsensors
 
     \section1 Overview
 

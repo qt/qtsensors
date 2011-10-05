@@ -29,7 +29,6 @@
     \qmlmodule QtMobility.sensors 1
     \title QtMobility.sensors 1.x
     \brief Legacy QML import for QtSensors
-    \ingroup qtsensors
 
     \section1 Overview
 
