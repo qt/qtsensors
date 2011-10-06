@@ -62,25 +62,13 @@
 
     \section1 Compatibility with QtMobility Sensors API
 
-    QtSensors 5.0 (the initial release) is expected to be source compatible with
-    Mobility Sensors 1.2.
-
-    Applications using the C++ API may need a few minor changes
-    (such as removing QTM_* macros) but should otherwise work the same. The .pro file
-    needs to be updated too. Instead of using:
-    \code
-    CONFIG += mobility
-    MOBILITY += sensors
-    \endcode
-    Applications should now use:
-    \code
-    QT += sensors
-    \endcode
-
-    Applications using the QML API should not need any changes because QtSensors
-    supplies a legacy import.
+    QtSensors 5.0 (the initial release) is generally expected to be source compatible
+    with QtMobility Sensors 1.2.
 
     \table
+        \row
+            \o \l {Porting Applications from QtMobility Sensors to QtSensors}{Porting Guide}
+            \o Information about the steps needed to port applications to the QtSensors API.
         \row
             \o \l {QtMobility.sensors 1.x}{Legacy QML API}
             \o Information about the legacy QtMobility.sensors QML API

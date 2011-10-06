@@ -272,11 +272,15 @@ private slots:
         sensor.connectToBackend();
         QVERIFY(sensor.reading() != 0);
         quint64 timestamp = sensor.reading()->timestamp();
+        qtimestamp timestamp2 = sensor.reading()->timestamp();
         QVERIFY(timestamp == quint64());
+        QVERIFY(timestamp2 == qtimestamp());
         sensor.setProperty("doThis", "setOne");
         sensor.start();
         timestamp = sensor.reading()->timestamp();
+        timestamp2 = sensor.reading()->timestamp();
         QVERIFY(timestamp == 1);
+        QVERIFY(timestamp2 == 1);
     }
 
     void testStart()
