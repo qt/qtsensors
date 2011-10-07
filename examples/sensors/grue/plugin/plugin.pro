@@ -6,7 +6,7 @@ PLUGIN_TYPE = sensors
 QT = core sensors
 
 INCLUDEPATH += $$PWD/../lib
-LIBS += -L$$QT.sensors.libs -lgruesensor
+LIBS += -L$$PWD/../lib -lgruesensor
 
 HEADERS += gruesensorimpl.h\
 
@@ -17,4 +17,7 @@ symbian {
     TARGET.EPOCALLOWDLLDATA = 1
     TARGET.CAPABILITY = ALL -TCB
 }
+
+target.path=$$[QT_INSTALL_PLUGINS]/sensors
+INSTALLS += target
 

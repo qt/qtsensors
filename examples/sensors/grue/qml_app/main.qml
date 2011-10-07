@@ -39,11 +39,13 @@
 ****************************************************************************/
 
 import QtQuick 2.0
+import QtMobility.sensors 1.3
 import Grue 1.0
 
 Item {
-    width: 200
-    height: 300
+    width: 240
+    height: 330
+    y: 30
 
     GrueSensor {
         id: sensor
@@ -51,17 +53,20 @@ Item {
         property int lastPercent: 0
         onReadingChanged: {
             var percent = Math.floor(reading.chanceOfBeingEaten * 100);
+            var thetext = "";
             if (percent == 0) {
-                text.text = "It is light. You are safe from Grues.";
+                thetext = "It is light. You are safe from Grues.";
             } else if (lastPercent == 0) {
-                text.text = "It is dark. You are likely to be eaten by a Grue.";
+                thetext = "It is dark. You are likely to be eaten by a Grue.";
             }
             if (percent == 100) {
-                text.text += "You have been eaten by a Grue!";
+                thetext += " You have been eaten by a Grue!";
                 sensor.active = false;
             } else if (percent) {
-                text.text += "Your chance of being eaten by a Grue: "+percent+" percent.";
+                thetext += " Your chance of being eaten by a Grue: "+percent+" percent.";
             }
+            text.font.pixelSize = 30;
+            text.text = "<p>" + thetext + "</p>";
             lastPercent = percent;
         }
     }
@@ -71,5 +76,6 @@ Item {
         anchors.fill: parent
         text: "I can't tell if you're going to be eaten by a Grue or not. You're on your own!"
         wrapMode: Text.WordWrap
+        font.pixelSize: 50
     }
 }

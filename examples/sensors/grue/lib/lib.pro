@@ -8,10 +8,11 @@ HEADERS += gruesensor.h\
 
 SOURCES += gruesensor.cpp\
 
-DESTDIR=$$QT.sensors.libs
-
 symbian {
     TARGET.EPOCALLOWDLLDATA = 1
     TARGET.CAPABILITY = ALL -TCB
 }
+
+target.path=$$[QT_INSTALL_LIBS]
+INSTALLS += target
 
