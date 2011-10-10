@@ -4,7 +4,7 @@
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
-** This file is part of the plugins of the Qt Toolkit.
+** This file is part of the QtSensors module of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** GNU Lesser General Public License Usage
@@ -38,6 +38,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+
 #ifndef QSEONSOR2TILT_H
 #define QSEONSOR2TILT_H
 
