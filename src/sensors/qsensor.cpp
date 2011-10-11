@@ -166,7 +166,7 @@ static int qoutputrangelist_id = qRegisterMetaType<qoutputrangelist>("qoutputran
     \o Stop receiving values.
     \endlist
 
-    The sensor data is delivered via QSensorData and its sub-classes.
+    The sensor data is delivered via QSensorReading and its sub-classes.
 
     \sa QSensorReading
 */
