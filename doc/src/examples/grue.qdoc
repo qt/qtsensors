@@ -149,7 +149,13 @@
     \title Grue Sensor QML Application
     \brief The Grue sensor QML application demonstrates use of the GrueSensor QML element.
 
-    blah blah blah
+    This is a pure QML application that can be run from Qt Creator or directly using the
+    \c qmlscene binary. You should install the other projects before trying to run
+    this example or it will not be able to find its dependencies.
+
+    \code
+    qmlscene main.qml
+    \endcode
 
     \sa {Grue Sensor Example}
 */
@@ -159,7 +165,8 @@
     \title Grue 1.0
     \brief QML import for the Grue Sensor Example
 
-    blah blah blah
+    These are the elements available in the Grue 1.0 import.
 
+    \sa {Grue Sensor QML Application}
 */
 
