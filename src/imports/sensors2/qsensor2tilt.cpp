@@ -45,6 +45,8 @@
 #include <QtCore/QDebug>
 #include <QtCore/QStringList>
 
+#define MAXRATE 30
+
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -66,6 +68,7 @@ QSensor2Tilt::QSensor2Tilt(QObject* parent)
     , _roll(0)
     , _calibratedPitch(0)
     , _calibratedRoll(0)
+    , _speed(QSensor2Tilt::Slow)
 {
     _accel = new QAccelerometer(this);
     _accel->addFilter(this);
@@ -75,21 +78,92 @@ QSensor2Tilt::~QSensor2Tilt()
 {
 }
 
-/*!
-    \qmlproperty bool QtSensors5::TiltSensor::dataRate
-    Holds the data rate that the sensor should be run at.
-*/
-int QSensor2Tilt::dataRate()
+int searchDataRate(const QList<int>& datarates, int value)
 {
-    return _accel->dataRate();
+    int l = 0;
+    int r = datarates.count() - 1;
+    int m = (l + r) / 2;
+
+    while (l <= r) {
+        m = (l + r) / 2;
+        if (datarates[m] == value)
+          break;
+        else if (datarates[m] < value)
+          r = m - 1;
+        else
+          l = m + 1;
+    }
+    if (m > 0){
+        int ddr = datarates[m - 1];
+        ddr -= value;
+        int ddr1 = datarates[m] - value;
+        if (ddr1 < 0) ddr1 = -ddr1;
+        if (ddr < ddr1)
+            return datarates[m - 1];
+    }
+
+    return datarates[m];
 }
 
-void QSensor2Tilt::setDataRate(int val)
+void QSensor2Tilt::createRunModeDataRateMap()
 {
-    if (val != dataRate()){
-        _accel->setDataRate(val);
-        emit dataRateChanged();
+    _dataRate.clear();
+    qrangelist rl = _accel->availableDataRates();
+
+    //1. make a list of all available datarates
+    QList<int> dr;
+    foreach (const qrange &r, rl) {
+        for (int i = r.first; i <= r.second; i++){
+            if (i <= MAXRATE){
+                if (!dr.contains(i))
+                   dr.append(i);
+            }
+        }
     }
+
+    //2. Sort the list
+    if (dr.count() > 0){
+        qSort(dr.begin(), dr.end(), qGreater<int>());
+        _dataRate.insert(QSensor2Tilt::Slow, searchDataRate(dr, 2));
+        _dataRate.insert(QSensor2Tilt::Medium, searchDataRate(dr, 10));
+        _dataRate.insert(QSensor2Tilt::Fast, searchDataRate(dr, 20));
+    }
+}
+
+/*!
+    \qmlproperty bool QtSensors5::TiltSensor::speed
+    Holds the speed that the sensor should be run at.
+    Default is Slow.
+
+    \table
+    \row
+        \o TiltSensor.Slow
+        \o The sensor runs in slow mode.
+        \o Closest available datarate at 2Hz.
+    \row
+        \o TiltSensor.Medium
+        \o The sensor runs in medium mode.
+        \o Closest available datarate at 10Hz.
+    \row
+        \o TiltSensor.Fast
+        \o The sensor runs in fast mode.
+        \o Closest available datarate at 20Hz.
+    \endtable
+*/
+QSensor2Tilt::Speed QSensor2Tilt::speed()
+{
+    return _speed;
+}
+
+void QSensor2Tilt::setSpeed(const QSensor2Tilt::Speed val)
+{
+    if (_dataRate.keys().contains(val)){
+        if (_dataRate.value(val) != _accel->dataRate()){
+            _accel->setDataRate(_dataRate.value(val));
+            emit speedChanged();
+        }
+    }
+    _speed = val;
 }
 
 /*!
@@ -101,14 +175,19 @@ bool QSensor2Tilt::enabled()
     return _accel->isActive();
 }
 
-void QSensor2Tilt::setEnabled(bool val)
+void QSensor2Tilt::setEnabled(const bool val)
 {
     bool active = enabled();
     if (active != val){
         if (val){
+            bool readDatarateMap = !_accel->isConnectedToBackend();
             bool ret = _accel->start();
             if (!ret)
                 qWarning() << "couldn't start the sensor.";
+            else if (readDatarateMap){
+                 createRunModeDataRateMap();
+                 setSpeed(_speed);
+             }
         }
         else
             _accel->stop();
@@ -224,7 +303,9 @@ inline qreal calcTheta(double Ax, double Ay, double Az)
 /*!
     \qmlsignal QtSensors5::TiltSensor::tiltChanged(qreal deltaX, qreal deltaY)
     This signal is emitted whenever the change from at leat one of the rotation values was higher than the accuracy.
-    The angle value is based on the specified unit (Degree or Radian) \sa {unit_property} {TiltSensor.unit}.
+    The angle value is based on the specified unit (Degree or Radian).
+
+    \sa {QtSensors5::TiltSensor::unit} {TiltSensor.unit}
 */
 qreal QSensor2Tilt::accuracy()
 {

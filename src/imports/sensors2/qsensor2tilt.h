@@ -51,11 +51,11 @@ QT_BEGIN_NAMESPACE
 class QSensor2Tilt : public QObject, public QAccelerometerFilter
 {
     Q_OBJECT
-    Q_ENUMS(Unit)
+    Q_ENUMS(Unit Speed)
     Q_PROPERTY(qreal yRotation READ yRotation NOTIFY yRotationChanged)
     Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged)
     Q_PROPERTY(Unit unit READ unit WRITE setUnit NOTIFY unitChanged)
-    Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
+    Q_PROPERTY(Speed speed READ speed WRITE setSpeed NOTIFY speedChanged)
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(qreal accuracy READ accuracy WRITE setAccuracy NOTIFY accuracyChanged)
     Q_PROPERTY(QByteArray settings READ settings WRITE setSettings)
@@ -70,11 +70,18 @@ public:
         , Degrees
     };
 
+    enum Speed{
+        Slow = 0
+        , Medium
+        , Fast
+    };
+
+
 Q_SIGNALS:
     void unitChanged();
     void yRotationChanged();
     void xRotationChanged();
-    void dataRateChanged();
+    void speedChanged();
     void enabledChanged();
     void tiltChanged(qreal deltaX, qreal deltaY);
     void accuracyChanged();
@@ -86,14 +93,15 @@ private:
     qreal xRotation();
     Unit unit();
     void setUnit(const Unit val);
-    int dataRate();
-    void setDataRate(const int val);
+    Speed speed();
+    void setSpeed(const Speed val);
     bool enabled();
-    void setEnabled(bool val);
+    void setEnabled(const bool val);
     qreal accuracy();
     void setAccuracy(const qreal val);
     QByteArray settings() const;
     void setSettings(const QByteArray val);
+    void createRunModeDataRateMap();
 
     QAccelerometer* _accel;
     qreal _yRotation;
@@ -104,6 +112,10 @@ private:
     qreal _roll;
     qreal _calibratedPitch;
     qreal _calibratedRoll;
+    QMap<Speed, int> _dataRate;
+    Speed _speed;
+
+    friend class tst_Sensors2QMLAPI;
 };
 
 QT_END_NAMESPACE

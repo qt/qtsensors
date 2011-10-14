@@ -66,6 +66,7 @@ private slots:
     void testTilt_receivedSignalsCount();
     void testTiltAccuracy();
     void testTiltCalibration();
+    void testTiltRunningMode();
     void testProximity();
     void testAmbientLight();
 
@@ -210,7 +211,6 @@ void tst_Sensors2QMLAPI::testTilt_data()
 
 int xrotch = 0;
 int yrotch = 0;
-int datarate = 10;
 void tst_Sensors2QMLAPI::testTilt()
 {
     QFETCH(qreal, pitch);
@@ -267,11 +267,6 @@ void tst_Sensors2QMLAPI::testTilt()
     spy.clear();
     _tilt->setProperty("enabled", QVariant(false));
     QCOMPARE(spy.count() , 0);
-
-    datarate++;
-    QSignalSpy spydr(_tilt, SIGNAL(dataRateChanged()));
-    _tilt->setProperty("dataRate", QVariant(datarate));
-    QCOMPARE(spydr.count() , 1);
 }
 
 void tst_Sensors2QMLAPI::testTiltAccuracy()
@@ -284,7 +279,7 @@ void tst_Sensors2QMLAPI::testTiltAccuracy()
     settings.append(";");
     settings.append(QString::number((double)(0)));
     _tilt->setProperty("settings", QVariant((QByteArray)settings));
-    _tilt->setProperty("enable", QVariant(true));
+    _tilt->setProperty("enabled", QVariant(true));
 
     QDeclAccelerometer* accel = _plugin.stAccel;
 
@@ -326,7 +321,7 @@ void tst_Sensors2QMLAPI::testTiltCalibration()
     settings.append(";");
     settings.append(QString::number((double)(0)));
     _tilt->setProperty("settings", QVariant((QByteArray)settings));
-    _tilt->setProperty("enable", QVariant(true));
+    _tilt->setProperty("enabled", QVariant(true));
     _tilt->setProperty("unit", QVariant((int)QSensor2Tilt::Degrees));
 
     QDeclAccelerometer* accel = _plugin.stAccel;
@@ -352,6 +347,88 @@ void tst_Sensors2QMLAPI::testTiltCalibration()
     if (yRotation < 0) yRotation = -yRotation;
     QVERIFY(xRotation < 0.25);
     QVERIFY(yRotation < 0.12);
+    _tilt->setProperty("enabled", QVariant(false));
+}
+
+void tst_Sensors2QMLAPI::testTiltRunningMode()
+{
+    if (!_tilt)
+        _tilt = new QSensor2Tilt(this);
+    QDeclAccelerometer* accel = _plugin.stAccel;
+    QCOMPARE(_tilt->_dataRate.count(), 0);
+    accel->addDataRate(13, 15);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 13);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 13);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 15);
+
+    accel->addDataRate(1, 8);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 8);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 15);
+
+    accel->addDataRate(11, 12);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 15);
+
+    accel->addDataRate(13, 18);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 18);
+
+    accel->addDataRate(21, 25);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 21);
+
+    accel->addDataRate(19, 20);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 20);
+
+    accel->addDataRate(9, 10);
+    _tilt->createRunModeDataRateMap();
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 10);
+    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 20);
+
+    QSensor2Tilt::Speed speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QCOMPARE(speed, QSensor2Tilt::Slow);
+    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Slow));
+
+    QSignalSpy spymode(_tilt, SIGNAL(speedChanged()));
+    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Slow));
+    QCOMPARE(spymode.count() , 0);
+    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QCOMPARE(speed, QSensor2Tilt::Slow);
+
+    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Medium));
+    QCOMPARE(spymode.count() , 1);
+    spymode.clear();
+    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QCOMPARE(speed, QSensor2Tilt::Medium);
+
+    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Medium));
+    QCOMPARE(spymode.count() , 0);
+    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QCOMPARE(speed, QSensor2Tilt::Medium);
+
+    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Fast));
+    QCOMPARE(spymode.count() , 1);
+    spymode.clear();
+    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QCOMPARE(speed, QSensor2Tilt::Fast);
+
+    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Fast));
+    QCOMPARE(spymode.count() , 0);
+    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QCOMPARE(speed, QSensor2Tilt::Fast);
 }
 
 QTEST_MAIN(tst_Sensors2QMLAPI)

@@ -43,13 +43,13 @@ import QtQuick 2.0
 import QtSensors 5.0
 
 /* Layout
-                                tiltrect
-                               /
------------------------------------------------------------/
+                                                                              tiltrect
+                                                                             /
+----------------------------------------------------------------------------/
 | Accuracy <----- textAccuracy
-| @ 0 Degree   <- selButton0DegreeAccuracy
-| O 1 Degree   <- selButton1DegreeAccuracy
-| O 5 Degree   <- selButton5DegreeAccuracy
+| @ 0 Degree   <- selButton0DegreeAccuracy @ Slow   <- selButtonSlowSpeed
+| O 1 Degree   <- selButton1DegreeAccuracy O Medium <- selButtonMediumSpeed
+| O 5 Degree   <- selButton5DegreeAccuracy O Fast   <- selButtonFastSpeed
 | -----------
 | |calibrate|    <------------------ calibrate
 | -----------
@@ -73,7 +73,7 @@ import QtSensors 5.0
 | ---------
 | |start  |    <-------------------- proxiStart
 | ---------
-------------------------------------------------------------
+------------------------------------------------------------------------------
 
 */
 
@@ -95,12 +95,21 @@ Rectangle {
             enabled: false
             accuracy: 1.0
         }
+
         Text{
             id: textAccuracy
             x: 5
             y: 20
             text: "Accuracy"
         }
+
+        Text{
+            id: textSpeed
+            x: 150
+            y: 20
+            text: "Speed"
+        }
+
         SelectionButton{
             id: selButton0DegreeAccuracy
             x: 5
@@ -114,6 +123,19 @@ Rectangle {
             }
         }
         SelectionButton{
+            id: selButtonSlowSpeed
+            x: 150
+            y: 45
+            checked: true
+            text: "Slow"
+            onClicked:{
+                selButtonMediumSpeed.setCheck(false);
+                selButtonFastSpeed.setCheck(false);
+                tilt.speed = TiltSensor.Slow;
+            }
+        }
+
+        SelectionButton{
             id: selButton1DegreeAccuracy
             x: 5
             y: 70
@@ -126,6 +148,19 @@ Rectangle {
             }
         }
         SelectionButton{
+            id: selButtonMediumSpeed
+            x: 150
+            y: 70
+            checked: false
+            text: "Medium"
+            onClicked:{
+                selButtonSlowSpeed.setCheck(false);
+                selButtonFastSpeed.setCheck(false);
+                tilt.speed = TiltSensor.Medium;
+            }
+        }
+
+        SelectionButton{
             id: selButton5DegreeAccuracy
             x: 5
             y: 95
@@ -135,6 +170,19 @@ Rectangle {
                 selButton0DegreeAccuracy.setCheck(false);
                 selButton1DegreeAccuracy.setCheck(false);
                 tilt.accuracy = (tilt.unit == TiltSensor.Degrees ? 5.0 : (5.0 * 3.14 / 180.0));
+            }
+        }
+
+        SelectionButton{
+            id: selButtonFastSpeed
+            x: 150
+            y: 95
+            checked: false
+            text: "Fast"
+            onClicked:{
+                selButtonSlowSpeed.setCheck(false);
+                selButtonMediumSpeed.setCheck(false);
+                tilt.speed = TiltSensor.Fast;
             }
         }
 

@@ -54,12 +54,15 @@ public:
         , _active(false)
         , _sensor(sensor)
     {
-        this->addDataRate(10, 50);
     }
     virtual ~QDeclAccelerometer() {}
 
     void start() { _active = true; }
-    void stop() { _active = false; }
+    void stop()
+    {
+        _sensor->stop();
+        _active = false;
+    }
     bool isActive() { return _active; }
 
     void test(float x, float y, float z)
