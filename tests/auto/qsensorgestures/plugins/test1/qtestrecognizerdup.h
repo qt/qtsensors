@@ -39,36 +39,39 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QTESTRECOGNIZERDUP_H
+#define QTESTRECOGNIZERDUP_H
 
-#include <QtCore/qglobal.h>
+#include <qsensorgesturerecognizer.h>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+class QTestRecognizerDup : public QSensorGestureRecognizer
+{
+    Q_OBJECT
+    Q_PROPERTY(int thresholdTime READ thresholdTime WRITE setThresholdTime)
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+public:
 
-#endif // QSENSORSGLOBAL_H
+    QTestRecognizerDup(QObject *parent = 0);
+    ~QTestRecognizerDup();
 
+    void create();
+
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
+
+    int thresholdTime() const;
+    void setThresholdTime(int msec);
+
+Q_SIGNALS:
+    void test2_dup();
+
+private:
+    int timerTimeout;
+    QTimer *timer;
+    bool active;
+
+};
+
+#endif // QTESTRECOGNIZERDUP_H

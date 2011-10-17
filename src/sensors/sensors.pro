@@ -9,7 +9,7 @@ CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
 
 MODULE_PRI = ../../modules/qt_sensors.pri
 
-QT = core
+QT = core core-private
 
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
 
@@ -53,6 +53,21 @@ SOURCES += qsensorbackend.cpp\
            qsensorplugin.cpp\
            qsensorpluginloader.cpp\
 
+SOURCES += \
+    gestures/qsensorgesture.cpp \
+    gestures/qsensorgesturerecognizer.cpp \
+    gestures/qsensorgesturemanager.cpp \
+    gestures/qsensorgesturemanagerprivate.cpp \
+    gestures/qsensorgestureplugininterface.cpp
+
+GESTURE_HEADERS += \
+    gestures/qsensorgesture.h\
+    gestures/qsensorgesture_p.h\
+    gestures/qsensorgesturerecognizer.h \
+    gestures/qsensorgesturemanager.h \
+    gestures/qsensorgesturemanagerprivate_p.h \
+    gestures/qsensorgestureplugininterface.h
+
 # 3 files per sensor (including QSensor)
 SENSORS=\
     qsensor\
@@ -76,4 +91,4 @@ for(s,SENSORS) {
     PRIVATE_HEADERS += $${s}_p.h
 }
 
-HEADERS = $$PUBLIC_HEADERS $$PRIVATE_HEADERS
+HEADERS = $$PUBLIC_HEADERS $$PRIVATE_HEADERS $$GESTURE_HEADERS

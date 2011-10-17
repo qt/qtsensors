@@ -39,36 +39,47 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QSENSORGESTUREMANAGER_P_H
+#define QSENSORGESTUREMANAGER_P_H
 
-#include <QtCore/qglobal.h>
+#include <QObject>
+#include <QStringList>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include "qsensorgesture.h"
+#include "qsensorgesturerecognizer.h"
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
 
-#endif // QSENSORSGLOBAL_H
+class QSensorGestureManagerPrivate;
+class Q_SENSORS_EXPORT QSensorGestureManager : public QObject
+{
+    Q_OBJECT
+    Q_DECLARE_PRIVATE(QSensorGestureManager)
 
+public:
+    explicit QSensorGestureManager(QObject *parent = 0);
+
+    ~QSensorGestureManager();
+
+     bool registerSensorGestureRecognizer(QSensorGestureRecognizer *recognizer);
+
+    QStringList gestureIds() const;
+    QStringList recognizerSignals(const QString &recognizerId) const;
+
+    static QSensorGestureRecognizer *sensorGestureRecognizer(const QString &id);
+
+signals:
+    void newSensorGestureAvailable();
+
+};
+
+
+QT_END_NAMESPACE
+QT_END_HEADER
+
+#define REGISTER_STATIC_PLUGIN_V2(pluginname) \
+    QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance_##pluginname() Q_PLUGIN_INSTANCE(pluginname)\
+    Q_IMPORT_PLUGIN(pluginname)
+
+#endif // QSENSORGESTUREMANAGER_P_H

@@ -39,36 +39,46 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QSENSORGESTURERECOGNIZER_H
+#define QSENSORGESTURERECOGNIZER_H
 
-#include <QtCore/qglobal.h>
+#include <QDebug>
+#include <QTimer>
+#include <QStringList>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include "qsensorgesture.h"
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+QT_BEGIN_NAMESPACE
 
-#endif // QSENSORSGLOBAL_H
+class QSensorGestureRecognizerPrivate;
+class Q_SENSORS_EXPORT QSensorGestureRecognizer : public QObject
+{
+    Q_OBJECT
+public:
+    QSensorGestureRecognizer(QObject *parent = 0);
+    virtual ~QSensorGestureRecognizer();
 
+    virtual QString id() const = 0;
+
+    virtual bool isActive() = 0;
+
+    virtual void create() = 0;
+    virtual bool start() = 0;
+    virtual bool stop() = 0;
+
+    void startBackend();
+    void stopBackend();
+    void createBackend();
+
+    QStringList gestureSignals() const;
+
+Q_SIGNALS:
+    void detected(const QString &);
+
+private:
+        QSensorGestureRecognizerPrivate * d_ptr;
+};
+QT_END_NAMESPACE
+
+
+#endif // QSENSORGESTURERECOGNIZER_H

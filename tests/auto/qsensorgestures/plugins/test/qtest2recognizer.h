@@ -39,36 +39,38 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QTEST2RECOGNIZER_H
+#define QTEST2RECOGNIZER_H
 
-#include <QtCore/qglobal.h>
+#include <qsensorgesturerecognizer.h>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+class QTest2Recognizer : public QSensorGestureRecognizer
+{
+    Q_OBJECT
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+public:
+    QTest2Recognizer(QObject *parent = 0);
+    ~QTest2Recognizer();
 
-#endif // QSENSORSGLOBAL_H
+    void create();
 
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
+
+    int thresholdTime() const;
+    void setThresholdTime(int msec);
+
+Q_SIGNALS:
+    void test2();
+    void test3(bool);
+
+private:
+    int timerTimeout;
+    QTimer *timer;
+    bool active;
+};
+
+
+#endif // QTEST2RECOGNIZER_H

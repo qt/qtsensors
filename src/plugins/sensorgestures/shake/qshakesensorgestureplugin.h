@@ -39,36 +39,27 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QSHAKESENSORGESTUREPLUGIN_H
+#define QSHAKESENSORGESTUREPLUGIN_H
 
-#include <QtCore/qglobal.h>
+#include <QObject>
+#include <QStringList>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include <qsensorgestureplugininterface.h>
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+class QShakeSensorGesturePlugin : public QObject, QSensorGesturePluginInterface
+{
+    Q_OBJECT
+    Q_INTERFACES(QSensorGesturePluginInterface)
+public:
+    explicit QShakeSensorGesturePlugin();
+    ~QShakeSensorGesturePlugin();
 
-#endif // QSENSORSGLOBAL_H
+    QList <QSensorGestureRecognizer *> createRecognizers();
 
+    QStringList gestureSignals() const;
+    QStringList supportedIds() const;
+    QString name() const { return "ShakeGestures"; }
+};
+
+#endif // QSHAKESENSORGESTUREPLUGIN_H

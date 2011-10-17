@@ -39,36 +39,57 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QSENSORGESTURE_H
+#define QSENSORGESTURE_H
 
-#include <QtCore/qglobal.h>
+#include <QObject>
+#include <QStringList>
+#include <qsensorsglobal.h>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
+#include <QList>
+#include <QMap>
+#include <QVector>
+
+#include <QtCore/qmetatype.h>
+
+QT_BEGIN_NAMESPACE
+
+class QSensorGesturePrivate;
+
+class Q_SENSORS_EXPORT QSensorGesture : public QObject
+{
+    //Do not use Q_OBJECT here
+public:
+    QSensorGesture(const QStringList &ids, QObject *parent = 0);
+    ~QSensorGesture();
+
+    bool isActive();
+
+    QStringList availableIds() const;
+    QStringList gestureSignals() const;
+
+    void startDetection();
+    void stopDetection();
+
+    bool isValid() const;
+
+private:
+    QSensorGesturePrivate * d_ptr;
+
+    // need to inject unknown recognizer signals at runtime.
+    virtual const QMetaObject* metaObject() const;
+    int qt_metacall(QMetaObject::Call c, int id, void **a);
+    void *qt_metacast(const char* className);
+
+#ifdef Q_QDOC
+signals:
+    // these signals are created at runtime, along with
+    // gesture recognizer specific signals.
+     void detected(QString);
 #endif
+};
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+QT_END_NAMESPACE
 
-#endif // QSENSORSGLOBAL_H
 
+#endif // QSENSORGESTURE_H

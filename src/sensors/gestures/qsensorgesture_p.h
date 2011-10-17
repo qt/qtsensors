@@ -39,36 +39,47 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QSENSORGESTURE_P_H
+#define QSENSORGESTURE_P_H
 
-#include <QtCore/qglobal.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists for the convenience
+// of other Qt classes.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+#include <QtSensors/QSensor>
+#include <QtSensors/QAccelerometer>
+#include <QtSensors/QAccelerometerFilter>
+#include <QTimer>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include "qsensorgesture.h"
+#include "qsensorgesturemanager.h"
+#include <QtCore/private/qmetaobjectbuilder_p.h>
+QT_BEGIN_NAMESPACE
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+class QSensorGesturePrivate : public QObject
+{
 
-#endif // QSENSORSGLOBAL_H
+public:
+    QSensorGesturePrivate(QObject *parent = 0);
+    ~QSensorGesturePrivate();
 
+    QList<QSensorGestureRecognizer *> m_sensorRecognizers;
+
+    QByteArray metadata;
+    QMetaObject* meta;
+    bool isActive;
+    QStringList localGestureSignals;
+    QStringList availableIds;
+    bool valid;
+};
+
+
+QT_END_NAMESPACE
+
+#endif // QSENSORGESTURE_P_H

@@ -39,36 +39,70 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#include <QObject>
+#include <QtPlugin>
+#include <QStringList>
+#include <QTimer>
 
-#include <QtCore/qglobal.h>
+#include "qtestrecognizerdup.h"
+#include "qtest2recognizerdup.h"
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include "qtestsensorgestureplugindup.h"
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturerecognizer.h>
+#include <qsensorgesturemanager.h>
 
-#endif // QSENSORSGLOBAL_H
 
+QTestSensorGestureDupPlugin::QTestSensorGestureDupPlugin()
+{
+}
+
+QTestSensorGestureDupPlugin::~QTestSensorGestureDupPlugin()
+{
+}
+
+/*!
+  Describes this gesture's possible gesture signals.
+handled through the detected(const QString &) signal.
+  */
+QStringList QTestSensorGestureDupPlugin::gestureSignals() const
+{
+    QStringList list;
+    Q_FOREACH (const QSensorGestureRecognizer* rec,recognizersList) {
+        list.append(rec->gestureSignals());
+    }
+    return list;
+}
+
+QList <QSensorGestureRecognizer *> QTestSensorGestureDupPlugin::createRecognizers()
+{
+    QSensorGestureRecognizer *sRec = new QTestRecognizerDup(this);
+    recognizersList.append(sRec);
+
+    QSensorGestureRecognizer *sRec2 = new QTest2RecognizerDup(this);
+    recognizersList.append(sRec2);
+
+    return recognizersList;
+}
+
+QStringList QTestSensorGestureDupPlugin::supportedIds() const
+{
+    QStringList list;
+    list << "QtSensors.test.dup";
+    list << "QtSensors.test.dup";
+
+    return list;
+}
+
+QList<QSensorGestureRecognizer*> QTestSensorGestureDupPlugin::recognizers() const
+{
+    return recognizersList;
+}
+
+QString QTestSensorGestureDupPlugin::name() const
+{
+    return "TestGesturesDup";
+}
+
+REGISTER_STATIC_PLUGIN_V2(QTestSensorGestureDupPlugin)

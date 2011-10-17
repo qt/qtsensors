@@ -73,5 +73,24 @@
             \o \l {QtMobility.sensors 1.x}{Legacy QML API}
             \o Information about the legacy QtMobility.sensors QML API
     \endtable
+
+
+    \section1 Information for QtSensorGestures API
+
+    \table
+        \row
+            \o \l {QtSensorGestures C++ API}{C++ API}
+            \o Information about the QtSensorGestures C++ API
+    \endtable
+
+    \section1 Information for QtSensorGestures Recognizer Plugin Implementors.
+
+    \table
+        \row
+            \o \l {QtSensorGestures Plugins}{Plugins}
+            \o Information about the QtSensorGestures recognizer plugins.
+
+    \endtable
+
 */
 

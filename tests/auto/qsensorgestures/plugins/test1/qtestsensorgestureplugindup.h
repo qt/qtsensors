@@ -39,36 +39,33 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QTESTSENSORGESTUREDUPPLUGIN_H
+#define QTESTSENSORGESTUREDUPPLUGIN_H
 
-#include <QtCore/qglobal.h>
+#include <QObject>
+#include <qsensorgestureplugininterface.h>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+class QTestSensorGestureDupPlugin :  public QObject, public QSensorGesturePluginInterface
+{
+    Q_OBJECT
+    Q_INTERFACES(QSensorGesturePluginInterface)
+public:
+    explicit QTestSensorGestureDupPlugin();
+    ~QTestSensorGestureDupPlugin();
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
 
-#endif // QSENSORSGLOBAL_H
+    QList <QSensorGestureRecognizer *> createRecognizers();
 
+    QStringList gestureSignals() const;
+    QStringList supportedIds() const;
+    QString name() const;
+
+    QList<QSensorGestureRecognizer*> recognizers() const;
+
+    QList<QSensorGestureRecognizer*> recognizersList;
+
+};
+
+
+
+#endif // QTESTSENSORGESTUREDUPPLUGIN_H

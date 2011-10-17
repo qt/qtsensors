@@ -39,36 +39,42 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#include <QtPlugin>
+#include <QStringList>
+#include <QObject>
 
-#include <QtCore/qglobal.h>
+#include "qshakesensorgestureplugin.h"
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturemanager.h>
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+#include "qshakerecognizer.h"
 
-#endif // QSENSORSGLOBAL_H
+
+QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+{
+}
+
+QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
+{
+}
+
+QStringList QShakeSensorGesturePlugin::supportedIds() const
+{
+    QStringList list;
+    list << "QtSensors.shake";
+    return list;
+}
+
+QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
+{
+    QList <QSensorGestureRecognizer *> recognizers;
+
+    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
+    recognizers.append(sRec);
+
+    return recognizers;
+}
+
+Q_EXPORT_PLUGIN2(QShakeSensorGestureRecognizer, QShakeSensorGesturePlugin)
 

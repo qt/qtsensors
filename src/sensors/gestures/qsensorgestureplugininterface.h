@@ -39,36 +39,29 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#ifndef QSENSORGESTUREPLUGININTERFACE_H
+#define QSENSORGESTUREPLUGININTERFACE_H
 
-#include <QtCore/qglobal.h>
+#include <QObject>
+#include <QtGlobal>
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+#include "qsensorgesture.h"
+#include "qsensorgesturerecognizer.h"
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+QT_BEGIN_NAMESPACE
+class QSensorGestureRecognizer;
 
-#endif // QSENSORSGLOBAL_H
+class Q_SENSORS_EXPORT QSensorGesturePluginInterface
+{
+public:
+    virtual QList <QSensorGestureRecognizer *> createRecognizers() = 0;
+    virtual QStringList supportedIds() const = 0;
+    virtual QString name() const = 0;
 
+};
+
+Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "com.Nokia.QSensorGesturePluginInterface");
+
+QT_END_NAMESPACE
+
+#endif // QSENSORGESTUREPLUGININTERFACE_H

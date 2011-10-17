@@ -39,36 +39,58 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#include "qtest2recognizerdup.h"
 
-#include <QtCore/qglobal.h>
+#include "qtestsensorgestureplugindup.h"
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
+QTest2RecognizerDup::QTest2RecognizerDup(QObject *parent)
+    : QSensorGestureRecognizer(parent),
+    active(0)
+{
+}
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+QTest2RecognizerDup::~QTest2RecognizerDup()
+{
+}
 
-#endif // QSENSORSGLOBAL_H
+bool QTest2RecognizerDup::start()
+{
+    Q_EMIT test2_dup();
+
+    active = true;
+
+    return true;
+}
+
+bool QTest2RecognizerDup::stop()
+{
+    active = false;
+    return true;
+}
+
+bool QTest2RecognizerDup::isActive()
+{
+    return active;
+}
+
+
+void QTest2RecognizerDup::create()
+{
+    active = false;
+}
+
+QString QTest2RecognizerDup::id() const
+{
+    return QString("QtSensors.test.dup");
+}
+
+int QTest2RecognizerDup::thresholdTime() const
+{
+    return timerTimeout;
+}
+
+void QTest2RecognizerDup::setThresholdTime(int msec)
+{
+    timer->setInterval(msec);
+}
 

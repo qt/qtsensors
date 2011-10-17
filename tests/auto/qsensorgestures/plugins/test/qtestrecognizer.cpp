@@ -39,36 +39,68 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORSGLOBAL_H
-#define QSENSORSGLOBAL_H
+#include <QStringList>
+#include <QTimer>
 
-#include <QtCore/qglobal.h>
+#include "qtestrecognizer.h"
+#include "qtestsensorgestureplugin_p.h"
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_SENSORS_LIB)
-#      define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SENSORS_EXPORT Q_DECL_IMPORT
-#    endif
-#  elif defined(QT_DLL)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  endif
-#endif
 
-#if !defined(Q_SENSORS_EXPORT)
-#  if defined(QT_SHARED)
-#    define Q_SENSORS_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORS_EXPORT
-#  endif
-#endif
+QTestRecognizer::QTestRecognizer(QObject *parent)
+    : QSensorGestureRecognizer(parent),
+      active(0)
+{
+    QTimer::singleShot(2000,this, SLOT(timeout()));
+}
 
-#endif // QSENSORSGLOBAL_H
+QTestRecognizer::~QTestRecognizer()
+{
+}
 
+void QTestRecognizer::timeout()
+{
+    Q_EMIT detected("tested");
+    Q_EMIT tested();
+    QTimer::singleShot(2000,this, SLOT(timeout()));
+}
+
+
+bool QTestRecognizer::start()
+{
+    Q_EMIT detected("tested");
+    Q_EMIT tested();
+    active = true;
+    return true;
+}
+
+bool QTestRecognizer::stop()
+{
+    active = false;
+    return true;
+}
+
+bool QTestRecognizer::isActive()
+{
+    return active;
+}
+
+void  QTestRecognizer::create()
+{
+    active = false;
+}
+
+QString QTestRecognizer::id() const
+{
+    return QString("QtSensors.test");
+}
+
+
+int QTestRecognizer::thresholdTime() const
+{
+    return timerTimeout;
+}
+
+void QTestRecognizer::setThresholdTime(int msec)
+{
+    timer->setInterval(msec);
+}
