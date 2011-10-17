@@ -128,7 +128,7 @@ Q_GLOBAL_STATIC(QSensorManagerPrivate, sensorManagerPrivate)
 static void initPlugin(QObject *plugin);
 static QSettings::Scope settings_scope = QSettings::SystemScope;
 static bool load_external_plugins = true;
-Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
+Q_SENSORS_EXPORT_TEMP void sensors_unit_test_hook(int index)
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
 

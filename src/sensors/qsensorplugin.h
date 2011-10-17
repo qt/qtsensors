@@ -42,13 +42,15 @@
 #ifndef QSENSORPLUGIN_H
 #define QSENSORPLUGIN_H
 
+#include <QtSensors/qsensorsglobal.h>
+
 #include <QtCore/qstringlist.h>
 #include <QtCore/qplugin.h>
 #include <QtCore/qfactoryinterface.h>
 
 QT_BEGIN_NAMESPACE
 
-class Q_SENSORS_EXPORT QSensorPluginInterface
+class Q_SENSORS_EXPORT_TEMP QSensorPluginInterface
 {
 public:
     virtual void registerSensors() = 0;
@@ -56,7 +58,7 @@ protected:
     ~QSensorPluginInterface() {}
 };
 
-class Q_SENSORS_EXPORT QSensorChangesInterface
+class Q_SENSORS_EXPORT_TEMP QSensorChangesInterface
 {
 public:
     virtual void sensorsChanged() = 0;

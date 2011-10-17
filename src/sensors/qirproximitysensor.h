@@ -46,7 +46,7 @@
 
 class QIRProximityReadingPrivate;
 
-class Q_SENSORS_EXPORT QIRProximityReading : public QSensorReading
+class Q_SENSORS_EXPORT_TEMP QIRProximityReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal reflectance READ reflectance)
@@ -56,7 +56,7 @@ public:
     void setReflectance(qreal reflectance);
 };
 
-class Q_SENSORS_EXPORT QIRProximityFilter : public QSensorFilter
+class Q_SENSORS_EXPORT_TEMP QIRProximityFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QIRProximityReading *reading) = 0;
@@ -64,7 +64,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QIRProximityReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT QIRProximitySensor : public QSensor
+class Q_SENSORS_EXPORT_TEMP QIRProximitySensor : public QSensor
 {
     Q_OBJECT
 public:

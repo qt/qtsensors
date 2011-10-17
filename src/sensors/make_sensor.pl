@@ -128,7 +128,7 @@ QT_BEGIN_NAMESPACE
 
 class '.$reading_private.';
 
-class Q_SENSORS_EXPORT '.$reading.' : public QSensorReading
+class Q_SENSORS_EXPORT_TEMP '.$reading.' : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal myprop READ myprop)
@@ -138,7 +138,7 @@ public:
     void setMyprop(qreal myprop);
 };
 
-class Q_SENSORS_EXPORT '.$filter.' : public QSensorFilter
+class Q_SENSORS_EXPORT_TEMP '.$filter.' : public QSensorFilter
 {
 public:
     virtual bool filter('.$reading.' *reading) = 0;
@@ -146,7 +146,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<'.$reading.'*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT '.$sensor.' : public QSensor
+class Q_SENSORS_EXPORT_TEMP '.$sensor.' : public QSensor
 {
     Q_OBJECT
 public:

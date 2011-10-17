@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QProximityReadingPrivate;
 
-class Q_SENSORS_EXPORT QProximityReading : public QSensorReading
+class Q_SENSORS_EXPORT_TEMP QProximityReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(bool close READ close)
@@ -58,7 +58,7 @@ public:
     void setClose(bool close);
 };
 
-class Q_SENSORS_EXPORT QProximityFilter : public QSensorFilter
+class Q_SENSORS_EXPORT_TEMP QProximityFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QProximityReading *reading) = 0;
@@ -66,7 +66,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QProximityReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT QProximitySensor : public QSensor
+class Q_SENSORS_EXPORT_TEMP QProximitySensor : public QSensor
 {
     Q_OBJECT
 public:

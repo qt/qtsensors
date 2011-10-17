@@ -42,6 +42,7 @@ PUBLIC_HEADERS += \
            qsensorbackend.h\
            qsensormanager.h\
            qsensorplugin.h\
+           qsensorsglobal.h
 
 PRIVATE_HEADERS += \
            qsensorpluginloader_p.h\

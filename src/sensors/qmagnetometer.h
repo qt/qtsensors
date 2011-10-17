@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QMagnetometerReadingPrivate;
 
-class Q_SENSORS_EXPORT QMagnetometerReading : public QSensorReading
+class Q_SENSORS_EXPORT_TEMP QMagnetometerReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal x READ x)
@@ -70,7 +70,7 @@ public:
     void setCalibrationLevel(qreal calibrationLevel);
 };
 
-class Q_SENSORS_EXPORT QMagnetometerFilter : public QSensorFilter
+class Q_SENSORS_EXPORT_TEMP QMagnetometerFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QMagnetometerReading *reading) = 0;
@@ -78,7 +78,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QMagnetometerReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT QMagnetometer : public QSensor
+class Q_SENSORS_EXPORT_TEMP QMagnetometer : public QSensor
 {
     Q_OBJECT
 #ifdef Q_QDOC

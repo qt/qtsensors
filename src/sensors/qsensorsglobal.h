@@ -38,53 +38,36 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef QSENSORSGLOBAL_H
+#define QSENSORSGLOBAL_H
 
-#ifndef QACCELEROMETER_H
-#define QACCELEROMETER_H
+#include <QtCore/qglobal.h>
 
-#include "qsensor.h"
-
-QT_BEGIN_NAMESPACE
-
-class QAccelerometerReadingPrivate;
-
-class Q_SENSORS_EXPORT_TEMP QAccelerometerReading : public QSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal x READ x)
-    Q_PROPERTY(qreal y READ y)
-    Q_PROPERTY(qreal z READ z)
-    DECLARE_READING(QAccelerometerReading)
-public:
-    qreal x() const;
-    void setX(qreal x);
-
-    qreal y() const;
-    void setY(qreal y);
-
-    qreal z() const;
-    void setZ(qreal z);
-};
-
-class Q_SENSORS_EXPORT_TEMP QAccelerometerFilter : public QSensorFilter
-{
-public:
-    virtual bool filter(QAccelerometerReading *reading) = 0;
-private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QAccelerometerReading*>(reading)); }
-};
-
-class Q_SENSORS_EXPORT_TEMP QAccelerometer : public QSensor
-{
-    Q_OBJECT
-public:
-    explicit QAccelerometer(QObject *parent = 0) : QSensor(QAccelerometer::type, parent) {}
-    virtual ~QAccelerometer() {}
-    QAccelerometerReading *reading() const { return static_cast<QAccelerometerReading*>(QSensor::reading()); }
-    static char const * const type;
-};
-
-QT_END_NAMESPACE
-
+#if defined(Q_OS_WIN)
+#  if defined(QT_NODLL)
+#    undef QT_MAKEDLL
+#    undef QT_DLL
+#  elif defined(QT_MAKEDLL)
+#    if defined(QT_DLL)
+#      undef QT_DLL
+#    endif
+#    if defined(QT_BUILD_SENSORS_LIB)
+#      define Q_SENSORS_EXPORT_TEMP Q_DECL_EXPORT
+#    else
+#      define Q_SENSORS_EXPORT_TEMP Q_DECL_IMPORT
+#    endif
+#  elif defined(QT_DLL)
+#    define Q_SENSORS_EXPORT_TEMP Q_DECL_EXPORT
+#  endif
 #endif
+
+#if !defined(Q_SENSORS_EXPORT_TEMP)
+#  if defined(QT_SHARED)
+#    define Q_SENSORS_EXPORT_TEMP Q_DECL_EXPORT
+#  else
+#    define Q_SENSORS_EXPORT_TEMP
+#  endif
+#endif
+
+#endif // QSENSORSGLOBAL_H
 
