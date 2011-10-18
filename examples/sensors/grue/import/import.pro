@@ -6,7 +6,7 @@ include(qsensorsimport.pri)
 QT = declarative sensors
 
 INCLUDEPATH += $$PWD/../lib
-LIBS += -L$$PWD/../lib -lgruesensor
+LIBS += -L$$OUT_PWD/../lib -lgruesensor
 
 SOURCES = main.cpp
 

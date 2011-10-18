@@ -6,7 +6,7 @@ PLUGIN_TYPE = sensors
 QT = core sensors
 
 INCLUDEPATH += $$PWD/../lib
-LIBS += -L$$PWD/../lib -lgruesensor
+LIBS += -L$$OUT_PWD/../lib -lgruesensor
 
 HEADERS += gruesensorimpl.h\
 
