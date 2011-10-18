@@ -5,5 +5,4 @@ SUBDIRS += \
     grue
 
 contains(QT_CONFIG,widgets):SUBDIRS += \
-    sensor_explorer \
-    cubehouse
+    sensor_explorer

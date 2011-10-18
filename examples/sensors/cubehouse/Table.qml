@@ -38,46 +38,13 @@
 **
 ****************************************************************************/
 
-#include "painter.h"
-#include <QtCore/qvarlengtharray.h>
+import QtQuick 2.0
+import Qt3D 1.0
+import Qt3D.Shapes 1.0
+import "."
 
-void Painter::drawQuad(const QVector3D &c1, const QVector3D &c2,
-                       const QVector3D &c3, const QVector3D &c4,
-                       const QVector3D &normal)
-{
-    QVarLengthArray<float> vertices;
-    QVarLengthArray<float> normals;
-
-    vertices.append(c1.x());
-    vertices.append(c1.y());
-    vertices.append(c1.z());
-    normals.append(normal.x());
-    normals.append(normal.y());
-    normals.append(normal.z());
-
-    vertices.append(c2.x());
-    vertices.append(c2.y());
-    vertices.append(c2.z());
-    normals.append(normal.x());
-    normals.append(normal.y());
-    normals.append(normal.z());
-
-    vertices.append(c3.x());
-    vertices.append(c3.y());
-    vertices.append(c3.z());
-    normals.append(normal.x());
-    normals.append(normal.y());
-    normals.append(normal.z());
-
-    vertices.append(c4.x());
-    vertices.append(c4.y());
-    vertices.append(c4.z());
-    normals.append(normal.x());
-    normals.append(normal.y());
-    normals.append(normal.z());
-
-    setVertices(vertices.constData(), 3);
-    setNormals(normals.constData(), 3);
-
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+Item3D {
+    id: table
+    scale: 1
+    mesh: Mesh { source: "mesh/table.3ds" }
 }

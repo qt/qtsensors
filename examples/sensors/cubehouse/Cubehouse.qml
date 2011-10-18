@@ -38,10 +38,62 @@
 **
 ****************************************************************************/
 
-varying mediump vec4 qColor;
-varying mediump vec4 qSecondaryColor;
+import QtQuick 2.0
+import Qt3D 1.0
+import Qt3D.Shapes 1.0
+import QtMobility.sensors 1.3
+import "."
 
-void main(void)
-{
-    gl_FragColor = clamp(qColor + vec4(qSecondaryColor.xyz, 0.0), 0.0, 1.0);
+Item {
+    id: mainWindow
+    width: 320
+    height: 480
+
+    Viewport {
+        id: view
+        anchors.top: parent.top
+        width: parent.width
+        height: parent.height
+        renderMode: "DirectRender"
+        fillColor: "darkblue"
+        objectName: "cube viewport"
+        camera: Camera { eye: Qt.vector3d(0, 3, 1.6 * room.scale )}
+
+        Room{
+            id: room
+            scale: 7.0
+        }
+
+        function rotateY(y)
+        {
+            room.rotateY(y);
+        }
+
+        function rotateX(x)
+        {
+            room.rotateX(x);
+        }
+    }
+
+    Accelerometer {
+        id: accel
+        active: true
+        property double pitch: 0.0
+        property double roll: 0.0
+
+        onReadingChanged: {
+            pitch = -(Math.atan2(reading.x, Math.sqrt(reading.y * reading.y + reading.z * reading.z)) * 180) / Math.PI;
+            roll = (Math.atan2(reading.y, Math.sqrt(reading.x * reading.x + reading.z * reading.z)) * 180) / Math.PI;
+        }
+    }
+
+    //Timer to read out the x and y rotation of the TiltSensor
+    Timer {
+        interval: 150; running: true; repeat: true
+
+        onTriggered: {
+            view.rotateY(accel.pitch);
+            view.rotateX(accel.roll);
+        }
+    }
 }

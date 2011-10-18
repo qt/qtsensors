@@ -3,12 +3,12 @@
     "dict": {
         "Category": "application",
         "Runtime": "qml",
-        "DisplayName": "Maze",
+        "DisplayName": "Cubehouse",
         "Subcategory": "utility",
-        "MainQML": "Maze.qml",
+        "MainQML": "Cubehouse.qml",
         "Version": "1.0",
-        "Identifier": "com.noklab.nrcc.maze.demo",
-        "Summary": "Labyrinth game using TiltSensor",
+        "Identifier": "com.nokia.mt.cubehouse.demo",
+        "Summary": "Cubehouse using Accelerometer",
         "Author": "Qt"
     }
 }

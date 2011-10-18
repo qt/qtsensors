@@ -38,20 +38,44 @@
 **
 ****************************************************************************/
 
-#include <QApplication>
-#include "view.h"
+import QtQuick 2.0
+import Qt3D 1.0
+import Qt3D.Shapes 1.0
 
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
-    View view;
-    if (QApplication::arguments().contains("-framerate"))
-        view.setShowFrameRate(true);
-    if (QApplication::arguments().contains("-maximize"))
-        view.showMaximized();
-    else if (QApplication::arguments().contains("-fullscreen"))
-        view.showFullScreen();
-    else
-        view.show();
-    return app.exec();
+Cube {
+    objectName: "cube"
+
+    transform: [
+        Rotation3D {
+            angle: 45.0
+            axis: Qt.vector3d(1, 0, 0)
+        },
+        Rotation3D {
+            angle: 45.0
+            axis: Qt.vector3d(0, 0, 1)
+        },
+        Rotation3D {
+            id: yRT
+            angle: 0
+            axis: Qt.vector3d(0, -1, 0)
+        }
+    ]
+
+    SequentialAnimation {
+        running: true
+        loops: Animation.Infinite
+        NumberAnimation {
+            target: yRT
+            property: "angle"
+            from: 0
+            to: 360
+            duration: 1000
+        }
+    }
+
+    effect: Effect {
+        color: "#aaca00"
+        texture: "images/qtlogo.png"
+        decal: true
+    }
 }

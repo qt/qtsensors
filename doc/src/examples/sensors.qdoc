@@ -38,26 +38,13 @@
 
 /*!
     \example sensors/cubehouse
-    \title Cube House
+    \title Cube House QML Accelerometer example
     \ingroup qtsensors-examples
 
     \image cubehouse.png
 
     The Cube House example demonstrates the use of the accelerometer to drive a camera
-    to create a pseudo-3D effect. It also demonstrates the use of a filter to smooth
-    out the accelerometer values.
-
-    The accelerometer is created and the filter is added.
-
-    \snippet ../examples/sensors/cubehouse/view.cpp accelerometer
-
-    When new values are available, the view is recalculated.
-
-    \snippet ../examples/sensors/cubehouse/view.cpp accelerometer2
-
-    The filter is defined like this.
-
-    \snippet ../examples/sensors/cubehouse/view.cpp smoothed
+    to create a pseudo-3D effect.
 */
 
 /*!
