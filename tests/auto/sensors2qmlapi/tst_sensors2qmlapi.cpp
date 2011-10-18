@@ -86,11 +86,11 @@ void tst_Sensors2QMLAPI::testProximity()
 {
     QSensor2Proximity prox;
     QSignalSpy spy(&prox, SIGNAL(enabledChanged()));
-    prox.setProperty("enabled", QVariant(true));
+    prox.setProperty("enabled", true);
     QCOMPARE(spy.count() , 1);
 
     spy.clear();
-    prox.setProperty("enabled", QVariant(true));
+    prox.setProperty("enabled", true);
     QCOMPARE(spy.count() , 0);
 
     TestSensorPlugin plugin;
@@ -111,18 +111,18 @@ void tst_Sensors2QMLAPI::testProximity()
     spy1.clear();
     proxi->test(false);
     QCOMPARE(spy1.count() , 0);
-    prox.setProperty("enabled", QVariant(false));
+    prox.setProperty("enabled", false);
 }
 
 void tst_Sensors2QMLAPI::testAmbientLight()
 {
     QSensor2AmbientLight als;
     QSignalSpy spy(&als, SIGNAL(enabledChanged()));
-    als.setProperty("enabled", QVariant(true));
+    als.setProperty("enabled", true);
     QCOMPARE(spy.count() , 1);
 
     spy.clear();
-    als.setProperty("enabled", QVariant(true));
+    als.setProperty("enabled", true);
     QCOMPARE(spy.count() , 0);
 
     TestSensorPlugin plugin;
@@ -130,7 +130,7 @@ void tst_Sensors2QMLAPI::testAmbientLight()
 
     for (int en = 5; en >= 0; en--){
         QSignalSpy spy1(&als, SIGNAL(lightLevelChanged()));
-        abl->test((QSensor2AmbientLight::LightLevel)en);
+        abl->test(static_cast<QSensor2AmbientLight::LightLevel>(en));
         QCOMPARE(spy1.count() , 1);
         int expected = en;
         int actual = als.property("lightLevel").toInt();
@@ -138,16 +138,16 @@ void tst_Sensors2QMLAPI::testAmbientLight()
         QCOMPARE(expected, actual);
 
         spy1.clear();
-        abl->test((QSensor2AmbientLight::LightLevel)en);
+        abl->test(static_cast<QSensor2AmbientLight::LightLevel>(en));
         QCOMPARE(spy1.count() , 0);
     }
-    als.setProperty("enabled", QVariant(false));
+    als.setProperty("enabled", false);
 }
 
 void tst_Sensors2QMLAPI::testTilt_data()
 {
-    QTest::addColumn<qreal>("pitch");
-    QTest::addColumn<qreal>("roll");
+    QTest::addColumn<float>("pitch");
+    QTest::addColumn<float>("roll");
     QTest::addColumn<int>("x");
     QTest::addColumn<int>("y");
     QTest::addColumn<int>("z");
@@ -156,65 +156,65 @@ void tst_Sensors2QMLAPI::testTilt_data()
 
     //Face up
     //                             Pitch  Roll     x       y       z       xRot    yRot
-    QTest::newRow("FaceUp1")    << 0.0  << 0.0  << 0    << 0    << 1    << 0    << 0;
-    QTest::newRow("FaceUp2")    << 0.0  << 0.0  << 0    << 1    << 0    << 90   << 0;
-    QTest::newRow("FaceUp3")    << 0.0  << 0.0  << 1    << 0    << 0    << 0    << -90;
-    QTest::newRow("FaceUp4")    << 0.0  << 0.0  << 1    << 0    << 1    << 0    << -45;
-    QTest::newRow("FaceUp5")    << 0.0  << 0.0  << 1    << 1    << 0    << 45   << -45;
-    QTest::newRow("FaceUp6")    << 0.0  << 0.0  << 0    << 1    << 1    << 45   << 0;
+    QTest::newRow("FaceUp1")    << 0.0f  << 0.0f  << 0    << 0    << 1    << 0    << 0;
+    QTest::newRow("FaceUp2")    << 0.0f  << 0.0f  << 0    << 1    << 0    << 90   << 0;
+    QTest::newRow("FaceUp3")    << 0.0f  << 0.0f  << 1    << 0    << 0    << 0    << -90;
+    QTest::newRow("FaceUp4")    << 0.0f  << 0.0f  << 1    << 0    << 1    << 0    << -45;
+    QTest::newRow("FaceUp5")    << 0.0f  << 0.0f  << 1    << 1    << 0    << 45   << -45;
+    QTest::newRow("FaceUp6")    << 0.0f  << 0.0f  << 0    << 1    << 1    << 45   << 0;
 
     //top up roll = 90
     //                             Pitch  Roll     x       y       z       xRot    yRot
-    QTest::newRow("TopUp1")     << 0.0  << 90.0 << 0    << 0    << 1    << -90  << 0;
-    QTest::newRow("TopUp2")     << 0.0  << 90.0 << 0    << 1    << 0    << 0    << 0;
-    QTest::newRow("TopUp3")     << 0.0  << 90.0 << 1    << 0    << 0    << -90  << -90;
-    QTest::newRow("TopUp4")     << 0.0  << 90.0 << 1    << 0    << 1    << -90  << -45;
-    QTest::newRow("TopUp5")     << 0.0  << 90.0 << 1    << 1    << 0    << -45  << -45;
-    QTest::newRow("TopUp6")     << 0.0  << 90.0 << 0    << 1    << 1    << -45  << 0;
+    QTest::newRow("TopUp1")     << 0.0f  << 90.0f << 0    << 0    << 1    << -90  << 0;
+    QTest::newRow("TopUp2")     << 0.0f  << 90.0f << 0    << 1    << 0    << 0    << 0;
+    QTest::newRow("TopUp3")     << 0.0f  << 90.0f << 1    << 0    << 0    << -90  << -90;
+    QTest::newRow("TopUp4")     << 0.0f  << 90.0f << 1    << 0    << 1    << -90  << -45;
+    QTest::newRow("TopUp5")     << 0.0f  << 90.0f << 1    << 1    << 0    << -45  << -45;
+    QTest::newRow("TopUp6")     << 0.0f  << 90.0f << 0    << 1    << 1    << -45  << 0;
 
     //top down roll = -90
     //                             Pitch  Roll     x       y       z       xRot    yRot
-    QTest::newRow("TopDown1")   << 0.0  <<-90.0 << 0    << 0    << 1    << 90   << 0;
-    QTest::newRow("TopDown2")   << 0.0  <<-90.0 << 0    << 1    << 0    << 0    << 0;
-    QTest::newRow("TopDown3")   << 0.0  <<-90.0 << 1    << 0    << 0    << 90   << -90;
-    QTest::newRow("TopDown4")   << 0.0  <<-90.0 << 1    << 0    << 1    << 90   << -45;
-    QTest::newRow("TopDown5")   << 0.0  <<-90.0 << 1    << 1    << 0    << 45   << -45;
-    QTest::newRow("TopDown6")   << 0.0  <<-90.0 << 0    << 1    << 1    << 45   << 0;
+    QTest::newRow("TopDown1")   << 0.0f  <<-90.0f << 0    << 0    << 1    << 90   << 0;
+    QTest::newRow("TopDown2")   << 0.0f  <<-90.0f << 0    << 1    << 0    << 0    << 0;
+    QTest::newRow("TopDown3")   << 0.0f  <<-90.0f << 1    << 0    << 0    << 90   << -90;
+    QTest::newRow("TopDown4")   << 0.0f  <<-90.0f << 1    << 0    << 1    << 90   << -45;
+    QTest::newRow("TopDown5")   << 0.0f  <<-90.0f << 1    << 1    << 0    << 45   << -45;
+    QTest::newRow("TopDown6")   << 0.0f  <<-90.0f << 0    << 1    << 1    << 45   << 0;
 
     //Left up Pitch = -90 Roll = 90
     //                             Pitch  Roll     x       y       z       xRot    yRot
-    QTest::newRow("LeftUp1")    <<-90.0 << 90.0 << 0    << 0    << 1    << -90  << 90;
-    QTest::newRow("LeftUp2")    <<-90.0 << 90.0 << 0    << 1    << 0    << 0    << 90;
-    QTest::newRow("LeftUp3")    <<-90.0 << 90.0 << 1    << 0    << 0    << -90  << 0;
-    QTest::newRow("LeftUp4")    <<-90.0 << 90.0 << 1    << 0    << 1    << -90  << 45;
-    QTest::newRow("LeftUp5")    <<-90.0 << 90.0 << 1    << 1    << 0    << -45  << 45;
-    QTest::newRow("LeftUp6")    <<-90.0 << 90.0 << 0    << 1    << 1    << -45  << 90;
+    QTest::newRow("LeftUp1")    <<-90.0f << 90.0f << 0    << 0    << 1    << -90  << 90;
+    QTest::newRow("LeftUp2")    <<-90.0f << 90.0f << 0    << 1    << 0    << 0    << 90;
+    QTest::newRow("LeftUp3")    <<-90.0f << 90.0f << 1    << 0    << 0    << -90  << 0;
+    QTest::newRow("LeftUp4")    <<-90.0f << 90.0f << 1    << 0    << 1    << -90  << 45;
+    QTest::newRow("LeftUp5")    <<-90.0f << 90.0f << 1    << 1    << 0    << -45  << 45;
+    QTest::newRow("LeftUp6")    <<-90.0f << 90.0f << 0    << 1    << 1    << -45  << 90;
 
     //Right up Pitch = -90 Roll = 90
     //                             Pitch  Roll      x       y       z       xRot    yRot
-    QTest::newRow("RightUp1")    << 90.0 << 90.0 << 0    << 0    << 1    << -90  << -90;
-    QTest::newRow("RightUp2")    << 90.0 << 90.0 << 0    << 1    << 0    << 0    << -90;
-    QTest::newRow("RightUp3")    << 90.0 << 90.0 << 1    << 0    << 0    << -90  << 0;
-    QTest::newRow("RightUp4")    << 90.0 << 90.0 << 1    << 0    << 1    << -90  << -45;
-    QTest::newRow("RightUp5")    << 90.0 << 90.0 << 1    << 1    << 0    << -45  << -45;
-    QTest::newRow("RightUp6")    << 90.0 << 90.0 << 0    << 1    << 1    << -45  << -90;
+    QTest::newRow("RightUp1")    << 90.0f << 90.0f << 0    << 0    << 1    << -90  << -90;
+    QTest::newRow("RightUp2")    << 90.0f << 90.0f << 0    << 1    << 0    << 0    << -90;
+    QTest::newRow("RightUp3")    << 90.0f << 90.0f << 1    << 0    << 0    << -90  << 0;
+    QTest::newRow("RightUp4")    << 90.0f << 90.0f << 1    << 0    << 1    << -90  << -45;
+    QTest::newRow("RightUp5")    << 90.0f << 90.0f << 1    << 1    << 0    << -45  << -45;
+    QTest::newRow("RightUp6")    << 90.0f << 90.0f << 0    << 1    << 1    << -45  << -90;
 
     //Face Down Pitch = -180 Roll = -180
     //                             Pitch   Roll     x       y       z       xRot    yRot
-    QTest::newRow("FaceDown1")   <<-180.0<<-180.0<< 0    << 0    << 1    << 0    << 0;
-    QTest::newRow("FaceDown2")   <<-180.0<<-180.0<< 0    << 1    << 0    << -90  << 0;
-    QTest::newRow("FaceDown3")   <<-180.0<<-180.0<< 1    << 0    << 0    << 0    << 90;
-    QTest::newRow("FaceDown4")   <<-180.0<<-180.0<< 1    << 0    << 1    << 0    << 45;
-    QTest::newRow("FaceDown5")   <<-180.0<<-180.0<< 1    << 1    << 0    << -45  << 45;
-    QTest::newRow("FaceDown6")   <<-180.0<<-180.0<< 0    << 1    << 1    << -45  << 0;
+    QTest::newRow("FaceDown1")   <<-180.0f<<-180.0f<< 0    << 0    << 1    << 0    << 0;
+    QTest::newRow("FaceDown2")   <<-180.0f<<-180.0f<< 0    << 1    << 0    << -90  << 0;
+    QTest::newRow("FaceDown3")   <<-180.0f<<-180.0f<< 1    << 0    << 0    << 0    << 90;
+    QTest::newRow("FaceDown4")   <<-180.0f<<-180.0f<< 1    << 0    << 1    << 0    << 45;
+    QTest::newRow("FaceDown5")   <<-180.0f<<-180.0f<< 1    << 1    << 0    << -45  << 45;
+    QTest::newRow("FaceDown6")   <<-180.0f<<-180.0f<< 0    << 1    << 1    << -45  << 0;
 }
 
 int xrotch = 0;
 int yrotch = 0;
 void tst_Sensors2QMLAPI::testTilt()
 {
-    QFETCH(qreal, pitch);
-    QFETCH(qreal, roll);
+    QFETCH(float, pitch);
+    QFETCH(float, roll);
     QFETCH(int, x);
     QFETCH(int, y);
     QFETCH(int, z);
@@ -225,29 +225,29 @@ void tst_Sensors2QMLAPI::testTilt()
         _tilt = new QSensor2Tilt(this);
 
     QSignalSpy spy(_tilt, SIGNAL(enabledChanged()));
-    _tilt->setProperty("enabled", QVariant(true));
+    _tilt->setProperty("enabled", true);
     QCOMPARE(spy.count() , 1);
 
     spy.clear();
-    _tilt->setProperty("enabled", QVariant(true));
+    _tilt->setProperty("enabled", true);
     QCOMPARE(spy.count() , 0);
 
-    _tilt->setProperty("unit", QVariant((int)QSensor2Tilt::Radians));
+    _tilt->setProperty("unit", QSensor2Tilt::Radians);
     QSignalSpy spyunitch(_tilt, SIGNAL(unitChanged()));
-    _tilt->setProperty("unit", QVariant((int)QSensor2Tilt::Degrees));
+    _tilt->setProperty("unit", QSensor2Tilt::Degrees);
     QCOMPARE(spyunitch.count() , 1);
 
     QByteArray settings;
-    settings.append(QString::number((double)-5.0));
+    settings.append(QString::number(-5.0));
     settings.append(";");
-    settings.append(QString::number((double)-5.0));
-    _tilt->setProperty("settings", QVariant((QByteArray)settings));
+    settings.append(QString::number(-5.0));
+    _tilt->setProperty("settings", settings);
 
     QByteArray settings1;
-    settings1.append(QString::number((double)(pitch * M_PI / 180), 'g', 20));
+    settings1.append(QString::number(pitch * M_PI / 180.0, 'g', 20));
     settings1.append(";");
-    settings1.append(QString::number((double)(roll * M_PI / 180), 'g', 20));
-    _tilt->setProperty("settings", QVariant((QByteArray)settings1));
+    settings1.append(QString::number(roll * M_PI / 180.0, 'g', 20));
+    _tilt->setProperty("settings", settings1);
 
     QDeclAccelerometer* accel = _plugin.stAccel;
 
@@ -257,15 +257,15 @@ void tst_Sensors2QMLAPI::testTilt()
     xrotch += spyxrot.count();
     yrotch += spyyrot.count();
 
-    QCOMPARE(xRotation, (int)_tilt->property("xRotation").toFloat());
-    QCOMPARE(yRotation, (int)_tilt->property("yRotation").toFloat());
+    QCOMPARE(xRotation, _tilt->property("xRotation").toInt());
+    QCOMPARE(yRotation, _tilt->property("yRotation").toInt());
 
     spy.clear();
-    _tilt->setProperty("enabled", QVariant(false));
+    _tilt->setProperty("enabled", false);
     QCOMPARE(spy.count() , 1);
 
     spy.clear();
-    _tilt->setProperty("enabled", QVariant(false));
+    _tilt->setProperty("enabled", false);
     QCOMPARE(spy.count() , 0);
 }
 
@@ -275,20 +275,20 @@ void tst_Sensors2QMLAPI::testTiltAccuracy()
         _tilt = new QSensor2Tilt(this);
 
     QByteArray settings;
-    settings.append(QString::number((double)(0)));
+    settings.append(QString::number(0.0));
     settings.append(";");
-    settings.append(QString::number((double)(0)));
-    _tilt->setProperty("settings", QVariant((QByteArray)settings));
-    _tilt->setProperty("enabled", QVariant(true));
+    settings.append(QString::number(0.0));
+    _tilt->setProperty("settings", settings);
+    _tilt->setProperty("enabled", true);
 
     QDeclAccelerometer* accel = _plugin.stAccel;
 
     //be sure we set rotation to 0
-    _tilt->setProperty("accuracy", QVariant((double)0));
+    _tilt->setProperty("accuracy", 0.0);
     accel->test(0,0,1);
 
     //now set accuracy a little bigger then Pi / 4 in deg
-    _tilt->setProperty("accuracy", QVariant((double)180 / 4 + 0.1));
+    _tilt->setProperty("accuracy", 180 / 4.0 + 0.1);
     QSignalSpy spyxrot(_tilt, SIGNAL(xRotationChanged()));
     QSignalSpy spyyrot(_tilt, SIGNAL(yRotationChanged()));
 
@@ -298,7 +298,7 @@ void tst_Sensors2QMLAPI::testTiltAccuracy()
 
     spyxrot.clear();
     spyyrot.clear();
-    _tilt->setProperty("accuracy", QVariant((double)180 / 4 + 0.1 - 0.1));
+    _tilt->setProperty("accuracy", 180 / 4.0 + 0.1 - 0.1);
     accel->test(1, 1, 0);
     QCOMPARE(spyxrot.count() , 1);
     QCOMPARE(spyyrot.count() , 1);
@@ -317,37 +317,37 @@ void tst_Sensors2QMLAPI::testTiltCalibration()
         _tilt = new QSensor2Tilt(this);
 
     QByteArray settings;
-    settings.append(QString::number((double)(0)));
+    settings.append(QString::number(0.0));
     settings.append(";");
-    settings.append(QString::number((double)(0)));
-    _tilt->setProperty("settings", QVariant((QByteArray)settings));
-    _tilt->setProperty("enabled", QVariant(true));
-    _tilt->setProperty("unit", QVariant((int)QSensor2Tilt::Degrees));
+    settings.append(QString::number(0.0));
+    _tilt->setProperty("settings", settings);
+    _tilt->setProperty("enabled", true);
+    _tilt->setProperty("unit", QSensor2Tilt::Degrees);
 
     QDeclAccelerometer* accel = _plugin.stAccel;
 
     //be sure we set rotation to 0
-    _tilt->setProperty("accuracy", QVariant((double)0));
+    _tilt->setProperty("accuracy", 0.0);
     accel->test(-3.59904, 5.52114, 7.07059);
     _tilt->calibrate();
     accel->test(-3.59904, 5.52114, 7.07059);
-    qreal xRotation = (qreal)_tilt->property("xRotation").toFloat();
-    qreal yRotation = (qreal)_tilt->property("yRotation").toFloat();
-    if (xRotation < 0) xRotation = -xRotation;
-    if (yRotation < 0) yRotation = -yRotation;
+    float xRotation = _tilt->property("xRotation").toFloat();
+    float yRotation = _tilt->property("yRotation").toFloat();
+    if (xRotation < 0.0) xRotation = -xRotation;
+    if (yRotation < 0.0) yRotation = -yRotation;
     QVERIFY(xRotation < 0.001);
     QVERIFY(yRotation < 0.001);
 
     accel->test(0.519752, 6.82543, 7.06079);
     _tilt->calibrate();
     accel->test(0.539366, 6.79601, 7.0804);
-    xRotation = (qreal)_tilt->property("xRotation").toFloat();
-    yRotation = (qreal)_tilt->property("yRotation").toFloat();
-    if (xRotation < 0) xRotation = -xRotation;
-    if (yRotation < 0) yRotation = -yRotation;
+    xRotation = _tilt->property("xRotation").toFloat();
+    yRotation = _tilt->property("yRotation").toFloat();
+    if (xRotation < 0.0) xRotation = -xRotation;
+    if (yRotation < 0.0) yRotation = -yRotation;
     QVERIFY(xRotation < 0.25);
     QVERIFY(yRotation < 0.12);
-    _tilt->setProperty("enabled", QVariant(false));
+    _tilt->setProperty("enabled", false);
 }
 
 void tst_Sensors2QMLAPI::testTiltRunningMode()
@@ -398,36 +398,36 @@ void tst_Sensors2QMLAPI::testTiltRunningMode()
     QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 10);
     QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 20);
 
-    QSensor2Tilt::Speed speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    QSensor2Tilt::Speed speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Slow);
-    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Slow));
+    _tilt->setProperty("speed", QSensor2Tilt::Slow);
 
     QSignalSpy spymode(_tilt, SIGNAL(speedChanged()));
-    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Slow));
+    _tilt->setProperty("speed", QSensor2Tilt::Slow);
     QCOMPARE(spymode.count() , 0);
-    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Slow);
 
-    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Medium));
+    _tilt->setProperty("speed", QSensor2Tilt::Medium);
     QCOMPARE(spymode.count() , 1);
     spymode.clear();
-    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Medium);
 
-    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Medium));
+    _tilt->setProperty("speed", QSensor2Tilt::Medium);
     QCOMPARE(spymode.count() , 0);
-    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Medium);
 
-    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Fast));
+    _tilt->setProperty("speed", QSensor2Tilt::Fast);
     QCOMPARE(spymode.count() , 1);
     spymode.clear();
-    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Fast);
 
-    _tilt->setProperty("speed", QVariant(QSensor2Tilt::Fast));
+    _tilt->setProperty("speed", QSensor2Tilt::Fast);
     QCOMPARE(spymode.count() , 0);
-    speed = (QSensor2Tilt::Speed)_tilt->property("speed").toInt();
+    speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Fast);
 }
 
