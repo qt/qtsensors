@@ -57,7 +57,7 @@
 #include <QtCore/QMetaType>
 #include <QtCore/QDateTime>
 
-QT_BEGIN_HEADER
+namespace QtMobility {
 
 struct QAmbientLightReadingData
 {
@@ -103,14 +103,13 @@ struct QProximityReadingData
 
 void qt_registerSensorTypes();
 
+}
 
-Q_DECLARE_METATYPE(QAmbientLightReadingData)
-Q_DECLARE_METATYPE(QLightReadingData)
-Q_DECLARE_METATYPE(QAccelerometerReadingData)
-Q_DECLARE_METATYPE(QMagnetometerReadingData)
-Q_DECLARE_METATYPE(QCompassReadingData)
-Q_DECLARE_METATYPE(QProximityReadingData)
-
-QT_END_HEADER
+Q_DECLARE_METATYPE(QtMobility::QAmbientLightReadingData)
+Q_DECLARE_METATYPE(QtMobility::QLightReadingData)
+Q_DECLARE_METATYPE(QtMobility::QAccelerometerReadingData)
+Q_DECLARE_METATYPE(QtMobility::QMagnetometerReadingData)
+Q_DECLARE_METATYPE(QtMobility::QCompassReadingData)
+Q_DECLARE_METATYPE(QtMobility::QProximityReadingData)
 
 #endif // QSENSORDATA_SIMULATOR_P_H

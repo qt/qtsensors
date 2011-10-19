@@ -43,6 +43,8 @@
 
 #include <QtCore/QDataStream>
 
+namespace QtMobility {
+
 void qt_registerSensorTypes()
 {
     qRegisterMetaTypeStreamOperators<QAmbientLightReadingData>("QtMobility::QAmbientLightReadingData");
@@ -126,3 +128,5 @@ QDataStream &operator>>(QDataStream &in, QMagnetometerReadingData &s)
     in >> s.x >> s.y >> s.z >> s.calibrationLevel >> s.timestamp;
     return in;
 }
+
+} // namespace

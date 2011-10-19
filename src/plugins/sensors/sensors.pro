@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += dummy generic
-#simulator: SUBDIRS += simulator
+simulator:SUBDIRS += simulator
 

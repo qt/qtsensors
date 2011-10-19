@@ -41,92 +41,70 @@
 
 #include "simulatorcommon.h"
 #include "qsensordata_simulator_p.h"
-#include "mobilitysimulatorglobal.h"
-#include <mobilityconnection_p.h>
+#include <QtSimulator/QtSimulator>
+#include <QDebug>
 
-#include <private/qsimulatordata_p.h>
+using namespace Simulator;
 
-#include <QtNetwork/QLocalSocket>
+Q_GLOBAL_STATIC(QtMobility::QAmbientLightReadingData, qtAmbientLightData)
+Q_GLOBAL_STATIC(QtMobility::QLightReadingData, qtLightData)
+Q_GLOBAL_STATIC(QtMobility::QAccelerometerReadingData, qtAccelerometerData)
+Q_GLOBAL_STATIC(QtMobility::QMagnetometerReadingData, qtMagnetometerData)
+Q_GLOBAL_STATIC(QtMobility::QCompassReadingData, qtCompassData)
+Q_GLOBAL_STATIC(QtMobility::QProximityReadingData, qtProximityData)
+Q_GLOBAL_STATIC(SensorsConnection, sensorsConnection)
 
-using namespace QtSimulatorPrivate;
-
-Q_GLOBAL_STATIC(QAmbientLightReadingData, qtAmbientLightData)
-Q_GLOBAL_STATIC(QLightReadingData, qtLightData)
-Q_GLOBAL_STATIC(QAccelerometerReadingData, qtAccelerometerData)
-Q_GLOBAL_STATIC(QMagnetometerReadingData, qtMagnetometerData)
-Q_GLOBAL_STATIC(QCompassReadingData, qtCompassData)
-Q_GLOBAL_STATIC(QProximityReadingData, qtProximityData)
-
-namespace Simulator
+SensorsConnection::SensorsConnection(QObject *parent)
+    : QObject(parent)
+    , mInitialDataSent(false)
 {
-    SensorsConnection::SensorsConnection(MobilityConnection *mobilityCon)
-        : QObject(mobilityCon)
-        , mConnection(mobilityCon)
-        , mInitialDataReceived(false)
-    {
-        qt_registerSensorTypes();
-        mobilityCon->addMessageHandler(this);
-    }
+    QtMobility::qt_registerSensorTypes();
+    mConnection = new Connection(Connection::Client, "QtSimulator_Mobility_ServerName1.3.0.0", 0xbeef+1, Version(1,0,0,0), this);
+    mWorker = mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1);
+    if (!mWorker)
+        qFatal("Could not connect to server");
+    mWorker->addReceiver(this);
+    mWorker->call("setRequestsSensors");
+}
 
-
-    void SensorsConnection::getInitialData()
-    {
-        RemoteMetacall<void>::call(mConnection->sendSocket(), NoSync, "setRequestsSensors");
-
-        while (!mInitialDataReceived) {
-            mConnection->receiveSocket()->waitForReadyRead(100);
-            mConnection->onReadyRead();
-        }
-    }
-
-    void SensorsConnection::initialSensorsDataSent()
-    {
-        mInitialDataReceived = true;
-    }
-
-    void SensorsConnection::setAmbientLightData(const QAmbientLightReadingData &data)
-    {
-        *qtAmbientLightData() = data;
-    }
-
-    void SensorsConnection::setLightData(const QLightReadingData &data)
-    {
-        *qtLightData() = data;
-    }
-
-    void SensorsConnection::setAccelerometerData(const QAccelerometerReadingData &data)
-    {
-        *qtAccelerometerData() = data;
-    }
-
-    void SensorsConnection::setMagnetometerData(const QMagnetometerReadingData &data)
-    {
-        *qtMagnetometerData() = data;
-    }
-
-    void SensorsConnection::setCompassData(const QCompassReadingData &data)
-    {
-        *qtCompassData() = data;
-    }
-
-    void SensorsConnection::setProximityData(const QProximityReadingData &data)
-    {
-        *qtProximityData() = data;
-    }
-} // namespace
-
-void ensureSimulatorConnection()
+SensorsConnection::~SensorsConnection()
 {
-    using namespace Simulator;
+    delete mWorker;
+}
 
-    static bool connected = false;
-    if (connected)
-        return;
+void SensorsConnection::setAmbientLightData(const QtMobility::QAmbientLightReadingData &data)
+{
+    *qtAmbientLightData() = data;
+}
 
-    connected = true;
-    MobilityConnection *connection = MobilityConnection::instance();
-    SensorsConnection *sensorsConnection = new SensorsConnection(connection);
-    sensorsConnection->getInitialData();
+void SensorsConnection::setLightData(const QtMobility::QLightReadingData &data)
+{
+    *qtLightData() = data;
+}
+
+void SensorsConnection::setAccelerometerData(const QtMobility::QAccelerometerReadingData &data)
+{
+    *qtAccelerometerData() = data;
+}
+
+void SensorsConnection::setMagnetometerData(const QtMobility::QMagnetometerReadingData &data)
+{
+    *qtMagnetometerData() = data;
+}
+
+void SensorsConnection::setCompassData(const QtMobility::QCompassReadingData &data)
+{
+    *qtCompassData() = data;
+}
+
+void SensorsConnection::setProximityData(const QtMobility::QProximityReadingData &data)
+{
+    *qtProximityData() = data;
+}
+
+void SensorsConnection::initialSensorsDataSent()
+{
+    mInitialDataSent = true;
 }
 
 SimulatorCommon::SimulatorCommon(QSensor *sensor)
@@ -135,7 +113,7 @@ SimulatorCommon::SimulatorCommon(QSensor *sensor)
 {
     addDataRate(1, 100);
     sensor->setDataRate(20);
-    ensureSimulatorConnection();
+    (void)sensorsConnection(); // Ensure this exists
 }
 
 void SimulatorCommon::start()
@@ -164,37 +142,37 @@ void SimulatorCommon::stop()
 
 void SimulatorCommon::timerEvent(QTimerEvent * /*event*/)
 {
+    if (!sensorsConnection()->safe()) return; // wait until it's safe to read the data
     poll();
 }
 
-QAccelerometerReadingData get_qtAccelerometerData()
+QtMobility::QAccelerometerReadingData get_qtAccelerometerData()
 {
     return *qtAccelerometerData();
 }
 
-QMagnetometerReadingData get_qtMagnetometerData()
+QtMobility::QMagnetometerReadingData get_qtMagnetometerData()
 {
     return *qtMagnetometerData();
 }
 
-QAmbientLightReadingData get_qtAmbientLightData()
+QtMobility::QAmbientLightReadingData get_qtAmbientLightData()
 {
     return *qtAmbientLightData();
 }
 
-QLightReadingData get_qtLightData()
+QtMobility::QLightReadingData get_qtLightData()
 {
     return *qtLightData();
 }
 
-QCompassReadingData get_qtCompassData()
+QtMobility::QCompassReadingData get_qtCompassData()
 {
     return *qtCompassData();
 }
 
-QProximityReadingData get_qtProximityData()
+QtMobility::QProximityReadingData get_qtProximityData()
 {
     return *qtProximityData();
 }
 
-#include "moc_simulatorcommon.cpp"

@@ -45,37 +45,37 @@
 #include <qsensorbackend.h>
 #include "qsensordata_simulator_p.h"
 
-QT_BEGIN_HEADER
-
 class QTimer;
 
 namespace Simulator
 {
-    class MobilityConnection;
+    class Connection;
+    class ConnectionWorker;
+}
 
-    class SensorsConnection : public QObject
-    {
-        Q_OBJECT
-    public:
-        SensorsConnection(MobilityConnection *mobilityCon);
-        virtual ~SensorsConnection() {}
+class SensorsConnection : public QObject
+{
+    Q_OBJECT
+public:
+    explicit SensorsConnection(QObject *parent = 0);
+    virtual ~SensorsConnection();
 
-        void getInitialData();
+    bool safe() const { return mInitialDataSent; }
 
-    private slots:
-        void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
-        void setLightData(const QtMobility::QLightReadingData &);
-        void setAccelerometerData(const QtMobility::QAccelerometerReadingData &);
-        void setMagnetometerData(const QtMobility::QMagnetometerReadingData &);
-        void setCompassData(const QtMobility::QCompassReadingData &);
-        void setProximityData(const QtMobility::QProximityReadingData &);
-        void initialSensorsDataSent();
+public slots:
+    void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
+    void setLightData(const QtMobility::QLightReadingData &);
+    void setAccelerometerData(const QtMobility::QAccelerometerReadingData &);
+    void setMagnetometerData(const QtMobility::QMagnetometerReadingData &);
+    void setCompassData(const QtMobility::QCompassReadingData &);
+    void setProximityData(const QtMobility::QProximityReadingData &);
+    void initialSensorsDataSent();
 
-    private:
-        MobilityConnection *mConnection;
-        bool mInitialDataReceived;
-    };
-} // end namespace Simulator
+private:
+    Simulator::Connection *mConnection;
+    Simulator::ConnectionWorker *mWorker;
+    bool mInitialDataSent;
+};
 
 class SimulatorCommon : public QSensorBackend
 {
@@ -91,14 +91,12 @@ private:
     int m_timerid;
 };
 
-QAccelerometerReadingData get_qtAccelerometerData();
-QMagnetometerReadingData get_qtMagnetometerData();
-QAmbientLightReadingData get_qtAmbientLightData();
-QLightReadingData get_qtLightData();
-QCompassReadingData get_qtCompassData();
-QProximityReadingData get_qtProximityData();
-
-QT_END_HEADER
+QtMobility::QAccelerometerReadingData get_qtAccelerometerData();
+QtMobility::QMagnetometerReadingData get_qtMagnetometerData();
+QtMobility::QAmbientLightReadingData get_qtAmbientLightData();
+QtMobility::QLightReadingData get_qtLightData();
+QtMobility::QCompassReadingData get_qtCompassData();
+QtMobility::QProximityReadingData get_qtProximityData();
 
 #endif
 

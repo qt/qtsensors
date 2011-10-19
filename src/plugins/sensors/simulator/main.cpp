@@ -45,11 +45,9 @@
 #include "simulatorcompass.h"
 #include "simulatorproximitysensor.h"
 #include "simulatormagnetometer.h"
-#include <qsensorplugin.h>
-#include <qsensorbackend.h>
-#include <qsensormanager.h>
-#include <QFile>
-#include <QDebug>
+#include <QSensorPluginInterface>
+#include <QSensorBackend>
+#include <QSensorManager>
 
 class SimulatorSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
