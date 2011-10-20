@@ -50,7 +50,6 @@ IMPLEMENT_READING(QTapReading)
     \class QTapReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QTapReading class represents one reading from the
            tap sensor.

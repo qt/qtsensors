@@ -50,7 +50,6 @@ IMPLEMENT_READING(QAccelerometerReading)
     \class QAccelerometerReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QAccelerometerReading class reports on linear acceleration
            along the X, Y and Z axes.

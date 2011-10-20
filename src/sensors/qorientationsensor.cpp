@@ -50,7 +50,6 @@ IMPLEMENT_READING(QOrientationReading)
     \class QOrientationReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QOrientationReading class represents one reading from the
            orientation sensor.

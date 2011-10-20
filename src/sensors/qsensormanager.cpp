@@ -206,7 +206,6 @@ void QSensorManagerPrivate::loadPlugins()
     \class QSensorManager
     \ingroup sensors_backend
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QSensorManager class handles registration and creation of sensor backends.
 

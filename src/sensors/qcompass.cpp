@@ -50,7 +50,6 @@ IMPLEMENT_READING(QCompassReading)
     \class QCompassReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QCompassReading class represents one reading from a
            compass.

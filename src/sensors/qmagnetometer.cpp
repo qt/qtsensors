@@ -50,7 +50,6 @@ IMPLEMENT_READING(QMagnetometerReading)
     \class QMagnetometerReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QMagnetometerReading class represents one reading from the
            magnetometer.

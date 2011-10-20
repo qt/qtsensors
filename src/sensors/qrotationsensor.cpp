@@ -50,7 +50,6 @@ IMPLEMENT_READING(QRotationReading)
     \class QRotationReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QRotationReading class represents one reading from the
            rotation sensor.

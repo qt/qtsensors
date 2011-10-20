@@ -50,7 +50,6 @@ IMPLEMENT_READING(QProximityReading)
     \class QProximityReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.0
 
     \brief The QProximityReading class represents one reading from the
            proximity sensor.

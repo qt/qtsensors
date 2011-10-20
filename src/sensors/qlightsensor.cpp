@@ -50,7 +50,6 @@ IMPLEMENT_READING(QLightReading)
     \class QLightReading
     \ingroup sensors_reading
 
-    \since 1.2
 
     \brief The QLightReading class represents one reading from the
            light sensor.

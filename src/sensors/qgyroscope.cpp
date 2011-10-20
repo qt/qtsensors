@@ -50,7 +50,6 @@ IMPLEMENT_READING(QGyroscopeReading)
     \class QGyroscopeReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 1.2
 
     \brief The QGyroscopeReading class represents one reading from the
            gyroscope sensor.
