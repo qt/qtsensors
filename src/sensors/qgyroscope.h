@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QGyroscopeReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QGyroscopeReading : public QSensorReading
+class Q_SENSORS_EXPORT QGyroscopeReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal x READ x)
@@ -66,7 +66,7 @@ public:
     void setZ(qreal z);
 };
 
-class Q_SENSORS_EXPORT_TEMP QGyroscopeFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QGyroscopeFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QGyroscopeReading *reading) = 0;
@@ -74,7 +74,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QGyroscopeReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QGyroscope : public QSensor
+class Q_SENSORS_EXPORT QGyroscope : public QSensor
 {
     Q_OBJECT
 public:

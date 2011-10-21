@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QAccelerometerReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QAccelerometerReading : public QSensorReading
+class Q_SENSORS_EXPORT QAccelerometerReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal x READ x)
@@ -66,7 +66,7 @@ public:
     void setZ(qreal z);
 };
 
-class Q_SENSORS_EXPORT_TEMP QAccelerometerFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QAccelerometerFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QAccelerometerReading *reading) = 0;
@@ -74,7 +74,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QAccelerometerReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QAccelerometer : public QSensor
+class Q_SENSORS_EXPORT QAccelerometer : public QSensor
 {
     Q_OBJECT
 public:

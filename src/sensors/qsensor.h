@@ -71,7 +71,7 @@ struct qoutputrange
 };
 typedef QList<qoutputrange> qoutputrangelist;
 
-class Q_SENSORS_EXPORT_TEMP QSensor : public QObject
+class Q_SENSORS_EXPORT QSensor : public QObject
 {
     friend class QSensorBackend;
 
@@ -160,7 +160,7 @@ private:
     Q_DISABLE_COPY(QSensor)
 };
 
-class Q_SENSORS_EXPORT_TEMP QSensorFilter
+class Q_SENSORS_EXPORT QSensorFilter
 {
     friend class QSensor;
 public:
@@ -172,7 +172,7 @@ protected:
     QSensor *m_sensor;
 };
 
-class Q_SENSORS_EXPORT_TEMP QSensorReading : public QObject
+class Q_SENSORS_EXPORT QSensorReading : public QObject
 {
     friend class QSensorBackend;
 

@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QCompassReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QCompassReading : public QSensorReading
+class Q_SENSORS_EXPORT QCompassReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal azimuth READ azimuth)
@@ -62,7 +62,7 @@ public:
     void setCalibrationLevel(qreal calibrationLevel);
 };
 
-class Q_SENSORS_EXPORT_TEMP QCompassFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QCompassFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QCompassReading *reading) = 0;
@@ -70,7 +70,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QCompassReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QCompass : public QSensor
+class Q_SENSORS_EXPORT QCompass : public QSensor
 {
     Q_OBJECT
 public:

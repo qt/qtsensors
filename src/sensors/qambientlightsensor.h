@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QAmbientLightReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QAmbientLightReading : public QSensorReading
+class Q_SENSORS_EXPORT QAmbientLightReading : public QSensorReading
 {
     Q_OBJECT
     Q_ENUMS(LightLevel)
@@ -68,7 +68,7 @@ public:
     void setLightLevel(LightLevel lightLevel);
 };
 
-class Q_SENSORS_EXPORT_TEMP QAmbientLightFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QAmbientLightFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QAmbientLightReading *reading) = 0;
@@ -76,7 +76,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QAmbientLightReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QAmbientLightSensor : public QSensor
+class Q_SENSORS_EXPORT QAmbientLightSensor : public QSensor
 {
     Q_OBJECT
 public:

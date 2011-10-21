@@ -56,7 +56,7 @@
 
 // The unit test needs to change the behaviour of the library. It does this
 // through an exported but undocumented function.
-Q_SENSORS_EXPORT_TEMP void sensors_unit_test_hook(int index);
+Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
 bool operator==(const qoutputrange &orl1, const qoutputrange &orl2)
 {
     return (orl1.minimum == orl2.minimum &&

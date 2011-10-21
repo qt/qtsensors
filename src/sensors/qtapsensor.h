@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QTapReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QTapReading : public QSensorReading
+class Q_SENSORS_EXPORT QTapReading : public QSensorReading
 {
     Q_OBJECT
     Q_ENUMS(TapDirection)
@@ -79,7 +79,7 @@ public:
     void setDoubleTap(bool doubleTap);
 };
 
-class Q_SENSORS_EXPORT_TEMP QTapFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QTapFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QTapReading *reading) = 0;
@@ -87,7 +87,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QTapReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QTapSensor : public QSensor
+class Q_SENSORS_EXPORT QTapSensor : public QSensor
 {
     Q_OBJECT
 #ifdef Q_QDOC

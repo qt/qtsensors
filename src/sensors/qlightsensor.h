@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QLightReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QLightReading : public QSensorReading
+class Q_SENSORS_EXPORT QLightReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal lux READ lux)
@@ -58,7 +58,7 @@ public:
     void setLux(qreal lux);
 };
 
-class Q_SENSORS_EXPORT_TEMP QLightFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QLightFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QLightReading *reading) = 0;
@@ -66,7 +66,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QLightReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QLightSensor : public QSensor
+class Q_SENSORS_EXPORT QLightSensor : public QSensor
 {
     Q_OBJECT
 #ifdef Q_QDOC

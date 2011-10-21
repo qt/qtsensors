@@ -53,7 +53,7 @@ QDeclAccelerometer* TestSensorPlugin::stAccel = 0;
 QDeclAmbientLightSensor* TestSensorPlugin::stAbl = 0;
 QDeclProximitySensor* TestSensorPlugin::stProxi = 0;
 
-Q_SENSORS_EXPORT_TEMP void sensors_unit_test_hook(int index);
+Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
 
 class tst_Sensors2QMLAPI : public QObject
 {

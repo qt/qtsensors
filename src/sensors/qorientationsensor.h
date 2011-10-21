@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QOrientationReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QOrientationReading : public QSensorReading
+class Q_SENSORS_EXPORT QOrientationReading : public QSensorReading
 {
     Q_OBJECT
     Q_ENUMS(Orientation)
@@ -69,7 +69,7 @@ public:
     void setOrientation(Orientation orientation);
 };
 
-class Q_SENSORS_EXPORT_TEMP QOrientationFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QOrientationFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QOrientationReading *reading) = 0;
@@ -77,7 +77,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QOrientationReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QOrientationSensor : public QSensor
+class Q_SENSORS_EXPORT QOrientationSensor : public QSensor
 {
     Q_OBJECT
 public:

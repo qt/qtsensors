@@ -50,7 +50,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_SENSORS_EXPORT_TEMP QSensorPluginInterface
+class Q_SENSORS_EXPORT QSensorPluginInterface
 {
 public:
     virtual void registerSensors() = 0;
@@ -58,7 +58,7 @@ protected:
     ~QSensorPluginInterface() {}
 };
 
-class Q_SENSORS_EXPORT_TEMP QSensorChangesInterface
+class Q_SENSORS_EXPORT QSensorChangesInterface
 {
 public:
     virtual void sensorsChanged() = 0;

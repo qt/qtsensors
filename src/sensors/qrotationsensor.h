@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 
 class QRotationReadingPrivate;
 
-class Q_SENSORS_EXPORT_TEMP QRotationReading : public QSensorReading
+class Q_SENSORS_EXPORT QRotationReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal x READ x)
@@ -66,7 +66,7 @@ public:
     void setZ(qreal z);
 };
 
-class Q_SENSORS_EXPORT_TEMP QRotationFilter : public QSensorFilter
+class Q_SENSORS_EXPORT QRotationFilter : public QSensorFilter
 {
 public:
     virtual bool filter(QRotationReading *reading) = 0;
@@ -74,7 +74,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QRotationReading*>(reading)); }
 };
 
-class Q_SENSORS_EXPORT_TEMP QRotationSensor : public QSensor
+class Q_SENSORS_EXPORT QRotationSensor : public QSensor
 {
     Q_OBJECT
 #ifdef Q_QDOC

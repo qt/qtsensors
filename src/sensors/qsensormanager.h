@@ -52,7 +52,7 @@ class QSensorPluginInterface;
 
 typedef QSensorPluginInterface *(*CreatePluginFunc)();
 
-class Q_SENSORS_EXPORT_TEMP QSensorManager
+class Q_SENSORS_EXPORT QSensorManager
 {
 public:
     // Register a backend (call this from a plugin)
@@ -68,7 +68,7 @@ public:
     static void registerStaticPlugin(CreatePluginFunc func);
 };
 
-class Q_SENSORS_EXPORT_TEMP QSensorBackendFactory
+class Q_SENSORS_EXPORT QSensorBackendFactory
 {
 public:
     virtual QSensorBackend *createBackend(QSensor *sensor) = 0;
