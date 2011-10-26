@@ -881,6 +881,10 @@ private slots:
             QCOMPARE(reading->isDoubleTap(), true);
         })
 
+        TEST_SENSORINTERFACE(QIRProximitySensor, QIRProximityReading, {
+            QCOMPARE(reading->reflectance(), 0.5);
+        })
+
         unregister_test_backends();
     }
 

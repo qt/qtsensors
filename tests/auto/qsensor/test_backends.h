@@ -57,6 +57,7 @@ void unregister_test_backends();
 #include <qproximitysensor.h>
 #include <qrotationsensor.h>
 #include <qtapsensor.h>
+#include <qirproximitysensor.h>
 
 #define PREPARE_SENSORINTERFACE_DECLS(SensorClass, ReadingClass, FilterClass, readingcode)\
     class SensorClass ## _impl : public QSensorBackend\
@@ -129,6 +130,9 @@ PREPARE_SENSORINTERFACE(QRotationSensor, QRotationReading, QRotationFilter, {
 PREPARE_SENSORINTERFACE(QTapSensor, QTapReading, QTapFilter, {
     reading->setTapDirection(QTapReading::Z_Both);
     reading->setDoubleTap(true);
+})
+PREPARE_SENSORINTERFACE(QIRProximitySensor, QIRProximityReading, QIRProximityFilter, {
+    reading->setReflectance(0.5);
 })
 
 #define TEST_SENSORINTERFACE(SensorClass, ReadingClass, readingcode)\
