@@ -56,11 +56,6 @@ QSensorPluginLoader::QSensorPluginLoader()
 
 QSensorPluginLoader::~QSensorPluginLoader()
 {
-    Q_FOREACH (QPluginLoader *loader, m_loaders) {
-        bool ok = loader->unload();
-        if (!ok) qWarning() << "Cannot unload" << loader->fileName();
-        delete loader;
-    }
 }
 
 QList<QObject*> QSensorPluginLoader::plugins() const
