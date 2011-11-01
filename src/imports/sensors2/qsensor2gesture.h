@@ -39,36 +39,68 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
+#ifndef QSENSOR2GESTURE_H
+#define QSENSOR2GESTURE_H
+
+#include <QtDeclarative/QDeclarativeParserStatus>
 #include <QtDeclarative/qdeclarative.h>
-#include "qsensor2ambientlight.h"
-#include "qsensor2proximity.h"
-#include "qsensor2tilt.h"
-#include "qsensor2gesture.h"
-#include <QtCore/QDebug>
+#include <QtCore/QStringList>
+#include <QtCore/QMap>
 
 QT_BEGIN_NAMESPACE
 
-class QSensors2DeclarativeModule : public QDeclarativeExtensionPlugin
+class QSensorGesture;
+class QSensorGestureManager;
+class QSensor2Gesture : public QObject, public QDeclarativeParserStatus
 {
     Q_OBJECT
-public:
-    virtual void registerTypes(const char *uri)
-    {
-        qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
+    Q_PROPERTY(QStringList availableGestures READ availableGestures NOTIFY availableGesturesChanged)
+    Q_PROPERTY(QStringList gestures READ gestures WRITE setGestures NOTIFY gesturesChanged)
+    Q_PROPERTY(QStringList validGestures READ validGestures NOTIFY validGesturesChanged)
+    Q_PROPERTY(QStringList invalidGestures READ invalidGestures NOTIFY invalidGesturesChanged)
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
+    Q_INTERFACES(QDeclarativeParserStatus)
 
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
-        qmlRegisterType<QSensor2Tilt>(uri, 5, 0, "TiltSensor");
-        qmlRegisterType<QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
-        qmlRegisterType<QSensor2Proximity>(uri, 5, 0, "ProximitySensor");
-        qmlRegisterType<QSensor2Gesture>(uri, 5, 0, "SensorGesture");
-    }
+public:
+    QSensor2Gesture(QObject* parent = 0);
+    virtual ~QSensor2Gesture();
+    void classBegin();
+    void componentComplete();
+
+Q_SIGNALS:
+    void detected(const QString &gesture);
+    void availableGesturesChanged();
+    void gesturesChanged();
+    void validGesturesChanged();
+    void invalidGesturesChanged();
+    void enabledChanged();
+
+public:
+    QStringList availableGestures();
+    QStringList gestures() const;
+    void setGestures(const QStringList& value);
+    bool enabled() const;
+    void setEnabled(bool value);
+    QStringList validGestures() const;
+    QStringList invalidGestures() const;
+
+private:
+    void deleteGesture();
+    void createGesture();
+
+private:
+    QStringList _gestureIds;
+    bool _enabled;
+    bool _oldEnabled;
+    bool _init;
+    QStringList _gestures;
+
+    QSensorGesture* _sensorGesture;
+    QSensorGestureManager* _sensorGestureManager;
 };
 
 QT_END_NAMESPACE
 
-#include "sensors2.moc"
+QML_DECLARE_TYPE(QSensor2Gesture)
 
-Q_EXPORT_PLUGIN2(qsensors2declarativemodule, QT_PREPEND_NAMESPACE(QSensors2DeclarativeModule))
-
-
+#endif // QSENSOR2GESTURE_H

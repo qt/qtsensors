@@ -39,36 +39,98 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
-#include "qsensor2ambientlight.h"
-#include "qsensor2proximity.h"
-#include "qsensor2tilt.h"
-#include "qsensor2gesture.h"
-#include <QtCore/QDebug>
+#include <QDebug>
+#include <QTimer>
 
-QT_BEGIN_NAMESPACE
+#include "qtemplaterecognizer.h"
 
-class QSensors2DeclarativeModule : public QDeclarativeExtensionPlugin
+QTemplateGestureRecognizer::QTemplateGestureRecognizer(QObject *parent)
+    : QSensorGestureRecognizer(parent)
 {
-    Q_OBJECT
-public:
-    virtual void registerTypes(const char *uri)
-    {
-        qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
+}
 
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
-        qmlRegisterType<QSensor2Tilt>(uri, 5, 0, "TiltSensor");
-        qmlRegisterType<QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
-        qmlRegisterType<QSensor2Proximity>(uri, 5, 0, "ProximitySensor");
-        qmlRegisterType<QSensor2Gesture>(uri, 5, 0, "SensorGesture");
-    }
-};
+QTemplateGestureRecognizer::~QTemplateGestureRecognizer()
+{
 
-QT_END_NAMESPACE
+}
 
-#include "sensors2.moc"
+void QTemplateGestureRecognizer::create()
+{
+    connect(&_timer,SIGNAL(timeout()),this,SLOT(timeout()));
+    _timer.setInterval(1000);
+}
 
-Q_EXPORT_PLUGIN2(qsensors2declarativemodule, QT_PREPEND_NAMESPACE(QSensors2DeclarativeModule))
+bool QTemplateGestureRecognizer::start()
+{
+    Q_EMIT detected(id());
+    _timer.start();
+    return _timer.isActive();
+}
+
+bool QTemplateGestureRecognizer::stop()
+{
+    _timer.stop();
+    return true;
+}
 
 
+bool QTemplateGestureRecognizer::isActive()
+{
+    return _timer.isActive();
+}
+
+QString QTemplateGestureRecognizer::id() const
+{
+    return QString("QtSensors.template");
+}
+
+void QTemplateGestureRecognizer::timeout()
+{
+    Q_EMIT detected(id());
+}
+
+
+QTemplateGestureRecognizer1::QTemplateGestureRecognizer1(QObject *parent)
+    : QSensorGestureRecognizer(parent)
+{
+}
+
+QTemplateGestureRecognizer1::~QTemplateGestureRecognizer1()
+{
+
+}
+
+void QTemplateGestureRecognizer1::create()
+{
+    connect(&_timer,SIGNAL(timeout()),this,SLOT(timeout()));
+    _timer.setInterval(500);
+}
+
+bool QTemplateGestureRecognizer1::start()
+{
+    Q_EMIT detected(id());
+    _timer.start();
+    return _timer.isActive();
+}
+
+bool QTemplateGestureRecognizer1::stop()
+{
+    _timer.stop();
+    return true;
+}
+
+
+bool QTemplateGestureRecognizer1::isActive()
+{
+    return _timer.isActive();
+}
+
+QString QTemplateGestureRecognizer1::id() const
+{
+    return QString("QtSensors.template1");
+}
+
+void QTemplateGestureRecognizer1::timeout()
+{
+    Q_EMIT detected(id());
+}

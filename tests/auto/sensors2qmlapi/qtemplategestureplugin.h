@@ -39,36 +39,27 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
-#include "qsensor2ambientlight.h"
-#include "qsensor2proximity.h"
-#include "qsensor2tilt.h"
-#include "qsensor2gesture.h"
-#include <QtCore/QDebug>
+#ifndef QTEMPLATEGESTUREPLUGIN_H
+#define QTEMPLATEGESTUREPLUGIN_H
 
-QT_BEGIN_NAMESPACE
+#include <QObject>
+#include <QStringList>
 
-class QSensors2DeclarativeModule : public QDeclarativeExtensionPlugin
+#include <qsensorgestureplugininterface.h>
+
+class QTemplateGesturePlugin : public QObject, QSensorGesturePluginInterface
 {
     Q_OBJECT
+    Q_INTERFACES(QSensorGesturePluginInterface)
 public:
-    virtual void registerTypes(const char *uri)
-    {
-        qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
+    explicit QTemplateGesturePlugin();
+    ~QTemplateGesturePlugin();
 
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
-        qmlRegisterType<QSensor2Tilt>(uri, 5, 0, "TiltSensor");
-        qmlRegisterType<QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
-        qmlRegisterType<QSensor2Proximity>(uri, 5, 0, "ProximitySensor");
-        qmlRegisterType<QSensor2Gesture>(uri, 5, 0, "SensorGesture");
-    }
+    QList <QSensorGestureRecognizer *> createRecognizers();
+
+    QStringList gestureSignals() const;
+    QStringList supportedIds() const;
+    QString name() const { return "TemplateGestures"; }
 };
 
-QT_END_NAMESPACE
-
-#include "sensors2.moc"
-
-Q_EXPORT_PLUGIN2(qsensors2declarativemodule, QT_PREPEND_NAMESPACE(QSensors2DeclarativeModule))
-
-
+#endif // QTEMPLATEGESTUREPLUGIN_H

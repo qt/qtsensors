@@ -39,36 +39,55 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
-#include "qsensor2ambientlight.h"
-#include "qsensor2proximity.h"
-#include "qsensor2tilt.h"
-#include "qsensor2gesture.h"
-#include <QtCore/QDebug>
+#ifndef QTEMPLATERECOGNIZER_H
+#define QTEMPLATERECOGNIZER_H
 
-QT_BEGIN_NAMESPACE
+#include <QDebug>
+#include <QtCore/QTimer>
+#include <qsensorgesturerecognizer.h>
 
-class QSensors2DeclarativeModule : public QDeclarativeExtensionPlugin
+class QTemplateGestureRecognizer : public QSensorGestureRecognizer
 {
     Q_OBJECT
 public:
-    virtual void registerTypes(const char *uri)
-    {
-        qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
 
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
-        qmlRegisterType<QSensor2Tilt>(uri, 5, 0, "TiltSensor");
-        qmlRegisterType<QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
-        qmlRegisterType<QSensor2Proximity>(uri, 5, 0, "ProximitySensor");
-        qmlRegisterType<QSensor2Gesture>(uri, 5, 0, "SensorGesture");
-    }
+    QTemplateGestureRecognizer(QObject *parent = 0);
+    ~QTemplateGestureRecognizer();
+
+    void create();
+
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
+
+private slots:
+    void timeout();
+
+private:
+    QTimer _timer;
 };
 
-QT_END_NAMESPACE
+class QTemplateGestureRecognizer1 : public QSensorGestureRecognizer
+{
+    Q_OBJECT
+public:
 
-#include "sensors2.moc"
+    QTemplateGestureRecognizer1(QObject *parent = 0);
+    ~QTemplateGestureRecognizer1();
 
-Q_EXPORT_PLUGIN2(qsensors2declarativemodule, QT_PREPEND_NAMESPACE(QSensors2DeclarativeModule))
+    void create();
 
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
+private slots:
+    void timeout();
+
+private:
+    QTimer _timer;
+};
+
+#endif // QTEMPLATERECOGNIZER_H

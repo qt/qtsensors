@@ -39,36 +39,43 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
-#include "qsensor2ambientlight.h"
-#include "qsensor2proximity.h"
-#include "qsensor2tilt.h"
-#include "qsensor2gesture.h"
-#include <QtCore/QDebug>
+#include <QtPlugin>
+#include <QStringList>
+#include <QObject>
 
-QT_BEGIN_NAMESPACE
+#include "qtemplategestureplugin.h"
+#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturemanager.h>
+#include "qtemplaterecognizer.h"
 
-class QSensors2DeclarativeModule : public QDeclarativeExtensionPlugin
+
+QTemplateGesturePlugin::QTemplateGesturePlugin()
 {
-    Q_OBJECT
-public:
-    virtual void registerTypes(const char *uri)
-    {
-        qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
+}
 
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
-        qmlRegisterType<QSensor2Tilt>(uri, 5, 0, "TiltSensor");
-        qmlRegisterType<QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
-        qmlRegisterType<QSensor2Proximity>(uri, 5, 0, "ProximitySensor");
-        qmlRegisterType<QSensor2Gesture>(uri, 5, 0, "SensorGesture");
-    }
-};
+QTemplateGesturePlugin::~QTemplateGesturePlugin()
+{
+}
 
-QT_END_NAMESPACE
+QStringList QTemplateGesturePlugin::supportedIds() const
+{
+    QStringList list;
+    list << "QtSensors.template" << "QtSensors.template1";
+    return list;
+}
 
-#include "sensors2.moc"
 
-Q_EXPORT_PLUGIN2(qsensors2declarativemodule, QT_PREPEND_NAMESPACE(QSensors2DeclarativeModule))
+QList <QSensorGestureRecognizer *>  QTemplateGesturePlugin::createRecognizers()
+{
+    QList <QSensorGestureRecognizer *> recognizers;
 
+    QSensorGestureRecognizer *sRec = new QTemplateGestureRecognizer(this);
+    recognizers.append(sRec);
+    sRec = new QTemplateGestureRecognizer1(this);
+    recognizers.append(sRec);
+
+    return recognizers;
+}
+
+Q_EXPORT_PLUGIN2(QTemplateGestureRecognizer, QTemplateGesturePlugin)
 
