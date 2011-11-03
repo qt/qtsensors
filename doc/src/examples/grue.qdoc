@@ -139,7 +139,7 @@
     \title Grue Sensor QML Import
     \brief The Grue sensor QML import exports the GrueSensor class as a QML element.
 
-    This example creates the \l {Grue 1.0} import.
+    This example creates the \e {Grue 1.0} import.
 
     \sa {Grue Sensor Example}
 */
@@ -158,15 +158,5 @@
     \endcode
 
     \sa {Grue Sensor Example}
-*/
-
-/*!
-    \qmlmodule Grue 1
-    \title Grue 1.0
-    \brief QML import for the Grue Sensor Example
-
-    These are the elements available in the Grue 1.0 import.
-
-    \sa {Grue Sensor QML Application}
 */
 
