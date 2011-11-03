@@ -43,7 +43,7 @@
 
 IMPLEMENT_READING(GrueSensorReading)
 
-/*!
+/*
     \class GrueSensorReading
 
     \brief The GrueSensorReading class holds readings from the Grue sensor.
@@ -55,7 +55,7 @@ IMPLEMENT_READING(GrueSensorReading)
     your chances are of being eaten by a Grue.
 */
 
-/*!
+/*
     \property GrueSensorReading::chanceOfBeingEaten
     \brief holds your chance of being eaten.
 
@@ -80,7 +80,7 @@ void GrueSensorReading::setChanceOfBeingEaten(qreal chanceOfBeingEaten)
 
 // begin generated code
 
-/*!
+/*
     \class GrueFilter
 
     \brief The GrueFilter class is a convenience wrapper around QSensorFilter.
@@ -89,7 +89,7 @@ void GrueSensorReading::setChanceOfBeingEaten(qreal chanceOfBeingEaten)
     instead of QSensorReading.
 */
 
-/*!
+/*
     \fn GrueFilter::filter(GrueSensorReading *reading)
 
     Called when \a reading changes. Returns false to prevent the reading from propagating.
@@ -99,7 +99,7 @@ void GrueSensorReading::setChanceOfBeingEaten(qreal chanceOfBeingEaten)
 
 char const * const GrueSensor::type("GrueSensor");
 
-/*!
+/*
     \class GrueSensor
 
     \brief The GrueSensor class is a convenience wrapper around QSensor.
@@ -113,19 +113,19 @@ char const * const GrueSensor::type("GrueSensor");
     \sa GrueSensorReading
 */
 
-/*!
+/*
     \fn GrueSensor::GrueSensor(QObject *parent)
 
     Construct the sensor as a child of \a parent.
 */
 
-/*!
+/*
     \fn GrueSensor::~GrueSensor()
 
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
 
-/*!
+/*
     \fn GrueSensor::reading() const
 
     Returns the reading class for this sensor.

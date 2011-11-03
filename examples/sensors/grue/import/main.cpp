@@ -70,7 +70,7 @@ QT_END_NAMESPACE
 
 Q_EXPORT_PLUGIN2(gruesensorqmlimport, QT_PREPEND_NAMESPACE(GrueSensorQmlImport));
 
-/*!
+/*
     \qmlclass GrueSensor GrueSensor
     \inqmlmodule Grue 1
     \brief The GrueSensor element reports on your chance of being eaten by a Grue.
@@ -83,19 +83,19 @@ Q_EXPORT_PLUGIN2(gruesensorqmlimport, QT_PREPEND_NAMESPACE(GrueSensorQmlImport))
     \sa {QtMobility.sensors QML Limitations}
 */
 
-/*!
+/*
     \qmlproperty GrueSensorReading Grue1::GrueSensor::reading
     Holds the most recent Grue sensor reading.
     Please see QSensor::reading for information about this property.
 */
 
-/*!
+/*
     \qmlsignal Grue1::GrueSensor::onReadingChanged()
     Called when the reading object changes.
     Please see QSensor::readingChanged() for information about this signal.
 */
 
-/*!
+/*
     \qmlclass GrueSensorReading GrueSensorReading
     \inqmlmodule Grue 1
     \inherits QtMobility.sensors1::SensorReading
@@ -109,7 +109,7 @@ Q_EXPORT_PLUGIN2(gruesensorqmlimport, QT_PREPEND_NAMESPACE(GrueSensorQmlImport))
     This element cannot be directly created.
 */
 
-/*!
+/*
     \qmlproperty qreal Grue1::GrueSensorReading::chanceOfBeingEaten
     Please see GrueSensorReading::chanceOfBeingEaten for information about this property.
 */
