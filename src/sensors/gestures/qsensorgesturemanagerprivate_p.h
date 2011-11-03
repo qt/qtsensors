@@ -72,6 +72,8 @@ public:
     QStringList gestureIds();
     QStringList knownIds;
     void initPlugin(QObject *o);
+Q_SIGNALS:
+        void newSensorGestureAvailable();
 };
 
 #endif // QSENSORGESTUREMANAGERPRIVATE_P_H

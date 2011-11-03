@@ -145,6 +145,7 @@ bool QSensorGestureManagerPrivate::registerSensorGestureRecognizer(QSensorGestur
         Q_ASSERT (!registeredSensorGestures.contains(recognizer->id()));
         recognizer->setParent(0);
         registeredSensorGestures.insert(recognizer->id(),recognizer);
+        Q_EMIT newSensorGestureAvailable();
 
         return true;
     }

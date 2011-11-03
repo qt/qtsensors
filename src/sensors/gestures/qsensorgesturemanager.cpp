@@ -68,6 +68,8 @@ Q_GLOBAL_STATIC(QSensorGestureManagerPrivate, sensorGestureManagerPrivate)
 QSensorGestureManager::QSensorGestureManager(QObject *parent)
     : QObject(parent)
 {
+    connect(sensorGestureManagerPrivate(),SIGNAL(newSensorGestureAvailable()),
+            this,SIGNAL(newSensorGestureAvailable()));
 }
 
 /*!
@@ -88,9 +90,7 @@ QSensorGestureManager::~QSensorGestureManager()
  bool QSensorGestureManager::registerSensorGestureRecognizer(QSensorGestureRecognizer *recognizer)
  {
      bool ok = sensorGestureManagerPrivate()->registerSensorGestureRecognizer(recognizer);
-     if (ok)
-         Q_EMIT newSensorGestureAvailable();
-     else
+     if (!ok)
          delete recognizer;
 
      return ok;

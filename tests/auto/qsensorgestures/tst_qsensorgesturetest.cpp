@@ -272,11 +272,14 @@ void Tst_qsensorgestureTest::tst_manager_registerSensorGestureRecognizer()
 void Tst_qsensorgestureTest::tst_manager__newSensorAvailable()
 {
     QSensorGestureManager manager;
+    QSensorGestureManager manager2;
 
     QSignalSpy spy_manager_available(&manager, SIGNAL(newSensorGestureAvailable()));
+    QSignalSpy spy_manager2_available(&manager2, SIGNAL(newSensorGestureAvailable()));
 
     manager.gestureIds();
     QCOMPARE(spy_manager_available.count(),0);
+    QCOMPARE(spy_manager2_available.count(),0);
 
     QTest3Recognizer *recognizer = new QTest3Recognizer;
     recognizer->changeId("QtSensors.test4");
@@ -291,6 +294,7 @@ void Tst_qsensorgestureTest::tst_manager__newSensorAvailable()
     ok = manager.registerSensorGestureRecognizer(recognizer);
     QCOMPARE(ok, false);
     QCOMPARE(spy_manager_available.count(),1);
+    QCOMPARE(spy_manager2_available.count(),1);
 }
 
 
