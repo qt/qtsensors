@@ -266,7 +266,6 @@ void Tst_qsensorgestureTest::tst_manager_registerSensorGestureRecognizer()
     ok = manager.registerSensorGestureRecognizer(recognizer);
     QCOMPARE(ok, false);
     QVERIFY(num+1 == manager.gestureIds().count());
-
 }
 
 void Tst_qsensorgestureTest::tst_manager__newSensorAvailable()
@@ -295,6 +294,10 @@ void Tst_qsensorgestureTest::tst_manager__newSensorAvailable()
     QCOMPARE(ok, false);
     QCOMPARE(spy_manager_available.count(),1);
     QCOMPARE(spy_manager2_available.count(),1);
+
+    QSensorGesture *test4sg;
+    test4sg = new QSensorGesture(QStringList() << "QtSensors.test4",this);
+    QVERIFY(test4sg->isValid());
 }
 
 

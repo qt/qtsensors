@@ -112,6 +112,11 @@ void QSensorGestureManagerPrivate::loadPlugins()
 
 bool QSensorGestureManagerPrivate::loadRecognizer(const QString &recognizerId)
 {
+    //if no plugin is used return true if this is a registered recognizer
+
+    if (registeredSensorGestures.contains(recognizerId))
+        return true;
+
     for (int i= 0; i < plugins.count(); i++) {
 
         if (QSensorGesturePluginInterface *pInterface
