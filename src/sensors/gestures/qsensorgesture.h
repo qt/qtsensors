@@ -65,13 +65,13 @@ public:
 
     bool isActive();
 
-    QStringList availableIds() const;
+    QStringList validIds() const;
+    QStringList invalidIds() const;
+
     QStringList gestureSignals() const;
 
     void startDetection();
     void stopDetection();
-
-    bool isValid() const;
 
 private:
     QSensorGesturePrivate * d_ptr;

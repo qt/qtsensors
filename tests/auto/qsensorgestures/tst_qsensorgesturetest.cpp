@@ -176,9 +176,9 @@ void Tst_qsensorgestureTest::tst_recognizer_dup()
         }
 
         QSensorGesture *sensorGesture = new QSensorGesture(idList, this);
-        QVERIFY(sensorGesture->availableIds().contains("QtSensors.test2"));
-        QVERIFY(sensorGesture->availableIds().contains("QtSensors.test"));
-        QVERIFY(sensorGesture->availableIds().contains("QtSensors.test.dup"));
+        QVERIFY(sensorGesture->validIds().contains("QtSensors.test2"));
+        QVERIFY(sensorGesture->validIds().contains("QtSensors.test"));
+        QVERIFY(sensorGesture->validIds().contains("QtSensors.test.dup"));
         delete sensorGesture;
     }
 
@@ -186,11 +186,11 @@ void Tst_qsensorgestureTest::tst_recognizer_dup()
     QString plugin;
     plugin = "QtSensors.test2";
     thisGesture = new QSensorGesture(QStringList() << plugin, this);
-    QVERIFY(thisGesture->availableIds().contains("QtSensors.test2"));
+    QVERIFY(thisGesture->validIds().contains("QtSensors.test2"));
 
     plugin = "QtSensors.test.dup";
     thisGesture = new QSensorGesture(QStringList() << plugin, this);
-    QVERIFY(!thisGesture->availableIds().contains("QtSensors.test2"));
+    QVERIFY(!thisGesture->validIds().contains("QtSensors.test2"));
     delete thisGesture;
 }
 
@@ -297,7 +297,8 @@ void Tst_qsensorgestureTest::tst_manager__newSensorAvailable()
 
     QSensorGesture *test4sg;
     test4sg = new QSensorGesture(QStringList() << "QtSensors.test4",this);
-    QVERIFY(test4sg->isValid());
+    QVERIFY(!test4sg->validIds().isEmpty());
+    QVERIFY(test4sg->invalidIds().isEmpty());
 }
 
 
@@ -338,12 +339,12 @@ void Tst_qsensorgestureTest::tst_sensor_gesture_signals()
             QVERIFY(thisGesture->gestureSignals().count() == 3);
             QVERIFY(thisGesture->gestureSignals() == signalList);
 
-            QVERIFY(thisGesture->gestureSignals().at(1) == "test2()");
+            QCOMPARE(thisGesture->gestureSignals().at(1), QString("test2()"));
             spy_gesture_test2 = new QSignalSpy(thisGesture, SIGNAL(test2()));
 
         }
 
-        QVERIFY( thisGesture->availableIds() != QStringList());
+        QVERIFY(!thisGesture->validIds().isEmpty());
         thisGesture->startDetection();
 
         QCOMPARE(spy_gesture_detected.count(),1);
@@ -352,7 +353,7 @@ void Tst_qsensorgestureTest::tst_sensor_gesture_signals()
             QCOMPARE(spy_gesture_tested->count(),1);
             QList<QVariant> arguments ;
            arguments = spy_gesture_detected.takeFirst(); // take the first signal
-           QVERIFY(arguments.at(0) == "tested");
+           QCOMPARE(arguments.at(0),QVariant("tested"));
         }
 
         if (plugin == "QtSensors.test2") {
@@ -411,9 +412,13 @@ void Tst_qsensorgestureTest::tst_sensor_gesture()
     QSensorGesture *gesture2 = new QSensorGesture(QStringList() << "QtSensors.test2", this);
     QSensorGesture *gesture3 = new QSensorGesture(QStringList() << "QtSensors.test2", this);
 
-    QCOMPARE(gesture->availableIds(),QStringList() << "QtSensors.test");
+    QCOMPARE(gesture->validIds(),QStringList() << "QtSensors.test");
 
     QCOMPARE(gesture->gestureSignals().at(1).left(gesture->gestureSignals().at(1).indexOf("(")),QString("tested"));
+
+    QVERIFY(gesture->invalidIds().isEmpty());
+    QVERIFY(gesture2->invalidIds().isEmpty());
+    QVERIFY(gesture3->invalidIds().isEmpty());
 
     currentSignal = gesture->gestureSignals().at(1).left(gesture->gestureSignals().at(1).indexOf("("));
 
@@ -433,7 +438,7 @@ void Tst_qsensorgestureTest::tst_sensor_gesture()
     QCOMPARE(spy_gesture.count(),1);
 
     QCOMPARE(gesture->isActive(),true);
-    QCOMPARE(gesture2->availableIds(),QStringList() <<"QtSensors.test2");
+    QCOMPARE(gesture2->validIds(),QStringList() <<"QtSensors.test2");
     QCOMPARE(gesture2->gestureSignals().at(1).left(gesture2->gestureSignals().at(1).indexOf("(")),QString("test2"));
     currentSignal = gesture2->gestureSignals().at(1).left(gesture2->gestureSignals().at(1).indexOf("("));
 
@@ -549,8 +554,8 @@ void Tst_qsensorgestureTest::tst_recognizer()
 void Tst_qsensorgestureTest::tst_sensorgesture_noid()
 {
     QSensorGesture *gesture = new QSensorGesture(QStringList() << "QtSensors.noid", this);
-    QVERIFY(gesture->availableIds().isEmpty());
-    QVERIFY(!gesture->isValid());
+    QVERIFY(gesture->validIds().isEmpty());
+    QCOMPARE(gesture->invalidIds(), QStringList() << "QtSensors.noid");
 
     QTest::ignoreMessage(QtWarningMsg, "QSignalSpy: No such signal: 'detected(QString)'");
     QSignalSpy spy_gesture(gesture, SIGNAL(detected(QString)));
@@ -566,6 +571,8 @@ void Tst_qsensorgestureTest::tst_sensorgesture_noid()
     QCOMPARE(spy_gesture.count(),0);
 
     QVERIFY(gesture->gestureSignals().isEmpty());
+
+    QCOMPARE(gesture->invalidIds() ,QStringList() << "QtSensors.noid");
 
     delete gesture;
     gesture = 0;
@@ -586,7 +593,7 @@ void Tst_qsensorgestureTest::tst_sensor_gesture_multi()
     QVERIFY(gestureSignals == gesture->gestureSignals());
 
     QVERIFY(gesture->gestureSignals().count() == 4);
-    QVERIFY(!gesture->availableIds().contains("QtSensors.bogus"));
+    QCOMPARE(gesture->invalidIds(), QStringList() << "QtSensors.bogus");
 
     QCOMPARE(gesture->isActive(),false);
 

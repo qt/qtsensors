@@ -76,6 +76,7 @@ public:
     bool isActive;
     QStringList localGestureSignals;
     QStringList availableIds;
+    QStringList invalidIds;
     bool valid;
 };
 

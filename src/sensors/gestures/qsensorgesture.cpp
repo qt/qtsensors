@@ -88,6 +88,7 @@ QSensorGesture::QSensorGesture(const QStringList &ids, QObject *parent) :
             d_ptr->m_sensorRecognizers.append(rec);
             d_ptr->availableIds.append(id);
         } else {
+            d_ptr->invalidIds.append(id);
             //add to not available things
         }
     }
@@ -125,19 +126,19 @@ QSensorGesture::~QSensorGesture()
 }
 
 /*!
-  Returns whether this QSensorGesture is valid or not.
+    Returns the gesture recognizer ids that were found.
   */
-bool QSensorGesture::isValid() const
+QStringList QSensorGesture::validIds() const
 {
-    return d_ptr->valid;
+    return d_ptr->availableIds;
 }
 
 /*!
-  Returns the gestures ids.
+   Returns the gesture recognizer ids that were not found.
   */
-QStringList QSensorGesture::availableIds() const
+QStringList QSensorGesture::invalidIds() const
 {
-    return d_ptr->availableIds;
+    return d_ptr->invalidIds;
 }
 
 /*!
