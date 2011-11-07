@@ -141,6 +141,7 @@ private Q_SLOTS:
     void tst_sensor_gesture_threaded();
 
     void tst_sensor_gesture();
+    void tst_sensor_gesture_metacast();
 
     void tst_recognizer();
 
@@ -488,6 +489,25 @@ void Tst_qsensorgestureTest::tst_sensor_gesture()
     gesture3 = 0;
 }
 
+void Tst_qsensorgestureTest::tst_sensor_gesture_metacast()
+{
+    QSensorGesture *gesture = new QSensorGesture(QStringList() << "QtSensors.test", this);
+    // exercise qt_metacast
+    QVERIFY(!gesture->inherits(""));
+    QVERIFY(gesture->inherits("QObject"));
+
+#if defined(QT_NO_QOBJECT_CHECK)
+    QObject *o = qobject_cast<QObject *>(gesture);
+    QVERIFY(o);
+
+    //    this will fail in the compile time check for
+    //    the Q_OBJECT macro in qobjectdefs.h unless QT_NO_QOBJECT_CHECK is defined,
+    QSensorGesture *gest = qobject_cast<QSensorGesture *>(o);
+    QVERIFY(!gest->gestureSignals().isEmpty());
+#endif
+    delete gesture;
+}
+
 
 void Tst_qsensorgestureTest::tst_recognizer()
 {
@@ -573,6 +593,15 @@ void Tst_qsensorgestureTest::tst_sensorgesture_noid()
     QVERIFY(gesture->gestureSignals().isEmpty());
 
     QCOMPARE(gesture->invalidIds() ,QStringList() << "QtSensors.noid");
+
+    QSensorGestureManager manager;
+    QStringList recognizerSignalsList = manager.recognizerSignals( "QtSensors.noid");
+    QVERIFY(recognizerSignalsList.isEmpty());
+
+    QVERIFY(!recognizerSignalsList.contains("QtSensors.noid"));
+
+    QSensorGestureRecognizer *fakeRecognizer = manager.sensorGestureRecognizer("QtSensors.noid");
+    QVERIFY(!fakeRecognizer);
 
     delete gesture;
     gesture = 0;

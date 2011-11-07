@@ -152,19 +152,20 @@ void QSensorGesture::startDetection()
         return;
 
     Q_FOREACH (QSensorGestureRecognizer *recognizer,  d_ptr->m_sensorRecognizers) {
-        if (recognizer !=0) { //it shouldn't be, but I am paranoid
-            connect(recognizer,SIGNAL(detected(QString)),
-                    this,SIGNAL(detected(QString)),Qt::UniqueConnection);
 
-            //connect recognizer signals
-            Q_FOREACH (QString method, recognizer->gestureSignals()) {
-                method.prepend(QLatin1String("2"));
-                connect(recognizer, method.toLatin1(),
-                        this, method.toLatin1(), Qt::UniqueConnection);
-            }
+        Q_ASSERT(recognizer !=0);
 
-            recognizer->startBackend();
+        connect(recognizer,SIGNAL(detected(QString)),
+                this,SIGNAL(detected(QString)),Qt::UniqueConnection);
+
+        //connect recognizer signals
+        Q_FOREACH (QString method, recognizer->gestureSignals()) {
+            method.prepend(QLatin1String("2"));
+            connect(recognizer, method.toLatin1(),
+                    this, method.toLatin1(), Qt::UniqueConnection);
         }
+
+        recognizer->startBackend();
     }
     d_ptr->isActive = true;
 }
