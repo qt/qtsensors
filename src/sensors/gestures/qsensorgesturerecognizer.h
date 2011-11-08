@@ -62,10 +62,6 @@ public:
 
     virtual bool isActive() = 0;
 
-    virtual void create() = 0;
-    virtual bool start() = 0;
-    virtual bool stop() = 0;
-
     void startBackend();
     void stopBackend();
     void createBackend();
@@ -74,6 +70,11 @@ public:
 
 Q_SIGNALS:
     void detected(const QString &);
+
+protected:
+    virtual void create() = 0;
+    virtual bool start() = 0;
+    virtual bool stop() = 0;
 
 private:
         QSensorGestureRecognizerPrivate * d_ptr;

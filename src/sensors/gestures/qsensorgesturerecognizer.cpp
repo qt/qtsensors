@@ -128,7 +128,6 @@ QSensorGestureRecognizer::QSensorGestureRecognizer(QObject *parent)
 */
 QSensorGestureRecognizer::~QSensorGestureRecognizer()
 {
-    Q_ASSERT(d_ptr->count == 0);
    delete d_ptr;
 }
 
