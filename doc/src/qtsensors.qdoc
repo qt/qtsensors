@@ -81,6 +81,9 @@
         \row
             \o \l {QtSensorGestures C++ API}{C++ API}
             \o Information about the QtSensorGestures C++ API
+        \row
+            \o \l {C++ Sensor Gestures Example}
+            \o The SensorGestures example demostrates how to use QSensorGestures
     \endtable
 
     \section1 Information for QtSensorGestures Recognizer Plugin Implementors.

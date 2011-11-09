@@ -42,6 +42,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
+#include <qsensorgesture.h>
 
 namespace Ui {
     class MainWindow;
@@ -57,11 +58,16 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QMap <QString, QSensorGesture *> recognizerMap;
+
 private slots:
     void detectedShake(const QString&);
     void onShake();
 
     void on_pushButton_clicked();
+
+    void on_startPushButton_clicked();
+    void on_stopPushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

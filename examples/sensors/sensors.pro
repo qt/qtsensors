@@ -2,8 +2,8 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     accel\
-    grue
-
-contains(QT_CONFIG,widgets):SUBDIRS += \
-    sensor_explorer \
+    grue \
     sensorgestures
+
+#contains(QT_CONFIG,widgets):SUBDIRS += \
+  #  sensor_explorer \
