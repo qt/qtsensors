@@ -283,17 +283,6 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
     return (float)atan2(Ay, (sqrt(Ax * Ax + Az * Az)));
 }
 
-/*
-  Angle between Z Axis relative to the Gravity
-                |  sqrt(Ax * Ax + Ay* Ay) |
-  theta = arctan| ----------------------- |
-                |            Az           |
-*/
-inline qreal calcTheta(double Ax, double Ay, double Az)
-{
-    return (float)atan2((sqrt(Ax * Ax + Ay * Ay)), Az);
-}
-
 /*!
     \qmlproperty qreal QtSensors5::TiltSensor::accuracy
     This property contains the accuracy (in degrees) in which the rotation should be measured.
