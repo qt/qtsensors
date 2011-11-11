@@ -48,7 +48,8 @@
 class QTestSensorGestureDupPlugin :  public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface)
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+
 public:
     explicit QTestSensorGestureDupPlugin();
     ~QTestSensorGestureDupPlugin();

@@ -50,10 +50,15 @@
 
 QT_BEGIN_NAMESPACE
 
-class Q_SENSORS_EXPORT QSensorPluginInterface
+#define QSensorFactoryInterface_iid "com.nokia.Qt.QSensorPluginInterface/1.0"
+
+class Q_SENSORS_EXPORT QSensorPluginInterface : public QFactoryInterface
 {
+
 public:
     virtual void registerSensors() = 0;
+    virtual QStringList keys() const = 0;
+
 protected:
     ~QSensorPluginInterface() {}
 };
@@ -68,7 +73,7 @@ protected:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.nokia.Qt.QSensorPluginInterface/1.0");
+Q_DECLARE_INTERFACE(QSensorPluginInterface, QSensorFactoryInterface_iid);
 Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/1.0");
 
 #endif

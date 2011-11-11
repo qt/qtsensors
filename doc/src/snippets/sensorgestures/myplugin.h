@@ -45,7 +45,7 @@
 #include <qsensorgestureplugininterface.h>
 #include <qsensorgesturerecognizer.h>
 
-class MySensorGestureRecognizer :  public QSensorGestureRecognizer
+class MySensorGestureRecognizer : public QSensorGestureRecognizer
 {
     Q_OBJECT
  public:
@@ -65,10 +65,11 @@ Q_SIGNALS:
     void mySignal();
 };
 
-class MySensorGesturePlugin : public  QObject, QSensorGesturePluginInterface
+class MySensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface)
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+
     explicit MySensorGesturePlugin();
     ~MySensorGesturePlugin();
 

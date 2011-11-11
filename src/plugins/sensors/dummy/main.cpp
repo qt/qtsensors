@@ -50,7 +50,7 @@
 class dummySensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface)
+    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface)
 public:
     void registerSensors()
     {
@@ -71,6 +71,7 @@ public:
 
         return 0;
     }
+    QStringList keys() const { return QStringList() << "dummy";}
 };
 
 Q_EXPORT_PLUGIN2(qtsensors_dummy, dummySensorPlugin)

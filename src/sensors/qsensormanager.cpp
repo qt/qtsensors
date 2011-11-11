@@ -84,6 +84,7 @@ public:
 
     bool sensorsChanged;
     QList<QSensorChangesInterface*> changeListeners;
+    QSet <QObject *> seenPlugins;
 
 Q_SIGNALS:
     void availableSensorsChanged();
@@ -154,15 +155,21 @@ Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
 static void initPlugin(QObject *o)
 {
     if (!o) return;
+
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (d->seenPlugins.contains(o))
+        return;
 
     QSensorChangesInterface *changes = qobject_cast<QSensorChangesInterface*>(o);
     if (changes)
         d->changeListeners << changes;
 
     QSensorPluginInterface *plugin = qobject_cast<QSensorPluginInterface*>(o);
-    if (plugin)
+
+    if (plugin) {
+        d->seenPlugins.insert(o);
         plugin->registerSensors();
+    }
 }
 
 void QSensorManagerPrivate::loadPlugins()

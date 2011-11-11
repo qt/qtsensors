@@ -72,7 +72,6 @@ private:
     void load();
 
     QList<QObject*> m_plugins;
-    QList<QPluginLoader *> m_loaders;
 };
 
 QT_END_NAMESPACE

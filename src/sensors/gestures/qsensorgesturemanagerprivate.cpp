@@ -42,12 +42,18 @@
 #include <QDir>
 #include <QLibraryInfo>
 
+#include <QtCore/private/qfactoryloader_p.h>
+
 #include "qsensorgesturerecognizer.h"
 #include "qsensorgesturemanagerprivate_p.h"
 #include "qsensorgestureplugininterface.h"
-#include "qmobilitypluginsearch.h"
 
 QT_BEGIN_NAMESPACE
+
+#ifndef QT_NO_LIBRARY
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+                          (QSensorGestureFactoryInterface_iid, QLatin1String("/sensorgestures")))
+#endif
 
 QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
     QObject(parent)
@@ -58,7 +64,6 @@ QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
 QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
 {
     qDeleteAll(registeredSensorGestures);
-    qDeleteAll(plugins);
 }
 
 
@@ -87,17 +92,10 @@ QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
   */
 void QSensorGestureManagerPrivate::loadPlugins()
 {
-    // Qt-style static plugins
-    Q_FOREACH (QObject *plugin, QPluginLoader::staticInstances()) {
-        initPlugin(plugin);
-    }
+    QFactoryLoader *l = loader();
+    foreach (const QString &key, l->keys()) {
 
-    QStringList gestureplugins = mobilityPlugins(QLatin1String("sensorgestures"));
-    for (int i = 0; i < gestureplugins.count(); i++) {
-
-        QPluginLoader *loader = new QPluginLoader(gestureplugins.at(i), this);
-
-        QObject *plugin = loader->instance();
+        QObject *plugin = l->instance(key);
         if (plugin) {
             initPlugin(plugin);
         }

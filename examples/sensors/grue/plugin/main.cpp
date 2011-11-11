@@ -48,7 +48,7 @@
 class GrueSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorChangesInterface, public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface QSensorChangesInterface)
+    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface QSensorChangesInterface)
 public:
     void registerSensors()
     {
@@ -74,6 +74,7 @@ public:
 
         return 0;
     }
+    QStringList keys() const { return QStringList() << "grue";}
 };
 
 Q_EXPORT_PLUGIN2(libsensors_grueplugin, GrueSensorPlugin);

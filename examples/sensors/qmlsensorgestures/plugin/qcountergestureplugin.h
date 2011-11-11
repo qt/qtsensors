@@ -46,10 +46,11 @@
 
 #include <qsensorgestureplugininterface.h>
 
-class QCounterGesturePlugin : public QObject, QSensorGesturePluginInterface
+class QCounterGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface)
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+
 public:
     explicit QCounterGesturePlugin();
     ~QCounterGesturePlugin();

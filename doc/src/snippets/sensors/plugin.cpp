@@ -45,10 +45,10 @@
 const char *MyBackend::id = "mybackend";
 
 //! [Plugin]
-class MyPluginClass : public QObject, QSensorPluginInterface, public QSensorBackendFactory
+class MyPluginClass : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface)
+    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface)
 public:
     void registerSensors()
     {
@@ -61,6 +61,7 @@ public:
             return new MyBackend(sensor);
         return 0;
     }
+    QStringList keys() const { return QStringList() << "myplugin";}
 };
 //! [Plugin]
 

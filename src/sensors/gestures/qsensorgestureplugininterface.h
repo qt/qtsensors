@@ -44,24 +44,29 @@
 
 #include <QObject>
 #include <QtGlobal>
-
+#include <QtCore/qplugin.h>
+#include <QtCore/qfactoryinterface.h>
 #include "qsensorgesture.h"
 #include "qsensorgesturerecognizer.h"
 
 QT_BEGIN_NAMESPACE
 class QSensorGestureRecognizer;
 
-class Q_SENSORS_EXPORT QSensorGesturePluginInterface
+#define QSensorGestureFactoryInterface_iid "com.Nokia.QSensorGesturePluginInterface"
+
+
+class Q_SENSORS_EXPORT QSensorGesturePluginInterface : public QFactoryInterface
 {
 public:
+    QSensorGesturePluginInterface();
+    virtual ~QSensorGesturePluginInterface();
     virtual QList <QSensorGestureRecognizer *> createRecognizers() = 0;
     virtual QStringList supportedIds() const = 0;
     virtual QString name() const = 0;
-
+    QStringList keys() const { return QStringList() << name(); }
 };
 
-Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "com.Nokia.QSensorGesturePluginInterface");
-
 QT_END_NAMESPACE
+Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, QSensorGestureFactoryInterface_iid);
 
 #endif // QSENSORGESTUREPLUGININTERFACE_H

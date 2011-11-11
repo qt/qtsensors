@@ -47,10 +47,11 @@
 
 #include <qsensorgestureplugininterface.h>
 
-class QShakeSensorGesturePlugin : public QObject, QSensorGesturePluginInterface
+class QShakeSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface)
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+
 public:
     explicit QShakeSensorGesturePlugin();
     ~QShakeSensorGesturePlugin();

@@ -47,10 +47,10 @@
 
 #include <qsensorgestureplugininterface.h>
 
-class QTemplateGesturePlugin : public QObject, QSensorGesturePluginInterface
+class QTemplateGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface)
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
 public:
     explicit QTemplateGesturePlugin();
     ~QTemplateGesturePlugin();

@@ -49,10 +49,10 @@
 #include <QSensorBackend>
 #include <QSensorManager>
 
-class SimulatorSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
+class SimulatorSensorPlugin : public QSensorPluginInterface,public QObject,  public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface)
+    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface)
 public:
     void registerSensors()
     {
@@ -92,6 +92,7 @@ public:
 
         return 0;
     }
+    QStringList keys() const { return QStringList() << "simulator";}
 };
 
 Q_EXPORT_PLUGIN2(libsensors_simulator, SimulatorSensorPlugin)

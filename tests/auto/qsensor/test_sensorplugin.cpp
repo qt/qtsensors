@@ -54,7 +54,7 @@ class TestSensorPlugin : public QObject,
                          public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface QSensorChangesInterface)
+    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface QSensorChangesInterface)
 public:
     void registerSensors()
     {
@@ -62,6 +62,7 @@ public:
         QVERIFY2(!recursive, "Recursively called TestSensorPlugin::registerSensors!");
         if (recursive) return;
         recursive = true;
+
 
         // This is bad code. It caused a crash due to recursively calling
         // loadPlugins() in qsensormanager.cpp (because loadPlugins() did
@@ -103,6 +104,8 @@ public:
         qWarning() << "Can't create backend" << sensor->identifier();
         return 0;
     }
+    QStringList keys() const { return QStringList() << "test";}
+
 };
 
 REGISTER_STATIC_PLUGIN_V2(TestSensorPlugin)
@@ -114,6 +117,8 @@ public:
     {
         qWarning() << "Loaded the LegacySensorPlugin";
     }
+    QStringList keys() const { return QStringList() << "legacy";}
+
 };
 
 REGISTER_STATIC_PLUGIN_V1(LegacySensorPlugin)

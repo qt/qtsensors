@@ -55,7 +55,7 @@ class TestSensorPlugin : public QObject,
                          public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface QSensorChangesInterface)
+    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface QSensorChangesInterface)
 public:
     void registerSensors()
     {
@@ -95,6 +95,7 @@ public:
         qWarning() << "Can't create backend" << sensor->identifier();
         return 0;
     }
+    QStringList keys() const { return QStringList() << "test";}
 public:
     static QDeclAccelerometer* stAccel;
     static QDeclAmbientLightSensor* stAbl;

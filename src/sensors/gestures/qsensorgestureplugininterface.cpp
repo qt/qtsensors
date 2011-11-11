@@ -80,4 +80,15 @@
 
   Returns this plugins name.
   */
+QT_BEGIN_NAMESPACE
 
+QSensorGesturePluginInterface::QSensorGesturePluginInterface()
+{
+}
+
+QSensorGesturePluginInterface::~QSensorGesturePluginInterface()
+{
+
+}
+
+QT_END_NAMESPACE

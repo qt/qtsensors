@@ -45,10 +45,11 @@
 #include <QObject>
 #include <qsensorgestureplugininterface.h>
 
-class QTestSensorGesturePlugin : public QObject, QSensorGesturePluginInterface
+class QTestSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface)
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+
 public:
     explicit QTestSensorGesturePlugin();
     ~QTestSensorGesturePlugin();

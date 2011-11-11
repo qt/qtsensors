@@ -43,11 +43,17 @@
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qdebug.h>
+#include <QtCore/private/qfactoryloader_p.h>
 
 #include "qsensorplugin.h"
-#include "qmobilitypluginsearch.h"
 
 QT_BEGIN_NAMESPACE
+
+
+#ifndef QT_NO_LIBRARY
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+                          (QSensorFactoryInterface_iid, QLatin1String("/sensors")))
+#endif
 
 QSensorPluginLoader::QSensorPluginLoader()
 {
@@ -68,36 +74,25 @@ void QSensorPluginLoader::load()
     if (!m_plugins.isEmpty())
         return;
 
-    QStringList plugins = mobilityPlugins(QLatin1String("sensors"));
     bool reportErrors = (qgetenv("QT_DEBUG_PLUGINS") == "1");
 
     /* Now discover the dynamic plugins */
-    for (int i = 0; i < plugins.count(); i++) {
-        QPluginLoader *loader = new QPluginLoader(plugins.at(i));
+    QFactoryLoader *l = loader();
+    foreach (const QString &key, l->keys()) {
 
-        QObject *o = loader->instance();
+        QObject *o = l->instance(key);
         if (o != 0) {
             QSensorPluginInterface *p = qobject_cast<QSensorPluginInterface*>(o);
             if (p != 0) {
                 m_plugins << o;
-                m_loaders << loader;
             } else {
                 if (reportErrors) {
-                    qWarning() << plugins.at(i) << "is not a QSensorPluginInterface";
+                    qWarning() << key << "is not a QSensorPluginInterface";
                 }
-                loader->unload();
-                delete loader;
             }
 
             continue;
-        } else {
-            if (reportErrors) {
-                qWarning() << loader->errorString();
-            }
         }
-        delete o;
-        loader->unload();
-        delete loader;
     }
 }
 
