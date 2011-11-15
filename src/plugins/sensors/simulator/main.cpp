@@ -49,7 +49,7 @@
 #include <QSensorBackend>
 #include <QSensorManager>
 
-class SimulatorSensorPlugin : public QSensorPluginInterface,public QObject,  public QSensorBackendFactory
+class SimulatorSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
     Q_OBJECT
     Q_INTERFACES(QSensorPluginInterface:QFactoryInterface)
