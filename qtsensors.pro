@@ -8,8 +8,9 @@ SUBDIRS += module_qtsensors_tests
 module_qtsensors_tests.subdir = tests
 module_qtsensors_tests.target = module-qtsensors-tests
 module_qtsensors_tests.depends = module_qtsensors_src
+module_qtsensors_tests.CONFIG = no_default_install
 !contains(QT_BUILD_PARTS,tests) {
-    module_qtsensors_tests.CONFIG = no_default_target no_default_install
+    module_qtsensors_tests.CONFIG += no_default_target
 }
 
 SUBDIRS += module_qtsensors_examples
