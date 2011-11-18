@@ -95,3 +95,9 @@
     \sa {Creating a sensor plugin}
 */
 
+/*!
+  \fn  QSensorChangesInterface::QStringList keys() const
+
+  Returns this plugins name.
+  Used by the factory loader.
+  */

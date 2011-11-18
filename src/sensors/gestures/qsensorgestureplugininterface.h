@@ -63,7 +63,8 @@ public:
     virtual QList <QSensorGestureRecognizer *> createRecognizers() = 0;
     virtual QStringList supportedIds() const = 0;
     virtual QString name() const = 0;
-    QStringList keys() const { return QStringList() << name(); }
+private:
+    QStringList keys() const;
 };
 
 QT_END_NAMESPACE
