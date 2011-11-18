@@ -80,7 +80,7 @@ Rectangle {
     SensorGesture {
         id: sensorGuesture
         enabled: true
-        gestures: ["QtSensors.shake", "QtSensors.SecondCounter"]
+        gestures: availableGestures
         onDetected:{
             if (gesture === "QtSensors.shake")
                 gesturerect.count++;
