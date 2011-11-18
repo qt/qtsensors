@@ -50,18 +50,15 @@
 QT_BEGIN_NAMESPACE
 
 
-#ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
-                          (QSensorFactoryInterface_iid, QLatin1String("/sensors")))
-#endif
-
 QSensorPluginLoader::QSensorPluginLoader()
 {
+    m_loader = new QFactoryLoader(QSensorFactoryInterface_iid, QLatin1String("/sensors"));
     load();
 }
 
 QSensorPluginLoader::~QSensorPluginLoader()
 {
+    delete m_loader;
 }
 
 QList<QObject*> QSensorPluginLoader::plugins() const
@@ -77,10 +74,9 @@ void QSensorPluginLoader::load()
     bool reportErrors = (qgetenv("QT_DEBUG_PLUGINS") == "1");
 
     /* Now discover the dynamic plugins */
-    QFactoryLoader *l = loader();
-    foreach (const QString &key, l->keys()) {
+    foreach (const QString &key, m_loader->keys()) {
 
-        QObject *o = l->instance(key);
+        QObject *o = m_loader->instance(key);
         if (o != 0) {
             QSensorPluginInterface *p = qobject_cast<QSensorPluginInterface*>(o);
             if (p != 0) {

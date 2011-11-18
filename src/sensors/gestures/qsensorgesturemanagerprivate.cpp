@@ -50,20 +50,17 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
-                          (QSensorGestureFactoryInterface_iid, QLatin1String("/sensorgestures")))
-#endif
-
 QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
     QObject(parent)
 {
+    loader = new QFactoryLoader(QSensorGestureFactoryInterface_iid, QLatin1String("/sensorgestures"));
     loadPlugins();
 }
 
 QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
 {
     qDeleteAll(registeredSensorGestures);
+    delete loader;
 }
 
 
@@ -92,10 +89,9 @@ QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
   */
 void QSensorGestureManagerPrivate::loadPlugins()
 {
-    QFactoryLoader *l = loader();
-    foreach (const QString &key, l->keys()) {
+    foreach (const QString &key, loader->keys()) {
 
-        QObject *plugin = l->instance(key);
+        QObject *plugin = loader->instance(key);
         if (plugin) {
             initPlugin(plugin);
         }

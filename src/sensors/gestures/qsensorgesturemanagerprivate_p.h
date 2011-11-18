@@ -52,6 +52,8 @@
 #include "qsensorgesture.h"
 #include "qsensorgesturerecognizer.h"
 
+class QFactoryLoader;
+
 class QSensorGestureManagerPrivate : public QObject
 {
     Q_OBJECT
@@ -63,6 +65,7 @@ public:
 
     QList <QObject *> plugins;
 
+    QFactoryLoader *loader;
     void loadPlugins();
     bool loadRecognizer(const QString &id);
 

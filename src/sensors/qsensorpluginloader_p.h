@@ -60,6 +60,8 @@
 
 QT_BEGIN_NAMESPACE
 
+class QFactoryLoader;
+
 class QSensorPluginLoader
 {
 public:
@@ -71,6 +73,7 @@ public:
 private:
     void load();
 
+    QFactoryLoader *m_loader;
     QList<QObject*> m_plugins;
 };
 
