@@ -67,7 +67,8 @@ private:
     QStringList keys() const;
 };
 
-QT_END_NAMESPACE
 Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, QSensorGestureFactoryInterface_iid);
+
+QT_END_NAMESPACE
 
 #endif // QSENSORGESTUREPLUGININTERFACE_H

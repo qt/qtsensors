@@ -44,6 +44,8 @@
 
 Q_GLOBAL_STATIC(QSensorGestureManagerPrivate, sensorGestureManagerPrivate)
 
+QT_BEGIN_NAMESPACE
+
 /*!
   \class QSensorGestureManager
   \ingroup sensorgestures_main
@@ -125,3 +127,5 @@ QSensorGestureRecognizer *QSensorGestureManager::sensorGestureRecognizer(const Q
 {
     return sensorGestureManagerPrivate()->sensorGestureRecognizer(id);
 }
+
+QT_END_NAMESPACE

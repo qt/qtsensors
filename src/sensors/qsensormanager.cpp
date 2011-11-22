@@ -498,7 +498,6 @@ void QSensor::registerInstance()
     \sa {Creating a sensor plugin}
 */
 
-#include "qsensormanager.moc"
-
 QT_END_NAMESPACE
 
+#include "qsensormanager.moc"

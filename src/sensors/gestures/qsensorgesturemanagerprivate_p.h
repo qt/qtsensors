@@ -52,6 +52,8 @@
 #include "qsensorgesture.h"
 #include "qsensorgesturerecognizer.h"
 
+QT_BEGIN_NAMESPACE
+
 class QFactoryLoader;
 
 class QSensorGestureManagerPrivate : public QObject
@@ -78,5 +80,7 @@ public:
 Q_SIGNALS:
         void newSensorGestureAvailable();
 };
+
+QT_END_NAMESPACE
 
 #endif // QSENSORGESTUREMANAGERPRIVATE_P_H
