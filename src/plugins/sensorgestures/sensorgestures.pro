@@ -1,2 +1,3 @@
 TEMPLATE = subdirs
-SUBDIRS += shake
+!simulator:SUBDIRS += shake
+simulator:SUBDIRS += simulator
