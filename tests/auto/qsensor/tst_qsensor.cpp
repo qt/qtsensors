@@ -54,6 +54,8 @@
 #include "test_sensorimpl.h"
 #include "test_backends.h"
 
+QT_BEGIN_NAMESPACE
+
 // The unit test needs to change the behaviour of the library. It does this
 // through an exported but undocumented function.
 Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
@@ -944,6 +946,8 @@ private slots:
         // That's what it did on Symbian before plugin loading was fixed.
     }
 };
+
+QT_END_NAMESPACE
 
 QTEST_MAIN(tst_QSensor)
 

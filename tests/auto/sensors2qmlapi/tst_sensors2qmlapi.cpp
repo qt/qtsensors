@@ -57,6 +57,8 @@ QDeclAccelerometer* TestSensorPlugin::stAccel = 0;
 QDeclAmbientLightSensor* TestSensorPlugin::stAbl = 0;
 QDeclProximitySensor* TestSensorPlugin::stProxi = 0;
 
+QT_BEGIN_NAMESPACE
+
 Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
 
 class tst_Sensors2QMLAPI : public QObject
@@ -620,6 +622,7 @@ void tst_Sensors2QMLAPI::testGesture()
     QCOMPARE(spy2_detected.count(), 1);
 }
 
+QT_END_NAMESPACE
 
 QTEST_MAIN(tst_Sensors2QMLAPI)
 #include "tst_sensors2qmlapi.moc"
