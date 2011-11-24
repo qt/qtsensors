@@ -60,6 +60,11 @@
     have their own specific signals, and may be discovered through
     QSensorGesture::gestureSignals().
 
+    \bold {Note that QSensorGesture uses a custom meta-object in order to provide
+    recognizer-specific signals. This means it is not possible to sub-class
+    QSensorGesture and use Q_OBJECT. Also qobject_cast<QSensorGesture*>(ptr) will
+    not work.}
+
     \sa QSensorGestureRecognizer
 
    You may use QSensorGestureManager to obtain the systems known sensor gesture ids.
@@ -96,7 +101,7 @@ QSensorGesture::QSensorGesture(const QStringList &ids, QObject *parent) :
     d_ptr->meta = 0;
 
     QMetaObjectBuilder builder;
-    builder.setSuperClass(&QSensorGesture::staticMetaObject);
+    builder.setSuperClass(&QObject::staticMetaObject);
     builder.setClassName("QSensorGesture");
 
     Q_FOREACH (QSensorGestureRecognizer *recognizer,  d_ptr->m_sensorRecognizers) {
@@ -217,14 +222,14 @@ bool QSensorGesture::isActive()
 }
 
 /*!
-  Internal
+  \internal
 */
 const QMetaObject* QSensorGesture::metaObject() const
 {
     return d_ptr->meta;
 }
 /*!
-  Internal
+  \internal
 */
 int QSensorGesture::qt_metacall(QMetaObject::Call c, int id, void **a)
 {
@@ -237,18 +242,6 @@ int QSensorGesture::qt_metacall(QMetaObject::Call c, int id, void **a)
     return id;
 }
 
-/*!
-  Internal
-*/
-void *QSensorGesture::qt_metacast(const char* className)
-{
-    if (!className) return 0;
-    return QObject::qt_metacast(className);
-}
-
-/*!
-  Internal
-*/
 QSensorGesturePrivate::QSensorGesturePrivate(QObject *parent)
     : QObject(parent),isActive(0), valid(0)
 {

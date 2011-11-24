@@ -76,10 +76,10 @@ public:
 private:
     QSensorGesturePrivate * d_ptr;
 
-    // need to inject unknown recognizer signals at runtime.
-    virtual const QMetaObject* metaObject() const;
-    int qt_metacall(QMetaObject::Call c, int id, void **a);
-    void *qt_metacast(const char* className);
+private:
+    // Pretend to be a Q_OBJECT
+    const QMetaObject *metaObject() const;
+    int qt_metacall(QMetaObject::Call, int, void **);
 
 #ifdef Q_QDOC
 signals:

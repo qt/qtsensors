@@ -6,7 +6,6 @@ QT += core testlib sensors
 QT -= gui
 
 SOURCES += tst_qsensorgesturetest.cpp
-DEFINES += QT_NO_QOBJECT_CHECK
 
 
 PLUGIN_1_HEADERS = \
