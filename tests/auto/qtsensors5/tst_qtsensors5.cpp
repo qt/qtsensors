@@ -40,7 +40,8 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <QtDeclarative/QtDeclarative>
+#include <QDeclarativeEngine>
+#include <QDeclarativeComponent>
 
 class tst_qtsensors5 : public QObject
 {
