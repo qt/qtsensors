@@ -3,7 +3,7 @@ TARGETPATH = Grue
 
 include(qsensorsimport.pri)
 
-QT = declarative sensors
+QT = core gui declarative sensors
 
 INCLUDEPATH += $$PWD/../lib
 LIBS += -L$$OUT_PWD/../lib -lgruesensor

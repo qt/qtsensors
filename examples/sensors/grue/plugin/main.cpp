@@ -77,7 +77,7 @@ public:
     QStringList keys() const { return QStringList() << "grue";}
 };
 
-Q_EXPORT_PLUGIN2(libsensors_grueplugin, GrueSensorPlugin);
+Q_EXPORT_PLUGIN2(libsensors_grueplugin, GrueSensorPlugin)
 
 #include "main.moc"
 

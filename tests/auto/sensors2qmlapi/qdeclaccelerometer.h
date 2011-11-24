@@ -65,13 +65,13 @@ public:
     }
     bool isActive() { return _active; }
 
-    void test(float x, float y, float z)
+    void test(qreal x, qreal y, qreal z)
     {
         if (sensor()->filters().count() > 0){
             QAccelerometerFilter* af = (QAccelerometerFilter*)sensor()->filters().at(0);
-            reader.setX((qreal)x);
-            reader.setY((qreal)y);
-            reader.setZ((qreal)z);
+            reader.setX(x);
+            reader.setY(y);
+            reader.setZ(z);
             af->filter(&reader);
         }
     }

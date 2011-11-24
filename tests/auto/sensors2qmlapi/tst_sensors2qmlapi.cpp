@@ -404,8 +404,8 @@ void tst_Sensors2QMLAPI::testTiltUnit()
     _tilt->setProperty("accuracy", 0.0);
     _tilt->setProperty("unit", QVariant(QSensor2Tilt::Radians));
     accel->test(-3.59904, 5.52114, 7.07059);
-    float xRotation = _tilt->property("xRotation").toFloat();
-    float yRotation = _tilt->property("yRotation").toFloat();
+    qreal xRotation = _tilt->property("xRotation").toReal();
+    qreal yRotation = _tilt->property("yRotation").toReal();
     xRotation += 0.159136;
     yRotation -= 0.43440;
     QVERIFY(xRotation < 0.0001);
@@ -414,8 +414,8 @@ void tst_Sensors2QMLAPI::testTiltUnit()
 
     _tilt->setProperty("unit", QVariant(QSensor2Tilt::Degrees));
     accel->test(-3.59904, 5.52114, 7.07059);
-    xRotation = _tilt->property("xRotation").toFloat();
-    yRotation = _tilt->property("yRotation").toFloat();
+    xRotation = _tilt->property("xRotation").toReal();
+    yRotation = _tilt->property("yRotation").toReal();
     xRotation += 9.11778;
     yRotation -= 24.8898;
     QVERIFY(xRotation < 0.0001);

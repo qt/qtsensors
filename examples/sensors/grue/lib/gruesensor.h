@@ -45,7 +45,13 @@
 
 class GrueSensorReadingPrivate;
 
-class GrueSensorReading : public QSensorReading
+#if defined(QT_BUILD_GRUE_LIB)
+#    define Q_GRUE_EXPORT Q_DECL_EXPORT
+#else
+#    define Q_GRUE_EXPORT Q_DECL_IMPORT
+#endif
+
+class Q_GRUE_EXPORT GrueSensorReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal chanceOfBeingEaten READ chanceOfBeingEaten WRITE setChanceOfBeingEaten)
@@ -57,7 +63,7 @@ public:
 
 // begin generated code
 
-class GrueFilter : public QSensorFilter
+class Q_GRUE_EXPORT GrueFilter : public QSensorFilter
 {
 public:
     virtual bool filter(GrueSensorReading *reading) = 0;
@@ -65,7 +71,7 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<GrueSensorReading*>(reading)); }
 };
 
-class GrueSensor : public QSensor
+class Q_GRUE_EXPORT GrueSensor : public QSensor
 {
     Q_OBJECT
 public:
