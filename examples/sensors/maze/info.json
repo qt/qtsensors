@@ -7,7 +7,7 @@
         "Subcategory": "utility",
         "MainQML": "Maze.qml",
         "Version": "1.0",
-        "Identifier": "com.noklab.nrcc.maze.demo",
+        "Identifier": "com.nokia.mt.maze.demo",
         "Summary": "Labyrinth game using TiltSensor",
         "Author": "Qt"
     }
