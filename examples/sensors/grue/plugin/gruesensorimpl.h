@@ -46,7 +46,9 @@
 #include <qambientlightsensor.h>
 #include <QTime>
 
+QT_BEGIN_NAMESPACE
 class QTimer;
+QT_END_NAMESPACE
 
 class gruesensorimpl : public QSensorBackend
 {
