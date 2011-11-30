@@ -245,11 +245,11 @@ Rectangle {
             id: tiltStart
             x: 5
             y: 245
-            text: "start"
+            text: tilt.enabled ? "running" : "start"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
+            color: tilt.enabled ? checkColor : unCheckColor
             checked: tilt.enabled
-            color: "lightyellow"
 
             onClicked:{
                 tilt.enabled = tiltStart.checked;
@@ -297,11 +297,11 @@ Rectangle {
             id: ambientlightStart
             x: 5
             y: 35
-            text: "start"
+            text: ambientlight.enabled ? "running" : "start"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
+            color: ambientlight.enabled ? checkColor : unCheckColor
             checked: ambientlight.enabled
-            color: "lightyellow"
 
             onClicked:{
                 ambientlight.enabled = ambientlightStart.checked;
@@ -335,11 +335,11 @@ Rectangle {
             id: proxiStart
             x: 5
             y: 35
-            text: "start"
+            text: proxi.enabled ? "running" : "start"
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
+            color: proxi.enabled ? checkColor : unCheckColor
             checked: proxi.enabled
-            color: "lightyellow"
 
             onClicked:{
                 proxi.enabled = proxiStart.checked;
