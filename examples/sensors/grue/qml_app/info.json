@@ -2,7 +2,7 @@
   "info-version": "1.0",
   "dict": {
      "DisplayName": "Grue Sensor",
-     "Identifier": "6777c7a0-782e-432a-9598-322335ebd441",
+     "Identifier": "com.nokia.mt.grue.demo",
      "Runtime": "qml",
      "MainQML": "main.qml",
      "Version": "1.0.0",
