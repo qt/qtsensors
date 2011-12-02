@@ -40,7 +40,10 @@
 
 //Import the declarative plugins
 import QtQuick 2.0
+
+//! [0]
 import QtSensors 5.0
+//! [0]
 
 /* Layout
                                          gesturerect
@@ -73,14 +76,17 @@ Rectangle {
     id: gesturerect
     border.width: 1
     anchors.margins: 5
-    property alias gestureid: sensorGuesture.gestures
+//! [2]
+    property alias gestureid: sensorGesture.gestures
+//! [2]
     property alias gesturetitle: titleText.text
-    property alias enabled: sensorGuesture.enabled
+    property alias enabled: sensorGesture.enabled
     property string oldgesture: ""
     property int count: 0
 
+//! [1]
     SensorGesture {
-        id: sensorGuesture
+        id: sensorGesture
         enabled: false
         onDetected:{
             if (gesture !== oldgesture)
@@ -93,6 +99,7 @@ Rectangle {
             valueText.text = ""
         }
     }
+//! [1]
 
     Text {
         id: titleText
@@ -123,7 +130,7 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 15
         text: ("")
-        visible: sensorGuesture.enabled
+        visible: sensorGesture.enabled
     }
 
     Button{
@@ -132,14 +139,14 @@ Rectangle {
         anchors.bottom: gesturerect.bottom
         height: 30
         width: 100
-        buttonText: (sensorGuesture.enabled ? "Stop" : "Start")
+        buttonText: (sensorGesture.enabled ? "Stop" : "Start")
         enabled: true;
         onClicked: {
             if (gestureStartStopButton.buttonText === "Start") {
-                sensorGuesture.enabled = true;
+                sensorGesture.enabled = true;
             }
             else {
-                sensorGuesture.enabled = false;
+                sensorGesture.enabled = false;
             }
         }
     }

@@ -69,14 +69,6 @@
 */
 
 /*!
-    \example sensors/qmlsensorgestures/qml_app
-    \title SensorGesture QML Element example
-    \ingroup qtsensors-examples
-
-    This example demonstrates use of the SensorGesture QML element.
-*/
-
-/*!
     \example sensors/maze
     \title Maze
     \brief The Maze example demonstrates the TiltSensor QML element

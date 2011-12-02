@@ -86,9 +86,11 @@ Rectangle {
         anchors.top: viewArea.top
         anchors.right: viewArea.right
         height: viewArea.height / 2
+//! [3]
         onSelectedGestureChanged: {
             gesture.enabled = false;
             gesture.gestureid = gestureList.selectedGesture;
+//! [3]
             gesture.gesturetitle = gestureList.selectedGesture;
         }
     }

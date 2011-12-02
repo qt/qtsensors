@@ -95,6 +95,7 @@ Rectangle {
         anchors.bottom: gesturerect.bottom
         anchors.margins: 5
 
+//! [4]
         ListView {
             id: gestureList
             anchors.fill: gestureListRect
@@ -104,7 +105,7 @@ Rectangle {
             currentIndex: -1
             delegate: gestureListDelegate
         }
-
+//! [4]
         Component {
             id: gestureListDelegate
 
