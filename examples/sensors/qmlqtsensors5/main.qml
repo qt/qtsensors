@@ -40,7 +40,10 @@
 
 //Import the declarative plugins
 import QtQuick 2.0
+
+//! [0]
 import QtSensors 5.0
+//! [0]
 
 /* Layout
                                                                               tiltrect
@@ -89,12 +92,14 @@ Rectangle {
         height: 270
         border.width: 1
 
+//! [1]
         TiltSensor {
             id: tilt
             unit: TiltSensor.Degrees
             enabled: false
             accuracy: 1.0
         }
+//! [1]
 
         Text{
             id: textAccuracy
@@ -233,13 +238,17 @@ Rectangle {
             id: xrottext
             x:5
             y:195
+//! [3]
             text: "X Rotation: " + tilt.xRotation
+//! [3]
         }
         Text {
             id: yrottext
             x:5
             y:220
+//! [4]
             text: "Y Rotation: " + tilt.yRotation
+//! [4]
         }
         Button{
             id: tiltStart
@@ -252,7 +261,9 @@ Rectangle {
             checked: tilt.enabled
 
             onClicked:{
+//! [2]
                 tilt.enabled = tiltStart.checked;
+//! [2]
                 if (tiltStart.checked)
                     tiltStart.text = "running";
                 else
@@ -273,8 +284,10 @@ Rectangle {
             id: ambientlight
             enabled: false
             onLightLevelChanged:{
+//! [5]
                 if (ambientlight.lightLevel == AmbientLightSensor.Unknown)
                     ambientlighttext.text = "Ambient light: Unknown";
+//! [5]
                 else if (ambientlight.lightLevel == AmbientLightSensor.Dark)
                     ambientlighttext.text = "Ambient light: Dark";
                 else if (ambientlight.lightLevel == AmbientLightSensor.Twilight)
@@ -287,6 +300,7 @@ Rectangle {
                     ambientlighttext.text = "Ambient light: Sunny";
             }
         }
+
         Text {
             id: ambientlighttext
             x: 5
@@ -325,6 +339,7 @@ Rectangle {
             id: proxi
             enabled: true
         }
+
         Text {
             id: proxitext
             x: 5
@@ -335,7 +350,9 @@ Rectangle {
             id: proxiStart
             x: 5
             y: 35
+//! [6]
             text: proxi.enabled ? "running" : "start"
+//! [6]
             checkColor: "lightblue"
             unCheckColor: "lightyellow"
             color: proxi.enabled ? checkColor : unCheckColor

@@ -59,16 +59,6 @@
 */
 
 /*!
-    \example sensors/qmlqtsensors5
-    \title QtSensors 5 QML API example
-    \ingroup qtsensors-examples
-
-    The QtSensors 5 QML API example demonstrates the QML elements in the QtSensors 5 import.
-
-    \sa QtSensors
-*/
-
-/*!
     \example sensors/maze
     \title Maze
     \brief The Maze example demonstrates the TiltSensor QML element
