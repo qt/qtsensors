@@ -52,6 +52,7 @@ QShakeSensorGestureRecognizer::QShakeSensorGestureRecognizer(QObject *parent)
     pYaxis = 0;nYaxis = 0;
     pZaxis = 0;nZaxis = 0;
     timerTimeout = 1500;
+
 }
 
 QShakeSensorGestureRecognizer::~QShakeSensorGestureRecognizer()
@@ -63,6 +64,13 @@ void QShakeSensorGestureRecognizer::create()
     accel = new QAccelerometer(this);
     accel->connectToBackend();
     timer = new QTimer(this);
+
+    qoutputrangelist outputranges = accel->outputRanges();
+
+    if (outputranges.count() > 0)
+        accelRange = (int)(outputranges.at(0).maximum *2) / 9.8; //approx range in g's
+    else
+        accelRange = 4; //this should never happen
 
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
@@ -86,7 +94,6 @@ bool QShakeSensorGestureRecognizer::stop()
     return !active;
 }
 
-
 bool QShakeSensorGestureRecognizer::isActive()
 {
     return active;
@@ -97,49 +104,48 @@ QString QShakeSensorGestureRecognizer::id() const
     return QString("QtSensors.shake");
 }
 
-
 #define NUMBER_SHAKES 3
 void QShakeSensorGestureRecognizer::accelChanged()
 {
     qreal x = accel->reading()->x();
-    qreal z = accel->reading()->z();
     qreal xdiff =  pXaxis - x;
+    qreal y = accel->reading()->y();
+    qreal ydiff = pYaxis - y;
+    qreal z = accel->reading()->z();
+    qreal zdiff =  pZaxis - z;
 
-    if (abs(xdiff) > 10) {
+    if (abs(xdiff) > (5 * accelRange)) {
         nXaxis++;
         if (timer->isActive()) {
             timer->stop();
         }
         timer->start();
     }
-    if (nXaxis >= NUMBER_SHAKES) {
-
-        Q_EMIT shake();
-        Q_EMIT detected("shake");
-
+    if (abs(ydiff) > (5 * accelRange)) {
+        nYaxis++;
         if (timer->isActive()) {
             timer->stop();
         }
-        timeout();
+        timer->start();
     }
+    if (abs(zdiff) > (5 * accelRange)) {
+            nZaxis++;
+            if (timer->isActive()) {
+                timer->stop();
+            }
+            timer->start();
+        }
 
-    //    if (abs(zdiff) > 10) {
-    //        nZaxis++;
-    //        if (timer->isActive()) {
-    //            timer->stop();
-    //        }
-    //        timer->start();
-    //    }
-
-    //    if (nZaxis >= NUMBER_SHAKES) {
-    //        Q_EMIT detected("ShakeZ");
-    //        Q_EMITshake();
-    //        if (timer->isActive()) {
-    //            timer->stop();
-    //        }
-    //        timeout();
-    //    }
+        if (nYaxis + nZaxis + nXaxis >= NUMBER_SHAKES) {
+            Q_EMIT shake();
+            Q_EMIT detected("shake");
+            if (timer->isActive()) {
+                timer->stop();
+            }
+            timeout();
+        }
     pXaxis = x;
+    pYaxis = y;
     pZaxis = z;
 }
 

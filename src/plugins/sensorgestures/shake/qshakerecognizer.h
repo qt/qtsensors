@@ -92,6 +92,7 @@ private:
     QTimer *timer;
     int timerTimeout;
     bool active;
+    int accelRange;
 };
 
 #endif // QSHAKERECOGNIZER_H
