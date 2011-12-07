@@ -61,8 +61,10 @@ SensorsConnection::SensorsConnection(QObject *parent)
     QtMobility::qt_registerSensorTypes();
     mConnection = new Connection(Connection::Client, "QtSimulator_Mobility_ServerName1.3.0.0", 0xbeef+1, Version(1,0,0,0), this);
     mWorker = mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1);
-    if (!mWorker)
-        qFatal("Could not connect to server");
+    if (!mWorker) {
+        qWarning("QtSensors simulator backend could not connect to the simulator!");
+        return;
+    }
     mWorker->addReceiver(this);
     mWorker->call("setRequestsSensors");
 }
