@@ -41,7 +41,11 @@
 import QtQuick 2.0
 import Qt3D 1.0
 import Qt3D.Shapes 1.0
+
+//! [0]
 import QtMobility.sensors 1.3
+//! [0]
+
 import "."
 
 Item {
@@ -75,19 +79,28 @@ Item {
         }
     }
 
+//! [1]
     Accelerometer {
         id: accel
         active: true
+//! [1]
+
+//! [2]
         property double pitch: 0.0
         property double roll: 0.0
+//! [2]
 
+//! [3]
         onReadingChanged: {
             pitch = -(Math.atan2(reading.x, Math.sqrt(reading.y * reading.y + reading.z * reading.z)) * 180) / Math.PI;
             roll = (Math.atan2(reading.y, Math.sqrt(reading.x * reading.x + reading.z * reading.z)) * 180) / Math.PI;
         }
     }
+//! [3]
+
 
     //Timer to read out the x and y rotation of the TiltSensor
+//! [4]
     Timer {
         interval: 150; running: true; repeat: true
 
@@ -96,4 +109,5 @@ Item {
             view.rotateX(accel.roll);
         }
     }
+//! [4]
 }

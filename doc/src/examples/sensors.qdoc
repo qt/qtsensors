@@ -37,17 +37,6 @@
 */
 
 /*!
-    \example sensors/cubehouse
-    \title Cube House QML Accelerometer example
-    \ingroup qtsensors-examples
-
-    \image cubehouse.png
-
-    The Cube House example demonstrates the use of the accelerometer to drive a camera
-    to create a pseudo-3D effect.
-*/
-
-/*!
     \example sensors/sensor_explorer
     \title Sensor Explorer
     \ingroup qtsensors-examples
