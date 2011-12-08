@@ -26,25 +26,31 @@
 ****************************************************************************/
 
 /*!
-    \group qtsensors-examples
-    \title QtSensors Examples
-    \brief Examples for the QtSensors module
-    \ingroup all-examples
-
-    These are the QtSensors examples.
-
-    \generatelist related
-*/
-
-/*!
-    \example sensors/sensor_explorer
-    \title Sensor Explorer
+    \example sensors/maze
+    \title Maze
+    \brief The Maze example demonstrates the TiltSensor QML element
     \ingroup qtsensors-examples
 
-    \image sensor_explorer.png
+\section1 Overview
+    To write a QML application that will use the TiltSensor QML sensors element you need to do the following steps:
 
-    The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
-    It was designed as a debugging aid.
+    Import the QtSensors 5.x declarative plugin:
+
+\snippet ../examples/sensors/maze/Maze.qml 0
+
+    Add the Sensor QML elements into your qml file.
+
+    In this example we use the TiltSensor with values based in degrees and an accuracy of 5 degree:
+
+\snippet ../examples/sensors/maze/Maze.qml 1
+
+    Starting the sensor can be done by setting the 'enabled' property to true:
+
+\snippet ../examples/sensors/maze/Maze.qml 2
+
+    To determine the walk direction of the mouse we use the following if -else statements:
+
+\snippet ../examples/sensors/maze/Maze.qml 3
+
 */
-
 

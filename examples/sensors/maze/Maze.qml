@@ -40,7 +40,10 @@
 
 //Import the declarative plugins
 import QtQuick 2.0
+
+//! [0]
 import QtSensors 5.0
+//! [0]
 
 //Import the javascript functions for this game
 import "lib.js" as Lib
@@ -159,20 +162,25 @@ Rectangle {
         }
     }
 
+//! [1]
     TiltSensor{
         id: tiltSensor
         unit: TiltSensor.Degrees
         enabled: true
         accuracy: 5.0
     }
+//! [1]
 
     //Timer to read out the x and y rotation of the TiltSensor
     Timer {
         id: tiltTimer
         interval: 50; running: false; repeat: true
+
+//! [2]
         onTriggered: {
             if (!tiltSensor.enabled)
                 tiltSensor.enabled = true;
+//! [2]
 
             if (mouseCtrl === null)
                 return;
@@ -185,6 +193,8 @@ Rectangle {
                 //check if we can move the mouse
                 var xval = -1;
                 var yval = -1;
+
+//! [3]
                 var xstep = 0;
                 if (tiltSensor.yRotation > 0)
                     xstep = 1;
@@ -195,6 +205,7 @@ Rectangle {
                     ystep = 1;
                 else if (tiltSensor.xRotation < 0)
                     ystep = -1;
+//! [3]
 
                 if (xstep < 0){
                     if (mouseCtrl.x > 0){
