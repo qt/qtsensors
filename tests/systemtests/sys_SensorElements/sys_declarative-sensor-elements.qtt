@@ -114,14 +114,46 @@ cleanup: function() {
            | *Step* | *Verification* |
            | Launch " + testBinary + " | App launches normally |
            | Press the *Start* button for the accelerometer | The button now displays *running* and numeric values are displayed for X and Y Rotation |
-           | Select the *Facing Up* radio button | Verify that when the device is orientated with the screen facing up the x, y rotation shows approximatly 0,0 |
-           | Select the *Left Up* radio button | Verify that when the device is orientated with the left up up (starting from portrait) the x, y rotation shows approximatly 0,0 |
-           | Select the *Top Down* radio button | Verify that when the device is orientated with the top edge down (starting from portrait) the x, y rotation shows approximatly 0,0 |
-           | Select the *Face Down* radio button | Verify that when the device is orientated with the face down the x, y rotation shows approximatly 0,0 |
-           | Select the *Right Up* radio button | Verify that when the device is orientated with the right edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
-           | Select the *Top Up* radio button | Verify that when the device is orientated with the top edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+           | Hold the device with the screen facing up in portrait | Verfy the x, y rotation values are approximatly 0,0 |
+           | Rotate the device toward you along the x axis until the device is at 90 degrees| Verify that the x rotation values show approximatly 90 degrees and the y values remain at approximatly 0 |
+           | While holding the device in this position select the calibrate button | Verify that the x, y values now show approximatly 0,0 |
+           | Return the device to the face up position | Verify that the accelerometer x, y rotation shows approximatly -90,0 |
+           | While holding the device in this position select the calibrate button | Verify that the x, y values now show approximatly 0,0 |
+           | Rotate the device toward the right along the y axis until the device is at 90 degrees| Verify that the x rotation values remain at approximatly 0 degrees and the y value show approximatly 90 degrees |
+           | While holding the device in this position select the calibrate button | Verify that the x, y values now show approximatly 0,0 |
+           | Return the device to the face up position | Verify that the accelerometer x, y rotation shows approximatly 0,-90 |
+           | Select the calibrate button | Verify that the x, y values now show approximatly 0,0 |
        "));
     },
+
+    // As a QML Application developer I want to calibrate the current device position
+        Calibrate_Current_Device_Position: function()
+        {
+            // Test meta data
+            testApplication = "qmlsensors2";
+            testBinary = "QtSensor...";
+            testGoal = "Verify that the application can be set to read an X and Y value of zero for the current phone position";
+            testPreconditions = "Nil.";
+            testGroups = "BAT";
+
+            // Test steps
+            mouseClick(findByProperty("label", testBinary)); wait(500);
+            prompt(twiki("---+++ " + testApplication + "<br><br>
+               *Goal:* " + testGoal + "<br>
+               *Pre-Requisites:* " + testPreconditions + "<br>
+               *Tested Binary:* " + testBinary + "<br>
+
+               | *Step* | *Verification* |
+               | Launch " + testBinary + " | App launches normally |
+               | Press the *Start* button for the accelerometer | The button now displays *running* and numeric values are displayed for X and Y Rotation |
+               | Select the *Facing Up* radio button | Verify that when the device is orientated with the screen facing up the x, y rotation shows approximatly 0,0 |
+               | Select the *Left Up* radio button | Verify that when the device is orientated with the left up up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+               | Select the *Top Down* radio button | Verify that when the device is orientated with the top edge down (starting from portrait) the x, y rotation shows approximatly 0,0 |
+               | Select the *Face Down* radio button | Verify that when the device is orientated with the face down the x, y rotation shows approximatly 0,0 |
+               | Select the *Right Up* radio button | Verify that when the device is orientated with the right edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+               | Select the *Top Up* radio button | Verify that when the device is orientated with the top edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+           "));
+        },
 
 // As a QML Application developer I would like to have one QML element per sensor type
     Display_All_Sensor_Types: function()
