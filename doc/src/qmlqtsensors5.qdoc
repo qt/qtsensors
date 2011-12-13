@@ -30,7 +30,7 @@
     \title QtSensors 5 QML API example
     \ingroup qtsensors-examples
 
-    The QtSensors 5 QML API example demonstrates the QML sensors elements in the QtSensors 5 import.
+    \brief The QtSensors 5 QML API example demonstrates the QML sensors elements in the QtSensors 5 import.
 
 \section1 Overview
     To write a QML application that will use the QML sensors elements in the QtSensors 5 import you need to to the following steps:

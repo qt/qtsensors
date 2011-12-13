@@ -38,12 +38,13 @@
 
 /*!
     \example sensors/sensor_explorer
-    \title Sensor Explorer
+    \title Sensor Explorer example
     \ingroup qtsensors-examples
 
     \image sensor_explorer.png
 
-    The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
+    \brief The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
+
     It was designed as a debugging aid.
 */
 

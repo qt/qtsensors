@@ -27,8 +27,8 @@
 
 /*!
     \example sensors/maze
-    \title Maze
-    \brief The Maze example demonstrates the TiltSensor QML element
+    \title Maze example
+    \brief The Maze example demonstrates the TiltSensor QML element.
     \ingroup qtsensors-examples
 
 \section1 Overview

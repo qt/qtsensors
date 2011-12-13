@@ -30,7 +30,7 @@
     \title SensorGesture QML Element example
     \ingroup qtsensors-examples
 
-    This example demonstrates use of the SensorGesture QML element.
+    \brief This example demonstrates use of the SensorGesture QML element.
 
 \section1 Overview
     To write a QML application that will use the gesture plugin you need to to the following steps:
