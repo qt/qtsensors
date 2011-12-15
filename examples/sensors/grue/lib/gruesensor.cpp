@@ -59,19 +59,19 @@ IMPLEMENT_READING(GrueSensorReading)
     \property GrueSensorReading::chanceOfBeingEaten
     \brief holds your chance of being eaten.
 
-    The value is the probability (from 0 to 1) that a Grue will eat you.
-    A probability of 1 means you are currently being eaten. The darker
+    The value is the probability (from 0 to 100) that a Grue will eat you.
+    A probability of 100 means you are currently being eaten. The darker
     it is, the more likely you are to be eaten by a Grue. The longer you
     stay in a dark area, the more likely you are to be eaten by a Grue.
     If you are in a lit room, the probability will be 0 as Grues fear light.
 */
 
-qreal GrueSensorReading::chanceOfBeingEaten() const
+int GrueSensorReading::chanceOfBeingEaten() const
 {
     return d->chanceOfBeingEaten;
 }
 
-void GrueSensorReading::setChanceOfBeingEaten(qreal chanceOfBeingEaten)
+void GrueSensorReading::setChanceOfBeingEaten(int chanceOfBeingEaten)
 {
     d->chanceOfBeingEaten = chanceOfBeingEaten;
 }

@@ -50,24 +50,22 @@ Item {
     GrueSensor {
         id: sensor
         active: true
-        property int lastPercent: 0
         onReadingChanged: {
-            var percent = Math.floor(reading.chanceOfBeingEaten * 100);
+            var percent = reading.chanceOfBeingEaten;
             var thetext = "";
-            if (percent == 0) {
+            if (percent === 0) {
                 thetext = "It is light. You are safe from Grues.";
-            } else if (lastPercent == 0) {
-                thetext = "It is dark. You are likely to be eaten by a Grue.";
             }
-            if (percent == 100) {
-                thetext += " You have been eaten by a Grue!";
+            else if (percent === 100) {
+                thetext = "You have been eaten by a Grue!";
                 sensor.active = false;
-            } else if (percent) {
+            }
+            else if (percent > 0) {
+                thetext = "It is dark. You are likely to be eaten by a Grue.";
                 thetext += " Your chance of being eaten by a Grue: "+percent+" percent.";
             }
             text.font.pixelSize = 30;
             text.text = "<p>" + thetext + "</p>";
-            lastPercent = percent;
         }
     }
 

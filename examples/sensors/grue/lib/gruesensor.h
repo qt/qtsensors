@@ -54,11 +54,11 @@ class GrueSensorReadingPrivate;
 class Q_GRUE_EXPORT GrueSensorReading : public QSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal chanceOfBeingEaten READ chanceOfBeingEaten WRITE setChanceOfBeingEaten)
+    Q_PROPERTY(int chanceOfBeingEaten READ chanceOfBeingEaten WRITE setChanceOfBeingEaten)
     DECLARE_READING(GrueSensorReading)
 public:
-    qreal chanceOfBeingEaten() const;
-    void setChanceOfBeingEaten(qreal chanceOfBeingEaten);
+    int chanceOfBeingEaten() const;
+    void setChanceOfBeingEaten(int chanceOfBeingEaten);
 };
 
 // begin generated code

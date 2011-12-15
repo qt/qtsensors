@@ -56,11 +56,11 @@ class GrueSensorReadingPrivate
 {
 public:
     GrueSensorReadingPrivate()
-        : chanceOfBeingEaten(-1.0)
+        : chanceOfBeingEaten(-1)
     {
     }
 
-    qreal chanceOfBeingEaten;
+    int chanceOfBeingEaten;
 };
 
 #endif
