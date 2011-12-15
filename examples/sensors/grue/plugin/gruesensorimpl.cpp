@@ -129,7 +129,7 @@ void gruesensorimpl::increaseChance()
 
     // No point in using the timer anymore if we've hit 1... you can't get more
     // likely to be eaten than 100%
-    if (chance == 1.0)
+    if (chance >= 1.0)
         darkTimer->stop();
 }
 
