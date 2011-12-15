@@ -53,15 +53,23 @@
 // We mean it.
 //
 
-#include <qambientlightsensor.h>
 #include <QtCore/QMetaType>
 #include <QtCore/QDateTime>
 
 namespace QtMobility {
 
+enum SimulatorLightLevel {
+    Undefined = 0,
+    Dark,
+    Twilight,
+    Light,
+    Bright,
+    Sunny
+};
+
 struct QAmbientLightReadingData
 {
-    QAmbientLightReading::LightLevel lightLevel;
+    SimulatorLightLevel lightLevel;
     QDateTime timestamp;
 };
 

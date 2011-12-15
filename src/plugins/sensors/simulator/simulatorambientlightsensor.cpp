@@ -54,6 +54,28 @@ SimulatorAmbientLightSensor::SimulatorAmbientLightSensor(QSensor *sensor)
 void SimulatorAmbientLightSensor::poll()
 {
     QtMobility::QAmbientLightReadingData data = get_qtAmbientLightData();
+    QAmbientLightReading::LightLevel convertedLightLevel;
+    switch (data.lightLevel) {
+    case QtMobility::Undefined:
+        convertedLightLevel = QAmbientLightReading::Undefined;
+        break;
+    case QtMobility::Dark:
+        convertedLightLevel = QAmbientLightReading::Dark;
+        break;
+    case QtMobility::Twilight:
+        convertedLightLevel = QAmbientLightReading::Twilight;
+        break;
+    case QtMobility::Light:
+        convertedLightLevel = QAmbientLightReading::Light;
+        break;
+    case QtMobility::Bright:
+        convertedLightLevel = QAmbientLightReading::Bright;
+        break;
+    case QtMobility::Sunny:
+        convertedLightLevel = QAmbientLightReading::Sunny;
+        break;
+    }
+
     quint64 newTimestamp;
     if (!data.timestamp.isValid())
         newTimestamp = QDateTime::currentDateTime().toTime_t();

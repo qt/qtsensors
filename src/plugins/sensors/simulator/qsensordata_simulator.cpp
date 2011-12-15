@@ -65,7 +65,7 @@ QDataStream &operator>>(QDataStream &in, QAmbientLightReadingData &s)
 {
     qint32 lightLevel;
     in >> lightLevel >> s.timestamp;
-    s.lightLevel = static_cast<QAmbientLightReading::LightLevel>(lightLevel);
+    s.lightLevel = static_cast<SimulatorLightLevel>(lightLevel);
     return in;
 }
 
