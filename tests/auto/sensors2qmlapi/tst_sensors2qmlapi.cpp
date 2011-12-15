@@ -515,7 +515,7 @@ void tst_Sensors2QMLAPI::testGesture()
     qDebug() << "QSensor2Gesture gestures:";
     qDebug() << gs->availableGestures();
     QSignalSpy spy_availableGesturesChanged(gs, SIGNAL(availableGesturesChanged()));
-    QSignalSpy spy_detected(gs, SIGNAL(detected(const QString)));
+    QSignalSpy spy_detected(gs, SIGNAL(detected(QString)));
     QSignalSpy spy_gesturesChanged(gs, SIGNAL(gesturesChanged()));
     QSignalSpy spy_validGesturesChanged(gs, SIGNAL(validGesturesChanged()));
     QSignalSpy spy_invalidGesturesChanged(gs, SIGNAL(invalidGesturesChanged()));
@@ -562,7 +562,7 @@ void tst_Sensors2QMLAPI::testGesture()
     gs->setEnabled(false);
 
     QSensor2Gesture* gs1 = new QSensor2Gesture(this);
-    QSignalSpy spy1_detected(gs1, SIGNAL(detected(const QString)));
+    QSignalSpy spy1_detected(gs1, SIGNAL(detected(QString)));
     QSignalSpy spy1_gesturesChanged(gs1, SIGNAL(gesturesChanged()));
     QSignalSpy spy1_validGesturesChanged(gs1, SIGNAL(validGesturesChanged()));
     QSignalSpy spy1_invalidGesturesChanged(gs1, SIGNAL(invalidGesturesChanged()));
@@ -614,7 +614,7 @@ void tst_Sensors2QMLAPI::testGesture()
 
     //check sensor shouldn't run until the componentComplete gets called
     QSensor2Gesture* gs2 = new QSensor2Gesture(this);
-    QSignalSpy spy2_detected(gs2, SIGNAL(detected(const QString)));
+    QSignalSpy spy2_detected(gs2, SIGNAL(detected(QString)));
     gs2->setGestures(QStringList() << "QtSensors.template");
     gs2->setEnabled(true);
     QCOMPARE(spy2_detected.count(), 0);
