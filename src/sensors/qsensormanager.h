@@ -44,6 +44,7 @@
 
 #include "qsensor.h"
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensorBackend;
@@ -103,6 +104,7 @@ protected:
     Q_IMPORT_PLUGIN(pluginname)
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 

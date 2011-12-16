@@ -48,6 +48,7 @@
 
 #include "qsensorgesture.h"
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensorGestureRecognizerPrivate;
@@ -79,7 +80,8 @@ protected:
 private:
         QSensorGestureRecognizerPrivate * d_ptr;
 };
-QT_END_NAMESPACE
 
+QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif // QSENSORGESTURERECOGNIZER_H

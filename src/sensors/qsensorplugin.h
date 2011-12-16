@@ -48,6 +48,7 @@
 #include <QtCore/qplugin.h>
 #include <QtCore/qfactoryinterface.h>
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 #define QSensorFactoryInterface_iid "com.nokia.Qt.QSensorPluginInterface/1.0"
@@ -75,6 +76,7 @@ Q_DECLARE_INTERFACE(QSensorPluginInterface, QSensorFactoryInterface_iid);
 Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/1.0");
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 

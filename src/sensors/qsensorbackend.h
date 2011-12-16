@@ -45,6 +45,7 @@
 #include "qsensor.h"
 #include "qsensormanager.h"
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class Q_SENSORS_EXPORT QSensorBackend : public QObject
@@ -89,6 +90,7 @@ private:
 };
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 

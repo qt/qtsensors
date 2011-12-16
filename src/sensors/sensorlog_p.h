@@ -53,6 +53,9 @@
 // We mean it.
 //
 
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
+
 #ifdef ENABLE_RUNTIME_SENSORLOG
 
 static bool logEnabled()
@@ -78,6 +81,9 @@ static bool logEnabled()
 #define SENSORLOG() if (1); else qDebug()
 
 #endif
+
+QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 

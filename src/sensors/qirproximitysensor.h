@@ -44,6 +44,9 @@
 
 #include "qsensor.h"
 
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
+
 class QIRProximityReadingPrivate;
 
 class Q_SENSORS_EXPORT QIRProximityReading : public QSensorReading
@@ -73,6 +76,9 @@ public:
     QIRProximityReading *reading() const { return static_cast<QIRProximityReading*>(QSensor::reading()); }
     static char const * const type;
 };
+
+QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 

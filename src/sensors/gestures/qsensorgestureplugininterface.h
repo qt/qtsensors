@@ -49,6 +49,7 @@
 #include "qsensorgesture.h"
 #include "qsensorgesturerecognizer.h"
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 class QSensorGestureRecognizer;
 
@@ -70,5 +71,6 @@ private:
 Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, QSensorGestureFactoryInterface_iid);
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif // QSENSORGESTUREPLUGININTERFACE_H

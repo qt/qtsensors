@@ -50,6 +50,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QPair>
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensorPrivate;
@@ -233,6 +234,7 @@ private:
 
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 Q_DECLARE_METATYPE(qrange)
 Q_DECLARE_METATYPE(qrangelist)

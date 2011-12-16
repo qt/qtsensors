@@ -60,6 +60,8 @@
 #include "qsensorgesture.h"
 #include "qsensorgesturemanager.h"
 #include <QtCore/private/qmetaobjectbuilder_p.h>
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensorGesturePrivate : public QObject
@@ -82,5 +84,6 @@ public:
 
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif // QSENSORGESTURE_P_H

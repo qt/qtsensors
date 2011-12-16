@@ -52,6 +52,7 @@
 
 #include <QtCore/qmetatype.h>
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensorGesturePrivate;
@@ -90,6 +91,7 @@ signals:
 };
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 
 #endif // QSENSORGESTURE_H
