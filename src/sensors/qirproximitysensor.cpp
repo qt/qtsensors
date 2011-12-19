@@ -44,7 +44,7 @@
 
 IMPLEMENT_READING(QIRProximityReading)
 
-/*
+/*!
     \class QIRProximityReading
     \ingroup sensors_reading
     \inmodule QtSensors
@@ -65,7 +65,7 @@ IMPLEMENT_READING(QIRProximityReading)
     power level that it was sent at.
 */
 
-/*
+/*!
     \property QIRProximityReading::reflectance
     \brief Holds the reflectance value.
 
@@ -79,7 +79,7 @@ qreal QIRProximityReading::reflectance() const
     return d->reflectance;
 }
 
-/*
+/*!
     Sets the reflectance value to \a reflectance.
 */
 void QIRProximityReading::setReflectance(qreal reflectance)
@@ -89,7 +89,7 @@ void QIRProximityReading::setReflectance(qreal reflectance)
 
 // =====================================================================
 
-/*
+/*!
     \class QIRProximityFilter
     \ingroup sensors_filter
     \inmodule QtSensors
@@ -100,7 +100,7 @@ void QIRProximityReading::setReflectance(qreal reflectance)
     instead of QSensorReading.
 */
 
-/*
+/*!
     \fn QIRProximityFilter::filter(QIRProximityReading *reading)
 
     Called when \a reading changes. Returns false to prevent the reading from propagating.
@@ -110,7 +110,7 @@ void QIRProximityReading::setReflectance(qreal reflectance)
 
 char const * const QIRProximitySensor::type("QIRProximitySensor");
 
-/*
+/*!
     \class QIRProximitySensor
     \ingroup sensors_type
     \inmodule QtSensors
@@ -126,19 +126,19 @@ char const * const QIRProximitySensor::type("QIRProximitySensor");
     \sa QIRProximityReading
 */
 
-/*
+/*!
     \fn QIRProximitySensor::QIRProximitySensor(QObject *parent)
 
     Construct the sensor as a child of \a parent.
 */
 
-/*
+/*!
     \fn QIRProximitySensor::~QIRProximitySensor()
 
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
 
-/*
+/*!
     \fn QIRProximitySensor::reading() const
 
     Returns the reading class for this sensor.
