@@ -45,16 +45,15 @@
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
 #include <qambientlightsensor.h>
+#include "qsensor2common.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensor2AmbientLight : public QObject, public QAmbientLightFilter
+class QSensor2AmbientLight : public qsensor2common, public QAmbientLightFilter
 {
     Q_OBJECT
     Q_ENUMS(LightLevel)
     Q_PROPERTY(LightLevel lightLevel READ lightLevel NOTIFY lightLevelChanged)
-    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
-
 public:
     QSensor2AmbientLight(QObject* parent = 0);
     virtual ~QSensor2AmbientLight();
@@ -70,15 +69,13 @@ public:
 
 Q_SIGNALS:
     void lightLevelChanged();
-    void enabledChanged();
 
 private:
     // Override of QAmbientLightFilter::filter(QAmbientLightReading*)
     bool filter(QAmbientLightReading *reading);
     LightLevel lightLevel();
-    bool enabled();
-    void setEnabled(bool val);
 
+    QSensor *sensor() { return _ambientLight; }
     QAmbientLightSensor* _ambientLight;
     LightLevel _lightLevel;
 };

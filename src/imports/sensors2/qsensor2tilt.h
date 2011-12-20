@@ -45,10 +45,11 @@
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
 #include <qaccelerometer.h>
+#include "qsensor2common.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensor2Tilt : public QObject, public QAccelerometerFilter
+class QSensor2Tilt : public qsensor2common, public QAccelerometerFilter
 {
     Q_OBJECT
     Q_ENUMS(Unit Speed)
@@ -56,7 +57,6 @@ class QSensor2Tilt : public QObject, public QAccelerometerFilter
     Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged)
     Q_PROPERTY(Unit unit READ unit WRITE setUnit NOTIFY unitChanged)
     Q_PROPERTY(Speed speed READ speed WRITE setSpeed NOTIFY speedChanged)
-    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
     Q_PROPERTY(qreal accuracy READ accuracy WRITE setAccuracy NOTIFY accuracyChanged)
     Q_PROPERTY(QByteArray settings READ settings WRITE setSettings)
 
@@ -82,7 +82,6 @@ Q_SIGNALS:
     void yRotationChanged();
     void xRotationChanged();
     void speedChanged();
-    void enabledChanged();
     void tiltChanged(qreal deltaX, qreal deltaY);
     void accuracyChanged();
 
@@ -95,14 +94,14 @@ private:
     void setUnit(const Unit val);
     Speed speed();
     void setSpeed(const Speed val);
-    bool enabled();
-    void setEnabled(const bool val);
+    void setEnabled(bool val);
     qreal accuracy();
     void setAccuracy(const qreal val);
     QByteArray settings() const;
     void setSettings(const QByteArray val);
     void createRunModeDataRateMap();
 
+    QSensor *sensor() { return _accel; }
     QAccelerometer* _accel;
     qreal _yRotation;
     qreal _xRotation;

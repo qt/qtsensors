@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -39,53 +39,38 @@
 **
 ****************************************************************************/
 
-#include "qsensor2proximity.h"
-#include <QtCore/QDebug>
+#ifndef QSENSOR2COMMON_H
+#define QSENSOR2COMMON_H
+
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmlclass ProximitySensor QSensor2Proximity
-    \inherits QtSensors5::Sensor
-    \inqmlmodule QtSensors 5
-    \ingroup qml-QtSensors5
-    \since QtSensors 5.0
-    \brief The ProximitySensor element provide an easy access to determine if the proximity of the mobile user by using the proximity sensor.
+class QSensor;
 
-    This element is part of the \bold{QtSensors 5} module.
-*/
-
-QSensor2Proximity::QSensor2Proximity(QObject* parent)
-    : qsensor2common(parent)
-    , _near(false)
+class qsensor2common : public QObject
 {
-    _proximity = new QProximitySensor(this);
-    _proximity->addFilter(this);
-}
+    Q_OBJECT
+    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
+    Q_PROPERTY(bool alwaysOn READ alwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged)
+public:
+    explicit qsensor2common(QObject *parent = 0);
+    virtual ~qsensor2common();
 
-QSensor2Proximity::~QSensor2Proximity()
-{
-}
+    bool enabled();
+    virtual void setEnabled(bool val);
 
-/*!
-    \qmlproperty bool QtSensors5::ProximitySensor::near
-    This property holds whether the sensor has detected something in close proximity.
-    Device dependent, but typically 1-2 cm.
-*/
-bool QSensor2Proximity::near()
-{
-    return _near;
-}
+    bool alwaysOn();
+    void setAlwaysOn(bool alwaysOn);
 
-bool QSensor2Proximity::filter(QProximityReading *reading)
-{
-    bool cl = reading->close();
-    if (_near != cl){
-        _near = cl;
-        emit nearChanged();
-    }
+signals:
+    void enabledChanged();
+    void alwaysOnChanged();
 
-    return false;
-}
+protected:
+    virtual QSensor *sensor() = 0;
+};
 
 QT_END_NAMESPACE
+
+#endif

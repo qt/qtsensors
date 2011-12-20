@@ -45,14 +45,14 @@
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
 #include <qproximitysensor.h>
+#include "qsensor2common.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensor2Proximity : public QObject, public QProximityFilter
+class QSensor2Proximity : public qsensor2common, public QProximityFilter
 {
     Q_OBJECT
     Q_PROPERTY(bool near READ near NOTIFY nearChanged)
-    Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
 
 public:
     QSensor2Proximity(QObject* parent = 0);
@@ -60,16 +60,14 @@ public:
 
 Q_SIGNALS:
     void nearChanged();
-    void enabledChanged();
 
 private:
     // Override of QProximityFilter::filter(QProximityReading*)
     bool filter(QProximityReading *reading);
     bool near();
-    bool enabled();
-    void setEnabled(bool val);
 
 private:
+    QSensor *sensor() { return _proximity; }
     QProximitySensor* _proximity;
     bool _near;
 };

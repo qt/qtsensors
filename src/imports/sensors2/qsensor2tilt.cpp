@@ -51,6 +51,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmlclass TiltSensor QSensor2Tilt
+    \inherits QtSensors5::Sensor
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
@@ -59,7 +60,7 @@ QT_BEGIN_NAMESPACE
     This element is part of the \bold{QtSensors 5} module.
 */
 QSensor2Tilt::QSensor2Tilt(QObject* parent)
-    : QObject(parent)
+    : qsensor2common(parent)
     , _yRotation(0)
     , _xRotation(0)
     , _radAccuracy(M_PI / 180)
@@ -164,15 +165,6 @@ void QSensor2Tilt::setSpeed(const QSensor2Tilt::Speed val)
         }
     }
     _speed = val;
-}
-
-/*!
-    \qmlproperty bool QtSensors5::QSensor2Tilt::enabled
-    This property can be used to activate or deactivate the sensor.
-*/
-bool QSensor2Tilt::enabled()
-{
-    return _accel->isActive();
 }
 
 void QSensor2Tilt::setEnabled(const bool val)

@@ -9,12 +9,14 @@ SOURCES += sensors2.cpp \
            qsensor2ambientlight.cpp \
            qsensor2proximity.cpp \
            qsensor2tilt.cpp \
-           qsensor2gesture.cpp
+           qsensor2gesture.cpp \
+    qsensor2common.cpp
 
 HEADERS += qsensor2ambientlight.h \
            qsensor2proximity.h \
            qsensor2tilt.h \
-           qsensor2gesture.h
+           qsensor2gesture.h \
+    qsensor2common.h
 
 DESTDIR = $$QT.sensors.imports/$$TARGETPATH
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
@@ -36,6 +38,3 @@ symbian {
     importFiles.path = $$QT_IMPORTS_BASE_DIR/$$TARGETPATH
     DEPLOYMENT = importFiles
  }
-
-
-

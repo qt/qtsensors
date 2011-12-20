@@ -124,6 +124,34 @@ private slots:
         QList<QDeclarativeError> errors = c.errors();
         QCOMPARE(errors.count(), 0);
     }
+
+    void uncreatable_elements_data()
+    {
+        QTest::addColumn<QString>("version");
+        QTest::addColumn<QString>("element");
+
+        QTest::newRow("Sensor 5.0")         << "5.0" << "Sensor";
+    }
+
+    void uncreatable_elements()
+    {
+        QFETCH(QString, version);
+        QFETCH(QString, element);
+
+        QDeclarativeEngine engine;
+        QString qml = QString("import QtQuick 2.0\nimport QtSensors %1\n%2 {}").arg(version).arg(element);
+        QDeclarativeComponent c(&engine);
+        c.setData(qml.toLocal8Bit(), QUrl::fromLocalFile(QDir::currentPath()));
+        //QTest::ignoreMessage(QtWarningMsg, "QDeclarativeComponent: Component is not ready");
+        QObject *obj = c.create();
+        QCOMPARE(obj, static_cast<QObject*>(0));
+        delete obj;
+        QList<QDeclarativeError> errors = c.errors();
+        QCOMPARE(errors.count(), 1);
+        QString expected = QString("Cannot create %1").arg(element);
+        QString actual = errors.first().description();
+        QCOMPARE(expected, actual);
+    }
 };
 
 QTEST_MAIN(tst_qtsensors5)

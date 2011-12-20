@@ -46,6 +46,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmlclass AmbientLightSensor QSensor2AmbientLight
+    \inherits QtSensors5::Sensor
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
@@ -54,7 +55,7 @@ QT_BEGIN_NAMESPACE
     This element is part of the \bold{QtSensors 5} module.
 */
 QSensor2AmbientLight::QSensor2AmbientLight(QObject* parent)
-    : QObject(parent)
+    : qsensor2common(parent)
     , _lightLevel(QSensor2AmbientLight::Unknown)
 {
     _ambientLight = new QAmbientLightSensor(this);
@@ -64,30 +65,6 @@ QSensor2AmbientLight::QSensor2AmbientLight(QObject* parent)
 
 QSensor2AmbientLight::~QSensor2AmbientLight()
 {
-}
-
-/*!
-    \qmlproperty bool QtSensors5::QSensor2AmbientLight::enabled
-    This property can be used to activate or deactivate the sensor.
-*/
-bool QSensor2AmbientLight::enabled()
-{
-    return _ambientLight->isActive();
-}
-
-void QSensor2AmbientLight::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = _ambientLight->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            _ambientLight->stop();
-        emit enabledChanged();
-    }
 }
 
 /*!

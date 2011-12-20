@@ -58,10 +58,11 @@ public:
         qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
 
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
-        qmlRegisterType<QSensor2Tilt>(uri, 5, 0, "TiltSensor");
-        qmlRegisterType<QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
-        qmlRegisterType<QSensor2Proximity>(uri, 5, 0, "ProximitySensor");
-        qmlRegisterType<QSensor2Gesture>(uri, 5, 0, "SensorGesture");
+        qmlRegisterUncreatableType<qsensor2common      >(uri, 5, 0, "Sensor", QLatin1String("Cannot create Sensor"));
+        qmlRegisterType           <QSensor2Tilt        >(uri, 5, 0, "TiltSensor");
+        qmlRegisterType           <QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
+        qmlRegisterType           <QSensor2Proximity   >(uri, 5, 0, "ProximitySensor");
+        qmlRegisterType           <QSensor2Gesture     >(uri, 5, 0, "SensorGesture");
     }
 };
 

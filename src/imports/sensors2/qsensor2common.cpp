@@ -39,53 +39,72 @@
 **
 ****************************************************************************/
 
-#include "qsensor2proximity.h"
-#include <QtCore/QDebug>
+#include "qsensor2common.h"
+#include <QSensor>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 
 /*!
-    \qmlclass ProximitySensor QSensor2Proximity
-    \inherits QtSensors5::Sensor
+    \qmlclass Sensor qsensor2common
     \inqmlmodule QtSensors 5
-    \ingroup qml-QtSensors5
-    \since QtSensors 5.0
-    \brief The ProximitySensor element provide an easy access to determine if the proximity of the mobile user by using the proximity sensor.
+    \brief The Sensor element serves as a base type for sensors.
 
-    This element is part of the \bold{QtSensors 5} module.
+    The Sensor element serves as a base type for sensors.
+
+    This element cannot be directly created. Please use one of the sub-classes instead.
 */
 
-QSensor2Proximity::QSensor2Proximity(QObject* parent)
-    : qsensor2common(parent)
-    , _near(false)
+qsensor2common::qsensor2common(QObject *parent)
+    : QObject(parent)
 {
-    _proximity = new QProximitySensor(this);
-    _proximity->addFilter(this);
 }
 
-QSensor2Proximity::~QSensor2Proximity()
+qsensor2common::~qsensor2common()
 {
 }
 
 /*!
-    \qmlproperty bool QtSensors5::ProximitySensor::near
-    This property holds whether the sensor has detected something in close proximity.
-    Device dependent, but typically 1-2 cm.
+    \qmlproperty bool QtSensors5::Sensor::enabled
+    Starts or stops the sensor.
 */
-bool QSensor2Proximity::near()
+
+bool qsensor2common::enabled()
 {
-    return _near;
+    return sensor()->isActive();
 }
 
-bool QSensor2Proximity::filter(QProximityReading *reading)
+void qsensor2common::setEnabled(bool val)
 {
-    bool cl = reading->close();
-    if (_near != cl){
-        _near = cl;
-        emit nearChanged();
+    bool active = enabled();
+    if (active != val){
+        if (val){
+            bool ret = sensor()->start();
+            if (!ret)
+                qWarning() << "couldn't start the sensor.";
+        }
+        else
+            sensor()->stop();
+        emit enabledChanged();
     }
+}
 
-    return false;
+/*!
+    \qmlproperty bool QtSensors5::Sensor::alwaysOn
+    Keeps the sensor running when the screen turns off.
+*/
+
+bool qsensor2common::alwaysOn()
+{
+    return sensor()->isAlwaysOn();
+}
+
+void qsensor2common::setAlwaysOn(bool alwaysOn)
+{
+    if (sensor()->isAlwaysOn() == alwaysOn) return;
+    sensor()->setAlwaysOn(alwaysOn);
+    emit alwaysOnChanged();
 }
 
 QT_END_NAMESPACE
+
