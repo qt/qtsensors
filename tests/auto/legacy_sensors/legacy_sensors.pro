@@ -1,6 +1,6 @@
 TEMPLATE=app
 TARGET=tst_legacy_sensors
 !no_system_tests:CONFIG += testcase
-QT = core testlib gui declarative
+QT = core testlib gui declarative sensors
 SOURCES += tst_legacy_sensors.cpp
 

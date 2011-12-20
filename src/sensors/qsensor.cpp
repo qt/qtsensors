@@ -349,7 +349,9 @@ bool QSensor::isActive() const
 */
 void QSensor::setAlwaysOn(bool alwaysOn)
 {
+    if (d->alwaysOn == alwaysOn) return;
     d->alwaysOn = alwaysOn;
+    emit alwaysOnChanged();
 }
 
 bool QSensor::isAlwaysOn() const

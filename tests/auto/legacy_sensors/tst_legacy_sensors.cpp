@@ -42,6 +42,7 @@
 #include <QtTest/QtTest>
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
+#include <QSensor>
 
 class tst_legacy_sensors : public QObject
 {
@@ -191,6 +192,69 @@ private slots:
             QString expected = QString("Cannot create %1").arg(element);
             QString actual = errors.first().description();
             QCOMPARE(expected, actual);
+        }
+    }
+
+    void alwaysOn_data()
+    {
+        QTest::addColumn<QString>("version");
+        QTest::addColumn<QString>("element");
+        QTest::addColumn<bool>("validSyntax");
+
+        QTest::newRow("") << "1.1" << "Accelerometer" << false;
+        QTest::newRow("") << "1.1" << "AmbientLightSensor" << false;
+        QTest::newRow("") << "1.1" << "Compass" << false;
+        QTest::newRow("") << "1.1" << "Magnetometer" << false;
+        QTest::newRow("") << "1.1" << "OrientationSensor" << false;
+        QTest::newRow("") << "1.1" << "ProximitySensor" << false;
+        QTest::newRow("") << "1.1" << "RotationSensor" << false;
+        QTest::newRow("") << "1.1" << "TapSensor" << false;
+
+        QTest::newRow("") << "1.2" << "Accelerometer" << false;
+        QTest::newRow("") << "1.2" << "AmbientLightSensor" << false;
+        QTest::newRow("") << "1.2" << "Compass" << false;
+        QTest::newRow("") << "1.2" << "Magnetometer" << false;
+        QTest::newRow("") << "1.2" << "OrientationSensor" << false;
+        QTest::newRow("") << "1.2" << "ProximitySensor" << false;
+        QTest::newRow("") << "1.2" << "RotationSensor" << false;
+        QTest::newRow("") << "1.2" << "TapSensor" << false;
+        QTest::newRow("") << "1.2" << "LightSensor" << false;
+        QTest::newRow("") << "1.2" << "Gyroscope" << false;
+
+        QTest::newRow("") << "1.3" << "Accelerometer" << true;
+        QTest::newRow("") << "1.3" << "AmbientLightSensor" << true;
+        QTest::newRow("") << "1.3" << "Compass" << true;
+        QTest::newRow("") << "1.3" << "Magnetometer" << true;
+        QTest::newRow("") << "1.3" << "OrientationSensor" << true;
+        QTest::newRow("") << "1.3" << "ProximitySensor" << true;
+        QTest::newRow("") << "1.3" << "RotationSensor" << true;
+        QTest::newRow("") << "1.3" << "TapSensor" << true;
+        QTest::newRow("") << "1.3" << "LightSensor" << true;
+        QTest::newRow("") << "1.3" << "Gyroscope" << true;
+        QTest::newRow("") << "1.3" << "IRProximitySensor" << true;
+    }
+
+    void alwaysOn()
+    {
+        QFETCH(QString, version);
+        QFETCH(QString, element);
+        QFETCH(bool, validSyntax);
+
+        QDeclarativeEngine engine;
+        QString qml = QString("import QtQuick 2.0\nimport QtMobility.sensors %1\n%2 {\nalwaysOn: true\n}").arg(version).arg(element);
+        QDeclarativeComponent c(&engine);
+        if (!validSyntax)
+            QTest::ignoreMessage(QtWarningMsg, "QDeclarativeComponent: Component is not ready");
+        c.setData(qml.toLocal8Bit(), QUrl::fromLocalFile(QDir::currentPath()));
+        QObject *obj = c.create();
+        if (validSyntax) {
+            QVERIFY(obj);
+            QSensor *sensor = qobject_cast<QSensor*>(obj);
+            QVERIFY(sensor);
+            QCOMPARE(sensor->isAlwaysOn(), true);
+            delete obj;
+        } else {
+            QCOMPARE(obj, static_cast<QObject*>(0));
         }
     }
 };

@@ -56,6 +56,43 @@
 
 QT_BEGIN_NAMESPACE
 
+// QtDeclarative doesn't have this for some reason. It has qmlRegisterRevision<T,int>
+// and qmlRegisterUncreatableType<T> but they both only do half the job. This one
+// registers an uncreatable type and sets the revision so that derived classes will
+// pick up new properties.
+template<typename T, int metaObjectRevision>
+int qmlRegisterUncreatableType(const char *uri, int versionMajor, int versionMinor, const char *qmlName, const QString& reason)
+{
+    QByteArray name(T::staticMetaObject.className());
+
+    QByteArray pointerName(name + '*');
+    QByteArray listName("QDeclarativeListProperty<" + name + ">");
+
+    QDeclarativePrivate::RegisterType type = {
+        1,
+
+        qRegisterMetaType<T *>(pointerName.constData()),
+        qRegisterMetaType<QDeclarativeListProperty<T> >(listName.constData()),
+        0, 0,
+        reason,
+
+        uri, versionMajor, versionMinor, qmlName, &T::staticMetaObject,
+
+        QDeclarativePrivate::attachedPropertiesFunc<T>(),
+        QDeclarativePrivate::attachedPropertiesMetaObject<T>(),
+
+        QDeclarativePrivate::StaticCastSelector<T,QDeclarativeParserStatus>::cast(),
+        QDeclarativePrivate::StaticCastSelector<T,QDeclarativePropertyValueSource>::cast(),
+        QDeclarativePrivate::StaticCastSelector<T,QDeclarativePropertyValueInterceptor>::cast(),
+
+        0, 0,
+
+        0,
+        metaObjectRevision
+    };
+
+    return QDeclarativePrivate::qmlregister(QDeclarativePrivate::TypeRegistration, &type);
+}
 
 class QSensorsDeclarativeModule : public QDeclarativeExtensionPlugin
 {
@@ -118,7 +155,7 @@ public:
         // Register the 1.3 interfaces
         major = 1;
         minor = 3;
-        qmlRegisterUncreatableType<QSensor              >(package, major, minor, "Sensor",               QLatin1String("Cannot create Sensor"));
+        qmlRegisterUncreatableType<QSensor            ,1>(package, major, minor, "Sensor",               QLatin1String("Cannot create Sensor"));
         qmlRegisterUncreatableType<QSensorReading       >(package, major, minor, "SensorReading",        QLatin1String("Cannot create SensorReading"));
         qmlRegisterType           <QAccelerometer       >(package, major, minor, "Accelerometer");
         qmlRegisterUncreatableType<QAccelerometerReading>(package, major, minor, "AccelerometerReading", QLatin1String("Cannot create AccelerometerReading"));
@@ -155,7 +192,6 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
 
 /*!
     \qmlclass Sensor QSensor
-    \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \brief The Sensor element serves as a base type for sensors.
 
@@ -188,6 +224,12 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
 */
 
 /*!
+    \qmlproperty bool QtMobility.sensors1::Sensor::alwaysOn
+    Keeps the sensor running when the display turns off.
+    Please see QSensor::alwaysOn for information about this property.
+*/
+
+/*!
     \qmlsignal QtMobility.sensors1::Sensor::onReadingChanged()
     Called when the reading object changes.
     Please see QSensor::readingChanged() for information about this signal.
@@ -195,7 +237,6 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
 
 /*!
     \qmlclass SensorReading QSensorReading
-    \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \brief The SensorReading element serves as a base type for sensor readings.
 
@@ -217,7 +258,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass Accelerometer QAccelerometer
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The Accelerometer element reports on linear acceleration
            along the X, Y and Z axes.
 
@@ -246,7 +287,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass AccelerometerReading QAccelerometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The AccelerometerReading element holds the most recent Accelerometer reading.
 
     The AccelerometerReading element holds the most recent Accelerometer reading.
@@ -276,7 +317,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass AmbientLightSensor QAmbientLightSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The AmbientLightSensor element repors on ambient lighting conditions.
 
     The AmbientLightSensor element repors on ambient lighting conditions.
@@ -303,7 +344,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass AmbientLightReading QAmbientLightReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The AmbientLightReading element holds the most AmbientLightSensor reading.
 
     The AmbientLightReading element holds the most AmbientLightSensor reading.
@@ -333,7 +374,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass Compass QCompass
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The Compass element reports on heading using magnetic north as a reference.
 
     The Compass element reports on heading using magnetic north as a reference.
@@ -360,7 +401,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass CompassReading QCompassReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The CompassReading element holds the most recent Compass reading.
 
     The CompassReading element holds the most recent Compass reading.
@@ -385,7 +426,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass Magnetometer QMagnetometer
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The Magnetometer element reports on magnetic field strength
            along the Z, Y and Z axes.
 
@@ -414,7 +455,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass MagnetometerReading QMagnetometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The MagnetometerReading element holds the most recent Magnetometer reading.
 
     The MagnetometerReading element holds the most recent Magnetometer reading.
@@ -449,7 +490,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass OrientationSensor QOrientationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The OrientationSensor element reports device orientation.
 
     The OrientationSensor element reports device orientation.
@@ -476,7 +517,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass OrientationReading QOrientationReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The OrientationReading element holds the most recent OrientationSensor reading.
 
     The OrientationReading element holds the most recent OrientationSensor reading.
@@ -506,7 +547,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass ProximitySensor QProximitySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The ProximitySensor element reports on object proximity.
 
     The ProximitySensor element reports on object proximity.
@@ -533,7 +574,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass ProximityReading QProximityReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The ProximityReading element holds the most recent ProximitySensor reading.
 
     The ProximityReading element holds the most recent ProximitySensor reading.
@@ -553,7 +594,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass RotationSensor QRotationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The RotationSensor element reports on device rotation
            around the X, Y and Z axes.
 
@@ -582,7 +623,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass RotationReading QRotationReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The RotationReading element holds the most recent RotationSensor reading.
 
     The RotationReading element holds the most recent RotationSensor reading.
@@ -612,7 +653,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass TapSensor QTapSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The TapSensor element reports tap and double tap events
            along the X, Y and Z axes.
 
@@ -641,7 +682,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \qmlclass TapReading QTapReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The TapReading element holds the most recent TapSensor reading.
 
     The TapReading element holds the most recent TapSensor reading.
@@ -677,7 +718,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The LightSensor element reports on light levels using LUX.
 
     The LightSensor element reports on light levels using LUX.
@@ -705,7 +746,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The LightReading element holds the most recent LightSensor reading.
 
     The LightReading element holds the most recent LightSensor reading.
@@ -726,7 +767,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The Gyroscope element reports on rotational acceleration
            around the X, Y and Z axes.
 
@@ -753,7 +794,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The GyroscopeReading element holds the most recent Gyroscope reading.
 
     The GyroscopeReading element holds the most recent Gyroscope reading.
@@ -784,7 +825,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.3
-    \inherits Sensor
+    \inherits QtMobility.sensors1::Sensor
     \brief The IRProximitySensor element reports on infra-red reflectance values.
 
     This element wraps the QIRProximitySensor class. Please see the documentation for
@@ -810,7 +851,7 @@ Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclara
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.3
-    \inherits SensorReading
+    \inherits QtMobility.sensors1::SensorReading
     \brief The IRProximityReading element holds the most recent IR proximity reading.
 
     The IRProximityReading element holds the most recent IR proximity reading.
