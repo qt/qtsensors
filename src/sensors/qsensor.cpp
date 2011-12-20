@@ -341,6 +341,23 @@ bool QSensor::isActive() const
 }
 
 /*!
+    \property QSensor::alwaysOn
+    \brief a value to indicate if the sensor should remain running when the screen is off.
+
+    Some platforms have a policy of suspending sensors when the screen turns off.
+    Setting this property to true will ensure the sensor continues to run.
+*/
+void QSensor::setAlwaysOn(bool alwaysOn)
+{
+    d->alwaysOn = alwaysOn;
+}
+
+bool QSensor::isAlwaysOn() const
+{
+    return d->alwaysOn;
+}
+
+/*!
     \property QSensor::availableDataRates
     \brief the data rates that the sensor supports.
 

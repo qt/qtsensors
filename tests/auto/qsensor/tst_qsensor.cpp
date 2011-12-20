@@ -810,6 +810,16 @@ private slots:
         QVERIFY(!sensor.isActive());
     }
 
+    void testAlwaysOn()
+    {
+        TestSensor sensor;
+        QCOMPARE(sensor.isAlwaysOn(), false);
+        sensor.setAlwaysOn(true);
+        QCOMPARE(sensor.isAlwaysOn(), true);
+        sensor.setAlwaysOn(false);
+        QCOMPARE(sensor.isAlwaysOn(), false);
+    }
+
     void testIsRegistered()
     {
         bool expected;

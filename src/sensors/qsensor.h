@@ -89,6 +89,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(int outputRange READ outputRange WRITE setOutputRange)
     Q_PROPERTY(QString description READ description)
     Q_PROPERTY(int error READ error NOTIFY sensorError)
+    Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn)
 #ifdef Q_QDOC
     Q_PROPERTY(int maxBufferSize)
     Q_PROPERTY(int efficientBufferSize)
@@ -110,6 +111,9 @@ public:
 
     void setActive(bool active);
     bool isActive() const;
+
+    bool isAlwaysOn() const;
+    void setAlwaysOn(bool alwaysOn);
 
     qrangelist availableDataRates() const;
     int dataRate() const;
