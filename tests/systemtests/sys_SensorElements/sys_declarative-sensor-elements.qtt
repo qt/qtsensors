@@ -259,4 +259,30 @@ cleanup: function() {
               | Move your hand away from the proximity sensor | Verify that the Proximity now reads *false* |
         "));
     },
+
+// MTMW-426   Handle service errors gracefully
+    Service_Errors: function()
+    {
+          // Test meta data
+          testApplication = "Grue Sensor";
+          testBinary = "Grue Sensor";
+          testGoal = "Verify that service errors are handled so as to prevent baldr crashes if the sensor daemon stops unexpectedly";
+          testPreconditions = "Nil.";
+          testGroups = "BAT";
+
+          // Test steps
+          mouseClick(findByProperty("label", testBinary)); wait(500);
+          prompt(twiki("---+++ " + testApplication + "<br><br>
+              *Goal:* " + testGoal + "<br>
+              *Pre-Requisites:* " + testPreconditions + "<br>
+              *Tested Binary:* " + testBinary + "<br>
+              | *Step* | *Verification* |
+              | Launch " + testBinary + " | App launches normally |
+              | Bring your hand to within 1 cm of the proximity sensor | Verify that the Proximity sensor is operating |
+              | Log into the device using a console and enter the following commands: <literal>ps -A | grep sensorq</literal> | Verify that the process ID number for sensorq is displayed |
+              | Using the process ID from the previous step stop sensorq by typing kill processID at the console |  |
+              | View the baldr log | Verify that sensorq is killed and restarted by baldr |
+              | Repeat the previous steps to find the process ID and kill sensorq a second time | View the baldr logs again to verify that sensorq has started again |
+        "));
+    },
 }
