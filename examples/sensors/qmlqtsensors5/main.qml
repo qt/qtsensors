@@ -337,7 +337,7 @@ Rectangle {
 
         ProximitySensor {
             id: proxi
-            enabled: true
+            enabled: false
         }
 
         Text {
