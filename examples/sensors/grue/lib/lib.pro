@@ -1,6 +1,8 @@
 TEMPLATE = lib
 TARGET = gruesensor
-DESTDIR = $$OUT_PWD
+
+# avoid going to release/debug subdirectory
+win32:DESTDIR = $$OUT_PWD
 
 DEFINES *= QT_BUILD_GRUE_LIB
 QT = core sensors
