@@ -1,0 +1,15 @@
+{
+    "info-version": "1.0",
+    "dict": {
+        "Category": "application",
+        "Runtime": "qml",
+        "DisplayName": "Sensor Explorer",
+        "Subcategory": "utility",
+        "MainQML": "main.qml",
+        "Version": "1.0",
+        "Identifier": "com.nokia.mt.sensorexplorer.demo",
+        "Summary": "QML Sensor Explorer demo",
+        "Author": "Qt"
+    }
+}
+

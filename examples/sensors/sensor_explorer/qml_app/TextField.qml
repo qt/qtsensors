@@ -38,46 +38,66 @@
 **
 ****************************************************************************/
 
-#ifndef EXPLORER_H
-#define EXPLORER_H
+//Import the declarative plugins
+import QtQuick 2.0
 
-#include <QMainWindow>
-#include <ui_explorer.h>
-#include <qsensor.h>
+Item {
+    id: textInputFrame
+    property alias text: textInput.text
+    resources: [
+        Component{
+            id: cursorA
+            Rectangle {
+                id: cursor_rect
+                width: 2
+                height: 20
+                color: "#1c94ff"
+                visible: textInput.cursorVisible
 
-class Explorer : public QMainWindow, public QSensorFilter
-{
-    Q_OBJECT
-public:
-    Explorer(QWidget *parent = 0);
-    ~Explorer();
+                PropertyAnimation on opacity  {
+                    easing.type: Easing.OutSine
+                    loops: Animation.Infinite
+                    from: 0
+                    to: 1.0
+                    duration: 750
+                }
+            }
+        }
+    ]
 
-    bool filter(QSensorReading *reading);
+    Image {
+        id: backgroundImage
+        anchors.fill: parent
+        source: (textInputFrame.enabled ? "images/textfield_background_normal.png" : "images/textfield_background_disabled.png")
+    }
 
-private slots:
-    void loadSensors();
-    void on_sensors_currentItemChanged();
-    void on_sensorprops_itemChanged(QTableWidgetItem *item);
-    void on_start_clicked();
-    void on_stop_clicked();
-    void sensor_changed();
-    void adjustSizes();
-    void loadSensorProperties();
+    TextInput {
+        id: textInput
+        anchors.fill: parent
+        anchors.topMargin: 5
+        anchors.leftMargin: 5
+        anchors.rightMargin: 5
+        activeFocusOnPress: false
 
-private:
-    void showEvent(QShowEvent *event);
-    void resizeEvent(QResizeEvent *event);
+        cursorDelegate: cursorA
 
-    void clearReading();
-    void loadReading();
-    void clearSensorProperties();
-    void adjustTableColumns(QTableWidget *table);
-    void resizeSensors();
+        onEnabledChanged: {
+             textInput.focus = false;
+        }
 
-    Ui::Explorer ui;
-    QSensor *m_sensor;
-    bool ignoreItemChanged;
-};
+        MouseArea {
+             anchors.fill: parent
 
-#endif
+             onClicked: {
+                if (!textInput.activeFocus) {
+                    textInput.forceActiveFocus()
+                    textInput.openSoftwareInputPanel();
+                } else {
+                    textInput.focus = false;
+                }
+            }
 
+            onPressAndHold: textInput.closeSoftwareInputPanel();
+        }
+    }
+}

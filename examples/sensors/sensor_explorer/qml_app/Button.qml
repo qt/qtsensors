@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -38,13 +38,38 @@
 **
 ****************************************************************************/
 
-#include "explorer.h"
+//Import the declarative plugins
+import QtQuick 2.0
 
-int main(int argc, char **argv)
-{
-    QApplication app(argc, argv);
-    Explorer explorer;
-    explorer.show();
-    return app.exec();
+//Implementation of the Button control.
+Item {
+    id: button
+    width: 30
+    height: 100
+    property alias text: innerText.text
+    signal clicked
+
+    Image {
+        id: backgroundImage
+        anchors.fill: parent
+        source: (button.enabled ? "images/button_background_normal.png" : "images/button_background_disabled.png")
+    }
+
+    Text {
+        id: innerText
+        anchors.centerIn: parent
+        color: "white"
+        font.bold: true
+    }
+
+    //Mouse area to react on click events
+    MouseArea {
+        anchors.fill: button
+        onClicked: { button.clicked();}
+        onPressed: {
+            backgroundImage.source = "images/button_background_pressed.png" }
+        onReleased: {
+            backgroundImage.source = (button.enabled ? "images/button_background_normal.png" : "images/button_background_disabled.png")
+        }
+    }
 }
-
