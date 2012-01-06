@@ -126,8 +126,8 @@ cleanup: function() {
        "));
     },
 
-    // As a QML Application developer I want to calibrate the current device position
-        Calibrate_Current_Device_Position: function()
+    // As a QML Application developer I want to find the device orientation
+        Show_Device_Orientation: function()
         {
             // Test meta data
             testApplication = "qmlsensors2";
