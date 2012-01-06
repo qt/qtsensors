@@ -38,7 +38,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-include("product.qtx")
+include("Device.qtx")
 include("extrafunctions.qtt")
 
 //TESTED_COMPONENT=src/sensors
@@ -156,6 +156,7 @@ cleanup: function() {
         },
 
 // As a QML Application developer I would like to have one QML element per sensor type
+// MTMW-427 QML System Test - Using only Proximity sensor does not start the sensor hardware
     Display_All_Sensor_Types: function()
     {
           // Test meta data
@@ -174,9 +175,14 @@ cleanup: function() {
 
               | *Step* | *Verification* |
               | Launch " + testBinary + " | App launches normally |
-              | Each sensor button will display *start*, press each of the sensor buttons | Verify that each sensor button displays *running* and operates as expected |
-              | Press each of the sensor buttons | Verify that each button no longer says *running* and now displays *stopped* |
-              | Press each sensor button again | Verify that each button now says *running* |
+              | Ensure that none of the sensors are in a *running* state | Press any buttons that display *Running* to place that sensor in a *Stopped* state |
+              | Each sensor button will display *start* or *Stopped*, press the accelerometer *Start* button | Verify that the accelerometer button displays *running* and operates as expected |
+              | Press the accelerometer button again to stop the accelerometer | Verify the button reads *Stopped* and the X, Y Rotation values do not repond to movement |
+              | Press the Ambient Light *Start* button | Verify that the Ambient Light sensor button displays *running* and operates as expected |
+              | Press the Ambient Light button again to stop the Ambient Light sensor | Verify the button reads *Stopped* and the Ambient Light sensor does not respond when a shadow falls on it |
+              | Press the Proximity sensor *Start* button | Verify that the Proximity sensor button displays *running* and operates as expected |
+              | Press the Proximity sensor button again to stop the Proximity sensor | Verify the button reads *Stopped* and the Proximity sensor does not respond when when your palm is brought within 1 cm of the Proximity sensor |
+              | Press all sensor buttons again to start all sensors | Verify all buttons read *Running* and all sensors operate as expected |
         "));
     },
 
