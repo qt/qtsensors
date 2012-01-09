@@ -39,41 +39,45 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
+#ifndef QTURNOVERSENSORGESTURERECOGNIZER_H
+#define QTURNOVERSENSORGESTURERECOGNIZER_H
 
-#include "qshakesensorgestureplugin.h"
+#include <QtSensors/QSensor>
+#include <QtSensors/QOrientationSensor>
+#include <QtSensors/QProximitySensor>
 
-#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturerecognizer.h>
+QT_BEGIN_NAMESPACE
 
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+class QTurnoverSensorGestureRecognizer : public QSensorGestureRecognizer
 {
-}
+    Q_OBJECT
+public:
+    explicit QTurnoverSensorGestureRecognizer(QObject *parent = 0);
+    ~QTurnoverSensorGestureRecognizer();
+    void create();
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+Q_SIGNALS:
+    void turnover();
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
+private slots:
+    void orientationChanged();
+    void proximityChanged();
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
+private:
+    QOrientationSensor *orientation;
+    QProximitySensor *proximity;
 
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
+    bool isClose;
+    bool isFaceDown;
+    bool active;
 
-    return recognizers;
-}
+    void isRecognized();
 
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
-
+};
+QT_END_NAMESPACE
+#endif // QTURNOVERSENSORGESTURERECOGNIZER_H

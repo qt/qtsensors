@@ -39,41 +39,38 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
+#ifndef QDOUBLETAPSENSORGESTURERECOGNIZER_H
+#define QDOUBLETAPSENSORGESTURERECOGNIZER_H
 
-#include "qshakesensorgestureplugin.h"
+#include <QtSensors/QSensor>
 
-#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturerecognizer.h>
+#include <QTapSensor>
+QT_BEGIN_NAMESPACE
 
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+class QDoubleTapSensorGestureRecognizer : public QSensorGestureRecognizer
 {
-}
+    Q_OBJECT
+public:
+    explicit QDoubleTapSensorGestureRecognizer(QObject *parent = 0);
+    ~QDoubleTapSensorGestureRecognizer();
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+    void create();
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
+Q_SIGNALS:
+    void doubletap();
 
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
+private slots:
+    void tapChanged();
 
-    return recognizers;
-}
+private:
+    QTapSensor *tapSensor;
 
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
-
+};
+QT_END_NAMESPACE
+#endif // QDOUBLETAPSENSORGESTURERECOGNIZER_H

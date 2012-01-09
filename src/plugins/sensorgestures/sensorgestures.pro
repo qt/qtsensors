@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
-!simulator:SUBDIRS += shake
+!simulator:SUBDIRS += shake qtsensors
 simulator:SUBDIRS += simulator

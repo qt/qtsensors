@@ -39,41 +39,45 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
 
-#include "qshakesensorgestureplugin.h"
+#ifndef QHOVERSENSORGESTURERECOGNIZER_H
+#define QHOVERSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgestureplugininterface.h>
+#include <QSensorGestureRecognizer>
+#include <QtSensors/QSensor>
+#include <QTimer>
+#include <QLightSensor>
+QT_BEGIN_NAMESPACE
 
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+class QHoverSensorGestureRecognizer : public QSensorGestureRecognizer
 {
-}
+    Q_OBJECT
+public:
+    explicit QHoverSensorGestureRecognizer(QObject *parent = 0);
+    ~QHoverSensorGestureRecognizer();
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+    void create();
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
+Q_SIGNALS:
+    void hover();
 
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
+private slots:
+    void lightChanged();
+    void timeout();
+    void timeout2();
+private:
+    QLightSensor *light;
+    QTimer *timer;
+    QTimer *timer2;
+    bool hoverOk;
+    qreal lastLightReading;
+    bool detecting;
 
-    return recognizers;
-}
-
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
-
+};
+QT_END_NAMESPACE
+#endif // QHOVERSENSORGESTURERECOGNIZER_H

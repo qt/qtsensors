@@ -39,41 +39,58 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
+#include <QTapSensor>
+#include "qdoubletapsensorgesturerecognizer.h"
+QT_BEGIN_NAMESPACE
 
-#include "qshakesensorgestureplugin.h"
-
-#include <qsensorgestureplugininterface.h>
-
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+QDoubleTapSensorGestureRecognizer::QDoubleTapSensorGestureRecognizer(QObject *parent) :
+    QSensorGestureRecognizer(parent)
 {
 }
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
+QDoubleTapSensorGestureRecognizer::~QDoubleTapSensorGestureRecognizer()
 {
 }
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
+void QDoubleTapSensorGestureRecognizer::create()
 {
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
+    tapSensor = new QTapSensor(this);
+    tapSensor->connectToBackend();
 }
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
+
+QString QDoubleTapSensorGestureRecognizer::id() const
 {
-    QList <QSensorGestureRecognizer *> recognizers;
-
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
-
-    return recognizers;
+    return QString("QtSensors.doubletap");
 }
 
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
+bool QDoubleTapSensorGestureRecognizer::start()
+{
+    connect(tapSensor,SIGNAL(readingChanged()),this,SLOT(tapChanged()));
+    tapSensor->start();
+    return isActive();
+}
 
+bool QDoubleTapSensorGestureRecognizer::stop()
+{
+    tapSensor->stop();
+    disconnect(tapSensor,SIGNAL(readingChanged()),this,SLOT(tapChanged()));
+    return isActive();
+}
+
+bool QDoubleTapSensorGestureRecognizer::isActive()
+{
+    return tapSensor->isActive();
+}
+
+void QDoubleTapSensorGestureRecognizer::tapChanged()
+{
+    QTapReading *reading = tapSensor->reading();
+    if (reading->isDoubleTap()) {
+        Q_EMIT doubletap();
+        Q_EMIT detected("doubletap");
+    }
+}
+
+
+QT_END_NAMESPACE

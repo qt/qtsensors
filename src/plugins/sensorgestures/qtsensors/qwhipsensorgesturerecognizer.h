@@ -39,41 +39,43 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
 
-#include "qshakesensorgestureplugin.h"
+#ifndef QWHIPSENSORGESTURERECOGNIZER_H
+#define QWHIPSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturerecognizer.h>
+#include <QtSensors/QAccelerometer>
+QT_BEGIN_NAMESPACE
 
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+class QWhipSensorGestureRecognizer : public QSensorGestureRecognizer
 {
-}
+    Q_OBJECT
+public:
+    explicit QWhipSensorGestureRecognizer(QObject *parent = 0);
+    ~QWhipSensorGestureRecognizer();
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+    void create();
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
+Q_SIGNALS:
+    void whip();
 
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
+private slots:
+    void accelChanged();
+    void timeout();
+private:
+    QAccelerometer *accel;
+    QTimer *timer;
+    int accelRange;
+    bool whipIt;
+    bool wasNegative;
+    qreal lastX;
+    bool active;
 
-    return recognizers;
-}
-
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
-
+};
+QT_END_NAMESPACE
+#endif // QWHIPSENSORGESTURERECOGNIZER_H

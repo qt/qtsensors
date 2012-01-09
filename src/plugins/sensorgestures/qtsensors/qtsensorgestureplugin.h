@@ -39,41 +39,28 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
+#ifndef QTSENSORGESTURESPLUGIN_H
+#define QTSENSORGESTURESPLUGIN_H
 
-#include "qshakesensorgestureplugin.h"
+#include <QObject>
+#include <QStringList>
 
 #include <qsensorgestureplugininterface.h>
+QT_BEGIN_NAMESPACE
 
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+class QtSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
-}
+    Q_OBJECT
+    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+public:
+    explicit QtSensorGesturePlugin();
+    ~QtSensorGesturePlugin();
+    QList <QSensorGestureRecognizer *> createRecognizers();
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
-
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
-
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
-
-    return recognizers;
-}
-
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
-
+    QStringList gestureSignals() const;
+    QStringList supportedIds() const;
+    QString name() const { return "QtSensorGestures"; }
+};
+QT_END_NAMESPACE
+#endif // QTSENSORGESTURESPLUGIN_H

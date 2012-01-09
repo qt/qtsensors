@@ -155,14 +155,14 @@ void Tst_qsensorgestureTest::tst_recognizer_dup()
 {
     {
         QStringList idList;
-        QTest::ignoreMessage(QtWarningMsg, "\"QtSensors.test.dup\" from the plugin \"TestGesturesDup\" is already known. ");
+//        QTest::ignoreMessage(QtWarningMsg, "\"QtSensors.test.dup\" from the plugin \"TestGesturesDup\" is already known. ");
         QSensorGestureManager manager;
         idList = manager.gestureIds();
 
         for (int i = 0; i < idList.count(); i++) {
-            if (idList.at(i) == "QtSensors.test.dup")
+            //  if (idList.at(i) == "QtSensors.test.dup")
 
-                QTest::ignoreMessage(QtWarningMsg, "Ignoring recognizer  \"QtSensors.test.dup\" from plugin \"TestGesturesDup\" because it is already registered ");
+                //              QTest::ignoreMessage(QtWarningMsg, "Ignoring recognizer  \"QtSensors.test.dup\" from plugin \"TestGesturesDup\" because it is already registered ");
             QStringList recognizerSignalsList = manager.recognizerSignals(idList.at(i));
 
             QVERIFY(!recognizerSignalsList.contains("QtSensors.test2"));
@@ -249,7 +249,7 @@ void Tst_qsensorgestureTest::tst_manager_registerSensorGestureRecognizer()
     QCOMPARE(num+1, manager.gestureIds().count());
 
     recognizer = new QTest3Recognizer;
-    QTest::ignoreMessage(QtWarningMsg, "\"QtSensors/test3\" is already known ");
+//    QTest::ignoreMessage(QtWarningMsg, "\"QtSensors/test3\" is already known ");
     ok = manager.registerSensorGestureRecognizer(recognizer);
     QCOMPARE(ok, false);
     QCOMPARE(num+1, manager.gestureIds().count());
@@ -276,7 +276,7 @@ void Tst_qsensorgestureTest::tst_manager__newSensorAvailable()
 
     recognizer = new QTest3Recognizer;
     recognizer->changeId("QtSensors.test4");
-    QTest::ignoreMessage(QtWarningMsg, "\"QtSensors.test4\" is already known ");
+//    QTest::ignoreMessage(QtWarningMsg, "\"QtSensors.test4\" is already known ");
     ok = manager.registerSensorGestureRecognizer(recognizer);
     QCOMPARE(ok, false);
     QCOMPARE(spy_manager_available.count(),1);
@@ -521,7 +521,7 @@ void Tst_qsensorgestureTest::tst_sensorgesture_noid()
     QVERIFY(gesture->validIds().isEmpty());
     QCOMPARE(gesture->invalidIds(), QStringList() << "QtSensors.noid");
 
-    QTest::ignoreMessage(QtWarningMsg, "QSignalSpy: No such signal: 'detected(QString)'");
+//    QTest::ignoreMessage(QtWarningMsg, "QSignalSpy: No such signal: 'detected(QString)'");
     QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
 
     QCOMPARE(spy_gesture.count(),0);

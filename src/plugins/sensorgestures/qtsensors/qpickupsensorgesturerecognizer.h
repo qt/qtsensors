@@ -39,41 +39,49 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
 
-#include "qshakesensorgestureplugin.h"
+#ifndef QPICKUPSENSORGESTURERECOGNIZER_H
+#define QPICKUPSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgestureplugininterface.h>
+#include <qsensorgesturerecognizer.h>
+#include <QtSensors/QSensor>
+#include <QtSensors/QAccelerometer>
+#include <QTimer>
+QT_BEGIN_NAMESPACE
 
-#include "qshakerecognizer.h"
-
-
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+class QPickupSensorGestureRecognizer : public QSensorGestureRecognizer
 {
-}
+    Q_OBJECT
+public:
+    explicit QPickupSensorGestureRecognizer(QObject *parent = 0);
+    ~QPickupSensorGestureRecognizer();
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+    void create();
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
+Q_SIGNALS:
+    void pickup();
 
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
 
-    return recognizers;
-}
+private slots:
+    void accelChanged();
+    void timeout();
+private:
+    QAccelerometer *accel;
 
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
+    QTimer *timer;
+    bool active;
+    bool atRest;
+    bool okToSignal;
 
+    qreal pXaxis;
+    qreal pYaxis;
+    qreal pZaxis;
+
+};
+QT_END_NAMESPACE
+#endif // QPICKUPSENSORGESTURERECOGNIZER_H

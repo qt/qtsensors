@@ -39,41 +39,78 @@
 **
 ****************************************************************************/
 
-#include <QtPlugin>
-#include <QStringList>
-#include <QObject>
-
-#include "qshakesensorgestureplugin.h"
-
-#include <qsensorgestureplugininterface.h>
-
-#include "qshakerecognizer.h"
+#ifndef QSHAKERECOGNIZER_H
+#define QSHAKERECOGNIZER_H
 
 
-QShakeSensorGesturePlugin::QShakeSensorGesturePlugin()
+#include <QtSensors/QSensor>
+#include <QtSensors/QAccelerometer>
+#include <QtSensors/QAccelerometerFilter>
+
+#include <QDebug>
+#include <QTimer>
+
+#include <qsensorgesturerecognizer.h>
+QT_BEGIN_NAMESPACE
+
+class QShake2SensorGestureRecognizer : public QSensorGestureRecognizer
 {
-}
+    Q_OBJECT
 
-QShakeSensorGesturePlugin::~QShakeSensorGesturePlugin()
-{
-}
+public:
 
-QStringList QShakeSensorGesturePlugin::supportedIds() const
-{
-    QStringList list;
-    list << "QtSensors.shake";
-    return list;
-}
+    enum ShakeDirection {
+        ShakeUndefined = 0,
+        ShakeLeft,
+        ShakeRight,
+        ShakeUp,
+        ShakeDown
+    };
 
-QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers()
-{
-    QList <QSensorGestureRecognizer *> recognizers;
+    QShake2SensorGestureRecognizer(QObject *parent = 0);
+    ~QShake2SensorGestureRecognizer();
 
-    QSensorGestureRecognizer *sRec = new QShakeSensorGestureRecognizer(this);
-    recognizers.append(sRec);
+    void create();
 
-    return recognizers;
-}
+    QString id() const;
+    bool start();
+    bool stop();
+    bool isActive();
 
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
+    int thresholdTime() const;
+    void setThresholdTime(int msec);
 
+Q_SIGNALS:
+    void shakeLeft();
+    void shakeRight();
+    void shakeUp();
+    void shakeDown();
+
+private slots:
+    void accelChanged();
+    void timeout();
+
+private:
+    QAccelerometer *accel;
+
+    qreal pXaxis;
+    qreal nXaxis;
+
+    qreal pYaxis;
+    qreal nYaxis;
+
+    qreal pZaxis;
+    qreal nZaxis;
+
+    bool detectingState;
+    QTimer *timer;
+    int timerTimeout;
+    bool active;
+    int accelRange;
+
+    ShakeDirection shakeDirection;
+
+
+};
+QT_END_NAMESPACE
+#endif // QSHAKERECOGNIZER_H

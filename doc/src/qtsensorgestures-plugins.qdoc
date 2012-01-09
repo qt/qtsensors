@@ -56,4 +56,57 @@ sensor gesture classes to use.
 \annotatedlist sensorgestures_recognizer
 
 
+\section1 Recognizer Plugins
+Here is a list of included plugins and their signals
+
+For ShakeGestures plugin:
+    \tablec
+        \row
+            \o Recognizer Id
+            \o Signals
+        \row
+            \o QtSensors.shake
+            \o shake
+\endtable
+
+For QtSensorGestures plugin:
+    \table
+        \row
+            \o Recognizer Id
+            \o Signals
+            \o Description
+        \row
+            \o QtSensors.cover
+            \o cover
+            \o Hand covers up phone display for one second.
+        \row
+            \o QtSensors.doubletap
+            \o doubletap
+            \o Double tap of finger on phone.
+        \row
+            \o QtSensors.hover
+            \o hover
+            \o Hand hovers over the phone for more than 1 second, then is removed .
+        \row
+            \o QtSensors.pickup
+            \o pickup
+            \o Phone is picked up and brought up into focus.
+        \row
+            \o QtSensors.shake2
+            \o shakeLeft, shakeRight, shakeUp, shakeDown
+            \o Shake phone in a certain direction.
+        \row
+            \o QtSensors.turnover
+            \o turnover
+            \o Phone is turned over and placed on a desk.
+        \row
+            \o QtSensors.twist
+            \o twistLeft, twistRight
+            \o Phone is quickly twisted left or right and back.
+        \row
+            \o QtSensors.whip
+            \o whip
+            \o Phone is moved like a whip gesture.
+   \endtable
+
 */

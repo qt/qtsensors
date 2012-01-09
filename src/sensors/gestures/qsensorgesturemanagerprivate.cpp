@@ -80,8 +80,11 @@ QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
 
         }
         plugins << plugin;
+    } else {
+        qWarning() << "Could not load "<< plugin;
     }
 }
+
 
 /*!
   Internal
@@ -115,7 +118,9 @@ bool QSensorGestureManagerPrivate::loadRecognizer(const QString &recognizerId)
 
         if (QSensorGesturePluginInterface *pInterface
                 = qobject_cast<QSensorGesturePluginInterface *>(plugins.at(i))) {
+
             if (pInterface->supportedIds().contains(recognizerId)) {
+
                 if (!registeredSensorGestures.contains(recognizerId)) {
                     //create these recognizers
                     QList <QSensorGestureRecognizer *> recognizers = pInterface->createRecognizers();
@@ -148,9 +153,6 @@ bool QSensorGestureManagerPrivate::registerSensorGestureRecognizer(QSensorGestur
 
         return true;
     }
-
-    qWarning() << recognizer->id() << "is already known";
-
     return false;
 }
 
