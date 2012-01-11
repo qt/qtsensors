@@ -188,7 +188,7 @@ Rectangle {
             //check if already solved
             if (Lib.won !== true){
                 Lib.sec += 0.05;
-                timePlayingLabel.text = Math.floor(Lib.sec) + " secounds";
+                timePlayingLabel.text = Math.floor(Lib.sec) + " seconds";
 
                 //check if we can move the mouse
                 var xval = -1;
