@@ -58,6 +58,7 @@ genericalssensor::genericalssensor(QSensor *sensor)
 void genericalssensor::start()
 {
     lightSensor->setDataRate(sensor()->dataRate());
+    lightSensor->setAlwaysOn(sensor()->isAlwaysOn());
     lightSensor->start();
     if (!lightSensor->isActive())
         sensorStopped();

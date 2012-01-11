@@ -58,6 +58,7 @@ genericorientationsensor::genericorientationsensor(QSensor *sensor)
 void genericorientationsensor::start()
 {
     accelerometer->setDataRate(sensor()->dataRate());
+    accelerometer->setAlwaysOn(sensor()->isAlwaysOn());
     accelerometer->start();
     if (!accelerometer->isActive())
         sensorStopped();
