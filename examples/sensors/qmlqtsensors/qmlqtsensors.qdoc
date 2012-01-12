@@ -26,43 +26,43 @@
 ****************************************************************************/
 
 /*!
-    \example sensors/qmlqtsensors5
-    \title QtSensors 5 QML API example
+    \example sensors/qmlqtsensors
+    \title QML QtSensors example
     \ingroup qtsensors-examples
-
-    \brief The QtSensors 5 QML API example demonstrates the QML sensors elements in the QtSensors 5 import.
+    \brief The QML QtSensors example demonstrates the QML sensors elements in the QtSensors 5 import.
+    \image qmlqtsensors.jpg
 
 \section1 Overview
     To write a QML application that will use the QML sensors elements in the QtSensors 5 import you need to to the following steps:
 
     Import the QtSensors 5.x declarative plugin:
 
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 0
+\snippet ../examples/sensors/qmlqtsensors/main.qml 0
 
     Add the Sensor QML elements into your qml file.
 
     In this example we use the TiltSensor:
 
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 1
+\snippet ../examples/sensors/qmlqtsensors/main.qml 1
 
     The Tilt-, AmbientLight- and the Proximity QML element sensor have the 'enabled' property in common.
     To start or stop the sensor set this property to true or false.
 
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 2
+\snippet ../examples/sensors/qmlqtsensors/main.qml 2
 
     Reading the data can be done for each sensor type like following:
 
     \l {QtSensors5::TiltSensor} {TiltSensor}
 
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 3
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 4
+\snippet ../examples/sensors/qmlqtsensors/main.qml 3
+\snippet ../examples/sensors/qmlqtsensors/main.qml 4
 
     \l {QtSensors5::AmbientLightSensor} {AmbientLightSensor}
 
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 5
+\snippet ../examples/sensors/qmlqtsensors/main.qml 5
 
     \l {QtSensors5::ProximitySensor} {ProximitySensor}
 
-\snippet ../examples/sensors/qmlqtsensors5/main.qml 6
+\snippet ../examples/sensors/qmlqtsensors/main.qml 6
 */
 

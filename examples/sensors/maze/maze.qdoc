@@ -28,8 +28,9 @@
 /*!
     \example sensors/maze
     \title Maze example
-    \brief The Maze example demonstrates the TiltSensor QML element.
     \ingroup qtsensors-examples
+    \brief The Maze example demonstrates the TiltSensor QML element.
+    \image maze.jpg
 
 \section1 Overview
     To write a QML application that will use the TiltSensor QML sensors element you need to do the following steps:

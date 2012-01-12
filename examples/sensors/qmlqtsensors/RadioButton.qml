@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -43,25 +43,39 @@ import QtQuick 2.0
 Rectangle {
     id: button
     width: 100
-    height: 20
-    property alias text: t.text
+    height: 30
+    property alias text: innerText.text
     property bool checked
     signal clicked
-    property color checkColor;
-    property color unCheckColor;
-    border.width: 1
-    radius:  2
+    color: "transparent"
+
+    Image{
+        id: image
+        width: button.height
+        height: button.height
+        anchors.right: button.right
+        source: (button.checked == true ? (button.enabled ?
+                    "images/radiobutton_background_checked.png" : "images/radiobutton_background_disabled_checked.png") :
+                (button.enabled ?
+                    "images/radiobutton_background_unchecked.png" : "images/radiobutton_background_disabled.png"))
+    }
 
     Text{
-        x: 0
-        id: t
-        anchors.fill: button
+        id: innerText
+        anchors.fill: parent
+        enabled: button.enabled
+        color: "black"
+        verticalAlignment: Text.AlignVCenter
+
+        onEnabledChanged: {
+             (enabled ?  innerText.color = "black" : innerText.color = "gray");
+        }
     }
 
     MouseArea{
         anchors.fill: button
         onClicked: {
-            setCheck(!button.checked);
+            setCheck(true);
             button.clicked();
         }
     }
@@ -69,6 +83,5 @@ Rectangle {
     function setCheck(val)
     {
         checked = val;
-        button.color = (button.checked == true ? checkColor : unCheckColor);
     }
 }

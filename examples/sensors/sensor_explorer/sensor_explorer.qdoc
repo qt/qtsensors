@@ -28,8 +28,9 @@
 /*!
     \page sensor_explorer.html
     \title Sensor Explorer example
-    \brief The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
     \ingroup qtsensors-examples
+    \brief The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
+    \image sensorexplorer.jpg
 
 \section1 Overview
     This example contains 2 projects.

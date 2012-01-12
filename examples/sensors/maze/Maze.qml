@@ -51,27 +51,29 @@ import "lib.js" as Lib
 /* Layout
                                 mainWnd
                                /
-------------------------------/
+------------------------------/ gameRect
+|                              /
+|-----------------------------/
+||---------------------------|
+||||M|                      ||
+|||   \                     ||
+|||    mouseCtrl            ||
+|||                         ||
+|||                         ||
+|||     Labyrinth           ||
+|||                         ||
+|||                         ||
+|||        cheeseSquare     ||
+|||                     \   ||
+|||                      |C|||
+||---------------------------|
+|-----------------------------
 |
 |-----------------------------
-|||M|                        |
-||   \                       |
-||    mouseCtrl              |
-||                           |
-||                           |
-||     Labyrinth             |
-||                           |
-||                           |
-||          cheeseSquare     |
-||                       \   |
-||                        |C||
+||             ||            |
 |-----------------------------
-|
-|---------- --------------
-||        | |            |
-|---------- --------------
-|       \      \
-|        \      timePlayingLabel
+|       \          \
+|        \          timePlayingLabel
 |         newGameButton
 ------------------------------
 
@@ -80,85 +82,95 @@ import "lib.js" as Lib
 Rectangle {
     id: mainWnd
     x: 0
-    y: 30
+    y: 0
     width: 320
-    height: 440
-    color: "white"
+    height: 480
+    color: "#ececec"
 
     property Mouse mouseCtrl;
     property LabyrinthSquare cheeseSquare;
     property Congratulation congratulation;
 
-    //timer for starting the labyrinth game
-    Timer {
-        id: startTimer
-        interval: 50; running: true; repeat: false
-        onTriggered: {
+    Rectangle {
+        id: gameRect
+        x: (mainWnd.width - width) / 2
+        y: 25
+        width: Lib.dimension * Lib.cellDimension
+        height: Lib.dimension * Lib.cellDimension
+        color: "transparent"
+        border.width: 2
 
-            //reset game time
-            timePlayingLabel.text = "--";
-            Lib.sec = 0.0;
-            Lib.createLabyrinth();
+        //timer for starting the labyrinth game
+        Timer {
+            id: startTimer
+            interval: 50; running: true; repeat: false
+            onTriggered: {
 
-            //create labyrinth elements (only at the first time)
-            var needloadcomponent = false;
-            if (Lib.objectArray === null){
-                needloadcomponent = true;
-                Lib.objectArray = new Array(Lib.dimension * Lib.dimension);
-            }
-            var idx = 0;
-            for (var y = 0; y < Lib.dimension; y++ ){
-                for (var x = 0; x < Lib.dimension; x++ ){
-                    var component = null;
+                //reset game time
+                timePlayingLabel.text = "--";
+                Lib.sec = 0.0;
+                Lib.createLabyrinth();
 
-                    //create labyrinth components (only at the first time)
-                    if (needloadcomponent){
-                        component = Qt.createComponent("LabyrinthSquare.qml");
-                        if (component.status == Component.Ready) {
-                            var square = component.createObject(parent);
-                            square.x = x * square.width;
-                            square.y = y * square.height;
-                            square.val = Lib.labyrinth[x][y];
-                            square.updateImage();
-                            Lib.objectArray[idx] = square;
-                            if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)){
-                                cheeseSquare = square;
-                                var component1 = Qt.createComponent("Congratulation.qml");
-                                if (component1.status == Component.Ready) {
-                                    congratulation = component1.createObject(parent);
-                                    congratulation.visible = false;
+                //create labyrinth elements (only at the first time)
+                var needloadcomponent = false;
+                if (Lib.objectArray === null){
+                    needloadcomponent = true;
+                    Lib.objectArray = new Array(Lib.dimension * Lib.dimension);
+                }
+                var idx = 0;
+                for (var y = 0; y < Lib.dimension; y++ ){
+                    for (var x = 0; x < Lib.dimension; x++ ){
+                        var component = null;
+
+                        //create labyrinth components (only at the first time)
+                        if (needloadcomponent){
+                            component = Qt.createComponent("LabyrinthSquare.qml");
+                            if (component.status == Component.Ready) {
+                                var square = component.createObject(parent);
+                                square.x = x * square.width;
+                                square.y = y * square.height;
+                                square.val = Lib.labyrinth[x][y];
+                                square.updateImage();
+                                Lib.objectArray[idx] = square;
+                                if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)){
+                                    cheeseSquare = square;
+                                    var component1 = Qt.createComponent("Congratulation.qml");
+                                    if (component1.status == Component.Ready) {
+                                        congratulation = component1.createObject(parent);
+                                        congratulation.visible = false;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else{
-                        Lib.objectArray[idx].val = Lib.labyrinth[x][y];
-                        Lib.objectArray[idx].updateImage();
-                        if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)){
-                            cheeseSquare = Lib.objectArray[idx];
-                            congratulation.visible = false;
+                        else{
+                            Lib.objectArray[idx].val = Lib.labyrinth[x][y];
+                            Lib.objectArray[idx].updateImage();
+                            if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)){
+                                cheeseSquare = Lib.objectArray[idx];
+                                congratulation.visible = false;
+                            }
                         }
+                        idx++;
                     }
-                    idx++;
                 }
-            }
 
-            //Lib.printLab(); //this is for debug. Labyrinth will be printed out in the console
+                //Lib.printLab(); //this is for debug. Labyrinth will be printed out in the console
 
-            //Create the mouse control  (only at the first time)
-            if (mouseCtrl === null){
-                var component = Qt.createComponent("Mouse.qml");
-                if (component.status == Component.Ready) {
-                    mouseCtrl = component.createObject(parent);
+                //Create the mouse control  (only at the first time)
+                if (mouseCtrl === null){
+                    var component = Qt.createComponent("Mouse.qml");
+                    if (component.status == Component.Ready) {
+                        mouseCtrl = component.createObject(parent);
+                    }
                 }
-            }
-            mouseCtrl.x = 0;
-            mouseCtrl.y = 0;
-            newGameButton.enabled = true;
+                mouseCtrl.x = 0;
+                mouseCtrl.y = 0;
+                newGameButton.enabled = true;
 
-            //Start the Tilt reader timer
-            tiltTimer.running = true;
-            tiltSensor.calibrate();
+                //Start the Tilt reader timer
+                tiltTimer.running = true;
+                tiltSensor.calibrate();
+            }
         }
     }
 
@@ -263,11 +275,12 @@ Rectangle {
     //Button to start a new Game
     Button{
         id: newGameButton
-        x: 0
-        y: mainWnd.x + (Lib.dimension * Lib.cellDimension) + 10
+        anchors.left: gameRect.left
+        anchors.top: gameRect.bottom
+        anchors.topMargin: 5
         height: 30
         width: 100
-        buttonText: "new game"
+        text: "new game"
         enabled: false;
         onClicked: {
             newGameButton.enabled = false;
@@ -278,8 +291,9 @@ Rectangle {
     //Label to print out the game time
     Text{
         id: timePlayingLabel
-        x: newGameButton.x + newGameButton.width + 20
-        y: newGameButton.y + 10
+        anchors.right: gameRect.right
+        anchors.top: gameRect.bottom
+        anchors.topMargin: 5
     }
 }
 
