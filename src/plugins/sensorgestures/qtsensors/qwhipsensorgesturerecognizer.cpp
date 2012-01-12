@@ -100,7 +100,6 @@ bool QWhipSensorGestureRecognizer::isActive()
 void QWhipSensorGestureRecognizer::accelChanged()
 {
     qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
 
     if (whipIt) {
         qreal difference = lastX - x;

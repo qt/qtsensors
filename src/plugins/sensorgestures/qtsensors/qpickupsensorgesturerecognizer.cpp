@@ -125,7 +125,6 @@ void QPickupSensorGestureRecognizer::accelChanged()
 
 void QPickupSensorGestureRecognizer::timeout()
 {
-    qreal x = accel->reading()->x();
     qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 

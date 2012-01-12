@@ -171,7 +171,8 @@ void QShake2SensorGestureRecognizer::accelChanged()
                 Q_EMIT shakeDown();
                 Q_EMIT detected("shakeDown");
                 break;
-
+            default:
+                break;
             };
             if (timer->isActive()) {
                 timer->stop();
