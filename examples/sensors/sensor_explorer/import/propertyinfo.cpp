@@ -45,12 +45,12 @@
 
 QT_BEGIN_NAMESPACE
 
-/*!
+/*
     \class QPropertyInfo
     \brief The QPropertyInfo element provides an easy access for reading and writing the property values.
 */
 
-/*!
+/*
     Construct a QPropertyInfo object with parent \a parent
 */
 QPropertyInfo::QPropertyInfo(QObject* parent)
@@ -62,7 +62,7 @@ QPropertyInfo::QPropertyInfo(QObject* parent)
     , _value("")
 {}
 
-/*!
+/*
     Construct a QPropertyInfo object with parent \a parent, property name \a name, property index \a index,
     property write access \a writeable, property type \a typeName and property value \a value
 */
@@ -75,7 +75,7 @@ QPropertyInfo::QPropertyInfo(const QString& name, int index, bool writeable, con
     , _value(value)
 {}
 
-/*!
+/*
     \property QPropertyInfo::name
     Returns the name of the property
 */
@@ -84,7 +84,7 @@ QString QPropertyInfo::name()
     return _name;
 }
 
-/*!
+/*
     \property QPropertyInfo::typeName
     Returns the type of the property
 */
@@ -93,7 +93,7 @@ QString QPropertyInfo::typeName()
     return _typeName;
 }
 
-/*!
+/*
     \property QPropertyInfo::value
     Returns the current value of the property
 */
@@ -102,12 +102,12 @@ QString QPropertyInfo::value()
     return _value;
 }
 
-/*!
+/*
     \fn void QPropertyInfo::valueChanged()
     Signal that notifies the client if the property value was changed.
 */
 
-/*!
+/*
     \fn QPropertyInfo::setValue(const QString& value)
     Sets the value \a value of the property
 */
@@ -119,7 +119,7 @@ void QPropertyInfo::setValue(const QString& value)
     }
 }
 
-/*!
+/*
     \fn QPropertyInfo::index()
     Returns the meta-data index of the property
 */
@@ -128,7 +128,7 @@ int QPropertyInfo::index()
     return _index;
 }
 
-/*!
+/*
     \property QPropertyInfo::isWriteable
     Returns true if the property is writeable false if property is read only
 */

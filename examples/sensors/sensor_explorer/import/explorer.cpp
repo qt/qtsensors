@@ -47,12 +47,12 @@
 
 QT_BEGIN_NAMESPACE
 
-/*!
+/*
     \class QSensorExplorer
     \brief The QSensorExplorer element provides an easy access for reading all avalaible sensors installed on the system.
 */
 
-/*!
+/*
     Construct a QSensorExplorer object with parent \a parent
 */
 QSensorExplorer::QSensorExplorer(QObject* parent)
@@ -62,14 +62,14 @@ QSensorExplorer::QSensorExplorer(QObject* parent)
     loadSensors();
 }
 
-/*!
+/*
     Destructor of a QSensorExplorer
 */
 QSensorExplorer::~QSensorExplorer()
 {
 }
 
-/*!
+/*
     Load all available sensors and store it in a list.
 */
 void QSensorExplorer::loadSensors()
@@ -97,12 +97,12 @@ void QSensorExplorer::loadSensors()
     //! [0]
 }
 
-/*!
+/*
     \fn QSensorExplorer::availableSensorsChanged()
     Notifies the client if the list of the available sensors was changed
 */
 
-/*!
+/*
     \property QSensorExplorer::availableSensors
     Returns a list of all available sensor.
 */
@@ -111,11 +111,12 @@ QDeclarativeListProperty<QSensorItem> QSensorExplorer::availableSensors()
     return QDeclarativeListProperty<QSensorItem>(this,_availableSensors);
 }
 
-/*!
+/*
     \fn QSensorExplorer::selectedSensorItemChanged()
     Notifies the client if the selected sensor has been changed
 */
-/*!
+
+/*
     \property QSensorExplorer::selectedSensorItem
     Returns the current selected sensor item.
 */
@@ -124,7 +125,7 @@ QSensorItem* QSensorExplorer::selectedSensorItem()
     return _selectedSensorItem;
 }
 
-/*!
+/*
     \fn QSensorExplorer::setSelectedSensorItem(QSensorItem* selitem)
     Sets the QSensorItem \a selitem as the current selected QSensorItem.
 */

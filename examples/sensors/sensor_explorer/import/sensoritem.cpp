@@ -45,12 +45,12 @@
 
 QT_BEGIN_NAMESPACE
 
-/*!
+/*
     \class QSensorItem
     \brief The QSensorItem element provides information about the meta-datas from a sensors installed on the system.
 */
 
-/*!
+/*
     Construct a QSensorItem object with parent \a parent
 */
 QSensorItem::QSensorItem(QObject* parent)
@@ -59,7 +59,7 @@ QSensorItem::QSensorItem(QObject* parent)
 {
 }
 
-/*!
+/*
     Construct a QSensorItem object with QSensor \a sensor and parent \a parent
 */
 QSensorItem::QSensorItem(QSensor* sensor, QObject* parent)
@@ -68,18 +68,19 @@ QSensorItem::QSensorItem(QSensor* sensor, QObject* parent)
 {
 }
 
-/*!
+/*
     Destructor of a QSensorItem
 */
 QSensorItem::~QSensorItem()
 {
 }
 
-/*!
+/*
     \fn QSensorItem::startChanged()
     Notifies the client if the sensors has changed its start active status
 */
-/*!
+
+/*
     \property QSensorItem::start
     This property starts or stops the sensor
 */
@@ -94,7 +95,7 @@ void QSensorItem::setStart(bool run)
         _qsensor->setActive(run);
 }
 
-/*!
+/*
     \property QSensorItem::id
     Returns the sensor id of the sensor item
 */
@@ -103,7 +104,7 @@ QString QSensorItem::id()
     return (_qsensor ? _qsensor->identifier() : "");
 }
 
-/*!
+/*
     Set the new value \a val to the QPropertyInfo object \a property
 */
 void QSensorItem::changePropertyValue(QPropertyInfo* property, const QString& val)
@@ -116,7 +117,7 @@ void QSensorItem::changePropertyValue(QPropertyInfo* property, const QString& va
     }
 }
 
-/*!
+/*
     Reading the meta-datas and activates the sensor.
 */
 void QSensorItem::select()
@@ -171,7 +172,7 @@ void QSensorItem::select()
     connect(_qsensor, SIGNAL(activeChanged()), SIGNAL(startChanged()));
 }
 
-/*!
+/*
     Unselect the sensor by stopping the sensor.
 */
 void QSensorItem::unSelect()
@@ -180,7 +181,7 @@ void QSensorItem::unSelect()
     disconnect(_qsensor, SIGNAL(activeChanged()), this , SIGNAL(startChanged()));
 }
 
-/*!
+/*
     Updates the property values from QSensor
 */
 void QSensorItem::updateSensorPropertyValues()
@@ -194,12 +195,12 @@ void QSensorItem::updateSensorPropertyValues()
     }
 }
 
-/*!
+/*
     \fn QSensorItem::propertiesChanged()
     Notifies the client if the list of the properties was changed
 */
 
-/*!
+/*
     Updates the property values from the QSensorReader
 */
 void QSensorItem::sensorReadingChanged()
@@ -212,7 +213,7 @@ void QSensorItem::sensorReadingChanged()
     }
 }
 
-/*!
+/*
     Returns true if the property with the name \a propertyname should be ignored
 */
 bool QSensorItem::ignoreProperty(const QString& propertyname)
@@ -227,7 +228,7 @@ bool QSensorItem::ignoreProperty(const QString& propertyname)
     return false;
 }
 
-/*!
+/*
     Returns true if the property with the name \a propertyname is writeable
 */
 bool QSensorItem::isWriteable(const QString& propertyname)
@@ -253,7 +254,7 @@ bool QSensorItem::isWriteable(const QString& propertyname)
     return false;
 }
 
-/*!
+/*
     Convert the variant \a val dependend on the type \a type and returns the converted value as a QString
 */
 QString QSensorItem::convertValue(const QString& type, const QVariant& val)
@@ -306,7 +307,7 @@ QString QSensorItem::convertValue(const QString& type, const QVariant& val)
     return val.toString();
 }
 
-/*!
+/*
     \property QSensorItem::properties
     Returns a list of all properties from the sensor
 */
