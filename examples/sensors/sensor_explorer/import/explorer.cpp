@@ -112,6 +112,10 @@ QDeclarativeListProperty<QSensorItem> QSensorExplorer::availableSensors()
 }
 
 /*!
+    \fn QSensorExplorer::selectedSensorItemChanged()
+    Notifies the client if the selected sensor has been changed
+*/
+/*!
     \property QSensorExplorer::selectedSensorItem
     Returns the current selected sensor item.
 */

@@ -76,6 +76,10 @@ QSensorItem::~QSensorItem()
 }
 
 /*!
+    \fn QSensorItem::startChanged()
+    Notifies the client if the sensors has changed its start active status
+*/
+/*!
     \property QSensorItem::start
     This property starts or stops the sensor
 */
