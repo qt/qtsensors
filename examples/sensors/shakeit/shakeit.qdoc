@@ -28,8 +28,10 @@
 /*!
     \example sensors/shakeit
     \title ShakeIt! QML Sensor Gestures Example
+    \ingroup qtsensors-examples
     \brief The sensor gesture example demonstrates the steps for creating a QML application
      that uses sensor gestures and the included shake sensor.
+    \image shakeit.jpg
 
     \section1 Overview
         Writing a QML application that uses the Shake QML sensorgestures element
