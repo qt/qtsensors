@@ -50,7 +50,7 @@ QTestRecognizer::QTestRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent),
       active(0)
 {
-    QTimer::singleShot(2000,this, SLOT(timeout()));
+    timeout();
 }
 
 QTestRecognizer::~QTestRecognizer()
@@ -61,7 +61,7 @@ void QTestRecognizer::timeout()
 {
     Q_EMIT detected("tested");
     Q_EMIT tested();
-    QTimer::singleShot(2000,this, SLOT(timeout()));
+    QTimer::singleShot(10,this, SLOT(timeout()));
 }
 
 
