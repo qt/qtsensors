@@ -347,6 +347,11 @@ bool QSensor::isActive() const
     Some platforms have a policy of suspending sensors when the screen turns off.
     Setting this property to true will ensure the sensor continues to run.
 */
+/*!
+    \fn QSensor::alwaysOnChanged()
+
+    This signal is emitted when the alwaysOn property changes.
+*/
 void QSensor::setAlwaysOn(bool alwaysOn)
 {
     if (d->alwaysOn == alwaysOn) return;
