@@ -60,7 +60,7 @@ sensor gesture classes to use.
 Here is a list of included plugins and their signals
 
 For ShakeGestures plugin:
-    \tablec
+    \table
         \row
             \o Recognizer Id
             \o Signals
