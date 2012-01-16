@@ -76,6 +76,8 @@ private:
     qreal lastX;
     bool active;
 
+    qreal accelX;
+
 };
 QT_END_NAMESPACE
 #endif // QWHIPSENSORGESTURERECOGNIZER_H

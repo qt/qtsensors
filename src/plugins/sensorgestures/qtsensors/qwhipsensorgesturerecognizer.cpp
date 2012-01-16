@@ -61,10 +61,10 @@ void QWhipSensorGestureRecognizer::create()
     qoutputrangelist outputranges = accel->outputRanges();
 
     if (outputranges.count() > 0)
-        accelRange = (int)(outputranges.at(0).maximum *2);
+        accelRange = (int)(outputranges.at(0).maximum);
     else
         accelRange = 44; //this should never happen
-qDebug() << accelRange;
+
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
     timer->setInterval(750);
@@ -97,41 +97,39 @@ bool QWhipSensorGestureRecognizer::isActive()
     return active;
 }
 
+#define WHIP_THRESHOLD_FACTOR 0.85
+#define WHIP_DETECTION_FACTOR 0.3
+
 void QWhipSensorGestureRecognizer::accelChanged()
 {
     qreal x = accel->reading()->x();
 
     if (whipIt) {
         qreal difference = lastX - x;
-//        qDebug() << Q_FUNC_INFO << x << difference << wasNegative;
 
-        if ((!wasNegative && difference > accelRange * .75) //58
-                || (wasNegative && difference < -accelRange * .75)) {
+        if ((!wasNegative && difference > accelRange * WHIP_THRESHOLD_FACTOR)
+                || (wasNegative && difference < -accelRange * WHIP_THRESHOLD_FACTOR)) {
 
-//            qDebug() << Q_FUNC_INFO << "WHIP";
             Q_EMIT whip();
             Q_EMIT detected("whip");
             whipIt = false;
         }
-//    } else if ((lastX - x) > (accelRange/2) || // 39
-//               (x - lastX) < -(accelRange/2)) {
-    } else if (x > (accelRange/3.3) || // 23
-               x < -(accelRange/3.3)) {
+
+    } else if (x > (accelRange * WHIP_DETECTION_FACTOR)
+               || x < -(accelRange * WHIP_DETECTION_FACTOR)) {
         //start of gesture
-//        qDebug() << Q_FUNC_INFO << "start detection";
         timer->start();
         whipIt = true;
-        lastX = x;
         if (lastX > 0)
             wasNegative = false;
         else
             wasNegative = true;
     }
+    lastX = x;
 }
 
 void QWhipSensorGestureRecognizer::timeout()
 {
-//    qDebug() << Q_FUNC_INFO;
     whipIt = false;
 }
 
