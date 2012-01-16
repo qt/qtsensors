@@ -65,7 +65,7 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
 }
 
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent), detecting(0)
+    QSensorGestureRecognizer(parent), detecting(0), lastDegree(0)
 {
 }
 
@@ -82,13 +82,13 @@ void QTwistSensorGestureRecognizer::create()
     qoutputrangelist outputranges = accel->outputRanges();
 
     if (outputranges.count() > 0)
-        accelRange = (int)(outputranges.at(0).maximum *2);
+        accelRange = (int)(outputranges.at(0).maximum);
     else
         accelRange = 44; //this should never happen
 
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
-    timer->setInterval(250);
+    timer->setInterval(500);
 
 }
 
@@ -119,6 +119,7 @@ bool QTwistSensorGestureRecognizer::isActive()
 }
 
 #define RESTING_VARIANCE 10
+#define THRESHOLD_DEGREES 40
 
 void QTwistSensorGestureRecognizer::accelChanged()
 {
@@ -126,14 +127,17 @@ void QTwistSensorGestureRecognizer::accelChanged()
     qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
+    if (abs(x) < 1)
+        return;
+
     pitch = calcPitch(x, y, z);
     roll = calcRoll(x, y, z);
 
     qreal degrees = calc(pitch);
 
     if (xList.count() > 4) {
-
-        if (detecting && abs(degrees) < RESTING_VARIANCE) {
+        if (detecting &&
+                abs(lastDegree - degrees) > (accelRange/2)) {
             if (lastX < 0) {
                 Q_EMIT twistLeft();
                 Q_EMIT detected("twistLeft");
@@ -142,9 +146,11 @@ void QTwistSensorGestureRecognizer::accelChanged()
                 Q_EMIT detected("twistRight");
             }
             detecting = false;
+            timer->stop();
+            lastX = degrees;
         }
 
-        if (abs(degrees) > 60 && abs(xList.last()) < RESTING_VARIANCE) {
+        if (!detecting && abs(degrees) > THRESHOLD_DEGREES) {
             detecting = true;
             timer->start();
             lastX = degrees;
@@ -154,11 +160,13 @@ void QTwistSensorGestureRecognizer::accelChanged()
     if (xList.count() > 5)
         xList.removeLast();
     xList.insert(0,degrees);
+    lastDegree = degrees;
 }
 
 void QTwistSensorGestureRecognizer::timeout()
 {
     detecting = false;
+    lastX = 0;
 }
 
 qreal QTwistSensorGestureRecognizer::calc(qreal yrot)

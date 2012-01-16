@@ -82,6 +82,7 @@ private:
 
     qreal calc(qreal yrot);
     bool detecting;
+    qreal lastDegree;
 };
 QT_END_NAMESPACE
 #endif // QWFLICKSENSORGESTURERECOGNIZER_H
