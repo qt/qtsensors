@@ -75,38 +75,48 @@ For QtSensorGestures plugin:
             \o Recognizer Id
             \o Signals
             \o Description
+            \o Images
         \row
             \o QtSensors.cover
             \o cover
-            \o Hand covers up phone display for one second.
+            \o Hand covers up phone display for one second, when it's face up, using the Proximity sensor.
+            \o \image sensorgesture-cover.png
         \row
             \o QtSensors.doubletap
             \o doubletap
-            \o Double tap of finger on phone.
+            \o Double tap of finger on phone, using the DoubleTap sensor.
+            \o \image sensorgesture-doubletap.png
         \row
             \o QtSensors.hover
             \o hover
-            \o Hand hovers over the phone for more than 1 second, then is removed .
+            \o Hand hovers over the phone for more than 1 second, then is removed when face up, using the Light sensor.
+            \o \image sensorgesture-hover.png
         \row
             \o QtSensors.pickup
             \o pickup
-            \o Phone is picked up and brought up into focus.
+            \o Phone is picked up and brought up into view, using the Accelerometer sensor.
+            \o \image sensorgesture-faceup.png
         \row
             \o QtSensors.shake2
             \o shakeLeft, shakeRight, shakeUp, shakeDown
-            \o Shake phone in a certain direction.
+            \o Shake phone in a certain direction, using the Accelerometer sensor.
+            \o \image sensorgesture-shake.png
         \row
             \o QtSensors.turnover
             \o turnover
-            \o Phone is turned over and placed on a desk.
+            \o Phone is turned face down and placed on a surface, using Proximity and Orientation sensors.
+            \o \image sensorgesture-facedown.png
         \row
             \o QtSensors.twist
             \o twistLeft, twistRight
-            \o Phone is quickly twisted left or right and back.
+            \o Phone is held face up and then quickly twisted left or right (left side up or right side up) and back, using the Accelerometer sensor.
+            \o \image sensorgesture-twist.png
         \row
             \o QtSensors.whip
             \o whip
-            \o Phone is moved like a whip gesture.
+            \o Phone is moved like a whip gesture, using the Accelerometer sensor.
+            \o \image sensorgesture-whip_1.png
+               \image sensorgesture-whip_2.png
    \endtable
 
 */
