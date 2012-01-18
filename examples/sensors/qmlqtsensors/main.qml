@@ -38,13 +38,6 @@
 **
 ****************************************************************************/
 
-//Import the declarative plugins
-import QtQuick 2.0
-
-//! [0]
-import QtSensors 5.0
-//! [0]
-
 /* Layout
                                                                                   mainWnd
                                                                                  /
@@ -59,9 +52,10 @@ import QtSensors 5.0
 |         / accuracyRect                               / speedRect
 |-------------------------------------------||----------------------------------|
 || Accuracy <----- textAccuracy             || Speed <-----textSpeed            |
-|| @ 0 Degree   <- selButton0DegreeAccuracy || @ Slow   <- selButtonSlowSpeed   |
-|| O 1 Degree   <- selButton1DegreeAccuracy || O Medium <- selButtonMediumSpeed |
-|| O 5 Degree   <- selButton5DegreeAccuracy || O Fast   <- selButtonFastSpeed   |
+||  value   <- textAccuracyValue            ||  value    <- textSpeedValue      |
+|| ----------------- ------------------     || --------------- ---------------- |
+|| | accuracyLower | | accuracyHigher |     || | speedLower  | | speedHigher  | |
+|| ----------------- ------------------     || --------------- ---------------- |
 |------------------------------------------ ||----------------------------------|
 | -----------
 | |Calibrate|    <------------------ calibrate
@@ -87,8 +81,14 @@ import QtSensors 5.0
 | |Start  |    <-------------------- proxiStart                  Proximity: -  <--------------- proxitext
 | ---------
 ------------------------------------------------------------------------------
-
 */
+
+//Import the declarative plugins
+import QtQuick 2.0
+
+//! [0]
+import QtSensors 5.0
+//! [0]
 
 Rectangle {
     id: mainWnd
@@ -96,7 +96,10 @@ Rectangle {
     y: 0
     width: 320
     height: 480
-    color: "#ececec"
+    color: "transparent"
+
+    property int accuracy: 1
+    property string speed: "Slow"
 
     Text {
         id: labelTitle
@@ -144,6 +147,7 @@ Rectangle {
         unit: TiltSensor.Degrees
         enabled: false
         accuracy: 1.0
+        speed: TiltSensor.Slow
     }
 //! [1]
 
@@ -166,51 +170,45 @@ Rectangle {
             font.bold: true
         }
 
-        RadioButton{
-            id: selButton0DegreeAccuracy
+        Text{
+            id: textAccuracyValue
             anchors.top: textAccuracy.bottom
+            anchors.topMargin: 5
+            anchors.left: accuracyHigher.left
+            anchors.right: accuracyHigher.right
+            text: mainWnd.accuracy
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        Button{
+            id: accuracyLower
+            anchors.top: textAccuracyValue.bottom
             anchors.left: accuracyRect.left
-            anchors.right: accuracyRect.right
-            anchors.rightMargin: 10
-            checked: true
-            text: "0 Degree"
+            height: 30
+            width: 40
+            text: "-"
 
             onClicked:{
-                selButton1DegreeAccuracy.setCheck(false);
-                selButton5DegreeAccuracy.setCheck(false);
-                tilt.accuracy = 0.0;
+                if (mainWnd.accuracy > 1){
+                    mainWnd.accuracy--;
+                    tilt.accuracy = mainWnd.accuracy;
+                }
             }
         }
 
-        RadioButton{
-            id: selButton1DegreeAccuracy
-            anchors.top: selButton0DegreeAccuracy.bottom
-            anchors.left: accuracyRect.left
-            anchors.right: accuracyRect.right
-            anchors.rightMargin: 10
-            checked: false
-            text: "1 Degree"
+        Button{
+            id: accuracyHigher
+            anchors.top: textAccuracyValue.bottom
+            anchors.left: accuracyLower.right
+            height: 30
+            width: 40
+            text: "+"
 
             onClicked:{
-                selButton0DegreeAccuracy.setCheck(false);
-                selButton5DegreeAccuracy.setCheck(false);
-                tilt.accuracy = (tilt.unit == TiltSensor.Degrees ? 1.0 : (3.14 / 180.0));
-            }
-        }
-
-        RadioButton{
-            id: selButton5DegreeAccuracy
-            anchors.top: selButton1DegreeAccuracy.bottom
-            anchors.left: accuracyRect.left
-            anchors.right: accuracyRect.right
-            anchors.rightMargin: 10
-            checked: false
-            text: "5 Degree"
-
-            onClicked:{
-                selButton0DegreeAccuracy.setCheck(false);
-                selButton1DegreeAccuracy.setCheck(false);
-                tilt.accuracy = (tilt.unit == TiltSensor.Degrees ? 5.0 : (5.0 * 3.14 / 180.0));
+                if (mainWnd.accuracy < 10){
+                    mainWnd.accuracy++;
+                    tilt.accuracy = mainWnd.accuracy;
+                }
             }
         }
     }
@@ -234,57 +232,56 @@ Rectangle {
             font.bold: true
         }
 
-        RadioButton{
-            id: selButtonSlowSpeed
+        Text{
+            id: textSpeedValue
             anchors.top: textSpeed.bottom
+            anchors.topMargin: 5
+            anchors.left: speedLower.left
+            anchors.right: speedHigher.right
+            text: mainWnd.speed
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        Button{
+            id: speedLower
+            anchors.top: textSpeedValue.bottom
             anchors.left: speedRect.left
-            anchors.right: speedRect.right
-            anchors.rightMargin: 10
-            checked: true
-            text: "Slow"
+            height: 30
+            width: 40
+            text: "-"
 
             onClicked:{
-                selButtonMediumSpeed.setCheck(false);
-                selButtonFastSpeed.setCheck(false);
-                tilt.speed = TiltSensor.Slow;
+                if (tilt.speed === TiltSensor.Fast) {
+                    mainWnd.speed = "Medium";
+                    tilt.speed = TiltSensor.Medium;
+                }
+                else if (tilt.speed === TiltSensor.Medium) {
+                    mainWnd.speed = "Slow";
+                    tilt.speed = TiltSensor.Slow;
+                }
             }
         }
 
-
-        RadioButton{
-            id: selButtonMediumSpeed
-            anchors.top: selButtonSlowSpeed.bottom
-            anchors.left: speedRect.left
-            anchors.right: speedRect.right
-            anchors.rightMargin: 10
-            checked: false
-            text: "Medium"
+        Button{
+            id: speedHigher
+            anchors.top: textSpeedValue.bottom
+            anchors.left: speedLower.right
+            height: 30
+            width: 40
+            text: "+"
 
             onClicked:{
-                selButtonSlowSpeed.setCheck(false);
-                selButtonFastSpeed.setCheck(false);
-                tilt.speed = TiltSensor.Medium;
-            }
-        }
-
-
-        RadioButton{
-            id: selButtonFastSpeed
-            anchors.top: selButtonMediumSpeed.bottom
-            anchors.left: speedRect.left
-            anchors.right: speedRect.right
-            anchors.rightMargin: 10
-            checked: false
-            text: "Fast"
-
-            onClicked:{
-                selButtonSlowSpeed.setCheck(false);
-                selButtonMediumSpeed.setCheck(false);
-                tilt.speed = TiltSensor.Fast;
+                if (tilt.speed === TiltSensor.Slow) {
+                    mainWnd.speed = "Medium";
+                    tilt.speed = TiltSensor.Medium;
+                }
+                else if (tilt.speed === TiltSensor.Medium) {
+                    mainWnd.speed = "Fast";
+                    tilt.speed = TiltSensor.Fast;
+                }
             }
         }
     }
-
 
     Button{
         id: calibrate
@@ -489,3 +486,4 @@ Rectangle {
 //! [6]
     }
 }
+
