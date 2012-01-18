@@ -38,16 +38,6 @@
 **
 ****************************************************************************/
 
-//Import the declarative plugins
-import QtQuick 2.0
-
-//! [0]
-import QtSensors 5.0
-//! [0]
-
-//Import the javascript functions for this game
-import "lib.js" as Lib
-
 /* Layout
                                 mainWnd
                                /
@@ -78,14 +68,19 @@ import "lib.js" as Lib
 ------------------------------
 
 */
+//Import the declarative plugins
+import QtQuick 2.0
+import "components"
 
-Rectangle {
+//! [0]
+import QtSensors 5.0
+//! [0]
+
+//Import the javascript functions for this game
+import "lib.js" as Lib
+
+ApplicationWindow {
     id: mainWnd
-    x: 0
-    y: 0
-    width: 320
-    height: 480
-    color: "#ececec"
 
     property Mouse mouseCtrl;
     property LabyrinthSquare cheeseSquare;

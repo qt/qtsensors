@@ -40,18 +40,14 @@
 
 //Import the declarative plugins
 import QtQuick 2.0
+import "components"
 
 //! [0]
 import Explorer 1.0
 //! [0]
 
-Rectangle {
+ApplicationWindow {
     id: mainWnd
-    x: 0
-    y: 0
-    width: 320
-    height: 480
-    color: "#ececec"
 
 //! [1]
     SensorExplorer {
@@ -65,7 +61,7 @@ Rectangle {
         anchors.topMargin: 20
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 200
+        height: 170
         title: "sensor explorer"
 
 //! [2]
@@ -105,7 +101,7 @@ Rectangle {
         anchors.bottomMargin: 5
 
         onSelectedItemChanged: {
-            changePropertyButton.enabled = (propertyList.selectedItem === null ?
+            textfield.enabled = (propertyList.selectedItem === null ?
                                             false : propertyList.selectedItem.isWriteable);
         }
     }
@@ -153,40 +149,48 @@ Rectangle {
         }
     }
 
-    Button {
-        id: changePropertyButton
-        anchors.bottom: parent.bottom
+    TextField {
+        id: textfield
+        anchors.top: parent.bottom
+        anchors.topMargin: -35
         anchors.left: startstopButton.right
+        anchors.right: parent.right
         anchors.margins: 5
-        text: "Set"
-        enabled: false
         height: 30
-        width: 60
+        enabled: false
 
         onEnabledChanged: {
-            textfield.visible = changePropertyButton.enabled;
+            if (!textfield.enabled) {
+                textfield.closeSoftwareInputPanel();
+                textfield.anchors.top= parent.bottom;
+                textfield.anchors.topMargin= -35;
+                textfield.text = "";
+            }
         }
 
-        onClicked: {
+        onFocusChanged: {
+            if (textfield.focus) {
+                textfield.anchors.top= sensorList.bottom
+                textfield.anchors.topMargin= -15
+            }
+            else {
+                textfield.closeSoftwareInputPanel();
+                textfield.anchors.top= parent.bottom;
+                textfield.anchors.topMargin= -35;
+            }
+        }
+
+        onAccepted: {
+
             if (explorer.selectedSensorItem !== null
                 && propertyList.selectedItem !== null) {
 //! [4]
                 explorer.selectedSensorItem.changePropertyValue(propertyList.selectedItem, textfield.text);
 //! [4]
+                propertyList.focus=true;
             }
-
             textfield.text = "";
         }
-    }
-
-    TextField {
-        id: textfield
-        anchors.bottom: parent.bottom
-        anchors.left: changePropertyButton.right
-        anchors.right: parent.right
-        anchors.margins: 5
-        height: 30
-        enabled: true
     }
 }
 

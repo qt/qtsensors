@@ -41,35 +41,11 @@
 //Import the declarative plugins
 import QtQuick 2.0
 
-//Implementation of the Button control.
-Item {
-    id: button
-    width: 30
-    height: 100
-    property alias text: innerText.text
-    signal clicked
-
-    Image {
-        id: backgroundImage
-        anchors.fill: parent
-        source: (button.enabled ? "images/button_background_normal.png" : "images/button_background_disabled.png")
-    }
-
-    Text {
-        id: innerText
-        anchors.centerIn: parent
-        color: "white"
-        font.bold: true
-    }
-
-    //Mouse area to react on click events
-    MouseArea {
-        anchors.fill: button
-        onClicked: { button.clicked();}
-        onPressed: {
-            backgroundImage.source = "images/button_background_pressed.png" }
-        onReleased: {
-            backgroundImage.source = (button.enabled ? "images/button_background_normal.png" : "images/button_background_disabled.png")
-        }
-    }
+Rectangle {
+    id: appWnd
+    x: 0
+    y: 0
+    width: 320
+    height: 480
+    color: "#ececec"
 }

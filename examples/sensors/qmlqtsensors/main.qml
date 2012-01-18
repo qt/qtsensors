@@ -85,405 +85,409 @@
 
 //Import the declarative plugins
 import QtQuick 2.0
+import "components"
 
 //! [0]
 import QtSensors 5.0
 //! [0]
 
-Rectangle {
-    id: mainWnd
-    x: 0
-    y: 0
-    width: 320
-    height: 480
-    color: "transparent"
-
-    property int accuracy: 1
-    property string speed: "Slow"
-
-    Text {
-        id: labelTitle
-        anchors.top: mainWnd.top
-        anchors.topMargin: 25
-        anchors.left: mainWnd.left
-        anchors.right: mainWnd.right
-
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 30
-        font.bold: true
-        text: "QML QtSensors"
-    }
-
-    //Tile region
+ApplicationWindow {
+    id: appWnd
 
     Rectangle {
-        id: tiltLine
-        anchors.top: labelTitle.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        anchors.right: mainWnd.right
-        anchors.rightMargin: 5
-        border.width: 1
-        height: 1
-        border.color: "#888888"
-    }
-
-    Text {
-        id: labelTilt
-        anchors.top: tiltLine.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.right: mainWnd.right
-
-        horizontalAlignment: Text.AlignHCenter
-        font.bold: true
-        text: "TiltSensor"
-    }
-
-//! [1]
-    TiltSensor {
-        id: tilt
-        unit: TiltSensor.Degrees
-        enabled: false
-        accuracy: 1.0
-        speed: TiltSensor.Slow
-    }
-//! [1]
-
-    Rectangle{
-        id: accuracyRect
-        anchors.top: labelTilt.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        anchors.right: mainWnd.right
-        anchors.rightMargin: mainWnd.width / 2
-        height: 110
+        id: mainWnd
+        x: 0
+        y: 0
+        width: 320
+        height: 480
         color: "transparent"
 
-        Text{
-            id: textAccuracy
-            anchors.top: accuracyRect.top
-            anchors.left: accuracyRect.left
-            text: "Accuracy"
+        property int accuracy: 1
+        property string speed: "Slow"
+
+        Text {
+            id: labelTitle
+            anchors.top: mainWnd.top
+            anchors.topMargin: 25
+            anchors.left: mainWnd.left
+            anchors.right: mainWnd.right
+
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 30
             font.bold: true
+            text: "QML QtSensors"
         }
 
-        Text{
-            id: textAccuracyValue
-            anchors.top: textAccuracy.bottom
+        //Tile region
+
+        Rectangle {
+            id: tiltLine
+            anchors.top: labelTitle.bottom
             anchors.topMargin: 5
-            anchors.left: accuracyHigher.left
-            anchors.right: accuracyHigher.right
-            text: mainWnd.accuracy
-            verticalAlignment: Text.AlignVCenter
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            anchors.right: mainWnd.right
+            anchors.rightMargin: 5
+            border.width: 1
+            height: 1
+            border.color: "#888888"
         }
 
-        Button{
-            id: accuracyLower
-            anchors.top: textAccuracyValue.bottom
-            anchors.left: accuracyRect.left
-            height: 30
-            width: 40
-            text: "-"
+        Text {
+            id: labelTilt
+            anchors.top: tiltLine.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.right: mainWnd.right
 
-            onClicked:{
-                if (mainWnd.accuracy > 1){
-                    mainWnd.accuracy--;
-                    tilt.accuracy = mainWnd.accuracy;
-                }
-            }
-        }
-
-        Button{
-            id: accuracyHigher
-            anchors.top: textAccuracyValue.bottom
-            anchors.left: accuracyLower.right
-            height: 30
-            width: 40
-            text: "+"
-
-            onClicked:{
-                if (mainWnd.accuracy < 10){
-                    mainWnd.accuracy++;
-                    tilt.accuracy = mainWnd.accuracy;
-                }
-            }
-        }
-    }
-
-    Rectangle{
-        id: speedRect
-        anchors.top: labelTilt.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: mainWnd.width / 2
-        anchors.right: mainWnd.right
-        anchors.rightMargin: 5
-        height: 110
-        color: "transparent"
-
-        Text{
-            id: textSpeed
-            anchors.top: speedRect.top
-            anchors.left: speedRect.left
-            text: "Speed"
+            horizontalAlignment: Text.AlignHCenter
             font.bold: true
+            text: "TiltSensor"
         }
 
-        Text{
-            id: textSpeedValue
-            anchors.top: textSpeed.bottom
+//! [1]
+        TiltSensor {
+            id: tilt
+            unit: TiltSensor.Degrees
+            enabled: false
+            accuracy: 1.0
+            speed: TiltSensor.Slow
+        }
+//! [1]
+
+        Rectangle{
+            id: accuracyRect
+            anchors.top: labelTilt.bottom
             anchors.topMargin: 5
-            anchors.left: speedLower.left
-            anchors.right: speedHigher.right
-            text: mainWnd.speed
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            anchors.right: mainWnd.right
+            anchors.rightMargin: mainWnd.width / 2
+            height: 110
+            color: "transparent"
+
+            Text{
+                id: textAccuracy
+                anchors.top: accuracyRect.top
+                anchors.left: accuracyRect.left
+                text: "Accuracy"
+                font.bold: true
+            }
+
+            Text{
+                id: textAccuracyValue
+                anchors.top: textAccuracy.bottom
+                anchors.topMargin: 5
+                anchors.left: accuracyHigher.left
+                anchors.right: accuracyHigher.right
+                text: mainWnd.accuracy
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Button{
+                id: accuracyLower
+                anchors.top: textAccuracyValue.bottom
+                anchors.left: accuracyRect.left
+                height: 30
+                width: 40
+                text: "-"
+
+                onClicked:{
+                    if (mainWnd.accuracy > 1){
+                        mainWnd.accuracy--;
+                        tilt.accuracy = mainWnd.accuracy;
+                    }
+                }
+            }
+
+            Button{
+                id: accuracyHigher
+                anchors.top: textAccuracyValue.bottom
+                anchors.left: accuracyLower.right
+                height: 30
+                width: 40
+                text: "+"
+
+                onClicked:{
+                    if (mainWnd.accuracy < 10){
+                        mainWnd.accuracy++;
+                        tilt.accuracy = mainWnd.accuracy;
+                    }
+                }
+            }
+        }
+
+        Rectangle{
+            id: speedRect
+            anchors.top: labelTilt.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.leftMargin: mainWnd.width / 2
+            anchors.right: mainWnd.right
+            anchors.rightMargin: 5
+            height: 110
+            color: "transparent"
+
+            Text{
+                id: textSpeed
+                anchors.top: speedRect.top
+                anchors.left: speedRect.left
+                text: "Speed"
+                font.bold: true
+            }
+
+            Text{
+                id: textSpeedValue
+                anchors.top: textSpeed.bottom
+                anchors.topMargin: 5
+                anchors.left: speedLower.left
+                anchors.right: speedHigher.right
+                text: mainWnd.speed
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            Button{
+                id: speedLower
+                anchors.top: textSpeedValue.bottom
+                anchors.left: speedRect.left
+                height: 30
+                width: 40
+                text: "-"
+
+                onClicked:{
+                    if (tilt.speed === TiltSensor.Fast) {
+                        mainWnd.speed = "Medium";
+                        tilt.speed = TiltSensor.Medium;
+                    }
+                    else if (tilt.speed === TiltSensor.Medium) {
+                        mainWnd.speed = "Slow";
+                        tilt.speed = TiltSensor.Slow;
+                    }
+                }
+            }
+
+            Button{
+                id: speedHigher
+                anchors.top: textSpeedValue.bottom
+                anchors.left: speedLower.right
+                height: 30
+                width: 40
+                text: "+"
+
+                onClicked:{
+                    if (tilt.speed === TiltSensor.Slow) {
+                        mainWnd.speed = "Medium";
+                        tilt.speed = TiltSensor.Medium;
+                    }
+                    else if (tilt.speed === TiltSensor.Medium) {
+                        mainWnd.speed = "Fast";
+                        tilt.speed = TiltSensor.Fast;
+                    }
+                }
+            }
+        }
+
+        Button{
+            id: calibrate
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            anchors.top: accuracyRect.bottom
+            height: 30
+            width: 80
+            text: "Calibrate"
+
+            onClicked:{
+                tilt.calibrate();
+            }
+        }
+
+        Button{
+            id: useRadian
+            anchors.top: calibrate.bottom
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            height: 30
+            width: 80
+            text: (tilt !== null ? tilt.unit === TiltSensor.Radians ? "Degree" : "Radians" : "Degree")
+
+            onClicked:{
+                tilt.unit = (useRadian.text === "Radians"  ? TiltSensor.Radians : TiltSensor.Degrees);
+            }
+        }
+
+        Button{
+            id: tiltStart
+            anchors.top: useRadian.bottom
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            height: 30
+            width: 80
+            text: tilt.enabled ? "Stop" : "Start"
+
+            onClicked:{
+//! [2]
+                tilt.enabled = (tiltStart.text === "Start"  ? true: false);
+//! [2]
+            }
+        }
+
+        Text {
+            id: xrottext
+            anchors.right: mainWnd.right
+            anchors.rightMargin: 5
+            anchors.left: useRadian.right
+            anchors.leftMargin: 15
+            anchors.top: useRadian.top
+            anchors.bottom: useRadian.bottom
             verticalAlignment: Text.AlignVCenter
+//! [3]
+            text: "X Rotation: " + tilt.xRotation + (tilt.unit === TiltSensor.Radians ? " rad" : "°")
+//! [3]
+        }
+
+        Text {
+            id: yrottext
+            anchors.right: mainWnd.right
+            anchors.rightMargin: 5
+            anchors.left: tiltStart.right
+            anchors.leftMargin: 15
+            anchors.top: tiltStart.top
+            anchors.bottom: tiltStart.bottom
+            verticalAlignment: Text.AlignVCenter
+//! [4]
+            text: "Y Rotation: " + tilt.yRotation + (tilt.unit === TiltSensor.Radians ? " rad" : "°")
+//! [4]
+        }
+
+        //Ambient Light region
+
+        Rectangle {
+            id: ambientlightLine
+            anchors.top: tiltStart.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            anchors.right: mainWnd.right
+            anchors.rightMargin: 5
+            border.width: 1
+            height: 1
+            border.color: "#888888"
+        }
+
+        Text {
+            id: labelAmbientLight
+            anchors.top: ambientlightLine.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.right: mainWnd.right
+
+            horizontalAlignment: Text.AlignHCenter
+            font.bold: true
+            text: "AmbientLightSensor"
+        }
+
+        AmbientLightSensor {
+            id: ambientlight
+            enabled: false
+//! [5]
+            onLightLevelChanged:{
+                if (ambientlight.lightLevel == AmbientLightSensor.Unknown)
+                    ambientlighttext.text = "Ambient light: Unknown";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Dark)
+                    ambientlighttext.text = "Ambient light: Dark";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Twilight)
+                    ambientlighttext.text = "Ambient light: Twilight";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Light)
+                    ambientlighttext.text = "Ambient light: Light";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Bright)
+                    ambientlighttext.text = "Ambient light: Bright";
+                else if (ambientlight.lightLevel == AmbientLightSensor.Sunny)
+                    ambientlighttext.text = "Ambient light: Sunny";
+            }
+//! [5]
         }
 
         Button{
-            id: speedLower
-            anchors.top: textSpeedValue.bottom
-            anchors.left: speedRect.left
+            id: ambientlightStart
+            anchors.top: labelAmbientLight.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
             height: 30
-            width: 40
-            text: "-"
+            width: 80
+            text: ambientlight.enabled ? "Stop" : "Start"
 
             onClicked:{
-                if (tilt.speed === TiltSensor.Fast) {
-                    mainWnd.speed = "Medium";
-                    tilt.speed = TiltSensor.Medium;
-                }
-                else if (tilt.speed === TiltSensor.Medium) {
-                    mainWnd.speed = "Slow";
-                    tilt.speed = TiltSensor.Slow;
-                }
+                ambientlight.enabled = (ambientlightStart.text === "Start"  ? true: false);
             }
+        }
+
+        Text {
+            id: ambientlighttext
+            anchors.left: ambientlightStart.right
+            anchors.leftMargin: 15
+            anchors.top: ambientlightStart.top
+            anchors.bottom: ambientlightStart.bottom
+            verticalAlignment: Text.AlignVCenter
+            text: "Ambient light: -"
+        }
+
+        //Proximity region
+
+        Rectangle {
+            id: proximityLine
+            anchors.top: ambientlightStart.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
+            anchors.right: mainWnd.right
+            anchors.rightMargin: 5
+            border.width: 1
+            height: 1
+            border.color: "#888888"
+        }
+
+        Text {
+            id: labelProximityLight
+            anchors.top: proximityLine.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.right: mainWnd.right
+            horizontalAlignment: Text.AlignHCenter
+            font.bold: true
+            text: "ProximitySensor"
+        }
+
+        ProximitySensor {
+            id: proxi
+            enabled: false
         }
 
         Button{
-            id: speedHigher
-            anchors.top: textSpeedValue.bottom
-            anchors.left: speedLower.right
+            id: proxiStart
+            anchors.top: labelProximityLight.bottom
+            anchors.topMargin: 5
+            anchors.left: mainWnd.left
+            anchors.leftMargin: 5
             height: 30
-            width: 40
-            text: "+"
+            width: 80
+            text: proxi.enabled ? "Stop" : "Start"
 
             onClicked:{
-                if (tilt.speed === TiltSensor.Slow) {
-                    mainWnd.speed = "Medium";
-                    tilt.speed = TiltSensor.Medium;
-                }
-                else if (tilt.speed === TiltSensor.Medium) {
-                    mainWnd.speed = "Fast";
-                    tilt.speed = TiltSensor.Fast;
-                }
+                proxi.enabled = (proxiStart.text === "Start"  ? true: false);
             }
         }
-    }
 
-    Button{
-        id: calibrate
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        anchors.top: accuracyRect.bottom
-        height: 30
-        width: 80
-        text: "Calibrate"
-
-        onClicked:{
-            tilt.calibrate();
-        }
-    }
-
-    Button{
-        id: useRadian
-        anchors.top: calibrate.bottom
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        height: 30
-        width: 80
-        text: (tilt !== null ? tilt.unit === TiltSensor.Radians ? "Degree" : "Radians" : "Degree")
-
-        onClicked:{
-            tilt.unit = (useRadian.text === "Radians"  ? TiltSensor.Radians : TiltSensor.Degrees);
-        }
-    }
-
-    Button{
-        id: tiltStart
-        anchors.top: useRadian.bottom
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        height: 30
-        width: 80
-        text: tilt.enabled ? "Stop" : "Start"
-
-        onClicked:{
-//! [2]
-            tilt.enabled = (tiltStart.text === "Start"  ? true: false);
-//! [2]
-        }
-    }
-
-    Text {
-        id: xrottext
-        anchors.right: mainWnd.right
-        anchors.rightMargin: 5
-        anchors.left: useRadian.right
-        anchors.leftMargin: 15
-        anchors.top: useRadian.top
-        anchors.bottom: useRadian.bottom
-        verticalAlignment: Text.AlignVCenter
-//! [3]
-        text: "X Rotation: " + tilt.xRotation + (tilt.unit === TiltSensor.Radians ? " rad" : "°")
-//! [3]
-    }
-
-    Text {
-        id: yrottext
-        anchors.right: mainWnd.right
-        anchors.rightMargin: 5
-        anchors.left: tiltStart.right
-        anchors.leftMargin: 15
-        anchors.top: tiltStart.top
-        anchors.bottom: tiltStart.bottom
-        verticalAlignment: Text.AlignVCenter
-//! [4]
-        text: "Y Rotation: " + tilt.yRotation + (tilt.unit === TiltSensor.Radians ? " rad" : "°")
-//! [4]
-    }
-
-    //Ambient Light region
-
-    Rectangle {
-        id: ambientlightLine
-        anchors.top: tiltStart.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        anchors.right: mainWnd.right
-        anchors.rightMargin: 5
-        border.width: 1
-        height: 1
-        border.color: "#888888"
-    }
-
-    Text {
-        id: labelAmbientLight
-        anchors.top: ambientlightLine.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.right: mainWnd.right
-
-        horizontalAlignment: Text.AlignHCenter
-        font.bold: true
-        text: "AmbientLightSensor"
-    }
-
-    AmbientLightSensor {
-        id: ambientlight
-        enabled: false
-//! [5]
-        onLightLevelChanged:{
-            if (ambientlight.lightLevel == AmbientLightSensor.Unknown)
-                ambientlighttext.text = "Ambient light: Unknown";
-            else if (ambientlight.lightLevel == AmbientLightSensor.Dark)
-                ambientlighttext.text = "Ambient light: Dark";
-            else if (ambientlight.lightLevel == AmbientLightSensor.Twilight)
-                ambientlighttext.text = "Ambient light: Twilight";
-            else if (ambientlight.lightLevel == AmbientLightSensor.Light)
-                ambientlighttext.text = "Ambient light: Light";
-            else if (ambientlight.lightLevel == AmbientLightSensor.Bright)
-                ambientlighttext.text = "Ambient light: Bright";
-            else if (ambientlight.lightLevel == AmbientLightSensor.Sunny)
-                ambientlighttext.text = "Ambient light: Sunny";
-        }
-//! [5]
-    }
-
-    Button{
-        id: ambientlightStart
-        anchors.top: labelAmbientLight.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        height: 30
-        width: 80
-        text: ambientlight.enabled ? "Stop" : "Start"
-
-        onClicked:{
-            ambientlight.enabled = (ambientlightStart.text === "Start"  ? true: false);
-        }
-    }
-
-    Text {
-        id: ambientlighttext
-        anchors.left: ambientlightStart.right
-        anchors.leftMargin: 15
-        anchors.top: ambientlightStart.top
-        anchors.bottom: ambientlightStart.bottom
-        verticalAlignment: Text.AlignVCenter
-        text: "Ambient light: -"
-    }
-
-    //Proximity region
-
-    Rectangle {
-        id: proximityLine
-        anchors.top: ambientlightStart.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        anchors.right: mainWnd.right
-        anchors.rightMargin: 5
-        border.width: 1
-        height: 1
-        border.color: "#888888"
-    }
-
-    Text {
-        id: labelProximityLight
-        anchors.top: proximityLine.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.right: mainWnd.right
-        horizontalAlignment: Text.AlignHCenter
-        font.bold: true
-        text: "ProximitySensor"
-    }
-
-    ProximitySensor {
-        id: proxi
-        enabled: false
-    }
-
-    Button{
-        id: proxiStart
-        anchors.top: labelProximityLight.bottom
-        anchors.topMargin: 5
-        anchors.left: mainWnd.left
-        anchors.leftMargin: 5
-        height: 30
-        width: 80
-        text: proxi.enabled ? "Stop" : "Start"
-
-        onClicked:{
-            proxi.enabled = (proxiStart.text === "Start"  ? true: false);
-        }
-    }
-
-    Text {
-        id: proxitext
-        anchors.left: proxiStart.right
-        anchors.leftMargin: 15
-        anchors.top: proxiStart.top
-        anchors.bottom: proxiStart.bottom
-        verticalAlignment: Text.AlignVCenter
+        Text {
+            id: proxitext
+            anchors.left: proxiStart.right
+            anchors.leftMargin: 15
+            anchors.top: proxiStart.top
+            anchors.bottom: proxiStart.bottom
+            verticalAlignment: Text.AlignVCenter
 //! [6]
-        text: "Proximity: " + (proxi.near ? "near" : "far")
+            text: "Proximity: " + (proxi.near ? "near" : "far")
 //! [6]
+        }
     }
 }
-

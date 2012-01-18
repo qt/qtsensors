@@ -41,63 +41,11 @@
 //Import the declarative plugins
 import QtQuick 2.0
 
-Item {
-    id: textInputFrame
-    property alias text: textInput.text
-    resources: [
-        Component{
-            id: cursorA
-            Rectangle {
-                id: cursor_rect
-                width: 2
-                height: 20
-                color: "#1c94ff"
-                visible: textInput.cursorVisible
-
-                PropertyAnimation on opacity  {
-                    easing.type: Easing.OutSine
-                    loops: Animation.Infinite
-                    from: 0
-                    to: 1.0
-                    duration: 750
-                }
-            }
-        }
-    ]
-
-    Image {
-        id: backgroundImage
-        anchors.fill: parent
-        source: (textInputFrame.enabled ? "images/textfield_background_normal.png" : "images/textfield_background_disabled.png")
-    }
-
-    TextInput {
-        id: textInput
-        anchors.fill: parent
-        anchors.topMargin: 5
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
-        activeFocusOnPress: false
-
-        cursorDelegate: cursorA
-
-        onEnabledChanged: {
-             textInput.focus = false;
-        }
-
-        MouseArea {
-             anchors.fill: parent
-
-             onClicked: {
-                if (!textInput.activeFocus) {
-                    textInput.forceActiveFocus()
-                    textInput.openSoftwareInputPanel();
-                } else {
-                    textInput.focus = false;
-                }
-            }
-
-            onPressAndHold: textInput.closeSoftwareInputPanel();
-        }
-    }
+Rectangle {
+    id: appWnd
+    x: 0
+    y: 0
+    width: 320
+    height: 480
+    color: "#ececec"
 }
