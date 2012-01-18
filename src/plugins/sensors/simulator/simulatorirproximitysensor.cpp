@@ -39,92 +39,31 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORDATA_SIMULATOR_P_H
-#define QSENSORDATA_SIMULATOR_P_H
+#include "simulatorirproximitysensor.h"
+#include <QDebug>
+#include <QtGlobal>
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
+const char *SimulatorIRProximitySensor::id("Simulator.IRProximitySensor");
 
-#include <QtCore/QMetaType>
-#include <QtCore/QDateTime>
-
-namespace QtMobility {
-
-enum SimulatorLightLevel {
-    Undefined = 0,
-    Dark,
-    Twilight,
-    Light,
-    Bright,
-    Sunny
-};
-
-struct QAmbientLightReadingData
+SimulatorIRProximitySensor::SimulatorIRProximitySensor(QSensor *sensor)
+    : SimulatorCommon(sensor)
 {
-    SimulatorLightLevel lightLevel;
-    QDateTime timestamp;
-};
-
-struct QLightReadingData
-{
-    double lux;
-    QDateTime timestamp;
-};
-
-struct QAccelerometerReadingData
-{
-    double x;
-    double y;
-    double z;
-    QDateTime timestamp;
-};
-
-struct QMagnetometerReadingData
-{
-    double x;
-    double y;
-    double z;
-    double calibrationLevel;
-    QDateTime timestamp;
-};
-
-struct QCompassReadingData
-{
-    double azimuth;
-    double calibrationLevel;
-    QDateTime timestamp;
-};
-
-struct QProximityReadingData
-{
-    bool close;
-    QDateTime timestamp;
-};
-
-struct QIRProximityReadingData
-{
-    double irProximity;
-    QDateTime timestamp;
-};
-
-void qt_registerSensorTypes();
-
+    setReading<QIRProximityReading>(&m_reading);
 }
 
-Q_DECLARE_METATYPE(QtMobility::QAmbientLightReadingData)
-Q_DECLARE_METATYPE(QtMobility::QLightReadingData)
-Q_DECLARE_METATYPE(QtMobility::QAccelerometerReadingData)
-Q_DECLARE_METATYPE(QtMobility::QMagnetometerReadingData)
-Q_DECLARE_METATYPE(QtMobility::QCompassReadingData)
-Q_DECLARE_METATYPE(QtMobility::QProximityReadingData)
-Q_DECLARE_METATYPE(QtMobility::QIRProximityReadingData)
+void SimulatorIRProximitySensor::poll()
+{
+    QtMobility::QIRProximityReadingData data = get_qtIRProximityData();
+    quint64 newTimestamp;
+    if (!data.timestamp.isValid())
+        newTimestamp = QDateTime::currentDateTime().toTime_t();
+    else
+        newTimestamp = data.timestamp.toTime_t();
+    if (m_reading.reflectance() != data.irProximity) {
+            m_reading.setTimestamp(newTimestamp);
+            m_reading.setReflectance(data.irProximity);
 
-#endif // QSENSORDATA_SIMULATOR_P_H
+            newReadingAvailable();
+    }
+}
+

@@ -44,6 +44,7 @@
 #include "simulatorlightsensor.h"
 #include "simulatorcompass.h"
 #include "simulatorproximitysensor.h"
+#include "simulatorirproximitysensor.h"
 #include "simulatormagnetometer.h"
 #include <QSensorPluginInterface>
 #include <QSensorBackend>
@@ -61,6 +62,7 @@ public:
         QSensorManager::registerBackend(QLightSensor::type, SimulatorLightSensor::id, this);
         QSensorManager::registerBackend(QCompass::type, SimulatorCompass::id, this);
         QSensorManager::registerBackend(QProximitySensor::type, SimulatorProximitySensor::id, this);
+        QSensorManager::registerBackend(QIRProximitySensor::type, SimulatorIRProximitySensor::id, this);
         QSensorManager::registerBackend(QMagnetometer::type, SimulatorMagnetometer::id, this);
     }
 
@@ -80,6 +82,10 @@ public:
 
         if (sensor->identifier() == SimulatorProximitySensor::id) {
             return new SimulatorProximitySensor(sensor);
+        }
+
+        if (sensor->identifier() == SimulatorIRProximitySensor::id) {
+            return new SimulatorIRProximitySensor(sensor);
         }
 
         if (sensor->identifier() == SimulatorCompass::id) {

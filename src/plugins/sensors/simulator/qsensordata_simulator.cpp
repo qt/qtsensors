@@ -52,6 +52,7 @@ void qt_registerSensorTypes()
     qRegisterMetaTypeStreamOperators<QAccelerometerReadingData>("QtMobility::QAccelerometerReadingData");
     qRegisterMetaTypeStreamOperators<QCompassReadingData>("QtMobility::QCompassReadingData");
     qRegisterMetaTypeStreamOperators<QProximityReadingData>("QtMobility::QProximityReadingData");
+    qRegisterMetaTypeStreamOperators<QIRProximityReadingData>("QtMobility::QIRProximityReadingData");
     qRegisterMetaTypeStreamOperators<QMagnetometerReadingData>("QtMobility::QMagnetometerReadingData");
 }
 
@@ -114,6 +115,18 @@ QDataStream &operator<<(QDataStream &out, const QProximityReadingData &s)
 QDataStream &operator>>(QDataStream &in, QProximityReadingData &s)
 {
     in >> s.close >> s.timestamp;
+    return in;
+}
+
+QDataStream &operator<<(QDataStream &out, const QIRProximityReadingData &s)
+{
+    out << s.irProximity << s.timestamp;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, QIRProximityReadingData &s)
+{
+    in >> s.irProximity >> s.timestamp;
     return in;
 }
 

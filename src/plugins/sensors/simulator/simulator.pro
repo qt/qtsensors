@@ -19,6 +19,7 @@ HEADERS += \
     simulatorlightsensor.h\
     simulatorcompass.h\
     simulatorproximitysensor.h\
+    simulatorirproximitysensor.h\
     simulatormagnetometer.h\
     qsensordata_simulator_p.h
 
@@ -29,6 +30,7 @@ SOURCES += \
     simulatorlightsensor.cpp\
     simulatorcompass.cpp\
     simulatorproximitysensor.cpp\
+    simulatorirproximitysensor.cpp\
     simulatormagnetometer.cpp\
     qsensordata_simulator.cpp\
     main.cpp

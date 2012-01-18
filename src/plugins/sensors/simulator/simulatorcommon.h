@@ -65,6 +65,7 @@ public slots:
     void setMagnetometerData(const QtMobility::QMagnetometerReadingData &);
     void setCompassData(const QtMobility::QCompassReadingData &);
     void setProximityData(const QtMobility::QProximityReadingData &);
+    void setIRProximityData(const QtMobility::QIRProximityReadingData &);
     void initialSensorsDataSent();
 
 private:
@@ -92,6 +93,7 @@ QtMobility::QAmbientLightReadingData get_qtAmbientLightData();
 QtMobility::QLightReadingData get_qtLightData();
 QtMobility::QCompassReadingData get_qtCompassData();
 QtMobility::QProximityReadingData get_qtProximityData();
+QtMobility::QIRProximityReadingData get_qtIRProximityData();
 
 #endif
 

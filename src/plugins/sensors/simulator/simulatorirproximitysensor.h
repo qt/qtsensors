@@ -39,92 +39,23 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORDATA_SIMULATOR_P_H
-#define QSENSORDATA_SIMULATOR_P_H
+#ifndef SIMULATORIRPROXIMITYSENSOR_H
+#define SIMULATORIRPROXIMITYSENSOR_H
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
+#include "simulatorcommon.h"
+#include <qirproximitysensor.h>
 
-#include <QtCore/QMetaType>
-#include <QtCore/QDateTime>
-
-namespace QtMobility {
-
-enum SimulatorLightLevel {
-    Undefined = 0,
-    Dark,
-    Twilight,
-    Light,
-    Bright,
-    Sunny
-};
-
-struct QAmbientLightReadingData
+class SimulatorIRProximitySensor : public SimulatorCommon
 {
-    SimulatorLightLevel lightLevel;
-    QDateTime timestamp;
+public:
+    static const char *id;
+
+    SimulatorIRProximitySensor(QSensor *sensor);
+
+    void poll();
+private:
+    QIRProximityReading m_reading;
 };
 
-struct QLightReadingData
-{
-    double lux;
-    QDateTime timestamp;
-};
+#endif
 
-struct QAccelerometerReadingData
-{
-    double x;
-    double y;
-    double z;
-    QDateTime timestamp;
-};
-
-struct QMagnetometerReadingData
-{
-    double x;
-    double y;
-    double z;
-    double calibrationLevel;
-    QDateTime timestamp;
-};
-
-struct QCompassReadingData
-{
-    double azimuth;
-    double calibrationLevel;
-    QDateTime timestamp;
-};
-
-struct QProximityReadingData
-{
-    bool close;
-    QDateTime timestamp;
-};
-
-struct QIRProximityReadingData
-{
-    double irProximity;
-    QDateTime timestamp;
-};
-
-void qt_registerSensorTypes();
-
-}
-
-Q_DECLARE_METATYPE(QtMobility::QAmbientLightReadingData)
-Q_DECLARE_METATYPE(QtMobility::QLightReadingData)
-Q_DECLARE_METATYPE(QtMobility::QAccelerometerReadingData)
-Q_DECLARE_METATYPE(QtMobility::QMagnetometerReadingData)
-Q_DECLARE_METATYPE(QtMobility::QCompassReadingData)
-Q_DECLARE_METATYPE(QtMobility::QProximityReadingData)
-Q_DECLARE_METATYPE(QtMobility::QIRProximityReadingData)
-
-#endif // QSENSORDATA_SIMULATOR_P_H

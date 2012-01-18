@@ -53,6 +53,7 @@ Q_GLOBAL_STATIC(QtMobility::QAccelerometerReadingData, qtAccelerometerData)
 Q_GLOBAL_STATIC(QtMobility::QMagnetometerReadingData, qtMagnetometerData)
 Q_GLOBAL_STATIC(QtMobility::QCompassReadingData, qtCompassData)
 Q_GLOBAL_STATIC(QtMobility::QProximityReadingData, qtProximityData)
+Q_GLOBAL_STATIC(QtMobility::QIRProximityReadingData, qtIRProximityData)
 Q_GLOBAL_STATIC(SensorsConnection, sensorsConnection)
 
 class SimulatorAsyncConnection: public QThread
@@ -93,6 +94,7 @@ signals:
     void setMagnetometerData(const QtMobility::QMagnetometerReadingData &);
     void setCompassData(const QtMobility::QCompassReadingData &);
     void setProximityData(const QtMobility::QProximityReadingData &);
+    void setIRProximityData(const QtMobility::QIRProximityReadingData &);
 
 private slots:
     void doConnectToServer()
@@ -133,6 +135,8 @@ SensorsConnection::SensorsConnection(QObject *parent)
             this, SLOT(setCompassData(QtMobility::QCompassReadingData)));
     connect(mConnection, SIGNAL(setProximityData(QtMobility::QProximityReadingData)),
             this, SLOT(setProximityData(QtMobility::QProximityReadingData)));
+    connect(mConnection, SIGNAL(setIRProximityData(QtMobility::QIRProximityReadingData)),
+            this, SLOT(setIRProximityData(QtMobility::QIRProximityReadingData)));
 
     mConnection->connectToServer();
 }
@@ -170,6 +174,11 @@ void SensorsConnection::setCompassData(const QtMobility::QCompassReadingData &da
 void SensorsConnection::setProximityData(const QtMobility::QProximityReadingData &data)
 {
     *qtProximityData() = data;
+}
+
+void SensorsConnection::setIRProximityData(const QtMobility::QIRProximityReadingData &data)
+{
+    *qtIRProximityData() = data;
 }
 
 void SensorsConnection::initialSensorsDataSent()
@@ -244,6 +253,11 @@ QtMobility::QCompassReadingData get_qtCompassData()
 QtMobility::QProximityReadingData get_qtProximityData()
 {
     return *qtProximityData();
+}
+
+QtMobility::QIRProximityReadingData get_qtIRProximityData()
+{
+    return *qtIRProximityData();
 }
 
 #include "simulatorcommon.moc"
