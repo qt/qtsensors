@@ -59,8 +59,7 @@ void SimulatorAccelerometer::poll()
         newTimestamp = QDateTime::currentDateTime().toTime_t();
     else
         newTimestamp = data.timestamp.toTime_t();
-    if (m_reading.timestamp() != newTimestamp
-        || m_reading.x() != data.x
+    if (m_reading.x() != data.x
         || m_reading.y() != data.y
         || m_reading.z() != data.z) {
             m_reading.setTimestamp(newTimestamp);

@@ -59,8 +59,7 @@ void SimulatorCompass::poll()
         newTimestamp = QDateTime::currentDateTime().toTime_t();
     else
         newTimestamp = data.timestamp.toTime_t();
-    if (m_reading.timestamp() != newTimestamp
-        || m_reading.azimuth() != data.azimuth
+    if (m_reading.azimuth() != data.azimuth
         || m_reading.calibrationLevel() != data.calibrationLevel) {
             m_reading.setTimestamp(newTimestamp);
             m_reading.setAzimuth(data.azimuth);

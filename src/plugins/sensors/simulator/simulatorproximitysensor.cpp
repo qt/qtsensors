@@ -59,8 +59,7 @@ void SimulatorProximitySensor::poll()
         newTimestamp = QDateTime::currentDateTime().toTime_t();
     else
         newTimestamp = data.timestamp.toTime_t();
-    if (m_reading.timestamp() != newTimestamp
-        || m_reading.close() != data.close) {
+    if (m_reading.close() != data.close) {
             m_reading.setTimestamp(newTimestamp);
             m_reading.setClose(data.close);
 

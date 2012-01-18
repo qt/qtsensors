@@ -59,8 +59,7 @@ void SimulatorLightSensor::poll()
         newTimestamp = QDateTime::currentDateTime().toTime_t();
     else
         newTimestamp = data.timestamp.toTime_t();
-    if (m_reading.timestamp() != newTimestamp
-        || m_reading.lux() != data.lux) {
+    if (m_reading.lux() != data.lux) {
             m_reading.setTimestamp(newTimestamp);
             m_reading.setLux(data.lux);
 
