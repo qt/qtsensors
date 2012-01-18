@@ -47,11 +47,7 @@
 
 class QTimer;
 
-namespace Simulator
-{
-    class Connection;
-    class ConnectionWorker;
-}
+class SimulatorAsyncConnection;
 
 class SensorsConnection : public QObject
 {
@@ -72,8 +68,7 @@ public slots:
     void initialSensorsDataSent();
 
 private:
-    Simulator::Connection *mConnection;
-    Simulator::ConnectionWorker *mWorker;
+    SimulatorAsyncConnection *mConnection;
     bool mInitialDataSent;
 };
 

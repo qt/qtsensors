@@ -43,6 +43,7 @@
 #include "qsensordata_simulator_p.h"
 #include <QtSimulator/QtSimulator>
 #include <QDebug>
+#include <QThread>
 
 using namespace Simulator;
 
@@ -54,24 +55,91 @@ Q_GLOBAL_STATIC(QtMobility::QCompassReadingData, qtCompassData)
 Q_GLOBAL_STATIC(QtMobility::QProximityReadingData, qtProximityData)
 Q_GLOBAL_STATIC(SensorsConnection, sensorsConnection)
 
+class SimulatorAsyncConnection: public QThread
+{
+    Q_OBJECT
+public:
+    SimulatorAsyncConnection()
+        : QThread()
+    {
+        QtMobility::qt_registerSensorTypes();
+
+        moveToThread(this);
+        connect(this, SIGNAL(queueConnectToServer()),
+                this, SLOT(doConnectToServer()),
+                Qt::QueuedConnection);
+
+        start();
+    }
+
+    ~SimulatorAsyncConnection()
+    {
+        quit();
+        wait();
+    }
+
+    void connectToServer()
+    {
+        emit queueConnectToServer();
+    }
+
+signals:
+    void queueConnectToServer();
+
+    void initialSensorsDataSent();
+    void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
+    void setLightData(const QtMobility::QLightReadingData &);
+    void setAccelerometerData(const QtMobility::QAccelerometerReadingData &);
+    void setMagnetometerData(const QtMobility::QMagnetometerReadingData &);
+    void setCompassData(const QtMobility::QCompassReadingData &);
+    void setProximityData(const QtMobility::QProximityReadingData &);
+
+private slots:
+    void doConnectToServer()
+    {
+        mConnection.reset(new Connection(Connection::Client, "QtSimulator_Mobility_ServerName1.3.0.0",
+                                         0xbeef+1, Version(1,0,0,0), this));
+        mWorker.reset(mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1));
+        if (!mWorker) {
+            qWarning("QtSensors simulator backend could not connect to the simulator!");
+            return;
+        }
+        mWorker->addReceiver(this);
+        mWorker->call("setRequestsSensors");
+    }
+
+private:
+    QScopedPointer<Simulator::Connection> mConnection;
+    QScopedPointer<Simulator::ConnectionWorker> mWorker;
+};
+
 SensorsConnection::SensorsConnection(QObject *parent)
     : QObject(parent)
     , mInitialDataSent(false)
 {
-    QtMobility::qt_registerSensorTypes();
-    mConnection = new Connection(Connection::Client, "QtSimulator_Mobility_ServerName1.3.0.0", 0xbeef+1, Version(1,0,0,0), this);
-    mWorker = mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1);
-    if (!mWorker) {
-        qWarning("QtSensors simulator backend could not connect to the simulator!");
-        return;
-    }
-    mWorker->addReceiver(this);
-    mWorker->call("setRequestsSensors");
+    mConnection = new SimulatorAsyncConnection();
+
+    connect(mConnection, SIGNAL(initialSensorsDataSent()),
+            this, SLOT(initialSensorsDataSent()));
+    connect(mConnection, SIGNAL(setAmbientLightData(QtMobility::QAmbientLightReadingData)),
+            this, SLOT(setAmbientLightData(QtMobility::QAmbientLightReadingData)));
+    connect(mConnection, SIGNAL(setLightData(QtMobility::QLightReadingData)),
+            this, SLOT(setLightData(QtMobility::QLightReadingData)));
+    connect(mConnection, SIGNAL(setAccelerometerData(QtMobility::QAccelerometerReadingData)),
+            this, SLOT(setAccelerometerData(QtMobility::QAccelerometerReadingData)));
+    connect(mConnection, SIGNAL(setMagnetometerData(QtMobility::QMagnetometerReadingData)),
+            this, SLOT(setMagnetometerData(QtMobility::QMagnetometerReadingData)));
+    connect(mConnection, SIGNAL(setCompassData(QtMobility::QCompassReadingData)),
+            this, SLOT(setCompassData(QtMobility::QCompassReadingData)));
+    connect(mConnection, SIGNAL(setProximityData(QtMobility::QProximityReadingData)),
+            this, SLOT(setProximityData(QtMobility::QProximityReadingData)));
+
+    mConnection->connectToServer();
 }
 
 SensorsConnection::~SensorsConnection()
 {
-    delete mWorker;
+    delete mConnection;
 }
 
 void SensorsConnection::setAmbientLightData(const QtMobility::QAmbientLightReadingData &data)
@@ -178,3 +246,4 @@ QtMobility::QProximityReadingData get_qtProximityData()
     return *qtProximityData();
 }
 
+#include "simulatorcommon.moc"
