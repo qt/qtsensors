@@ -85,9 +85,8 @@ Q_SIGNALS:
     void tiltChanged(qreal deltaX, qreal deltaY);
     void accuracyChanged();
 
-private:
+public:
     // Override of QAcclerometerFilter::filter(QAccelerometerReading*)
-    bool filter(QAccelerometerReading* reading);
     qreal yRotation();
     qreal xRotation();
     Unit unit();
@@ -100,6 +99,10 @@ private:
     QByteArray settings() const;
     void setSettings(const QByteArray val);
     void createRunModeDataRateMap();
+    QMap<Speed, int> dataRate();
+
+private:
+    bool filter(QAccelerometerReading* reading);
 
     QSensor *sensor() { return _accel; }
     QAccelerometer* _accel;
@@ -113,8 +116,6 @@ private:
     qreal _calibratedRoll;
     QMap<Speed, int> _dataRate;
     Speed _speed;
-
-    friend class tst_Sensors2QMLAPI;
 };
 
 QT_END_NAMESPACE

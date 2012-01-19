@@ -106,6 +106,11 @@ int searchDataRate(const QList<int>& datarates, int value)
     return datarates[m];
 }
 
+QMap<QSensor2Tilt::Speed, int> QSensor2Tilt::dataRate()
+{
+    return _dataRate;
+}
+
 void QSensor2Tilt::createRunModeDataRateMap()
 {
     _dataRate.clear();

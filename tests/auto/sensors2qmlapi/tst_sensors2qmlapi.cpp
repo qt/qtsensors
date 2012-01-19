@@ -428,48 +428,48 @@ void tst_Sensors2QMLAPI::testTiltRunningMode()
     if (!_tilt)
         _tilt = new QSensor2Tilt(this);
     QDeclAccelerometer* accel = _plugin.stAccel;
-    QCOMPARE(_tilt->_dataRate.count(), 0);
+    QCOMPARE(_tilt->dataRate().count(), 0);
     accel->addDataRate(13, 15);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 13);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 13);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 15);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 13);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 13);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 15);
 
     accel->addDataRate(1, 8);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 8);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 15);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 8);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 15);
 
     accel->addDataRate(11, 12);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 15);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 15);
 
     accel->addDataRate(13, 18);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 18);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 18);
 
     accel->addDataRate(21, 31);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 21);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 21);
 
     accel->addDataRate(19, 20);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 11);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 20);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 11);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 20);
 
     accel->addDataRate(9, 10);
     _tilt->createRunModeDataRateMap();
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Slow), 2);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Medium), 10);
-    QCOMPARE(_tilt->_dataRate.value(QSensor2Tilt::Fast), 20);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Slow), 2);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Medium), 10);
+    QCOMPARE(_tilt->dataRate().value(QSensor2Tilt::Fast), 20);
 
     QSensor2Tilt::Speed speed = static_cast<QSensor2Tilt::Speed>(_tilt->property("speed").toInt());
     QCOMPARE(speed, QSensor2Tilt::Slow);
