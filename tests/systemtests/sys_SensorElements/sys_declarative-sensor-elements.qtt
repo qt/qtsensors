@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
 ** Contact: Nokia Corporation (qt-info@nokia.com)
 **
@@ -38,14 +38,14 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-include("Device.qtx")
-include("extrafunctions.qtt")
+//include("Device.qtx")
+//include("extrafunctions.qtt")
 
 //TESTED_COMPONENT=src/sensors
 
 testcase = {
 
-
+/*
 init: function() {
     qtuitest.checkActiveWindow = false;
     qtuitest.autoTerminate = false;
@@ -62,6 +62,7 @@ cleanup: function() {
     Gesture.swipe(Screen.leftCenter(), Screen.rightCenter()); //close applicatin
     wait(500);
 },
+*/
 
 // As a QML Application developer I need information about the position of the device (rotation angles from X and Y Axis)
     Device_Rotational_Position: function()
@@ -74,7 +75,7 @@ cleanup: function() {
         testGroups = "BAT";
 
       // Test steps
-        mouseClick(findByProperty("label", testBinary)); wait(500);
+//        mouseClick(findByProperty("label", testBinary)); wait(500);
         prompt(twiki("---+++ " + testApplication + "<br><br>
             *Goal:* " + testGoal + "<br>
             *Pre-Requisites:* " + testPreconditions + "<br>
@@ -105,7 +106,7 @@ cleanup: function() {
         testGroups = "BAT";
 
         // Test steps
-        mouseClick(findByProperty("label", testBinary)); wait(500);
+//        mouseClick(findByProperty("label", testBinary)); wait(500);
         prompt(twiki("---+++ " + testApplication + "<br><br>
            *Goal:* " + testGoal + "<br>
            *Pre-Requisites:* " + testPreconditions + "<br>
@@ -137,7 +138,7 @@ cleanup: function() {
             testGroups = "BAT";
 
             // Test steps
-            mouseClick(findByProperty("label", testBinary)); wait(500);
+//            mouseClick(findByProperty("label", testBinary)); wait(500);
             prompt(twiki("---+++ " + testApplication + "<br><br>
                *Goal:* " + testGoal + "<br>
                *Pre-Requisites:* " + testPreconditions + "<br>
@@ -167,7 +168,7 @@ cleanup: function() {
           testGroups = "BAT";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -197,7 +198,7 @@ cleanup: function() {
           testGroups = "BAT";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -224,7 +225,7 @@ cleanup: function() {
           testGroups = "BAT";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -252,7 +253,7 @@ cleanup: function() {
           testGroups = "BAT";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -277,7 +278,7 @@ cleanup: function() {
           testGroups = "BAT";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -291,4 +292,85 @@ cleanup: function() {
               | Repeat the previous steps to find the process ID and kill sensorq a second time | View the baldr logs again to verify that sensorq has started again |
         "));
     },
+
+// MTMW-423 QML System Test - Ensure sensor defaults to 10hz - accelerometer
+    Accelerometer_Default: function()
+    {
+          // Test meta data
+          testApplication = "sensortest";
+          testBinary = "sensortest";
+          testGoal = "Verify that the accelerometer maximum sample rate defaults to 10 hz";
+          testPreconditions = "Nil.";
+          testGroups = "BAT";
+
+          // Test steps
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
+          prompt(twiki("---+++ " + testApplication + "<br><br>
+              *Goal:* " + testGoal + "<br>
+              *Pre-Requisites:* " + testPreconditions + "<br>
+              *Tested Binary:* " + testBinary + "<br>
+              | *Step* | *Verification* |
+              | Connect to the console on the device via ssh and launch *" + testBinary + " accel* | App launches normally |
+              | A stream of data is displayed, move the device in various directions and observe the X, Y and Z data | Verify that the data varies indicating the accelerometer is operating |
+              | While continuing to move the device observe the sample rate data (last value on each line) | Verify that the default sample rate does not go higher than 10 Hz |
+              | Stop the " + testBinary + " application using ctrl c and restart using the following command *" + testBinary + " accel -r 100* | |
+              | Continue moving the device and observe the sample rate data | Verify the sample rate now doesn't go above 100 Hz |
+              | Stop the " + testBinary + " application and restart using the following command *" + testBinary + " accel* | |
+              | Continue moving the device and observe the sample rate data | Verify that the sample rate now doesn't go above 10 Hz |
+        "));
+    },
+
+    // MTMW-438 QML System Test - Ensure sensor defaults to 10hz - IR proximity
+        IR_Proximity_Default: function()
+        {
+              // Test meta data
+              testApplication = "sensortest";
+              testBinary = "sensortest";
+              testGoal = "Verify that the IR proximity sensor maximum sample rate defaults to 10 hz";
+              testPreconditions = "Nil.";
+              testGroups = "BAT";
+
+              // Test steps
+    //          mouseClick(findByProperty("label", testBinary)); wait(500);
+              prompt(twiki("---+++ " + testApplication + "<br><br>
+                  *Goal:* " + testGoal + "<br>
+                  *Pre-Requisites:* " + testPreconditions + "<br>
+                  *Tested Binary:* " + testBinary + "<br>
+              | *Step* | *Verification* |
+              | Connect to the console on the device via ssh and launch *" + testBinary + " irprox* | App launches normally |
+              | A stream of data is displayed, move your finger in front of the proximity sensor and observe the IR reflectance value | Verify that the data varies indicating the IR proximity sensor is operating |
+              | While continuing to move your finger in front of the proximity sensor observe the sample rate data (last value on each line) | Verify that the default sample rate does not go higher than 10 Hz |
+              | Stop the " + testBinary + " application using ctrl c and restart using the following command *" + testBinary + " irprox -r 100* | |
+              | Continue moving your finger in front of the proximity sensor and observe the sample rate data | Verify the sample rate now doesn't go above 100 Hz and does occasionly go above 10 Hz |
+              | Stop the " + testBinary + " application and restart using the following command *" + testBinary + " irprox* | |
+              | Continue moving your finger in front of the proximity sensor and observe the sample rate data | Verify that the sample rate now doesn't go above 10 Hz |
+            "));
+        },
+
+    // MTMW-439 QML System Test - Ensure sensor defaults to 10hz - light sensor
+        Light_Sensor_Default: function()
+        {
+              // Test meta data
+              testApplication = "sensortest";
+              testBinary = "sensortest";
+              testGoal = "Verify that the light sensor maximum sample rate defaults to 10 hz";
+              testPreconditions = "Nil.";
+              testGroups = "BAT";
+
+              // Test steps
+    //          mouseClick(findByProperty("label", testBinary)); wait(500);
+              prompt(twiki("---+++ " + testApplication + "<br><br>
+                  *Goal:* " + testGoal + "<br>
+                  *Pre-Requisites:* " + testPreconditions + "<br>
+                  *Tested Binary:* " + testBinary + "<br>
+              | *Step* | *Verification* |
+              | Connect to the console on the device via ssh and launch *" + testBinary + " light* | App launches normally |
+              | A stream of data is displayed, vary the light falling on the device and observe the lux value of the data | Verify that the data varies indicating the light sensor is operating |
+              | While continuing to vary the light falling on the device observe the sample rate data (last value on each line) | Verify that the default sample rate does not go higher than 10 Hz |
+              | Stop the " + testBinary + " application using ctrl c and restart using the following command *" + testBinary + " light -r 5* | |
+              | Continue to vary the light falling on the device and observe the sample rate data | Verify the sample rate now doesn't go above 5 Hz |
+              | Stop the " + testBinary + " application and restart using the following command *" + testBinary + " light* | |
+              | Continue to vary the light falling on the device and observe the sample rate data | Verify that the sample rate now doesn't go above 10 Hz |
+            "));
+        },
 }
