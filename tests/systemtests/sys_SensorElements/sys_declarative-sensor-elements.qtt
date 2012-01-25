@@ -2,7 +2,7 @@
 **
 ** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
 ** All rights reserved.
-** Contact: http://www.qt-project.org/
+** Contact: Nokia Corporation (qt-info@nokia.com)
 **
 ** This file is part of the Qt Mobility Components.
 **
@@ -241,8 +241,7 @@ cleanup: function() {
         "));
     },
 
-// As a QML Application developer I would like to deactivate the touchscreen as soon the proximity of the user is close
-// Note: no need for test app to lock screen, testing that the proximity is detected is sufficient
+// As a QML Application developer I would like to deactivate the touchscreen as soon the proximity of the user is close - no need for test app to lock screen, testing that the proximity is detected is sufficient
     Proximity_Detection: function()
     {
           // Test meta data
@@ -371,6 +370,32 @@ cleanup: function() {
               | Continue to vary the light falling on the device and observe the sample rate data | Verify the sample rate now doesn't go above 5 Hz |
               | Stop the " + testBinary + " application and restart using the following command *" + testBinary + " light* | |
               | Continue to vary the light falling on the device and observe the sample rate data | Verify that the sample rate now doesn't go above 10 Hz |
+            "));
+        },
+
+    // MTMW-424 - Slow down IR Proxy polling when close
+        Slow_Down_IR_Proxy: function()
+        {
+              // Test meta data
+              testApplication = "sensortest";
+              testBinary = "sensortest";
+              testGoal = "Verify that the IR Proxy poll rate slows down to 5 Hz when objects are close";
+              testPreconditions = "Nil.";
+              testGroups = "BAT";
+
+              // Test steps
+    //          mouseClick(findByProperty("label", testBinary)); wait(500);
+              prompt(twiki("---+++ " + testApplication + "<br><br>
+                  *Goal:* " + testGoal + "<br>
+                  *Pre-Requisites:* " + testPreconditions + "<br>
+                  *Tested Binary:* " + testBinary + "<br>
+              | *Step* | *Verification* |
+              | Connect to the console on the device via ssh and launch *" + testBinary + " irprox* | Verify the App launches normally and displays *loaded the grue plugin*, *loaded the Meltemi plugin* |
+              | | Verify it also displays *Detected: HW35*, *Sensor 0, IR Reflectance 0.0%* |
+              | Move your hand to within 1 cm of the IR Proxy sensor | Verify that the IR Reflectance data increases to about 10Hz briefly and then goes down to 5Hz or less - note that the readings will not update unless your hand is moving |
+              | Move your hand a small amount without moving further away than 1 cm | Verify that the values update but never go above 5Hz |
+              | Move your hand further away than 1 cm | Verify the updating stops |
+              | Move your hand to within 1 cm of the IR Proxy sensor again | Verify that the IR Reflectance data increases to about 10Hz briefly and then goes down to 5Hz or less |
             "));
         },
 }
