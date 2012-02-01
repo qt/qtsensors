@@ -45,6 +45,8 @@
 
 #include <qsensorgesturerecognizer.h>
 #include <QtSensors/QAccelerometer>
+#include <QtSensors/QOrientationSensor>
+
 QT_BEGIN_NAMESPACE
 
 class QTwistSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -71,6 +73,7 @@ private slots:
 
 private:
     QAccelerometer *accel;
+    QOrientationSensor *orientation;
     QTimer *timer;
     int accelRange;
     qreal lastX;
@@ -83,6 +86,7 @@ private:
     qreal calc(qreal yrot);
     bool detecting;
     qreal lastDegree;
+    QOrientationReading::Orientation lastOrientation;
 };
 QT_END_NAMESPACE
 #endif // QWFLICKSENSORGESTURERECOGNIZER_H

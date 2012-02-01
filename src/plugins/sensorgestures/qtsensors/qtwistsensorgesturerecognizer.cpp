@@ -65,7 +65,7 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
 }
 
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent), detecting(0), lastDegree(0)
+    QSensorGestureRecognizer(parent), detecting(0), lastDegree(0), lastX(0)
 {
 }
 
@@ -77,6 +77,10 @@ void QTwistSensorGestureRecognizer::create()
 {
     accel = new QAccelerometer(this);
     accel->connectToBackend();
+    orientation = new QOrientationSensor(this);
+    orientation->connectToBackend();
+
+
     timer = new QTimer(this);
 
     qoutputrangelist outputranges = accel->outputRanges();
@@ -101,6 +105,7 @@ bool QTwistSensorGestureRecognizer::start()
 {
     connect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
     active = accel->start();
+    orientation->start();
     return active;
 }
 
@@ -110,6 +115,7 @@ bool QTwistSensorGestureRecognizer::stop()
     disconnect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
 
     active = accel->isActive();
+    orientation->stop();
     return !active;
 }
 
@@ -118,8 +124,8 @@ bool QTwistSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define RESTING_VARIANCE 10
-#define THRESHOLD_DEGREES 40
+#define RESTING_VARIANCE 20
+#define THRESHOLD_DEGREES 70
 
 void QTwistSensorGestureRecognizer::accelChanged()
 {
@@ -127,32 +133,55 @@ void QTwistSensorGestureRecognizer::accelChanged()
     qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
-    if (abs(x) < 1)
-        return;
-
     pitch = calcPitch(x, y, z);
     roll = calcRoll(x, y, z);
 
     qreal degrees = calc(pitch);
 
+//    qDebug() << Q_FUNC_INFO << degrees << calc(roll) << lastX;
+
     if (xList.count() > 4) {
-        if (detecting &&
-                abs(lastDegree - degrees) > (accelRange/2)) {
-            if (lastX < 0) {
+        if (detecting && (degrees > 0 && lastX < 0
+                          || degrees < 0 && lastX > 0)) {
+             // if shake-like:
+            detecting = false;
+            timer->stop();
+            lastX = degrees;
+//            qDebug() << Q_FUNC_INFO << "stop detecting";
+        }
+
+        if (detecting
+                && abs(degrees) < RESTING_VARIANCE
+                && abs(calc(roll)) < RESTING_VARIANCE
+                && (abs(lastX + degrees) > (degrees / 2))
+                ) {
+            if (lastX < 0 ) {
                 Q_EMIT twistLeft();
                 Q_EMIT detected("twistLeft");
             } else {
                 Q_EMIT twistRight();
                 Q_EMIT detected("twistRight");
             }
-            detecting = false;
-            timer->stop();
-            lastX = degrees;
+            // don't give two signals for same gestures
+                detecting = false;
+                timer->stop();
+                lastX = degrees;
         }
 
-        if (!detecting && abs(degrees) > THRESHOLD_DEGREES) {
+        if (!detecting && abs(degrees) > THRESHOLD_DEGREES
+                && calc(roll) < RESTING_VARIANCE) {
+
             detecting = true;
             timer->start();
+            lastX = degrees;
+            lastOrientation = orientation->reading()->orientation();
+//            qDebug() << Q_FUNC_INFO << "start detecting" << lastOrientation;
+        }
+
+        if (detecting && (orientation->reading()->orientation() == QOrientationReading::TopUp
+                || orientation->reading()->orientation() == QOrientationReading::TopDown)) {
+            detecting = false;
+            timer->stop();
             lastX = degrees;
         }
     }
@@ -167,6 +196,7 @@ void QTwistSensorGestureRecognizer::timeout()
 {
     detecting = false;
     lastX = 0;
+    lastOrientation = QOrientationReading::Undefined;
 }
 
 qreal QTwistSensorGestureRecognizer::calc(qreal yrot)

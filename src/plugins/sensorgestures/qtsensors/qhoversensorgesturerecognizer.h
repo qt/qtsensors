@@ -46,7 +46,9 @@
 #include <QSensorGestureRecognizer>
 #include <QtSensors/QSensor>
 #include <QTimer>
-#include <QLightSensor>
+#include <QProximitySensor>
+#include <QIRProximitySensor>
+
 QT_BEGIN_NAMESPACE
 
 class QHoverSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -67,16 +69,20 @@ Q_SIGNALS:
     void hover();
 
 private slots:
-    void lightChanged();
+    void proxyChanged();
     void timeout();
     void timeout2();
 private:
-    QLightSensor *light;
+    QProximitySensor *proximity;
+    QIRProximitySensor *irProx;
+
     QTimer *timer;
     QTimer *timer2;
     bool hoverOk;
     qreal lastLightReading;
     bool detecting;
+
+    qreal detectedHigh;
 
 };
 QT_END_NAMESPACE

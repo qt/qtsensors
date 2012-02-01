@@ -82,6 +82,11 @@ private:
     qreal pYaxis;
     qreal pZaxis;
 
+    qreal roll;
+
+    qreal calc(qreal yrot);
+    qreal lastRoll;
+
 };
 QT_END_NAMESPACE
 #endif // QPICKUPSENSORGESTURERECOGNIZER_H

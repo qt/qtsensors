@@ -43,16 +43,16 @@
 #include <QTimer>
 
 #include "qshake2recognizer.h"
+#include <math.h>
+
 
 QT_BEGIN_NAMESPACE
 
 QShake2SensorGestureRecognizer::QShake2SensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
-    , active(0)
+    , active(0),shaking(0), shakeCount(0),
+      shakeDirection(QShake2SensorGestureRecognizer::ShakeUndefined)
 {
-    pXaxis = 0;nXaxis = 0;
-    pYaxis = 0;nYaxis = 0;
-    pZaxis = 0;nZaxis = 0;
     timerTimeout = 750;
 }
 
@@ -64,20 +64,11 @@ void QShake2SensorGestureRecognizer::create()
 {
     accel = new QAccelerometer(this);
     accel->connectToBackend();
+
     timer = new QTimer(this);
-
-    qoutputrangelist outputranges = accel->outputRanges();
-
-    if (outputranges.count() > 0)
-        accelRange = (int)(outputranges.at(0).maximum *2) / 9.8; //approx range in g's
-    else
-        accelRange = 4; //this should never happen
-
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
     timer->setInterval(timerTimeout);
-
-
 }
 
 bool QShake2SensorGestureRecognizer::start()
@@ -107,100 +98,107 @@ QString QShake2SensorGestureRecognizer::id() const
 }
 
 #define NUMBER_SHAKES 3
+#define THRESHOLD 25
+
 void QShake2SensorGestureRecognizer::accelChanged()
 {
     qreal x = accel->reading()->x();
-    qreal xdiff =  pXaxis - x;
     qreal y = accel->reading()->y();
-    qreal ydiff = pYaxis - y;
     qreal z = accel->reading()->z();
-    qreal zdiff =  pZaxis - z;
 
-    if (abs(xdiff) > (5 * accelRange)) {
+    currentData.x = x;
+    currentData.y = y;
+    currentData.z = z;
 
-        if (shakeDirection == QShake2SensorGestureRecognizer::ShakeUndefined && nXaxis == 0) {
-            if (xdiff < 0)
-                shakeDirection = QShake2SensorGestureRecognizer::ShakeLeft;
-            else
-                shakeDirection = QShake2SensorGestureRecognizer::ShakeRight;
-        }
+    if ( (abs(currentData.x - prevData.x)
+          || abs(currentData.y - prevData.y)
+          || abs(currentData.z - prevData.z)) < 1)
+        return;
 
-        nXaxis++;
-        if (timer->isActive()) {
-            timer->stop();
-        }
-        timer->start();
-    }
-    if (abs(ydiff) > (5 * accelRange)) {
-        if (nYaxis == 0) {
-            if (shakeDirection == QShake2SensorGestureRecognizer::ShakeUndefined && ydiff < 0)
-                shakeDirection = QShake2SensorGestureRecognizer::ShakeDown;
-            else
-                shakeDirection = QShake2SensorGestureRecognizer::ShakeUp;
-        }
-        nYaxis++;
-        if (timer->isActive()) {
-            timer->stop();
-        }
-        timer->start();
-    }
-    if (abs(zdiff) > (5 * accelRange)) {
-            nZaxis++;
-            if (timer->isActive()) {
-                timer->stop();
+    if (!shaking && checkForShake(prevData, currentData, THRESHOLD) &&
+        shakeCount >= NUMBER_SHAKES) {
+        shaking = true;
+        shakeCount = 0;
+
+        switch (shakeDirection) {
+        case QShake2SensorGestureRecognizer::ShakeLeft:
+            Q_EMIT shakeLeft();
+            Q_EMIT detected("shakeLeft");
+            break;
+        case QShake2SensorGestureRecognizer::ShakeRight:
+            Q_EMIT shakeRight();
+            Q_EMIT detected("shakeRight");
+            break;
+        case QShake2SensorGestureRecognizer::ShakeUp:
+            Q_EMIT shakeUp();
+            Q_EMIT detected("shakeUp");
+            break;
+        case QShake2SensorGestureRecognizer::ShakeDown:
+            Q_EMIT shakeDown();
+            Q_EMIT detected("shakeDown");
+            break;
+        default:
+            break;
+        };
+
+    } else if (checkForShake(prevData, currentData, THRESHOLD)) {
+
+        if (shakeCount == 0 && shakeDirection == QShake2SensorGestureRecognizer::ShakeUndefined) {
+
+            int xdiff = currentData.x - prevData.x;
+            int ydiff = currentData.y - prevData.y;
+
+            int max = qMax(abs(ydiff), abs(xdiff));
+
+            if (max == abs(xdiff)) {
+                if (isNegative(xdiff))
+                    shakeDirection = QShake2SensorGestureRecognizer::ShakeLeft;
+                else
+                    shakeDirection = QShake2SensorGestureRecognizer::ShakeRight;
+
+            } else if (max == abs(ydiff)) {
+                if (isNegative(ydiff))
+                    shakeDirection = QShake2SensorGestureRecognizer::ShakeDown;
+                else
+                    shakeDirection = QShake2SensorGestureRecognizer::ShakeUp;
             }
-            timer->start();
         }
+        shakeCount++;
+        timer->start();
 
-        if (nYaxis + nZaxis + nXaxis >= NUMBER_SHAKES) {
+    }
 
-            switch (shakeDirection) {
-            case QShake2SensorGestureRecognizer::ShakeLeft:
-                Q_EMIT shakeLeft();
-                Q_EMIT detected("shakeLeft");
-                break;
-            case QShake2SensorGestureRecognizer::ShakeRight:
-                Q_EMIT shakeRight();
-                Q_EMIT detected("shakeRight");
-                break;
-            case QShake2SensorGestureRecognizer::ShakeUp:
-                Q_EMIT shakeUp();
-                Q_EMIT detected("shakeUp");
-                break;
-            case QShake2SensorGestureRecognizer::ShakeDown:
-                Q_EMIT shakeDown();
-                Q_EMIT detected("shakeDown");
-                break;
-            default:
-                break;
-            };
-            if (timer->isActive()) {
-                timer->stop();
-            }
-            timeout();
-        }
-    pXaxis = x;
-    pYaxis = y;
-    pZaxis = z;
+    prevData.x = currentData.x;
+    prevData.y = currentData.y;
+    prevData.z = currentData.z;
+
 }
 
 void QShake2SensorGestureRecognizer::timeout()
 {
-    nXaxis = 0;
-    nYaxis = 0;
-    nZaxis = 0;
+    shakeCount = 0;
+    shaking = false;
     shakeDirection = QShake2SensorGestureRecognizer::ShakeUndefined;
 
 }
-
-int QShake2SensorGestureRecognizer::thresholdTime() const
+bool QShake2SensorGestureRecognizer::checkForShake(ShakeData prevSensorData, ShakeData currentSensorData, qreal threshold)
 {
-    return timerTimeout;
+    double deltaX = qAbs(prevSensorData.x - currentSensorData.x);
+    double deltaY = qAbs(prevSensorData.y - currentSensorData.y);
+    double deltaZ = qAbs(prevSensorData.z - currentSensorData.z);
+
+    return (deltaX > threshold
+            || deltaY > threshold
+            || deltaZ > threshold);
 }
 
-void QShake2SensorGestureRecognizer::setThresholdTime(int msec)
+bool QShake2SensorGestureRecognizer::isNegative(qreal num)
 {
-    timer->setInterval(msec);
+    if (num < 0)
+        return true;
+    return false;
 }
+
+
 
 QT_END_NAMESPACE

@@ -55,8 +55,11 @@ QHoverSensorGestureRecognizer::~QHoverSensorGestureRecognizer()
 
 void QHoverSensorGestureRecognizer::create()
 {
-    light = new QLightSensor(this);
-    light->connectToBackend();
+    proximity = new QProximitySensor(this);
+    proximity->connectToBackend();
+
+    irProx = new QIRProximitySensor(this);
+    irProx->connectToBackend();
 
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
@@ -66,7 +69,7 @@ void QHoverSensorGestureRecognizer::create()
     timer2 = new QTimer(this);
     connect(timer2,SIGNAL(timeout()),this,SLOT(timeout2()));
     timer2->setSingleShot(true);
-    timer2->setInterval(3000);
+    timer2->setInterval(5000);
 }
 
 QString QHoverSensorGestureRecognizer::id() const
@@ -76,47 +79,50 @@ QString QHoverSensorGestureRecognizer::id() const
 
 bool QHoverSensorGestureRecognizer::start()
 {
-    connect(light,SIGNAL(readingChanged()), this,SLOT(lightChanged()));
-    light->start();
-    return light->isActive();
+    connect(irProx,SIGNAL(readingChanged()), this,SLOT(proxyChanged()));
+    proximity->start();
+    irProx->start();
+    return irProx->isActive();
 }
 
 bool QHoverSensorGestureRecognizer::stop()
 {
-   light->stop();
-   disconnect(light,SIGNAL(readingChanged()),this,SLOT(lightChanged()));
-   return light->isActive();
+    proximity->stop();
+    irProx->stop();
+    disconnect(irProx,SIGNAL(readingChanged()),this,SLOT(proxyChanged()));
+    return irProx->isActive();
 }
 
 bool QHoverSensorGestureRecognizer::isActive()
 {
-    return light->isActive();
+    return irProx->isActive();
 }
 
-void QHoverSensorGestureRecognizer::lightChanged()
+void QHoverSensorGestureRecognizer::proxyChanged()
 {
-    qreal lightReading = light->reading()->lux();
-
-    int difference = 100 - (lightReading/lastLightReading) * 100;
-
-    if (difference == 0) {
+    if (proximity->reading()->close()) {
+        hoverOk = false;
+        detecting = false;
         return;
     }
 
-    if (!detecting && difference > 19) {
-//        if (lightReading < lastLightReading ) {
+    int refl = irProx->reading()->reflectance() * 100;
+
+    if (!detecting && (refl > 20 && refl < 35)) {
         detecting = true;
         timer->start();
         timer2->start();
-    } else if (hoverOk && detecting && difference < -24) {
+
+    } else if (hoverOk && detecting
+               && refl == 0) {
         // went light again after 1 seconds
-//            qDebug() << "hover";
             Q_EMIT hover();
             Q_EMIT detected("hover");
             hoverOk = false;
             detecting = false;
     }
-    lastLightReading = lightReading;
+    if (refl == 0)
+        detecting = false;
 }
 
 void QHoverSensorGestureRecognizer::timeout()

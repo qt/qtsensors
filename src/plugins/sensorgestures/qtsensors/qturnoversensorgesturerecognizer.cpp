@@ -118,9 +118,6 @@ void QTurnoverSensorGestureRecognizer::orientationChanged()
 
 void QTurnoverSensorGestureRecognizer::isRecognized()
 {
-    qDebug() << Q_FUNC_INFO
-             << isClose << isFaceDown;
-
     if (isClose && isFaceDown) {
         Q_EMIT turnover();
         Q_EMIT detected("turnover");

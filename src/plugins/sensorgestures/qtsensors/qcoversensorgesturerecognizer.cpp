@@ -94,11 +94,12 @@ bool QCoverSensorGestureRecognizer::isActive()
 }
 
 void QCoverSensorGestureRecognizer::proximityChanged()
-{
-    if ((orientation->reading()->orientation() ==  QOrientationReading::FaceDown
-            || orientation->reading()->orientation() ==  QOrientationReading::FaceUp)
+{// look at case of face up->face down->face up.
+    if ((orientation->reading()->orientation() ==  QOrientationReading::FaceUp)
             && proximity->reading()->close())
         timer->start();
+    else if (proximity->reading()->close())
+        timer->stop();
 }
 
 void QCoverSensorGestureRecognizer::timeout()

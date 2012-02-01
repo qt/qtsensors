@@ -53,6 +53,12 @@
 #include <qsensorgesturerecognizer.h>
 QT_BEGIN_NAMESPACE
 
+struct ShakeData {
+   qreal x;
+   qreal y;
+   qreal z;
+};
+
 class QShake2SensorGestureRecognizer : public QSensorGestureRecognizer
 {
     Q_OBJECT
@@ -77,8 +83,9 @@ public:
     bool stop();
     bool isActive();
 
-    int thresholdTime() const;
-    void setThresholdTime(int msec);
+    QTimer *timer;
+    int timerTimeout;
+
 
 Q_SIGNALS:
     void shakeLeft();
@@ -90,27 +97,23 @@ private slots:
     void accelChanged();
     void timeout();
 
+
 private:
     QAccelerometer *accel;
 
-    qreal pXaxis;
-    qreal nXaxis;
-
-    qreal pYaxis;
-    qreal nYaxis;
-
-    qreal pZaxis;
-    qreal nZaxis;
-
-    bool detectingState;
-    QTimer *timer;
-    int timerTimeout;
     bool active;
-    int accelRange;
 
     ShakeDirection shakeDirection;
 
+    ShakeData prevData;
+    ShakeData currentData;
 
+    bool checkForShake(ShakeData prevSensorData, ShakeData currentSensorData, qreal threshold);
+    bool shaking;
+    int shakeCount;
+    int threshold;
+
+    bool isNegative(qreal num);
 };
 QT_END_NAMESPACE
 #endif // QSHAKERECOGNIZER_H

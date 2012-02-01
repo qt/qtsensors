@@ -45,6 +45,8 @@
 
 #include <qsensorgesturerecognizer.h>
 #include <QtSensors/QAccelerometer>
+#include <QtSensors/QOrientationSensor>
+
 QT_BEGIN_NAMESPACE
 
 class QWhipSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -69,14 +71,18 @@ private slots:
     void timeout();
 private:
     QAccelerometer *accel;
+    QOrientationSensor *orientation;
     QTimer *timer;
     int accelRange;
     bool whipIt;
     bool wasNegative;
     qreal lastX;
+    qreal detectedX;
+
     bool active;
 
     qreal accelX;
+    qreal calc(qreal rot);
 
 };
 QT_END_NAMESPACE
