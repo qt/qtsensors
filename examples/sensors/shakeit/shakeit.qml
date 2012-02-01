@@ -43,11 +43,27 @@ import QtQuick 2.0
 //! [0]
 import QtSensors 5.0
 //! [0]
+//import QtMultimedia 4.0
+import Qt.multimediakit 4.0
+
+
 
 Rectangle {
     id: window
 
+    state: "default"
+
+    Audio {
+        id :phone
+        source: "audio/phone.wav" //mono
+    }
+    Audio {
+        id :loopy2a_mono
+        source: "audio/loopy2a_mono.wav" //mono
+    }
+
     Text {
+        id: label
         text: qsTr("Shake to rotate triangles")
         y: parent.height / 4
         anchors.horizontalCenter: parent.horizontalCenter
@@ -56,20 +72,29 @@ Rectangle {
         id: triangle1
         smooth: true
         source: "images/triangle.png"
-        y: parent.height / 2 - (triangle1.height);
         x: parent.width / 2 - (triangle1.width / 2)
+        y: parent.height / 2 - (triangle1.height);
+        Behavior on x { SmoothedAnimation { velocity: 200 } }
+        Behavior on y { SmoothedAnimation { velocity: 200 } }
     }
     Image {
         id: triangle2
         smooth: true
         source: "images/triangle2.png"
-        anchors.right: triangle1.left; anchors.top: triangle1.bottom
+        x: parent.width / 2 - (triangle1.width + triangle2.width / 2)
+        y: parent.height / 2 + (triangle2.height / 2);
+        Behavior on x { SmoothedAnimation { velocity: 200 } }
+        Behavior on y { SmoothedAnimation { velocity: 200 } }
     }
     Image {
         id: triangle3
         smooth: true
         source: "images/triangle3.png"
-        anchors.left: triangle1.right; anchors.top: triangle1.bottom
+        x: parent.width / 2 + (triangle1.width / 2)
+        y: parent.height / 2 + (triangle3.height / 2);
+
+        Behavior on x { SmoothedAnimation { velocity: 200 } }
+        Behavior on y { SmoothedAnimation { velocity: 200 } }
     }
 
     states: [
@@ -80,16 +105,90 @@ Rectangle {
             PropertyChanges { target: triangle3; rotation: 270 }
         },
         State {
-            name: "unrotated"
-            PropertyChanges { target: triangle1; rotation: 0 }
-            PropertyChanges { target: triangle2; rotation: 0 }
-            PropertyChanges { target: triangle3; rotation: 0 }
-        }
+            name: "default"
+            PropertyChanges { target: triangle1; rotation: 0;
+                x: parent.width / 2 - (triangle1.width / 2)
+                y: parent.height / 2 - (triangle1.height);
+            }
+            PropertyChanges { target: triangle2; rotation: 0;
+                x: parent.width / 2 - (triangle1.width + triangle2.width / 2)
+                y: parent.height / 2 + (triangle2.height / 2);
+            }
+            PropertyChanges { target: triangle3; rotation: 0;
+                x: parent.width / 2 + (triangle1.width / 2)
+                y: parent.height / 2 + (triangle3.height / 2);
+            }
+        },
+        State {
+            name: "whipped"
+            PropertyChanges { target: triangle1; rotation: 0; x:0;
+            }
+            PropertyChanges { target: triangle2; rotation: 0; x:0;
+            }
+            PropertyChanges { target: triangle3; rotation: 0; x:0;
+                y: triangle2.y + triangle2.height;
+            }
+        },
+        State {
+            name: "twisted"
+            PropertyChanges { target: triangle1; rotation: 270;
+                x:window.width - triangle1.width;
+            }
+            PropertyChanges { target: triangle2; rotation: 180;
+                x:window.width - triangle2.width;
+            }
+            PropertyChanges { target: triangle3; rotation: 90;
+                x:window.width - triangle3.width;
+                y:triangle2.y + triangle2.height;
+            }
+        },
+        State {
+            name: "covered"
+            PropertyChanges { target: triangle1; rotation: 0;
+                x: window.width / 3 - triangle1.width / 2;
+                y: window.height - triangle1.height;
+            }
+            PropertyChanges { target: triangle2; rotation: 0;
+                x: window.width / 2 - triangle2.width / 2; // middle
+                y: window.height - triangle2.height;
+            }
+            PropertyChanges { target: triangle3; rotation: 0;
+                x: (window.width / 3 + window.width / 3) - triangle3.width / 2;
+                y: window.height - triangle3.height;
+            }
+        },
+        State {
+            name: "hovered"
+            PropertyChanges { target: triangle1; rotation: 90;
+                x: window.width / 3 - triangle1.width / 2;
+                y: triangle1.height;
+            }
+            PropertyChanges { target: triangle2; rotation: 270;
+                x: window.width / 2 - triangle2.width / 2; // middle
+                y: triangle2.height;
+            }
+            PropertyChanges { target: triangle3; rotation: 180;
+                x: (window.width / 3 + window.width / 3) - triangle3.width / 2;
+                y: triangle3.height
+            }
+        }/*,
+        State {
+            name :"turnedover"
+        }*/
     ]
+
+
     transitions: Transition {
-        RotationAnimation { id: t1Rotation; target: triangle1; duration: 1000; direction: RotationAnimation.Clockwise }
-        RotationAnimation { id: t2Rotation; target: triangle2; duration: 3000; direction: RotationAnimation.Counterclockwise }
-        RotationAnimation { id: t3Rotation; target: triangle3; duration: 3000; direction: RotationAnimation.Clockwise }
+        ParallelAnimation {
+            running: true
+            NumberAnimation { properties: "x,y"; easing.type: Easing.OutBounce;duration: 3000; }
+            RotationAnimation { id: t1Rotation; target: triangle1; duration: 1000;
+                direction: RotationAnimation.Clockwise }
+            RotationAnimation { id: t2Rotation; target: triangle2; duration: 3000;
+                direction: RotationAnimation.Counterclockwise }
+            RotationAnimation { id: t3Rotation; target: triangle3; duration: 3000;
+                direction: RotationAnimation.Clockwise }
+        }
     }
 
 //! [1]
@@ -100,12 +199,36 @@ Rectangle {
         enabled: true
 //! [3]
 //! [2]
-        gestures : ["QtSensors.shake"]
+        gestures : ["QtSensors.shake", "QtSensors.whip", "QtSensors.twist", "QtSensors.cover",
+            "QtSensors.hover", "QtSensors.turnover", "QtSensors.pickup"]
 //! [2]
 //! [4]
         onDetected:{
+            console.debug(gesture)
+            label.text = gesture
+
             if (gesture == "shake") {
-                window.state == "rotated" ? window.state = "unrotated" : window.state = "rotated"
+                window.state == "rotated" ? window.state = "default" : window.state = "rotated"
+            }
+            if (gesture == "whip") {
+                window.state == "whipped" ? window.state = "default" : window.state = "whipped"
+            }
+            if (gesture == "twistRight") {
+                window.state == "twisted" ? window.state = "default" : window.state = "twisted"
+            }
+            if (gesture == "cover") {
+                window.state == "covered" ? window.state = "default" : window.state = "covered"
+            }
+            if (gesture == "hover") {
+                window.state == "hovered" ? window.state = "default" : window.state = "hovered"
+            }
+            if (gesture == "turnover") {
+                window.state = "default"
+                loopy2a_mono.play();
+            }
+            if (gesture == "pickup") {
+                window.state = "default"
+                phone.play()
             }
         }
 //! [4]
