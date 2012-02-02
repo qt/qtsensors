@@ -62,7 +62,7 @@ QSimulatorSensorGesturePlugin::~QSimulatorSensorGesturePlugin()
 QStringList QSimulatorSensorGesturePlugin::supportedIds() const
 {
     QStringList list;
-    list << "shake";
+    list << "QtSensors.emulator";
     return list;
 }
 
