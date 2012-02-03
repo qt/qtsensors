@@ -4,13 +4,12 @@ app.files = \
     info.json \
     notions.json \
     settings.json \
-    shakeit.qml \
+    main.qml \
     icon.png \
-    audio \
-    images
+    components
 
 !isEmpty(EXAMPLES_PREFIX) {
-    TARGET_DIR = $$EXAMPLES_PREFIX/com.nokia.mt.shakeit
+    TARGET_DIR = $$EXAMPLES_PREFIX/com.nokia.mt.qmlqtsensors
     app.path = $$TARGET_DIR
     INSTALLS = app
 }

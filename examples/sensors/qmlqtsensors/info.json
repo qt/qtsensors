@@ -3,12 +3,12 @@
     "dict": {
         "Category": "application",
         "Runtime": "qml",
-        "DisplayName": "QtSensors",
+        "DisplayName": "QML QtSensors",
         "Subcategory": "utility",
         "MainQML": "main.qml",
-        "Version": "1.0",
-        "Identifier": "com.nokia.mt.qmlqtsensors.demo",
-        "Summary": "QML QtSensors demo",
+        "Version": "1.0.0",
+        "Identifier": "com.nokia.mt.qmlqtsensors",
+        "Summary": "QML Qt Sensors demo",
         "Author": "Qt"
     }
 }

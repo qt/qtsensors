@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
+CONFIG += ordered
 
-SUBDIRS += import #qml_app
-
+SUBDIRS = \
+    import \
+    qml.pro

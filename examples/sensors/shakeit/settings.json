@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "identifier": "com.nokia.mt.shakeit",
+  "label": "ShakeIt demonstrates the Qt5 QtSensor Gestures API",
+  "settings": [
+  ]
+}

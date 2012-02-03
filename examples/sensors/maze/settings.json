@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "identifier": "com.nokia.mt.maze",
+  "label": "Labyrinth game using TiltSensor",
+  "settings": [
+  ]
+}

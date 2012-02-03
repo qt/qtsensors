@@ -6,8 +6,8 @@
         "DisplayName": "Maze",
         "Subcategory": "utility",
         "MainQML": "Maze.qml",
-        "Version": "1.0",
-        "Identifier": "com.nokia.mt.maze.demo",
+        "Version": "1.0.0",
+        "Identifier": "com.nokia.mt.maze",
         "Summary": "Labyrinth game using TiltSensor",
         "Author": "Qt"
     }
