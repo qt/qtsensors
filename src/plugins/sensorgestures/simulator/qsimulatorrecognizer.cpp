@@ -94,7 +94,7 @@ bool QSimulatorSensorGestureRecognizer::isActive()
 
 QString QSimulatorSensorGestureRecognizer::id() const
 {
-    return QString("QtSensors.simulator");
+    return QString("QtSensors.emulator");
 }
 
 void QSimulatorSensorGestureRecognizer::timeout()

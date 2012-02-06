@@ -63,9 +63,6 @@ public:
     bool stop();
     bool isActive();
 
-Q_SIGNALS:
-    void simulator();
-
 private slots:
     void timeout();
     void sensorGestureDetected();

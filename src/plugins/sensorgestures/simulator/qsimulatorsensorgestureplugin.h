@@ -60,7 +60,7 @@ public:
 
     QStringList gestureSignals() const;
     QStringList supportedIds() const;
-    QString name() const { return "SimulatorGestures"; }
+    QString name() const { return "EmulatorGestures"; }
 };
 
 #endif // QSIMULATORSENSORGESTUREPLUGIN_H

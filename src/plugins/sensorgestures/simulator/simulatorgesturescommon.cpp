@@ -53,7 +53,8 @@ Q_GLOBAL_STATIC(QString, qtSensorGestureData)
 SensorGesturesConnection::SensorGesturesConnection(QObject *parent)
     : QObject(parent)
 {
-    mConnection = new Connection(Connection::Client, "QtSimulator_Mobility_ServerName1.3.0.0", 0xbeef+1, Version(1,0,0,0), this);
+    mConnection = new Connection(Connection::Client, "QtSimulator_Mobility_ServerName1.3.0.0",
+                                 0xbeef+1, Version(1,0,0,0), this);
     mWorker = mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1);
 
     if (!mWorker) {
