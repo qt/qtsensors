@@ -41,6 +41,8 @@
 
 
 #include "qhoversensorgesturerecognizer.h"
+#include <math.h>
+
 QT_BEGIN_NAMESPACE
 
 QHoverSensorGestureRecognizer::QHoverSensorGestureRecognizer(QObject *parent) :
@@ -55,9 +57,6 @@ QHoverSensorGestureRecognizer::~QHoverSensorGestureRecognizer()
 
 void QHoverSensorGestureRecognizer::create()
 {
-    proximity = new QProximitySensor(this);
-    proximity->connectToBackend();
-
     irProx = new QIRProximitySensor(this);
     irProx->connectToBackend();
 
@@ -80,14 +79,12 @@ QString QHoverSensorGestureRecognizer::id() const
 bool QHoverSensorGestureRecognizer::start()
 {
     connect(irProx,SIGNAL(readingChanged()), this,SLOT(proxyChanged()));
-    proximity->start();
     irProx->start();
     return irProx->isActive();
 }
 
 bool QHoverSensorGestureRecognizer::stop()
 {
-    proximity->stop();
     irProx->stop();
     disconnect(irProx,SIGNAL(readingChanged()),this,SLOT(proxyChanged()));
     return irProx->isActive();
@@ -100,28 +97,31 @@ bool QHoverSensorGestureRecognizer::isActive()
 
 void QHoverSensorGestureRecognizer::proxyChanged()
 {
-    if (proximity->reading()->close()) {
+    qreal refl = irProx->reading()->reflectance();
+
+    if (refl > .51) {
         hoverOk = false;
         detecting = false;
         return;
     }
 
-    int refl = irProx->reading()->reflectance() * 100;
-
-    if (!detecting && (refl > 20 && refl < 35)) {
+    if (!detecting && (refl > .40 && refl < .50)) {
         detecting = true;
         timer->start();
         timer2->start();
+        detectedHigh = refl;
 
     } else if (hoverOk && detecting
-               && refl == 0) {
+               && refl < .33
+               && detectedHigh
+               ) {
         // went light again after 1 seconds
             Q_EMIT hover();
             Q_EMIT detected("hover");
             hoverOk = false;
             detecting = false;
     }
-    if (refl == 0)
+    if (refl > .60)
         detecting = false;
 }
 
@@ -130,9 +130,9 @@ void QHoverSensorGestureRecognizer::timeout()
     hoverOk = true;
 }
 
-
 void QHoverSensorGestureRecognizer::timeout2()
 {
     detecting = false;
 }
+
 QT_END_NAMESPACE

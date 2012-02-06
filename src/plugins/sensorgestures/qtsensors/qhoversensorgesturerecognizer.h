@@ -49,6 +49,7 @@
 #include <QProximitySensor>
 #include <QIRProximitySensor>
 
+
 QT_BEGIN_NAMESPACE
 
 class QHoverSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -73,7 +74,6 @@ private slots:
     void timeout();
     void timeout2();
 private:
-    QProximitySensor *proximity;
     QIRProximitySensor *irProx;
 
     QTimer *timer;
@@ -83,7 +83,7 @@ private:
     bool detecting;
 
     qreal detectedHigh;
-
+    qreal lastProx;
 };
 QT_END_NAMESPACE
 #endif // QHOVERSENSORGESTURERECOGNIZER_H

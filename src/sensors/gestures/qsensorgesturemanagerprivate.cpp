@@ -59,8 +59,8 @@ QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
 
 QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
 {
-    qDeleteAll(registeredSensorGestures);
-    delete loader;
+//    qDeleteAll(registeredSensorGestures);
+//    delete loader;
 }
 
 

@@ -41,11 +41,13 @@
 
 
 #include "qcoversensorgesturerecognizer.h"
+#include <math.h>
+
 QT_BEGIN_NAMESPACE
 
 QCoverSensorGestureRecognizer::QCoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    lastProx(0)
+    detecting(0), lastProx(0)
 {
 }
 
@@ -55,7 +57,7 @@ QCoverSensorGestureRecognizer::~QCoverSensorGestureRecognizer()
 
 void QCoverSensorGestureRecognizer::create()
 {
-    proximity = new QProximitySensor(this);
+    proximity = new QIRProximitySensor(this);
     proximity->connectToBackend();
 
     orientation = new QOrientationSensor(this);
@@ -77,6 +79,7 @@ bool QCoverSensorGestureRecognizer::start()
     connect(proximity,SIGNAL(readingChanged()),this,SLOT(proximityChanged()));
     proximity->start();
     orientation->start();
+    lastProx = proximity->reading()->reflectance();
     return proximity->isActive();
 }
 
@@ -95,22 +98,38 @@ bool QCoverSensorGestureRecognizer::isActive()
 
 void QCoverSensorGestureRecognizer::proximityChanged()
 {// look at case of face up->face down->face up.
-    if ((orientation->reading()->orientation() ==  QOrientationReading::FaceUp)
-            && proximity->reading()->close())
-        timer->start();
-    else if (proximity->reading()->close())
-        timer->stop();
+
+    qreal refl = proximity->reading()->reflectance();
+    qreal difference =  lastProx - refl;
+
+    if (fabs(difference) < .15) {
+        return;
+    }
+
+    if (orientation->reading()->orientation() ==  QOrientationReading::FaceUp
+            && refl > .55) {
+        if (!timer->isActive()) {
+            timer->start();
+            detecting = true;
+        }
+    }
+    if (refl < .55) {
+        if (timer->isActive()) {
+            timer->stop();
+            detecting = false;
+        }
+    }
+    lastProx = refl;
 }
 
 void QCoverSensorGestureRecognizer::timeout()
 {
-
-    if ((orientation->reading()->orientation() ==  QOrientationReading::FaceUp)
-            && proximity->reading()->close()) {
+    if (detecting && orientation->reading()->orientation() == QOrientationReading::FaceUp
+            && proximity->reading()->reflectance() > 0.55) {
         Q_EMIT cover();
         Q_EMIT detected("cover");
+        detecting = false;
     }
-    lastProx = proximity->reading()->close();
 }
 
 QT_END_NAMESPACE

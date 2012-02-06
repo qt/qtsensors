@@ -79,7 +79,7 @@ For QtSensorGestures plugin:
         \row
             \o QtSensors.cover
             \o cover
-            \o Hand covers up phone display for one second, when it's face up, using the Proximity sensor.
+            \o Hand covers up phone display for one second, when it's face up, using the IR Proximity sensor.
             \o \image sensorgesture-cover.png
         \row
             \o QtSensors.doubletap
@@ -89,7 +89,8 @@ For QtSensorGestures plugin:
         \row
             \o QtSensors.hover
             \o hover
-            \o Hand hovers over the phone for more than 1 second, then is removed when face up, using the Light sensor.
+            \o Hand hovers about 5 cm above the phone for more than 1 second, then is removed when face up,
+               using the IR Proximity sensor.
             \o \image sensorgesture-hover.png
         \row
             \o QtSensors.pickup

@@ -46,6 +46,7 @@
 #include <QtSensors/QSensor>
 #include <QProximitySensor>
 #include <QtSensors/QOrientationSensor>
+#include <QIRProximitySensor>
 
 #include <qsensorgesturerecognizer.h>
 #include <QTimer>
@@ -74,11 +75,12 @@ private slots:
 
 
 private:
-    QProximitySensor *proximity;
+    QIRProximitySensor *proximity;
     QOrientationSensor *orientation;
 
     QTimer *timer;
-    bool lastProx;
+    bool detecting;
+    qreal lastProx;
 
 };
 QT_END_NAMESPACE
