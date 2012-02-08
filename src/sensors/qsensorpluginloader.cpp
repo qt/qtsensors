@@ -58,7 +58,7 @@ QSensorPluginLoader::QSensorPluginLoader()
 
 QSensorPluginLoader::~QSensorPluginLoader()
 {
-    delete m_loader;
+    //delete m_loader;
 }
 
 QList<QObject*> QSensorPluginLoader::plugins() const
