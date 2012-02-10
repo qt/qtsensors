@@ -57,5 +57,7 @@
 
 \snippet ../examples/sensors/qmlsensorgestures/qml_app/GestureList.qml 4
 
+\sa {ShakeIt! QML Sensor Gestures Example}
+
 */
 

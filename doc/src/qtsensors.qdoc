@@ -77,13 +77,15 @@
 
     \section1 Information for QtSensorGestures API
 
+    QtSensorGestures provides a motion gesture recognition API for devices.
+
     \table
+        \row
+            \o \l {SensorGesture}{QML API}
+            \o Information about the QtSensorGestures QML API
         \row
             \o \l {QtSensorGestures C++ API}{C++ API}
             \o Information about the QtSensorGestures C++ API
-        \row
-            \o \l {C++ Sensor Gestures Example}
-            \o The SensorGestures example demostrates how to use QSensorGestures
     \endtable
 
     \section1 Information for QtSensorGestures Recognizer Plugin Implementors.
@@ -92,7 +94,9 @@
         \row
             \o \l {QtSensorGestures Plugins}{Plugins}
             \o Information about the QtSensorGestures recognizer plugins.
-
+        \row
+            \o \l {QtSensorGestures Emulator}{Emulator}
+            \o Information about QtSensorGestures use in the Emulator.
     \endtable
 
 */

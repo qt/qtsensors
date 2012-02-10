@@ -59,4 +59,7 @@
 
     \snippet ../examples/sensors/shakeit/shakeit.qml 4
 
+       There are additional gestures to shake which are supported:
+           whip, twistRight, hover, cover, turnover and pickup.
+
 */

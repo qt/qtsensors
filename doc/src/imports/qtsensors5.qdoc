@@ -33,23 +33,22 @@
     \section1 Overview
 
     The identifying string for this component is \e QtSensors.
-    Use this in the QML \e import  statement.
+    Use this in the QML import statement, as such: \e import QtSensors 5.0
 
     The QML Sensors 5 Plugin provides an easy to use interface to the Sensors API.
-    It enables us to receive sensor events and to read current values from
+    It enables the receiving of sensor events and reading current values from the
     sensors.
 
-    The plugin contains many sensor types and properties to read values
-    from them. As an example consider the tilt sensor. The qmlsensors2
-    simply displays text on-screen to show the current tilt.
+    The plugin contains many sensor types and properties to read values.
+    As an example, consider the tilt sensor. The \l {QML QtSensors example}
+    simply displays text on-screen to show the current tilt value.
 
-    The QML code that reads the value is quite simple. Here we see a QML component
-    tilt declared which is an \l TiltSensor element. First
-    the sensor is started by setting the running property
-    to true. The element receives a signal when the x and y rotation changes and it
-    can be picked up by the onXRotationChanged and onYRotationChanged slot. Now the
-    xRotation and yRotation property of this element can be
-    used to extract the current tilt so that it can be used for further calulations.
+    The QML code to read the value is quite simple. Below is a QML \l TiltSensor element
+    declared with an id of \e tilt. The sensor is started by setting the running
+    property to true. The element receives a signal when the x and y rotation
+    changes and it can be picked up by the onXRotationChanged and onYRotationChanged
+    slot. Now the xRotation and yRotation property of this element can be used to
+    extract the current tilt value so that it can be used for further calculations.
 
     \qml
         TiltSensor {

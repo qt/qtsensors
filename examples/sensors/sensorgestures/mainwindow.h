@@ -43,7 +43,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include <qsensorgesture.h>
-
+QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
 }
@@ -69,5 +69,8 @@ private slots:
     void on_startPushButton_clicked();
     void on_stopPushButton_clicked();
 };
+
+
+QT_END_NAMESPACE
 
 #endif // MAINWINDOW_H

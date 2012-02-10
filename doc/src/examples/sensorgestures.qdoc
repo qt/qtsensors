@@ -28,8 +28,10 @@
 /*!
     \page sensorgestureexample.html
     \title C++ Sensor Gestures Example
+    \ingroup qtsensors-examples
     \brief The sensor gesture example demonstrates the steps for creating a C++ application
      that uses sensor gestures and the included shake sensor.
+    \image sensorgesturecpp.png
 
     QSensorGestures class defines one predefined signal, \c { void detected(const QString &) }
 

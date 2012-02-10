@@ -60,16 +60,16 @@ IMPLEMENT_READING(QIRProximityReading)
 
     \section2 QIRProximityReading Units
 
-    The sensor reports reflectance as a percentage. That is, 0 indicates nothing was detected
-    within the range of the sensor and 100 indicates the infra-red signal returned at the full
-    power level that it was sent at.
+    The sensor reports reflectance as a decimal fraction in the range of 0 - 1. That is, 0 indicates
+    nothing was detected within the range of the sensor and 1 indicates the infra-red signal
+    returned at the full power level that it was sent at.
 */
 
 /*!
     \property QIRProximityReading::reflectance
     \brief Holds the reflectance value.
 
-    The reflectance is a percentage (from 0 to 100) indicating how much of the transmitted
+    The reflectance is a decimal fraction (from 0 to 1) indicating how much of the transmitted
     infra-red light was returned.
 
     \sa {QIRProximityReading Units}
