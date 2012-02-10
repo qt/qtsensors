@@ -42,8 +42,7 @@
 #include <QtPlugin>
 #include <QStringList>
 #include <QObject>
-#include <QFile>
-#include <QDateTime>
+
 #include "qtsensorgestureplugin.h"
 
 #include <qsensorgestureplugininterface.h>
@@ -60,49 +59,9 @@
 
 QT_BEGIN_NAMESPACE
 
-QTextStream *out = 0;
-void logOutput(QtMsgType type, const char *msg)
-{
-    if (QString(msg).contains("setWindowProperty") ||
-            QString(msg).contains("getSurface"))
-        return;
-
-    QString debugdate = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss");
-    switch (type)
-    {
-    case QtDebugMsg:
-        debugdate += "[D]";
-        break;
-    case QtWarningMsg:
-        debugdate += "[W]";
-        break;
-    case QtCriticalMsg:
-        debugdate += "[C]";
-        break;
-    case QtFatalMsg:
-        debugdate += "[F]";
-    }
-    (*out) << debugdate << " " << msg << endl;
-
-    if (QtFatalMsg == type)
-    {
-        abort();
-    }
-}
-
 
 QtSensorGesturePlugin::QtSensorGesturePlugin()
 {
-    QString fileName = "/tmp/log";
-        QFile *log = new QFile(fileName);
-        if (log->open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
-            out = new QTextStream(log);
-            qInstallMsgHandler(logOutput);
-        } else {
-            qDebug() << "Error opening log file '" << fileName << "'. All debug output redirected to console.";
-        }
-
-        qDebug() << Q_FUNC_INFO;
 }
 
 QtSensorGesturePlugin::~QtSensorGesturePlugin()
@@ -111,8 +70,6 @@ QtSensorGesturePlugin::~QtSensorGesturePlugin()
 
 QStringList QtSensorGesturePlugin::supportedIds() const
 {
-    qDebug() << Q_FUNC_INFO;
-
     QStringList list;
     list << "QtSensors.cover";
     list << "QtSensors.doubletap";
@@ -127,7 +84,6 @@ QStringList QtSensorGesturePlugin::supportedIds() const
 
 QList <QSensorGestureRecognizer *> QtSensorGesturePlugin::createRecognizers()
 {
-    qDebug() << Q_FUNC_INFO;
     QList <QSensorGestureRecognizer *> recognizers;
 
 //    QSensorGestureRecognizer *sRec1 = new QCirclesSensorGestureRecognizer(this);
