@@ -121,13 +121,10 @@ Rectangle {
         },
         State {
             name: "whipped"
-            PropertyChanges { target: triangle1; rotation: 0; x:0;
-            }
-            PropertyChanges { target: triangle2; rotation: 0; x:0;
-            }
+            PropertyChanges { target: triangle1; rotation: 0; x:0; }
+            PropertyChanges { target: triangle2; rotation: 0; x:0; y:triangle1.x + triangle1.height; }
             PropertyChanges { target: triangle3; rotation: 0; x:0;
-                y: triangle2.y + triangle2.height;
-            }
+                y: triangle2.y + triangle2.height; }
         },
         State {
             name: "twisted"
@@ -171,25 +168,47 @@ Rectangle {
                 x: (window.width / 3 + window.width / 3) - triangle3.width / 2;
                 y: triangle3.height
             }
-        }/*,
+        },
         State {
-            name :"turnedover"
-        }*/
+            name :"slammed"
+            PropertyChanges { target: triangle1; rotation: 0;
+                x: 0;
+                y: 0 + 30
+            }
+            PropertyChanges { target: triangle2; rotation: 0;
+                x: window.width - triangle2.width;
+                y: 0 + 30
+                ;}
+            PropertyChanges { target: triangle3; rotation: 0;
+                x: window.width / 2 - triangle3.width / 2;
+                y:window.height - triangle3.height;
+            }
+        }
     ]
 
 
-    transitions: Transition {
+    transitions: [
+        Transition {
+
         ParallelAnimation {
             running: true
-            NumberAnimation { properties: "x,y"; easing.type: Easing.OutBounce;duration: 3000; }
+            NumberAnimation { properties: "x,y"; easing.type: Easing.OutBounce;duration: 2000; }
             RotationAnimation { id: t1Rotation; target: triangle1; duration: 1000;
                 direction: RotationAnimation.Clockwise }
-            RotationAnimation { id: t2Rotation; target: triangle2; duration: 3000;
+            RotationAnimation { id: t2Rotation; target: triangle2; duration: 2000;
                 direction: RotationAnimation.Counterclockwise }
-            RotationAnimation { id: t3Rotation; target: triangle3; duration: 3000;
+            RotationAnimation { id: t3Rotation; target: triangle3; duration: 2000;
                 direction: RotationAnimation.Clockwise }
         }
-    }
+
+    }, Transition {
+            to: "slammed"
+            SequentialAnimation {
+                NumberAnimation { properties: "x"; easing.type: Easing.OutBounce;duration: 500; }
+
+            }
+        }
+    ]
 
 //! [1]
     SensorGesture {
@@ -200,7 +219,7 @@ Rectangle {
 //! [3]
 //! [2]
         gestures : ["QtSensors.shake", "QtSensors.whip", "QtSensors.twist", "QtSensors.cover",
-            "QtSensors.hover", "QtSensors.turnover", "QtSensors.pickup"]
+            "QtSensors.hover", "QtSensors.turnover", "QtSensors.pickup", "QtSensors.slam" ]
 //! [2]
 //! [4]
         onDetected:{
@@ -209,28 +228,50 @@ Rectangle {
 
             if (gesture == "shake") {
                 window.state == "rotated" ? window.state = "default" : window.state = "rotated"
+                timer.start()
             }
             if (gesture == "whip") {
                 window.state == "whipped" ? window.state = "default" : window.state = "whipped"
+                timer.start()
             }
             if (gesture == "twistRight") {
                 window.state == "twisted" ? window.state = "default" : window.state = "twisted"
+                timer.start()
             }
             if (gesture == "cover") {
                 window.state == "covered" ? window.state = "default" : window.state = "covered"
+                timer.start()
             }
             if (gesture == "hover") {
                 window.state == "hovered" ? window.state = "default" : window.state = "hovered"
+                timer.start()
             }
             if (gesture == "turnover") {
                 window.state = "default"
                 loopy2a_mono.play();
+                timer.start()
             }
             if (gesture == "pickup") {
                 window.state = "default"
                 phone.play()
+                timer.start()
+            }
+            if (gesture == "slam") {
+                window.state == "slammed" ? window.state = "default" : window.state = "slammed"
+                timer.start()
             }
         }
 //! [4]
+    }
+    Timer {
+        id: timer
+        running: false
+        repeat: false
+        interval: 3000
+        onTriggered: {
+            console.log("timer triggered")
+            window.state = "default"
+            label.text = "Try another gesture"
+        }
     }
 }

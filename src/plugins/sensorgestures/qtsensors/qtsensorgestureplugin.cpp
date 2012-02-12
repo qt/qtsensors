@@ -53,6 +53,7 @@
 #include "qhoversensorgesturerecognizer.h"
 #include "qpickupsensorgesturerecognizer.h"
 #include "qshake2recognizer.h"
+#include "qslamgesturerecognizer.h"
 #include "qturnoversensorgesturerecognizer.h"
 #include "qwhipsensorgesturerecognizer.h"
 
@@ -76,6 +77,7 @@ QStringList QtSensorGesturePlugin::supportedIds() const
     list << "QtSensors.hover";
     list << "QtSensors.pickup";
     list << "QtSensors.shake2";
+    list << "QtSensors.slam";
     list << "QtSensors.turnover";
     list << "QtSensors.twist";
     list << "QtSensors.whip";
@@ -103,6 +105,9 @@ QList <QSensorGestureRecognizer *> QtSensorGesturePlugin::createRecognizers()
 
     QSensorGestureRecognizer *sRec6 = new QShake2SensorGestureRecognizer(this);
     recognizers.append(sRec6);
+
+    QSensorGestureRecognizer *sRec10 = new QSlamSensorGestureRecognizer(this);
+    recognizers.append(sRec10);
 
     QSensorGestureRecognizer *sRec7 = new QTurnoverSensorGestureRecognizer(this);
     recognizers.append(sRec7);

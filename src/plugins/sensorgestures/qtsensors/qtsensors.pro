@@ -13,6 +13,7 @@ HEADERS += qtsensorgestureplugin.h \
     qhoversensorgesturerecognizer.h \
     qpickupsensorgesturerecognizer.h \
     qshake2recognizer.h \
+    qslamgesturerecognizer.h \
     qturnoversensorgesturerecognizer.h \
     qtwistsensorgesturerecognizer.h \
     qwhipsensorgesturerecognizer.h
@@ -23,6 +24,7 @@ SOURCES += qtsensorgestureplugin.cpp \
     qhoversensorgesturerecognizer.cpp \
     qpickupsensorgesturerecognizer.cpp \
     qshake2recognizer.cpp \
+    qslamgesturerecognizer.cpp \
     qturnoversensorgesturerecognizer.cpp \
     qtwistsensorgesturerecognizer.cpp \
     qwhipsensorgesturerecognizer.cpp
