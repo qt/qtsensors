@@ -103,6 +103,11 @@ For QtSensorGestures plugin:
             \o Shake phone in a certain direction, using the Accelerometer sensor.
             \o \image sensorgesture-shake.png
         \row
+            \o QtSensors.slam
+            \o slam
+            \o Move phone quickly down and then back up, using the Accelerometer sensor.
+            \o \image sensorgesture-slam.png
+        \row
             \o QtSensors.turnover
             \o turnover
             \o Phone is turned face down and placed on a surface, using Proximity and Orientation sensors.

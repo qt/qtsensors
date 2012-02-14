@@ -60,7 +60,8 @@ inline qreal calcYaw(double Ax, double Ay, double Az)
 }
 
 QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent), whipIt(0), lastX(0)
+    QSensorGestureRecognizer(parent), whipIt(0), lastX(0),
+    detectedX(0)
 {
 }
 
@@ -137,8 +138,7 @@ void QWhipSensorGestureRecognizer::accelChanged()
     if (whipIt) {
         if (((!wasNegative && difference > accelRange * WHIP_THRESHOLD_FACTOR)
                 || (wasNegative && difference < -accelRange * WHIP_THRESHOLD_FACTOR))
-                && abs(degreesZ) < WHIP_DEGREES
-                && abs(detectedX) < abs(x)) {
+                && abs(degreesZ) < WHIP_DEGREES) {
             Q_EMIT whip();
             Q_EMIT detected("whip");
             whipIt = false;
@@ -148,7 +148,6 @@ void QWhipSensorGestureRecognizer::accelChanged()
                  || (difference < 0 && difference > -accelRange * WHIP_DETECTION_FACTOR))
                && abs(degreesZ) < WHIP_DEGREES
                && orientation->reading()->orientation() != QOrientationReading::FaceUp) {
-
         detectedX = x;
 //        start of gesture
         timer->start();

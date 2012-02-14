@@ -86,6 +86,7 @@ private:
 
     qreal calc(qreal yrot);
     qreal lastRoll;
+    qreal detectedRoll;
 
 };
 QT_END_NAMESPACE

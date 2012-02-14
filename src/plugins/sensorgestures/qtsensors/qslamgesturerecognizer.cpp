@@ -113,12 +113,10 @@ bool QSlamSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define SLAM_FACTOR 5.0
+#define SLAM_FACTOR -20.0
 
 void QSlamSensorGestureRecognizer::accelChanged()
 {
-    qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
 //// very hacky
@@ -127,17 +125,7 @@ void QSlamSensorGestureRecognizer::accelChanged()
     if (currentOrientation == QOrientationReading::FaceUp) {
         z = z - 9.8;
     }
-    if (currentOrientation == QOrientationReading::LeftUp
-            || currentOrientation == QOrientationReading::RightUp) {
-        x = x - 9.8;
-    }
-    if (currentOrientation == QOrientationReading::TopUp
-            ||currentOrientation == QOrientationReading::TopDown ) {
-        y = y - 9.8;
-    }
 
-    qreal diffX = lastX - x;
-    qreal diffY = lastY - y;
     qreal diffZ = lastZ - z;
 
     if (detecting && slamMap.count() > 5 && slamMap.at(5) == true) {
@@ -147,26 +135,15 @@ void QSlamSensorGestureRecognizer::accelChanged()
     if (slamMap.count() > 5)
         slamMap.removeLast();
 
-    if (fabs(x) > SLAM_FACTOR
-            || fabs(y) > SLAM_FACTOR
-            || fabs(z) > SLAM_FACTOR) {
-
+    if (z < SLAM_FACTOR) {
         slamMap.insert(0,true);
-
-
-        if (!detecting && !timer->isActive()
-                && (fabs(diffX) < SLAM_FACTOR + 3
-                    ||fabs(diffY) < SLAM_FACTOR + 3
-                    ||fabs(diffZ) < SLAM_FACTOR + 3)) {
+        if (!detecting && !timer->isActive()) {
             timer->start();
             detecting = true;
         }
     } else {
         slamMap.insert(0,false);
     }
-
-    lastX = x;
-    lastY = y;
     lastZ = z;
 }
 

@@ -110,14 +110,16 @@ bool QPickupSensorGestureRecognizer::isActive()
     return active;
 }
 
+#define PICKUP_BOTTOM_THRESHOLD 15
+#define PICKUP_TOP_THRESHOLD 60
 
 void QPickupSensorGestureRecognizer::accelChanged()
 {
     qreal x = accel->reading()->x();
-    qreal xdiff =  pXaxis - x;
     qreal y = accel->reading()->y();
-    qreal ydiff = pYaxis - y;
     qreal z = accel->reading()->z();
+    qreal xdiff =  pXaxis - x;
+    qreal ydiff = pYaxis - y;
     qreal zdiff =  pZaxis - z;
 
     roll = calc(calcRoll(x, y, z));
@@ -125,16 +127,16 @@ void QPickupSensorGestureRecognizer::accelChanged()
     if (xdiff < 0.7 && ydiff < .7 && zdiff < .7) {
         atRest = true;
     } else {
-        if (atRest && roll > 15 ) {
-//            roll =  calc(calcRoll(x, y, z));
-            atRest = false;
-            okToSignal = true;
-        }
+        atRest = false;
     }
-
-    if (atRest&&
-            okToSignal && (roll < 60 && roll > 15)
-        && (y > 5.0 && y < 8.9) && (z > 5.0 && z < 7.9)) {
+    if (roll > PICKUP_BOTTOM_THRESHOLD
+            && (fabs(lastRoll - roll) > PICKUP_BOTTOM_THRESHOLD)) {
+        okToSignal = true;
+        detectedRoll = roll;
+    }
+    if (atRest
+            && okToSignal
+            && (roll < PICKUP_TOP_THRESHOLD && roll > PICKUP_BOTTOM_THRESHOLD)) {
         if (!timer->isActive()) {
             timer->start();
         }
@@ -155,15 +157,11 @@ void QPickupSensorGestureRecognizer::timeout()
     qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
-    qreal thisroll = calc(calcRoll(x, y, z));
-
     qreal pitch = calc(calcPitch(x, y, z));
 
-    qreal difference = thisroll - roll;
-//qDebug() << Q_FUNC_INFO << thisroll << pitch;
     if (atRest
             && (pitch > -6 && pitch < 6)
-            && (roll < 60 && roll > 15)
+            && (roll < PICKUP_TOP_THRESHOLD && roll > PICKUP_BOTTOM_THRESHOLD)
             && (y > 5.0 && y < 8.9)
             && (z > 5.0 && z < 7.9)) {
         Q_EMIT pickup();
