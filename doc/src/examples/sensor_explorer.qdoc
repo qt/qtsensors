@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \page sensor_explorer.html
+    \example sensors/sensor_explorer
     \title Sensor Explorer example
     \ingroup qtsensors-examples
     \brief The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
@@ -38,35 +38,25 @@
     A \l{Sensor Explorer QML Import} to make the sensors and their meta-data available to a QML application.
 
     A \l{Sensor Explorer QML Application} that represents the \l{Sensor Explorer QML Import} information to the user interface.
-*/
 
+    \section1 Sensor Explorer QML Import
 
-/*!
-    \example sensors/sensor_explorer/import
-    \title Sensor Explorer QML Import
-    \brief The Sensor Explorer QML import exports the QSensorExplorer, QPropertyInfo and the QSensorItem class as a QML element.
+    The Sensor Explorer QML import exports the QSensorExplorer, QPropertyInfo and the QSensorItem class as a QML element.
 
     This example creates the \e {Explorer 1.0} import.
 
-    \sa {Sensor Explorer Example}
-*/
+    It consists of the code under the \c{import/} directory.
 
-/*!
-    \example sensors/sensor_explorer/qml_app
-    \title Sensor Explorer QML Application
-    \brief The Sensor Explorer QML application demonstrates use of the Explorer 1.0 import QML elements.
+    \section1 Sensor Explorer QML Application
 
     This is a pure QML application that can be run from Qt Creator or directly using the
-    \c qmlscene binary. You should install the other projects before trying to run
-    this example or it will not be able to find its dependencies.
+    \c qmlscene binary. This app won't work if it cannot locate its related import.
 
     \code
     qmlscene main.qml
     \endcode
 
-    \sa {Sensor Explorer Example}
-
-\section1 Overview
+\section2 Overview
     To write a QML application that will use the Explorer QML element you need to do the following steps:
 
     Import the Explorer 1.0 declarative plugin:
