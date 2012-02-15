@@ -110,9 +110,9 @@ void QShake2SensorGestureRecognizer::accelChanged()
     currentData.y = y;
     currentData.z = z;
 
-    if ( (abs(currentData.x - prevData.x)
-          || abs(currentData.y - prevData.y)
-          || abs(currentData.z - prevData.z)) < 1)
+    if ( (qAbs(currentData.x - prevData.x)
+          || qAbs(currentData.y - prevData.y)
+          || qAbs(currentData.z - prevData.z)) < 1)
         return;
 
     if (!shaking && checkForShake(prevData, currentData, THRESHOLD) &&
@@ -148,15 +148,15 @@ void QShake2SensorGestureRecognizer::accelChanged()
             int xdiff = currentData.x - prevData.x;
             int ydiff = currentData.y - prevData.y;
 
-            int max = qMax(abs(ydiff), abs(xdiff));
+            int max = qMax(qAbs(ydiff), qAbs(xdiff));
 
-            if (max == abs(xdiff)) {
+            if (max == qAbs(xdiff)) {
                 if (isNegative(xdiff))
                     shakeDirection = QShake2SensorGestureRecognizer::ShakeLeft;
                 else
                     shakeDirection = QShake2SensorGestureRecognizer::ShakeRight;
 
-            } else if (max == abs(ydiff)) {
+            } else if (max == qAbs(ydiff)) {
                 if (isNegative(ydiff))
                     shakeDirection = QShake2SensorGestureRecognizer::ShakeDown;
                 else

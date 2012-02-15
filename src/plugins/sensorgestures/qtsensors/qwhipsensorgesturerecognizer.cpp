@@ -127,7 +127,7 @@ void QWhipSensorGestureRecognizer::accelChanged()
 {
     qreal x = accel->reading()->x();
     qreal difference = lastX - x;
-    if (abs(difference) < 1)
+    if (qAbs(difference) < 1)
         return;
 
     qreal y = accel->reading()->y();
@@ -138,7 +138,7 @@ void QWhipSensorGestureRecognizer::accelChanged()
     if (whipIt) {
         if (((!wasNegative && difference > accelRange * WHIP_THRESHOLD_FACTOR)
                 || (wasNegative && difference < -accelRange * WHIP_THRESHOLD_FACTOR))
-                && abs(degreesZ) < WHIP_DEGREES) {
+                && qAbs(degreesZ) < WHIP_DEGREES) {
             Q_EMIT whip();
             Q_EMIT detected("whip");
             whipIt = false;
@@ -146,7 +146,7 @@ void QWhipSensorGestureRecognizer::accelChanged()
 
     } else if (((difference > 0 && difference < accelRange * WHIP_DETECTION_FACTOR)
                  || (difference < 0 && difference > -accelRange * WHIP_DETECTION_FACTOR))
-               && abs(degreesZ) < WHIP_DEGREES
+               && qAbs(degreesZ) < WHIP_DEGREES
                && orientation->reading()->orientation() != QOrientationReading::FaceUp) {
         detectedX = x;
 //        start of gesture

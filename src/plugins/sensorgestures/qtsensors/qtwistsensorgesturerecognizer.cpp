@@ -151,9 +151,9 @@ void QTwistSensorGestureRecognizer::accelChanged()
         }
 
         if (detecting
-                && abs(degrees) < RESTING_VARIANCE
-                && abs(calc(roll)) < RESTING_VARIANCE
-                && (abs(lastX + degrees) > (degrees / 2))
+                && qAbs(degrees) < RESTING_VARIANCE
+                && qAbs(calc(roll)) < RESTING_VARIANCE
+                && (qAbs(lastX + degrees) > (degrees / 2))
                 ) {
             if (lastX < 0 ) {
                 Q_EMIT twistLeft();
@@ -168,7 +168,7 @@ void QTwistSensorGestureRecognizer::accelChanged()
                 lastX = degrees;
         }
 
-        if (!detecting && abs(degrees) > THRESHOLD_DEGREES
+        if (!detecting && qAbs(degrees) > THRESHOLD_DEGREES
                 && calc(roll) < RESTING_VARIANCE) {
 
             detecting = true;

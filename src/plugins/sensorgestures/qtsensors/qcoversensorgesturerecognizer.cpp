@@ -102,7 +102,7 @@ void QCoverSensorGestureRecognizer::proximityChanged()
     qreal refl = proximity->reading()->reflectance();
     qreal difference =  lastProx - refl;
 
-    if (fabs(difference) < .15) {
+    if (qAbs(difference) < .15) {
         return;
     }
 

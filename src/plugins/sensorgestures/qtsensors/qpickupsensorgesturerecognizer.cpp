@@ -130,7 +130,7 @@ void QPickupSensorGestureRecognizer::accelChanged()
         atRest = false;
     }
     if (roll > PICKUP_BOTTOM_THRESHOLD
-            && (fabs(lastRoll - roll) > PICKUP_BOTTOM_THRESHOLD)) {
+            && (qAbs(lastRoll - roll) > PICKUP_BOTTOM_THRESHOLD)) {
         okToSignal = true;
         detectedRoll = roll;
     }
