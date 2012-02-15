@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
 
 inline qreal calcYaw(double Ax, double Ay, double Az)
 {
-    return (float)atan2(Az, (sqrt(Ax * Ax + Ay * Ay)));
+    return (float)qAtan2(Az, (qSqrt(Ax * Ax + Ay * Ay)));
 }
 
 QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent) :
@@ -170,7 +170,7 @@ qreal QWhipSensorGestureRecognizer::calc(qreal yrot)
     qreal aG = 1 * sin(yrot);
     qreal aK = 1 * cos(yrot);
 
-    yrot = atan2(aG, aK);
+    yrot = qAtan2(aG, aK);
     if (yrot > M_PI_2)
         yrot = M_PI - yrot;
     else if (yrot < -M_PI_2)

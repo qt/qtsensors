@@ -54,11 +54,11 @@ QT_BEGIN_NAMESPACE
 
 inline qreal calcPitch(double Ax, double Ay, double Az)
 {
-    return (float)-atan2(Ax, sqrt(Ay * Ay + Az * Az));
+    return (float)-qAtan2(Ax, qSqrt(Ay * Ay + Az * Az));
 }
 inline qreal calcRoll(double Ax, double Ay, double Az)
 {
-    return (float)atan2(Ay, (sqrt(Ax * Ax + Az * Az)));
+    return (float)qAtan2(Ay, (qSqrt(Ax * Ax + Az * Az)));
 }
 
 QPickupSensorGestureRecognizer::QPickupSensorGestureRecognizer(QObject *parent) :
@@ -176,7 +176,7 @@ qreal QPickupSensorGestureRecognizer::calc(qreal yrot)
     qreal aG = 1 * sin(yrot);
     qreal aK = 1 * cos(yrot);
 
-    yrot = atan2(aG, aK);
+    yrot = qAtan2(aG, aK);
     if (yrot > M_PI_2)
         yrot = M_PI - yrot;
     else if (yrot < -M_PI_2)

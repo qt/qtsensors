@@ -41,7 +41,7 @@
 
 #include "qsensor2tilt.h"
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <qmath.h>
 #include <QtCore/QDebug>
 #include <QtCore/QStringList>
 
@@ -266,7 +266,7 @@ qreal QSensor2Tilt::xRotation()
 */
 inline qreal calcPitch(double Ax, double Ay, double Az)
 {
-    return (float)-atan2(Ax, sqrt(Ay * Ay + Az * Az));
+    return (float)-qAtan2(Ax, sqrt(Ay * Ay + Az * Az));
 }
 
 /*
@@ -277,7 +277,7 @@ inline qreal calcPitch(double Ax, double Ay, double Az)
 */
 inline qreal calcRoll(double Ax, double Ay, double Az)
 {
-    return (float)atan2(Ay, (sqrt(Ax * Ax + Az * Az)));
+    return (float)qAtan2(Ay, (sqrt(Ax * Ax + Az * Az)));
 }
 
 /*!
@@ -376,14 +376,14 @@ bool QSensor2Tilt::filter(QAccelerometerReading* reading)
     //get angle beteen 0 and 180 or 0 -180
     qreal aG = 1 * sin(xrot);
     qreal aK = 1 * cos(xrot);
-    xrot = atan2(aG, aK);
+    xrot = qAtan2(aG, aK);
     if (xrot > M_PI_2)
         xrot = M_PI - xrot;
     else if (xrot < -M_PI_2)
         xrot = -(M_PI + xrot);
     aG = 1 * sin(yrot);
     aK = 1 * cos(yrot);
-    yrot = atan2(aG, aK);
+    yrot = qAtan2(aG, aK);
     if (yrot > M_PI_2)
         yrot = M_PI - yrot;
     else if (yrot < -M_PI_2)
