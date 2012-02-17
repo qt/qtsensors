@@ -39,47 +39,48 @@
 **
 ****************************************************************************/
 
-#ifndef QSENSORMANAGER_H
-#define QSENSORMANAGER_H
+#ifndef QSENSORPLUGINDEFS_H
+#define QSENSORPLUGINDEFS_H
 
-#include "qsensor.h"
-#include "qsensorplugindefs.h"
+#include <QtCore/qplugin.h>
 
-QT_BEGIN_HEADER
-QT_BEGIN_NAMESPACE
+// The default is for legacy static plugins
+// This will change to Qt-style static plugins in 1.3
+#define REGISTER_STATIC_PLUGIN(pluginname) \
+        REGISTER_STATIC_PLUGIN_V1(pluginname)
 
-class QSensorBackend;
-class QSensorBackendFactory;
-class QSensorPluginInterface;
+// Legacy static plugins have their own registration methods.
+// They can only register types. They cannot use the changes interface.
+#define REGISTER_STATIC_PLUGIN_V1(pluginname) \
+    static QSensorPluginInterface *create_static_plugin_ ## pluginname()\
+    {\
+        return new pluginname;\
+    }\
+    static bool side_effect_sensor_backend_ ## pluginname ()\
+    {\
+        QSensorManager::registerStaticPlugin(create_static_plugin_ ## pluginname);\
+        return false;\
+    }\
+    /* This assignment calls the function above */\
+    static bool dummy_sensor_backend_ ## pluginname = side_effect_sensor_backend_ ## pluginname();
 
-typedef QSensorPluginInterface *(*CreatePluginFunc)();
-
-class Q_SENSORS_EXPORT QSensorManager
-{
-public:
-    // Register a backend (call this from a plugin)
-    static void registerBackend(const QByteArray &type, const QByteArray &identifier, QSensorBackendFactory *factory);
-    static void unregisterBackend(const QByteArray &type, const QByteArray &identifier);
-
-    static bool isBackendRegistered(const QByteArray &type, const QByteArray &identifier);
-
-    // Create a backend (uses the type and identifier set in the sensor)
-    static QSensorBackend *createBackend(QSensor *sensor);
-
-    // For static plugins
-    static void registerStaticPlugin(CreatePluginFunc func);
-};
-
-class Q_SENSORS_EXPORT QSensorBackendFactory
-{
-public:
-    virtual QSensorBackend *createBackend(QSensor *sensor) = 0;
-protected:
-    ~QSensorBackendFactory() {}
-};
-
-QT_END_NAMESPACE
-QT_END_HEADER
-
+// Qt-style static plugins use macros from Qt.
+// They are handled just like regular plugins.
+// FIXME remove the ifdef and else case once everyone is using the new qtbase
+#ifdef QT_MOC_EXPORT_PLUGIN
+#define REGISTER_STATIC_PLUGIN_V2(pluginname) \
+    static QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance() \
+    Q_PLUGIN_INSTANCE(pluginname) \
+    const QT_PREPEND_NAMESPACE(QStaticPlugin) qt_static_plugin_##pluginname() { \
+        QT_PREPEND_NAMESPACE(QStaticPlugin) plugin = { qt_plugin_instance, 0 }; \
+        return plugin; \
+    }\
+    Q_IMPORT_PLUGIN(pluginname)
+#else
+#define REGISTER_STATIC_PLUGIN_V2(pluginname) \
+    QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance_##pluginname() Q_PLUGIN_INSTANCE(pluginname)\
+    Q_IMPORT_PLUGIN(pluginname)
 #endif
 
+
+#endif

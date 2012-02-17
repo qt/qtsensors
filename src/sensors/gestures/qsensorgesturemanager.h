@@ -47,6 +47,7 @@
 
 #include "qsensorgesture.h"
 #include "qsensorgesturerecognizer.h"
+#include <QtSensors/qsensorplugindefs.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
@@ -77,9 +78,5 @@ signals:
 
 QT_END_NAMESPACE
 QT_END_HEADER
-
-#define REGISTER_STATIC_PLUGIN_V2(pluginname) \
-    QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance_##pluginname() Q_PLUGIN_INSTANCE(pluginname)\
-    Q_IMPORT_PLUGIN(pluginname)
 
 #endif // QSENSORGESTUREMANAGER_P_H
