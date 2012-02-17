@@ -127,7 +127,7 @@ Rectangle {
                 y: triangle2.y + triangle2.height; }
         },
         State {
-            name: "twisted"
+            name: "twistedR"
             PropertyChanges { target: triangle1; rotation: 270;
                 x:window.width - triangle1.width;
             }
@@ -136,6 +136,19 @@ Rectangle {
             }
             PropertyChanges { target: triangle3; rotation: 90;
                 x:window.width - triangle3.width;
+                y:triangle2.y + triangle2.height;
+            }
+        },
+        State {
+            name: "twistedL"
+            PropertyChanges { target: triangle1; rotation: 270;
+                x:0;
+            }
+            PropertyChanges { target: triangle2; rotation: 180;
+                x:0;
+            }
+            PropertyChanges { target: triangle3; rotation: 90;
+                x:0;
                 y:triangle2.y + triangle2.height;
             }
         },
@@ -235,7 +248,11 @@ Rectangle {
                 timer.start()
             }
             if (gesture == "twistRight") {
-                window.state == "twisted" ? window.state = "default" : window.state = "twisted"
+                window.state == "twistedR" ? window.state = "default" : window.state = "twistedR"
+                timer.start()
+            }
+            if (gesture == "twistLeft") {
+                window.state == "twistedL" ? window.state = "default" : window.state = "twistedL"
                 timer.start()
             }
             if (gesture == "cover") {

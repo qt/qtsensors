@@ -42,30 +42,16 @@
 
 #include "qtwistsensorgesturerecognizer.h"
 
-#define _USE_MATH_DEFINES
 #include <QtCore/qmath.h>
-#ifndef M_PI
-#define M_PI 3.14159265358979323846264338327950288419717
-#endif
-#ifndef M_PI_2
-#define M_PI_2  1.57079632679489661923
-#endif
 
 QT_BEGIN_NAMESPACE
 
-// from qsensor2tilt
-inline qreal calcPitch(double Ax, double Ay, double Az)
-{
-    return (float)-qAtan2(Ax, qSqrt(Ay * Ay + Az * Az));
-}
-
-inline qreal calcRoll(double Ax, double Ay, double Az)
-{
-    return (float)qAtan2(Ay, (qSqrt(Ax * Ax + Az * Az)));
-}
+#define RADIANS_TO_DEGREES 57.2957795
 
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent), detecting(0), lastDegree(0), lastX(0)
+    QSensorGestureRecognizer(parent),
+    accelRange(0), lastRoll(0), active(0), pitch(0), detecting(0), lastDegree(0),
+    lastX(0), lastY(0), lastZ()
 {
 }
 
@@ -77,9 +63,9 @@ void QTwistSensorGestureRecognizer::create()
 {
     accel = new QAccelerometer(this);
     accel->connectToBackend();
+    accel->setDataRate(5);
     orientation = new QOrientationSensor(this);
     orientation->connectToBackend();
-
 
     timer = new QTimer(this);
 
@@ -124,8 +110,8 @@ bool QTwistSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define RESTING_VARIANCE 20
-#define THRESHOLD_DEGREES 70
+#define RESTING_VARIANCE 25
+#define THRESHOLD_DEGREES 60
 
 void QTwistSensorGestureRecognizer::accelChanged()
 {
@@ -133,29 +119,26 @@ void QTwistSensorGestureRecognizer::accelChanged()
     qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
-    pitch = calcPitch(x, y, z);
-    roll = calcRoll(x, y, z);
+    qreal diffX = lastX - x;
+    qreal diffY = lastY - y;
+    pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
 
-    qreal degrees = calc(pitch);
+    qreal degrees = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
-//    qDebug() << Q_FUNC_INFO << degrees << calc(roll) << lastX;
-
-    if (xList.count() > 4) {
-        if (detecting && (degrees > 0 && lastX < 0
-                          || degrees < 0 && lastX > 0)) {
-             // if shake-like:
+    if (rollList.count() > 4) {
+        if (detecting
+                && isShake()) {
+            // if shake-like:
             detecting = false;
             timer->stop();
-            lastX = degrees;
-//            qDebug() << Q_FUNC_INFO << "stop detecting";
+            lastRoll = degrees;
         }
-
         if (detecting
                 && qAbs(degrees) < RESTING_VARIANCE
-                && qAbs(calc(roll)) < RESTING_VARIANCE
-                && (qAbs(lastX + degrees) > (degrees / 2))
+                && qAbs(pitch) < RESTING_VARIANCE
+                && (qAbs(lastRoll + degrees) > (degrees / 2))
                 ) {
-            if (lastX < 0 ) {
+            if (lastRoll > 0 ) {
                 Q_EMIT twistLeft();
                 Q_EMIT detected("twistLeft");
             } else {
@@ -165,52 +148,61 @@ void QTwistSensorGestureRecognizer::accelChanged()
             // don't give two signals for same gestures
                 detecting = false;
                 timer->stop();
-                lastX = degrees;
+                lastRoll = degrees;
         }
 
         if (!detecting && qAbs(degrees) > THRESHOLD_DEGREES
-                && calc(roll) < RESTING_VARIANCE) {
+                && pitch < RESTING_VARIANCE) {
 
             detecting = true;
             timer->start();
-            lastX = degrees;
+            lastRoll = degrees;
             lastOrientation = orientation->reading()->orientation();
-//            qDebug() << Q_FUNC_INFO << "start detecting" << lastOrientation;
         }
 
         if (detecting && (orientation->reading()->orientation() == QOrientationReading::TopUp
                 || orientation->reading()->orientation() == QOrientationReading::TopDown)) {
+
             detecting = false;
             timer->stop();
-            lastX = degrees;
+            lastRoll = degrees;
         }
     }
 
-    if (xList.count() > 5)
-        xList.removeLast();
-    xList.insert(0,degrees);
+    if (negativeList.count() > 5)
+        negativeList.removeLast();
+
+    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0)) && qAbs(diffX) > (accelRange * 0.5))
+            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0)) && qAbs(diffY) > (accelRange * 0.5))) {
+        negativeList.insert(0,true);
+    } else {
+        negativeList.insert(0,false);
+    }
+
+    if (rollList.count() > 5)
+        rollList.removeLast();
+    rollList.insert(0,degrees);
     lastDegree = degrees;
+    lastX = x; lastY = y;
 }
 
 void QTwistSensorGestureRecognizer::timeout()
 {
     detecting = false;
-    lastX = 0;
+    lastRoll = 0;
     lastOrientation = QOrientationReading::Undefined;
 }
 
-qreal QTwistSensorGestureRecognizer::calc(qreal yrot)
+bool QTwistSensorGestureRecognizer::isShake()
 {
-    qreal aG = 1 * sin(yrot);
-    qreal aK = 1 * cos(yrot);
-
-    yrot = qAtan2(aG, aK);
-    if (yrot > M_PI_2)
-        yrot = M_PI - yrot;
-    else if (yrot < -M_PI_2)
-        yrot = -(M_PI + yrot);
-
-    return yrot * 180 / M_PI;
+    for (int i = 0; i < negativeList.count() - 1; i++) {
+        if (negativeList.at(i)) {
+            return true;
+        }
+    }
+    return false;
 }
+
+
 
 QT_END_NAMESPACE

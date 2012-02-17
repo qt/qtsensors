@@ -89,6 +89,10 @@ private:
 
     void checkForSlam();
 
+    QList <bool> negativeList;
+
+    //QList<qreal> yList;
+
 };
 
 QT_END_NAMESPACE

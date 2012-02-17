@@ -82,7 +82,7 @@ private:
     bool active;
 
     qreal accelX;
-    qreal calc(qreal rot);
+    qreal roll;
 
 };
 QT_END_NAMESPACE

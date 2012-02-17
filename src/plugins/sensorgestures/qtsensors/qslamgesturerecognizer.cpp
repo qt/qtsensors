@@ -114,9 +114,12 @@ bool QSlamSensorGestureRecognizer::isActive()
 }
 
 #define SLAM_FACTOR -20.0
+#define SLAM_WIGGLE_FACTOR 0.95
 
 void QSlamSensorGestureRecognizer::accelChanged()
 {
+    qreal x = accel->reading()->x();
+    qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
 //// very hacky
@@ -126,7 +129,8 @@ void QSlamSensorGestureRecognizer::accelChanged()
         z = z - 9.8;
     }
 
-    qreal diffZ = lastZ - z;
+    qreal diffX = lastX - x;
+    qreal diffY = lastY - y;
 
     if (detecting && slamMap.count() > 5 && slamMap.at(5) == true) {
         checkForSlam();
@@ -135,7 +139,9 @@ void QSlamSensorGestureRecognizer::accelChanged()
     if (slamMap.count() > 5)
         slamMap.removeLast();
 
-    if (z < SLAM_FACTOR) {
+    if (z < SLAM_FACTOR
+            && qAbs(diffX) < (accelRange *SLAM_WIGGLE_FACTOR)
+            && qAbs(diffY) < (accelRange *SLAM_WIGGLE_FACTOR)) {
         slamMap.insert(0,true);
         if (!detecting && !timer->isActive()) {
             timer->start();
@@ -145,6 +151,19 @@ void QSlamSensorGestureRecognizer::accelChanged()
         slamMap.insert(0,false);
     }
     lastZ = z;
+
+    if (negativeList.count() > 5)
+        negativeList.removeLast();
+
+    if (((x < 0 && lastX > 0 || x > 0 && lastX < 0) && qAbs(diffX) > (accelRange * 0.5))
+            || (y < 0 && lastY > 0 || y > 0 && lastY < 0) && qAbs(diffY) > (accelRange * 0.5)) {
+        negativeList.insert(0,true);
+    } else {
+        negativeList.insert(0,false);
+    }
+
+    lastX = x; lastY = y;
+
 }
 
 void QSlamSensorGestureRecognizer::timeout()
@@ -169,8 +188,16 @@ void QSlamSensorGestureRecognizer:: checkForSlam()
         }
     }
     if (slamOk) {
-        Q_EMIT slam();
-        Q_EMIT detected("slam");
+        bool ok = true;
+        for (int i = 0; i < negativeList.count() - 1; i++) {
+            if (negativeList.at(i)) {
+                ok = false;
+            }
+        }
+        if (ok) {
+            Q_EMIT slam();
+            Q_EMIT detected("slam");
+        }
         detecting = false;
         slamMap.clear();
         timer->stop();

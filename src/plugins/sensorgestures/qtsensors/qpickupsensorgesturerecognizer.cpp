@@ -41,29 +41,15 @@
 
 #include "qpickupsensorgesturerecognizer.h"
 
-#define _USE_MATH_DEFINES
 #include <QtCore/qmath.h>
-#ifndef M_PI
-#define M_PI 3.14159265358979323846264338327950288419717
-#endif
-#ifndef M_PI_2
-#define M_PI_2  1.57079632679489661923
-#endif
+
+#define RADIANS_TO_DEGREES 57.2957795
 
 QT_BEGIN_NAMESPACE
 
-inline qreal calcPitch(double Ax, double Ay, double Az)
-{
-    return (float)-qAtan2(Ax, qSqrt(Ay * Ay + Az * Az));
-}
-inline qreal calcRoll(double Ax, double Ay, double Az)
-{
-    return (float)qAtan2(Ay, (qSqrt(Ax * Ax + Az * Az)));
-}
-
 QPickupSensorGestureRecognizer::QPickupSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),atRest(1),okToSignal(1),
-    lastRoll(0)
+    lastpitch(0), detecting(0)
 {
 }
 
@@ -110,7 +96,7 @@ bool QPickupSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define PICKUP_BOTTOM_THRESHOLD 15
+#define PICKUP_BOTTOM_THRESHOLD 30
 #define PICKUP_TOP_THRESHOLD 60
 
 void QPickupSensorGestureRecognizer::accelChanged()
@@ -122,33 +108,27 @@ void QPickupSensorGestureRecognizer::accelChanged()
     qreal ydiff = pYaxis - y;
     qreal zdiff =  pZaxis - z;
 
-    roll = calc(calcRoll(x, y, z));
+    pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
 
-    if (xdiff < 0.7 && ydiff < .7 && zdiff < .7) {
+    if (qAbs(xdiff) < 0.7 && qAbs(ydiff) < .7 && qAbs(zdiff) < .7) {
         atRest = true;
     } else {
         atRest = false;
     }
-    if (roll > PICKUP_BOTTOM_THRESHOLD
-            && (qAbs(lastRoll - roll) > PICKUP_BOTTOM_THRESHOLD)) {
-        okToSignal = true;
-        detectedRoll = roll;
-    }
-    if (atRest
-            && okToSignal
-            && (roll < PICKUP_TOP_THRESHOLD && roll > PICKUP_BOTTOM_THRESHOLD)) {
+
+    if (!atRest && (lastpitch - pitch < -PICKUP_BOTTOM_THRESHOLD)) {
+        detecting = true;
         if (!timer->isActive()) {
             timer->start();
         }
+        lastpitch = pitch;
     }
-
-    // initial at ~0, z = 9.8
-    // at 'focus' when y == 6 to 8 && z == 5 to 7
 
     pXaxis = x;
     pYaxis = y;
     pZaxis = z;
-    lastRoll = roll;
+    if (atRest && !detecting)
+        lastpitch = pitch;
 }
 
 void QPickupSensorGestureRecognizer::timeout()
@@ -157,11 +137,9 @@ void QPickupSensorGestureRecognizer::timeout()
     qreal y = accel->reading()->y();
     qreal z = accel->reading()->z();
 
-    qreal pitch = calc(calcPitch(x, y, z));
-
-    if (atRest
-            && (pitch > -6 && pitch < 6)
-            && (roll < PICKUP_TOP_THRESHOLD && roll > PICKUP_BOTTOM_THRESHOLD)
+    qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    if ((roll > -6 && roll < 6)
+            && (pitch < PICKUP_TOP_THRESHOLD && pitch > PICKUP_BOTTOM_THRESHOLD)
             && (y > 5.0 && y < 8.9)
             && (z > 5.0 && z < 7.9)) {
         Q_EMIT pickup();
@@ -169,20 +147,7 @@ void QPickupSensorGestureRecognizer::timeout()
 
         okToSignal = false;
     }
-}
-
-qreal QPickupSensorGestureRecognizer::calc(qreal yrot)
-{
-    qreal aG = 1 * sin(yrot);
-    qreal aK = 1 * cos(yrot);
-
-    yrot = qAtan2(aG, aK);
-    if (yrot > M_PI_2)
-        yrot = M_PI - yrot;
-    else if (yrot < -M_PI_2)
-        yrot = -(M_PI + yrot);
-
-    return yrot * 180 / M_PI;
+    detecting = false;
 }
 
 QT_END_NAMESPACE

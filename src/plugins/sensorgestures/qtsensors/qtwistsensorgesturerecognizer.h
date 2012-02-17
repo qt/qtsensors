@@ -76,17 +76,20 @@ private:
     QOrientationSensor *orientation;
     QTimer *timer;
     int accelRange;
-    qreal lastX;
+    qreal lastRoll;
     bool active;
-    QList<int> xList;
+    QList<int> rollList;
 
     qreal pitch;
-    qreal roll;
 
-    qreal calc(qreal yrot);
     bool detecting;
     qreal lastDegree;
     QOrientationReading::Orientation lastOrientation;
+    QList <bool> negativeList;
+    bool isShake();
+    qreal lastX;
+    qreal lastY;
+    qreal lastZ;
 };
 QT_END_NAMESPACE
 #endif // QWFLICKSENSORGESTURERECOGNIZER_H

@@ -82,12 +82,10 @@ private:
     qreal pYaxis;
     qreal pZaxis;
 
-    qreal roll;
+    qreal pitch;
 
-    qreal calc(qreal yrot);
-    qreal lastRoll;
-    qreal detectedRoll;
-
+    qreal lastpitch;
+    bool detecting;
 };
 QT_END_NAMESPACE
 #endif // QPICKUPSENSORGESTURERECOGNIZER_H
