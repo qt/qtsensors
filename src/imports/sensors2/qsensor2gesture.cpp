@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
     \qmlclass SensorGesture QSensor2Gesture
     \inqmlmodule QtSensors 5
     \since QtSensors 5.0
-    \brief The SensorGesture element provide notification when sensor gestures are triggered.
+    \brief The SensorGesture element provides notification when sensor gestures are triggered.
 
     This element is part of the \bold{QtSensors 5} module.
 
@@ -112,7 +112,7 @@ void QSensor2Gesture::componentComplete()
 */
 
 /*!
-    \qmlproperty QStringList QtSensors5::SensorGesture::availableGestures
+    \qmlproperty stringlist QtSensors5::SensorGesture::availableGestures
     This property can be used to determine all available gestures on the system.
 */
 QStringList QSensor2Gesture::availableGestures()
@@ -121,7 +121,7 @@ QStringList QSensor2Gesture::availableGestures()
 }
 
 /*!
-    \qmlproperty QString QtSensors5::SensorGesture::gestures
+    \qmlproperty string QtSensors5::SensorGesture::gestures
     Set this property to the gestures the application is interested in detecting.
     The properties validGestures and invalidGestures will be set as appropriate immediately.
     The list of available gestures can be found in the availableGestures property.
@@ -151,7 +151,7 @@ void QSensor2Gesture::setGestures(const QStringList& value)
 
 
 /*!
-    \qmlproperty QStringList QtSensors5::SensorGesture::validGestures
+    \qmlproperty stringlist QtSensors5::SensorGesture::validGestures
     This property holds the requested gestures that were found on the system.
 */
 QStringList QSensor2Gesture::validGestures() const
@@ -162,7 +162,7 @@ QStringList QSensor2Gesture::validGestures() const
 }
 
 /*!
-    \qmlproperty QStringList QtSensors5::SensorGesture::invalidGestures
+    \qmlproperty stringlist QtSensors5::SensorGesture::invalidGestures
     This property holds the requested gestures that were not found on the system.
 */
 QStringList QSensor2Gesture::invalidGestures() const
@@ -209,7 +209,7 @@ void QSensor2Gesture::setEnabled(bool value)
 }
 
 /*!
-    \qmlsignal QtSensors5::SensorGesture::detected(QString gesture)
+    \qmlsignal QtSensors5::SensorGesture::detected(string gesture)
     This signal is emitted whenever a gesture is detected.
     The gesture parameter contains the gesture that was detected.
 */

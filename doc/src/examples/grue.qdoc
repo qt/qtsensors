@@ -80,7 +80,7 @@
 /*!
     \example sensors/grue/plugin
     \title Grue Sensor Implementation
-    \brief The Grue sensor implementation lives in a plugin that is loaded by the QtSensors library.
+    \brief The Grue sensor implementation lives in a plugin that is loaded by the Qt Sensors library.
 
     The Grue sensor needs a backend before it can be used. The backend provided
     is rather basic and it relies on some kind of light sensor to work but it
@@ -128,7 +128,7 @@
     \brief The Grue sensor console application demonstrates use of the Grue sensor.
 
     This is a simple commandline application. It demonstrates how to use the generic
-    access feature of QtSensors to avoid a link-time dependency on the Grue Sensor
+    access feature of Qt Sensors to avoid a link-time dependency on the Grue Sensor
     library.
 
     \sa {Grue Sensor Example}

@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
-    \brief The ProximitySensor element provide an easy access to determine if the proximity of the mobile user by using the proximity sensor.
+    \brief The ProximitySensor element provides an easy access to determine if the proximity of the mobile user by using the proximity sensor.
 
     This element is part of the \bold{QtSensors 5} module.
 */

@@ -27,15 +27,15 @@
 
 /*!
     \page qtsensors-porting.html
-    \title Porting Applications from QtMobility Sensors to QtSensors
+    \title Porting Applications from QtMobility Sensors to Qt Sensors
 
     \tableofcontents
 
     \section1 Overview
 
-    The initial release of QtSensors (5.0) is generally expected to be source
+    The initial release of Qt Sensors (5.0) is generally expected to be source
     compatible with QtMobility Sensors 1.2. This document attempts to explain
-    where things must be changed in order to port applications to QtSensors.
+    where things must be changed in order to port applications to Qt Sensors.
 
     \section1 QML
 
@@ -48,8 +48,8 @@
 
     \table
         \row
-            \o \l {QtSensors 5.x}{QML API}
-            \o Information about the QtSensors QML API
+            \o \l {Qt Sensors QML API}{QML API}
+            \o Information about the Qt Sensors QML API
         \row
             \o \l {QtMobility.sensors 1.x}{Legacy QML API}
             \o Information about the legacy QtMobility.sensors QML API
@@ -59,8 +59,8 @@
 
     \section2 Includes
 
-    QtMobility Sensors installed headers into a \c QtSensors directory. This is
-    also the directory that QtSensors uses. It is therefore expected that includes
+    QtMobility Sensors installed headers into a \c Qt Sensors directory. This is
+    also the directory that Qt Sensors uses. It is therefore expected that includes
     that worked with QtMobility Sensors should continue to work.
 
     For example:
@@ -74,7 +74,7 @@
     \section2 Macros and Namespace
 
     QtMobility Sensors was built in a \c QtMobility namespace. This was enabled by
-    the use of various macros. QtSensors does not normally build into a namespace
+    the use of various macros. Qt Sensors does not normally build into a namespace
     and the macros from QtMobility no longer exist.
 
     \list
@@ -85,7 +85,7 @@
     \endlist
 
     Note that Qt can be configured to build into a namespace. If Qt is built in this
-    way then QtSensors is also built into the nominated namespace. However, as this
+    way then Qt Sensors is also built into the nominated namespace. However, as this
     is optional, the macros for this are typically defined to do nothing.
 
     \list
@@ -100,7 +100,7 @@
     qtimestamp was previously defined as an opaque type equivalent to a quint64. It existed
     as a class due to an implementation detail.
 
-    In QtSensors, the API uses quint64 instead of qtimestamp. qtimestamp still exists as a
+    In Qt Sensors, the API uses quint64 instead of qtimestamp. qtimestamp still exists as a
     typedef so that applications that refer to qtimestamp can be compiled.
 
     \section1 Project Files
@@ -112,7 +112,7 @@
     MOBILITY += sensors
     \endcode
 
-    Applications should remove these lines and instead use this to enable the QtSensors API.
+    Applications should remove these lines and instead use this to enable the Qt Sensors API.
 
     \code
     QT += sensors

@@ -137,7 +137,7 @@ void QSensor2Tilt::createRunModeDataRateMap()
 }
 
 /*!
-    \qmlproperty bool QtSensors5::TiltSensor::speed
+    \qmlproperty enumeration QtSensors5::TiltSensor::speed
     Holds the speed that the sensor should be run at.
     Default is Slow.
 
@@ -220,7 +220,7 @@ void QSensor2Tilt::setUnit(const QSensor2Tilt::Unit val)
 
 
 /*!
-    \qmlproperty qreal QtSensors5::TiltSensor::yRotation
+    \qmlproperty real QtSensors5::TiltSensor::yRotation
     Holds the rotation arround the y axis.
 
     \table
@@ -240,7 +240,7 @@ qreal QSensor2Tilt::yRotation()
 }
 
 /*!
-    \qmlproperty qreal QtSensors5::TiltSensor::xRotation
+    \qmlproperty real QtSensors5::TiltSensor::xRotation
     Holds the rotation arround the x axis.
     \table
     \row
@@ -281,13 +281,35 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
 }
 
 /*!
-    \qmlproperty qreal QtSensors5::TiltSensor::accuracy
+    \qmlproperty real QtSensors5::TiltSensor::accuracy
     This property contains the accuracy (in degrees) in which the rotation should be measured.
     This can be used to minimize signal emiting and therefore saving of performance.
     Default value is 1 degree.
+    The accuracy value is unsigned and works clockwise and anti-clockwise in X and Y axis rotation directions.
+    Accuracy range can be 0 to 90 degrees.
+
+
+    E.g.
+
+
+    Accuracy 5.5 will notify the client application about an rotation change only if the rotation angle over the X and / or Y axis was changed by 5.5 or more degrees clockwise or anti-clockwise.
+
+    \table
+    \header \o Rotation \o notify application \o reason
+    \row \o 0.2424   \o no   \o
+    \row \o 4.34234  \o no   \o
+    \row \o 5.23423  \o no   \o
+    \row \o 6.34324  \o yes  \o because 6.34324 >= 5.5
+    \row \o 7.43264  \o no   \o
+    \row \o 8.24504  \o no   \o
+    \row \o 9.34653  \o no   \o
+    \row \o 10.23476 \o no   \o
+    \row \o 11.43565 \o no   \o
+    \row \o 12.45645 \o yes  \o because 12.45645 - 6.34324 = 6.11321 >= 5.5
+    \endtable
 */
 /*!
-    \qmlsignal QtSensors5::TiltSensor::tiltChanged(qreal deltaX, qreal deltaY)
+    \qmlsignal QtSensors5::TiltSensor::tiltChanged(real deltaX, real deltaY)
     This signal is emitted whenever the change from at leat one of the rotation values was higher than the accuracy.
     The angle value is based on the specified unit (Degree or Radian).
 
@@ -302,11 +324,12 @@ qreal QSensor2Tilt::accuracy()
 void QSensor2Tilt::setAccuracy(qreal val)
 {
     //save in rad to save convertion calc in filter function
-    _radAccuracy = M_PI * val / 180;
+    if (val <= 90 && val >= 0)
+      _radAccuracy = M_PI * val / 180;
 }
 
 /*!
-    \qmlproperty void QtSensors5::TiltSensor::calibrate
+    \qmlmethod void QtSensors5::TiltSensor::calibrate()
     The call of this function calibrates the tilt from x and y to the current position.
 */
 void QSensor2Tilt::calibrate()
@@ -322,7 +345,7 @@ void QSensor2Tilt::calibrate()
 }
 
 /*!
-    \qmlproperty qreal QtSensors5::TiltSensor::settings
+    \qmlproperty real QtSensors5::TiltSensor::settings
     This property contains the setting of the current state.
     It can be used for saving and reloading previously saved calibrations.
 */

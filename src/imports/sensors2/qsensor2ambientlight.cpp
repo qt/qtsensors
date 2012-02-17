@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
-    \brief The AmbientLightSensor element provide an easy access to determine the ambient light by using the ambient light sensor.
+    \brief The AmbientLightSensor element provides easy access to determine the ambient light by using the ambient light sensor.
 
     This element is part of the \bold{QtSensors 5} module.
 */
@@ -86,7 +86,7 @@ QSensor2AmbientLight::~QSensor2AmbientLight()
         \o It is light (eg. internal lights).
     \row
         \o AmbientLightSensor.Bright
-        \o It is bright (eg. shade).
+        \o It is bright (eg. outside but in the shade).
     \row
         \o AmbientLightSensor.Sunny
         \o It is very bright (eg. direct sunlight).

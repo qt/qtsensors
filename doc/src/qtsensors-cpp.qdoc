@@ -27,23 +27,23 @@
 
 /*!
 \page qtsensors-cpp.html
-\title QtSensors C++ API
-\brief Information about the QtSensors C++ API
+\title Qt Sensors C++ API
+\brief Information about the Qt Sensors C++ API
 
 \tableofcontents
 
 \section1 Sensor Types
 
-On a device there can be many types of sensors. Not all of the types that the QtSensors API
+On a device there can be many types of sensors. Not all of the types that the Qt Sensors API
 supports may be available. There may also be types available that are not defined in the
-QtSensors API. The types of sensors available on a device is found using the
+Qt Sensors API. The types of sensors available on a device is found using the
 \l QSensor::sensorTypes() function.
 
 For a list of built-in sensor types, see the \l{Sensor Classes} section below.
 
 \section1 Common Conventions
 
-Unless otherwise specified, QtSensors uses the
+Unless otherwise specified, Qt Sensors uses the
 \l{http://en.wikipedia.org/wiki/Cartesian_coordinate_system}{Right Hand Cartesian coordinate system}.
 
 \image sensors-coordinates.jpg
@@ -106,7 +106,7 @@ shows you information about available sensors.
 
 \section1 Front end, back end
 
-The QtSensors API has a front end, for application developers to use and a back end,
+The Qt Sensors API has a front end, for application developers to use and a back end,
 where device implementors write code to access their hardware. As an application
 developer you do not need to access the back end though it may be useful to understand
 how it works.
@@ -116,11 +116,11 @@ device plugin. Data comes back through the QSensorReading class.
 
 \image sensors-overview.png
 
-More information about the back end can be found in \l{QtSensors Backend}.
+More information about the back end can be found in \l{Qt Sensors Backend}.
 
 \section1 Main Classes
 
-The primary classes that make up the QtSensors API.
+The primary classes that make up the Qt Sensors API.
 
 \annotatedlist sensors_main
 
@@ -133,7 +133,7 @@ The best way to access sensor data is via one of these classes.
 \section1 Sensor Classes
 
 These classes provide convenience wrappers that reduce the need for casting.
-Each of these classes represents a sensor type that the QtSensors API knows
+Each of these classes represents a sensor type that the Qt Sensors API knows
 about. Note that additional types may be made available at run-time. See
 \l{Sensor Types} for more information.
 

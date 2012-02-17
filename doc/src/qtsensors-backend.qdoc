@@ -27,10 +27,10 @@
 
 /*!
 \group sensors_backend_topics
-\title QtSensors Backend
-\brief Information about the QtSensors back end
+\title Qt Sensors Backend
+\brief Information about the Qt Sensors back end
 
-The QtSensors backend connects the QtSensors API to the platform services or hardware sensors.
+The Qt Sensors backend connects the Qt Sensors API to the platform services or hardware sensors.
 
 \tableofcontents
 
@@ -39,7 +39,7 @@ The QtSensors backend connects the QtSensors API to the platform services or har
 \section1 Backend API
 
 QSensor instances talk to a backend object. Backends are usually supplied
-with the QtSensors library for a specific device although third party
+with the Qt Sensors library for a specific device although third party
 backends may be used as well. A backend may talk
 directly to hardware or it may talk to a system service. In some instances
 it may even talk to another sensor.

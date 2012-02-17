@@ -27,11 +27,11 @@
 
 /*!
     \group qtsensors-examples
-    \title QtSensors Examples
-    \brief Examples for the QtSensors module
+    \title Qt Sensors Examples
+    \brief Examples for the Qt Sensors module
     \ingroup all-examples
 
-    These are the QtSensors examples.
+    These are the Qt Sensors examples.
 
     \generatelist related
 */

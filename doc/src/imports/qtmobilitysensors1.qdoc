@@ -35,7 +35,7 @@
     This is the legacy QML import. It exists for compatibility with the QtMobiltiy 1.2 release
     and is not recommended for new applications.
 
-    The QtMobility.sensors import has the QtSensors C++ classes directly exported into the QML environment.
+    The QtMobility.sensors import has the Qt Sensors C++ classes directly exported into the QML environment.
     This causes some limitations due to the use of types that do not work in the QML environment.
     See \l{QtMobility.sensors QML Limitations}{below} for a list of the known limitations.
 
