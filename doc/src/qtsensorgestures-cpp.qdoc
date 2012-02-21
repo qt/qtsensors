@@ -39,8 +39,9 @@
 
 With QtSensorGestures, you are able to easily utilize device gesturing using
 sensors such as the accelerometer and proximity.
-For example 'shake','spin', 'drop','cover' and 'turnover'.
 
+A list of currently supported sensor gestures and their descriptions can be found here:
+\l  {Qt Sensor Gestures}
 
 Using QtSensorGestures is easy. There are two main classes you will need to use.
 

@@ -75,6 +75,10 @@ QT_BEGIN_NAMESPACE
        }
     }
     \endqml
+
+A list of currently supported sensor gestures and their descriptions can be found here:
+\l {Qt Sensor Gestures}
+
 */
 QSensor2Gesture::QSensor2Gesture(QObject* parent)
     : QObject(parent)
@@ -128,6 +132,8 @@ QStringList QSensor2Gesture::availableGestures()
     This property cannot be changed while the element is enabled.
     To determine all available getures on the system please use the
     \l {QtSensors5::SensorGesture::availableGestures} {availableGestures} property.
+
+    \sa {QtSensorGestures Plugins}
 */
 QStringList QSensor2Gesture::gestures() const
 {

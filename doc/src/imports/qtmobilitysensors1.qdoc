@@ -39,7 +39,7 @@
     This causes some limitations due to the use of types that do not work in the QML environment.
     See \l{QtMobility.sensors QML Limitations}{below} for a list of the known limitations.
 
-    See \l QtSensors for more information about the Sensors API.
+    See \l Qt Sensors for more information about the Sensors API.
 
     \section1 QtMobility.sensors QML Limitations
 
