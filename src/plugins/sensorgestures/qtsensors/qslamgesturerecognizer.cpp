@@ -79,7 +79,7 @@ void QSlamSensorGestureRecognizer::create()
 
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
-    timer->setInterval(1000);
+    timer->setInterval(1250);
 }
 
 
@@ -113,7 +113,7 @@ bool QSlamSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define SLAM_FACTOR -20.0
+#define SLAM_FACTOR -16
 #define SLAM_WIGGLE_FACTOR 0.95
 
 void QSlamSensorGestureRecognizer::accelChanged()
@@ -155,8 +155,10 @@ void QSlamSensorGestureRecognizer::accelChanged()
     if (negativeList.count() > 5)
         negativeList.removeLast();
 
-    if (((x < 0 && lastX > 0 || x > 0 && lastX < 0) && qAbs(diffX) > (accelRange * 0.5))
-            || (y < 0 && lastY > 0 || y > 0 && lastY < 0) && qAbs(diffY) > (accelRange * 0.5)) {
+    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0))
+         && qAbs(diffX) > (accelRange * 0.5))
+            || ((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
+            && qAbs(diffY) > (accelRange * 0.5)) {
         negativeList.insert(0,true);
     } else {
         negativeList.insert(0,false);

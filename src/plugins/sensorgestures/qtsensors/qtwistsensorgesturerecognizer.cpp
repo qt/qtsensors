@@ -72,7 +72,7 @@ void QTwistSensorGestureRecognizer::create()
     qoutputrangelist outputranges = accel->outputRanges();
 
     if (outputranges.count() > 0)
-        accelRange = (int)(outputranges.at(0).maximum);
+        accelRange = (int)(outputranges.at(0).maximum * 2);
     else
         accelRange = 44; //this should never happen
 
@@ -111,7 +111,7 @@ bool QTwistSensorGestureRecognizer::isActive()
 }
 
 #define RESTING_VARIANCE 25
-#define THRESHOLD_DEGREES 60
+#define THRESHOLD_DEGREES 50
 
 void QTwistSensorGestureRecognizer::accelChanged()
 {

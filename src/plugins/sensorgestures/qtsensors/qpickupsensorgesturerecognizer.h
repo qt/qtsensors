@@ -66,7 +66,6 @@ public:
 Q_SIGNALS:
     void pickup();
 
-
 private slots:
     void accelChanged();
     void timeout();
@@ -83,9 +82,15 @@ private:
     qreal pZaxis;
 
     qreal pitch;
-
     qreal lastpitch;
+    qreal detectedPitchDifference;
     bool detecting;
+
+    QList <bool> detectingNegativeList;
+    QList <qreal> zList;
+
+    void clear();
+
 };
 QT_END_NAMESPACE
 #endif // QPICKUPSENSORGESTURERECOGNIZER_H
