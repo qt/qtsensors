@@ -26,3 +26,5 @@ module_qtsensors_snippets.subdir = doc/src/snippets
 module_qtsensors_snippets.target = module-qtsensors-snippets
 module_qtsensors_snippets.depends = module_qtsensors_src
 
+include(doc/config/qtsensors_doc.pri)
+
