@@ -1,19 +1,15 @@
-TARGET  = declarative_explorer
-TARGETPATH = Explorer
+TEMPLATE = lib
+CONFIG += plugin
 
-include(qsensorsimport.pri)
+TARGET = $$qtLibraryTarget(declarative_explorer)
+TARGETPATH = Explorer
 
 QT += declarative sensors
 
 SOURCES = main.cpp explorer.cpp sensoritem.cpp propertyinfo.cpp
 HEADERS = explorer.h sensoritem.h propertyinfo.h
 
-symbian {
-    TARGET.EPOCALLOWDLLDATA = 1
-    TARGET.CAPABILITY = ALL -TCB
-}
-
-!isEmpty(EXAMPLES_PREFIX):DESTPATH=$$EXAMPLES_PREFIX/sensor_explorer/imports/Explorer
+!isEmpty(EXAMPLES_PREFIX):DESTPATH=$$EXAMPLES_PREFIX/com.nokia.mt.sensor_explorer/imports/Explorer
 else:DESTPATH=$$[QT_INSTALL_IMPORTS]/Explorer
 
 target.path=$$DESTPATH

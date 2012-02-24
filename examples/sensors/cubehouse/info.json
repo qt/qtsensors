@@ -7,7 +7,7 @@
         "Subcategory": "utility",
         "MainQML": "Cubehouse.qml",
         "Version": "1.0",
-        "Identifier": "com.nokia.mt.cubehouse.demo",
+        "Identifier": "com.nokia.mt.cubehouse",
         "Summary": "Cubehouse using Accelerometer",
         "Author": "Qt"
     }

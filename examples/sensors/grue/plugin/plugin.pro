@@ -13,11 +13,6 @@ HEADERS += gruesensorimpl.h\
 SOURCES += gruesensorimpl.cpp\
            main.cpp\
 
-symbian {
-    TARGET.EPOCALLOWDLLDATA = 1
-    TARGET.CAPABILITY = ALL -TCB
-}
-
 target.path=$$[QT_INSTALL_PLUGINS]/sensors
 INSTALLS += target
 

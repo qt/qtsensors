@@ -7,7 +7,7 @@
       "Subcategory": "utility",
       "MainQML": "Gesture.qml",
       "Version": "1.0",
-      "Identifier": "com.nokia.mt.qmlsensorsgesture.demo",
+      "Identifier": "com.nokia.mt.qmlsensorsgesture",
       "Summary": "QML Sensors Gesture demo",
       "Author": "Qt"
   }

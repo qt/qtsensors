@@ -1,12 +1,12 @@
 {
-  "info-version": "1.0",
-  "dict": {
-     "DisplayName": "Grue Sensor",
-     "Identifier": "com.nokia.mt.grue.demo",
-     "Runtime": "qml",
-     "MainQML": "main.qml",
-     "Version": "1.0.0",
-     "Category": "application",
-     "Summary": "The Grue sensor identifies your chance of being eaten by a Grue."
-  }
+    "info-version": "1.0",
+    "dict": {
+        "DisplayName": "Grue Sensor",
+        "Identifier": "com.nokia.mt.grue",
+        "Runtime": "qml",
+        "MainQML": "main.qml",
+        "Version": "1.0.0",
+        "Category": "application",
+        "Summary": "The Grue sensor identifies your chance of being eaten by a Grue."
+    }
 }

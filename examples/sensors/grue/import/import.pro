@@ -1,7 +1,8 @@
-TARGET = declarative_grue
-TARGETPATH = Grue
+TEMPLATE = lib
+CONFIG += plugin
 
-include(qsensorsimport.pri)
+TARGET = $$qtLibraryTarget(declarative_grue)
+TARGETPATH = Grue
 
 QT = core gui declarative sensors
 
@@ -10,12 +11,7 @@ LIBS += -L$$OUT_PWD/../lib -lgruesensor
 
 SOURCES = main.cpp
 
-symbian {
-    TARGET.EPOCALLOWDLLDATA = 1
-    TARGET.CAPABILITY = ALL -TCB
-}
-
-!isEmpty(EXAMPLES_PREFIX):DESTPATH=$$EXAMPLES_PREFIX/grue/imports/Grue
+!isEmpty(EXAMPLES_PREFIX):DESTPATH=$$EXAMPLES_PREFIX/com.nokia.mt.grue/imports/Grue
 else:DESTPATH=$$[QT_INSTALL_IMPORTS]/Grue
 
 target.path=$$DESTPATH

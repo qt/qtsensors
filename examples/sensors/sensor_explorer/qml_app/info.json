@@ -7,7 +7,7 @@
         "Subcategory": "utility",
         "MainQML": "main.qml",
         "Version": "1.0.0",
-        "Identifier": "com.nokia.mt.sensorexplorer",
+        "Identifier": "com.nokia.mt.sensor_explorer",
         "Summary": "QML Sensors Explorer demo",
         "Author": "Qt"
     }

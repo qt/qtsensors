@@ -6,7 +6,6 @@ TARGET = qtsensorgestures_counterplugin
 QT += sensors
 DESTDIR = $$QT.sensors.plugins/sensorgestures
 
-# Input
 HEADERS += \
     qcountergestureplugin.h \
     qcounterrecognizer.h
@@ -16,12 +15,4 @@ SOURCES += \
 
 target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
 INSTALLS += target
-
-
-
-
-
-
-
-
 

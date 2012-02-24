@@ -1,7 +1,0 @@
-{
-  "version": "1.0.0",
-  "identifier": "com.nokia.mt.sensorexplorer",
-  "label": "QML Sensor Explorer demo",
-  "settings": [
-  ]
-}
