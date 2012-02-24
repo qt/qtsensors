@@ -38,14 +38,14 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-include("product.qtx")
-include("extrafunctions.qtt")
+//include("product.qtx")
+//include("extrafunctions.qtt")
 
 //TESTED_COMPONENT=src/sensors/gestures
 
 testcase = {
 
-
+/*
 init: function() {
     qtuitest.checkActiveWindow = false;
     qtuitest.autoTerminate = false;
@@ -62,6 +62,7 @@ cleanup: function() {
     Gesture.swipe(Screen.leftCenter(), Screen.rightCenter()); //close applicatin
     wait(500);
 },
+*/
 
 // As a QML Application developer I need to be able to list sensor gesture plugins
     List_Sensor_Gestures: function()
@@ -71,10 +72,10 @@ cleanup: function() {
         testBinary = "Gesture"; // Running QML using qmlrunner will insert test app binary name when compiled
         testGoal = "Verify a list of all registered sensor gesture plugins";
         testPreconditions = "Nil.";
-        testGroups = "BAT";
+        testGroups = "5.0";
 
       // Test steps
-        mouseClick(findByProperty("label", testBinary)); wait(500);
+//        mouseClick(findByProperty("label", testBinary)); wait(500);
         prompt(twiki("---+++ " + testApplication + "<br><br>
             *Goal:* " + testGoal + "<br>
             *Pre-Requisites:* " + testPreconditions + "<br>
@@ -94,10 +95,10 @@ cleanup: function() {
         testBinary = "Gesture";
         testGoal = "Verify selection of a sensor gesture plugin";
         testPreconditions = "Nil.";
-        testGroups = "BAT";
+        testGroups = "5.0";
 
         // Test steps
-        mouseClick(findByProperty("label", testBinary)); wait(500);
+//        mouseClick(findByProperty("label", testBinary)); wait(500);
         prompt(twiki("---+++ " + testApplication + "<br><br>
            *Goal:* " + testGoal + "<br>
            *Pre-Requisites:* " + testPreconditions + "<br>
@@ -117,10 +118,10 @@ cleanup: function() {
           testBinary = "Gesture";
           testGoal = "Verify that a sensor gesture is triggered";
           testPreconditions = "Nil.";
-          testGroups = "BAT";
+          testGroups = "5.0";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -137,14 +138,14 @@ cleanup: function() {
     Sensor_Gesture_False_Positives: function()
     {
           // Test meta data
-          testApplication = "Gesture";
-          testBinary = "Gesture";
+          testApplication = "ShakeIt!";
+          testBinary = "ShakeIt!";
           testGoal = "Verify that a sensor gesture doesn't trigger falsely";
           testPreconditions = "Nil.";
-          testGroups = "BAT";
+          testGroups = "5.0";
 
           // Test steps
-          mouseClick(findByProperty("label", testBinary)); wait(500);
+//          mouseClick(findByProperty("label", testBinary)); wait(500);
           prompt(twiki("---+++ " + testApplication + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
@@ -152,14 +153,36 @@ cleanup: function() {
 
               | *Step* | *Verification* |
               | Launch " + testBinary + " | App launches normally |
-              | Select the QtSensors.shake gesture from the gesture list and press *start* on the detection menu | Verify that *start* button now reads *stop* and is highlighted |
-              | Shake the phone more than 3 times in the Y axis | Verify that no shake detections are registered |
-              | Shake the phone more than 3 times in the Z axis | Verify that no shake detections are registered |
-              | Shake the phone more than 3 times in the X axis | Verify that shake detections are registered |
-              | Shake the phone more than 2 times in the Y axis | Verify that no shake detections are registered |
-              | Shake the phone more than 2 times in the Z axis | Verify that no shake detections are registered |
-              | Shake the phone more than 2 times in the X axis | Verify that no shake detections are registered |
-              | Shake the phone more than 6 times in the X axis | Verify that 2 shake detections are registered |
+              | | The display shows* Shake to rotate the triangles* and three tringles are below that |
+              | Perform the *Shake* gesture | Verify that *Shake* is displayed and the triangles rotate |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Slam* gesture | Verify that *Slam* is displayed and the triangles move out from the center of the display |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Whip* gesture | Verify that the *Whip* is displayed |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Hover* gesture | Verify that the *hover* is displayed and the triangles move to the top of the display |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Cover* gesture | Verify that the *Cover* is displayed and the triangles go to the bottom of the display |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Twist Left* gesture | Verify that the *TwistLeft* is displayed and the triangles move to the left |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Twist Right* gesture | Verify that the *TwistRight* is displayed and the triangles move to the right |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Pickup* gesture | Verify that the *Pickup* is displayed |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Turnover* gesture | Verify that the turnover chime is played |
+              | Turn over and wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
+              | Perform the *Double Tap* gesture | Verify that the *Double Tap* is displayed |
+              | | Verify no other gestures register at the same time |
+              | Wait for 3 seconds while observing the display | Verify the display now reads *Try another gesture* and the triangles return to the center of the display |
         "));
     },
 }
