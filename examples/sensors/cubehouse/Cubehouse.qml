@@ -61,7 +61,7 @@ Item {
         renderMode: "DirectRender"
         fillColor: "darkblue"
         objectName: "cube viewport"
-        camera: Camera { eye: Qt.vector3d(0, 3, 1.6 * room.scale )}
+        camera: Camera { eye: Qt.vector3d(0, 3, 1.6 * room.scale - 4)}
 
         Room{
             id: room

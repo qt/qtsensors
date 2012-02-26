@@ -50,6 +50,7 @@ Item3D{
     property bool xspin: false
     property int yrot: 0
     property int xrot: 0
+    property double distanceCorrection: 3.7
 
     transform: [
         Rotation3D {
@@ -106,7 +107,7 @@ Item3D{
         }
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -frontWall.scale, 0)
+                translate: Qt.vector3d(0, -frontWall.scale + room.distanceCorrection, 0)
             },
             Rotation3D {
                 angle: 90
@@ -131,7 +132,7 @@ Item3D{
         }
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -ground.scale, 0)
+                translate: Qt.vector3d(0, -ground.scale + room.distanceCorrection, 0)
             },
             Rotation3D {
                 angle: 90
@@ -156,7 +157,7 @@ Item3D{
         }
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -leftWall.scale, 0)
+                translate: Qt.vector3d(0, -leftWall.scale + room.distanceCorrection, 0)
             },
             Rotation3D {
                 angle: 0
@@ -181,7 +182,7 @@ Item3D{
         }
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -rightWall.scale, 0)
+                translate: Qt.vector3d(0, -rightWall.scale + room.distanceCorrection, 0)
             },
             Rotation3D {
                 angle: 180
@@ -206,7 +207,7 @@ Item3D{
         }
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -roof.scale, 0)
+                translate: Qt.vector3d(0, -roof.scale + room.distanceCorrection, 0)
             },
             Rotation3D {
                 angle: 90
@@ -231,7 +232,7 @@ Item3D{
         }
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -backWall.scale, 0)
+                translate: Qt.vector3d(0, -backWall.scale + room.distanceCorrection, 0)
             },
             Rotation3D {
                 angle: -90
@@ -254,16 +255,16 @@ Item3D{
 
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0.0, 0.8 - 0.85, 0.0)
+                translate: Qt.vector3d(0.0, 0.0, 0.0)
             }
         ]
     }
 
     Table {
-        scale: 0.045
+        scale: 0.025
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0, -5, 0)
+                translate: Qt.vector3d(0, -7 + room.distanceCorrection, 0)
             }
         ]
     }
@@ -278,7 +279,7 @@ Item3D{
 
         transform: [
             Translation3D {
-                translate: Qt.vector3d(0.0, -0.85, 0.0)
+                translate: Qt.vector3d(0.0, -4.50 + room.distanceCorrection, 0.0)
             }
         ]
     }
