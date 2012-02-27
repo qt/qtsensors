@@ -33,6 +33,14 @@
 The QtSensorGestures recognizer plugins are the way to create your own
 sensor gestures.
 
+Creating software to recognize motion gestures using sensors is a huge subject not covered here.
+
+The QSensorGesture API does not limit usage to any of the common classification methods of gesture
+recognition such as Hidden Markov Models, Neural Networks, Dynamic Time Warping, or even the
+ad-hoc heuristic recognizers of Qt's built-in sensor gesture recognizers. It's basically a
+signaling system for lower level gesture recogition methods and algorithms to communicate to the
+higher level applications.
+
 \tableofcontents
 
 \section1 Overview
@@ -44,19 +52,49 @@ sensor gestures.
 \o Create an instance of that recognizer in the derived QSensorGesturePluginInterface class, and call
  QSensorGestureManager::registerSensorGestureRecognizer(sRec); in your registerRecognizers()
 function. QSensorGestureManager will retain ownership of the recognizer object.
+
+This is the class in which the gesture recognizer system should be implemented from.
+
 \endlist
 
 \snippet snippets/sensorgestures/plugin.cpp Plugin
 
 
 \section2 Recognizer Classes
+
 If you are making sensorgestures available through the QtSensorGestures API, these are the
-sensor gesture classes to use.
+classes to subclass.
 
 \annotatedlist sensorgestures_recognizer
 
 \target Qt Sensor Gestures
 \section3 Recognizer Plugins
+
+The Sensor Gesture Recognizers that come with Qt are made using an ad-hock heurustic approach.
+The user cannot define their own gestures, and must learn how to perform and accomodate the
+pre-defined gestures herein.
+
+A developer may use any method including computationally and training intensive well
+ known classifiers, to produce gesture recognizers. There are currently no classes in Qt for
+gesture training, nor ability for the user to define their own sensor based motion gestures.
+
+A procedure for writing ad-hock recognizers might include:
+\list
+    \o Obtain and gather output from the accelerometer through QAccelerometerReading of a gesture being performed.
+    \o Use various methods and constraints on the accelerometer data to recognize the various states:
+    \list i
+        \o Initial 'listening' state for a gesture
+        \o Start of a possible gesture, moving into a 'detecting' state
+        \o End of a possible gesture, moving into a 'recognizing' state
+        \o and finally, if it is recognized, the 'recognized' state, or if not recognized, move back to
+           the 'listening' state.
+    \endlist
+    \o Test procedure to make sure it is easy to perform, and will not
+ produce too many false positive recognitions. And if used with other gestures, collisions. Meaning
+that gestures performed get recognized as another gesture instead.
+
+\endlist
+
 Here is a list of included plugins and their signals
 
 For ShakeGestures plugin:
