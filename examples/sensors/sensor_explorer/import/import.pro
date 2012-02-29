@@ -9,6 +9,8 @@ QT += declarative sensors
 SOURCES = main.cpp explorer.cpp sensoritem.cpp propertyinfo.cpp
 HEADERS = explorer.h sensoritem.h propertyinfo.h
 
+MT_SYSROOT=$$(MT_SYSROOT)
+!isEmpty(MT_SYSROOT):EXAMPLES_PREFIX=/opt/mt/applications
 !isEmpty(EXAMPLES_PREFIX):DESTPATH=$$EXAMPLES_PREFIX/com.nokia.mt.sensor_explorer/imports/Explorer
 else:DESTPATH=$$[QT_INSTALL_IMPORTS]/Explorer
 

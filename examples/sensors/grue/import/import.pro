@@ -11,6 +11,8 @@ LIBS += -L$$OUT_PWD/../lib -lgruesensor
 
 SOURCES = main.cpp
 
+MT_SYSROOT=$$(MT_SYSROOT)
+!isEmpty(MT_SYSROOT):EXAMPLES_PREFIX=/opt/mt/applications
 !isEmpty(EXAMPLES_PREFIX):DESTPATH=$$EXAMPLES_PREFIX/com.nokia.mt.grue/imports/Grue
 else:DESTPATH=$$[QT_INSTALL_IMPORTS]/Grue
 
