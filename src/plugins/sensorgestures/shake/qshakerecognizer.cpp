@@ -73,7 +73,6 @@ void QShakeSensorGestureRecognizer::create()
 bool QShakeSensorGestureRecognizer::start()
 {
     active = accel->start();
-
     return active;
 }
 

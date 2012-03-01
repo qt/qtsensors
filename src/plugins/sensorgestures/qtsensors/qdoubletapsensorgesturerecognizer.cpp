@@ -54,8 +54,6 @@ QDoubleTapSensorGestureRecognizer::~QDoubleTapSensorGestureRecognizer()
 
 void QDoubleTapSensorGestureRecognizer::create()
 {
-    tapSensor = new QTapSensor(this);
-    tapSensor->connectToBackend();
 }
 
 
@@ -66,26 +64,32 @@ QString QDoubleTapSensorGestureRecognizer::id() const
 
 bool QDoubleTapSensorGestureRecognizer::start()
 {
-    connect(tapSensor,SIGNAL(readingChanged()),this,SLOT(tapChanged()));
-    tapSensor->start();
-    return isActive();
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Tap)) {
+        active = true;
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(dTabReadingChanged(QTapReading *)),
+                this,SLOT(tapChanged(QTapReading *)));
+    } else {
+        active = false;
+    }
+    return active;
 }
 
 bool QDoubleTapSensorGestureRecognizer::stop()
 {
-    tapSensor->stop();
-    disconnect(tapSensor,SIGNAL(readingChanged()),this,SLOT(tapChanged()));
-    return isActive();
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Tap);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(dTabReadingChanged(QTapReading *)),
+            this,SLOT(tapChanged(QTapReading *)));
+    active = false;
+    return active;
 }
 
 bool QDoubleTapSensorGestureRecognizer::isActive()
 {
-    return tapSensor->isActive();
+    return active;
 }
 
-void QDoubleTapSensorGestureRecognizer::tapChanged()
+void QDoubleTapSensorGestureRecognizer::tapChanged(QTapReading *reading)
 {
-    QTapReading *reading = tapSensor->reading();
     if (reading->isDoubleTap()) {
         Q_EMIT doubletap();
         Q_EMIT detected("doubletap");

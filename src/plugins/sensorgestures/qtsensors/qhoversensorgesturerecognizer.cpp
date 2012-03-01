@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
 
 QHoverSensorGestureRecognizer::QHoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    hoverOk(0), lastLightReading(0), detecting(0)
+    hoverOk(0), lastLightReading(0), detecting(0), active(0)
 {
 }
 
@@ -57,9 +57,6 @@ QHoverSensorGestureRecognizer::~QHoverSensorGestureRecognizer()
 
 void QHoverSensorGestureRecognizer::create()
 {
-    irProx = new QIRProximitySensor(this);
-    irProx->connectToBackend();
-
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
@@ -78,50 +75,57 @@ QString QHoverSensorGestureRecognizer::id() const
 
 bool QHoverSensorGestureRecognizer::start()
 {
-    connect(irProx,SIGNAL(readingChanged()), this,SLOT(proxyChanged()));
-    irProx->start();
-    return irProx->isActive();
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::IrProximity)) {
+        active = true;
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
+                this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
+    } else {
+        active = false;
+    }
+    return active;
 }
 
 bool QHoverSensorGestureRecognizer::stop()
 {
-    irProx->stop();
-    disconnect(irProx,SIGNAL(readingChanged()),this,SLOT(proxyChanged()));
-    return irProx->isActive();
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
+            this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
+    active = false;
+    return active;
 }
 
 bool QHoverSensorGestureRecognizer::isActive()
 {
-    return irProx->isActive();
+    return active;
 }
 
-void QHoverSensorGestureRecognizer::proxyChanged()
+void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReading *reading)
 {
-    qreal refl = irProx->reading()->reflectance();
+    reflectance = reading->reflectance();
 
-    if (refl > .51) {
+    if (reflectance > .51) {
         hoverOk = false;
         detecting = false;
         return;
     }
 
-    if (!detecting && (refl > .40 && refl < .50)) {
+    if (!detecting && (reflectance > .35 && reflectance < .50)) {
         detecting = true;
         timer->start();
         timer2->start();
-        detectedHigh = refl;
+        detectedHigh = reflectance;
 
     } else if (hoverOk && detecting
-               && refl < .33
-               && detectedHigh
+               && reflectance < .33
+           //    && detectedHigh
                ) {
         // went light again after 1 seconds
-            Q_EMIT hover();
-            Q_EMIT detected("hover");
-            hoverOk = false;
-            detecting = false;
+        Q_EMIT hover();
+        Q_EMIT detected("hover");
+        hoverOk = false;
+        detecting = false;
     }
-    if (refl > .60)
+    if (reflectance > .60)
         detecting = false;
 }
 

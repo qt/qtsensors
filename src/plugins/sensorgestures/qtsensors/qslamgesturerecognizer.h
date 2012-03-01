@@ -67,12 +67,14 @@ Q_SIGNALS:
     void slam();
 
 private slots:
-    void accelChanged();
+    void accelChanged(QAccelerometerReading *reading);
+    void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
+
 private:
 
     QAccelerometer *accel;
-    QOrientationSensor *orientation;
+    QOrientationReading *orientationReading;
     QTimer *timer;
     int accelRange;
     bool active;

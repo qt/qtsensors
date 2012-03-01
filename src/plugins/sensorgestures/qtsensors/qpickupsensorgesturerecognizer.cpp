@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 
 QPickupSensorGestureRecognizer::QPickupSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),atRest(1),okToSignal(1),
-    lastpitch(0), detecting(0)
+    lastpitch(0), detecting(0), active(0)
 {
 }
 
@@ -59,8 +59,6 @@ QPickupSensorGestureRecognizer::~QPickupSensorGestureRecognizer()
 
 void QPickupSensorGestureRecognizer::create()
 {
-    accel = new QAccelerometer(this);
-    accel->connectToBackend();
     timer = new QTimer(this);
 
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
@@ -76,19 +74,24 @@ QString QPickupSensorGestureRecognizer::id() const
 
 bool QPickupSensorGestureRecognizer::start()
 {
-    connect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    accel->start();
-
-    active = accel->isActive();
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
+        active = true;
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+                this,SLOT(accelChanged(QAccelerometerReading *)));
+    } else {
+        active = false;
+    }
     return active;
+
 }
 
 bool QPickupSensorGestureRecognizer::stop()
 {
-    accel->stop();
-    active = accel->isActive();
-    disconnect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    return !active;
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
+            this,SLOT(accelChanged(QAccelerometerReading *)));
+    active = false;
+    return active;
 }
 
 bool QPickupSensorGestureRecognizer::isActive()
@@ -99,13 +102,14 @@ bool QPickupSensorGestureRecognizer::isActive()
 #define PICKUP_BOTTOM_THRESHOLD 20
 #define PICKUP_TOP_THRESHOLD 87
 
-void QPickupSensorGestureRecognizer::accelChanged()
+void QPickupSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
-    qreal z = accel->reading()->z();
+    accelReading = reading;
+    qreal x = reading->x();
     qreal xdiff =  pXaxis - x;
+    qreal y = reading->y();
     qreal ydiff = pYaxis - y;
+    qreal z = reading->z();
     qreal zdiff =  pZaxis - z;
 
     pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
@@ -131,10 +135,8 @@ void QPickupSensorGestureRecognizer::accelChanged()
         detectingNegativeList.insert(0,true);
         atRest = true;
     }
-    qDebug() << z << pitch << (lastpitch - pitch) << detecting;
 
     if (!atRest && !detecting && (lastpitch - pitch < -PICKUP_BOTTOM_THRESHOLD)) {
-        qDebug() << Q_FUNC_INFO << "start detecting";
         detecting = true;
         if (!timer->isActive()) {
             timer->start();
@@ -153,21 +155,19 @@ void QPickupSensorGestureRecognizer::accelChanged()
 
 void QPickupSensorGestureRecognizer::timeout()
 {
-    qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
-    qreal z = accel->reading()->z();
+    qreal x = accelReading->x();
+    qreal y = accelReading->y();
+    qreal z = accelReading->z();
 
     qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
     bool ok = true;
-    qDebug() << "zlist" << zList;
     for (int i = 0; i < zList.count() - 1; i++) {
         if (zList.at(i) < 0) {
             ok = false;
         }
     }
 
-    qDebug() << "negativeList" << detectingNegativeList;
     if (ok) {
         for (int i = 0; i < detectingNegativeList.count() - 1; i++) {
             if (detectingNegativeList.at(i) == true) {
@@ -175,8 +175,6 @@ void QPickupSensorGestureRecognizer::timeout()
             }
         }
     }
-    qDebug() << Q_FUNC_INFO << y << z << roll << pitch
-             << okToSignal << ok;
 
     if (ok && detecting
             && okToSignal
@@ -198,5 +196,5 @@ void QPickupSensorGestureRecognizer::clear()
     detecting = false;
     detectingNegativeList.clear();
 }
-
 QT_END_NAMESPACE
+

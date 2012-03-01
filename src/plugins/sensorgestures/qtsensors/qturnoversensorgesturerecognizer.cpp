@@ -42,6 +42,8 @@
 #include <QtSensors/QSensor>
 
 #include "qturnoversensorgesturerecognizer.h"
+#include "qtsensorgesturesensorhandler.h"
+
 QT_BEGIN_NAMESPACE
 
 // turnover and put down i.e. facedown
@@ -49,7 +51,7 @@ QT_BEGIN_NAMESPACE
 QTurnoverSensorGestureRecognizer::QTurnoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
     isClose(0)
-  , isFaceDown(0)
+  , isFaceDown(0), active(0)
 {
 }
 
@@ -59,30 +61,41 @@ QTurnoverSensorGestureRecognizer::~QTurnoverSensorGestureRecognizer()
 
 void QTurnoverSensorGestureRecognizer::create()
 {
-    orientation = new QOrientationSensor(this);
-    orientation->connectToBackend();
-    proximity = new QProximitySensor(this);
-    proximity->connectToBackend();
-
-
 }
 
 bool QTurnoverSensorGestureRecognizer::start()
 {
-    connect(orientation,SIGNAL(readingChanged()),this,SLOT(orientationChanged()));
-    connect(proximity,SIGNAL(readingChanged()),this,SLOT(proximityChanged()));
-    active = (orientation->start() && proximity->start());
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Proximity)) {
+        if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
+            active = true;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(proximityReadingChanged(QProximityReading *)),
+                    this,SLOT(proximityChanged(QProximityReading *)));
+
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Proximity);
+            active = false;
+        }
+    } else {
+        active = false;
+    }
     return active;
 }
 
 bool QTurnoverSensorGestureRecognizer::stop()
 {
-    orientation->stop();
-    proximity->stop();
-    active = (orientation->isActive() && proximity->isActive());
-    disconnect(orientation,SIGNAL(readingChanged()),this,SLOT(orientationChanged()));
-    disconnect(proximity,SIGNAL(readingChanged()),this,SLOT(proximityChanged()));
-    return !active;
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Proximity);
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
+
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(proximityReadingChanged(QProximityReading *)),
+            this,SLOT(proximityChanged(QProximityReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
+    active = false;
+
+    return active;
 }
 
 bool QTurnoverSensorGestureRecognizer::isActive()
@@ -95,15 +108,15 @@ QString QTurnoverSensorGestureRecognizer::id() const
     return QString("QtSensors.turnover");
 }
 
-void QTurnoverSensorGestureRecognizer::proximityChanged()
+void QTurnoverSensorGestureRecognizer::proximityChanged(QProximityReading *reading)
 {
-    isClose = proximity->reading()->close();
+    isClose = reading->close();
     isRecognized();
 }
 
-void QTurnoverSensorGestureRecognizer::orientationChanged()
+void QTurnoverSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
 {
-    switch (orientation->reading()->orientation()) {
+    switch (reading->orientation()) {
        case  QOrientationReading::FaceDown:
     {
         isFaceDown = true;

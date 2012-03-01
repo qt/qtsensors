@@ -40,6 +40,8 @@
 ****************************************************************************/
 
 #include "qslamgesturerecognizer.h"
+#include "qtsensorgesturesensorhandler.h"
+
 #include <QtCore/qmath.h>
 
 QT_BEGIN_NAMESPACE
@@ -62,21 +64,7 @@ QSlamSensorGestureRecognizer::~QSlamSensorGestureRecognizer()
 
 void QSlamSensorGestureRecognizer::create()
 {
-    accel = new QAccelerometer(this);
-    accel->connectToBackend();
-
-    orientation = new QOrientationSensor(this);
-    orientation->connectToBackend();
-
     timer = new QTimer(this);
-
-    qoutputrangelist outputranges = accel->outputRanges();
-
-    if (outputranges.count() > 0)
-        accelRange = (int)(outputranges.at(0).maximum *2);//39
-    else
-        accelRange = 40; //this should never happen
-
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
     timer->setInterval(1250);
@@ -90,21 +78,37 @@ QString QSlamSensorGestureRecognizer::id() const
 
 bool QSlamSensorGestureRecognizer::start()
 {
-    connect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    accel->setDataRate(10);
-    active = accel->start();
-    orientation->start();
+    connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
 
+    connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+            this,SLOT(accelChanged(QAccelerometerReading *)));
+
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
+        if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
+            active = true;
+            accelRange = QtSensorGestureSensorHandler::instance()->accelRange;
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+            active = false;
+        }
+    } else {
+        active = false;
+    }
     return active;
 }
 
 bool QSlamSensorGestureRecognizer::stop()
 {
-    accel->stop();
-    orientation->stop();
-    active = accel->isActive();
-    disconnect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    return !active;
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+            this,SLOT(accelChanged(QAccelerometerReading *)));
+    active = false;
+    return active;
 }
 
 bool QSlamSensorGestureRecognizer::isActive()
@@ -113,19 +117,22 @@ bool QSlamSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define SLAM_FACTOR -16
+void QSlamSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
+{
+    orientationReading = reading;
+}
+
+#define SLAM_FACTOR -16.0
 #define SLAM_WIGGLE_FACTOR 0.95
 
-void QSlamSensorGestureRecognizer::accelChanged()
+void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
-    qreal z = accel->reading()->z();
+    qreal x = reading->x();
+    qreal y = reading->y();
+    qreal z = reading->z();
 
 //// very hacky
-    QOrientationReading::Orientation currentOrientation = orientation->reading()->orientation();
-
-    if (currentOrientation == QOrientationReading::FaceUp) {
+    if (orientationReading->orientation() == QOrientationReading::FaceUp) {
         z = z - 9.8;
     }
 
@@ -138,7 +145,6 @@ void QSlamSensorGestureRecognizer::accelChanged()
 
     if (slamMap.count() > 5)
         slamMap.removeLast();
-
     if (z < SLAM_FACTOR
             && qAbs(diffX) < (accelRange *SLAM_WIGGLE_FACTOR)
             && qAbs(diffY) < (accelRange *SLAM_WIGGLE_FACTOR)) {

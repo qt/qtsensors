@@ -46,6 +46,9 @@
 
 #include <qsensorgesturerecognizer.h>
 #include <QTapSensor>
+
+#include "qtsensorgesturesensorhandler.h"
+
 QT_BEGIN_NAMESPACE
 
 class QDoubleTapSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -56,7 +59,6 @@ public:
     ~QDoubleTapSensorGestureRecognizer();
 
     void create();
-
     QString id() const;
     bool start();
     bool stop();
@@ -66,10 +68,11 @@ Q_SIGNALS:
     void doubletap();
 
 private slots:
-    void tapChanged();
+    void tapChanged(QTapReading *reading);
 
 private:
     QTapSensor *tapSensor;
+    bool active;
 
 };
 QT_END_NAMESPACE

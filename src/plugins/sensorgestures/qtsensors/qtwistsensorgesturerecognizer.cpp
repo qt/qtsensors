@@ -61,25 +61,10 @@ QTwistSensorGestureRecognizer::~QTwistSensorGestureRecognizer()
 
 void QTwistSensorGestureRecognizer::create()
 {
-    accel = new QAccelerometer(this);
-    accel->connectToBackend();
-    accel->setDataRate(5);
-    orientation = new QOrientationSensor(this);
-    orientation->connectToBackend();
-
     timer = new QTimer(this);
-
-    qoutputrangelist outputranges = accel->outputRanges();
-
-    if (outputranges.count() > 0)
-        accelRange = (int)(outputranges.at(0).maximum * 2);
-    else
-        accelRange = 44; //this should never happen
-
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
     timer->setInterval(500);
-
 }
 
 QString QTwistSensorGestureRecognizer::id() const
@@ -89,20 +74,36 @@ QString QTwistSensorGestureRecognizer::id() const
 
 bool QTwistSensorGestureRecognizer::start()
 {
-    connect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    active = accel->start();
-    orientation->start();
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
+        if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
+            accelRange = QtSensorGestureSensorHandler::instance()->accelRange;
+            active = true;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+                    this,SLOT(accelChanged(QAccelerometerReading *)));
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+            active = false;
+        }
+    } else {
+        active = false;
+    }
     return active;
 }
 
 bool QTwistSensorGestureRecognizer::stop()
 {
-    accel->stop();
-    disconnect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
 
-    active = accel->isActive();
-    orientation->stop();
-    return !active;
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+            this,SLOT(accelChanged(QAccelerometerReading *)));
+    active = false;
+    return active;
 }
 
 bool QTwistSensorGestureRecognizer::isActive()
@@ -113,11 +114,16 @@ bool QTwistSensorGestureRecognizer::isActive()
 #define RESTING_VARIANCE 25
 #define THRESHOLD_DEGREES 50
 
-void QTwistSensorGestureRecognizer::accelChanged()
+void QTwistSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
 {
-    qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
-    qreal z = accel->reading()->z();
+    orientationReading = reading;
+}
+
+void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
+{
+    qreal x = reading->x();
+    qreal y = reading->y();
+    qreal z = reading->z();
 
     qreal diffX = lastX - x;
     qreal diffY = lastY - y;
@@ -157,11 +163,11 @@ void QTwistSensorGestureRecognizer::accelChanged()
             detecting = true;
             timer->start();
             lastRoll = degrees;
-            lastOrientation = orientation->reading()->orientation();
+            lastOrientation = orientationReading->orientation();
         }
 
-        if (detecting && (orientation->reading()->orientation() == QOrientationReading::TopUp
-                || orientation->reading()->orientation() == QOrientationReading::TopDown)) {
+        if (detecting && (orientationReading->orientation() == QOrientationReading::TopUp
+                || orientationReading->orientation() == QOrientationReading::TopDown)) {
 
             detecting = false;
             timer->stop();

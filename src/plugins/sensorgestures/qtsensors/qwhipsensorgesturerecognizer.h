@@ -44,8 +44,8 @@
 #define QWHIPSENSORGESTURERECOGNIZER_H
 
 #include <qsensorgesturerecognizer.h>
-#include <QtSensors/QAccelerometer>
-#include <QtSensors/QOrientationSensor>
+
+#include "qtsensorgesturesensorhandler.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -67,11 +67,12 @@ Q_SIGNALS:
     void whip();
 
 private slots:
-    void accelChanged();
+    void accelChanged(QAccelerometerReading *reading);
+    void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
+
 private:
-    QAccelerometer *accel;
-    QOrientationSensor *orientation;
+    QOrientationReading *orientationReading;
     QTimer *timer;
     int accelRange;
     bool whipIt;
@@ -85,5 +86,6 @@ private:
     qreal roll;
 
 };
+
 QT_END_NAMESPACE
 #endif // QWHIPSENSORGESTURERECOGNIZER_H

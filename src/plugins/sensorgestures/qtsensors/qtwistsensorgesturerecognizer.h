@@ -46,6 +46,7 @@
 #include <qsensorgesturerecognizer.h>
 #include <QtSensors/QAccelerometer>
 #include <QtSensors/QOrientationSensor>
+#include "qtsensorgesturesensorhandler.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -68,12 +69,13 @@ Q_SIGNALS:
     void twistRight();
 
 private slots:
-    void accelChanged();
+    void accelChanged(QAccelerometerReading *reading);
+    void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
 
 private:
-    QAccelerometer *accel;
-    QOrientationSensor *orientation;
+
+    QOrientationReading *orientationReading;
     QTimer *timer;
     int accelRange;
     qreal lastRoll;

@@ -51,8 +51,7 @@ QT_BEGIN_NAMESPACE
 QShake2SensorGestureRecognizer::QShake2SensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
     , active(0),shaking(0), shakeCount(0),
-      shakeDirection(QShake2SensorGestureRecognizer::ShakeUndefined)
-{
+      shakeDirection(QShake2SensorGestureRecognizer::ShakeUndefined){
     timerTimeout = 750;
 }
 
@@ -62,9 +61,6 @@ QShake2SensorGestureRecognizer::~QShake2SensorGestureRecognizer()
 
 void QShake2SensorGestureRecognizer::create()
 {
-    accel = new QAccelerometer(this);
-    accel->connectToBackend();
-
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
@@ -73,18 +69,24 @@ void QShake2SensorGestureRecognizer::create()
 
 bool QShake2SensorGestureRecognizer::start()
 {
-    connect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    active = accel->start();
 
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
+        active = true;
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+                this,SLOT(accelChanged(QAccelerometerReading *)));
+    } else {
+        active = false;
+    }
     return active;
 }
 
 bool QShake2SensorGestureRecognizer::stop()
 {
-    accel->stop();
-    active = accel->isActive();
-    disconnect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
-    return !active;
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+            this,SLOT(accelChanged(QAccelerometerReading *)));
+    active = false;
+    return active;
 }
 
 bool QShake2SensorGestureRecognizer::isActive()
@@ -100,11 +102,11 @@ QString QShake2SensorGestureRecognizer::id() const
 #define NUMBER_SHAKES 3
 #define THRESHOLD 25
 
-void QShake2SensorGestureRecognizer::accelChanged()
+void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = accel->reading()->x();
-    qreal y = accel->reading()->y();
-    qreal z = accel->reading()->z();
+    qreal x = reading->x();
+    qreal y = reading->y();
+    qreal z = reading->z();
 
     currentData.x = x;
     currentData.y = y;

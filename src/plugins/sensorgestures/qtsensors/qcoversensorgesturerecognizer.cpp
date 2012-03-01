@@ -39,15 +39,14 @@
 **
 ****************************************************************************/
 
-
 #include "qcoversensorgesturerecognizer.h"
-#include <math.h>
+#include "qtsensorgesturesensorhandler.h"
 
 QT_BEGIN_NAMESPACE
 
 QCoverSensorGestureRecognizer::QCoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    detecting(0), lastProx(0)
+    detecting(0), lastProx(0), proximityReading(0), active(0)
 {
 }
 
@@ -57,12 +56,6 @@ QCoverSensorGestureRecognizer::~QCoverSensorGestureRecognizer()
 
 void QCoverSensorGestureRecognizer::create()
 {
-    proximity = new QIRProximitySensor(this);
-    proximity->connectToBackend();
-
-    orientation = new QOrientationSensor(this);
-    orientation->connectToBackend();
-
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
@@ -76,60 +69,83 @@ QString QCoverSensorGestureRecognizer::id() const
 
 bool QCoverSensorGestureRecognizer::start()
 {
-    connect(proximity,SIGNAL(readingChanged()),this,SLOT(proximityChanged()));
-    proximity->start();
-    orientation->start();
-    lastProx = proximity->reading()->reflectance();
-    return proximity->isActive();
+    if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::IrProximity)) {
+        if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
+            active = true;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
+                    this,SLOT(proximityChanged(QIRProximityReading *)));
+
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
+            active = false;
+        }
+    } else {
+        active = false;
+    }
+    return active;
 }
 
 bool QCoverSensorGestureRecognizer::stop()
 {
-    proximity->stop();
-    orientation->stop();
-    disconnect(proximity,SIGNAL(readingChanged()),this,SLOT(proximityChanged()));
-    return proximity->isActive();
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
+
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
+            this,SLOT(proximityChanged(QIRProximityReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
+    active = false;
+
+    return active;
 }
 
 bool QCoverSensorGestureRecognizer::isActive()
 {
-    return proximity->isActive();
+    return active;
 }
 
-void QCoverSensorGestureRecognizer::proximityChanged()
-{// look at case of face up->face down->face up.
-
-    qreal refl = proximity->reading()->reflectance();
-    qreal difference =  lastProx - refl;
+void QCoverSensorGestureRecognizer::proximityChanged(QIRProximityReading *reading)
+{
+    proximityReading = reading->reflectance();
+    qreal difference =  lastProx - proximityReading;
 
     if (qAbs(difference) < .15) {
         return;
     }
-
-    if (orientation->reading()->orientation() ==  QOrientationReading::FaceUp
-            && refl > .55) {
+    // look at case of face up->face down->face up.
+    if (orientationReading->orientation() ==  QOrientationReading::FaceUp
+            && proximityReading > .55) {
         if (!timer->isActive()) {
             timer->start();
             detecting = true;
         }
     }
-    if (refl < .55) {
+    if (proximityReading < .55) {
         if (timer->isActive()) {
             timer->stop();
             detecting = false;
         }
     }
-    lastProx = refl;
+    lastProx = proximityReading;
+}
+
+void QCoverSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
+{
+    orientationReading = reading;
 }
 
 void QCoverSensorGestureRecognizer::timeout()
 {
-    if (detecting && orientation->reading()->orientation() == QOrientationReading::FaceUp
-            && proximity->reading()->reflectance() > 0.55) {
+    if ((orientationReading->orientation() == QOrientationReading::FaceUp)
+            && proximityReading > 0.55) {
         Q_EMIT cover();
         Q_EMIT detected("cover");
         detecting = false;
     }
+    lastProx = proximityReading;
 }
 
 QT_END_NAMESPACE

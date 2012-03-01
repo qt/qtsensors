@@ -42,11 +42,9 @@
 #ifndef QTURNOVERSENSORGESTURERECOGNIZER_H
 #define QTURNOVERSENSORGESTURERECOGNIZER_H
 
-#include <QtSensors/QSensor>
-#include <QtSensors/QOrientationSensor>
-#include <QtSensors/QProximitySensor>
-
 #include <qsensorgesturerecognizer.h>
+#include "qtsensorgesturesensorhandler.h"
+
 QT_BEGIN_NAMESPACE
 
 class QTurnoverSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -65,12 +63,10 @@ Q_SIGNALS:
     void turnover();
 
 private slots:
-    void orientationChanged();
-    void proximityChanged();
+    void orientationReadingChanged(QOrientationReading *reading);
+    void proximityChanged(QProximityReading *reading);
 
 private:
-    QOrientationSensor *orientation;
-    QProximitySensor *proximity;
 
     bool isClose;
     bool isFaceDown;

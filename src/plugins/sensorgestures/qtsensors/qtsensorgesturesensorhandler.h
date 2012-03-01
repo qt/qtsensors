@@ -39,58 +39,62 @@
 **
 ****************************************************************************/
 
+#ifndef QTSENSORGESTURESENSORHANDLER_H
+#define QTSENSORGESTURESENSORHANDLER_H
 
-#ifndef QPICKUPSENSORGESTURERECOGNIZER_H
-#define QPICKUPSENSORGESTURERECOGNIZER_H
+#include <QObject>
 
-#include <qsensorgesturerecognizer.h>
-#include <QTimer>
+#include <QtSensors/QAccelerometer>
+#include <QtSensors/QAccelerometerFilter>
+#include <QtSensors/QSensor>
+#include <QtSensors/QOrientationSensor>
+#include <QtSensors/QProximitySensor>
+#include <QtSensors/QIRProximitySensor>
+#include <QtSensors/QTapSensor>
 
-#include "qtsensorgesturesensorhandler.h"
-
-QT_BEGIN_NAMESPACE
-
-class QPickupSensorGestureRecognizer : public QSensorGestureRecognizer
+class QtSensorGestureSensorHandler : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(SensorGestureSensors)
 public:
-    explicit QPickupSensorGestureRecognizer(QObject *parent = 0);
-    ~QPickupSensorGestureRecognizer();
+    explicit QtSensorGestureSensorHandler(QObject *parent = 0);
 
-    void create();
+    enum SensorGestureSensors {
+        Accel = 0,
+        Orientation,
+        Proximity,
+        IrProximity,
+        Tap
+    };
+    static QtSensorGestureSensorHandler *instance();
+    qreal accelRange;
 
-    QString id() const;
-    bool start();
-    bool stop();
-    bool isActive();
+public slots:
+    void accelChanged();
+    void orientationChanged();
+    void proximityChanged();
+    void irProximityChanged();
+    void doubletap();
+
+    bool startSensor(SensorGestureSensors sensor);
+    void stopSensor(SensorGestureSensors sensor);
 
 Q_SIGNALS:
-    void pickup();
+    void accelReadingChanged(QAccelerometerReading *reading);
+    void orientationReadingChanged(QOrientationReading *reading);
+    void proximityReadingChanged(QProximityReading *reading);
+    void irProximityReadingChanged(QIRProximityReading *reading);
+    void dTabReadingChanged(QTapReading *reading);
 
-private slots:
-    void accelChanged(QAccelerometerReading *reading);
-    void timeout();
 private:
-    QAccelerometerReading *accelReading;
+    QAccelerometer *accel;
+    QOrientationSensor *orientation;
+    QProximitySensor *proximity;
+    QIRProximitySensor *irProx;
+    QTapSensor *tapSensor;
 
-    QTimer *timer;
-    bool active;
-    bool atRest;
-    bool okToSignal;
+    QMap<SensorGestureSensors, int> usedSensorsMap;
 
-    qreal pXaxis;
-    qreal pYaxis;
-    qreal pZaxis;
-
-    qreal pitch;
-    qreal lastpitch;
-    qreal detectedPitchDifference;
-    bool detecting;
-
-    QList <bool> detectingNegativeList;
-    QList <qreal> zList;
-
-    void clear();
 };
-QT_END_NAMESPACE
-#endif // QPICKUPSENSORGESTURERECOGNIZER_H
+
+#endif // QTSENSORGESTURESENSORHANDLER_H

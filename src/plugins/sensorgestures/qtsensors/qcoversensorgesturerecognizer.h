@@ -43,13 +43,11 @@
 #ifndef QCOVERSENSORGESTURERECOGNIZER_H
 #define QCOVERSENSORGESTURERECOGNIZER_H
 
-#include <QtSensors/QSensor>
-#include <QProximitySensor>
-#include <QtSensors/QOrientationSensor>
-#include <QIRProximitySensor>
-
 #include <qsensorgesturerecognizer.h>
 #include <QTimer>
+
+#include "qtsensorgesturesensorhandler.h"
+
 QT_BEGIN_NAMESPACE
 
 class QCoverSensorGestureRecognizer : public QSensorGestureRecognizer
@@ -70,18 +68,21 @@ Q_SIGNALS:
     void cover();
 
 private slots:
-    void proximityChanged();
+    void proximityChanged(QIRProximityReading *reading);
+    void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
 
-
 private:
-    QIRProximitySensor *proximity;
-    QOrientationSensor *orientation;
+
+    QOrientationReading *orientationReading;
+    qreal proximityReading;
 
     QTimer *timer;
+    bool lastProx;
+    QtSensorGestureSensorHandler *handler;
+    bool active;
     bool detecting;
-    qreal lastProx;
-
 };
+
 QT_END_NAMESPACE
 #endif // QCOVERSENSORGESTURERECOGNIZER_H

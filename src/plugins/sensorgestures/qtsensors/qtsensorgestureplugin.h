@@ -46,6 +46,7 @@
 #include <QStringList>
 
 #include <qsensorgestureplugininterface.h>
+
 QT_BEGIN_NAMESPACE
 
 class QtSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
@@ -61,6 +62,8 @@ public:
     QStringList gestureSignals() const;
     QStringList supportedIds() const;
     QString name() const { return "QtSensorGestures"; }
+
 };
+
 QT_END_NAMESPACE
 #endif // QTSENSORGESTURESPLUGIN_H

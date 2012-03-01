@@ -16,7 +16,8 @@ HEADERS += qtsensorgestureplugin.h \
     qslamgesturerecognizer.h \
     qturnoversensorgesturerecognizer.h \
     qtwistsensorgesturerecognizer.h \
-    qwhipsensorgesturerecognizer.h
+    qwhipsensorgesturerecognizer.h \
+    qtsensorgesturesensorhandler.h
 
 SOURCES += qtsensorgestureplugin.cpp \
     qcoversensorgesturerecognizer.cpp \
@@ -27,7 +28,8 @@ SOURCES += qtsensorgestureplugin.cpp \
     qslamgesturerecognizer.cpp \
     qturnoversensorgesturerecognizer.cpp \
     qtwistsensorgesturerecognizer.cpp \
-    qwhipsensorgesturerecognizer.cpp
+    qwhipsensorgesturerecognizer.cpp \
+    qtsensorgesturesensorhandler.cpp
 
 target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
 INSTALLS += target

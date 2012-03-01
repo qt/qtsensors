@@ -42,15 +42,13 @@
 #ifndef QSHAKERECOGNIZER_H
 #define QSHAKERECOGNIZER_H
 
-
-#include <QtSensors/QSensor>
-#include <QtSensors/QAccelerometer>
-#include <QtSensors/QAccelerometerFilter>
-
 #include <QDebug>
 #include <QTimer>
 
 #include <qsensorgesturerecognizer.h>
+
+#include "qtsensorgesturesensorhandler.h"
+
 QT_BEGIN_NAMESPACE
 
 struct ShakeData {
@@ -94,12 +92,12 @@ Q_SIGNALS:
     void shakeDown();
 
 private slots:
-    void accelChanged();
+    void accelChanged(QAccelerometerReading *reading);
     void timeout();
 
 
 private:
-    QAccelerometer *accel;
+    QAccelerometerReading *accelReading;
 
     bool active;
 

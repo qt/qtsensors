@@ -88,38 +88,27 @@ QList <QSensorGestureRecognizer *> QtSensorGesturePlugin::createRecognizers()
 {
     QList <QSensorGestureRecognizer *> recognizers;
 
-//    QSensorGestureRecognizer *sRec1 = new QCirclesSensorGestureRecognizer(this);
-//    recognizers.append(sRec1);
+    recognizers.append(new QCoverSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec2 = new QCoverSensorGestureRecognizer(this);
-    recognizers.append(sRec2);
+    recognizers.append(new QDoubleTapSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec3 = new QDoubleTapSensorGestureRecognizer(this);
-    recognizers.append(sRec3);
+    recognizers.append(new QHoverSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec4 = new QHoverSensorGestureRecognizer(this);
-    recognizers.append(sRec4);
+    recognizers.append(new QPickupSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec5 = new QPickupSensorGestureRecognizer(this);
-    recognizers.append(sRec5);
+    recognizers.append(new QShake2SensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec6 = new QShake2SensorGestureRecognizer(this);
-    recognizers.append(sRec6);
+    recognizers.append(new QSlamSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec10 = new QSlamSensorGestureRecognizer(this);
-    recognizers.append(sRec10);
+    recognizers.append(new QTurnoverSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec7 = new QTurnoverSensorGestureRecognizer(this);
-    recognizers.append(sRec7);
+    recognizers.append(new QWhipSensorGestureRecognizer(this));
 
-    QSensorGestureRecognizer *sRec8 = new QWhipSensorGestureRecognizer(this);
-    recognizers.append(sRec8);
-
-    QSensorGestureRecognizer *sRec9 = new QTwistSensorGestureRecognizer(this);
-    recognizers.append(sRec9);
+    recognizers.append(new QTwistSensorGestureRecognizer(this));
 
     return recognizers;
 }
+
 
 Q_EXPORT_PLUGIN2(qtsensorgestures_plugin, QtSensorGesturePlugin)
 

@@ -44,10 +44,9 @@
 #define QHOVERSENSORGESTURERECOGNIZER_H
 
 #include <QSensorGestureRecognizer>
-#include <QtSensors/QSensor>
 #include <QTimer>
-#include <QProximitySensor>
-#include <QIRProximitySensor>
+
+#include "qtsensorgesturesensorhandler.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -60,7 +59,6 @@ public:
     ~QHoverSensorGestureRecognizer();
 
     void create();
-
     QString id() const;
     bool start();
     bool stop();
@@ -70,11 +68,12 @@ Q_SIGNALS:
     void hover();
 
 private slots:
-    void proxyChanged();
+    void irProximityReadingChanged(QIRProximityReading *reading);
     void timeout();
     void timeout2();
 private:
-    QIRProximitySensor *irProx;
+//    bool proximity;
+    qreal reflectance;
 
     QTimer *timer;
     QTimer *timer2;
@@ -84,6 +83,8 @@ private:
 
     qreal detectedHigh;
     qreal lastProx;
+    bool active;
+
 };
 QT_END_NAMESPACE
 #endif // QHOVERSENSORGESTURERECOGNIZER_H
