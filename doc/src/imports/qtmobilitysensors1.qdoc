@@ -46,15 +46,15 @@
     The following limitations affect all versions of the QtMobility.sensors import.
 
     \list 1
-    \o The QSensor::sensorid property cannot be set because QML does not support QByteArray.
+    \li The QSensor::sensorid property cannot be set because QML does not support QByteArray.
        This means that it is not possible to specify a particular sensor when two or more have
        been registered with the same type.
-    \o The QSensor::availableDataRates property cannot be used because QML does not support \l qrangelist.
-    \o The QSensor::outputRanges property cannot be used because QML does not support \l qoutputrangelist.
-    \o The QLightSensor::fieldOfView property cannot be used because QML cannot access dynamic properties.
-    \o The QMagnetometer::returnGeoValues property cannot be used because QML cannot access dynamic properties.
-    \o The QRotationSensor::hasZ property cannot be used because QML cannot access dynamic properties.
-    \o The QTapSensor::returnDoubleTapEvents property cannot be used because QML cannot access dynamic properties.
+    \li The QSensor::availableDataRates property cannot be used because QML does not support \l qrangelist.
+    \li The QSensor::outputRanges property cannot be used because QML does not support \l qoutputrangelist.
+    \li The QLightSensor::fieldOfView property cannot be used because QML cannot access dynamic properties.
+    \li The QMagnetometer::returnGeoValues property cannot be used because QML cannot access dynamic properties.
+    \li The QRotationSensor::hasZ property cannot be used because QML cannot access dynamic properties.
+    \li The QTapSensor::returnDoubleTapEvents property cannot be used because QML cannot access dynamic properties.
     \endlist
 
     \section1 QML Sensor Elements

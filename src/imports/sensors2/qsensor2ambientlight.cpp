@@ -52,7 +52,7 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief The AmbientLightSensor element provides easy access to determine the ambient light by using the ambient light sensor.
 
-    This element is part of the \bold{QtSensors 5} module.
+    This element is part of the \b{QtSensors 5} module.
 */
 QSensor2AmbientLight::QSensor2AmbientLight(QObject* parent)
     : qsensor2common(parent)
@@ -73,23 +73,23 @@ QSensor2AmbientLight::~QSensor2AmbientLight()
 
     \table
     \row
-        \o AmbientLightSensor.Unknown
-        \o Ambient light value is not set yet.
+        \li AmbientLightSensor.Unknown
+        \li Ambient light value is not set yet.
     \row
-        \o AmbientLightSensor.Dark
-        \o It is dark.
+        \li AmbientLightSensor.Dark
+        \li It is dark.
     \row
-        \o AmbientLightSensor.Twilight
-        \o It is moderately dark.
+        \li AmbientLightSensor.Twilight
+        \li It is moderately dark.
     \row
-        \o AmbientLightSensor.Light
-        \o It is light (eg. internal lights).
+        \li AmbientLightSensor.Light
+        \li It is light (eg. internal lights).
     \row
-        \o AmbientLightSensor.Bright
-        \o It is bright (eg. outside but in the shade).
+        \li AmbientLightSensor.Bright
+        \li It is bright (eg. outside but in the shade).
     \row
-        \o AmbientLightSensor.Sunny
-        \o It is very bright (eg. direct sunlight).
+        \li AmbientLightSensor.Sunny
+        \li It is very bright (eg. direct sunlight).
     \endtable
 */
 QSensor2AmbientLight::LightLevel QSensor2AmbientLight::lightLevel()

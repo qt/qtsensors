@@ -52,7 +52,7 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief The ProximitySensor element provides an easy access to determine if the proximity of the mobile user by using the proximity sensor.
 
-    This element is part of the \bold{QtSensors 5} module.
+    This element is part of the \b{QtSensors 5} module.
 */
 
 QSensor2Proximity::QSensor2Proximity(QObject* parent)

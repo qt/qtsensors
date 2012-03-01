@@ -149,8 +149,8 @@ void QTapReading::setTapDirection(QTapReading::TapDirection tapDirection)
     \brief a value indicating if there was a single or double tap.
 
     \list
-    \o true - double tap
-    \o false - single tap
+    \li true - double tap
+    \li false - single tap
     \endlist
     \sa {QTapReading Units}
 */

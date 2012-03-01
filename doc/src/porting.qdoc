@@ -48,11 +48,11 @@
 
     \table
         \row
-            \o \l {Qt Sensors QML API}{QML API}
-            \o Information about the Qt Sensors QML API
+            \li \l {Qt Sensors QML API}{QML API}
+            \li Information about the Qt Sensors QML API
         \row
-            \o \l {QtMobility.sensors 1.x}{Legacy QML API}
-            \o Information about the legacy QtMobility.sensors QML API
+            \li \l {QtMobility.sensors 1.x}{Legacy QML API}
+            \li Information about the legacy QtMobility.sensors QML API
     \endtable
 
     \section1 C++
@@ -78,10 +78,10 @@
     and the macros from QtMobility no longer exist.
 
     \list
-    \o QTM_BEGIN_NAMESPACE
-    \o QTM_END_NAMESPACE
-    \o QTM_USE_NAMESPACE
-    \o QTM_PREPEND_NAMESPACE(x)
+    \li QTM_BEGIN_NAMESPACE
+    \li QTM_END_NAMESPACE
+    \li QTM_USE_NAMESPACE
+    \li QTM_PREPEND_NAMESPACE(x)
     \endlist
 
     Note that Qt can be configured to build into a namespace. If Qt is built in this
@@ -89,10 +89,10 @@
     is optional, the macros for this are typically defined to do nothing.
 
     \list
-    \o QT_BEGIN_NAMESPACE
-    \o QT_END_NAMESPACE
-    \o QT_USE_NAMESPACE
-    \o QT_PREPEND_NAMESPACE(x)
+    \li QT_BEGIN_NAMESPACE
+    \li QT_END_NAMESPACE
+    \li QT_USE_NAMESPACE
+    \li QT_PREPEND_NAMESPACE(x)
     \endlist
 
     \section2 qtimestamp

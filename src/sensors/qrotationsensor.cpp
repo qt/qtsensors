@@ -66,11 +66,11 @@ IMPLEMENT_READING(QRotationReading)
     The three angles are applied to the device in the following order.
 
     \list
-    \o Right-handed rotation z (-180, 180]. Starting from the y-axis and
+    \li Right-handed rotation z (-180, 180]. Starting from the y-axis and
      incrementing in the counter-clockwise direction.
-    \o Right-handed rotation x [-90, 90]. Starting from the new
+    \li Right-handed rotation x [-90, 90]. Starting from the new
      (once-rotated) y-axis and incrementing towards the z-axis.
-    \o Right-handed rotation y (-180, 180]. Starting from the new
+    \li Right-handed rotation y (-180, 180]. Starting from the new
      (twice-rotated) z-axis and incrementing towards the x-axis.
     \endlist
 

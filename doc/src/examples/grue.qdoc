@@ -37,22 +37,22 @@
     lives in a plugin.
 
     \list
-    \o \l{Grue Sensor Definition}
-    \o \l{Grue Sensor Implementation}
+    \li \l{Grue Sensor Definition}
+    \li \l{Grue Sensor Implementation}
     \endlist
 
     The sensor can now be used by a C++ application, even if the application does not have access to the
     definition.
 
     \list
-    \o \l{Grue Sensor Console Application}
+    \li \l{Grue Sensor Console Application}
     \endlist
 
     To make the sensor available to a QML application an import must be created.
 
     \list
-    \o \l{Grue Sensor QML Import}
-    \o \l{Grue Sensor QML Application}
+    \li \l{Grue Sensor QML Import}
+    \li \l{Grue Sensor QML Application}
     \endlist
 */
 

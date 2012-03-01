@@ -68,11 +68,11 @@ sensor.
 The life cycle of a QSensor is typically:
 
 \list
-\o Create an instance of QSensor or one of its sub-classes on the stack or heap.
-\o Setup as required by the application.
-\o Start receiving values.
-\o Sensor data is used by the application.
-\o Stop receiving values.
+\li Create an instance of QSensor or one of its sub-classes on the stack or heap.
+\li Setup as required by the application.
+\li Start receiving values.
+\li Sensor data is used by the application.
+\li Stop receiving values.
 \endlist
 
 Here is an example of creating a sensor on the heap and on the stack.
@@ -90,9 +90,9 @@ Thanks to Qt's property system you can still access the sensor data. You need to
 3 pieces of information in order to do this:
 
 \list
-\o The sensor type.
-\o The property name or index.
-\o The property type or a comparable type.
+\li The sensor type.
+\li The property name or index.
+\li The property type or a comparable type.
 \endlist
 
 For example, here is an example of how you can access a property of the accelerometer.

@@ -57,7 +57,7 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief The TiltSensor element provides tilt datas from x and y rotation of the device using the accelerometer sensor.
 
-    This element is part of the \bold{QtSensors 5} module.
+    This element is part of the \b{QtSensors 5} module.
 */
 QSensor2Tilt::QSensor2Tilt(QObject* parent)
     : qsensor2common(parent)
@@ -143,17 +143,17 @@ void QSensor2Tilt::createRunModeDataRateMap()
 
     \table
     \row
-        \o TiltSensor.Slow
-        \o The sensor runs in slow mode.
-        \o Closest available datarate at 2Hz.
+        \li TiltSensor.Slow
+        \li The sensor runs in slow mode.
+        \li Closest available datarate at 2Hz.
     \row
-        \o TiltSensor.Medium
-        \o The sensor runs in medium mode.
-        \o Closest available datarate at 10Hz.
+        \li TiltSensor.Medium
+        \li The sensor runs in medium mode.
+        \li Closest available datarate at 10Hz.
     \row
-        \o TiltSensor.Fast
-        \o The sensor runs in fast mode.
-        \o Closest available datarate at 20Hz.
+        \li TiltSensor.Fast
+        \li The sensor runs in fast mode.
+        \li Closest available datarate at 20Hz.
     \endtable
 */
 QSensor2Tilt::Speed QSensor2Tilt::speed()
@@ -198,11 +198,11 @@ void QSensor2Tilt::setEnabled(const bool val)
     Returns the unit of the rotation which can be one of:
     \table
     \row
-        \o TiltSensor.Radians
-        \o The unit of the rotation angle is radians.
+        \li TiltSensor.Radians
+        \li The unit of the rotation angle is radians.
     \row
-        \o TiltSensor.Degrees
-        \o The unit of the rotation angle is degrees.
+        \li TiltSensor.Degrees
+        \li The unit of the rotation angle is degrees.
     \endtable
 */
 QSensor2Tilt::Unit QSensor2Tilt::unit()
@@ -225,9 +225,9 @@ void QSensor2Tilt::setUnit(const QSensor2Tilt::Unit val)
 
     \table
     \row
-        \o
+        \li
         \image YAngle.gif
-        \o
+        \li
         \image YAngleNegative.gif
     \endtable
 */
@@ -244,9 +244,9 @@ qreal QSensor2Tilt::yRotation()
     Holds the rotation arround the x axis.
     \table
     \row
-        \o
+        \li
         \image XAngle.gif
-        \o
+        \li
         \image XAngleNegative.gif
     \endtable
 */
@@ -295,17 +295,17 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
     Accuracy 5.5 will notify the client application about an rotation change only if the rotation angle over the X and / or Y axis was changed by 5.5 or more degrees clockwise or anti-clockwise.
 
     \table
-    \header \o Rotation \o notify application \o reason
-    \row \o 0.2424   \o no   \o
-    \row \o 4.34234  \o no   \o
-    \row \o 5.23423  \o no   \o
-    \row \o 6.34324  \o yes  \o because 6.34324 >= 5.5
-    \row \o 7.43264  \o no   \o
-    \row \o 8.24504  \o no   \o
-    \row \o 9.34653  \o no   \o
-    \row \o 10.23476 \o no   \o
-    \row \o 11.43565 \o no   \o
-    \row \o 12.45645 \o yes  \o because 12.45645 - 6.34324 = 6.11321 >= 5.5
+    \header \li Rotation \li notify application \li reason
+    \row \li 0.2424   \li no   \li
+    \row \li 4.34234  \li no   \li
+    \row \li 5.23423  \li no   \li
+    \row \li 6.34324  \li yes  \li because 6.34324 >= 5.5
+    \row \li 7.43264  \li no   \li
+    \row \li 8.24504  \li no   \li
+    \row \li 9.34653  \li no   \li
+    \row \li 10.23476 \li no   \li
+    \row \li 11.43565 \li no   \li
+    \row \li 12.45645 \li yes  \li because 12.45645 - 6.34324 = 6.11321 >= 5.5
     \endtable
 */
 /*!

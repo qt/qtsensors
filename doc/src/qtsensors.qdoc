@@ -39,25 +39,25 @@
 
     \table
         \row
-            \o \l {Qt Sensors QML API}{QML API}
-            \o Information about the Qt Sensors QML API
+            \li \l {Qt Sensors QML API}{QML API}
+            \li Information about the Qt Sensors QML API
         \row
-            \o \l {Qt Sensors C++ API}{C++ API}
-            \o Information about the Qt Sensors C++ API
+            \li \l {Qt Sensors C++ API}{C++ API}
+            \li Information about the Qt Sensors C++ API
         \row
-            \o \l {Qt Sensors Examples}{Examples}
-            \o Examples demonstrating use of the Qt Sensors APIs
+            \li \l {Qt Sensors Examples}{Examples}
+            \li Examples demonstrating use of the Qt Sensors APIs
     \endtable
 
     \section1 Information for Backend Implementors
 
     \table
         \row
-            \o \l {Qt Sensors Backend}{Backend}
-            \o Information about the Qt Sensors back end
+            \li \l {Qt Sensors Backend}{Backend}
+            \li Information about the Qt Sensors back end
         \row
-            \o \l {Grue Sensor Example}
-            \o The Grue Sensor Example demonstrates creation of a sensor backend
+            \li \l {Grue Sensor Example}
+            \li The Grue Sensor Example demonstrates creation of a sensor backend
     \endtable
 
     \section1 Compatibility with QtMobility Sensors API
@@ -67,11 +67,11 @@
 
     \table
         \row
-            \o \l {Porting Applications from QtMobility Sensors to Qt Sensors}{Porting Guide}
-            \o Information about the steps needed to port applications to the Qt Sensors API.
+            \li \l {Porting Applications from QtMobility Sensors to Qt Sensors}{Porting Guide}
+            \li Information about the steps needed to port applications to the Qt Sensors API.
         \row
-            \o \l {QtMobility.sensors 1.x}{Legacy QML API}
-            \o Information about the legacy QtMobility.sensors QML API
+            \li \l {QtMobility.sensors 1.x}{Legacy QML API}
+            \li Information about the legacy QtMobility.sensors QML API
     \endtable
 
 
@@ -81,22 +81,22 @@
 
     \table
         \row
-            \o \l {SensorGesture}{QML API}
-            \o Information about the Qt SensorGestures QML API
+            \li \l {SensorGesture}{QML API}
+            \li Information about the Qt SensorGestures QML API
         \row
-            \o \l {QtSensorGestures C++ API}{C++ API}
-            \o Information about the Qt SensorGestures C++ API
+            \li \l {QtSensorGestures C++ API}{C++ API}
+            \li Information about the Qt SensorGestures C++ API
     \endtable
 
     \section1 Information for Qt SensorGestures Recognizer Plugin Implementors.
 
     \table
         \row
-            \o \l {QtSensorGestures Plugins}{Plugins}
-            \o Information about the Qt SensorGestures recognizer plugins.
+            \li \l {QtSensorGestures Plugins}{Plugins}
+            \li Information about the Qt SensorGestures recognizer plugins.
         \row
-            \o \l {QtSensorGestures Emulator}{Emulator}
-            \o Information about Qt SensorGestures use in the Emulator.
+            \li \l {QtSensorGestures Emulator}{Emulator}
+            \li Information about Qt SensorGestures use in the Emulator.
     \endtable
 
 */

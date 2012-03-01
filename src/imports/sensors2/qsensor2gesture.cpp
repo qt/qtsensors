@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief The SensorGesture element provides notification when sensor gestures are triggered.
 
-    This element is part of the \bold{QtSensors 5} module.
+    This element is part of the \b{QtSensors 5} module.
 
     The following QML code creates a "shake" and "template" SensorGesture QML element.
 

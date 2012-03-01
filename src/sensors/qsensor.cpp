@@ -159,11 +159,11 @@ static int qoutputrangelist_id = qRegisterMetaType<qoutputrangelist>("qoutputran
     The life cycle of a sensor is typically:
 
     \list
-    \o Create a sub-class of QSensor on the stack or heap.
-    \o Setup as required by the application.
-    \o Start receiving values.
-    \o Sensor data is used by the application.
-    \o Stop receiving values.
+    \li Create a sub-class of QSensor on the stack or heap.
+    \li Setup as required by the application.
+    \li Start receiving values.
+    \li Sensor data is used by the application.
+    \li Stop receiving values.
     \endlist
 
     The sensor data is delivered via QSensorReading and its sub-classes.
@@ -848,7 +848,7 @@ QSensorReading::~QSensorReading()
     Note that sensor timestamps from different sensors may not be directly
     comparable (as they may choose different fixed points for their reference).
 
-    \bold{Note that some platforms do not deliver timestamps correctly}.
+    \b{Note that some platforms do not deliver timestamps correctly}.
     Applications should be prepared for occasional issues that cause timestamps to jump
     backwards.
 */

@@ -47,9 +47,9 @@ higher level applications.
 
     The steps to creating a sensor gesture plugin are as follows:
 \list
-\o Sub-class from QSensorGesturePluginInterface
-\o Sub-class from QSensorGestureRecognizer and implement gesture recognizer logic using QtSensors.
-\o Create an instance of that recognizer in the derived QSensorGesturePluginInterface class, and call
+\li Sub-class from QSensorGesturePluginInterface
+\li Sub-class from QSensorGestureRecognizer and implement gesture recognizer logic using QtSensors.
+\li Create an instance of that recognizer in the derived QSensorGesturePluginInterface class, and call
  QSensorGestureManager::registerSensorGestureRecognizer(sRec); in your registerRecognizers()
 function. QSensorGestureManager will retain ownership of the recognizer object.
 
@@ -80,16 +80,16 @@ gesture training, nor ability for the user to define their own sensor based moti
 
 A procedure for writing ad-hock recognizers might include:
 \list
-    \o Obtain and gather output from the accelerometer through QAccelerometerReading of a gesture being performed.
-    \o Use various methods and constraints on the accelerometer data to recognize the various states:
+    \li Obtain and gather output from the accelerometer through QAccelerometerReading of a gesture being performed.
+    \li Use various methods and constraints on the accelerometer data to recognize the various states:
     \list i
-        \o Initial 'listening' state for a gesture
-        \o Start of a possible gesture, moving into a 'detecting' state
-        \o End of a possible gesture, moving into a 'recognizing' state
-        \o and finally, if it is recognized, the 'recognized' state, or if not recognized, move back to
+        \li Initial 'listening' state for a gesture
+        \li Start of a possible gesture, moving into a 'detecting' state
+        \li End of a possible gesture, moving into a 'recognizing' state
+        \li and finally, if it is recognized, the 'recognized' state, or if not recognized, move back to
            the 'listening' state.
     \endlist
-    \o Test procedure to make sure it is easy to perform, and will not
+    \li Test procedure to make sure it is easy to perform, and will not
  produce too many false positive recognitions. And if used with other gestures, collisions. Meaning
 that gestures performed get recognized as another gesture instead.
 
@@ -100,66 +100,66 @@ Here is a list of included plugins and their signals
 For ShakeGestures plugin:
     \table
         \row
-            \o Recognizer Id
-            \o Signals
+            \li Recognizer Id
+            \li Signals
         \row
-            \o QtSensors.shake
-            \o shake
+            \li QtSensors.shake
+            \li shake
 \endtable
 
 For QtSensorGestures plugin:
     \table
         \row
-            \o Recognizer Id
-            \o Signals
-            \o Description
-            \o Images
+            \li Recognizer Id
+            \li Signals
+            \li Description
+            \li Images
         \row
-            \o QtSensors.cover
-            \o cover
-            \o Hand covers up phone display for one second, when it's face up, using the IR Proximity and Orientation sensors.
-            \o \image sensorgesture-cover.png
+            \li QtSensors.cover
+            \li cover
+            \li Hand covers up phone display for one second, when it's face up, using the IR Proximity and Orientation sensors.
+            \li \image sensorgesture-cover.png
         \row
-            \o QtSensors.doubletap
-            \o doubletap
-            \o Double tap of finger on phone, using the DoubleTap sensor.
-            \o \image sensorgesture-doubletap.png
+            \li QtSensors.doubletap
+            \li doubletap
+            \li Double tap of finger on phone, using the DoubleTap sensor.
+            \li \image sensorgesture-doubletap.png
         \row
-            \o QtSensors.hover
-            \o hover
-            \o Hand hovers about 5 cm above the phone for more than 1 second, then is removed when face up,
+            \li QtSensors.hover
+            \li hover
+            \li Hand hovers about 5 cm above the phone for more than 1 second, then is removed when face up,
                using the IR Proximity sensor.
-            \o \image sensorgesture-hover.png
+            \li \image sensorgesture-hover.png
         \row
-            \o QtSensors.pickup
-            \o pickup
-            \o Phone is resting face up on a flat curface, and is then picked up and brought up into viewing position, using the Accelerometer sensor.
-            \o \image sensorgesture-faceup.png
+            \li QtSensors.pickup
+            \li pickup
+            \li Phone is resting face up on a flat curface, and is then picked up and brought up into viewing position, using the Accelerometer sensor.
+            \li \image sensorgesture-faceup.png
         \row
-            \o QtSensors.shake2
-            \o shakeLeft, shakeRight, shakeUp, shakeDown
-            \o Shake phone in a certain direction, using the Accelerometer sensor.
-            \o \image sensorgesture-shake.png
+            \li QtSensors.shake2
+            \li shakeLeft, shakeRight, shakeUp, shakeDown
+            \li Shake phone in a certain direction, using the Accelerometer sensor.
+            \li \image sensorgesture-shake.png
         \row
-            \o QtSensors.slam
-            \o slam
-            \o Move phone quickly down and then back up, using the Accelerometer and Orientation sensors.
-            \o \image sensorgesture-slam.png
+            \li QtSensors.slam
+            \li slam
+            \li Move phone quickly down and then back up, using the Accelerometer and Orientation sensors.
+            \li \image sensorgesture-slam.png
         \row
-            \o QtSensors.turnover
-            \o turnover
-            \o Phone is turned face down and placed on a surface, using Proximity and Orientation sensors.
-            \o \image sensorgesture-facedown.png
+            \li QtSensors.turnover
+            \li turnover
+            \li Phone is turned face down and placed on a surface, using Proximity and Orientation sensors.
+            \li \image sensorgesture-facedown.png
         \row
-            \o QtSensors.twist
-            \o twistLeft, twistRight
-            \o Phone is held face up and then twisted left or right (left side up or right side up) and back, using the Accelerometer and Orientation sensors.
-            \o \image sensorgesture-twist.png
+            \li QtSensors.twist
+            \li twistLeft, twistRight
+            \li Phone is held face up and then twisted left or right (left side up or right side up) and back, using the Accelerometer and Orientation sensors.
+            \li \image sensorgesture-twist.png
         \row
-            \o QtSensors.whip
-            \o whip
-            \o Phone held top up, is moved like a whip gesture, back towards one side of the phone, then forward towards the other side, using the Accelerometer and Orientation sensors.
-            \o \image sensorgesture-whip_1.png
+            \li QtSensors.whip
+            \li whip
+            \li Phone held top up, is moved like a whip gesture, back towards one side of the phone, then forward towards the other side, using the Accelerometer and Orientation sensors.
+            \li \image sensorgesture-whip_1.png
                \image sensorgesture-whip_2.png
    \endtable
 

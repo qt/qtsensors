@@ -60,7 +60,7 @@
     have their own specific signals, and may be discovered through
     QSensorGesture::gestureSignals().
 
-    \bold {Note that QSensorGesture uses a custom meta-object in order to provide
+    \b {Note that QSensorGesture uses a custom meta-object in order to provide
     recognizer-specific signals. This means it is not possible to sub-class
     QSensorGesture and use Q_OBJECT. Also qobject_cast<QSensorGesture*>(ptr) will
     not work.}
