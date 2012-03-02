@@ -41,18 +41,20 @@
 
 #include <QtQml/qqmlextensionplugin.h>
 #include <QtQml/qqml.h>
+#include <QtSensors/QSensorManager>
 
-#include <qaccelerometer.h>
-#include <qambientlightsensor.h>
-#include <qcompass.h>
-#include <qmagnetometer.h>
-#include <qorientationsensor.h>
-#include <qproximitysensor.h>
-#include <qrotationsensor.h>
-#include <qtapsensor.h>
-#include <qlightsensor.h>
-#include <qgyroscope.h>
-#include <qirproximitysensor.h>
+#include <QtSensors/qaccelerometer.h>
+#include <QtSensors/qambientlightsensor.h>
+#include <QtSensors/qcompass.h>
+#include <QtSensors/qmagnetometer.h>
+#include <QtSensors/qorientationsensor.h>
+#include <QtSensors/qproximitysensor.h>
+#include <QtSensors/qrotationsensor.h>
+#include <QtSensors/qtapsensor.h>
+#include <QtSensors/qlightsensor.h>
+#include <QtSensors/qgyroscope.h>
+#include <QtSensors/qirproximitysensor.h>
+#include <QtSensors/qtiltsensor.h>
 
 #include "qmlsensorglobal.h"
 #include "qmlsensor.h"
@@ -67,6 +69,7 @@
 #include "qmlproximitysensor.h"
 #include "qmlrotationsensor.h"
 #include "qmltapsensor.h"
+#include "qmltiltsensor.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -75,7 +78,7 @@ static QObject *global_object_13(QQmlEngine *, QJSEngine *)
     return new QmlSensorGlobal;
 }
 
-class QSensorsDeclarativeModule : public QQmlExtensionPlugin
+class QtSensorsDeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
@@ -164,6 +167,8 @@ public:
         qmlRegisterUncreatableType<QmlRotationSensorReading    >(package, major, minor, "RotationReading",      QLatin1String("Cannot create RotationReading"));
         qmlRegisterType           <QmlTapSensor                >(package, major, minor, "TapSensor");
         qmlRegisterUncreatableType<QmlTapSensorReading         >(package, major, minor, "TapReading",           QLatin1String("Cannot create TapReading"));
+        qmlRegisterType           <QmlTiltSensor               >(package, major, minor, "TiltSensor");
+        qmlRegisterUncreatableType<QmlTiltSensorReading        >(package, major, minor, "TiltReading",          QLatin1String("Cannot create TiltReading"));
     }
 };
 

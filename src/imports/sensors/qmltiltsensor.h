@@ -39,47 +39,54 @@
 **
 ****************************************************************************/
 
-#ifndef QMLIRPROXIMITYSENSOR_H
-#define QMLIRPROXIMITYSENSOR_H
+#ifndef QMLTILTSENSOR_H
+#define QMLTILTSENSOR_H
 
 #include "qmlsensor.h"
+#include <QtSensors/QTiltSensor>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-class QIRProximitySensor;
+class QTiltSensor;
 
-class QmlIRProximitySensor : public QmlSensor
+class QmlTiltSensor : public QmlSensor
 {
     Q_OBJECT
 public:
-    explicit QmlIRProximitySensor(QObject *parent = 0);
-    ~QmlIRProximitySensor();
+
+    explicit QmlTiltSensor(QObject *parent = 0);
+    ~QmlTiltSensor();
+    Q_INVOKABLE void calibrate();
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
+    QTiltSensor *m_sensor;
     QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
 };
 
-class QmlIRProximitySensorReading : public QmlSensorReading
+class QmlTiltSensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal reflectance READ reflectance NOTIFY reflectanceChanged)
+    Q_PROPERTY(qreal yRotation READ yRotation NOTIFY yRotationChanged)
+    Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged)
 public:
-    explicit QmlIRProximitySensorReading(QIRProximitySensor *sensor);
-    ~QmlIRProximitySensorReading();
+    explicit QmlTiltSensorReading(QTiltSensor *sensor);
+    ~QmlTiltSensorReading();
 
-    qreal reflectance() const;
+    qreal yRotation() const;
+    qreal xRotation() const;
 
 Q_SIGNALS:
-    void reflectanceChanged();
+    void yRotationChanged();
+    void xRotationChanged();
 
 private:
     QSensorReading *reading() const Q_DECL_OVERRIDE;
     void readingUpdate() Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    qreal m_reflectance;
+    QTiltSensor *m_sensor;
+    qreal m_yRotation;
+    qreal m_xRotation;
 };
 
 QT_END_NAMESPACE

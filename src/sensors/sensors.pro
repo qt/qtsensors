@@ -60,6 +60,7 @@ SENSORS=\
     qirproximitysensor\
     qrotationsensor\
     qtapsensor\
+    qtiltsensor\
     qgyroscope\
 
 for(s,SENSORS) {

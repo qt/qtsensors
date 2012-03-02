@@ -70,6 +70,8 @@ public:
                 QSensorManager::registerBackend(QRotationSensor::type, genericrotationsensor::id, this);
             if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
                 QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
+                QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
         } else {
             if (QSensorManager::isBackendRegistered(QOrientationSensor::type, genericorientationsensor::id))
                 QSensorManager::unregisterBackend(QOrientationSensor::type, genericorientationsensor::id);

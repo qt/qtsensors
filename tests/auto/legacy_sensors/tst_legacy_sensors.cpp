@@ -173,6 +173,8 @@ private slots:
         QTest::newRow("1.3 GyroscopeReading") << "1.3" << "GyroscopeReading" << false;
         QTest::newRow("1.3 IRProximitySensor") << "1.3" << "IRProximitySensor" << true;
         QTest::newRow("1.3 IRProximityReading") << "1.3" << "IRProximityReading" << false;
+        QTest::newRow("1.3 TiltSensor") << "1.3" << "TiltSensor" << true;
+        QTest::newRow("1.3 TiltReading") << "1.3" << "TiltReading" << false;
     }
 
     void elements()
@@ -238,6 +240,7 @@ private slots:
         QTest::newRow("1.3 LightSensor") << "1.3" << "LightSensor" << true;
         QTest::newRow("1.3 Gyroscope") << "1.3" << "Gyroscope" << true;
         QTest::newRow("1.3 IRProximitySensor") << "1.3" << "IRProximitySensor" << true;
+        QTest::newRow("1.3 TiltSensor") << "1.3" << "TiltSensor" << true;
     }
 
     void alwaysOn()

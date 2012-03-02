@@ -56,13 +56,6 @@ Module {
         prototype: "qsensor2common"
         exports: ["TiltSensor 5.0"]
         Enum {
-            name: "Unit"
-            values: {
-                "Radians": 0,
-                "Degrees": 1
-            }
-        }
-        Enum {
             name: "Speed"
             values: {
                 "Slow": 0,
@@ -72,11 +65,8 @@ Module {
         }
         Property { name: "yRotation"; type: "double"; isReadonly: true }
         Property { name: "xRotation"; type: "double"; isReadonly: true }
-        Property { name: "unit"; type: "Unit" }
         Property { name: "speed"; type: "Speed" }
-        Property { name: "accuracy"; type: "double" }
         Property { name: "settings"; type: "QByteArray" }
-        Signal { name: "unitChanged"; type: "void" }
         Signal { name: "yRotationChanged"; type: "void" }
         Signal { name: "xRotationChanged"; type: "void" }
         Signal { name: "speedChanged"; type: "void" }

@@ -39,47 +39,34 @@
 **
 ****************************************************************************/
 
-#ifndef QMLIRPROXIMITYSENSOR_H
-#define QMLIRPROXIMITYSENSOR_H
+#ifndef QTILTSENSOR_P_H
+#define QTILTSENSOR_P_H
 
-#include "qmlsensor.h"
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-class QIRProximitySensor;
-
-class QmlIRProximitySensor : public QmlSensor
+class QTiltReadingPrivate
 {
-    Q_OBJECT
 public:
-    explicit QmlIRProximitySensor(QObject *parent = 0);
-    ~QmlIRProximitySensor();
+    QTiltReadingPrivate()
+        : yRotation(0)
+        , xRotation(0)
+    {
+    }
 
-private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
-};
-
-class QmlIRProximitySensorReading : public QmlSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal reflectance READ reflectance NOTIFY reflectanceChanged)
-public:
-    explicit QmlIRProximitySensorReading(QIRProximitySensor *sensor);
-    ~QmlIRProximitySensorReading();
-
-    qreal reflectance() const;
-
-Q_SIGNALS:
-    void reflectanceChanged();
-
-private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    qreal m_reflectance;
+    qreal yRotation;
+    qreal xRotation;
 };
 
 QT_END_NAMESPACE

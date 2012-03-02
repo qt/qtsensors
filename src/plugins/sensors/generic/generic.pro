@@ -7,12 +7,14 @@ DESTDIR = $$QT.sensors.plugins/sensors
 
 HEADERS += genericorientationsensor.h\
            genericrotationsensor.h\
-           genericalssensor.h
+           genericalssensor.h\
+           generictiltsensor.h
 
 SOURCES += genericorientationsensor.cpp\
            main.cpp\
            genericrotationsensor.cpp\
-           genericalssensor.cpp
+           genericalssensor.cpp\
+           generictiltsensor.cpp
 
 OTHER_FILES = plugin.json
 

@@ -102,7 +102,6 @@ ApplicationWindow {
         height: 480
         color: "transparent"
 
-        property int accuracy: 1
         property string speed: "Slow"
 
         Text {
@@ -148,74 +147,10 @@ ApplicationWindow {
 //! [1]
         TiltSensor {
             id: tilt
-            unit: TiltSensor.Degrees
             enabled: false
-            accuracy: 1.0
             speed: TiltSensor.Slow
         }
 //! [1]
-
-        Rectangle{
-            id: accuracyRect
-            anchors.top: labelTilt.bottom
-            anchors.topMargin: 5
-            anchors.left: mainWnd.left
-            anchors.leftMargin: 5
-            anchors.right: mainWnd.right
-            anchors.rightMargin: mainWnd.width / 2
-            height: 110
-            color: "transparent"
-
-            Text{
-                id: textAccuracy
-                anchors.top: accuracyRect.top
-                anchors.left: accuracyRect.left
-                text: "Accuracy"
-                font.bold: true
-            }
-
-            Text{
-                id: textAccuracyValue
-                anchors.top: textAccuracy.bottom
-                anchors.topMargin: 5
-                anchors.left: accuracyHigher.left
-                anchors.right: accuracyHigher.right
-                text: mainWnd.accuracy
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            Button{
-                id: accuracyLower
-                anchors.top: textAccuracyValue.bottom
-                anchors.left: accuracyRect.left
-                height: 30
-                width: 40
-                text: "-"
-
-                onClicked:{
-                    if (mainWnd.accuracy > 1){
-                        mainWnd.accuracy--;
-                        tilt.accuracy = mainWnd.accuracy;
-                    }
-                }
-            }
-
-            Button{
-                id: accuracyHigher
-                anchors.top: textAccuracyValue.bottom
-                anchors.left: accuracyLower.right
-                height: 30
-                width: 40
-                text: "+"
-
-                onClicked:{
-                    if (mainWnd.accuracy < 10){
-                        mainWnd.accuracy++;
-                        tilt.accuracy = mainWnd.accuracy;
-                    }
-                }
-            }
-        }
 
         Rectangle{
             id: speedRect
@@ -291,7 +226,7 @@ ApplicationWindow {
             id: calibrate
             anchors.left: mainWnd.left
             anchors.leftMargin: 5
-            anchors.top: accuracyRect.bottom
+            anchors.top: speedRect.bottom
             height: 30
             width: 80
             text: "Calibrate"
@@ -302,22 +237,8 @@ ApplicationWindow {
         }
 
         Button{
-            id: useRadian
-            anchors.top: calibrate.bottom
-            anchors.left: mainWnd.left
-            anchors.leftMargin: 5
-            height: 30
-            width: 80
-            text: (tilt !== null ? tilt.unit === TiltSensor.Radians ? "Degree" : "Radians" : "Degree")
-
-            onClicked:{
-                tilt.unit = (useRadian.text === "Radians"  ? TiltSensor.Radians : TiltSensor.Degrees);
-            }
-        }
-
-        Button{
             id: tiltStart
-            anchors.top: useRadian.bottom
+            anchors.top: calibrate.bottom
             anchors.left: mainWnd.left
             anchors.leftMargin: 5
             height: 30
@@ -341,7 +262,7 @@ ApplicationWindow {
             anchors.bottom: useRadian.bottom
             verticalAlignment: Text.AlignVCenter
 //! [3]
-            text: "X Rotation: " + tilt.xRotation + (tilt.unit === TiltSensor.Radians ? " rad" : "°")
+            text: "X Rotation: " + tilt.xRotation + "°"
 //! [3]
         }
 
@@ -355,7 +276,7 @@ ApplicationWindow {
             anchors.bottom: tiltStart.bottom
             verticalAlignment: Text.AlignVCenter
 //! [4]
-            text: "Y Rotation: " + tilt.yRotation + (tilt.unit === TiltSensor.Radians ? " rad" : "°")
+            text: "Y Rotation: " + tilt.yRotation +  "°"
 //! [4]
         }
 

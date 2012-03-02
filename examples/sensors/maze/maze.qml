@@ -173,9 +173,7 @@ ApplicationWindow {
 //! [1]
     TiltSensor{
         id: tiltSensor
-        unit: TiltSensor.Degrees
         enabled: true
-        accuracy: 5.0
     }
 //! [1]
 

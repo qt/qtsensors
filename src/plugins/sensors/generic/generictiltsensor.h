@@ -39,49 +39,45 @@
 **
 ****************************************************************************/
 
-#ifndef QMLIRPROXIMITYSENSOR_H
-#define QMLIRPROXIMITYSENSOR_H
+#ifndef GENERICTILTSENSOR_H
+#define GENERICTILTSENSOR_H
 
-#include "qmlsensor.h"
+#include <qsensorbackend.h>
+#include <qtiltsensor.h>
+#include <qaccelerometer.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-class QIRProximitySensor;
-
-class QmlIRProximitySensor : public QmlSensor
+class GenericTiltSensor : public QSensorBackend, public QAccelerometerFilter
 {
-    Q_OBJECT
 public:
-    explicit QmlIRProximitySensor(QObject *parent = 0);
-    ~QmlIRProximitySensor();
+
+    static char const * const id;
+
+    GenericTiltSensor(QSensor *sensor);
+
+    void start();
+    void stop();
+
+    void calibrate();
+
+    bool filter(QAccelerometerReading *reading);
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
-};
-
-class QmlIRProximitySensorReading : public QmlSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal reflectance READ reflectance NOTIFY reflectanceChanged)
-public:
-    explicit QmlIRProximitySensorReading(QIRProximitySensor *sensor);
-    ~QmlIRProximitySensorReading();
-
-    qreal reflectance() const;
-
-Q_SIGNALS:
-    void reflectanceChanged();
-
-private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    qreal m_reflectance;
+    QTiltReading m_reading;
+    QAccelerometer *accelerometer;
+    qreal radAccuracy;
+    qreal pitch;
+    qreal roll;
+    qreal calibratedPitch;
+    qreal calibratedRoll;
+    qreal xRotation;
+    qreal yRotation;
 };
 
 QT_END_NAMESPACE
 QT_END_HEADER
+
 #endif
+

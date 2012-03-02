@@ -892,6 +892,11 @@ private slots:
             QCOMPARE(reading->isDoubleTap(), true);
         })
 
+        TEST_SENSORINTERFACE(QTiltSensor, QTiltReading, {
+            QCOMPARE(reading->yRotation(), 1.0);
+            QCOMPARE(reading->xRotation(), 1.0);
+        })
+
         TEST_SENSORINTERFACE(QIRProximitySensor, QIRProximityReading, {
             QCOMPARE(reading->reflectance(), 0.5);
         })

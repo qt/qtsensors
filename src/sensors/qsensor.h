@@ -171,6 +171,7 @@ Q_SIGNALS:
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);
+    QSensorBackend *backend() const;
 
 private:
     void registerInstance();

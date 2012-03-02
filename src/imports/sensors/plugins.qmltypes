@@ -495,5 +495,21 @@ Module {
         Signal { name: "tapDirectionChanged"; type: "void" }
         Signal { name: "isDoubleTapChanged"; type: "void" }
     }
+    Component {
+        name: "QmlTiltSensor"
+        prototype: "QmlSensor"
+        exports: ["TiltSensor 1.3"]
+        }
+        Method { name: "calibrate"; type: "void" }
+    }
+    Component {
+        name: "QmlTiltSensorReading"
+        prototype: "QmlSensorReading"
+        exports: ["TiltReading 1.3"]
+        Property { name: "yRotation"; type: "double"; isReadonly: true }
+        Property { name: "xRotation"; type: "double"; isReadonly: true }
+        Signal { name: "yRotationChanged"; type: "void" }
+        Signal { name: "xRotationChanged"; type: "void" }
+    }
     ModuleApi { version: 1.3; name: "QmlSensorGlobal" }
 }

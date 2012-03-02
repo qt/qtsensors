@@ -71,7 +71,6 @@ QSensor2Tilt::QSensor2Tilt(QObject* parent)
     , _yRotation(0)
     , _xRotation(0)
     , _radAccuracy(M_PI / 180)
-    , _unit(QSensor2Tilt::Radians)
     , _pitch(0)
     , _roll(0)
     , _calibratedPitch(0)
@@ -199,32 +198,6 @@ void QSensor2Tilt::setEnabled(const bool val)
     }
 }
 
-/*!
-    \target unit_property
-    \qmlproperty enumeration QtSensors5::TiltSensor::unit
-    Returns the unit of the rotation which can be one of:
-    \table
-    \row
-        \li TiltSensor.Radians
-        \li The unit of the rotation angle is radians.
-    \row
-        \li TiltSensor.Degrees
-        \li The unit of the rotation angle is degrees.
-    \endtable
-*/
-QSensor2Tilt::Unit QSensor2Tilt::unit()
-{
-    return _unit;
-}
-
-void QSensor2Tilt::setUnit(const QSensor2Tilt::Unit val)
-{
-    if (_unit != val){
-        _unit = val;
-        Q_EMIT unitChanged();
-    }
-}
-
 
 /*!
     \qmlproperty real QtSensors5::TiltSensor::yRotation
@@ -240,10 +213,7 @@ void QSensor2Tilt::setUnit(const QSensor2Tilt::Unit val)
 */
 qreal QSensor2Tilt::yRotation()
 {
-    if (_unit == QSensor2Tilt::Degrees)
-        return _yRotation * 180 / M_PI;
-
-    return _yRotation;
+    return _yRotation * 180 / M_PI;
 }
 
 /*!
@@ -259,10 +229,7 @@ qreal QSensor2Tilt::yRotation()
 */
 qreal QSensor2Tilt::xRotation()
 {
-    if (_unit == QSensor2Tilt::Degrees)
-        return _xRotation * 180 / M_PI;
-
-    return _xRotation;
+    return _xRotation * 180 / M_PI;
 }
 
 /*
@@ -273,7 +240,7 @@ qreal QSensor2Tilt::xRotation()
 */
 inline qreal calcPitch(double Ax, double Ay, double Az)
 {
-    return (float)-qAtan2(Ax, sqrt(Ay * Ay + Az * Az));
+    return -qAtan2(Ax, sqrt(Ay * Ay + Az * Az));
 }
 
 /*
@@ -284,7 +251,7 @@ inline qreal calcPitch(double Ax, double Ay, double Az)
 */
 inline qreal calcRoll(double Ax, double Ay, double Az)
 {
-    return (float)qAtan2(Ay, (sqrt(Ax * Ax + Az * Az)));
+    return qAtan2(Ay, (sqrt(Ax * Ax + Az * Az)));
 }
 
 /*!
@@ -316,22 +283,16 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
 /*!
     \qmlsignal QtSensors5::TiltSensor::tiltChanged(real deltaX, real deltaY)
     This signal is emitted whenever the change from at leat one of the rotation values was higher than the accuracy.
-    The angle value is based on the specified unit (Degree or Radian).
+    The angle value is based on degrees.
 
-    \sa {QtSensors5::TiltSensor::unit}
 */
-qreal QSensor2Tilt::accuracy()
-{
-    //return in degree
-    return 180 * _radAccuracy / M_PI;
-}
 
-void QSensor2Tilt::setAccuracy(qreal val)
-{
-    //save in rad to save convertion calc in filter function
-    if (val <= 90 && val >= 0)
-      _radAccuracy = M_PI * val / 180;
-}
+//void QSensor2Tilt::setAccuracy(qreal val)
+//{
+//    //save in rad to save convertion calc in filter function
+//    if (val <= 90 && val >= 0)
+//      _radAccuracy = M_PI * val / 180;
+//}
 
 /*!
     \qmlmethod void QtSensors5::TiltSensor::calibrate()
@@ -440,10 +401,7 @@ bool QSensor2Tilt::filter(QAccelerometerReading* reading)
         change = true;
     }
     if (change){
-        if (_unit == QSensor2Tilt::Degrees)
             Q_EMIT tiltChanged(dxrot * 180 / M_PI, dyrot * 180 / M_PI);
-        else
-            Q_EMIT tiltChanged(dxrot, dyrot);
     }
     return false;
 }

@@ -69,10 +69,8 @@ private slots:
     void testTilt();
     void testTilt_receivedSignalsCount();
     void testTiltSettings();
-    void testTiltAccuracy();
     void testTiltCalibration();
     void testTiltRunningMode();
-    void testTiltUnit();
     void testProximity();
     void testAmbientLight();
     void testGesture();
@@ -239,11 +237,6 @@ void tst_Sensors2QMLAPI::testTilt()
     _tilt->setProperty("enabled", true);
     QCOMPARE(spy.count() , 0);
 
-    _tilt->setProperty("unit", QSensor2Tilt::Radians);
-    QSignalSpy spyunitch(_tilt, SIGNAL(unitChanged()));
-    _tilt->setProperty("unit", QSensor2Tilt::Degrees);
-    QCOMPARE(spyunitch.count() , 1);
-
     QByteArray settings;
     settings.append(QString::number(-5.0));
     settings.append(";");
@@ -310,44 +303,6 @@ void tst_Sensors2QMLAPI::testTiltSettings()
     QCOMPARE(settings, val);
 }
 
-void tst_Sensors2QMLAPI::testTiltAccuracy()
-{
-    if (!_tilt)
-        _tilt = new QSensor2Tilt(this);
-
-    QByteArray settings;
-    settings.append(QString::number(0.0));
-    settings.append(";");
-    settings.append(QString::number(0.0));
-    _tilt->setProperty("settings", settings);
-    _tilt->setProperty("enabled", true);
-
-    QDeclAccelerometer* accel = _plugin.stAccel;
-
-    //be sure we set rotation to 0
-    _tilt->setProperty("accuracy", 0.0);
-    QVERIFY(0.01 > _tilt->property("accuracy").toFloat());
-
-    accel->test(0,0,1);
-
-    //now set accuracy a little bigger then Pi / 4 in deg
-    _tilt->setProperty("accuracy", 180 / 4.0 + 0.1);
-    QSignalSpy spyxrot(_tilt, SIGNAL(xRotationChanged()));
-    QSignalSpy spyyrot(_tilt, SIGNAL(yRotationChanged()));
-
-    accel->test(1, 1, 0);
-    QCOMPARE(spyxrot.count() , 0);
-    QCOMPARE(spyyrot.count() , 0);
-
-    spyxrot.clear();
-    spyyrot.clear();
-    _tilt->setProperty("accuracy", 180 / 4.0 + 0.1 - 0.1);
-    accel->test(1, 1, 0);
-    QCOMPARE(spyxrot.count() , 1);
-    QCOMPARE(spyyrot.count() , 1);
-
-}
-
 void tst_Sensors2QMLAPI::testTilt_receivedSignalsCount()
 {
     QCOMPARE(xrotch , 23);
@@ -365,12 +320,10 @@ void tst_Sensors2QMLAPI::testTiltCalibration()
     settings.append(QString::number(0.0));
     _tilt->setProperty("settings", settings);
     _tilt->setProperty("enabled", true);
-    _tilt->setProperty("unit", QSensor2Tilt::Degrees);
 
     QDeclAccelerometer* accel = _plugin.stAccel;
 
     //be sure we set rotation to 0
-    _tilt->setProperty("accuracy", 0.0);
     accel->test(-3.59904, 5.52114, 7.07059);
     _tilt->calibrate();
     accel->test(-3.59904, 5.52114, 7.07059);
@@ -391,34 +344,6 @@ void tst_Sensors2QMLAPI::testTiltCalibration()
     QVERIFY(xRotation < 0.25);
     QVERIFY(yRotation < 0.12);
     _tilt->setProperty("enabled", false);
-}
-
-void tst_Sensors2QMLAPI::testTiltUnit()
-{
-    if (!_tilt)
-        _tilt = new QSensor2Tilt(this);
-    QDeclAccelerometer* accel = _plugin.stAccel;
-    _tilt->setProperty("enabled", false);
-    _tilt->setProperty("accuracy", 0.0);
-    _tilt->setProperty("unit", QVariant(QSensor2Tilt::Radians));
-    accel->test(-3.59904, 5.52114, 7.07059);
-    qreal xRotation = _tilt->property("xRotation").toReal();
-    qreal yRotation = _tilt->property("yRotation").toReal();
-    xRotation += 0.159136;
-    yRotation -= 0.43440;
-    QVERIFY(xRotation < 0.0001);
-    QVERIFY(yRotation < 0.0001);
-    QCOMPARE(_tilt->property("unit").toInt(), (int)QSensor2Tilt::Radians);
-
-    _tilt->setProperty("unit", QVariant(QSensor2Tilt::Degrees));
-    accel->test(-3.59904, 5.52114, 7.07059);
-    xRotation = _tilt->property("xRotation").toReal();
-    yRotation = _tilt->property("yRotation").toReal();
-    xRotation += 9.11778;
-    yRotation -= 24.8898;
-    QVERIFY(xRotation < 0.0001);
-    QVERIFY(yRotation < 0.0001);
-    QCOMPARE(_tilt->property("unit").toInt(), (int)QSensor2Tilt::Degrees);
 }
 
 void tst_Sensors2QMLAPI::testTiltRunningMode()

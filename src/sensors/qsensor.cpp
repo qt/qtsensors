@@ -224,6 +224,14 @@ QSensor::QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent)
     d->init(type);
 }
 
+/*! \internal
+ */
+QSensorBackend *QSensor::backend() const
+{
+    Q_D(const QSensor);
+    return d->backend;
+}
+
 /*!
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */

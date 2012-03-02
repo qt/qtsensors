@@ -39,47 +39,55 @@
 **
 ****************************************************************************/
 
-#ifndef QMLIRPROXIMITYSENSOR_H
-#define QMLIRPROXIMITYSENSOR_H
+#ifndef QTILTSENSOR_H
+#define QTILTSENSOR_H
 
-#include "qmlsensor.h"
+#include "qsensor.h"
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-class QIRProximitySensor;
+QT_MODULE(QtSensors)
 
-class QmlIRProximitySensor : public QmlSensor
+class QTiltReadingPrivate;
+
+class Q_SENSORS_EXPORT QTiltReading : public QSensorReading
 {
     Q_OBJECT
-public:
-    explicit QmlIRProximitySensor(QObject *parent = 0);
-    ~QmlIRProximitySensor();
+    Q_PROPERTY(qreal yRotation READ yRotation)
+    Q_PROPERTY(qreal xRotation READ xRotation)
+    DECLARE_READING(QTiltReading)
 
-private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+public:
+    qreal yRotation() const;
+    void setYRotation(qreal y);
+
+    qreal xRotation() const;
+    void setXRotation(qreal x);
+
 };
 
-class QmlIRProximitySensorReading : public QmlSensorReading
+class Q_SENSORS_EXPORT QTiltFilter : public QSensorFilter
+{
+public:
+    virtual bool filter(QTiltReading *reading) = 0;
+private:
+    bool filter(QSensorReading *reading) { return filter(static_cast<QTiltReading*>(reading)); }
+};
+
+class Q_SENSORS_EXPORT QTiltSensor : public QSensor
 {
     Q_OBJECT
-    Q_PROPERTY(qreal reflectance READ reflectance NOTIFY reflectanceChanged)
 public:
-    explicit QmlIRProximitySensorReading(QIRProximitySensor *sensor);
-    ~QmlIRProximitySensorReading();
+    explicit QTiltSensor(QObject *parent = 0);
+    ~QTiltSensor();
+    QTiltReading *reading() const { return static_cast<QTiltReading*>(QSensor::reading()); }
+    static char const * const type;
 
-    qreal reflectance() const;
-
-Q_SIGNALS:
-    void reflectanceChanged();
+    Q_INVOKABLE void calibrate();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
-    QIRProximitySensor *m_sensor;
-    qreal m_reflectance;
+    Q_DISABLE_COPY(QTiltSensor)
 };
 
 QT_END_NAMESPACE
