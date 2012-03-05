@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
 
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    accelRange(0), lastRoll(0), active(0), pitch(0), detecting(0), lastDegree(0),
+    accelRange(0), orientationReading(0), lastRoll(0), active(0), pitch(0), detecting(0), lastDegree(0),
     lastX(0), lastY(0), lastZ()
 {
 }
@@ -130,6 +130,9 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
 
     qreal degrees = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+
+    if (orientationReading == 0)
+        return;
 
     if (rollList.count() > 4) {
         if (detecting

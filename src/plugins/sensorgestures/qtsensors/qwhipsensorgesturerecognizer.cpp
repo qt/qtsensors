@@ -48,7 +48,7 @@
 QT_BEGIN_NAMESPACE
 
 QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent), whipIt(0), lastX(0),
+    QSensorGestureRecognizer(parent), orientationReading(0), whipIt(0), lastX(0),
     detectedX(0), active(0)
 {
 }
@@ -131,6 +131,8 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     qreal difference = lastX - x;
 
     if (qAbs(difference) < 1)
+        return;
+    if (orientationReading == 0)
         return;
 
     qreal y = reading->y();

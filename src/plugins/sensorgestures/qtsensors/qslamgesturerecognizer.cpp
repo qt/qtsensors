@@ -48,6 +48,7 @@ QT_BEGIN_NAMESPACE
 
 QSlamSensorGestureRecognizer::QSlamSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
+    orientationReading(0),
     accelRange(0),
     active(0),
     lastX(0),
@@ -78,16 +79,15 @@ QString QSlamSensorGestureRecognizer::id() const
 
 bool QSlamSensorGestureRecognizer::start()
 {
-    connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
-            this,SLOT(orientationReadingChanged(QOrientationReading *)));
-
-    connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-            this,SLOT(accelChanged(QAccelerometerReading *)));
-
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
         if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
             active = true;
             accelRange = QtSensorGestureSensorHandler::instance()->accelRange;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+                    this,SLOT(accelChanged(QAccelerometerReading *)));
         } else {
             QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
             active = false;
@@ -132,6 +132,8 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     qreal z = reading->z();
 
 //// very hacky
+    if (orientationReading == 0)
+        return;
     if (orientationReading->orientation() == QOrientationReading::FaceUp) {
         z = z - 9.8;
     }

@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 QCoverSensorGestureRecognizer::QCoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    detecting(0), lastProx(0), proximityReading(0), active(0)
+  orientationReading(0),lastProx(0), proximityReading(0), active(0), detecting(0)
 {
 }
 
@@ -109,6 +109,9 @@ bool QCoverSensorGestureRecognizer::isActive()
 
 void QCoverSensorGestureRecognizer::proximityChanged(QIRProximityReading *reading)
 {
+    if (orientationReading == 0)
+        return;
+
     proximityReading = reading->reflectance();
     qreal difference =  lastProx - proximityReading;
 

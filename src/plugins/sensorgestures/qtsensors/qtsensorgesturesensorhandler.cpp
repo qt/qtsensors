@@ -89,7 +89,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
     switch (sensor) {
     case Accel:
         //accel
-        if (!accel) {
+        if (accel == 0x0) {
             accel = new QAccelerometer(this);
             ok = accel->connectToBackend();
             qoutputrangelist outputranges = accel->outputRanges();
@@ -105,7 +105,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         break;
     case Orientation:
         //orientation
-        if (!orientation) {
+        if (orientation == 0x0) {
             orientation = new QOrientationSensor(this);
             ok = orientation->connectToBackend();
             connect(orientation,SIGNAL(readingChanged()),this,SLOT(orientationChanged()));
@@ -115,7 +115,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         break;
     case Proximity:
         //proximity
-        if (!proximity) {
+        if (proximity == 0x0) {
             proximity = new QProximitySensor(this);
             ok = proximity->connectToBackend();
             connect(proximity,SIGNAL(readingChanged()),this,SLOT(proximityChanged()));
@@ -125,7 +125,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         break;
     case IrProximity:
         //irproximity
-        if (!irProx) {
+        if (irProx == 0x0) {
             irProx = new QIRProximitySensor(this);
             ok = irProx->connectToBackend();
             connect(irProx,SIGNAL(readingChanged()),this,SLOT(irProximityChanged()));
@@ -135,7 +135,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         break;
     case Tap:
         //dtap
-        if (!tapSensor) {
+        if (tapSensor == 0x0) {
             tapSensor = new QTapSensor(this);
             ok = tapSensor->connectToBackend();
             connect(tapSensor,SIGNAL(readingChanged()),this,SLOT(doubletap()));
