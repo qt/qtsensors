@@ -42,10 +42,10 @@ import QtQuick 2.0
 import QtMobility.sensors 1.3
 import Grue 1.0
 
-Item {
+Rectangle {
     width: 240
-    height: 330
-    y: 30
+    height: 320
+    color: "black"
 
     GrueSensor {
         id: sensor
@@ -53,27 +53,42 @@ Item {
         onReadingChanged: {
             var percent = reading.chanceOfBeingEaten;
             var thetext = "";
+            var theopacity = 0;
             if (percent === 0) {
                 thetext = "It is light. You are safe from Grues.";
             }
             else if (percent === 100) {
                 thetext = "You have been eaten by a Grue!";
                 sensor.active = false;
+                theopacity = 1;
             }
             else if (percent > 0) {
-                thetext = "It is dark. You are likely to be eaten by a Grue.";
-                thetext += " Your chance of being eaten by a Grue: "+percent+" percent.";
+                thetext = "It is dark. You are likely to be eaten by a Grue. "
+                        + "Your chance of being eaten by a Grue: "+percent+" percent.";
+                theopacity = 0.05 + (percent * 0.001);
             }
             text.font.pixelSize = 30;
             text.text = "<p>" + thetext + "</p>";
+            grueimg.opacity = theopacity;
         }
     }
 
     Text {
         id: text
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         text: "I can't tell if you're going to be eaten by a Grue or not. You're on your own!"
         wrapMode: Text.WordWrap
         font.pixelSize: 50
+        color: "white"
+    }
+
+    Image {
+        id: grueimg
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        source: "grue.png"
+        opacity: 0
     }
 }

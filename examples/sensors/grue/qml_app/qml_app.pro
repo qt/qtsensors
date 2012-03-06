@@ -3,7 +3,8 @@ TEMPLATE = aux
 app.files = \
     icon.png \
     info.json \
-    main.qml
+    main.qml \
+    grue.png
 
 MT_SYSROOT=$$(MT_SYSROOT)
 !isEmpty(MT_SYSROOT):EXAMPLES_PREFIX=/opt/mt/applications
