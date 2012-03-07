@@ -68,14 +68,11 @@ Q_SIGNALS:
 
 private slots:
     void accelChanged(QAccelerometerReading *reading);
-    void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
 
 private:
-    QOrientationReading *orientationReading;
     QTimer *timer;
     int accelRange;
-    bool whipIt;
     bool wasNegative;
     qreal lastX;
     qreal detectedX;
@@ -84,6 +81,8 @@ private:
 
     qreal accelX;
     qreal roll;
+    bool detecting;
+    QList<qreal> zList;
 
 };
 

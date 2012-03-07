@@ -131,7 +131,19 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     qreal y = reading->y();
     qreal z = reading->z();
 
-//// very hacky
+    if (zList.count() > 4)
+        zList.removeLast();
+
+    qreal averageZ = 0;
+    Q_FOREACH (qreal az, zList) {
+        averageZ += az;
+    }
+    averageZ += z;
+    averageZ /= zList.count() + 1;
+
+    zList.insert(0,qAbs(averageZ));
+
+    //// very hacky
     if (orientationReading == 0)
         return;
     if (orientationReading->orientation() == QOrientationReading::FaceUp) {
@@ -148,8 +160,8 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (slamMap.count() > 5)
         slamMap.removeLast();
     if (z < SLAM_FACTOR
-            && qAbs(diffX) < (accelRange *SLAM_WIGGLE_FACTOR)
-            && qAbs(diffY) < (accelRange *SLAM_WIGGLE_FACTOR)) {
+            && qAbs(diffX) < (accelRange  * SLAM_WIGGLE_FACTOR)
+            && qAbs(diffY) < (accelRange  * SLAM_WIGGLE_FACTOR)) {
         slamMap.insert(0,true);
         if (!detecting && !timer->isActive()) {
             timer->start();
@@ -164,9 +176,9 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         negativeList.removeLast();
 
     if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0))
-         && qAbs(diffX) > (accelRange * 0.5))
-            || ((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
-            && qAbs(diffY) > (accelRange * 0.5)) {
+         && qAbs(diffX) > (accelRange   * 0.7))
+            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
+            && qAbs(diffY) > (accelRange * 0.7))) {
         negativeList.insert(0,true);
     } else {
         negativeList.insert(0,false);
@@ -186,6 +198,15 @@ void QSlamSensorGestureRecognizer:: checkForSlam()
 {
     slamOk = false;
 
+    qreal averageZ = 0;
+    Q_FOREACH (qreal az, zList) {
+        averageZ += az;
+    }
+    averageZ /= zList.count();
+
+    if (qAbs(averageZ) < 6.0)
+        return;
+
     for (int i = 0; i < slamMap.count() - 1; i++) {
         if (!slamMap.at(i)) {
             slamOk = true;
@@ -204,6 +225,7 @@ void QSlamSensorGestureRecognizer:: checkForSlam()
                 ok = false;
             }
         }
+
         if (ok) {
             Q_EMIT slam();
             Q_EMIT detected("slam");

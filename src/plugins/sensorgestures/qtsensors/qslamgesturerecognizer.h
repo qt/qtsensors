@@ -93,8 +93,7 @@ private:
 
     QList <bool> negativeList;
 
-    //QList<qreal> yList;
-
+    QList<qreal> zList;
 };
 
 QT_END_NAMESPACE

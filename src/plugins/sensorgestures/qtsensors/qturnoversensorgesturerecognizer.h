@@ -73,6 +73,7 @@ private:
     bool active;
 
     void isRecognized();
+    QList<qreal> zList;
 
 };
 QT_END_NAMESPACE

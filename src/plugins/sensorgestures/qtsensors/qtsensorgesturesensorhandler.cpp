@@ -95,7 +95,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
             qoutputrangelist outputranges = accel->outputRanges();
 
             if (outputranges.count() > 0)
-                accelRange = (int)(outputranges.at(0).maximum *2);//39
+                accelRange = (int)(outputranges.at(0).maximum);//39
             else
                 accelRange = 39; //this should never happen
             connect(accel,SIGNAL(readingChanged()),this,SLOT(accelChanged()));
