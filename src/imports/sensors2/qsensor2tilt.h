@@ -42,8 +42,8 @@
 #ifndef QSEONSOR2TILT_H
 #define QSEONSOR2TILT_H
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqmlextensionplugin.h>
+#include <QtQml/qqml.h>
 #include <qaccelerometer.h>
 #include "qsensor2common.h"
 

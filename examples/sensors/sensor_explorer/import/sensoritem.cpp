@@ -311,12 +311,12 @@ QString QSensorItem::convertValue(const QString& type, const QVariant& val)
     \property QSensorItem::properties
     Returns a list of all properties from the sensor
 */
-QDeclarativeListProperty<QPropertyInfo> QSensorItem::properties()
+QQmlListProperty<QPropertyInfo> QSensorItem::properties()
 {
     _properties.clear();
     _properties.append(_sensorProperties);
     _properties.append(_readerProperties);
-    return QDeclarativeListProperty<QPropertyInfo> (this, _properties);
+    return QQmlListProperty<QPropertyInfo> (this, _properties);
 }
 
 QT_END_NAMESPACE

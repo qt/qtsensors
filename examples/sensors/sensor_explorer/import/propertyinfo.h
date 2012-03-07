@@ -42,7 +42,7 @@
 #ifndef QPROPERTYINFO_H
 #define QPROPERTYINFO_H
 
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqml.h>
 #include <QtCore/QString>
 
 QT_BEGIN_NAMESPACE

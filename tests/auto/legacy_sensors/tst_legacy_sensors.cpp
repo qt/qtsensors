@@ -40,8 +40,8 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <QDeclarativeEngine>
-#include <QDeclarativeComponent>
+#include <QQmlEngine>
+#include <QQmlComponent>
 #include <QSensor>
 
 class tst_legacy_sensors : public QObject
@@ -78,16 +78,16 @@ private slots:
         QFETCH(QString, version);
         QFETCH(bool, exists);
 
-        QDeclarativeEngine engine;
+        QQmlEngine engine;
         QString qml = QString("import QtQuick 2.0\nimport QtMobility.sensors %1\nItem {}").arg(version);
-        QDeclarativeComponent c(&engine);
+        QQmlComponent c(&engine);
         c.setData(qml.toLocal8Bit(), QUrl::fromLocalFile(QDir::currentPath()));
         if (!exists)
-            QTest::ignoreMessage(QtWarningMsg, "QDeclarativeComponent: Component is not ready");
+            QTest::ignoreMessage(QtWarningMsg, "QQmlComponent: Component is not ready");
         QObject *obj = c.create();
         QCOMPARE(exists, (obj != 0));
         delete obj;
-        QList<QDeclarativeError> errors = c.errors();
+        QList<QQmlError> errors = c.errors();
         if (exists) {
             QCOMPARE(errors.count(), 0);
         } else {
@@ -175,16 +175,16 @@ private slots:
         QFETCH(QString, element);
         QFETCH(bool, exists);
 
-        QDeclarativeEngine engine;
+        QQmlEngine engine;
         QString qml = QString("import QtQuick 2.0\nimport QtMobility.sensors %1\n%2 {}").arg(version).arg(element);
-        QDeclarativeComponent c(&engine);
+        QQmlComponent c(&engine);
         c.setData(qml.toLocal8Bit(), QUrl::fromLocalFile(QDir::currentPath()));
         if (!exists)
-            QTest::ignoreMessage(QtWarningMsg, "QDeclarativeComponent: Component is not ready");
+            QTest::ignoreMessage(QtWarningMsg, "QQmlComponent: Component is not ready");
         QObject *obj = c.create();
         QCOMPARE(exists, (obj != 0));
         delete obj;
-        QList<QDeclarativeError> errors = c.errors();
+        QList<QQmlError> errors = c.errors();
         if (exists) {
             QCOMPARE(errors.count(), 0);
         } else {
@@ -240,11 +240,11 @@ private slots:
         QFETCH(QString, element);
         QFETCH(bool, validSyntax);
 
-        QDeclarativeEngine engine;
+        QQmlEngine engine;
         QString qml = QString("import QtQuick 2.0\nimport QtMobility.sensors %1\n%2 {\nalwaysOn: true\n}").arg(version).arg(element);
-        QDeclarativeComponent c(&engine);
+        QQmlComponent c(&engine);
         if (!validSyntax)
-            QTest::ignoreMessage(QtWarningMsg, "QDeclarativeComponent: Component is not ready");
+            QTest::ignoreMessage(QtWarningMsg, "QQmlComponent: Component is not ready");
         c.setData(qml.toLocal8Bit(), QUrl::fromLocalFile(QDir::currentPath()));
         QObject *obj = c.create();
         if (validSyntax) {

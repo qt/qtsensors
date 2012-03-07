@@ -42,8 +42,8 @@
 #ifndef QSENSOR2PROXIMITY_H
 #define QSENSOR2PROXIMITY_H
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqmlextensionplugin.h>
+#include <QtQml/qqml.h>
 #include <qproximitysensor.h>
 #include "qsensor2common.h"
 

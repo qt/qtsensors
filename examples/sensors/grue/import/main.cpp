@@ -38,14 +38,14 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqmlextensionplugin.h>
+#include <QtQml/qqml.h>
 
 #include <gruesensor.h>
 
 QT_BEGIN_NAMESPACE
 
-class GrueSensorQmlImport : public QDeclarativeExtensionPlugin
+class GrueSensorQmlImport : public QQmlExtensionPlugin
 {
     Q_OBJECT
 public:

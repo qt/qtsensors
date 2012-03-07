@@ -4,7 +4,7 @@ CONFIG += plugin
 TARGET = $$qtLibraryTarget(declarative_explorer)
 TARGETPATH = Explorer
 
-QT += declarative sensors
+QT += qml sensors
 
 SOURCES = main.cpp explorer.cpp sensoritem.cpp propertyinfo.cpp
 HEADERS = explorer.h sensoritem.h propertyinfo.h

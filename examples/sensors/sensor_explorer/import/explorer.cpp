@@ -106,9 +106,9 @@ void QSensorExplorer::loadSensors()
     \property QSensorExplorer::availableSensors
     Returns a list of all available sensor.
 */
-QDeclarativeListProperty<QSensorItem> QSensorExplorer::availableSensors()
+QQmlListProperty<QSensorItem> QSensorExplorer::availableSensors()
 {
-    return QDeclarativeListProperty<QSensorItem>(this,_availableSensors);
+    return QQmlListProperty<QSensorItem>(this,_availableSensors);
 }
 
 /*

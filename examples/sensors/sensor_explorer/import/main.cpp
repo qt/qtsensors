@@ -38,14 +38,14 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqmlextensionplugin.h>
+#include <QtQml/qqml.h>
 #include "explorer.h"
 #include <QtCore/QDebug>
 
 QT_BEGIN_NAMESPACE
 
-class SensorExplorerDeclarativeModule : public QDeclarativeExtensionPlugin
+class SensorExplorerDeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
 public:

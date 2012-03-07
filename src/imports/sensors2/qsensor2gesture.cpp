@@ -97,7 +97,7 @@ QSensor2Gesture::~QSensor2Gesture()
 }
 
 /*
-  QDeclarativeParserStatus interface implementation
+  QQmlParserStatus interface implementation
 */
 void QSensor2Gesture::classBegin()
 {
@@ -112,7 +112,7 @@ void QSensor2Gesture::componentComplete()
     setEnabled(_enabled);
 }
 /*
-  End of QDeclarativeParserStatus interface implementation
+  End of QQmlParserStatus interface implementation
 */
 
 /*!

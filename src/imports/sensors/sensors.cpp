@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqmlextensionplugin.h>
+#include <QtQml/qqml.h>
 
 #include <qaccelerometer.h>
 #include <qambientlightsensor.h>
@@ -56,7 +56,7 @@
 
 QT_BEGIN_NAMESPACE
 
-// QtDeclarative doesn't have this for some reason. It has qmlRegisterRevision<T,int>
+// QtQml doesn't have this for some reason. It has qmlRegisterRevision<T,int>
 // and qmlRegisterUncreatableType<T> but they both only do half the job. This one
 // registers an uncreatable type and sets the revision so that derived classes will
 // pick up new properties.
@@ -66,24 +66,24 @@ int qmlRegisterUncreatableType(const char *uri, int versionMajor, int versionMin
     QByteArray name(T::staticMetaObject.className());
 
     QByteArray pointerName(name + '*');
-    QByteArray listName("QDeclarativeListProperty<" + name + ">");
+    QByteArray listName("QQmlListProperty<" + name + ">");
 
-    QDeclarativePrivate::RegisterType type = {
+    QQmlPrivate::RegisterType type = {
         1,
 
         qRegisterMetaType<T *>(pointerName.constData()),
-        qRegisterMetaType<QDeclarativeListProperty<T> >(listName.constData()),
+        qRegisterMetaType<QQmlListProperty<T> >(listName.constData()),
         0, 0,
         reason,
 
         uri, versionMajor, versionMinor, qmlName, &T::staticMetaObject,
 
-        QDeclarativePrivate::attachedPropertiesFunc<T>(),
-        QDeclarativePrivate::attachedPropertiesMetaObject<T>(),
+        QQmlPrivate::attachedPropertiesFunc<T>(),
+        QQmlPrivate::attachedPropertiesMetaObject<T>(),
 
-        QDeclarativePrivate::StaticCastSelector<T,QDeclarativeParserStatus>::cast(),
-        QDeclarativePrivate::StaticCastSelector<T,QDeclarativePropertyValueSource>::cast(),
-        QDeclarativePrivate::StaticCastSelector<T,QDeclarativePropertyValueInterceptor>::cast(),
+        QQmlPrivate::StaticCastSelector<T,QQmlParserStatus>::cast(),
+        QQmlPrivate::StaticCastSelector<T,QQmlPropertyValueSource>::cast(),
+        QQmlPrivate::StaticCastSelector<T,QQmlPropertyValueInterceptor>::cast(),
 
         0, 0,
 
@@ -91,10 +91,10 @@ int qmlRegisterUncreatableType(const char *uri, int versionMajor, int versionMin
         metaObjectRevision
     };
 
-    return QDeclarativePrivate::qmlregister(QDeclarativePrivate::TypeRegistration, &type);
+    return QQmlPrivate::qmlregister(QQmlPrivate::TypeRegistration, &type);
 }
 
-class QSensorsDeclarativeModule : public QDeclarativeExtensionPlugin
+class QSensorsDeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
 public:

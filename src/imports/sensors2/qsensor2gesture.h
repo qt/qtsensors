@@ -42,8 +42,8 @@
 #ifndef QSENSOR2GESTURE_H
 #define QSENSOR2GESTURE_H
 
-#include <QtDeclarative/QDeclarativeParserStatus>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/QQmlParserStatus>
+#include <QtQml/qqml.h>
 #include <QtCore/QStringList>
 #include <QtCore/QMap>
 
@@ -51,7 +51,7 @@ QT_BEGIN_NAMESPACE
 
 class QSensorGesture;
 class QSensorGestureManager;
-class QSensor2Gesture : public QObject, public QDeclarativeParserStatus
+class QSensor2Gesture : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_PROPERTY(QStringList availableGestures READ availableGestures NOTIFY availableGesturesChanged)
@@ -59,7 +59,7 @@ class QSensor2Gesture : public QObject, public QDeclarativeParserStatus
     Q_PROPERTY(QStringList validGestures READ validGestures NOTIFY validGesturesChanged)
     Q_PROPERTY(QStringList invalidGestures READ invalidGestures NOTIFY invalidGesturesChanged)
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled NOTIFY enabledChanged)
-    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     QSensor2Gesture(QObject* parent = 0);

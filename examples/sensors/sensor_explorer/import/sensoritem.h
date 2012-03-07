@@ -42,7 +42,7 @@
 #ifndef QSENSORITEM_H
 #define QSENSORITEM_H
 
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqml.h>
 #include <QtCore/QString>
 #include "propertyinfo.h"
 
@@ -54,7 +54,7 @@ class QSensorItem : public QObject
     Q_OBJECT
     Q_PROPERTY(bool start READ start WRITE setStart NOTIFY startChanged)
     Q_PROPERTY(QString id READ id CONSTANT)
-    Q_PROPERTY(QDeclarativeListProperty<QPropertyInfo> properties READ properties NOTIFY propertiesChanged)
+    Q_PROPERTY(QQmlListProperty<QPropertyInfo> properties READ properties NOTIFY propertiesChanged)
 public:
     QSensorItem(QObject* parent = 0);
     QSensorItem(QSensor* sensor, QObject* parent = 0);
@@ -72,7 +72,7 @@ private:
     QString id();
     bool start();
     void setStart(bool run);
-    QDeclarativeListProperty<QPropertyInfo> properties();
+    QQmlListProperty<QPropertyInfo> properties();
     QString convertValue(const QString& type, const QVariant& val);
     bool isWriteable(const QString& propertyname);
     bool ignoreProperty(const QString& propertyname);

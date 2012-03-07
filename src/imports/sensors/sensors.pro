@@ -3,7 +3,7 @@ TARGETPATH = QtMobility/sensors
 
 include(qsensorsimport.pri)
 
-QT += declarative sensors
+QT += qml sensors
 
 SOURCES += sensors.cpp
 

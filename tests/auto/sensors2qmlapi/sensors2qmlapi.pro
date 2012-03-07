@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = tst_sensors2qmlapi
 
 CONFIG += testcase
-QT = core testlib sensors-private declarative
+QT = core testlib sensors-private qml
 INCLUDEPATH += ./
 DEPENDPATH += ./
 

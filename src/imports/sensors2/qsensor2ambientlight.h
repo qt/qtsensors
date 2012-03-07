@@ -42,8 +42,8 @@
 #ifndef QSENSOR2AMBIENTLIGHT_H
 #define QSENSOR2AMBIENTLIGHT_H
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#include <QtQml/qqmlextensionplugin.h>
+#include <QtQml/qqml.h>
 #include <qambientlightsensor.h>
 #include "qsensor2common.h"
 

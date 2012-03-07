@@ -42,8 +42,8 @@
 #ifndef QSEONSOREXPLORER_H
 #define QSEONSOREXPLORER_H
 
-#include <QtDeclarative/qdeclarative.h>
-#include <QtDeclarative/QDeclarativeListProperty>
+#include <QtQml/qqml.h>
+#include <QtQml/QQmlListProperty>
 #include "sensoritem.h"
 
 QT_BEGIN_NAMESPACE
@@ -51,14 +51,14 @@ QT_BEGIN_NAMESPACE
 class QSensorExplorer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<QSensorItem> availableSensors READ availableSensors NOTIFY availableSensorsChanged)
+    Q_PROPERTY(QQmlListProperty<QSensorItem> availableSensors READ availableSensors NOTIFY availableSensorsChanged)
     Q_PROPERTY(QSensorItem* selectedSensorItem READ selectedSensorItem WRITE setSelectedSensorItem NOTIFY selectedSensorItemChanged)
 public:
     QSensorExplorer(QObject* parent = 0);
     virtual ~QSensorExplorer();
 
 private:
-    QDeclarativeListProperty<QSensorItem> availableSensors();
+    QQmlListProperty<QSensorItem> availableSensors();
     void loadSensors();
     void setSelectedSensorItem(QSensorItem* selitem);
     QSensorItem* selectedSensorItem();
