@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \page qtsensors.html
+    \page index-qtsensors.html
     \title Qt Sensors
     \brief The Qt Sensors API provides access to sensors via QML and C++ interfaces.
     \ingroup technology-apis
