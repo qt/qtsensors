@@ -43,7 +43,6 @@
 #define QSENSORMANAGER_H
 
 #include "qsensor.h"
-#include "qsensorplugindefs.h"
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
@@ -79,6 +78,21 @@ public:
 protected:
     ~QSensorBackendFactory() {}
 };
+
+// Static plugins have their own registration methods.
+// They can only register types. They cannot use the changes interface.
+#define REGISTER_STATIC_PLUGIN(pluginname) \
+    static QSensorPluginInterface *create_static_plugin_ ## pluginname()\
+    {\
+        return new pluginname;\
+    }\
+    static bool side_effect_sensor_backend_ ## pluginname ()\
+    {\
+        QSensorManager::registerStaticPlugin(create_static_plugin_ ## pluginname);\
+        return false;\
+    }\
+    /* This assignment calls the function above */\
+    static bool dummy_sensor_backend_ ## pluginname = side_effect_sensor_backend_ ## pluginname();
 
 QT_END_NAMESPACE
 QT_END_HEADER

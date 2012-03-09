@@ -108,6 +108,16 @@ public:
 
 };
 
+// Logic stolen from qplugin.h
+#define REGISTER_STATIC_PLUGIN_V2(pluginname) \
+    static QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance() \
+    Q_PLUGIN_INSTANCE(pluginname) \
+    const QT_PREPEND_NAMESPACE(QStaticPlugin) qt_static_plugin_##pluginname() { \
+        QT_PREPEND_NAMESPACE(QStaticPlugin) plugin = { qt_plugin_instance, 0 }; \
+        return plugin; \
+    }\
+    Q_IMPORT_PLUGIN(pluginname)
+
 REGISTER_STATIC_PLUGIN_V2(TestSensorPlugin)
 
 class LegacySensorPlugin : public QSensorPluginInterface
@@ -121,7 +131,6 @@ public:
 
 };
 
-REGISTER_STATIC_PLUGIN_V1(LegacySensorPlugin)
+REGISTER_STATIC_PLUGIN(LegacySensorPlugin)
 
 #include "test_sensorplugin.moc"
-

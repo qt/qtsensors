@@ -14,8 +14,7 @@ QT = core core-private
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
 
 load(qt_module_config)
-HEADERS += qtsensorsversion.h \
-    qsensorplugindefs.h
+HEADERS += qtsensorsversion.h
 
 
 symbian {
