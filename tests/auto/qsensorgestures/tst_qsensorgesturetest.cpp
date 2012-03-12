@@ -121,6 +121,7 @@ public:
     Tst_qsensorgestureTest();
 
 private Q_SLOTS:
+    void tst_sensor_gesture_notinitialized();
 
     void tst_recognizer_dup(); //comes first to weed out messages
 
@@ -143,6 +144,7 @@ private Q_SLOTS:
 
     void shakeDetected(const QString &);
 
+
 private:
     QString currentSignal;
 };
@@ -153,16 +155,15 @@ Tst_qsensorgestureTest::Tst_qsensorgestureTest()
 
 void Tst_qsensorgestureTest::tst_recognizer_dup()
 {
+    QStringList idList;
     {
-        QStringList idList;
 //        QTest::ignoreMessage(QtWarningMsg, "\"QtSensors.test.dup\" from the plugin \"TestGesturesDup\" is already known. ");
         QSensorGestureManager manager;
         idList = manager.gestureIds();
 
         for (int i = 0; i < idList.count(); i++) {
-            //  if (idList.at(i) == "QtSensors.test.dup")
-
-                //              QTest::ignoreMessage(QtWarningMsg, "Ignoring recognizer  \"QtSensors.test.dup\" from plugin \"TestGesturesDup\" because it is already registered ");
+              if (idList.at(i) == "QtSensors.test.dup")
+                  QTest::ignoreMessage(QtWarningMsg, "Ignoring recognizer  \"QtSensors.test.dup\" from plugin \"TestGesturesDup\" because it is already registered ");
             QStringList recognizerSignalsList = manager.recognizerSignals(idList.at(i));
 
             QVERIFY(!recognizerSignalsList.contains("QtSensors.test2"));
@@ -521,7 +522,7 @@ void Tst_qsensorgestureTest::tst_sensorgesture_noid()
     QVERIFY(gesture->validIds().isEmpty());
     QCOMPARE(gesture->invalidIds(), QStringList() << "QtSensors.noid");
 
-//    QTest::ignoreMessage(QtWarningMsg, "QSignalSpy: No such signal: 'detected(QString)'");
+    QTest::ignoreMessage(QtWarningMsg, "QSignalSpy: No such signal: 'detected(QString)'");
     QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
 
     QCOMPARE(spy_gesture.count(),0);
@@ -598,6 +599,26 @@ void Tst_qsensorgestureTest::shakeDetected(const QString &type)
 {
     QCOMPARE(type,currentSignal);
 }
+
+void Tst_qsensorgestureTest::tst_sensor_gesture_notinitialized()
+{
+    QTest::ignoreMessage(QtWarningMsg, "\"QtSensors.test.dup\" from the plugin \"TestGesturesDup\" is already known. ");
+    QSensorGestureManager manager;
+    QSensorGestureRecognizer *recognizer = manager.sensorGestureRecognizer("QtSensors.test");
+
+    QTest::ignoreMessage(QtWarningMsg, "Not starting. Gesture Recognizer not initialized ");
+    recognizer->startBackend();
+    QVERIFY(recognizer->isActive() == false);
+
+    QTest::ignoreMessage(QtWarningMsg, "Not stopping. Gesture Recognizer not initialized ");
+    recognizer->stopBackend();
+    QVERIFY(recognizer->isActive() == false);
+
+    recognizer->createBackend();
+    QVERIFY(recognizer->isActive() == false);
+
+}
+
 
 QTEST_MAIN(Tst_qsensorgestureTest);
 

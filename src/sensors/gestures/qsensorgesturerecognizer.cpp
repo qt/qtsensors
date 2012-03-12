@@ -169,19 +169,34 @@ void QSensorGestureRecognizer::createBackend()
 }
 
 /*!
-  Calls QSensorGestureRecognizer::start() if the recognizer isn't already running.
+  Calls QSensorGestureRecognizer::start() if the recognizer isn't already initialized.
+  This is called by the QSensorGesture object, so please use that instead.
+
+\sa QSensorGesture::startDetection
+
 */
 void QSensorGestureRecognizer::startBackend()
 {
+  if (!d_ptr->initialized) {
+        qWarning() << "Not starting. Gesture Recognizer not initialized";
+        return;
+    }
     if (d_ptr->count++ == 0)
         start();
 }
 
 /*!
   Calls QSensorGestureRecognizer::stop() if no other clients are using it.
+  This is called by the QSensorGesture object, so please use that instead.
+
+\sa QSensorGesture::stopDetection
 */
 void QSensorGestureRecognizer::stopBackend()
 {
+    if (!d_ptr->initialized) {
+        qWarning() << "Not stopping. Gesture Recognizer not initialized";
+        return;
+    }
     if (--d_ptr->count == 0)
         stop();
 }
