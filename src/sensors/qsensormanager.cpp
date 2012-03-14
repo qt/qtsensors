@@ -76,8 +76,6 @@ public:
     PluginLoadingState pluginLoadingState;
     void loadPlugins();
 
-    QList<CreatePluginFunc> staticRegistrations;
-
     // Holds a mapping from type to available identifiers (and from there to the factory)
     BackendIdentifiersForTypeMap backendsByType;
 
@@ -181,13 +179,6 @@ void QSensorManagerPrivate::loadPlugins()
     QSensorManagerPrivate *d = this;
     if (d->pluginLoadingState != QSensorManagerPrivate::NotLoaded) return;
     d->pluginLoadingState = QSensorManagerPrivate::Loading;
-
-    SENSORLOG() << "initializing legacy static plugins";
-    // Legacy static plugins
-    Q_FOREACH (CreatePluginFunc func, d->staticRegistrations) {
-        QSensorPluginInterface *plugin = func();
-        plugin->registerSensors();
-    }
 
     SENSORLOG() << "initializing static plugins";
     // Qt-style static plugins
@@ -300,15 +291,6 @@ void QSensorManager::unregisterBackend(const QByteArray &type, const QByteArray 
     // Notify the app that the available sensor list has changed.
     // This may cause recursive calls!
     d->emitSensorsChanged();
-}
-
-/*!
-    \internal
-*/
-void QSensorManager::registerStaticPlugin(CreatePluginFunc func)
-{
-    QSensorManagerPrivate *d = sensorManagerPrivate();
-    d->staticRegistrations.append(func);
 }
 
 /*!
@@ -530,18 +512,6 @@ void QSensor::registerInstance()
     it should check with the \a sensor to see which one is requested.
 
     If the factory cannot create a backend it should return 0.
-*/
-
-/*!
-    \macro REGISTER_STATIC_PLUGIN(pluginname)
-    \relates QSensorManager
-
-    Registers a static plugin, \a pluginname.
-
-    Note that this macro relies on static initialization so it may not be appropriate
-    for use in a library and may not work on all platforms.
-
-    \sa {Creating a sensor plugin}
 */
 
 QT_END_NAMESPACE

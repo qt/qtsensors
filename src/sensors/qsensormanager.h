@@ -51,8 +51,6 @@ class QSensorBackend;
 class QSensorBackendFactory;
 class QSensorPluginInterface;
 
-typedef QSensorPluginInterface *(*CreatePluginFunc)();
-
 class Q_SENSORS_EXPORT QSensorManager
 {
 public:
@@ -65,9 +63,6 @@ public:
     // Create a backend (uses the type and identifier set in the sensor)
     static QSensorBackend *createBackend(QSensor *sensor);
 
-    // For static plugins
-    static void registerStaticPlugin(CreatePluginFunc func);
-
     static void setDefaultBackend(const QByteArray &type, const QByteArray &identifier);
 };
 
@@ -78,21 +73,6 @@ public:
 protected:
     ~QSensorBackendFactory() {}
 };
-
-// Static plugins have their own registration methods.
-// They can only register types. They cannot use the changes interface.
-#define REGISTER_STATIC_PLUGIN(pluginname) \
-    static QSensorPluginInterface *create_static_plugin_ ## pluginname()\
-    {\
-        return new pluginname;\
-    }\
-    static bool side_effect_sensor_backend_ ## pluginname ()\
-    {\
-        QSensorManager::registerStaticPlugin(create_static_plugin_ ## pluginname);\
-        return false;\
-    }\
-    /* This assignment calls the function above */\
-    static bool dummy_sensor_backend_ ## pluginname = side_effect_sensor_backend_ ## pluginname();
 
 QT_END_NAMESPACE
 QT_END_HEADER

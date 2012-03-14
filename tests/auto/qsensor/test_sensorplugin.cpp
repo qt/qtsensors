@@ -120,17 +120,4 @@ public:
 
 REGISTER_STATIC_PLUGIN_V2(TestSensorPlugin)
 
-class LegacySensorPlugin : public QSensorPluginInterface
-{
-public:
-    void registerSensors()
-    {
-        qWarning() << "Loaded the LegacySensorPlugin";
-    }
-    QStringList keys() const { return QStringList() << "legacy";}
-
-};
-
-REGISTER_STATIC_PLUGIN(LegacySensorPlugin)
-
 #include "test_sensorplugin.moc"

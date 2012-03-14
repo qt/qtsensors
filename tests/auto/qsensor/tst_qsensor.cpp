@@ -140,9 +140,6 @@ private slots:
     {
         TestSensor sensor;
 
-        // This confirms that legacy static plugins can still be registered
-        QTest::ignoreMessage(QtWarningMsg, "Loaded the LegacySensorPlugin ");
-
         // The logic for the test is in test_sensorplugin.cpp (which warns and aborts if the test fails)
         (void)QSensor::sensorTypes();
 
