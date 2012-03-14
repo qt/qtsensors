@@ -109,7 +109,4 @@ QList <QSensorGestureRecognizer *> QtSensorGesturePlugin::createRecognizers()
     return recognizers;
 }
 
-
-Q_EXPORT_PLUGIN2(qtsensorgestures_plugin, QtSensorGesturePlugin)
-
 QT_END_NAMESPACE

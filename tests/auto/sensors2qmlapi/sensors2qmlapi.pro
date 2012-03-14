@@ -26,3 +26,4 @@ HEADERS += qdeclaccelerometer.h \
            ./../../../src/imports/sensors2/qsensor2common.h \
            qtemplategestureplugin.h \
            qtemplaterecognizer.h
+

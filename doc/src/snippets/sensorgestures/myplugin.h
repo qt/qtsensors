@@ -68,7 +68,9 @@ Q_SIGNALS:
 class MySensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+    //Q_PLUGIN_METADATA(IID "com.Nokia.QSensorGesturePluginInterface" FILE "plugin.json")
+    Q_INTERFACES(QSensorGesturePluginInterface)
+public:
 
     explicit MySensorGesturePlugin();
     ~MySensorGesturePlugin();
@@ -77,7 +79,5 @@ class MySensorGesturePlugin : public QObject, public QSensorGesturePluginInterfa
     QStringList supportedIds() const;
     QString name() const { return "MyGestures"; }
 };
-
-//Q_EXPORT_PLUGIN2(MySensorGestureRecognizer, MySensorGesturePlugin)
 
 #endif

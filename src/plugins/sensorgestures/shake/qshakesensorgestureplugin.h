@@ -50,7 +50,8 @@
 class QShakeSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorGesturePluginInterface:QFactoryInterface)
+    Q_PLUGIN_METADATA(IID "com.Nokia.QSensorGesturePluginInterface" FILE "plugin.json")
+    Q_INTERFACES(QSensorGesturePluginInterface)
 
 public:
     explicit QShakeSensorGesturePlugin();

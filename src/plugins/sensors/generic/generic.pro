@@ -7,8 +7,16 @@ load(qt_plugin)
 
 DESTDIR = $$QT.sensors.plugins/sensors
 
-include(generic.pri)
+HEADERS += genericorientationsensor.h\
+           genericrotationsensor.h\
+           genericalssensor.h
 
+SOURCES += genericorientationsensor.cpp\
+           main.cpp\
+           genericrotationsensor.cpp\
+           genericalssensor.cpp
+
+OTHER_FILES = plugin.json
 
 symbian {
     TARGET.EPOCALLOWDLLDATA = 1

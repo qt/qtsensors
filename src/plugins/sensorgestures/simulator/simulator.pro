@@ -21,4 +21,7 @@ SOURCES += \
     qsimulatorrecognizer.cpp\
     qsimulatorsensorgestureplugin.cpp
 
+OTHER_FILES += \
+    plugin.json
+
 

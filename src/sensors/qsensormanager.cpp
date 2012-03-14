@@ -67,7 +67,7 @@ public:
     };
     QSensorManagerPrivate()
         : pluginLoadingState(NotLoaded)
-        , loader(new QFactoryLoader(QSensorPluginInterface_iid, QLatin1String("/sensors")))
+        , loader(new QFactoryLoader("com.nokia.Qt.QSensorPluginInterface/1.0", QLatin1String("/sensors")))
         , defaultIdentifierForTypeLoaded(false)
         , sensorsChanged(false)
     {
@@ -143,14 +143,17 @@ Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
         load_external_plugins = false;
         break;
     case 1:
+    {
         Q_ASSERT(load_external_plugins == false);
         Q_ASSERT(d->pluginLoadingState == QSensorManagerPrivate::Loaded);
         SENSORLOG() << "initializing plugins";
-        foreach (const QString &key, d->loader->keys()) {
-            QObject *plugin = d->loader->instance(key);
+        QList<QJsonObject> meta = d->loader->metaData();
+        for (int i = 0; i < meta.count(); i++) {
+            QObject *plugin = d->loader->instance(i);
             initPlugin(plugin);
         }
         break;
+    }
     default:
         break;
     }
@@ -190,8 +193,9 @@ void QSensorManagerPrivate::loadPlugins()
 
     if (load_external_plugins) {
         SENSORLOG() << "initializing plugins";
-        foreach (const QString &key, d->loader->keys()) {
-            QObject *plugin = d->loader->instance(key);
+        QList<QJsonObject> meta = d->loader->metaData();
+        for (int i = 0; i < meta.count(); i++) {
+            QObject *plugin = d->loader->instance(i);
             initPlugin(plugin);
         }
     }

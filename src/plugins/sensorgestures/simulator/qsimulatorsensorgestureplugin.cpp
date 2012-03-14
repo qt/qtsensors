@@ -75,6 +75,3 @@ QList <QSensorGestureRecognizer *> QSimulatorSensorGesturePlugin::createRecogniz
 
     return recognizers;
 }
-
-Q_EXPORT_PLUGIN2(QSimulatorSensorGestureRecognizer, QSimulatorSensorGesturePlugin)
-

@@ -74,6 +74,3 @@ QList <QSensorGestureRecognizer *> QShakeSensorGesturePlugin::createRecognizers(
 
     return recognizers;
 }
-
-Q_EXPORT_PLUGIN2(qtsensorgestures_shakeplugin, QShakeSensorGesturePlugin)
-

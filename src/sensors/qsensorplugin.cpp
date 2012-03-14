@@ -59,13 +59,6 @@
 */
 
 /*!
-    \fn QStringList QSensorPluginInterface::keys() const
-
-    Returns a stringlist with one entry that contains a unique name for this plugin.
-    Required as an artifact of the factory loader.
-*/
-
-/*!
     \fn QSensorPluginInterface::registerSensors()
 
     This function is called when the plugin is loaded. The plugin should register

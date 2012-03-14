@@ -15,3 +15,6 @@ SOURCES += qshakesensorgestureplugin.cpp \
 target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
 INSTALLS += target
 
+OTHER_FILES += \
+    plugin.json
+

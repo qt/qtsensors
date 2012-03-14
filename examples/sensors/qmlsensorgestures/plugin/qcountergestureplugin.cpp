@@ -73,6 +73,3 @@ QList <QSensorGestureRecognizer *>  QCounterGesturePlugin::createRecognizers()
 
     return recognizers;
 }
-
-Q_EXPORT_PLUGIN2(QCounterGestureRecognizer, QCounterGesturePlugin)
-

@@ -55,7 +55,8 @@ class TestSensorPlugin : public QObject,
                          public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface QSensorChangesInterface)
+    //Q_PLUGIN_METADATA(IID "com.nokia.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
+    Q_INTERFACES(QSensorPluginInterface QSensorChangesInterface)
 public:
     void registerSensors()
     {
@@ -95,7 +96,6 @@ public:
         qWarning() << "Can't create backend" << sensor->identifier();
         return 0;
     }
-    QStringList keys() const { return QStringList() << "test";}
 public:
     static QDeclAccelerometer* stAccel;
     static QDeclAmbientLightSensor* stAbl;

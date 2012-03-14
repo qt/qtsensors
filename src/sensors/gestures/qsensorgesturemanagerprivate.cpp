@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
     QObject(parent)
 {
-    loader = new QFactoryLoader(QSensorGestureFactoryInterface_iid, QLatin1String("/sensorgestures"));
+    loader = new QFactoryLoader("com.Nokia.QSensorGesturePluginInterface", QLatin1String("/sensorgestures"));
     loadPlugins();
 }
 
@@ -92,12 +92,13 @@ QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
   */
 void QSensorGestureManagerPrivate::loadPlugins()
 {
-    foreach (const QString &key, loader->keys()) {
-
-        QObject *plugin = loader->instance(key);
-        if (plugin) {
-            initPlugin(plugin);
-        }
+    Q_FOREACH (QObject *plugin, QPluginLoader::staticInstances()) {
+        initPlugin(plugin);
+    }
+    QList<QJsonObject> meta = loader->metaData();
+    for (int i = 0; i < meta.count(); i++) {
+        QObject *plugin = loader->instance(i);
+        initPlugin(plugin);
     }
 }
 

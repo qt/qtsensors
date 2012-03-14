@@ -7,7 +7,16 @@ load(qt_plugin)
 
 DESTDIR = $$QT.sensors.plugins/sensors
 
-include(dummy.pri)
+HEADERS += dummycommon.h\
+           dummyaccelerometer.h\
+           dummylightsensor.h
+
+SOURCES += dummycommon.cpp\
+           dummyaccelerometer.cpp\
+           dummylightsensor.cpp\
+           main.cpp
+
+OTHER_FILES = plugin.json
 
 unix:!mac:LIBS+=-lrt
 

@@ -48,7 +48,8 @@
 class GrueSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorChangesInterface, public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_INTERFACES(QSensorPluginInterface:QFactoryInterface QSensorChangesInterface)
+    Q_PLUGIN_METADATA(IID "com.nokia.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
+    Q_INTERFACES(QSensorPluginInterface QSensorChangesInterface)
 public:
     void registerSensors()
     {
@@ -74,10 +75,7 @@ public:
 
         return 0;
     }
-    QStringList keys() const { return QStringList() << "grue";}
 };
-
-Q_EXPORT_PLUGIN2(libsensors_grueplugin, GrueSensorPlugin)
 
 #include "main.moc"
 

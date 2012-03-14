@@ -35,3 +35,4 @@ SOURCES += \
     qsensordata_simulator.cpp\
     main.cpp
 
+OTHER_FILES = plugin.json

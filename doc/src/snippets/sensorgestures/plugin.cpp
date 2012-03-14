@@ -98,6 +98,3 @@ QStringList MySensorGesturePlugin::supportedIds() const
 }
 
 //! [Plugin]
-
-//Q_EXPORT_PLUGIN2(libmy_plugin_file_name, MySensorGesturePlugin);
-//#include "plugin.moc"

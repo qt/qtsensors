@@ -41,6 +41,7 @@
 
 #include "qsensorgestureplugininterface.h"
 
+QT_BEGIN_NAMESPACE
 
 /*!
     \class QSensorGesturePluginInterface
@@ -81,8 +82,6 @@
   Returns this plugins name.
   */
 
-QT_BEGIN_NAMESPACE
-
 /*!
     Construct the QSensorGesturePluginInterface.
 */
@@ -95,16 +94,6 @@ QSensorGesturePluginInterface::QSensorGesturePluginInterface()
 */
 QSensorGesturePluginInterface::~QSensorGesturePluginInterface()
 {
-
-}
-
-/*!
-  \internal
-  Used by the factory loader.
-  */
-QStringList QSensorGesturePluginInterface::keys() const
-{
-    return QStringList() << name();
 }
 
 QT_END_NAMESPACE

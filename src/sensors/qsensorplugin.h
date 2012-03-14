@@ -44,22 +44,15 @@
 
 #include <QtSensors/qsensorsglobal.h>
 
-#include <QtCore/qstringlist.h>
 #include <QtCore/qplugin.h>
-#include <QtCore/qfactoryinterface.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-#define QSensorPluginInterface_iid "com.nokia.Qt.QSensorPluginInterface/1.0"
-
-class Q_SENSORS_EXPORT QSensorPluginInterface : public QFactoryInterface
+class Q_SENSORS_EXPORT QSensorPluginInterface
 {
-
 public:
     virtual void registerSensors() = 0;
-    virtual QStringList keys() const = 0;
-
 protected:
     ~QSensorPluginInterface() {}
 };
@@ -72,8 +65,8 @@ protected:
     ~QSensorChangesInterface() {}
 };
 
-Q_DECLARE_INTERFACE(QSensorPluginInterface, QSensorPluginInterface_iid);
-Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/1.0");
+Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.nokia.Qt.QSensorPluginInterface/1.0");
+Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/5.0");
 
 QT_END_NAMESPACE
 QT_END_HEADER
