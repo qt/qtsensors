@@ -41,7 +41,8 @@
 
 #include "qsensormanager.h"
 #include <QDebug>
-#include "qsensorpluginloader_p.h"
+#include <private/qfactoryloader_p.h>
+#include <QPluginLoader>
 #include "qsensorplugin.h"
 #include <QStandardPaths>
 #include "sensorlog_p.h"
@@ -49,8 +50,6 @@
 #include <QFile>
 
 QT_BEGIN_NAMESPACE
-
-Q_GLOBAL_STATIC(QSensorPluginLoader, pluginLoader)
 
 typedef QHash<QByteArray,QSensorBackendFactory*> FactoryForIdentifierMap;
 typedef QHash<QByteArray,FactoryForIdentifierMap> BackendIdentifiersForTypeMap;
@@ -68,12 +67,14 @@ public:
     };
     QSensorManagerPrivate()
         : pluginLoadingState(NotLoaded)
+        , loader(new QFactoryLoader(QSensorPluginInterface_iid, QLatin1String("/sensors")))
         , defaultIdentifierForTypeLoaded(false)
         , sensorsChanged(false)
     {
     }
 
     PluginLoadingState pluginLoadingState;
+    QFactoryLoader *loader;
     void loadPlugins();
 
     // Holds a mapping from type to available identifiers (and from there to the factory)
@@ -145,7 +146,8 @@ Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
         Q_ASSERT(load_external_plugins == false);
         Q_ASSERT(d->pluginLoadingState == QSensorManagerPrivate::Loaded);
         SENSORLOG() << "initializing plugins";
-        Q_FOREACH (QObject *plugin, pluginLoader()->plugins()) {
+        foreach (const QString &key, d->loader->keys()) {
+            QObject *plugin = d->loader->instance(key);
             initPlugin(plugin);
         }
         break;
@@ -188,7 +190,8 @@ void QSensorManagerPrivate::loadPlugins()
 
     if (load_external_plugins) {
         SENSORLOG() << "initializing plugins";
-        Q_FOREACH (QObject *plugin, pluginLoader()->plugins()) {
+        foreach (const QString &key, d->loader->keys()) {
+            QObject *plugin = d->loader->instance(key);
             initPlugin(plugin);
         }
     }

@@ -45,13 +45,11 @@ PUBLIC_HEADERS += \
            qsensorsglobal.h
 
 PRIVATE_HEADERS += \
-           qsensorpluginloader_p.h\
            sensorlog_p.h\
 
 SOURCES += qsensorbackend.cpp\
            qsensormanager.cpp\
            qsensorplugin.cpp\
-           qsensorpluginloader.cpp\
 
 SOURCES += \
     gestures/qsensorgesture.cpp \
