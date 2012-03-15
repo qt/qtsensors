@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 QCoverSensorGestureRecognizer::QCoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-  orientationReading(0),lastProx(0), proximityReading(0), active(0), detecting(0)
+  orientationReading(0), proximityReading(0),lastProx(0), active(0), detecting(0)
 {
 }
 

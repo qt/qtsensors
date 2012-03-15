@@ -47,9 +47,13 @@
 
 QT_BEGIN_NAMESPACE
 
-QPickupSensorGestureRecognizer::QPickupSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent),atRest(1),okToSignal(1),
-    lastpitch(0), detecting(0), active(0)
+QPickupSensorGestureRecognizer::QPickupSensorGestureRecognizer(QObject *parent)
+    : QSensorGestureRecognizer(parent)
+    , active(0)
+    , atRest(1)
+    , okToSignal(1)
+    , lastpitch(0)
+    , detecting(0)
 {
 }
 

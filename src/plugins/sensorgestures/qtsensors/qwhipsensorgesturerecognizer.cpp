@@ -47,9 +47,13 @@
 
 QT_BEGIN_NAMESPACE
 
-QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent), lastX(0),
-    detectedX(0), active(0),wasNegative(0), detecting(0)
+QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent)
+    : QSensorGestureRecognizer(parent)
+    , wasNegative(0)
+    , lastX(0)
+    , detectedX(0)
+    , active(0)
+    , detecting(0)
 {
 }
 

@@ -50,8 +50,11 @@ QT_BEGIN_NAMESPACE
 
 QShake2SensorGestureRecognizer::QShake2SensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
-    , active(0),shaking(0), shakeCount(0),
-      shakeDirection(QShake2SensorGestureRecognizer::ShakeUndefined){
+    , active(0)
+    , shakeDirection(QShake2SensorGestureRecognizer::ShakeUndefined)
+    , shaking(0)
+    , shakeCount(0)
+{
     timerTimeout = 750;
 }
 

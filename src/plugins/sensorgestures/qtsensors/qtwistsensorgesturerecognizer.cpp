@@ -48,10 +48,18 @@ QT_BEGIN_NAMESPACE
 
 #define RADIANS_TO_DEGREES 57.2957795
 
-QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent),
-    accelRange(0), orientationReading(0), lastRoll(0), active(0), pitch(0), detecting(0), lastDegree(0),
-    lastX(0), lastY(0), lastZ()
+QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent)
+    : QSensorGestureRecognizer(parent)
+    , orientationReading(0)
+    , accelRange(0)
+    , lastRoll(0)
+    , active(0)
+    , pitch(0)
+    , detecting(0)
+    , lastDegree(0)
+    , lastX(0)
+    , lastY(0)
+    , lastZ()
 {
 }
 
