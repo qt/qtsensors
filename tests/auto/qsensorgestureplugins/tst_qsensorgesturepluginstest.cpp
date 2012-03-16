@@ -51,6 +51,8 @@
 #include <qsensorgesturerecognizer.h>
 #include <qsensorgestureplugininterface.h>
 
+#include "test_backends.h"
+
 class Tst_qsensorgesturePluginsTest : public QObject
 {
     Q_OBJECT
@@ -69,6 +71,8 @@ private Q_SLOTS:
 
 Tst_qsensorgesturePluginsTest::Tst_qsensorgesturePluginsTest()
 {
+    qputenv("QTSENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
+    register_test_backends();
 }
 
 void Tst_qsensorgesturePluginsTest::tst_sensor_plugins_shake()
@@ -148,30 +152,18 @@ void Tst_qsensorgesturePluginsTest::tst_sensor_plugins_qtsensors()
     QVERIFY(gesture->isActive() == true);
     QVERIFY(gesture2->isActive() == false);
 
-    if (gestureId.contains("cover") || gestureId.contains("doubletap") || gestureId.contains("turnover")) {
-        // prox and tap dont work yet
-        QEXPECT_FAIL("", QString("fail ok for: " + gestureId).toLocal8Bit(), Continue);
-    }
     QVERIFY(recognizer->isActive() == true);
 
     gesture2->startDetection();
 
     QVERIFY(gesture->isActive() == true);
     QVERIFY(gesture2->isActive() == true);
-    if (gestureId.contains("cover") || gestureId.contains("doubletap") || gestureId.contains("turnover")) {
-        // prox and tap dont work yet
-        QEXPECT_FAIL("", QString("fail ok for: " + gestureId).toLocal8Bit(), Continue);
-    }
     QVERIFY(recognizer->isActive() == true);
 
     gesture2->stopDetection();
 
     QVERIFY(gesture->isActive() == true);
     QVERIFY(gesture2->isActive() == false);
-    if (gestureId.contains("cover") || gestureId.contains("doubletap") || gestureId.contains("turnover")) {
-        // prox and tap dont work yet
-        QEXPECT_FAIL("", QString("fail ok for: " + gestureId).toLocal8Bit(), Continue);
-    }
     QVERIFY(recognizer->isActive() == true);
 
     gesture->stopDetection();
