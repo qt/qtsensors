@@ -117,7 +117,7 @@ class tst_QSensor : public QObject
 public:
     tst_QSensor()
     {
-        sensors_unit_test_hook(0); // change some flags the library uses
+        qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
     }
 
 private slots:
@@ -923,17 +923,6 @@ private slots:
         // Now we can start the second instance
         sensor2.start();
         QVERIFY(sensor2.isActive());
-    }
-
-    // This test must be LAST or it will interfere with the other tests
-    void testLoadingPlugins()
-    {
-        // Go ahead and load the actual plugins (as a test that plugin loading works)
-        sensors_unit_test_hook(1);
-
-        // Hmm... There's no real way to tell if this worked or not.
-        // If it doesn't work the unit test will probably crash.
-        // That's what it did on Symbian before plugin loading was fixed.
     }
 };
 

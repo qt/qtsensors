@@ -70,9 +70,15 @@ public:
         , loader(new QFactoryLoader("com.nokia.Qt.QSensorPluginInterface/1.0", QLatin1String("/sensors")))
         , defaultIdentifierForTypeLoaded(false)
         , sensorsChanged(false)
+        , loadExternalPlugins(true)
     {
+        QByteArray env = qgetenv("QT_SENSORS_LOAD_PLUGINS");
+        if (env == "0") {
+            loadExternalPlugins = false;
+        }
     }
 
+    bool loadExternalPlugins;
     PluginLoadingState pluginLoadingState;
     QFactoryLoader *loader;
     void loadPlugins();
@@ -129,36 +135,6 @@ public Q_SLOTS:
 
 Q_GLOBAL_STATIC(QSensorManagerPrivate, sensorManagerPrivate)
 
-// The unit test needs to change the behaviour of the library. It does this
-// through an exported but undocumented function.
-static void initPlugin(QObject *plugin);
-static bool load_external_plugins = true;
-Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
-{
-    QSensorManagerPrivate *d = sensorManagerPrivate();
-
-    switch (index) {
-    case 0:
-        Q_ASSERT(d->pluginLoadingState == QSensorManagerPrivate::NotLoaded);
-        load_external_plugins = false;
-        break;
-    case 1:
-    {
-        Q_ASSERT(load_external_plugins == false);
-        Q_ASSERT(d->pluginLoadingState == QSensorManagerPrivate::Loaded);
-        SENSORLOG() << "initializing plugins";
-        QList<QJsonObject> meta = d->loader->metaData();
-        for (int i = 0; i < meta.count(); i++) {
-            QObject *plugin = d->loader->instance(i);
-            initPlugin(plugin);
-        }
-        break;
-    }
-    default:
-        break;
-    }
-}
-
 static void initPlugin(QObject *o)
 {
     if (!o) return;
@@ -191,7 +167,7 @@ void QSensorManagerPrivate::loadPlugins()
         initPlugin(plugin);
     }
 
-    if (load_external_plugins) {
+    if (d->loadExternalPlugins) {
         SENSORLOG() << "initializing plugins";
         QList<QJsonObject> meta = d->loader->metaData();
         for (int i = 0; i < meta.count(); i++) {

@@ -59,8 +59,6 @@ QDeclProximitySensor* TestSensorPlugin::stProxi = 0;
 
 QT_BEGIN_NAMESPACE
 
-Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
-
 class tst_Sensors2QMLAPI : public QObject
 {
     Q_OBJECT
@@ -86,7 +84,7 @@ protected:
 
 void tst_Sensors2QMLAPI::initTestCase()
 {
-    sensors_unit_test_hook(0); // change some flags the library uses
+    qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
     _plugin.registerSensors();
     _tilt = 0;
 }
