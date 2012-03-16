@@ -44,9 +44,9 @@
 #include <QObject>
 #include <QTest>
 #include <QDebug>
-#include <QSettings>
 #include <QFile>
 #include <QSignalSpy>
+#include <QSensorManager>
 
 #include "qsensor.h"
 #include "test_sensor.h"
@@ -123,14 +123,10 @@ public:
 private slots:
     void initTestCase()
     {
-        QSettings settings(QLatin1String("Nokia"), QLatin1String("Sensors"));
-        settings.clear();
     }
 
     void cleanupTestCase()
     {
-        QSettings settings(QLatin1String("Nokia"), QLatin1String("Sensors"));
-        settings.clear();
 
 #ifdef WAIT_AT_END
         QFile _stdin;
@@ -181,10 +177,7 @@ private slots:
 
     void testBadDefaultFromConfig()
     {
-        QSettings settings(QLatin1String("Nokia"), QLatin1String("Sensors"));
-        settings.setValue(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(TestSensor::type)), QByteArray("bogus id"));
-        settings.sync();
-
+        QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray("bogus id"));
         QByteArray expected = testsensorimpl::id;
         QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
         QCOMPARE(actual, expected);
@@ -192,15 +185,10 @@ private slots:
 
     void testGoodDefaultFromConfig()
     {
-        QSettings settings(QLatin1String("Nokia"), QLatin1String("Sensors"));
-        settings.setValue(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(TestSensor::type)), QByteArray(testsensorimpl::id));
-        settings.sync();
-
+        QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray(testsensorimpl::id));
         QByteArray expected = testsensorimpl::id;
         QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
         QCOMPARE(actual, expected);
-
-        settings.clear();
     }
 
     void testNoSensorsForType()
@@ -245,18 +233,13 @@ private slots:
 
     void testBadDefaultCreation()
     {
-        QSettings settings(QLatin1String("Nokia"), QLatin1String("Sensors"));
-        settings.setValue(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(TestSensor::type)), QByteArray("test sensor 2"));
-        settings.sync();
-
+        QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray("test sensor 2"));
         TestSensor sensor;
         QTest::ignoreMessage(QtWarningMsg, "Can't create backend \"test sensor 2\" ");
         sensor.connectToBackend();
         QByteArray expected = testsensorimpl::id;
         QByteArray actual = sensor.identifier();
         QCOMPARE(actual, expected);
-
-        settings.clear();
     }
 
     void testBadCreation()

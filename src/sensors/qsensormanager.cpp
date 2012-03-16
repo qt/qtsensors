@@ -43,9 +43,10 @@
 #include <QDebug>
 #include "qsensorpluginloader_p.h"
 #include "qsensorplugin.h"
-#include <QSettings>
+#include <QStandardPaths>
 #include "sensorlog_p.h"
 #include <QTimer>
+#include <QFile>
 
 QT_BEGIN_NAMESPACE
 
@@ -67,6 +68,7 @@ public:
     };
     QSensorManagerPrivate()
         : pluginLoadingState(NotLoaded)
+        , defaultIdentifierForTypeLoaded(false)
         , sensorsChanged(false)
     {
     }
@@ -78,6 +80,10 @@ public:
 
     // Holds a mapping from type to available identifiers (and from there to the factory)
     BackendIdentifiersForTypeMap backendsByType;
+
+    // Holds the default identifier
+    QHash<QByteArray, QByteArray> defaultIdentifierForType;
+    bool defaultIdentifierForTypeLoaded;
 
     // Holds the first identifier for each type
     QHash<QByteArray, QByteArray> firstIdentifierForType;
@@ -127,7 +133,6 @@ Q_GLOBAL_STATIC(QSensorManagerPrivate, sensorManagerPrivate)
 // The unit test needs to change the behaviour of the library. It does this
 // through an exported but undocumented function.
 static void initPlugin(QObject *plugin);
-static QSettings::Scope settings_scope = QSettings::SystemScope;
 static bool load_external_plugins = true;
 Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
 {
@@ -136,7 +141,6 @@ Q_SENSORS_EXPORT void sensors_unit_test_hook(int index)
     switch (index) {
     case 0:
         Q_ASSERT(d->pluginLoadingState == QSensorManagerPrivate::NotLoaded);
-        settings_scope = QSettings::UserScope;
         load_external_plugins = false;
         break;
     case 1:
@@ -387,6 +391,16 @@ bool QSensorManager::isBackendRegistered(const QByteArray &type, const QByteArra
     return true;
 }
 
+/*!
+    Sets or overwrite the sensor \a type with the backend \a identifier.
+*/
+void QSensorManager::setDefaultBackend(const QByteArray &type, const QByteArray &identifier)
+{
+    QSensorManagerPrivate *d = sensorManagerPrivate();
+    d->defaultIdentifierForType.insert(type, identifier);
+}
+
+
 // =====================================================================
 
 /*!
@@ -438,13 +452,45 @@ QByteArray QSensor::defaultSensorForType(const QByteArray &type)
     if (!d->backendsByType.contains(type))
         return QByteArray();
 
-    // The unit test needs to modify Sensors.conf but it can't access the system directory
-    QSettings settings(settings_scope, QLatin1String("Nokia"), QLatin1String("Sensors"));
-    QVariant value = settings.value(QString(QLatin1String("Default/%1")).arg(QString::fromLatin1(type)));
-    if (!value.isNull()) {
-        QByteArray defaultIdentifier = value.toByteArray();
-        if (d->backendsByType[type].contains(defaultIdentifier)) // Don't return a value that we can't use!
-            return defaultIdentifier;
+    //check if we need to read the config setting file
+    if (!d->defaultIdentifierForTypeLoaded) {
+        d->defaultIdentifierForTypeLoaded = true;
+        QStringList abspath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+        QString cfgpath = "";
+        //first in the list is user specific, so ignore it and take the last
+        if (abspath.length() > 0) {
+            cfgpath = abspath[abspath.count() - 1];
+            cfgpath += QString::fromLatin1("/Nokia/Sensors.conf");
+            if (QFile::exists(cfgpath)){
+                QFile cfgfile(cfgpath);
+                if (cfgfile.open(QFile::ReadOnly)){
+                    //Read the sensor default setting file
+                    QTextStream stream(&cfgfile);
+                    QString line = "";
+                    bool isconfig = false;
+                    while (!stream.atEnd()) {
+                        line = stream.readLine();
+                        if (!isconfig && line == QString::fromLatin1("[Default]"))
+                            isconfig = true;
+                        else {
+                            if (isconfig) {
+                                //read out setting line
+                                line.remove(' ');
+                                QStringList pair = line.split('=');
+                                if (pair.count() == 2)
+                                    d->defaultIdentifierForType.insert(pair[0].toLatin1(), pair[1].toLatin1());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    QHash<QByteArray, QByteArray>::const_iterator i = d->defaultIdentifierForType.find(type);
+    if (i != d->defaultIdentifierForType.end() && i.key() == type) {
+        if (d->backendsByType[type].contains(i.value())) // Don't return a value that we can't use!
+            return i.value();
     }
 
     // This is our fallback

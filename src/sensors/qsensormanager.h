@@ -68,6 +68,8 @@ public:
 
     // For static plugins
     static void registerStaticPlugin(CreatePluginFunc func);
+
+    static void setDefaultBackend(const QByteArray &type, const QByteArray &identifier);
 };
 
 class Q_SENSORS_EXPORT QSensorBackendFactory

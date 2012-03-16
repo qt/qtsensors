@@ -114,8 +114,7 @@ file to determine the default instead.
 \section1 Sensors.conf
 
 The config file that determines the default sensor for a type is called Sensors.conf. If present,
-it is located in /etc/xdg/Nokia. It is read using QSettings so it has the standard formatting
-of a QSettings .conf file.
+it is located in /etc/xdg/Nokia. It has the standard formatting of an ini file.
 
 The settings live in the Default group and the general format is:
 \code
