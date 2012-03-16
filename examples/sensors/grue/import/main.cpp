@@ -48,6 +48,7 @@ QT_BEGIN_NAMESPACE
 class GrueSensorQmlImport : public QQmlExtensionPlugin
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
 public:
     virtual void registerTypes(const char *uri)
     {
@@ -67,8 +68,6 @@ public:
 QT_END_NAMESPACE
 
 #include "main.moc"
-
-Q_EXPORT_PLUGIN2(gruesensorqmlimport, QT_PREPEND_NAMESPACE(GrueSensorQmlImport));
 
 /*
     \qmlclass GrueSensor GrueSensor
@@ -102,4 +101,3 @@ Q_EXPORT_PLUGIN2(gruesensorqmlimport, QT_PREPEND_NAMESPACE(GrueSensorQmlImport))
     \qmlproperty qreal Grue1::GrueSensorReading::chanceOfBeingEaten
     Please see GrueSensorReading::chanceOfBeingEaten for information about this property.
 */
-

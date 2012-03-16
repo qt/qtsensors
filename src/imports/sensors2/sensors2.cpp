@@ -52,6 +52,7 @@ QT_BEGIN_NAMESPACE
 class QSensors2DeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
 public:
     virtual void registerTypes(const char *uri)
     {
@@ -69,7 +70,3 @@ public:
 QT_END_NAMESPACE
 
 #include "sensors2.moc"
-
-Q_EXPORT_PLUGIN2(qsensors2declarativemodule, QT_PREPEND_NAMESPACE(QSensors2DeclarativeModule))
-
-

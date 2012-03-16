@@ -97,6 +97,7 @@ int qmlRegisterUncreatableType(const char *uri, int versionMajor, int versionMin
 class QSensorsDeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
 public:
     virtual void registerTypes(const char *uri)
     {
@@ -185,8 +186,6 @@ public:
 QT_END_NAMESPACE
 
 #include "sensors.moc"
-
-Q_EXPORT_PLUGIN2(qsensorsdeclarativemodule, QT_PREPEND_NAMESPACE(QSensorsDeclarativeModule));
 
 // =====================================================================
 

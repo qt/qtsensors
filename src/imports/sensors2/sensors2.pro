@@ -38,3 +38,6 @@ symbian {
     importFiles.path = $$QT_IMPORTS_BASE_DIR/$$TARGETPATH
     DEPLOYMENT = importFiles
  }
+
+OTHER_FILES += \
+    plugin.json

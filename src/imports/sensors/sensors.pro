@@ -28,3 +28,6 @@ symbian {
     DEPLOYMENT = importFiles
 }
 
+OTHER_FILES += \
+    plugin.json
+

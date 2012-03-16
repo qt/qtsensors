@@ -20,3 +20,6 @@ INSTALLS += target
 qmldir.files=$$PWD/qmldir
 qmldir.path=$$DESTPATH
 INSTALLS += qmldir
+
+OTHER_FILES += \
+    plugin.json
