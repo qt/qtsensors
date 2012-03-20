@@ -66,7 +66,7 @@ private slots:
         QTest::addColumn<QString>("version");
         QTest::addColumn<bool>("exists");
 
-        QTest::newRow("version 5.0") << "5.0" << true;
+        QTest::newRow("5.0") << "5.0" << true;
     }
 
     void versions()
@@ -100,10 +100,10 @@ private slots:
         QTest::addColumn<QString>("element");
         QTest::addColumn<bool>("exists");
 
-        QTest::newRow("TiltSensor 5.0")         << "5.0" << "TiltSensor" << true;
-        QTest::newRow("AmbientLightSensor 5.0") << "5.0" << "AmbientLightSensor" << true;
-        QTest::newRow("ProximitySensor 5.0")    << "5.0" << "ProximitySensor" << true;
-        QTest::newRow("SensorGesture 5.0")      << "5.0" << "SensorGesture" << true;
+        QTest::newRow("5.0 AmbientLightSensor") << "5.0" << "AmbientLightSensor" << true;
+        QTest::newRow("5.0 ProximitySensor") << "5.0" << "ProximitySensor" << true;
+        QTest::newRow("5.0 TiltSensor") << "5.0" << "TiltSensor" << true;
+        QTest::newRow("5.0 SensorGesture") << "5.0" << "SensorGesture" << true;
     }
 
     void elements()
@@ -130,7 +130,7 @@ private slots:
         QTest::addColumn<QString>("version");
         QTest::addColumn<QString>("element");
 
-        QTest::newRow("Sensor 5.0")         << "5.0" << "Sensor";
+        QTest::newRow("5.0 Sensor")         << "5.0" << "Sensor";
     }
 
     void uncreatable_elements()

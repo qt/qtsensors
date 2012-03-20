@@ -104,69 +104,70 @@ private slots:
         QTest::addColumn<QString>("element");
         QTest::addColumn<bool>("exists");
 
-        QTest::newRow("") << "1.1" << "SensorReading" << false;
-        QTest::newRow("") << "1.1" << "Accelerometer" << true;
-        QTest::newRow("") << "1.1" << "AccelerometerReading" << true;
-        QTest::newRow("") << "1.1" << "AmbientLightSensor" << true;
-        QTest::newRow("") << "1.1" << "AmbientLightReading" << true;
-        QTest::newRow("") << "1.1" << "Compass" << true;
-        QTest::newRow("") << "1.1" << "CompassReading" << true;
-        QTest::newRow("") << "1.1" << "Magnetometer" << true;
-        QTest::newRow("") << "1.1" << "MagnetometerReading" << true;
-        QTest::newRow("") << "1.1" << "OrientationSensor" << true;
-        QTest::newRow("") << "1.1" << "OrientationReading" << true;
-        QTest::newRow("") << "1.1" << "ProximitySensor" << true;
-        QTest::newRow("") << "1.1" << "ProximityReading" << true;
-        QTest::newRow("") << "1.1" << "RotationSensor" << true;
-        QTest::newRow("") << "1.1" << "RotationReading" << true;
-        QTest::newRow("") << "1.1" << "TapSensor" << true;
-        QTest::newRow("") << "1.1" << "TapReading" << true;
+        QTest::newRow("1.1 SensorReading") << "1.1" << "SensorReading" << false;
+        QTest::newRow("1.1 Accelerometer") << "1.1" << "Accelerometer" << true;
+        QTest::newRow("1.1 AccelerometerReading") << "1.1" << "AccelerometerReading" << true;
+        QTest::newRow("1.1 AmbientLightSensor") << "1.1" << "AmbientLightSensor" << true;
+        QTest::newRow("1.1 AmbientLightReading") << "1.1" << "AmbientLightReading" << true;
+        QTest::newRow("1.1 Compass") << "1.1" << "Compass" << true;
+        QTest::newRow("1.1 CompassReading") << "1.1" << "CompassReading" << true;
+        QTest::newRow("1.1 Magnetometer") << "1.1" << "Magnetometer" << true;
+        QTest::newRow("1.1 MagnetometerReading") << "1.1" << "MagnetometerReading" << true;
+        QTest::newRow("1.1 OrientationSensor") << "1.1" << "OrientationSensor" << true;
+        QTest::newRow("1.1 OrientationReading") << "1.1" << "OrientationReading" << true;
+        QTest::newRow("1.1 ProximitySensor") << "1.1" << "ProximitySensor" << true;
+        QTest::newRow("1.1 ProximityReading") << "1.1" << "ProximityReading" << true;
+        QTest::newRow("1.1 RotationSensor") << "1.1" << "RotationSensor" << true;
+        QTest::newRow("1.1 RotationReading") << "1.1" << "RotationReading" << true;
+        QTest::newRow("1.1 TapSensor") << "1.1" << "TapSensor" << true;
+        QTest::newRow("1.1 TapReading") << "1.1" << "TapReading" << true;
 
-        QTest::newRow("") << "1.2" << "SensorReading" << false;
-        QTest::newRow("") << "1.2" << "Accelerometer" << true;
-        QTest::newRow("") << "1.2" << "AccelerometerReading" << false;
-        QTest::newRow("") << "1.2" << "AmbientLightSensor" << true;
-        QTest::newRow("") << "1.2" << "AmbientLightReading" << false;
-        QTest::newRow("") << "1.2" << "Compass" << true;
-        QTest::newRow("") << "1.2" << "CompassReading" << false;
-        QTest::newRow("") << "1.2" << "Magnetometer" << true;
-        QTest::newRow("") << "1.2" << "MagnetometerReading" << false;
-        QTest::newRow("") << "1.2" << "OrientationSensor" << true;
-        QTest::newRow("") << "1.2" << "OrientationReading" << false;
-        QTest::newRow("") << "1.2" << "ProximitySensor" << true;
-        QTest::newRow("") << "1.2" << "ProximityReading" << false;
-        QTest::newRow("") << "1.2" << "RotationSensor" << true;
-        QTest::newRow("") << "1.2" << "RotationReading" << false;
-        QTest::newRow("") << "1.2" << "TapSensor" << true;
-        QTest::newRow("") << "1.2" << "TapReading" << false;
-        QTest::newRow("") << "1.2" << "LightSensor" << true;
-        QTest::newRow("") << "1.2" << "LightReading" << false;
-        QTest::newRow("") << "1.2" << "Gyroscope" << true;
-        QTest::newRow("") << "1.2" << "GyroscopeReading" << false;
+        QTest::newRow("1.2 SensorReading") << "1.2" << "SensorReading" << false;
+        QTest::newRow("1.2 Accelerometer") << "1.2" << "Accelerometer" << true;
+        QTest::newRow("1.2 AccelerometerReading") << "1.2" << "AccelerometerReading" << false;
+        QTest::newRow("1.2 AmbientLightSensor") << "1.2" << "AmbientLightSensor" << true;
+        QTest::newRow("1.2 AmbientLightReading") << "1.2" << "AmbientLightReading" << false;
+        QTest::newRow("1.2 Compass") << "1.2" << "Compass" << true;
+        QTest::newRow("1.2 CompassReading") << "1.2" << "CompassReading" << false;
+        QTest::newRow("1.2 Magnetometer") << "1.2" << "Magnetometer" << true;
+        QTest::newRow("1.2 MagnetometerReading") << "1.2" << "MagnetometerReading" << false;
+        QTest::newRow("1.2 OrientationSensor") << "1.2" << "OrientationSensor" << true;
+        QTest::newRow("1.2 OrientationReading") << "1.2" << "OrientationReading" << false;
+        QTest::newRow("1.2 ProximitySensor") << "1.2" << "ProximitySensor" << true;
+        QTest::newRow("1.2 ProximityReading") << "1.2" << "ProximityReading" << false;
+        QTest::newRow("1.2 RotationSensor") << "1.2" << "RotationSensor" << true;
+        QTest::newRow("1.2 RotationReading") << "1.2" << "RotationReading" << false;
+        QTest::newRow("1.2 TapSensor") << "1.2" << "TapSensor" << true;
+        QTest::newRow("1.2 TapReading") << "1.2" << "TapReading" << false;
+        QTest::newRow("1.2 LightSensor") << "1.2" << "LightSensor" << true;
+        QTest::newRow("1.2 LightReading") << "1.2" << "LightReading" << false;
+        QTest::newRow("1.2 Gyroscope") << "1.2" << "Gyroscope" << true;
+        QTest::newRow("1.2 GyroscopeReading") << "1.2" << "GyroscopeReading" << false;
 
-        QTest::newRow("") << "1.3" << "SensorReading" << false;
-        QTest::newRow("") << "1.3" << "Accelerometer" << true;
-        QTest::newRow("") << "1.3" << "AccelerometerReading" << false;
-        QTest::newRow("") << "1.3" << "AmbientLightSensor" << true;
-        QTest::newRow("") << "1.3" << "AmbientLightReading" << false;
-        QTest::newRow("") << "1.3" << "Compass" << true;
-        QTest::newRow("") << "1.3" << "CompassReading" << false;
-        QTest::newRow("") << "1.3" << "Magnetometer" << true;
-        QTest::newRow("") << "1.3" << "MagnetometerReading" << false;
-        QTest::newRow("") << "1.3" << "OrientationSensor" << true;
-        QTest::newRow("") << "1.3" << "OrientationReading" << false;
-        QTest::newRow("") << "1.3" << "ProximitySensor" << true;
-        QTest::newRow("") << "1.3" << "ProximityReading" << false;
-        QTest::newRow("") << "1.3" << "RotationSensor" << true;
-        QTest::newRow("") << "1.3" << "RotationReading" << false;
-        QTest::newRow("") << "1.3" << "TapSensor" << true;
-        QTest::newRow("") << "1.3" << "TapReading" << false;
-        QTest::newRow("") << "1.3" << "LightSensor" << true;
-        QTest::newRow("") << "1.3" << "LightReading" << false;
-        QTest::newRow("") << "1.3" << "Gyroscope" << true;
-        QTest::newRow("") << "1.3" << "GyroscopeReading" << false;
-        QTest::newRow("") << "1.3" << "IRProximitySensor" << true;
-        QTest::newRow("") << "1.3" << "IRProximityReading" << false;
+        QTest::newRow("1.3 Sensor") << "1.3" << "Sensor" << false;
+        QTest::newRow("1.3 SensorReading") << "1.3" << "SensorReading" << false;
+        QTest::newRow("1.3 Accelerometer") << "1.3" << "Accelerometer" << true;
+        QTest::newRow("1.3 AccelerometerReading") << "1.3" << "AccelerometerReading" << false;
+        QTest::newRow("1.3 AmbientLightSensor") << "1.3" << "AmbientLightSensor" << true;
+        QTest::newRow("1.3 AmbientLightReading") << "1.3" << "AmbientLightReading" << false;
+        QTest::newRow("1.3 Compass") << "1.3" << "Compass" << true;
+        QTest::newRow("1.3 CompassReading") << "1.3" << "CompassReading" << false;
+        QTest::newRow("1.3 Magnetometer") << "1.3" << "Magnetometer" << true;
+        QTest::newRow("1.3 MagnetometerReading") << "1.3" << "MagnetometerReading" << false;
+        QTest::newRow("1.3 OrientationSensor") << "1.3" << "OrientationSensor" << true;
+        QTest::newRow("1.3 OrientationReading") << "1.3" << "OrientationReading" << false;
+        QTest::newRow("1.3 ProximitySensor") << "1.3" << "ProximitySensor" << true;
+        QTest::newRow("1.3 ProximityReading") << "1.3" << "ProximityReading" << false;
+        QTest::newRow("1.3 RotationSensor") << "1.3" << "RotationSensor" << true;
+        QTest::newRow("1.3 RotationReading") << "1.3" << "RotationReading" << false;
+        QTest::newRow("1.3 TapSensor") << "1.3" << "TapSensor" << true;
+        QTest::newRow("1.3 TapReading") << "1.3" << "TapReading" << false;
+        QTest::newRow("1.3 LightSensor") << "1.3" << "LightSensor" << true;
+        QTest::newRow("1.3 LightReading") << "1.3" << "LightReading" << false;
+        QTest::newRow("1.3 Gyroscope") << "1.3" << "Gyroscope" << true;
+        QTest::newRow("1.3 GyroscopeReading") << "1.3" << "GyroscopeReading" << false;
+        QTest::newRow("1.3 IRProximitySensor") << "1.3" << "IRProximitySensor" << true;
+        QTest::newRow("1.3 IRProximityReading") << "1.3" << "IRProximityReading" << false;
     }
 
     void elements()
@@ -201,37 +202,37 @@ private slots:
         QTest::addColumn<QString>("element");
         QTest::addColumn<bool>("validSyntax");
 
-        QTest::newRow("") << "1.1" << "Accelerometer" << false;
-        QTest::newRow("") << "1.1" << "AmbientLightSensor" << false;
-        QTest::newRow("") << "1.1" << "Compass" << false;
-        QTest::newRow("") << "1.1" << "Magnetometer" << false;
-        QTest::newRow("") << "1.1" << "OrientationSensor" << false;
-        QTest::newRow("") << "1.1" << "ProximitySensor" << false;
-        QTest::newRow("") << "1.1" << "RotationSensor" << false;
-        QTest::newRow("") << "1.1" << "TapSensor" << false;
+        QTest::newRow("1.1 Accelerometer") << "1.1" << "Accelerometer" << false;
+        QTest::newRow("1.1 AmbientLightSensor") << "1.1" << "AmbientLightSensor" << false;
+        QTest::newRow("1.1 Compass") << "1.1" << "Compass" << false;
+        QTest::newRow("1.1 Magnetometer") << "1.1" << "Magnetometer" << false;
+        QTest::newRow("1.1 OrientationSensor") << "1.1" << "OrientationSensor" << false;
+        QTest::newRow("1.1 ProximitySensor") << "1.1" << "ProximitySensor" << false;
+        QTest::newRow("1.1 RotationSensor") << "1.1" << "RotationSensor" << false;
+        QTest::newRow("1.1 TapSensor") << "1.1" << "TapSensor" << false;
 
-        QTest::newRow("") << "1.2" << "Accelerometer" << false;
-        QTest::newRow("") << "1.2" << "AmbientLightSensor" << false;
-        QTest::newRow("") << "1.2" << "Compass" << false;
-        QTest::newRow("") << "1.2" << "Magnetometer" << false;
-        QTest::newRow("") << "1.2" << "OrientationSensor" << false;
-        QTest::newRow("") << "1.2" << "ProximitySensor" << false;
-        QTest::newRow("") << "1.2" << "RotationSensor" << false;
-        QTest::newRow("") << "1.2" << "TapSensor" << false;
-        QTest::newRow("") << "1.2" << "LightSensor" << false;
-        QTest::newRow("") << "1.2" << "Gyroscope" << false;
+        QTest::newRow("1.2 Accelerometer") << "1.2" << "Accelerometer" << false;
+        QTest::newRow("1.2 AmbientLightSensor") << "1.2" << "AmbientLightSensor" << false;
+        QTest::newRow("1.2 Compass") << "1.2" << "Compass" << false;
+        QTest::newRow("1.2 Magnetometer") << "1.2" << "Magnetometer" << false;
+        QTest::newRow("1.2 OrientationSensor") << "1.2" << "OrientationSensor" << false;
+        QTest::newRow("1.2 ProximitySensor") << "1.2" << "ProximitySensor" << false;
+        QTest::newRow("1.2 RotationSensor") << "1.2" << "RotationSensor" << false;
+        QTest::newRow("1.2 TapSensor") << "1.2" << "TapSensor" << false;
+        QTest::newRow("1.2 LightSensor") << "1.2" << "LightSensor" << false;
+        QTest::newRow("1.2 Gyroscope") << "1.2" << "Gyroscope" << false;
 
-        QTest::newRow("") << "1.3" << "Accelerometer" << true;
-        QTest::newRow("") << "1.3" << "AmbientLightSensor" << true;
-        QTest::newRow("") << "1.3" << "Compass" << true;
-        QTest::newRow("") << "1.3" << "Magnetometer" << true;
-        QTest::newRow("") << "1.3" << "OrientationSensor" << true;
-        QTest::newRow("") << "1.3" << "ProximitySensor" << true;
-        QTest::newRow("") << "1.3" << "RotationSensor" << true;
-        QTest::newRow("") << "1.3" << "TapSensor" << true;
-        QTest::newRow("") << "1.3" << "LightSensor" << true;
-        QTest::newRow("") << "1.3" << "Gyroscope" << true;
-        QTest::newRow("") << "1.3" << "IRProximitySensor" << true;
+        QTest::newRow("1.3 Accelerometer") << "1.3" << "Accelerometer" << true;
+        QTest::newRow("1.3 AmbientLightSensor") << "1.3" << "AmbientLightSensor" << true;
+        QTest::newRow("1.3 Compass") << "1.3" << "Compass" << true;
+        QTest::newRow("1.3 Magnetometer") << "1.3" << "Magnetometer" << true;
+        QTest::newRow("1.3 OrientationSensor") << "1.3" << "OrientationSensor" << true;
+        QTest::newRow("1.3 ProximitySensor") << "1.3" << "ProximitySensor" << true;
+        QTest::newRow("1.3 RotationSensor") << "1.3" << "RotationSensor" << true;
+        QTest::newRow("1.3 TapSensor") << "1.3" << "TapSensor" << true;
+        QTest::newRow("1.3 LightSensor") << "1.3" << "LightSensor" << true;
+        QTest::newRow("1.3 Gyroscope") << "1.3" << "Gyroscope" << true;
+        QTest::newRow("1.3 IRProximitySensor") << "1.3" << "IRProximitySensor" << true;
     }
 
     void alwaysOn()
@@ -249,14 +250,15 @@ private slots:
         QObject *obj = c.create();
         if (validSyntax) {
             QVERIFY(obj);
-            QSensor *sensor = qobject_cast<QSensor*>(obj);
-            QVERIFY(sensor);
-            QCOMPARE(sensor->isAlwaysOn(), true);
+            QVariant alwaysOn = obj->property("alwaysOn");
+            QCOMPARE(alwaysOn.isValid(), true);
+            QCOMPARE(alwaysOn.toBool(), true);
             delete obj;
         } else {
             QCOMPARE(obj, static_cast<QObject*>(0));
         }
     }
+
 };
 
 QTEST_MAIN(tst_legacy_sensors)
