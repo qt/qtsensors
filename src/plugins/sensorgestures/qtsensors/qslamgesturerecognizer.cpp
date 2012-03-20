@@ -68,7 +68,7 @@ void QSlamSensorGestureRecognizer::create()
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
-    timer->setInterval(1250);
+    timer->setInterval(850);
 }
 
 
@@ -122,8 +122,8 @@ void QSlamSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
     orientationReading = reading;
 }
 
-#define SLAM_FACTOR -16.0
-#define SLAM_WIGGLE_FACTOR 0.95
+#define SLAM_FACTOR -11.0
+#define SLAM_WIGGLE_FACTOR 0.35
 
 void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
@@ -143,9 +143,9 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 
     zList.insert(0,qAbs(averageZ));
 
-    //// very hacky
     if (orientationReading == 0)
         return;
+    //// very hacky
     if (orientationReading->orientation() == QOrientationReading::FaceUp) {
         z = z - 9.8;
     }
@@ -159,9 +159,11 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 
     if (slamMap.count() > 5)
         slamMap.removeLast();
+
     if (z < SLAM_FACTOR
-            && qAbs(diffX) < (accelRange  * SLAM_WIGGLE_FACTOR)
-            && qAbs(diffY) < (accelRange  * SLAM_WIGGLE_FACTOR)) {
+            && qAbs(diffX) > -(accelRange * .1285)//-5.0115
+            && qAbs(lastX) < 7
+            && qAbs(x) < 7) {
         slamMap.insert(0,true);
         if (!detecting && !timer->isActive()) {
             timer->start();
@@ -176,7 +178,7 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         negativeList.removeLast();
 
     if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0))
-         && qAbs(diffX) > (accelRange   * 0.7))
+         && qAbs(diffX) > (accelRange   * 0.7)) //27.3
             || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
             && qAbs(diffY) > (accelRange * 0.7))) {
         negativeList.insert(0,true);

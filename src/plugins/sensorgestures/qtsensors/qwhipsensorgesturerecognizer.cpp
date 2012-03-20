@@ -77,10 +77,18 @@ QString QWhipSensorGestureRecognizer::id() const
 bool QWhipSensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
-        accelRange = QtSensorGestureSensorHandler::instance()->accelRange;
-        active = true;
-        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-                this,SLOT(accelChanged(QAccelerometerReading *)));
+        if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
+            accelRange = QtSensorGestureSensorHandler::instance()->accelRange;
+            active = true;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+                    this,SLOT(accelChanged(QAccelerometerReading *)));
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+            active = false;
+        }
     } else {
         active = false;
     }
@@ -90,6 +98,10 @@ bool QWhipSensorGestureRecognizer::start()
 bool QWhipSensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
+
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
@@ -99,6 +111,11 @@ bool QWhipSensorGestureRecognizer::stop()
 bool QWhipSensorGestureRecognizer::isActive()
 {
     return active;
+}
+
+void QWhipSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
+{
+    orientationReading = reading;
 }
 
 #define WHIP_THRESHOLD_FACTOR 0.4//29.25  //33.15
@@ -131,13 +148,15 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (qAbs(difference) < 1) {
         return;
     }
+    if (orientationReading == 0)
+        return;
 
     qreal y = reading->y();
     qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
     if (detecting) {
         if (roll > WHIP_Y_DEGREES
-                && qAbs(averageZ) < 4.0
+                && orientationReading->orientation() == QOrientationReading::TopUp
                 && ((!wasNegative && qAbs(detectedX - x) >= accelRange * WHIP_THRESHOLD_FACTOR)
                     || (wasNegative && detectedX - x >= (accelRange * WHIP_THRESHOLD_FACTOR))) ) {
             Q_EMIT whip();
@@ -146,6 +165,7 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
             timer->stop();
         }
     } else if (!timer->isActive()
+               && orientationReading->orientation() == QOrientationReading::TopUp
                && roll < WHIP_Y_DEGREES
                && ((difference > accelRange * WHIP_DETECTION_FACTOR)
                 || (difference < -accelRange * WHIP_DETECTION_FACTOR))) {
@@ -164,7 +184,6 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 
 void QWhipSensorGestureRecognizer::timeout()
 {
-    qDebug() << __FUNCTION__;
     detecting = false;
 }
 

@@ -168,7 +168,8 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
                 lastRoll = degrees;
         }
 
-        if (!detecting && qAbs(degrees) > THRESHOLD_DEGREES
+        if (orientationReading->orientation() == QOrientationReading::FaceUp
+                && !detecting && qAbs(degrees) > THRESHOLD_DEGREES
                 && pitch < RESTING_VARIANCE) {
 
             detecting = true;
