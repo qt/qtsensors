@@ -71,7 +71,7 @@ private Q_SLOTS:
 
 Tst_qsensorgesturePluginsTest::Tst_qsensorgesturePluginsTest()
 {
-    qputenv("QTSENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
+    qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
     register_test_backends();
 }
 
