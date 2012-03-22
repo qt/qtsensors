@@ -66,11 +66,11 @@ public:
         Loaded
     };
     QSensorManagerPrivate()
-        : pluginLoadingState(NotLoaded)
+        : loadExternalPlugins(true)
+        , pluginLoadingState(NotLoaded)
         , loader(new QFactoryLoader("com.nokia.Qt.QSensorPluginInterface/1.0", QLatin1String("/sensors")))
         , defaultIdentifierForTypeLoaded(false)
         , sensorsChanged(false)
-        , loadExternalPlugins(true)
     {
         QByteArray env = qgetenv("QT_SENSORS_LOAD_PLUGINS");
         if (env == "0") {
@@ -421,7 +421,7 @@ QByteArray QSensor::defaultSensorForType(const QByteArray &type)
     if (!d->defaultIdentifierForTypeLoaded) {
         d->defaultIdentifierForTypeLoaded = true;
         QStringList abspath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
-        QString cfgpath = "";
+        QString cfgpath;
         //first in the list is user specific, so ignore it and take the last
         if (abspath.length() > 0) {
             cfgpath = abspath[abspath.count() - 1];
@@ -431,7 +431,7 @@ QByteArray QSensor::defaultSensorForType(const QByteArray &type)
                 if (cfgfile.open(QFile::ReadOnly)){
                     //Read the sensor default setting file
                     QTextStream stream(&cfgfile);
-                    QString line = "";
+                    QString line;
                     bool isconfig = false;
                     while (!stream.atEnd()) {
                         line = stream.readLine();
