@@ -69,7 +69,7 @@ Q_SIGNALS:
 private slots:
     void accelChanged(QAccelerometerReading *reading);
     void orientationReadingChanged(QOrientationReading *reading);
-    void timeout();
+    void checkForSlam();
 
 private:
 
@@ -79,21 +79,19 @@ private:
     int accelRange;
     bool active;
 
+    bool wasNegative;
     qreal lastX;
     qreal lastY;
     qreal lastZ;
-
+    qreal detectedX;
 
     bool detecting;
-    bool slamOk;
 
-    QList<bool> slamMap;
-
-    void checkForSlam();
-
-    QList <bool> negativeList;
-
-    QList<qreal> zList;
+    qreal accelX;
+    qreal roll;
+    QList<qreal> restingList;
+    bool resting;
+    QList<qreal> xList;
 };
 
 QT_END_NAMESPACE

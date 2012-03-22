@@ -54,8 +54,11 @@ QSlamSensorGestureRecognizer::QSlamSensorGestureRecognizer(QObject *parent) :
     lastX(0),
     lastY(0),
     lastZ(0),
+    detectedX(0),
     detecting(0),
-    slamOk(0)
+    accelX(0),
+    roll(0),
+    resting(0)
 {
 }
 
@@ -66,9 +69,9 @@ QSlamSensorGestureRecognizer::~QSlamSensorGestureRecognizer()
 void QSlamSensorGestureRecognizer::create()
 {
     timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(checkForSlam()));
     timer->setSingleShot(true);
-    timer->setInterval(850);
+    timer->setInterval(500);
 }
 
 
@@ -113,7 +116,6 @@ bool QSlamSensorGestureRecognizer::stop()
 
 bool QSlamSensorGestureRecognizer::isActive()
 {
-
     return active;
 }
 
@@ -122,8 +124,11 @@ void QSlamSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
     orientationReading = reading;
 }
 
-#define SLAM_FACTOR -11.0
-#define SLAM_WIGGLE_FACTOR 0.35
+#define SLAM_DETECTION_FACTOR 0.15 // 5.85
+
+#define SLAM_Y_DEGREES 15
+
+#define RADIANS_TO_DEGREES 57.2957795
 
 void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
@@ -131,111 +136,72 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     qreal y = reading->y();
     qreal z = reading->z();
 
-    if (zList.count() > 4)
-        zList.removeLast();
-
-    qreal averageZ = 0;
-    Q_FOREACH (qreal az, zList) {
-        averageZ += az;
+    if (qAbs(lastX - x) < 2 && qAbs(lastY - y) < 2 && qAbs(lastZ - z) < 2) {
+        resting = true;
+    } else {
+        resting = false;
     }
-    averageZ += z;
-    averageZ /= zList.count() + 1;
 
-    zList.insert(0,qAbs(averageZ));
+    if (restingList.count() > 5)
+        restingList.removeLast();
+    restingList.insert(0, resting);
+
+    if (xList.count() > 15)
+        xList.removeLast();
+    xList.insert(0, x);
 
     if (orientationReading == 0)
         return;
-    //// very hacky
-    if (orientationReading->orientation() == QOrientationReading::FaceUp) {
-        z = z - 9.8;
+
+    qreal difference = lastX - x;
+
+    roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+
+    if (!timer->isActive()
+            && detecting
+            && (orientationReading->orientation() == QOrientationReading::RightUp
+                || orientationReading->orientation() == QOrientationReading::LeftUp)
+            && resting) {
+        timer->start();
     }
 
-    qreal diffX = lastX - x;
-    qreal diffY = lastY - y;
-
-    if (detecting && slamMap.count() > 5 && slamMap.at(5) == true) {
-        checkForSlam();
+    if (!detecting
+            && orientationReading->orientation() == QOrientationReading::TopUp
+            && roll < SLAM_Y_DEGREES
+            && (difference > accelRange * SLAM_DETECTION_FACTOR
+                || difference < -accelRange * SLAM_DETECTION_FACTOR)) {
+        detectedX = x;
+        // start of gesture
+        detecting = true;
+        if (difference > 0)
+            wasNegative = false;
+        else
+            wasNegative = true;
+        restingList.clear();
     }
 
-    if (slamMap.count() > 5)
-        slamMap.removeLast();
-
-    if (z < SLAM_FACTOR
-            && qAbs(diffX) > -(accelRange * .1285)//-5.0115
-            && qAbs(lastX) < 7
-            && qAbs(x) < 7) {
-        slamMap.insert(0,true);
-        if (!detecting && !timer->isActive()) {
-            timer->start();
-            detecting = true;
-        }
-    } else {
-        slamMap.insert(0,false);
-    }
+    lastX = x;
+    lastY = y;
     lastZ = z;
-
-    if (negativeList.count() > 5)
-        negativeList.removeLast();
-
-    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0))
-         && qAbs(diffX) > (accelRange   * 0.7)) //27.3
-            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
-            && qAbs(diffY) > (accelRange * 0.7))) {
-        negativeList.insert(0,true);
-    } else {
-        negativeList.insert(0,false);
-    }
-
-    lastX = x; lastY = y;
-
-}
-
-void QSlamSensorGestureRecognizer::timeout()
-{
-    detecting = false;
-    slamMap.clear();
 }
 
 void QSlamSensorGestureRecognizer:: checkForSlam()
 {
-    slamOk = false;
 
-    qreal averageZ = 0;
-    Q_FOREACH (qreal az, zList) {
-        averageZ += az;
-    }
-    averageZ /= zList.count();
-
-    if (qAbs(averageZ) < 6.0)
-        return;
-
-    for (int i = 0; i < slamMap.count() - 1; i++) {
-        if (!slamMap.at(i)) {
-            slamOk = true;
-        } else {
+    for (int i = 0; i < restingList.count() - 1; i++) {
+        if (!restingList.at(i)) {
             detecting = false;
-            slamOk = false;
-            timer->stop();
-
             return;
         }
     }
-    if (slamOk) {
-        bool ok = true;
-        for (int i = 0; i < negativeList.count() - 1; i++) {
-            if (negativeList.at(i)) {
-                ok = false;
-            }
-        }
 
-        if (ok) {
-            Q_EMIT slam();
-            Q_EMIT detected("slam");
-        }
-        detecting = false;
-        slamMap.clear();
-        timer->stop();
+    if (detecting && (orientationReading->orientation() == QOrientationReading::RightUp // 3 or 4
+                      || orientationReading->orientation() == QOrientationReading::LeftUp)) {
+        Q_EMIT slam();
+        Q_EMIT detected("slam");
     }
+
+    detecting = false;
 }
 
 QT_END_NAMESPACE
