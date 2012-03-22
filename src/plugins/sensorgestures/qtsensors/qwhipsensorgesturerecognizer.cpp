@@ -48,13 +48,15 @@
 QT_BEGIN_NAMESPACE
 
 QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent)
-    : QSensorGestureRecognizer(parent)
-    , wasNegative(0)
-    , lastX(0)
-    , detectedX(0)
-    , active(0)
-    , detecting(0)
-{
+    : QSensorGestureRecognizer(parent),
+    orientationReading(0),
+    accelRange(0),
+    active(0),
+    lastX(0),
+    lastY(0),
+    lastZ(0),
+    detecting(0),
+    whipOk(0){
 }
 
 QWhipSensorGestureRecognizer::~QWhipSensorGestureRecognizer()
@@ -66,7 +68,7 @@ void QWhipSensorGestureRecognizer::create()
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
-    timer->setInterval(750);
+    timer->setInterval(850);
 }
 
 QString QWhipSensorGestureRecognizer::id() const
@@ -118,68 +120,72 @@ void QWhipSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
     orientationReading = reading;
 }
 
-#define WHIP_THRESHOLD_FACTOR 0.4//29.25  //33.15
-#define WHIP_DETECTION_FACTOR 0.15 // 5.85
-
-#define WHIP_DEGREES 25
-
-#define WHIP_Y_DEGREES 15
-#define WHIP_DEGREES_BELOW
-
-#define RADIANS_TO_DEGREES 57.2957795
+#define WHIP_FACTOR -11.0
+#define WHIP_WIGGLE_FACTOR 0.35
 
 void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
     const qreal x = reading->x();
-    const qreal difference = lastX - x;
-    const qreal z = reading->z();
+    const qreal y = reading->y();
+    qreal z = reading->z();
+
+    if (zList.count() > 4)
+        zList.removeLast();
 
     qreal averageZ = 0;
-    Q_FOREACH (const qreal az, zList) {
+    Q_FOREACH (qreal az, zList) {
         averageZ += az;
     }
-    if (zList.count() > 0)
-        averageZ /= zList.count();
+    averageZ += z;
+    averageZ /= zList.count() + 1;
 
-    if (zList.count() > 5)
-        zList.removeLast();
-    zList.insert(0,qAbs(z));
+    zList.insert(0,qAbs(averageZ));
 
-    if (qAbs(difference) < 1) {
-        return;
-    }
     if (orientationReading == 0)
         return;
-
-    const qreal y = reading->y();
-    const qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
-
-    if (detecting) {
-        if (roll > WHIP_Y_DEGREES
-                && orientationReading->orientation() == QOrientationReading::TopUp
-                && ((!wasNegative && qAbs(detectedX - x) >= accelRange * WHIP_THRESHOLD_FACTOR)
-                    || (wasNegative && detectedX - x >= (accelRange * WHIP_THRESHOLD_FACTOR))) ) {
-            Q_EMIT whip();
-            Q_EMIT detected("whip");
-            detecting = false;
-            timer->stop();
-        }
-    } else if (!timer->isActive()
-               && orientationReading->orientation() == QOrientationReading::TopUp
-               && roll < WHIP_Y_DEGREES
-               && ((difference > accelRange * WHIP_DETECTION_FACTOR)
-                || (difference < -accelRange * WHIP_DETECTION_FACTOR))) {
-        detectedX = x;
-//        start of gesture
-        timer->start();
-        detecting = true;
-        if (difference > 0)
-            wasNegative = false;
-        else
-            wasNegative = true;
-        zList.clear();
+    //// very hacky
+    if (orientationReading->orientation() == QOrientationReading::FaceUp) {
+        z = z - 9.8;
     }
-    lastX = x;
+
+    const qreal diffX = lastX - x;
+    const qreal diffY = lastY - y;
+
+    if (detecting && whipMap.count() > 5 && whipMap.at(5) == true) {
+        checkForWhip();
+    }
+
+    if (whipMap.count() > 5)
+        whipMap.removeLast();
+
+    if (z < WHIP_FACTOR
+            && qAbs(diffX) > -(accelRange * .1285)//-5.0115
+            && qAbs(lastX) < 7
+            && qAbs(x) < 7) {
+        whipMap.insert(0,true);
+        if (!detecting && !timer->isActive()) {
+            timer->start();
+            detecting = true;
+        }
+    } else {
+        whipMap.insert(0,false);
+    }
+    lastZ = z;
+
+    if (negativeList.count() > 5)
+        negativeList.removeLast();
+
+    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0))
+         && qAbs(diffX) > (accelRange   * 0.7)) //27.3
+            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
+            && qAbs(diffY) > (accelRange * 0.7))) {
+        negativeList.insert(0,true);
+    } else {
+        negativeList.insert(0,false);
+    }
+
+    lastX = x; lastY = y;
+
 }
 
 void QWhipSensorGestureRecognizer::timeout()
@@ -187,4 +193,46 @@ void QWhipSensorGestureRecognizer::timeout()
     detecting = false;
 }
 
+
+void QWhipSensorGestureRecognizer::checkForWhip()
+{
+    whipOk = false;
+
+    qreal averageZ = 0;
+    Q_FOREACH (qreal az, zList) {
+        averageZ += az;
+    }
+    averageZ /= zList.count();
+
+    if (qAbs(averageZ) < 6.0)
+        return;
+    for (int i = 0; i < whipMap.count() - 1; i++) {
+        if (!whipMap.at(i)) {
+            whipOk = true;
+        } else {
+            detecting = false;
+            whipOk = false;
+            timer->stop();
+
+            return;
+        }
+    }
+
+    if (whipOk) {
+        bool ok = true;
+        for (int i = 0; i < negativeList.count() - 1; i++) {
+            if (negativeList.at(i)) {
+                ok = false;
+            }
+        }
+
+        if (ok) {
+            Q_EMIT whip();
+            Q_EMIT detected("whip");
+        }
+        detecting = false;
+        whipMap.clear();
+        timer->stop();
+    }
+}
 QT_END_NAMESPACE

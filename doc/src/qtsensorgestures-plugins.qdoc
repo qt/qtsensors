@@ -160,9 +160,8 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.whip
             \li whip
-            \li Phone held top up, is moved like a whip gesture, back towards one side of the phone, then forward towards the other side, using the Accelerometer and Orientation sensors.
-            \li \image sensorgesture-whip_1.png
-               \image sensorgesture-whip_2.png
+            \li Move phone quickly down and then back up. using the Accelerometer and Orientation sensors.
+            \li \image sensorgesture-whip.png
    \endtable
 
 */

@@ -74,18 +74,23 @@ private slots:
 private:
     QOrientationReading *orientationReading;
     QTimer *timer;
-    int accelRange;
-    bool wasNegative;
-    qreal lastX;
-    qreal detectedX;
-
+    qreal accelRange;
     bool active;
 
-    qreal accelX;
-    qreal roll;
-    bool detecting;
-    QList<qreal> zList;
+    qreal lastX;
+    qreal lastY;
+    qreal lastZ;
 
+    bool detecting;
+    bool whipOk;
+
+    QList<bool> whipMap;
+
+    void checkForWhip();
+
+    QList <bool> negativeList;
+
+    QList<qreal> zList;
 };
 
 QT_END_NAMESPACE
