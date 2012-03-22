@@ -106,10 +106,15 @@ void QShakeSensorGestureRecognizer::accelChanged()
     currentData.y = y;
     currentData.z = z;
 
-    if ((qAbs(currentData.x - prevData.x)
-          || qAbs(currentData.y - prevData.y)
-          || qAbs(currentData.z - prevData.z)) < 1)
+    if (qAbs(prevData.x - currentData.x)  < 1
+            && qAbs(prevData.y - currentData.y)  < 1
+            && qAbs(prevData.z - currentData.z)  < 1) {
+
+        prevData.x = currentData.x;
+        prevData.y = currentData.y;
+        prevData.z = currentData.z;
         return;
+    }
 
 
     if (!shaking && checkForShake(prevData, currentData, THRESHOLD) &&
