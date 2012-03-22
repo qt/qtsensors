@@ -109,12 +109,12 @@ bool QPickupSensorGestureRecognizer::isActive()
 void QPickupSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
     accelReading = reading;
-    qreal x = reading->x();
-    qreal xdiff =  pXaxis - x;
-    qreal y = reading->y();
-    qreal ydiff = pYaxis - y;
-    qreal z = reading->z();
-    qreal zdiff =  pZaxis - z;
+    const qreal x = reading->x();
+    const qreal xdiff =  pXaxis - x;
+    const qreal y = reading->y();
+    const qreal ydiff = pYaxis - y;
+    const qreal z = reading->z();
+    const qreal zdiff =  pZaxis - z;
 
     pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
 
@@ -159,11 +159,11 @@ void QPickupSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
 
 void QPickupSensorGestureRecognizer::timeout()
 {
-    qreal x = accelReading->x();
-    qreal y = accelReading->y();
-    qreal z = accelReading->z();
+    const qreal x = accelReading->x();
+    const qreal y = accelReading->y();
+    const qreal z = accelReading->z();
 
-    qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    const qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
     bool ok = true;
     for (int i = 0; i < zList.count() - 1; i++) {

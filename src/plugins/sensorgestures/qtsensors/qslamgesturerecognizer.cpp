@@ -132,9 +132,9 @@ void QSlamSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
 
 void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = reading->x();
-    qreal y = reading->y();
-    qreal z = reading->z();
+    const qreal x = reading->x();
+    const qreal y = reading->y();
+    const qreal z = reading->z();
 
     if (qAbs(lastX - x) < 2 && qAbs(lastY - y) < 2 && qAbs(lastZ - z) < 2) {
         resting = true;
@@ -153,7 +153,7 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (orientationReading == 0)
         return;
 
-    qreal difference = lastX - x;
+    const qreal difference = lastX - x;
 
     roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 

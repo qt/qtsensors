@@ -129,15 +129,15 @@ void QTwistSensorGestureRecognizer::orientationReadingChanged(QOrientationReadin
 
 void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = reading->x();
-    qreal y = reading->y();
-    qreal z = reading->z();
+    const qreal x = reading->x();
+    const qreal y = reading->y();
+    const qreal z = reading->z();
 
-    qreal diffX = lastX - x;
-    qreal diffY = lastY - y;
+    const qreal diffX = lastX - x;
+    const qreal diffY = lastY - y;
     pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
 
-    qreal degrees = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    const qreal degrees = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
     if (orientationReading == 0)
         return;

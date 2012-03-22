@@ -107,9 +107,9 @@ QString QShake2SensorGestureRecognizer::id() const
 
 void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = reading->x();
-    qreal y = reading->y();
-    qreal z = reading->z();
+    const qreal x = reading->x();
+    const qreal y = reading->y();
+    const qreal z = reading->z();
 
     currentData.x = x;
     currentData.y = y;
@@ -150,10 +150,10 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
 
         if (shakeCount == 0 && shakeDirection == QShake2SensorGestureRecognizer::ShakeUndefined) {
 
-            int xdiff = currentData.x - prevData.x;
-            int ydiff = currentData.y - prevData.y;
+            const int xdiff = currentData.x - prevData.x;
+            const int ydiff = currentData.y - prevData.y;
 
-            int max = qMax(qAbs(ydiff), qAbs(xdiff));
+            const int max = qMax(qAbs(ydiff), qAbs(xdiff));
 
             if (max == qAbs(xdiff)) {
                 if (isNegative(xdiff))
@@ -188,9 +188,9 @@ void QShake2SensorGestureRecognizer::timeout()
 }
 bool QShake2SensorGestureRecognizer::checkForShake(ShakeData prevSensorData, ShakeData currentSensorData, qreal threshold)
 {
-    double deltaX = qAbs(prevSensorData.x - currentSensorData.x);
-    double deltaY = qAbs(prevSensorData.y - currentSensorData.y);
-    double deltaZ = qAbs(prevSensorData.z - currentSensorData.z);
+    const double deltaX = qAbs(prevSensorData.x - currentSensorData.x);
+    const double deltaY = qAbs(prevSensorData.y - currentSensorData.y);
+    const double deltaZ = qAbs(prevSensorData.z - currentSensorData.z);
 
     return (deltaX > threshold
             || deltaY > threshold

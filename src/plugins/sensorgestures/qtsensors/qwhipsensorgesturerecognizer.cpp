@@ -130,12 +130,12 @@ void QWhipSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
 
 void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
-    qreal x = reading->x();
-    qreal difference = lastX - x;
-    qreal z = reading->z();
+    const qreal x = reading->x();
+    const qreal difference = lastX - x;
+    const qreal z = reading->z();
 
     qreal averageZ = 0;
-    Q_FOREACH (qreal az, zList) {
+    Q_FOREACH (const qreal az, zList) {
         averageZ += az;
     }
     if (zList.count() > 0)
@@ -151,8 +151,8 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (orientationReading == 0)
         return;
 
-    qreal y = reading->y();
-    qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    const qreal y = reading->y();
+    const qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
     if (detecting) {
         if (roll > WHIP_Y_DEGREES
