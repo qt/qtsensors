@@ -128,8 +128,6 @@ void QSlamSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
 
 #define SLAM_Y_DEGREES 15
 
-#define RADIANS_TO_DEGREES 57.2957795
-
 void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
     const qreal x = reading->x();
@@ -155,8 +153,6 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 
     const qreal difference = lastX - x;
 
-    roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
-
     if (!timer->isActive()
             && detecting
             && (orientationReading->orientation() == QOrientationReading::RightUp
@@ -164,12 +160,9 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
             && resting) {
         timer->start();
     }
-
     if (!detecting
             && orientationReading->orientation() == QOrientationReading::TopUp
-            && roll < SLAM_Y_DEGREES
-            && (difference > accelRange * SLAM_DETECTION_FACTOR
-                || difference < -accelRange * SLAM_DETECTION_FACTOR)) {
+            && hasBeenResting()) {
         detectedX = x;
         // start of gesture
         detecting = true;
@@ -185,14 +178,23 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     lastZ = z;
 }
 
-void QSlamSensorGestureRecognizer:: checkForSlam()
-{
 
+bool QSlamSensorGestureRecognizer::hasBeenResting()
+{
     for (int i = 0; i < restingList.count() - 1; i++) {
         if (!restingList.at(i)) {
-            detecting = false;
-            return;
+            return false;
         }
+    }
+    return true;
+}
+
+void QSlamSensorGestureRecognizer::checkForSlam()
+{
+
+    if (!hasBeenResting()) {
+        detecting = false;
+        return;
     }
 
     if (detecting && (orientationReading->orientation() == QOrientationReading::RightUp // 3 or 4

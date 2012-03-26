@@ -143,8 +143,8 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.slam
             \li slam
-            \li Phone is held in a top up position with a side facing forward. Move phone up, then swing it down and then held stationary briefly.
-             Like it is being used to point at something with the top corner. using the Accelerometer and Orientation sensors.
+            \li Phone is held in a top up position with a side facing forward. Swing it with a downward motion and then
+                hold stationary briefly, like it is being used to point at something with the top corner. using the Accelerometer and Orientation sensors.
             \li \image sensorgesture-slam_1.png
             \image sensorgesture-slam_2.png
         \row

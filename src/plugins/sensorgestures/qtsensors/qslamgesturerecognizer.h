@@ -92,6 +92,8 @@ private:
     QList<qreal> restingList;
     bool resting;
     QList<qreal> xList;
+
+    bool hasBeenResting();
 };
 
 QT_END_NAMESPACE
