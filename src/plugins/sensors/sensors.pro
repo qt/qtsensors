@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
-SUBDIRS += dummy generic
-simulator:SUBDIRS += simulator
-
+isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, dummy):SUBDIRS += dummy
+isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, generic):SUBDIRS += generic
+isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, simulator):simulator:SUBDIRS += simulator
