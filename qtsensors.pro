@@ -28,3 +28,10 @@ module_qtsensors_snippets.depends = module_qtsensors_src
 
 include(doc/config/qtsensors_doc.pri)
 
+!isEmpty(MIDDLEWARE):exists($$MIDDLEWARE/$$MIDDLEWARE.pro) {
+    SUBDIRS += module_qtsensors_middleware
+    module_qtsensors_middleware.subdir = $$MIDDLEWARE
+    module_qtsensors_middleware.target = module-qtsensors-middleware
+    module_qtsensors_middleware.depends = module_qtsensors_src
+}
+
