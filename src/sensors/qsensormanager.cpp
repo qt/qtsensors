@@ -89,6 +89,33 @@ public:
     // Holds the default identifier
     QHash<QByteArray, QByteArray> defaultIdentifierForType;
     bool defaultIdentifierForTypeLoaded;
+    void readConfigFile()
+    {
+        defaultIdentifierForTypeLoaded = true;
+        QStringList configs = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+        // This shouldn't happen but just in case, check in /etc/xdg
+        if (configs.count() == 0) configs << QLatin1String("/etc/xdg");
+        QString config = configs.at(configs.count()-1) + QLatin1String("/Nokia/Sensors.conf");
+        if (!QFile::exists(config)) return;
+        QFile cfgfile(config);
+        if (!cfgfile.open(QFile::ReadOnly)) return;
+
+        QTextStream stream(&cfgfile);
+        QString line;
+        bool isconfig = false;
+        while (!stream.atEnd()) {
+            line = stream.readLine();
+            if (!isconfig && line == QLatin1String("[Default]"))
+                isconfig = true;
+            else if (isconfig) {
+                //read out setting line
+                line.remove(' ');
+                QStringList pair = line.split('=');
+                if (pair.count() == 2)
+                    defaultIdentifierForType.insert(pair[0].toLatin1(), pair[1].toLatin1());
+            }
+        }
+    }
 
     // Holds the first identifier for each type
     QHash<QByteArray, QByteArray> firstIdentifierForType;
@@ -418,39 +445,8 @@ QByteArray QSensor::defaultSensorForType(const QByteArray &type)
         return QByteArray();
 
     //check if we need to read the config setting file
-    if (!d->defaultIdentifierForTypeLoaded) {
-        d->defaultIdentifierForTypeLoaded = true;
-        QStringList abspath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
-        QString cfgpath;
-        //first in the list is user specific, so ignore it and take the last
-        if (abspath.length() > 0) {
-            cfgpath = abspath[abspath.count() - 1];
-            cfgpath += QString::fromLatin1("/Nokia/Sensors.conf");
-            if (QFile::exists(cfgpath)){
-                QFile cfgfile(cfgpath);
-                if (cfgfile.open(QFile::ReadOnly)){
-                    //Read the sensor default setting file
-                    QTextStream stream(&cfgfile);
-                    QString line;
-                    bool isconfig = false;
-                    while (!stream.atEnd()) {
-                        line = stream.readLine();
-                        if (!isconfig && line == QString::fromLatin1("[Default]"))
-                            isconfig = true;
-                        else {
-                            if (isconfig) {
-                                //read out setting line
-                                line.remove(' ');
-                                QStringList pair = line.split('=');
-                                if (pair.count() == 2)
-                                    d->defaultIdentifierForType.insert(pair[0].toLatin1(), pair[1].toLatin1());
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    if (!d->defaultIdentifierForTypeLoaded)
+        d->readConfigFile();
 
     QHash<QByteArray, QByteArray>::const_iterator i = d->defaultIdentifierForType.find(type);
     if (i != d->defaultIdentifierForType.end() && i.key() == type) {
