@@ -1,1 +1,2 @@
 plugin declarative_sensors
+typeinfo plugin.qmltypes

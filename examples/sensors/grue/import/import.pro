@@ -24,4 +24,4 @@ qmldir.path=$$DESTPATH
 INSTALLS += qmldir
 
 OTHER_FILES += \
-    plugin.json
+    plugin.json qmldir

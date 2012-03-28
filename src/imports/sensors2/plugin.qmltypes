@@ -1,0 +1,83 @@
+import QtQuick.tooling 1.1
+
+// This file describes the plugin-supplied types contained in the library.
+// It is used for QML tooling purposes only.
+
+Module {
+    Component {
+        name: "QSensor2AmbientLight"
+        prototype: "qsensor2common"
+        exports: ["AmbientLightSensor 5.0"]
+        Enum {
+            name: "LightLevel"
+            values: {
+                "Unknown": 0,
+                "Dark": 1,
+                "Twilight": 2,
+                "Light": 3,
+                "Bright": 4,
+                "Sunny": 5
+            }
+        }
+        Property { name: "lightLevel"; type: "LightLevel"; isReadonly: true }
+    }
+    Component {
+        name: "QSensor2Gesture"
+        prototype: "QObject"
+        exports: ["SensorGesture 5.0"]
+        Property { name: "availableGestures"; type: "QStringList"; isReadonly: true }
+        Property { name: "gestures"; type: "QStringList" }
+        Property { name: "validGestures"; type: "QStringList"; isReadonly: true }
+        Property { name: "invalidGestures"; type: "QStringList"; isReadonly: true }
+        Property { name: "enabled"; type: "bool" }
+        Signal {
+            name: "detected"
+            Parameter { name: "gesture"; type: "string" }
+        }
+    }
+    Component {
+        name: "QSensor2Proximity"
+        prototype: "qsensor2common"
+        exports: ["ProximitySensor 5.0"]
+        Property { name: "near"; type: "bool"; isReadonly: true }
+    }
+    Component {
+        name: "QSensor2Tilt"
+        prototype: "qsensor2common"
+        exports: ["TiltSensor 5.0"]
+        Enum {
+            name: "Unit"
+            values: {
+                "Radians": 0,
+                "Degrees": 1
+            }
+        }
+        Enum {
+            name: "Speed"
+            values: {
+                "Slow": 0,
+                "Medium": 1,
+                "Fast": 2
+            }
+        }
+        Property { name: "yRotation"; type: "qreal"; isReadonly: true }
+        Property { name: "xRotation"; type: "qreal"; isReadonly: true }
+        Property { name: "unit"; type: "Unit" }
+        Property { name: "speed"; type: "Speed" }
+        Property { name: "accuracy"; type: "qreal" }
+        Property { name: "settings"; type: "QByteArray" }
+        Signal {
+            name: "tiltChanged"
+            Parameter { name: "deltaX"; type: "qreal" }
+            Parameter { name: "deltaY"; type: "qreal" }
+        }
+        Method { name: "calibrate" }
+    }
+    Component {
+        name: "qsensor2common"
+        prototype: "QObject"
+        exports: ["Sensor 5.0"]
+        Property { name: "enabled"; type: "bool" }
+        Property { name: "alwaysOn"; type: "bool" }
+    }
+}
