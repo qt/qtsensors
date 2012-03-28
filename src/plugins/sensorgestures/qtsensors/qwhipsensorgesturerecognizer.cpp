@@ -204,9 +204,10 @@ void QWhipSensorGestureRecognizer::checkForWhip()
     }
     averageZ /= zList.count();
 
-    if (qAbs(averageZ) < 6.0)
+    if (qAbs(averageZ) < 5.0)
         return;
-    for (int i = 0; i < whipMap.count() - 1; i++) {
+
+    for (int i = 0; i < whipMap.count() - 2; i++) {
         if (!whipMap.at(i)) {
             whipOk = true;
         } else {

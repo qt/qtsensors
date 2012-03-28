@@ -144,10 +144,6 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         restingList.removeLast();
     restingList.insert(0, resting);
 
-    if (xList.count() > 15)
-        xList.removeLast();
-    xList.insert(0, x);
-
     if (orientationReading == 0)
         return;
 
@@ -191,7 +187,6 @@ bool QSlamSensorGestureRecognizer::hasBeenResting()
 
 void QSlamSensorGestureRecognizer::checkForSlam()
 {
-
     if (!hasBeenResting()) {
         detecting = false;
         return;

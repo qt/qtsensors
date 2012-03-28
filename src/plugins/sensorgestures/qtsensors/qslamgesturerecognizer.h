@@ -91,7 +91,6 @@ private:
     qreal roll;
     QList<qreal> restingList;
     bool resting;
-    QList<qreal> xList;
 
     bool hasBeenResting();
 };
