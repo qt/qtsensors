@@ -55,9 +55,16 @@ QT_BEGIN_NAMESPACE
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
-    \brief The TiltSensor element provides tilt datas from x and y rotation of the device using the accelerometer sensor.
+    \brief Provides access to the current X and Y axis rotation angles of the device.
+
+     This element provides tilt data from the rotation around the x and y axis of the device using
+    the accelerometer sensor. Like for a marble and maze game, where the marble is rolled
+    around the screen according to the user tilting the device.
 
     This element is part of the \b{QtSensors 5} module.
+
+    The \l {QML Qt Sensors example} is an example how to use this QML element.
+
 */
 QSensor2Tilt::QSensor2Tilt(QObject* parent)
     : qsensor2common(parent)
@@ -285,13 +292,11 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
     This property contains the accuracy (in degrees) in which the rotation should be measured.
     This can be used to minimize signal emiting and therefore saving of performance.
     Default value is 1 degree.
-    The accuracy value is unsigned and works clockwise and anti-clockwise in X and Y axis rotation directions.
-    Accuracy range can be 0 to 90 degrees.
+    The accuracy value is unsigned and works clockwise and counterclockwise in X and Y axis rotation
+    directions. Accuracy range can be 0 to 90 degrees.
 
 
-    E.g.
-
-
+    For example:
     Accuracy 5.5 will notify the client application about an rotation change only if the rotation angle over the X and / or Y axis was changed by 5.5 or more degrees clockwise or anti-clockwise.
 
     \table

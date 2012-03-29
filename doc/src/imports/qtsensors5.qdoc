@@ -32,49 +32,31 @@
 
     \section1 Overview
 
+
+    Mobile devices contains sensor hardware that allow detecting changes in various physical
+    properties of the device itself or its immediate environment. Examples of device properties
+    include the angle at which the device is held, whereas environmental properties include for
+    example the current level of ambient light.
+
+    These properties can be either actual values, such as the tilt angle in
+    degrees, or approximations, like the enumeration describing brightness in
+    relative terms using values such as AmbientLightSensor.Dark and AmbientLightSensor.Bright.
+
+    The latter type of value is also based on a natural phenomenon (in the case
+    of the ambient light sensor, the amount of visible light emitted by a source), but the value
+    itself is descriptive instead of using any effective unit of measurement, such as lumen.
+
     The identifying string for this component is \e QtSensors.
     Use this in the QML import statement, as such: \e import QtSensors 5.0
 
-    The QML Sensors 5 Plugin provides an easy to use interface to the Sensors API.
+    Qt Sensors QML API provides an easy to use interface to the Qt Sensors API.
     It enables the receiving of sensor events and reading current values from the
     sensors.
 
-    The plugin contains many sensor types and properties to read values.
-    As an example, consider the tilt sensor. The \l {QML Qt Sensors example}
-    simply displays text on-screen to show the current tilt value.
+    The emulator supports simulating the Ambient Light, Orientation, Compass and Proximity sensors.
 
-    The QML code to read the value is quite simple. Below is a QML \l TiltSensor element
-    declared with an id of \e tilt. The sensor is started by setting the running
-    property to true. The element receives a signal when the x and y rotation
-    changes and it can be picked up by the onXRotationChanged and onYRotationChanged
-    slot. Now the xRotation and yRotation property of this element can be used to
-    extract the current tilt value so that it can be used for further calculations.
-
-    \qml
-        TiltSensor {
-            id: tilt
-            enabled: false
-            unit: TiltSensor.Degrees
-            accuracy: 1.0
-        }
-    \endqml
-
-    \qml
-        Text {
-            x:5
-            y:160
-            text: "X Rotation: " + tilt.xRotation
-        }
-    \endqml
-
-    \qml
-        Text {
-            x:5
-            y:180
-            text: "Y Rotation: " + tilt.yRotation
-        }
-
-    \endqml
+    The \l {QML Qt Sensors example} contains code for using the the \l TiltSensor, \l AmbientLightSensor
+    and ProximitySensor elements.
 
     \section1 QML Elements
 

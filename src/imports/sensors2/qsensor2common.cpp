@@ -66,7 +66,7 @@ qsensor2common::~qsensor2common()
 
 /*!
     \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor.
+    Starts or stops the sensor. Default value is false.
 */
 
 bool qsensor2common::enabled()
@@ -91,7 +91,7 @@ void qsensor2common::setEnabled(bool val)
 
 /*!
     \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off.
+    Keeps the sensor running when the screen turns off. Default value is false.
 */
 
 bool qsensor2common::alwaysOn()

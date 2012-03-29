@@ -51,11 +51,17 @@ QT_BEGIN_NAMESPACE
     \qmlclass SensorGesture QSensor2Gesture
     \inqmlmodule QtSensors 5
     \since QtSensors 5.0
-    \brief The SensorGesture element provides notification when sensor gestures are triggered.
+    \brief Provides notifications when sensor-based gestures are detected.
+
+    This element provides notification when sensor gestures are triggered.
 
     This element is part of the \b{QtSensors 5} module.
 
-    The following QML code creates a "shake" and "template" SensorGesture QML element.
+    The following QML code creates a "shake" and "template" SensorGesture QML element, and
+    displays the detected gesture in a text element.
+
+    QtSensors.shake gesture is available with the Qt Sensors API, but the QtSensors.SecondCounter
+    sensor gesture is provided as example code for the \l {SensorGesture QML Element example}
 
     \qml
     Item {
@@ -76,8 +82,9 @@ QT_BEGIN_NAMESPACE
     }
     \endqml
 
-A list of currently supported sensor gestures and their descriptions can be found here:
-\l {Qt Sensor Gestures}
+    \l {Qt Sensor Gestures} contains a list of currently supported sensor gestures and their
+    descriptions.
+
 
 */
 QSensor2Gesture::QSensor2Gesture(QObject* parent)
@@ -125,11 +132,11 @@ QStringList QSensor2Gesture::availableGestures()
 }
 
 /*!
-    \qmlproperty string QtSensors5::SensorGesture::gestures
-    Set this property to the gestures the application is interested in detecting.
-    The properties validGestures and invalidGestures will be set as appropriate immediately.
-    The list of available gestures can be found in the availableGestures property.
+    \qmlproperty stringlist QtSensors5::SensorGesture::gestures
+    Set this property to a list of the gestures that the application is interested in detecting.
     This property cannot be changed while the element is enabled.
+
+    The properties validGestures and invalidGestures will be set as appropriate immediately.
     To determine all available getures on the system please use the
     \l {QtSensors5::SensorGesture::availableGestures} {availableGestures} property.
 
@@ -181,6 +188,7 @@ QStringList QSensor2Gesture::invalidGestures() const
 /*!
     \qmlproperty bool QtSensors5::SensorGesture::enabled
     This property can be used to activate or deactivate the sensor gesture.
+    Default value is false;
     \sa {QtSensors5::SensorGesture::detected} {detected}
 */
 bool QSensor2Gesture::enabled() const

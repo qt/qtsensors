@@ -50,9 +50,14 @@ QT_BEGIN_NAMESPACE
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
-    \brief The AmbientLightSensor element provides easy access to determine the ambient light by using the ambient light sensor.
+    \brief Provides access to the current ambient light level.
+
+    This element provides easy access to determine the ambient light by using the ambient light sensor.
+    For example brightening the screen according to whether the device is in full sunlight or not.
 
     This element is part of the \b{QtSensors 5} module.
+
+    The \l {QML Qt Sensors example} is an example how to use this QML element.
 */
 QSensor2AmbientLight::QSensor2AmbientLight(QObject* parent)
     : qsensor2common(parent)
@@ -83,13 +88,13 @@ QSensor2AmbientLight::~QSensor2AmbientLight()
         \li It is moderately dark.
     \row
         \li AmbientLightSensor.Light
-        \li It is light (eg. internal lights).
+        \li It is light (internal lights).
     \row
         \li AmbientLightSensor.Bright
-        \li It is bright (eg. outside but in the shade).
+        \li It is bright (outside but in the shade).
     \row
         \li AmbientLightSensor.Sunny
-        \li It is very bright (eg. direct sunlight).
+        \li It is very bright (direct sunlight).
     \endtable
 */
 QSensor2AmbientLight::LightLevel QSensor2AmbientLight::lightLevel()

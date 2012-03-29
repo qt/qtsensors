@@ -50,9 +50,15 @@ QT_BEGIN_NAMESPACE
     \inqmlmodule QtSensors 5
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
-    \brief The ProximitySensor element provides an easy access to determine if the proximity of the mobile user by using the proximity sensor.
+    \brief Provides access to the proximity sensor.
+
+    This element allows determining if something is held in close proximity to the device, such
+    as determining if the user is holding the device to their ear.
 
     This element is part of the \b{QtSensors 5} module.
+
+    The \l {QML Qt Sensors example} is an example how to use this QML element.
+
 */
 
 QSensor2Proximity::QSensor2Proximity(QObject* parent)
@@ -70,7 +76,8 @@ QSensor2Proximity::~QSensor2Proximity()
 /*!
     \qmlproperty bool QtSensors5::ProximitySensor::near
     This property holds whether the sensor has detected something in close proximity.
-    Device dependent, but typically 1-2 cm.
+    The definition of close proximity is device dependent, but it
+    typically stands for a distance of 1-2 cm.
 */
 bool QSensor2Proximity::near()
 {
