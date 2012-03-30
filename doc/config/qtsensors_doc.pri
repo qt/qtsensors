@@ -31,8 +31,8 @@ qch_docs.commands = #no commands yet
 
 QMAKE_EXTRA_TARGETS += docs dita_docs online_docs qch_docs
 QMAKE_CLEAN += \
-               "-r $$PWD/../html" \
-               "-r $$PWD/../ditaxml"
+               "-r $$OUT_PWD/../html" \
+               "-r $$OUT_PWD/../ditaxml"
 
 
 OTHER_FILES += \

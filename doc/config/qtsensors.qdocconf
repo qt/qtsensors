@@ -70,7 +70,7 @@ qhp.qtsensors.subprojects.classes.sortPages = true
 
 # Do NOT change the variables after this line unless you know what you are doing.
 
-outputdir = ../html
+outputdir = $PWD/doc/html
 outputformats = HTML
 
 examples.fileextensions = "*.cpp *.h *.js *.svg *.xml *.ui *.qml"
