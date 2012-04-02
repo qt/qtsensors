@@ -18,7 +18,7 @@ SOURCES += dummycommon.cpp\
 
 OTHER_FILES = plugin.json
 
-unix:!mac:LIBS+=-lrt
+unix:!mac:!qnx:LIBS+=-lrt
 
 target.path += $$[QT_INSTALL_PLUGINS]/sensors
 INSTALLS += target
