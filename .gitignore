@@ -22,6 +22,7 @@
 core
 .qmake.cache
 .qmake.vars
+config.log
 *.prl
 tags
 .DS_Store
@@ -69,6 +70,10 @@ tst_*~
 # MinGW generated files
 *.Debug
 *.Release
+
+# Generated documentation
+doc/src/snippets/sensorgestures/sensorgesturessdocsnippet
+doc/src/snippets/sensors/sensorsdocsnippet
 
 # Directories to ignore
 # ---------------------
