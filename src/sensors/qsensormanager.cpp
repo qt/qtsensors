@@ -93,9 +93,12 @@ public:
     {
         defaultIdentifierForTypeLoaded = true;
         QStringList configs = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
-        // This shouldn't happen but just in case, check in /etc/xdg
-        if (configs.count() == 0) configs << QLatin1String("/etc/xdg");
-        QString config = configs.at(configs.count()-1) + QLatin1String("/Nokia/Sensors.conf");
+        // This list shouldn't be empty... but sometimes it is!
+        if (configs.count() == 0) configs << QString();
+        QString config = configs.at(configs.count()-1);
+        // This variable shouldn't be empty... but sometimes it is!
+        if (config.isEmpty()) config = QLatin1String("/etc/xdg");
+        config += QLatin1String("/Nokia/Sensors.conf");
         if (!QFile::exists(config)) return;
         QFile cfgfile(config);
         if (!cfgfile.open(QFile::ReadOnly)) return;
