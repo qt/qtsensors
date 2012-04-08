@@ -62,6 +62,9 @@ tst_*~
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+*.exe
+*.manifest
+*.res
 
 # MinGW generated files
 *.Debug
