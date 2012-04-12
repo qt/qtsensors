@@ -7,9 +7,7 @@ CONFIG += module
 CONFIG += strict_flags
 CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
 
-MODULE_PRI = ../../modules/qt_sensors.pri
-
-QT = core core-private
+QT = core-private
 
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
 !isEmpty(SENSORS_CONFIG_PATH):DEFINES += "QTSENSORS_CONFIG_PATH=\\\"$$SENSORS_CONFIG_PATH\\\""

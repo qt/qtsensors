@@ -8,9 +8,6 @@
 );
 %mastercontent = (
 );
-%modulepris = (
-    "QtSensors" => "$basedir/modules/qt_sensors.pri",
-);
 %dependencies = (
     "qtbase" => "refs/heads/master",
     "qtdeclarative" => "refs/heads/master",
