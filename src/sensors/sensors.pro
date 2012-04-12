@@ -12,6 +12,7 @@ MODULE_PRI = ../../modules/qt_sensors.pri
 QT = core core-private
 
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
+!isEmpty(SENSORS_CONFIG_PATH):DEFINES += "QTSENSORS_CONFIG_PATH=\\\"$$SENSORS_CONFIG_PATH\\\""
 
 load(qt_module_config)
 HEADERS += qtsensorsversion.h

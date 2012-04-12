@@ -92,13 +92,15 @@ public:
     void readConfigFile()
     {
         defaultIdentifierForTypeLoaded = true;
+#ifdef QTSENSORS_CONFIG_PATH
+        QString config = QString::fromLocal8Bit(QTSENSORS_CONFIG_PATH);
+#else
         QStringList configs = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
-        // This list shouldn't be empty... but sometimes it is!
-        if (configs.count() == 0) configs << QString();
+        if (configs.count() == 0) return; // QStandardPaths is broken?
         QString config = configs.at(configs.count()-1);
-        // This variable shouldn't be empty... but sometimes it is!
-        if (config.isEmpty()) config = QLatin1String("/etc/xdg");
+        if (config.isEmpty()) return; // QStandardPaths is broken?
         config += QLatin1String("/Nokia/Sensors.conf");
+#endif
         if (!QFile::exists(config)) return;
         QFile cfgfile(config);
         if (!cfgfile.open(QFile::ReadOnly)) return;
