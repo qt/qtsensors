@@ -3,11 +3,6 @@
 );
 %moduleheaders = ( # restrict the module headers to those found in relative path
 );
-%classnames = (
-    "qtsensorsversion.h" => "QtSensorsVersion",
-);
-%mastercontent = (
-);
 %dependencies = (
     "qtbase" => "refs/heads/master",
     "qtdeclarative" => "refs/heads/master",

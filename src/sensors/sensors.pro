@@ -1,15 +1,10 @@
-load(qt_module)
+load(qt_build_config)
 
 TARGET = QtSensors
-QPRO_PWD = $$PWD
-
-CONFIG += module
 CONFIG += strict_flags
-CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
-
 QT = core-private
 
-DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
+CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
 !isEmpty(SENSORS_CONFIG_PATH):DEFINES += "QTSENSORS_CONFIG_PATH=\\\"$$SENSORS_CONFIG_PATH\\\""
 
 simulator {
@@ -18,7 +13,6 @@ simulator {
 }
 
 load(qt_module_config)
-HEADERS += qtsensorsversion.h
 
 QMAKE_DOCS = $$PWD/../../doc/config/qtsensors.qdocconf
 
@@ -78,4 +72,4 @@ for(s,SENSORS) {
     PRIVATE_HEADERS += $${s}_p.h
 }
 
-HEADERS = $$PUBLIC_HEADERS $$PRIVATE_HEADERS $$GESTURE_HEADERS
+HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS $$GESTURE_HEADERS

@@ -3,8 +3,6 @@ TARGET = tst_sensors2qmlapi
 
 CONFIG += testcase
 QT = core testlib sensors-private qml
-INCLUDEPATH += ./
-DEPENDPATH += ./
 
 SOURCES += tst_sensors2qmlapi.cpp \
            ./../../../src/imports/sensors2/qsensor2ambientlight.cpp \

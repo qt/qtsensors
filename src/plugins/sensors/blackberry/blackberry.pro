@@ -1,4 +1,4 @@
-load(qt_module)
+load(qt_build_config)
 
 TARGET = qtsensors_blackberry
 QT = sensors core gui gui-private
