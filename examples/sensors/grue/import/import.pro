@@ -25,3 +25,9 @@ INSTALLS += qmldir
 
 OTHER_FILES += \
     plugin.json qmldir
+
+!isEmpty(EXAMPLES_PREFIX) {
+    QMAKE_LFLAGS += -Wl,-rpath,$$EXAMPLES_PREFIX/com.nokia.mt.grue/lib
+    DEFINES += "BUNDLED_PLUGIN=\\\"$$EXAMPLES_PREFIX/com.nokia.mt.grue/plugins\\\""
+}
+

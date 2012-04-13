@@ -76,6 +76,7 @@ Rectangle {
     Text {
         id: text
         anchors.top: parent.top
+        anchors.topMargin: 20
         anchors.left: parent.left
         anchors.right: parent.right
         text: "I can't tell if you're going to be eaten by a Grue or not. You're on your own!"

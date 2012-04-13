@@ -19,3 +19,9 @@ INSTALLS += target
 OTHER_FILES += \
     plugin.json
 
+MT_SYSROOT=$$(MT_SYSROOT)
+!isEmpty(MT_SYSROOT):EXAMPLES_PREFIX=/opt/mt/applications
+!isEmpty(EXAMPLES_PREFIX) {
+    target.path = $$EXAMPLES_PREFIX/com.nokia.mt.grue/plugins/sensors
+}
+

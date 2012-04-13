@@ -43,6 +43,13 @@
 
 #include <gruesensor.h>
 
+#ifdef BUNDLED_PLUGIN
+#include <QFile>
+#include <QCoreApplication>
+#include <QQmlEngine>
+#include <QStringList>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 class GrueSensorQmlImport : public QQmlExtensionPlugin
@@ -50,6 +57,13 @@ class GrueSensorQmlImport : public QQmlExtensionPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
 public:
+#ifdef BUNDLED_PLUGIN
+    GrueSensorQmlImport()
+    {
+        QCoreApplication::addLibraryPath(QString::fromLocal8Bit(BUNDLED_PLUGIN));
+    }
+#endif
+
     virtual void registerTypes(const char *uri)
     {
         char const * const package = "Grue";
