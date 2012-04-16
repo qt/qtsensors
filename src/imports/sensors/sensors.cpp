@@ -106,6 +106,9 @@ public:
         int major;
         int minor;
 
+        // Force all of the sensors initialization to happen now, while we don't have a UI thread to interrupt
+        (void)QSensor::sensorTypes();
+
         // Register the 1.1 interfaces
         major = 1;
         minor = 1;
