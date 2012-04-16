@@ -173,7 +173,7 @@ public:
     virtual bool filter(QSensorReading *reading) = 0;
 protected:
     QSensorFilter();
-    ~QSensorFilter();
+    virtual ~QSensorFilter();
     virtual void setSensor(QSensor *sensor);
     QSensor *m_sensor;
 };
