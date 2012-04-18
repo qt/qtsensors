@@ -113,7 +113,9 @@ void Tst_qsensorgesturePluginsTest::tst_sensor_plugins_qtsensors_data()
     QTest::addColumn<QString>("gestureId");
 
     QTest::newRow("QtSensors.cover") << "QtSensors.cover";
+#ifndef  Q_OS_MAC // QTBUG-25374
     QTest::newRow("QtSensors.doubletap") << "QtSensors.doubletap";
+#endif
     QTest::newRow("QtSensors.hover") << "QtSensors.hover";
     QTest::newRow("QtSensors.hover") << "QtSensors.hover";
     QTest::newRow("QtSensors.shake2") << "QtSensors.shake2";

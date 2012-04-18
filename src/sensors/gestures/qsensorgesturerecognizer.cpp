@@ -145,12 +145,12 @@ QStringList QSensorGestureRecognizer::gestureSignals() const
     bool ok = false;
     for (int i = 0; i < this->metaObject()->methodCount(); i++) {
         //weed out objectsignals and slots
-        if (this->metaObject()->indexOfSignal(this->metaObject()->method(i).signature()) != -1) {
-            QString sig( QLatin1String(this->metaObject()->method(i).signature()));
-            if (sig.contains(QLatin1String("detected")))
+        const QByteArray sig(this->metaObject()->method(i).methodSignature());
+        if (this->metaObject()->indexOfSignal(sig) != -1) {
+            if (sig.contains("detected"))
                 ok = true;
             if (ok)
-                list.append(sig);
+                list.append(QString::fromLatin1(sig));
         }
     }
     return list;
