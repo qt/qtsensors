@@ -92,6 +92,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         if (accel == 0x0) {
             accel = new QAccelerometer(this);
             ok = accel->connectToBackend();
+            accel->setDataRate(50);
             qoutputrangelist outputranges = accel->outputRanges();
 
             if (outputranges.count() > 0)

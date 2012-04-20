@@ -196,6 +196,7 @@ void QSlamSensorGestureRecognizer::checkForSlam()
                       || orientationReading->orientation() == QOrientationReading::LeftUp)) {
         Q_EMIT slam();
         Q_EMIT detected("slam");
+        restingList.clear();
     }
 
     detecting = false;
