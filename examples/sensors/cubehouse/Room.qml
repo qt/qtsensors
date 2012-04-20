@@ -71,7 +71,8 @@ Item3D{
             target: yRT
             property: "angle"
             to: yrot
-            easing.type:"OutQuad"
+            easing.type:"Linear"
+            duration: 50
         }
         onCompleted: yspin = false
     }
@@ -82,7 +83,8 @@ Item3D{
             target: xRT
             property: "angle"
             to: xrot
-            easing.type:"OutQuad"
+            easing.type:"Linear"
+            duration: 50
         }
         onCompleted: xspin = false
     }

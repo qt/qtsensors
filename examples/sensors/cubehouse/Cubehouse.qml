@@ -83,6 +83,7 @@ Item {
     Accelerometer {
         id: accel
         active: true
+        dataRate: 20
 //! [1]
 
 //! [2]
@@ -102,7 +103,7 @@ Item {
     //Timer to read out the x and y rotation of the TiltSensor
 //! [4]
     Timer {
-        interval: 150; running: true; repeat: true
+        interval: 50; running: true; repeat: true
 
         onTriggered: {
             view.rotateY(accel.pitch);
