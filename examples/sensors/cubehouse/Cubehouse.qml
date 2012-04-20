@@ -58,7 +58,6 @@ Item {
         anchors.top: parent.top
         width: parent.width
         height: parent.height
-        renderMode: "DirectRender"
         fillColor: "darkblue"
         objectName: "cube viewport"
         camera: Camera { eye: Qt.vector3d(0, 3, 1.6 * room.scale - 4)}
