@@ -27,9 +27,9 @@
 
 /*!
     \example sensors/qmlqtsensors
-    \title QML Qt Sensors example
+    \title Qt Sensors - Simple QML Example
     \ingroup qtsensors-examples
-    \brief The QML Qt Sensors example demonstrates the QML sensors elements in the QtSensors 5 import.
+    \brief The Qt Sensors simple QML example demonstrates the QML sensors elements in the QtSensors 5 import.
     \image qmlqtsensors.jpg
 
 \section1 Overview

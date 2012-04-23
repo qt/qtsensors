@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
 
     This element is part of the \b{QtSensors 5} module.
 
-    The \l {QML Qt Sensors example} is an example how to use this QML element.
+    The \l {Qt Sensors - Simple QML Example} is an example how to use this QML element.
 
 */
 QSensor2Tilt::QSensor2Tilt(QObject* parent)
