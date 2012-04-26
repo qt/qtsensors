@@ -81,6 +81,7 @@ protected:
 
 private slots:
     void dataAvailable();
+    void applyAlwaysOnProperty();
 
 private:
     QFile m_deviceFile;

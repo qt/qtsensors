@@ -59,6 +59,7 @@ BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_
                                          QSensor *sensor)
     : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType)
 {
+    connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
 }
 
 QFile &BbSensorBackendBase::deviceFile()
@@ -147,6 +148,8 @@ void BbSensorBackendBase::start()
         return;
     }
 
+    applyAlwaysOnProperty();
+
     m_socketNotifier.reset(new QSocketNotifier(m_deviceFile.handle(), QSocketNotifier::Read));
     connect(m_socketNotifier.data(), SIGNAL(activated(int)), this, SLOT(dataAvailable()));
 }
@@ -171,5 +174,20 @@ void BbSensorBackendBase::dataAvailable()
             qDebug() << "Reading sensor event data for" << m_deviceFile.fileName()
                      << "failed (unexpected data size):" << m_deviceFile.errorString();
         }
+    }
+}
+
+void BbSensorBackendBase::applyAlwaysOnProperty()
+{
+    if (!m_deviceFile.isOpen())
+        return;
+
+    sensor_devctl_bkgrnd_u bgState;
+    bgState.tx.enable = sensor()->isAlwaysOn() ? 1 : 0;
+
+    const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_BKGRND, &bgState, sizeof(bgState), NULL);
+    if (result != EOK) {
+        perror(QString::fromLatin1("Setting sensor always on for %1 failed")
+               .arg(m_deviceFile.fileName()).toLocal8Bit());
     }
 }
