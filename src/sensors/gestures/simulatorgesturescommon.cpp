@@ -39,69 +39,70 @@
 **
 ****************************************************************************/
 
+#include "simulatorgesturescommon_p.h"
+
+#include <QtSimulator/version.h>
+#include <QtSimulator/QtSimulator>
+
 #include <QDebug>
-#include <QTimer>
-#include <QFile>
+#include <QStringList>
 
-#include "qsimulatorrecognizer.h"
-#include "simulatorgesturescommon.h"
+using namespace Simulator;
 
-QSimulatorSensorGestureRecognizer::QSimulatorSensorGestureRecognizer(QObject *parent)
-    : QSensorGestureRecognizer(parent)
+
+Q_GLOBAL_STATIC(QString, qtSensorGestureData)
+
+SensorGesturesConnection::SensorGesturesConnection(QObject *parent)
+    : QObject(parent)
 {
-    timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
+    mConnection = new Connection(Connection::Client, QLatin1String("QtSimulator_Mobility_ServerName1.3.0.0"),
+                                 0xbeef+1, Version(1,0,0,0), this);
+    mWorker = mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1);
 
-    timer->setInterval(1000);
-}
-
-QSimulatorSensorGestureRecognizer::~QSimulatorSensorGestureRecognizer()
-{
-    if (timer->isActive())
-        timer->stop();
-}
-
-void QSimulatorSensorGestureRecognizer::create()
-{
-    SensorGesturesConnection *connection =  new SensorGesturesConnection(this);
-    connect(connection,SIGNAL(sensorGestureDetected()),this,SLOT(sensorGestureDetected()));
-}
-
-void QSimulatorSensorGestureRecognizer::sensorGestureDetected()
-{
-    detectingState = true;
-}
-
-
-bool QSimulatorSensorGestureRecognizer::start()
-{
-    timer->start();
-    timeout();
-    return timer->isActive();
-}
-
-bool QSimulatorSensorGestureRecognizer::stop()
-{
-    timer->stop();
-    return timer->isActive();
-}
-
-
-bool QSimulatorSensorGestureRecognizer::isActive()
-{
-    return timer->isActive();
-}
-
-QString QSimulatorSensorGestureRecognizer::id() const
-{
-    return QString("QtSensors.emulator");
-}
-
-void QSimulatorSensorGestureRecognizer::timeout()
-{
-    if (detectingState) {
-        QString str = get_qtSensorGestureData();
-        emit detected(str);
-        detectingState = false;
+    if (!mWorker) {
+        qWarning() << "Could not connect to server";
+        return;
     }
+
+    mWorker->addReceiver(this);
+    mWorker->call("setRequestsSensorGestures");
 }
+
+SensorGesturesConnection::~SensorGesturesConnection()
+{
+    delete mWorker;
+}
+
+void SensorGesturesConnection::setSensorGestureData(const QString &data)
+{
+    QString gesture = data;
+    if (data.contains(QLatin1String("detected"))) {
+            gesture.remove(QLatin1String("detected("));
+            gesture.remove(QLatin1String(")"));
+    }
+    *qtSensorGestureData() = gesture;
+}
+
+void SensorGesturesConnection::newSensorGestureDetected()
+{
+    emit sensorGestureDetected();
+}
+
+void SensorGesturesConnection::newSensorGestures(const QStringList &gestures)
+{
+    Q_FOREACH (const QString &gest, gestures) {
+        if (!gest.contains(QLatin1String("detected"))) {
+            QString tmp = gest.left(gest.length()-2);
+            if (!allGestures.contains(tmp)) {
+                allGestures.append(tmp);
+            }
+        }
+    }
+    mWorker->call("setSensorGestures", allGestures);
+}
+
+QString get_qtSensorGestureData()
+{
+    return *qtSensorGestureData();
+}
+

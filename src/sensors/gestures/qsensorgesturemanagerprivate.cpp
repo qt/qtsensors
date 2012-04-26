@@ -48,11 +48,24 @@
 #include "qsensorgesturemanagerprivate_p.h"
 #include "qsensorgestureplugininterface.h"
 
+#ifdef SIMULATOR_BUILD
+#include "simulatorgesturescommon_p.h"
+#endif
+
 QT_BEGIN_NAMESPACE
 
 QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
     QObject(parent)
 {
+#ifdef SIMULATOR_BUILD
+    SensorGesturesConnection *connection =  new SensorGesturesConnection(this);
+    connect(connection,SIGNAL(sensorGestureDetected()),
+            this,SLOT(sensorGestureDetected()));
+
+    connect(this,SIGNAL(newSensorGestures(QStringList)),
+            connection,SLOT(newSensorGestures(QStringList)));
+#endif
+
     loader = new QFactoryLoader("com.Nokia.QSensorGesturePluginInterface", QLatin1String("/sensorgestures"));
     loadPlugins();
 }
@@ -133,6 +146,11 @@ bool QSensorGestureManagerPrivate::loadRecognizer(const QString &recognizerId)
                             delete recognizer;
                         } else {
                             registeredSensorGestures.insert(recognizer->id(),recognizer);
+
+#ifdef SIMULATOR_BUILD
+                            QStringList list = recognizer->gestureSignals();
+                            Q_EMIT newSensorGestures(list);
+#endif
                         }
                     }
                 }
@@ -172,6 +190,35 @@ QStringList QSensorGestureManagerPrivate::gestureIds()
 {
     return knownIds;
 }
+
+#ifdef SIMULATOR_BUILD
+void QSensorGestureManagerPrivate::sensorGestureDetected()
+{
+    QString str = get_qtSensorGestureData();
+
+    Q_FOREACH (const QString &id, gestureIds()) {
+        QSensorGestureRecognizer *recognizer = sensorGestureRecognizer(id);
+        if (recognizer != 0) {
+            Q_FOREACH (const QString &sig,  recognizer->gestureSignals()) {
+                if (!sig.contains("detected")) { //weed out detected signals
+                    QString tmp;
+                        tmp = sig.left(sig.length() - 2);
+                    if (str == tmp) {
+                        // named signal for c++
+                        QMetaObject::invokeMethod(recognizer, str.toLocal8Bit(), Qt::DirectConnection);
+                        // detected signal for qml and c++
+                        QMetaObject::invokeMethod(recognizer, "detected", Qt::DirectConnection,
+                                                  Q_ARG(QString, str));
+                        break;
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+#endif
 
 
 QT_END_NAMESPACE

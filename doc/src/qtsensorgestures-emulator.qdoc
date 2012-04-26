@@ -34,49 +34,18 @@
 
 Whether creating client apps using Qt's built-in sensor gestures, or
 creating customized recognizers, the Emulator can be used to help develop client
-apps and recognizers using the special 'QtSensors.emulator' plugin to send
-arbitrary signals to the emulator environment.
+apps and recognizers.
 
 \section1 Developing sensor gesture clients.
 
 For instance, the Emulator can be used for writing a client app that needs
-to use a 'spin' gesture. The app can temporarily connect and start the
-'QtSensors.emulator' plugin in the Emulator.
+to use the 'slam' gesture.
 
 Under the 'Sensors' heading in the Emulator control, you will see an edit
-box for 'Sensor gestures'.
+box for 'Sensor gestures' that will contain a list of signals available
+when your client instantiates a QSensorGesture.
 
-Type the word, "spin", hit enter to set it, and then click the 'Send' button
-to send a detected("spin") signal to the QtSensors.emulator plugin.
-
-You do not even need to wait for the recognizer plugin to be written!
-
-\section1 Developing sensor gesture plugins.
-
-Once the recognizer is written, the scripting facility may be used in the Emulator
-to script the sensors to trigger your custom plugins signals.
-
-A sensor gesture script for the 'turnover' gesture looks like this:
-
-\code
-// simulate turnover gesture
-
-//set the phone FaceUp
-sensors.accelerometerX = 0
-sensors.accelerometerZ = 9.8
-sensors.accelerometerY = 0
-yield(100)
-
-
-// set the phone FaceDown
-sensors.accelerometerZ = -9.8
-
-// set the Proximity to close
-sensors.proximitySensorClose = true
-
-\endcode
-
-This will cause the simulator sensor plugin to send these signals to a real recognizer plugin
-as real QAccelerometer and QProximity sensor values.
+Select 'slam', and then click the 'Send' button
+to send a detected("slam") signal to the client.
 
 */

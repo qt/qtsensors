@@ -39,29 +39,55 @@
 **
 ****************************************************************************/
 
-#ifndef QSIMULATORSENSORGESTUREPLUGIN_H
-#define QSIMULATORSENSORGESTUREPLUGIN_H
+#ifndef SIMULATORGESTURESCOMMON_H
+#define SIMULATORGESTURESCOMMON_H
 
-#include <QObject>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include <QtSimulator/connection.h>
+#include <QtSimulator/connectionworker.h>
 #include <QStringList>
 
-#include <qsensorgestureplugininterface.h>
+class QTimer;
 
-class QSimulatorSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
+namespace Simulator
+{
+    class Connection;
+    class ConnectionWorker;
+}
+
+class SensorGesturesConnection : public QObject
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "com.Nokia.QSensorGesturePluginInterface" FILE "plugin.json")
-    Q_INTERFACES(QSensorGesturePluginInterface)
-
 public:
-    explicit QSimulatorSensorGesturePlugin();
-    ~QSimulatorSensorGesturePlugin();
+    explicit SensorGesturesConnection(QObject *parent = 0);
+    virtual ~SensorGesturesConnection();
 
-    QList <QSensorGestureRecognizer *> createRecognizers();
+Q_SIGNALS:
+    void sensorGestureDetected();
 
-    QStringList gestureSignals() const;
-    QStringList supportedIds() const;
-    QString name() const { return "EmulatorGestures"; }
+public slots:
+    void setSensorGestureData(const QString &);
+    void newSensorGestureDetected();
+    void newSensorGestures(const QStringList &gestures);
+
+private:
+    Simulator::Connection *mConnection;
+    Simulator::ConnectionWorker *mWorker;
+    QStringList allGestures;
+
 };
 
-#endif // QSIMULATORSENSORGESTUREPLUGIN_H
+QString get_qtSensorGestureData();
+
+#endif //SIMULATORGESTURESCOMMON_H
+

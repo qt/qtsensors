@@ -14,6 +14,11 @@ QT = core core-private
 DEFINES += QT_BUILD_SENSORS_LIB QT_MAKEDLL
 !isEmpty(SENSORS_CONFIG_PATH):DEFINES += "QTSENSORS_CONFIG_PATH=\\\"$$SENSORS_CONFIG_PATH\\\""
 
+simulator {
+    DEFINES += SIMULATOR_BUILD
+    QT += simulator
+}
+
 load(qt_module_config)
 HEADERS += qtsensorsversion.h
 
@@ -66,6 +71,11 @@ GESTURE_HEADERS += \
     gestures/qsensorgesturemanager.h \
     gestures/qsensorgesturemanagerprivate_p.h \
     gestures/qsensorgestureplugininterface.h
+
+simulator {
+    SOURCES += gestures/simulatorgesturescommon.cpp
+    GESTURE_HEADERS += gestures/simulatorgesturescommon_p.h
+}
 
 # 3 files per sensor (including QSensor)
 SENSORS=\

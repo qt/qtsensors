@@ -80,6 +80,15 @@ public:
     void initPlugin(QObject *o);
 Q_SIGNALS:
         void newSensorGestureAvailable();
+
+#ifdef SIMULATOR_BUILD
+Q_SIGNALS:
+    void newSensorGestures(QStringList);
+
+private slots:
+    void sensorGestureDetected();
+
+#endif
 };
 
 QT_END_NAMESPACE
