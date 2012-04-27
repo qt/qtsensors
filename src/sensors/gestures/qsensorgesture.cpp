@@ -126,7 +126,7 @@ QSensorGesture::~QSensorGesture()
 {
     stopDetection();
     if (d_ptr->meta)
-        qFree(d_ptr->meta);
+        free(d_ptr->meta);
     delete d_ptr;
 }
 
