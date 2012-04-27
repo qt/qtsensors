@@ -28,6 +28,6 @@ OTHER_FILES += \
 
 !isEmpty(EXAMPLES_PREFIX) {
     QMAKE_LFLAGS += -Wl,-rpath,$$EXAMPLES_PREFIX/com.nokia.mt.grue/lib
-    DEFINES += "BUNDLED_PLUGIN=\\\"$$EXAMPLES_PREFIX/com.nokia.mt.grue/plugins\\\""
+    DEFINES += "BUNDLED_PLUGIN=\\\"$$EXAMPLES_PREFIX/com.nokia.mt.grue/plugins/sensors/libqtsensors_grue.so\\\""
 }
 

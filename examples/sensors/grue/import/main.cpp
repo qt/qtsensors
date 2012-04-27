@@ -42,12 +42,11 @@
 #include <QtQml/qqml.h>
 
 #include <gruesensor.h>
+#include <QDebug>
 
 #ifdef BUNDLED_PLUGIN
-#include <QFile>
-#include <QCoreApplication>
-#include <QQmlEngine>
-#include <QStringList>
+#include <QPluginLoader>
+#include <QSensorPluginInterface>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -57,13 +56,6 @@ class GrueSensorQmlImport : public QQmlExtensionPlugin
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
 public:
-#ifdef BUNDLED_PLUGIN
-    GrueSensorQmlImport()
-    {
-        QCoreApplication::addLibraryPath(QString::fromLocal8Bit(BUNDLED_PLUGIN));
-    }
-#endif
-
     virtual void registerTypes(const char *uri)
     {
         char const * const package = "Grue";
@@ -77,6 +69,39 @@ public:
         qmlRegisterType           <GrueSensor       >(package, major, minor, "GrueSensor");
         qmlRegisterUncreatableType<GrueSensorReading>(package, major, minor, "GrueSensorReading", QLatin1String("Cannot create GrueSensorReading"));
     }
+
+#ifdef BUNDLED_PLUGIN
+    GrueSensorQmlImport()
+    {
+        // For now, this is getting called after Sensors has loaded
+        // Ensure that a change later does not break this by forcing
+        // sensors to load now
+        (void)QSensor::sensorTypes();
+
+        // Load the bundled sensor plugin
+        QPluginLoader loader(QString::fromLocal8Bit(BUNDLED_PLUGIN));
+        QObject *instance = loader.instance();
+        m_changes = qobject_cast<QSensorChangesInterface*>(instance);
+        if (m_changes) {
+            QSensor *sensor = new QSensor(QByteArray(), this);
+            connect(sensor, SIGNAL(availableSensorsChanged()), this, SLOT(sensorsChanged()));
+            m_changes->sensorsChanged();
+        }
+        QSensorPluginInterface *plugin = qobject_cast<QSensorPluginInterface*>(instance);
+        if (plugin) {
+            plugin->registerSensors();
+        }
+    }
+
+private slots:
+    void sensorsChanged()
+    {
+        m_changes->sensorsChanged();
+    }
+
+private:
+    QSensorChangesInterface *m_changes;
+#endif
 };
 
 QT_END_NAMESPACE
