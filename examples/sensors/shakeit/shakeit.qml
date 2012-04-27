@@ -76,6 +76,9 @@ Rectangle {
         y: parent.height / 2 - (triangle1.height);
         Behavior on x { SmoothedAnimation { velocity: 200 } }
         Behavior on y { SmoothedAnimation { velocity: 200 } }
+        transform: Rotation {
+             id: myRot
+         }
     }
     Image {
         id: triangle2
@@ -109,6 +112,7 @@ Rectangle {
             PropertyChanges { target: triangle1; rotation: 0;
                 x: parent.width / 2 - (triangle1.width / 2)
                 y: parent.height / 2 - (triangle1.height);
+                transformOrigin: triangle1.Center
             }
             PropertyChanges { target: triangle2; rotation: 0;
                 x: parent.width / 2 - (triangle1.width + triangle2.width / 2)
@@ -177,7 +181,7 @@ Rectangle {
                 x: window.width / 2 - triangle2.width / 2; // middle
                 y: triangle2.height;
             }
-            PropertyChanges { target: triangle3; rotation: 180;
+            PropertyChanges { target: triangle3; rotation: 195;
                 x: (window.width / 3 + window.width / 3) - triangle3.width / 2;
                 y: triangle3.height
             }
@@ -195,6 +199,15 @@ Rectangle {
             PropertyChanges { target: triangle3; rotation: 0;
                 x: window.width / 2 - triangle3.width / 2;
                 y:window.height - triangle3.height;
+            }
+        },
+        State {
+            name: "doubletapped"
+            PropertyChanges { target: triangle1; rotation: 114;
+                 transformOrigin: Item.BottomLeft
+            }
+            PropertyChanges { target: triangle2; rotation: 120;
+                transformOrigin: Item.BottomLeft
             }
         }
     ]
@@ -220,6 +233,21 @@ Rectangle {
                 NumberAnimation { properties: "x"; easing.type: Easing.OutBounce;duration: 500; }
 
             }
+        }, Transition {
+            to: "doubletapped"
+            SequentialAnimation {
+                PropertyAction { target: triangle1; property: "transformOrigin" }
+                PropertyAction { target: triangle2; property: "transformOrigin" }
+                NumberAnimation {  target: triangle1; properties: "rotation"; easing.type: Easing.OutBounce;duration: 500; }
+                NumberAnimation {  target: triangle2; properties: "rotation"; easing.type: Easing.OutBounce;duration: 1500; }
+            }
+        }, Transition {
+            from: "doubletapped"
+            SequentialAnimation {
+                NumberAnimation { properties: "rotation"; easing.type: Easing.OutBounce;duration: 1500; }
+                PropertyAction { target: triangle1; property: "transformOrigin" }
+                PropertyAction { target: triangle2; property: "transformOrigin" }
+            }
         }
     ]
 
@@ -232,7 +260,7 @@ Rectangle {
 //! [3]
 //! [2]
         gestures : ["QtSensors.shake", "QtSensors.whip", "QtSensors.twist", "QtSensors.cover",
-            "QtSensors.hover", "QtSensors.turnover", "QtSensors.pickup", "QtSensors.slam" ]
+            "QtSensors.hover", "QtSensors.turnover", "QtSensors.pickup", "QtSensors.slam" , "QtSensors.doubletap"]
 //! [2]
 //! [4]
         onDetected:{
@@ -275,6 +303,10 @@ Rectangle {
             }
             if (gesture == "slam") {
                 window.state == "slammed" ? window.state = "default" : window.state = "slammed"
+                timer.start()
+            }
+            if (gesture == "doubletap") {
+                window.state == "doubletapped" ? window.state = "default" : window.state = "doubletapped"
                 timer.start()
             }
         }
