@@ -90,6 +90,7 @@ void SensorGesturesConnection::newSensorGestureDetected()
 
 void SensorGesturesConnection::newSensorGestures(const QStringList &gestures)
 {
+    if (!mWorker) return;
     Q_FOREACH (const QString &gest, gestures) {
         if (!gest.contains(QLatin1String("detected"))) {
             QString tmp = gest.left(gest.length()-2);

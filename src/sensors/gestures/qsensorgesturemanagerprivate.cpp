@@ -200,7 +200,7 @@ void QSensorGestureManagerPrivate::sensorGestureDetected()
         QSensorGestureRecognizer *recognizer = sensorGestureRecognizer(id);
         if (recognizer != 0) {
             Q_FOREACH (const QString &sig,  recognizer->gestureSignals()) {
-                if (!sig.contains("detected")) { //weed out detected signals
+                if (!sig.contains(QLatin1String("detected"))) { //weed out detected signals
                     QString tmp;
                         tmp = sig.left(sig.length() - 2);
                     if (str == tmp) {
