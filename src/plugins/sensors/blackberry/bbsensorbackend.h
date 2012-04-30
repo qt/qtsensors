@@ -79,9 +79,12 @@ protected:
 
     virtual void processEvent(const sensor_event_t &sensorEvent) = 0;
 
+    virtual bool eventFilter(QObject *object, QEvent *event);
+
 private slots:
     void dataAvailable();
     void applyAlwaysOnProperty();
+    void setPaused(bool paused);
 
 private:
     QFile m_deviceFile;

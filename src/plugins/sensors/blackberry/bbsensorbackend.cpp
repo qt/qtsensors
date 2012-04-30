@@ -41,6 +41,7 @@
 #include "bbsensorbackend.h"
 
 #include <QtCore/QDebug>
+#include <QtGui/QGuiApplication>
 #include <fcntl.h>
 
 static const int microSecondsPerSecond = 1000 * 1000;
@@ -59,6 +60,7 @@ BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_
                                          QSensor *sensor)
     : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType)
 {
+    QCoreApplication::instance()->installEventFilter(this);
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
 }
 
@@ -112,6 +114,25 @@ bool BbSensorBackendBase::addDefaultRange()
 qreal BbSensorBackendBase::convertValue(float bbValue)
 {
     return bbValue;
+}
+
+bool BbSensorBackendBase::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == QCoreApplication::instance()) {
+        switch (event->type()) {
+        case QEvent::ApplicationActivate:
+            setPaused(false);
+            break;
+        case QEvent::ApplicationDeactivate:
+            if (!sensor()->isAlwaysOn())
+                setPaused(true);
+            break;
+        default:
+            break;
+        }
+    }
+
+    return QSensorBackend::eventFilter(object, event);
 }
 
 void BbSensorBackendBase::start()
@@ -188,6 +209,25 @@ void BbSensorBackendBase::applyAlwaysOnProperty()
     const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_BKGRND, &bgState, sizeof(bgState), NULL);
     if (result != EOK) {
         perror(QString::fromLatin1("Setting sensor always on for %1 failed")
+               .arg(m_deviceFile.fileName()).toLocal8Bit());
+    }
+
+    // We might need to pause now
+    setPaused(QGuiApplication::focusWindow() == 0 && !sensor()->isAlwaysOn());
+}
+
+void BbSensorBackendBase::setPaused(bool paused)
+{
+    if (!m_deviceFile.isOpen())
+        return;
+
+    sensor_devctl_enable_u enableState;
+    enableState.tx.enable = paused ? 0 : 1;
+
+    const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_ENABLE, &enableState, sizeof(enableState), NULL);
+    if (result != EOK) {
+        perror(QString::fromLatin1("Setting sensor enabled (%1) for %2 failed")
+               .arg(paused)
                .arg(m_deviceFile.fileName()).toLocal8Bit());
     }
 }

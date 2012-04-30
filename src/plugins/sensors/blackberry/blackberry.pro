@@ -1,7 +1,7 @@
 load(qt_module)
 
 TARGET = qtsensors_blackberry
-QT = sensors core
+QT = sensors core gui
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 load(qt_plugin)
