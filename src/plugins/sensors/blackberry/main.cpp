@@ -40,6 +40,7 @@
 ****************************************************************************/
 #include "bbaccelerometer.h"
 #include "bbaltimeter.h"
+#include "bbcompass.h"
 #include "bbgyroscope.h"
 #include "bbirproximitysensor.h"
 #include "bblightsensor.h"
@@ -55,6 +56,7 @@
 
 static const char *bbAccelerometerId = "bbAccelerometer";
 static const char *bbAltitmeterId = "bbAltimeter";
+static const char *bbCompassId = "bbCompass";
 static const char *bbGyroscopeId = "bbGyroscope";
 static const char *bbIRProximitySensorId = "bbIRProximitySensor";
 static const char *bbLightSensorId = "bbLightSensor";
@@ -78,6 +80,8 @@ public:
             QSensorManager::registerBackend("QAccelerometer", bbAccelerometerId, this);
         if (sensorSupported(BbAltimeter::devicePath()))
             QSensorManager::registerBackend("BbAltimeter", bbAltitmeterId, this);
+        if (sensorSupported(BbCompass::devicePath()))
+            QSensorManager::registerBackend("BbCompass", bbCompassId, this);
         if (sensorSupported(BbGyroscope::devicePath()))
             QSensorManager::registerBackend("QGyroscope", bbGyroscopeId, this);
         if (sensorSupported(BbIRProximitySensor::devicePath()))
@@ -105,6 +109,8 @@ public:
             backend = new BbAccelerometer(sensor);
         if (sensor->identifier() == bbAltitmeterId)
             backend = new BbAltimeter(sensor);
+        if (sensor->identifier() == bbCompassId)
+            backend = new BbCompass(sensor);
         if (sensor->identifier() == bbGyroscopeId)
             backend = new BbGyroscope(sensor);
         if (sensor->identifier() == bbIRProximitySensorId)
