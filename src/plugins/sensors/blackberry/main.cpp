@@ -45,6 +45,7 @@
 #include "bblightsensor.h"
 #include "bbmagnetometer.h"
 #include "bborientationsensor.h"
+#include "bbpressuresensor.h"
 #include "bbproximitysensor.h"
 #include "bbrotationsensor.h"
 #include "bbtemperaturesensor.h"
@@ -59,6 +60,7 @@ static const char *bbIRProximitySensorId = "bbIRProximitySensor";
 static const char *bbLightSensorId = "bbLightSensor";
 static const char *bbMagnetometerId = "bbMagnetometer";
 static const char *bbOrientationSensorId = "bbOrientationSensor";
+static const char *bbPressureSensorId = "bbPressureSensor";
 static const char *bbProximitySensorId = "bbProximitySensor";
 static const char *bbRotationSensorId = "bbRotationSensor";
 static const char *bbTemperatureSensorId = "bbTemperatureSensorId";
@@ -86,6 +88,8 @@ public:
             QSensorManager::registerBackend("QMagnetometer", bbMagnetometerId, this);
         if (sensorSupported(BbOrientationSensor::devicePath()))
             QSensorManager::registerBackend("QOrientationSensor", bbOrientationSensorId, this);
+        if (sensorSupported(BbPressureSensor::devicePath()))
+            QSensorManager::registerBackend("BbPressureSensor", bbPressureSensorId, this);
         if (sensorSupported(BbProximitySensor::devicePath()))
             QSensorManager::registerBackend("QProximitySensor", bbProximitySensorId, this);
         if (sensorSupported(BbRotationSensor::devicePath()))
@@ -111,6 +115,8 @@ public:
             backend = new BbMagnetometer(sensor);
         if (sensor->identifier() == bbOrientationSensorId)
             backend = new BbOrientationSensor(sensor);
+        if (sensor->identifier() == bbPressureSensorId)
+            backend = new BbPressureSensor(sensor);
         if (sensor->identifier() == bbProximitySensorId)
             backend = new BbProximitySensor(sensor);
         if (sensor->identifier() == bbRotationSensorId)

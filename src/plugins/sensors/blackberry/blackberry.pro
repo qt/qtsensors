@@ -16,6 +16,7 @@ HEADERS += bbsensorbackend.h \
     bblightsensor.h \
     bbmagnetometer.h \
     bborientationsensor.h \
+    bbpressuresensor.h \
     bbproximitysensor.h \
     bbrotationsensor.h \
     bbtemperaturesensor.h \
@@ -29,6 +30,7 @@ SOURCES += bbsensorbackend.cpp \
     bblightsensor.cpp \
     bbmagnetometer.cpp \
     bborientationsensor.cpp \
+    bbpressuresensor.cpp \
     bbproximitysensor.cpp \
     bbrotationsensor.cpp \
     bbtemperaturesensor.cpp \
