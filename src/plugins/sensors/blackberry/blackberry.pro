@@ -12,6 +12,7 @@ HEADERS += bbsensorbackend.h \
     bbaccelerometer.h \
     bbaltimeter.h \
     bbgyroscope.h \
+    bbirproximitysensor.h \
     bblightsensor.h \
     bbmagnetometer.h \
     bborientationsensor.h \
@@ -24,6 +25,7 @@ SOURCES += bbsensorbackend.cpp \
     bbaccelerometer.cpp \
     bbaltimeter.cpp \
     bbgyroscope.cpp \
+    bbirproximitysensor.cpp \
     bblightsensor.cpp \
     bbmagnetometer.cpp \
     bborientationsensor.cpp \
