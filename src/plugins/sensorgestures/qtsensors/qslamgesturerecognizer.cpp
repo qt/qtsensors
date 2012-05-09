@@ -68,10 +68,6 @@ QSlamSensorGestureRecognizer::~QSlamSensorGestureRecognizer()
 
 void QSlamSensorGestureRecognizer::create()
 {
-    timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(checkForSlam()));
-    timer->setSingleShot(true);
-    timer->setInterval(500);
 }
 
 
@@ -110,6 +106,8 @@ bool QSlamSensorGestureRecognizer::stop()
 
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
+    detecting = false;
+    restingList.clear();
     active = false;
     return active;
 }
@@ -124,9 +122,10 @@ void QSlamSensorGestureRecognizer::orientationReadingChanged(QOrientationReading
     orientationReading = reading;
 }
 
-#define SLAM_DETECTION_FACTOR 0.15 // 5.85
-
-#define SLAM_Y_DEGREES 15
+#define SLAM_DETECTION_FACTOR 0.3 // 11.7
+#define SLAM_RESTING_FACTOR 2.5
+#define SLAM_RESTING_COUNT 5
+#define SLAM_ZERO_FACTOR .02
 
 void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
@@ -134,30 +133,28 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     const qreal y = reading->y();
     const qreal z = reading->z();
 
-    if (qAbs(lastX - x) < 2 && qAbs(lastY - y) < 2 && qAbs(lastZ - z) < 2) {
+
+    if (qAbs(lastX - x) < SLAM_RESTING_FACTOR
+            && qAbs(lastY - y) < SLAM_RESTING_FACTOR
+            && qAbs(lastZ - z) < SLAM_RESTING_FACTOR) {
         resting = true;
     } else {
         resting = false;
     }
 
-    if (restingList.count() > 5)
+    if (restingList.count() > SLAM_RESTING_COUNT)
         restingList.removeLast();
     restingList.insert(0, resting);
 
-    if (orientationReading == 0)
+    if (orientationReading == 0) {
         return;
+    }
 
     const qreal difference = lastX - x;
 
-    if (!timer->isActive()
-            && detecting
-            && (orientationReading->orientation() == QOrientationReading::RightUp
-                || orientationReading->orientation() == QOrientationReading::LeftUp)
-            && resting) {
-        timer->start();
-    }
     if (!detecting
             && orientationReading->orientation() == QOrientationReading::TopUp
+            && resting
             && hasBeenResting()) {
         detectedX = x;
         // start of gesture
@@ -168,12 +165,18 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
             wasNegative = true;
         restingList.clear();
     }
-
+    if (detecting
+            && qAbs(difference) > (accelRange * SLAM_DETECTION_FACTOR)) {
+        QTimer::singleShot(225,this,SLOT(doSlam()));
+    }
+    if (detecting &&
+            (qAbs(difference) < SLAM_ZERO_FACTOR && qAbs(difference) > 0)) {
+        detecting = false;
+    }
     lastX = x;
     lastY = y;
     lastZ = z;
 }
-
 
 bool QSlamSensorGestureRecognizer::hasBeenResting()
 {
@@ -185,21 +188,15 @@ bool QSlamSensorGestureRecognizer::hasBeenResting()
     return true;
 }
 
-void QSlamSensorGestureRecognizer::checkForSlam()
+void QSlamSensorGestureRecognizer::doSlam()
 {
-    if (!hasBeenResting()) {
-        detecting = false;
-        return;
-    }
-
-    if (detecting && (orientationReading->orientation() == QOrientationReading::RightUp // 3 or 4
-                      || orientationReading->orientation() == QOrientationReading::LeftUp)) {
+    if (detecting && (orientationReading->orientation() == QOrientationReading::RightUp
+            || orientationReading->orientation() == QOrientationReading::LeftUp)) {
         Q_EMIT slam();
         Q_EMIT detected("slam");
         restingList.clear();
+        detecting = false;
     }
-
-    detecting = false;
 }
 
 QT_END_NAMESPACE

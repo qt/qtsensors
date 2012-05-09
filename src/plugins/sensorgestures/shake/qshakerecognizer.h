@@ -73,11 +73,15 @@ public:
     bool stop();
     bool isActive();
 
+    QTimer *timer;
+    int timerTimeout;
+
 Q_SIGNALS:
     void shake();
 
 private slots:
     void accelChanged();
+    void timeout();
 private:
     QAccelerometer *accel;
     bool active;

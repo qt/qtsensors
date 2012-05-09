@@ -157,6 +157,7 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 
     if (whipMap.count() > 5)
         whipMap.removeLast();
+//qDebug() << z << qAbs(diffX) << qAbs(lastX)  << qAbs(x) ;
 
     if (z < WHIP_FACTOR
             && qAbs(diffX) > -(accelRange * .1285)//-5.0115
@@ -166,6 +167,7 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         if (!detecting && !timer->isActive()) {
             timer->start();
             detecting = true;
+//            qDebug() << "start detecting";
         }
     } else {
         whipMap.insert(0,false);
@@ -196,6 +198,8 @@ void QWhipSensorGestureRecognizer::timeout()
 
 void QWhipSensorGestureRecognizer::checkForWhip()
 {
+ //   qDebug() << __FUNCTION__;
+
     whipOk = false;
 
     qreal averageZ = 0;
@@ -203,11 +207,12 @@ void QWhipSensorGestureRecognizer::checkForWhip()
         averageZ += az;
     }
     averageZ /= zList.count();
+ //   qDebug() << qAbs(averageZ) << zList << whipMap;
 
     if (qAbs(averageZ) < 5.0)
         return;
 
-    for (int i = 0; i < whipMap.count() - 2; i++) {
+    for (int i = 0; i < 3; i++) {
         if (!whipMap.at(i)) {
             whipOk = true;
         } else {

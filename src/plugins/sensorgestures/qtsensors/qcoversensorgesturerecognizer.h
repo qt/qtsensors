@@ -68,20 +68,20 @@ Q_SIGNALS:
     void cover();
 
 private slots:
-    void proximityChanged(QIRProximityReading *reading);
+    void proximityChanged(QProximityReading *reading);
     void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
 
 private:
 
     QOrientationReading *orientationReading;
-    qreal proximityReading;
+    bool proximityReading;
 
     QTimer *timer;
-    bool lastProx;
     QtSensorGestureSensorHandler *handler;
     bool active;
     bool detecting;
+    qreal lastTs;
 };
 
 QT_END_NAMESPACE

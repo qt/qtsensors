@@ -109,6 +109,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         if (orientation == 0x0) {
             orientation = new QOrientationSensor(this);
             ok = orientation->connectToBackend();
+            orientation->setDataRate(50);
             connect(orientation,SIGNAL(readingChanged()),this,SLOT(orientationChanged()));
         }
         if (ok && !orientation->isActive())

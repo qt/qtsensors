@@ -103,13 +103,7 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
 {
     reflectance = reading->reflectance();
 
-    if (reflectance > .51) {
-        hoverOk = false;
-        detecting = false;
-        return;
-    }
-
-    if (!detecting && (reflectance > .35 && reflectance < .50)) {
+    if (!detecting && (reflectance > .25 && reflectance < .50)) {
         detecting = true;
         timer->start();
         timer2->start();
@@ -117,7 +111,6 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
 
     } else if (hoverOk && detecting
                && reflectance < .33
-           //    && detectedHigh
                ) {
         // went light again after 1 seconds
         Q_EMIT hover();

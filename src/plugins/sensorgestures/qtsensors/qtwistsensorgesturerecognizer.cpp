@@ -72,7 +72,7 @@ void QTwistSensorGestureRecognizer::create()
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
     timer->setSingleShot(true);
-    timer->setInterval(500);
+    timer->setInterval(750);
 }
 
 QString QTwistSensorGestureRecognizer::id() const
@@ -142,14 +142,27 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (orientationReading == 0)
         return;
 
+    if (negativeList.count() > 5)
+        negativeList.removeLast();
+
+    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0)) && qAbs(diffX) > (accelRange * 0.35))
+            || (x < 0 && lastX < 0 && qAbs(diffX > accelRange * 0.35))
+            || (x > 0 && lastX > 0 && qAbs(diffX > accelRange * 0.35))
+            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0)) && qAbs(diffY) > (accelRange * 0.35))) {
+        negativeList.insert(0,true);
+    } else {
+        negativeList.insert(0,false);
+    }
+
+    if (detecting
+            && isShake()) {
+        // if shake-like:
+        detecting = false;
+        timer->stop();
+        lastRoll = degrees;
+    }
+
     if (rollList.count() > 4) {
-        if (detecting
-                && isShake()) {
-            // if shake-like:
-            detecting = false;
-            timer->stop();
-            lastRoll = degrees;
-        }
         if (detecting
                 && qAbs(degrees) < RESTING_VARIANCE
                 && qAbs(pitch) < RESTING_VARIANCE
@@ -175,7 +188,6 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
             detecting = true;
             timer->start();
             lastRoll = degrees;
-            lastOrientation = orientationReading->orientation();
         }
 
         if (detecting && (orientationReading->orientation() == QOrientationReading::TopUp
@@ -185,16 +197,6 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
             timer->stop();
             lastRoll = degrees;
         }
-    }
-
-    if (negativeList.count() > 5)
-        negativeList.removeLast();
-
-    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0)) && qAbs(diffX) > (accelRange * 0.5))
-            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0)) && qAbs(diffY) > (accelRange * 0.5))) {
-        negativeList.insert(0,true);
-    } else {
-        negativeList.insert(0,false);
     }
 
     if (rollList.count() > 5)
@@ -208,17 +210,17 @@ void QTwistSensorGestureRecognizer::timeout()
 {
     detecting = false;
     lastRoll = 0;
-    lastOrientation = QOrientationReading::Undefined;
 }
 
 bool QTwistSensorGestureRecognizer::isShake()
 {
-    for (int i = 0; i < negativeList.count() - 1; i++) {
+    int count = 0;
+    for (int i = 1; i < negativeList.count() - 1; i++) {
         if (negativeList.at(i)) {
-            return true;
+            count++;
         }
     }
-    return false;
+    return (count > 1);
 }
 
 

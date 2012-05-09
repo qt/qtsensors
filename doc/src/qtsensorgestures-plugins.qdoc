@@ -117,7 +117,7 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.cover
             \li cover
-            \li Hand covers up phone display for one second, when it's face up, using the IR Proximity and Orientation sensors.
+            \li Hand covers up phone display for one second, when it's face up, using the Proximity and Orientation sensors.
             \li \image sensorgesture-cover.png
         \row
             \li QtSensors.doubletap
@@ -127,7 +127,7 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.hover
             \li hover
-            \li Hand hovers about 5 cm above the phone for more than 1 second, then is removed when face up,
+            \li Hand hovers about 4 cm above the phone for more than 1 second, then is removed when face up,
                using the IR Proximity sensor.
             \li \image sensorgesture-hover.png
         \row
@@ -143,8 +143,8 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.slam
             \li slam
-            \li Phone is held in a top up position with a side facing forward for a moment. Swing it with a downward motion and then
-                hold stationary briefly, like it is being used to point at something with the top corner. using the Accelerometer and Orientation sensors.
+            \li Phone is held in a top up position with a side facing forward for a moment. Swing it quickly with a downward motion
+             like it is being used to point at something with the top corner. using the Accelerometer and Orientation sensors.
             \li \image sensorgesture-slam_1.png
             \image sensorgesture-slam_2.png
         \row
