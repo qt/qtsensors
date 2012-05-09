@@ -1,9 +1,10 @@
-TEMPLATE = lib
-CONFIG += plugin
+load(qt_module)
 
 TARGET = qtsensorgestures_shakeplugin
+QT = core sensors
 
-QT += sensors
+load(qt_plugin)
+
 DESTDIR = $$QT.sensors.plugins/sensorgestures
 
 # Input
