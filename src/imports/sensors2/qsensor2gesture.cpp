@@ -189,7 +189,7 @@ QStringList QSensor2Gesture::invalidGestures() const
     \qmlproperty bool QtSensors5::SensorGesture::enabled
     This property can be used to activate or deactivate the sensor gesture.
     Default value is false;
-    \sa {QtSensors5::SensorGesture::detected} {detected}
+    \sa {QtSensors5::SensorGesture::detected}, {detected}
 */
 bool QSensor2Gesture::enabled() const
 {
