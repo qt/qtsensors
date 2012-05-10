@@ -510,8 +510,6 @@ void tst_Sensors2QMLAPI::testGesture()
 
     QSensor2Gesture* gs = new QSensor2Gesture(this);
     gs->componentComplete();
-    qDebug() << "QSensor2Gesture gestures:";
-    qDebug() << gs->availableGestures();
     QSignalSpy spy_availableGesturesChanged(gs, SIGNAL(availableGesturesChanged()));
     QSignalSpy spy_detected(gs, SIGNAL(detected(QString)));
     QSignalSpy spy_gesturesChanged(gs, SIGNAL(gesturesChanged()));

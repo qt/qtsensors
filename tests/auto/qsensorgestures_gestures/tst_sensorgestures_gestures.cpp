@@ -1,0 +1,326 @@
+/****************************************************************************
+**
+** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Contact: http://www.qt-project.org/
+**
+** This file is part of the QtSensors module of the Qt Toolkit.
+**
+** $QT_BEGIN_LICENSE:LGPL$
+** GNU Lesser General Public License Usage
+** This file may be used under the terms of the GNU Lesser General Public
+** License version 2.1 as published by the Free Software Foundation and
+** appearing in the file LICENSE.LGPL included in the packaging of this
+** file. Please review the following information to ensure the GNU Lesser
+** General Public License version 2.1 requirements will be met:
+** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+** In addition, as a special exception, Nokia gives you certain additional
+** rights. These rights are described in the Nokia Qt LGPL Exception
+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU General
+** Public License version 3.0 as published by the Free Software Foundation
+** and appearing in the file LICENSE.GPL included in the packaging of this
+** file. Please review the following information to ensure the GNU General
+** Public License version 3.0 requirements will be met:
+** http://www.gnu.org/copyleft/gpl.html.
+**
+** Other Usage
+** Alternatively, this file may be used in accordance with the terms and
+** conditions contained in a signed written agreement between you and Nokia.
+**
+**
+**
+**
+**
+**
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+#include <QString>
+#include <QtTest>
+#include <QtSensors/QSensorGestureManager>
+#include <QtSensors/QSensorGesture>
+#include <QFile>
+
+#include "mockbackends.h"
+
+class tst_sensorgestures_gestures : public QObject
+{
+    Q_OBJECT
+
+public:
+    tst_sensorgestures_gestures();
+
+private Q_SLOTS:
+    void initTestCase();
+
+    void testSingleGestures();
+    void testSingleGestures_data();
+
+    void testSingleDataset2Gestures();
+    void testSingleDataset2Gestures_data();
+
+    void testTwist();
+    void testTwist_data();
+
+    void testShake2();
+    void testShake2_data();
+
+    void testShake();
+
+    void testAllGestures();
+    void testAllGestures_data();
+
+protected:
+    mockSensorPlugin plugin;
+
+};
+
+tst_sensorgestures_gestures::tst_sensorgestures_gestures()
+{
+}
+
+void tst_sensorgestures_gestures::initTestCase()
+{
+    qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
+    plugin.registerSensors();
+}
+
+void tst_sensorgestures_gestures::testSingleGestures()
+{
+    QFETCH(QString, gestureId);
+
+    QString name = "mock_data/sensordata_" + gestureId + ".dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+    QString gestStr = QLatin1String("QtSensors.") + gestureId;
+
+    QVERIFY(idList.contains(gestStr));
+
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(QStringList() << gestStr));
+    QVERIFY(gesture.data()->validIds().contains(gestStr));
+
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+}
+
+void tst_sensorgestures_gestures::testSingleGestures_data()
+{
+    QTest::addColumn<QString>("gestureId");
+    QTest::newRow("cover") << "cover";
+    QTest::newRow("doubletap") << "doubletap";
+    QTest::newRow("hover") << "hover";
+    QTest::newRow("pickup") << "pickup";
+    QTest::newRow("shake2") << "shake2"; //multi?
+    QTest::newRow("slam") << "slam";
+    QTest::newRow("turnover") << "turnover";
+    QTest::newRow("twist") << "twist"; //multi?
+    QTest::newRow("whip") << "whip";
+}
+
+void tst_sensorgestures_gestures::testSingleDataset2Gestures()
+{
+    QFETCH(QString, gestureId);
+
+    QString name = "dataset2_mock_data/sensordata_" + gestureId + ".dat";
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QString gestStr = QLatin1String("QtSensors.") + gestureId;
+
+    QVERIFY(idList.contains(gestStr));
+
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(QStringList() << gestStr));
+    QVERIFY(gesture.data()->validIds().contains(gestStr));
+
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+}
+
+void tst_sensorgestures_gestures::testSingleDataset2Gestures_data()
+{
+    QTest::addColumn<QString>("gestureId");
+    QTest::newRow("cover") << "cover";
+    QTest::newRow("doubletap") << "doubletap";
+    QTest::newRow("hover") << "hover";
+    QTest::newRow("pickup") << "pickup";
+    QTest::newRow("shake2") << "shake2"; //multi?
+    QTest::newRow("slam") << "slam";
+    QTest::newRow("turnover") << "turnover";
+    QTest::newRow("twist") << "twist"; //multi?
+    QTest::newRow("whip") << "whip";
+}
+
+void tst_sensorgestures_gestures::testTwist()
+{
+    QFETCH(QString, gestureSignal);
+
+    QString name = "mock_data/sensordata_" + gestureSignal + ".dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QString gestStr = QLatin1String("QtSensors.twist");
+
+    QVERIFY(idList.contains(gestStr));
+
+    QScopedPointer<QSensorGesture> gesture2(new QSensorGesture(QStringList() << gestStr));
+    QVERIFY(gesture2.data()->validIds().contains(gestStr));
+
+    QSignalSpy spy_gesture(gesture2.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture2.data()->startDetection();
+    QCOMPARE(gesture2->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+
+    QList<QVariant> arguments = spy_gesture.takeFirst();
+    QCOMPARE(arguments.at(0).toString(), QString(gestureSignal));
+}
+
+void tst_sensorgestures_gestures::testTwist_data()
+{
+    QTest::addColumn<QString>("gestureSignal");
+    QTest::newRow("twistLeft") << "twistLeft";
+    QTest::newRow("twistRight") << "twistRight";
+}
+
+void tst_sensorgestures_gestures::testShake2()
+{
+    QFETCH(QString, gestureSignal);
+
+    QString name = "mock_data/sensordata_" + gestureSignal + ".dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QString gestStr = QLatin1String("QtSensors.shake2");
+
+    QVERIFY(idList.contains(gestStr));
+
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(QStringList() << gestStr));
+    QVERIFY(gesture.data()->validIds().contains(gestStr));
+
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+    QList<QVariant> arguments = spy_gesture.takeFirst();
+    QCOMPARE(arguments.at(0).toString(), QString(gestureSignal));
+
+    gesture.data()->stopDetection();
+}
+
+void tst_sensorgestures_gestures::testShake2_data()
+{
+    QTest::addColumn<QString>("gestureSignal");
+    QTest::newRow("shakeLeft") << "shakeLeft";
+    QTest::newRow("shakeRight") << "shakeRight";
+    QTest::newRow("shakeUp") << "shakeUp";
+    QTest::newRow("shakeDown") << "shakeDown";
+}
+
+void tst_sensorgestures_gestures::testShake()
+{
+    QString gestureSignal = "shake";
+
+    QString name = "mock_data/sensordata_shake2.dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QString gestStr = QLatin1String("QtSensors.shake");
+
+    QVERIFY(idList.contains(gestStr));
+
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(QStringList() << gestStr));
+    QVERIFY(gesture.data()->validIds().contains(gestStr));
+
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+    QList<QVariant> arguments = spy_gesture.takeFirst();
+
+    QCOMPARE(arguments.at(0).toString(), QString(gestureSignal));
+    gesture.data()->stopDetection();
+}
+
+
+void tst_sensorgestures_gestures::testAllGestures_data()
+{
+    testSingleGestures_data();
+}
+
+void tst_sensorgestures_gestures::testAllGestures()
+{
+    QFETCH(QString, gestureId);
+
+    QString name = "dataset2_mock_data/sensordata_" + gestureId + ".dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QStringList gestStringList;
+
+    gestStringList << "QtSensors.cover"
+                   << "QtSensors.doubletap"
+                   << "QtSensors.hover"
+                   << "QtSensors.pickup"
+                   << "QtSensors.shake2"
+                   << "QtSensors.slam"
+                   << "QtSensors.turnover"
+                   << "QtSensors.twist"
+                   << "QtSensors.whip";
+
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
+
+    QCOMPARE(gesture->invalidIds().count(),0);
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+
+    gesture.data()->stopDetection();
+
+    QList<QVariant> arguments = spy_gesture.takeFirst();
+    QString gestureSignal;
+    if (gestureId.right(1) == QLatin1String("2")) {
+        gestureSignal = "shakeLeft";
+    } else if (gestureId.contains("twist")) {
+            gestureSignal = "twistLeft";
+        } else {
+            gestureSignal = gestureId;
+        }
+
+    QCOMPARE(arguments.at(0).toString(), QString(gestureSignal));
+}
+
+
+QTEST_MAIN(tst_sensorgestures_gestures)
+
+#include "tst_sensorgestures_gestures.moc"

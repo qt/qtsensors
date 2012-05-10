@@ -7,3 +7,5 @@ SUBDIRS += qtsensors5
 SUBDIRS += qsensorgestures
 SUBDIRS += qsensorgestureplugins
 
+!mac:!win32:SUBDIRS += qsensorgestures_gestures
+
