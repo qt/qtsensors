@@ -51,6 +51,8 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
+QT_MODULE(QtSensors)
+
 class QSensorGestureManagerPrivate;
 class Q_SENSORS_EXPORT QSensorGestureManager : public QObject
 {
@@ -69,7 +71,7 @@ public:
 
     static QSensorGestureRecognizer *sensorGestureRecognizer(const QString &id);
 
-signals:
+Q_SIGNALS:
     void newSensorGestureAvailable();
 
 };

@@ -47,6 +47,8 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
+QT_MODULE(QtSensors)
+
 class QAmbientLightReadingPrivate;
 
 class Q_SENSORS_EXPORT QAmbientLightReading : public QSensorReading

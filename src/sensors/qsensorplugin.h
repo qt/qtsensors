@@ -49,6 +49,8 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
+QT_MODULE(QtSensors)
+
 class Q_SENSORS_EXPORT QSensorPluginInterface
 {
 public:

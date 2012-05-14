@@ -51,6 +51,8 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
+QT_MODULE(QtSensors)
+
 class QSensorGestureRecognizerPrivate;
 class Q_SENSORS_EXPORT QSensorGestureRecognizer : public QObject
 {

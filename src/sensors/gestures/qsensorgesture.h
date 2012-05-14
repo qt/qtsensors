@@ -55,6 +55,8 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
+QT_MODULE(QtSensors)
+
 class QSensorGesturePrivate;
 
 class Q_SENSORS_EXPORT QSensorGesture : public QObject
@@ -83,7 +85,7 @@ private:
     int qt_metacall(QMetaObject::Call, int, void **);
 
 #ifdef Q_QDOC
-signals:
+Q_SIGNALS:
     // these signals are created at runtime, along with
     // gesture recognizer specific signals.
      void detected(QString);
