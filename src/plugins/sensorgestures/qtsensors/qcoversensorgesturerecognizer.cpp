@@ -98,7 +98,7 @@ bool QCoverSensorGestureRecognizer::stop()
                this,SLOT(orientationReadingChanged(QOrientationReading *)));
 
     active = false;
-
+    timer->stop();
     return active;
 }
 

@@ -107,6 +107,8 @@ bool QWhipSensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
+    timer->stop();
+
     return active;
 }
 

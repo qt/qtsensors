@@ -80,6 +80,12 @@ bool QShake2SensorGestureRecognizer::start()
     } else {
         active = false;
     }
+    prevData.x = 0;
+    prevData.y = 0;
+    prevData.z = 0;
+    shakeCount = 0;
+    shaking = false;
+    shakeDirection = QShake2SensorGestureRecognizer::ShakeUndefined;
     return active;
 }
 
@@ -89,6 +95,7 @@ bool QShake2SensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
+    timer->stop();
     return active;
 }
 
@@ -126,8 +133,9 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
     }
 
     bool wasShake = checkForShake(prevData, currentData, THRESHOLD);
+
     if (!shaking && wasShake &&
-        shakeCount >= NUMBER_SHAKES) {
+        shakeCount == NUMBER_SHAKES) {
         shaking = true;
         shakeCount = 0;
 
@@ -151,7 +159,6 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
         default:
             break;
         };
-
     } else if (wasShake) {
 
         if (shakeCount == 0 && shakeDirection == QShake2SensorGestureRecognizer::ShakeUndefined) {
@@ -183,7 +190,6 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
     prevData.x = currentData.x;
     prevData.y = currentData.y;
     prevData.z = currentData.z;
-
 }
 
 void QShake2SensorGestureRecognizer::timeout()
@@ -191,7 +197,6 @@ void QShake2SensorGestureRecognizer::timeout()
     shakeCount = 0;
     shaking = false;
     shakeDirection = QShake2SensorGestureRecognizer::ShakeUndefined;
-
 }
 
 bool QShake2SensorGestureRecognizer::checkForShake(ShakeData prevSensorData, ShakeData currentSensorData, qreal threshold)

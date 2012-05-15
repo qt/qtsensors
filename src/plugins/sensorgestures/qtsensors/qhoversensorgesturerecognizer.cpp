@@ -82,6 +82,7 @@ bool QHoverSensorGestureRecognizer::start()
     } else {
         active = false;
     }
+    detecting = false;
     return active;
 }
 
@@ -91,6 +92,8 @@ bool QHoverSensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
             this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
     active = false;
+    timer->stop();
+    timer2->stop();
     return active;
 }
 
@@ -102,7 +105,6 @@ bool QHoverSensorGestureRecognizer::isActive()
 void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReading *reading)
 {
     reflectance = reading->reflectance();
-
     if (!detecting && (reflectance > .25 && reflectance < .50)) {
         detecting = true;
         timer->start();
