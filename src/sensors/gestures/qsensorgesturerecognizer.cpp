@@ -181,8 +181,12 @@ void QSensorGestureRecognizer::startBackend()
         qWarning() << "Not starting. Gesture Recognizer not initialized";
         return;
     }
-    if (d_ptr->count++ == 0)
-        start();
+  if (d_ptr->count++ == 0) {
+      start();
+#ifdef SIMULATOR_BUILD
+      Q_EMIT started();
+#endif
+  }
 }
 
 /*!
@@ -197,8 +201,12 @@ void QSensorGestureRecognizer::stopBackend()
         qWarning() << "Not stopping. Gesture Recognizer not initialized";
         return;
     }
-    if (--d_ptr->count == 0)
+    if (--d_ptr->count == 0) {
         stop();
+#ifdef SIMULATOR_BUILD
+        Q_EMIT stopped();
+#endif
+    }
 }
 
 QT_END_NAMESPACE

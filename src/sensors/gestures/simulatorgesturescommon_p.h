@@ -79,6 +79,7 @@ public slots:
     void setSensorGestureData(const QString &);
     void newSensorGestureDetected();
     void newSensorGestures(const QStringList &gestures);
+    void removeSensorGestures(const QStringList &gestures);
 
 private:
     Simulator::Connection *mConnection;

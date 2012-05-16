@@ -70,6 +70,7 @@ SensorGesturesConnection::SensorGesturesConnection(QObject *parent)
 
 SensorGesturesConnection::~SensorGesturesConnection()
 {
+    mWorker->call("setSensorGestures", QStringList());
     delete mWorker;
 }
 
@@ -91,12 +92,24 @@ void SensorGesturesConnection::newSensorGestureDetected()
 void SensorGesturesConnection::newSensorGestures(const QStringList &gestures)
 {
     if (!mWorker) return;
+
     Q_FOREACH (const QString &gest, gestures) {
         if (!gest.contains(QLatin1String("detected"))) {
             QString tmp = gest.left(gest.length()-2);
             if (!allGestures.contains(tmp)) {
                 allGestures.append(tmp);
             }
+        }
+    }
+    mWorker->call("setSensorGestures", allGestures);
+}
+
+void SensorGesturesConnection::removeSensorGestures(const QStringList &gestures)
+{
+    Q_FOREACH (const QString &gest, gestures) {
+        QString tmp = gest.left(gest.length()-2);
+        if (allGestures.contains(tmp)) {
+            allGestures.removeOne(tmp);
         }
     }
     mWorker->call("setSensorGestures", allGestures);

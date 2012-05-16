@@ -84,9 +84,12 @@ Q_SIGNALS:
 #ifdef SIMULATOR_BUILD
 Q_SIGNALS:
     void newSensorGestures(QStringList);
+    void removeSensorGestures(QStringList);
 
 private slots:
     void sensorGestureDetected();
+    void recognizerStarted();
+    void recognizerStopped();
 
 #endif
 };

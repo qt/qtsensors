@@ -64,6 +64,9 @@ QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
 
     connect(this,SIGNAL(newSensorGestures(QStringList)),
             connection,SLOT(newSensorGestures(QStringList)));
+
+    connect(this,SIGNAL(removeSensorGestures(QStringList)),
+            connection,SLOT(removeSensorGestures(QStringList)));
 #endif
 
     loader = new QFactoryLoader("com.Nokia.QSensorGesturePluginInterface", QLatin1String("/sensorgestures"));
@@ -148,8 +151,8 @@ bool QSensorGestureManagerPrivate::loadRecognizer(const QString &recognizerId)
                             registeredSensorGestures.insert(recognizer->id(),recognizer);
 
 #ifdef SIMULATOR_BUILD
-                            QStringList list = recognizer->gestureSignals();
-                            Q_EMIT newSensorGestures(list);
+                            connect(recognizer, SIGNAL(started()), this, SLOT(recognizerStarted()), Qt::UniqueConnection);
+                            connect(recognizer, SIGNAL(stopped()), this, SLOT(recognizerStopped()), Qt::UniqueConnection);
 #endif
                         }
                     }
@@ -216,6 +219,26 @@ void QSensorGestureManagerPrivate::sensorGestureDetected()
             }
         }
     }
+}
+
+void QSensorGestureManagerPrivate::recognizerStarted()
+{
+    QSensorGestureRecognizer *recognizer = qobject_cast<QSensorGestureRecognizer *>(sender());
+    QStringList list = recognizer->gestureSignals();
+    list.removeOne("detected(QString)");
+    list.removeOne("started()");
+    list.removeOne("stopped()");
+    Q_EMIT newSensorGestures(list);
+}
+
+void QSensorGestureManagerPrivate::recognizerStopped()
+{
+    QSensorGestureRecognizer *recognizer = qobject_cast<QSensorGestureRecognizer *>(sender());
+    QStringList list = recognizer->gestureSignals();
+    list.removeOne("detected(QString)");
+    list.removeOne("started()");
+    list.removeOne("stopped()");
+    Q_EMIT removeSensorGestures(list);
 }
 
 #endif
