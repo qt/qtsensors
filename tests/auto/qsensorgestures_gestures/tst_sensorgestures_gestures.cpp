@@ -58,6 +58,8 @@ private Q_SLOTS:
     void initTestCase();
 
     void testTiltedTwist();
+    void testNotPickup();
+
     void testNotHover2();
     void testNotHover();
     void testNotWhip();
@@ -405,7 +407,6 @@ void tst_sensorgestures_gestures::testTiltedTwist()
     QStringList gestStringList;
 
     gestStringList << "QtSensors.twist";
-
     QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
 
     QCOMPARE(gesture->invalidIds().count(),0);
@@ -419,6 +420,28 @@ void tst_sensorgestures_gestures::testTiltedTwist()
 
     QList<QVariant> arguments = spy_gesture.takeFirst();
     QCOMPARE(arguments.at(0).toString(), QLatin1String("twistLeft"));
+}
+
+void tst_sensorgestures_gestures::testNotPickup()
+{
+//    QString name = "mock_data/sensordata_notpickup.dat";
+
+//    QStringList gestStringList;
+//    gestStringList << "QtSensors.pickup" << "QtSensors.twist";
+
+//    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
+
+//    QCOMPARE(gesture->invalidIds().count(),0);
+//    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+//    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+//    gesture.data()->startDetection();
+//    QCOMPARE(gesture->isActive(),true);
+
+//    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+
+//    QList<QVariant> arguments = spy_gesture.takeFirst();
+//    QCOMPARE(arguments.at(0).toString(), QLatin1String("twistLeft"));
 }
 
 

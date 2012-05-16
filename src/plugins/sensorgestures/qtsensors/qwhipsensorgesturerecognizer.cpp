@@ -45,6 +45,8 @@
 
 #include <QtCore/qmath.h>
 
+#define TIMER_TIMEOUT 850
+
 QT_BEGIN_NAMESPACE
 
 QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent)
@@ -56,7 +58,11 @@ QWhipSensorGestureRecognizer::QWhipSensorGestureRecognizer(QObject *parent)
     lastY(0),
     lastZ(0),
     detecting(0),
-    whipOk(0){
+    whipOk(0)
+  , lastTimestamp(0)
+  , timerActive(0)
+  , lapsedTime(0)
+{
 }
 
 QWhipSensorGestureRecognizer::~QWhipSensorGestureRecognizer()
@@ -65,10 +71,6 @@ QWhipSensorGestureRecognizer::~QWhipSensorGestureRecognizer()
 
 void QWhipSensorGestureRecognizer::create()
 {
-    timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
-    timer->setSingleShot(true);
-    timer->setInterval(850);
 }
 
 QString QWhipSensorGestureRecognizer::id() const
@@ -94,6 +96,9 @@ bool QWhipSensorGestureRecognizer::start()
     } else {
         active = false;
     }
+    lastTimestamp = 0;
+    timerActive = false;
+    lapsedTime = 0;
     return active;
 }
 
@@ -107,8 +112,6 @@ bool QWhipSensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
-    timer->stop();
-
     return active;
 }
 
@@ -130,6 +133,8 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     const qreal x = reading->x();
     const qreal y = reading->y();
     qreal z = reading->z();
+
+    quint64 timestamp = reading->timestamp();
 
     if (zList.count() > 4)
         zList.removeLast();
@@ -163,14 +168,13 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (negativeList.count() > 5)
         negativeList.removeLast();
 
-
     if (z < WHIP_FACTOR
             && qAbs(diffX) > -(accelRange * .1285)//-5.0115
             && qAbs(lastX) < 7
             && qAbs(x) < 7) {
         whipMap.insert(0,true);
-        if (!detecting && !timer->isActive()) {
-            timer->start();
+        if (!detecting && !timerActive) {
+            timerActive = true;
             detecting = true;
         }
     } else {
@@ -190,6 +194,13 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     lastX = x;
     lastY = y;
     lastZ = z;
+
+    if (timerActive && lastTimestamp > 0)
+        lapsedTime += (timestamp - lastTimestamp )/1000;
+
+    if (timerActive && lapsedTime >= TIMER_TIMEOUT) {
+        timeout();
+    }
 }
 
 void QWhipSensorGestureRecognizer::timeout()
@@ -211,6 +222,7 @@ void QWhipSensorGestureRecognizer::checkForWhip()
         whipOk = true;
     else
         return;
+
     if (whipOk) {
         bool ok = true;
         for (int i = 0; i < negativeList.count() - 1; i++) {
@@ -224,7 +236,7 @@ void QWhipSensorGestureRecognizer::checkForWhip()
         }
         detecting = false;
         whipMap.clear();
-        timer->stop();
+        timerActive = false;
     }
 }
 

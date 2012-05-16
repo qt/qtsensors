@@ -44,8 +44,6 @@
 #define QPICKUPSENSORGESTURERECOGNIZER_H
 
 #include <qsensorgesturerecognizer.h>
-#include <QTimer>
-
 #include "qtsensorgesturesensorhandler.h"
 
 QT_BEGIN_NAMESPACE
@@ -69,26 +67,21 @@ Q_SIGNALS:
 
 private slots:
     void accelChanged(QAccelerometerReading *reading);
+
     void timeout();
 private:
     QAccelerometerReading *accelReading;
 
-    QTimer *timer;
     bool active;
-    bool atRest;
-    bool okToSignal;
-
     qreal pXaxis;
     qreal pYaxis;
     qreal pZaxis;
 
-    qreal pitch;
     qreal lastpitch;
-    qreal detectedPitchDifference;
     bool detecting;
 
-    QList <bool> detectingNegativeList;
-    QList <qreal> zList;
+    QList <qreal> pitchList;
+    QList <qreal> rollList;
 
     void clear();
 };

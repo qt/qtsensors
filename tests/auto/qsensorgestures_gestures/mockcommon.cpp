@@ -99,6 +99,7 @@ bool mockcommonPrivate::parseData(const QString &line)
 
     if (sensorToken == QLatin1String("accelerometer")) {
         if (!firstRun) {
+
             Q_EMIT accelData(data);
             if (prevts == 0 || prevts > 90000 )
                 prevts = 20000; // use 20 Hz

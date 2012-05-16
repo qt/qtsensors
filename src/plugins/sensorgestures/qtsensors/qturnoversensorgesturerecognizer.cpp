@@ -111,7 +111,8 @@ QString QTurnoverSensorGestureRecognizer::id() const
 void QTurnoverSensorGestureRecognizer::proximityChanged(QProximityReading *reading)
 {
     isClose = reading->close();
-    isRecognized();
+    if (isClose)
+        isRecognized();
 }
 
 void QTurnoverSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)

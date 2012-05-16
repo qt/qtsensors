@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include <QDebug>
-#include <QTimer>
 
 #include "qshake2recognizer.h"
 #include <math.h>
@@ -54,6 +53,9 @@ QShake2SensorGestureRecognizer::QShake2SensorGestureRecognizer(QObject *parent)
     , shakeDirection(QShake2SensorGestureRecognizer::ShakeUndefined)
     , shaking(0)
     , shakeCount(0)
+    , lapsedTime(0)
+    , lastTimestamp(0),
+      timerActive(0)
 {
     timerTimeout = 250;
 }
@@ -64,15 +66,10 @@ QShake2SensorGestureRecognizer::~QShake2SensorGestureRecognizer()
 
 void QShake2SensorGestureRecognizer::create()
 {
-    timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
-    timer->setSingleShot(true);
-    timer->setInterval(timerTimeout);
 }
 
 bool QShake2SensorGestureRecognizer::start()
 {
-
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
         active = true;
         connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
@@ -86,6 +83,7 @@ bool QShake2SensorGestureRecognizer::start()
     shakeCount = 0;
     shaking = false;
     shakeDirection = QShake2SensorGestureRecognizer::ShakeUndefined;
+
     return active;
 }
 
@@ -95,7 +93,6 @@ bool QShake2SensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
-    timer->stop();
     return active;
 }
 
@@ -118,6 +115,8 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
     const qreal y = reading->y();
     const qreal z = reading->z();
 
+    const quint64 timestamp = reading->timestamp();
+
     currentData.x = x;
     currentData.y = y;
     currentData.z = z;
@@ -132,13 +131,15 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
         return;
     }
 
-    bool wasShake = checkForShake(prevData, currentData, THRESHOLD);
+    bool wasShake;
+    wasShake = checkForShake(prevData, currentData, THRESHOLD);
 
     if (!shaking && wasShake &&
         shakeCount == NUMBER_SHAKES) {
         shaking = true;
         shakeCount = 0;
-
+        lapsedTime = 0;
+        timerActive = false;
         switch (shakeDirection) {
         case QShake2SensorGestureRecognizer::ShakeLeft:
             Q_EMIT shakeLeft();
@@ -159,6 +160,7 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
         default:
             break;
         };
+
     } else if (wasShake) {
 
         if (shakeCount == 0 && shakeDirection == QShake2SensorGestureRecognizer::ShakeUndefined) {
@@ -167,7 +169,6 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
             const int ydiff =  prevData.x - currentData.y;
 
             const int max = qMax(qAbs(ydiff), qAbs(xdiff));
-
             if (max == qAbs(xdiff)) {
                 if (isNegative(xdiff))
                     shakeDirection = QShake2SensorGestureRecognizer::ShakeLeft;
@@ -182,14 +183,21 @@ void QShake2SensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
             }
         }
         shakeCount++;
-        if (shakeCount == 3) {
-            timer->start();
+        if (shakeCount == NUMBER_SHAKES) {
+            timerActive = true;
         }
     }
 
+    if (timerActive && lastTimestamp > 0)
+        lapsedTime += (timestamp - lastTimestamp )/1000;
+
+    if (timerActive && lapsedTime >= timerTimeout) {
+        timeout();
+    }
     prevData.x = currentData.x;
     prevData.y = currentData.y;
     prevData.z = currentData.z;
+    lastTimestamp = timestamp;
 }
 
 void QShake2SensorGestureRecognizer::timeout()
@@ -197,6 +205,9 @@ void QShake2SensorGestureRecognizer::timeout()
     shakeCount = 0;
     shaking = false;
     shakeDirection = QShake2SensorGestureRecognizer::ShakeUndefined;
+    timerActive = false;
+    lapsedTime = 0;
+    lastTimestamp = 0;
 }
 
 bool QShake2SensorGestureRecognizer::checkForShake(ShakeData prevSensorData, ShakeData currentSensorData, qreal threshold)

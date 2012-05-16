@@ -92,7 +92,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         if (accel == 0x0) {
             accel = new QAccelerometer(this);
             ok = accel->connectToBackend();
-            accel->setDataRate(50);
+            accel->setDataRate(100);
             qoutputrangelist outputranges = accel->outputRanges();
 
             if (outputranges.count() > 0)
@@ -129,6 +129,7 @@ bool QtSensorGestureSensorHandler::startSensor(SensorGestureSensors sensor)
         //irproximity
         if (irProx == 0x0) {
             irProx = new QIRProximitySensor(this);
+            irProx->setDataRate(50);
             ok = irProx->connectToBackend();
             connect(irProx,SIGNAL(readingChanged()),this,SLOT(irProximityChanged()));
         }

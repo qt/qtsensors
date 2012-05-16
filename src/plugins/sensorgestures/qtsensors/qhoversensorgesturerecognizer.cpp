@@ -43,12 +43,15 @@
 #include "qhoversensorgesturerecognizer.h"
 #include <math.h>
 
+#define TIMER2_TIMEOUT 5000
+
 QT_BEGIN_NAMESPACE
 
 QHoverSensorGestureRecognizer::QHoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    orientationReading(0),
-    hoverOk(0), detecting(0), active(0), initialReflectance(0), useHack(0)
+    orientationReading(0),reflectance(0),
+    hoverOk(0), detecting(0), active(0), initialReflectance(0), useHack(0),
+    lastTimestamp(0), timer2Active(0), lapsedTime2(0)
 {
 }
 
@@ -58,10 +61,7 @@ QHoverSensorGestureRecognizer::~QHoverSensorGestureRecognizer()
 
 void QHoverSensorGestureRecognizer::create()
 {
-    timer2 = new QTimer(this);
-    connect(timer2,SIGNAL(timeout()),this,SLOT(timeout2()));
-    timer2->setSingleShot(true);
-    timer2->setInterval(3000);
+
 }
 
 QString QHoverSensorGestureRecognizer::id() const
@@ -90,6 +90,8 @@ bool QHoverSensorGestureRecognizer::start()
     detectedHigh = 0;
     initialReflectance = 0;
     useHack = false;
+    timer2Active = false;
+    lapsedTime2 = 0;
     return active;
 }
 
@@ -102,6 +104,8 @@ bool QHoverSensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
             this,SLOT(orientationReadingChanged(QOrientationReading *)));
     active = false;
+    timer2Active = false;
+    initialReflectance = 0;
     return active;
 }
 
@@ -144,7 +148,6 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
         detectedHigh = 0;
     }
 
-
     qreal detectedPercent =  100 - (detectedHigh / reflectance * 100);
 
     qint16 percentCheck;
@@ -153,9 +156,13 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
     else
         percentCheck = -101;
 
+    quint64 timestamp = reading->timestamp();
+
     if (!detecting
             && checkForHovering()) {
         detecting = true;
+        detecting = true;
+        timer2Active = true;
         detectedHigh = reflectance;
     } else if (detecting
                 && detectedPercent < percentCheck
@@ -166,11 +173,19 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
         hoverOk = false;
         detecting = false;
         detectedHigh = 0;
-        timer2->stop();
+        timer2Active = false;;
     }
     if (detecting && reflectance <  0.2) {
         timeout();
     }
+    if (timer2Active && lastTimestamp > 0)
+        lapsedTime2 += (timestamp - lastTimestamp )/1000;
+
+    if (timer2Active && lapsedTime2 >= TIMER2_TIMEOUT) {
+        timeout2();
+    }
+
+    lastTimestamp = reading->timestamp();
 }
 
 bool QHoverSensorGestureRecognizer::checkForHovering()
@@ -192,7 +207,7 @@ void QHoverSensorGestureRecognizer::timeout()
 {
     if (checkForHovering()) {
         hoverOk = true;
-        timer2->start();
+        timer2Active = true;
     } else {
         detecting = false;
         detectedHigh = 0;

@@ -44,14 +44,17 @@
 #include <QtCore/qmath.h>
 
 #define RADIANS_TO_DEGREES 57.2957795
+#define TIMER_TIMEOUT 250
 
 QT_BEGIN_NAMESPACE
 
 QPickupSensorGestureRecognizer::QPickupSensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
+    , accelReading(0)
     , active(0)
-    , atRest(1)
-    , okToSignal(1)
+    , pXaxis(0)
+    , pYaxis(0)
+    , pZaxis(0)
     , lastpitch(0)
     , detecting(0)
 {
@@ -63,12 +66,6 @@ QPickupSensorGestureRecognizer::~QPickupSensorGestureRecognizer()
 
 void QPickupSensorGestureRecognizer::create()
 {
-    timer = new QTimer(this);
-
-    connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
-    timer->setSingleShot(true);
-    timer->setInterval(750);
-
 }
 
 QString QPickupSensorGestureRecognizer::id() const
@@ -79,12 +76,15 @@ QString QPickupSensorGestureRecognizer::id() const
 bool QPickupSensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
-        active = true;
-        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-                this,SLOT(accelChanged(QAccelerometerReading *)));
-    } else {
-        active = false;
-    }
+            active = true;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
+                    this,SLOT(accelChanged(QAccelerometerReading *)));
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
+            active = false;
+        }
+    clear();
+
     return active;
 
 }
@@ -95,7 +95,6 @@ bool QPickupSensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
-    timer->stop();
 
     return active;
 }
@@ -105,102 +104,113 @@ bool QPickupSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define PICKUP_BOTTOM_THRESHOLD 20
-#define PICKUP_TOP_THRESHOLD 87
+#define PICKUP_BOTTOM_THRESHOLD 25
+#define PICKUP_TOP_THRESHOLD 80
+#define PICKUP_ANGLE_THRESHOLD 25
+#define PICKUP_ROLL_THRESHOLD 13
 
 void QPickupSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
     accelReading = reading;
     const qreal x = reading->x();
-    const qreal xdiff =  pXaxis - x;
     const qreal y = reading->y();
-    const qreal ydiff = pYaxis - y;
     const qreal z = reading->z();
+    const qreal xdiff =  pXaxis - x;
+    const qreal ydiff = pYaxis - y;
     const qreal zdiff =  pZaxis - z;
 
-    pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
+    qreal pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
+    qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
-    if (zList.count() > 5)
-        zList.removeLast();
-
-    if (qAbs(xdiff) < 0.7 && qAbs(ydiff) < .7 && qAbs(zdiff) < .7) {
-        atRest = true;
-    } else {
-        atRest = false;
-    }
-
-    if (detectingNegativeList.count() > 5)
-        detectingNegativeList.removeLast();
-
-    if (!detecting) {
-        zList.insert(0,z);
-    }
-    if (detecting && z < 0) {
-        okToSignal = false;
+    if ((qAbs(xdiff) < 0.7 && qAbs(ydiff) < .7 && qAbs(zdiff) < .7)
+            || z < 0) {
         detecting = false;
-        detectingNegativeList.insert(0,true);
-        atRest = true;
-    }
-
-    if (!atRest && !detecting && (lastpitch - pitch < -PICKUP_BOTTOM_THRESHOLD)) {
+    } else if (pitch > PICKUP_BOTTOM_THRESHOLD && pitch < PICKUP_TOP_THRESHOLD) {
         detecting = true;
-        if (!timer->isActive()) {
-            timer->start();
-        }
-        detectedPitchDifference = lastpitch - pitch;
-        lastpitch = pitch;
-        okToSignal = true;
+     }
+
+    if ( pitchList.count() > 21) {
+        pitchList.removeFirst();
+    }
+    if ( rollList.count() > 21) {
+        rollList.removeFirst();
     }
 
+    if (pitch > 1) {
+        pitchList.append(pitch);
+    }
+    if (roll > 1) {
+        rollList.append(roll);
+    }
+
+    if (detecting && pitchList.count() > 5 ) {
+       timeout();
+    }
+
+    lastpitch = pitch;
     pXaxis = x;
     pYaxis = y;
     pZaxis = z;
-    if (atRest && !detecting)
-        lastpitch = pitch;
 }
 
 void QPickupSensorGestureRecognizer::timeout()
 {
-    const qreal x = accelReading->x();
-    const qreal y = accelReading->y();
-    const qreal z = accelReading->z();
+    qreal averageRoll = 0;
+    for (int r = 0; r < rollList.count(); r++) {
+        averageRoll += rollList.at(r);
+    }
+    averageRoll /= rollList.count();
 
-    const qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
-
-    bool ok = true;
-    for (int i = 0; i < zList.count() - 1; i++) {
-        if (zList.at(i) < 0) {
-            ok = false;
-        }
+    if (averageRoll >  PICKUP_ROLL_THRESHOLD) {
+        clear();
+        return;
+    }
+    if (pitchList.isEmpty()
+            || pitchList.at(0) > PICKUP_BOTTOM_THRESHOLD) {
+        clear();
+        return;
     }
 
-    if (ok) {
-        for (int i = 0; i < detectingNegativeList.count() - 1; i++) {
-            if (detectingNegativeList.at(i) == true) {
-                ok = false;
+    qreal previousPitch = 0;
+    qreal startPitch = -1.0;
+    int goodCount = 0;
+
+    qreal averagePitch = 0;
+    for (int i = 0; i < pitchList.count(); i++) {
+        averagePitch += pitchList.at(i);
+        if (previousPitch < pitchList.at(i)
+                && qAbs(pitchList.at(i)) - qAbs(previousPitch) < 20) {
+            if (goodCount == 1 && previousPitch != 0) {
+                startPitch = previousPitch;
             }
+            goodCount++;
         }
+
+        previousPitch = pitchList.at(i);
+    }
+    averagePitch /= pitchList.count();
+
+    if (averagePitch < 5) {
+        clear();
+        return;
     }
 
-    if (ok && detecting
-            && okToSignal
-            && qAbs(roll) < 10
-            && (pitch < PICKUP_TOP_THRESHOLD
-                && pitch > PICKUP_BOTTOM_THRESHOLD)
-            && (y > 4.0 && y < 10)
-            && (z > 4.0 && z < 10)) {
+    if (goodCount >= 3 &&
+            (pitchList.last() < PICKUP_TOP_THRESHOLD
+             && pitchList.last() > PICKUP_BOTTOM_THRESHOLD)
+            && startPitch > 0
+            && (pitchList.last() - startPitch) > PICKUP_ANGLE_THRESHOLD) {
         Q_EMIT pickup();
         Q_EMIT detected("pickup");
     }
     clear();
 }
 
-
 void QPickupSensorGestureRecognizer::clear()
 {
-    okToSignal = false;
+    pitchList.clear();
     detecting = false;
-    detectingNegativeList.clear();
 }
+
 QT_END_NAMESPACE
 

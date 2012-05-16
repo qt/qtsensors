@@ -58,7 +58,10 @@ QSlamSensorGestureRecognizer::QSlamSensorGestureRecognizer(QObject *parent) :
     detecting(0),
     accelX(0),
     roll(0),
-    resting(0)
+    resting(0),
+    lastTimestamp(0),
+    lapsedTime(0),
+    timerActive(0)
 {
 }
 
@@ -132,7 +135,7 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     const qreal x = reading->x();
     const qreal y = reading->y();
     const qreal z = reading->z();
-
+    quint64 timestamp = reading->timestamp();
 
     if (qAbs(lastX - x) < SLAM_RESTING_FACTOR
             && qAbs(lastY - y) < SLAM_RESTING_FACTOR
@@ -145,6 +148,15 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (restingList.count() > SLAM_RESTING_COUNT)
         restingList.removeLast();
     restingList.insert(0, resting);
+
+
+    if (timerActive && lastTimestamp > 0)
+        lapsedTime += (timestamp - lastTimestamp )/1000;
+
+    if (timerActive && lapsedTime >= 250) {
+        doSlam();
+    }
+    lastTimestamp = timestamp;
 
     if (orientationReading == 0) {
         return;
@@ -167,7 +179,7 @@ void QSlamSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     }
     if (detecting
             && qAbs(difference) > (accelRange * SLAM_DETECTION_FACTOR)) {
-        QTimer::singleShot(225,this,SLOT(doSlam()));
+        timerActive = true;
     }
     if (detecting &&
             (qAbs(difference) < SLAM_ZERO_FACTOR && qAbs(difference) > 0)) {
@@ -197,6 +209,8 @@ void QSlamSensorGestureRecognizer::doSlam()
         restingList.clear();
         detecting = false;
     }
+    timerActive = false;
+    lapsedTime = 0;
 }
 
 QT_END_NAMESPACE

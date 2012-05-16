@@ -65,6 +65,7 @@ Q_SIGNALS:
 private slots:
     void orientationReadingChanged(QOrientationReading *reading);
     void proximityChanged(QProximityReading *reading);
+    void isRecognized();
 
 private:
 
@@ -72,7 +73,6 @@ private:
     bool isFaceDown;
     bool active;
 
-    void isRecognized();
     QList<qreal> zList;
 
 };

@@ -47,7 +47,7 @@
 QT_BEGIN_NAMESPACE
 
 #define RADIANS_TO_DEGREES 57.2957795
-
+#define TIMER_TIMEOUT 750
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
     , orientationReading(0)
@@ -92,6 +92,7 @@ bool QTwistSensorGestureRecognizer::start()
 
         active = false;
     }
+
     return active;
 }
 
@@ -143,7 +144,6 @@ bool QTwistSensorGestureRecognizer::checkOrientation()
     }
     return true;
 }
-
 
 void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {

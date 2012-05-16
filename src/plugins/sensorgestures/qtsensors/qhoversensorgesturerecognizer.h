@@ -44,7 +44,6 @@
 #define QHOVERSENSORGESTURERECOGNIZER_H
 
 #include <QSensorGestureRecognizer>
-#include <QTimer>
 
 #include "qtsensorgesturesensorhandler.h"
 
@@ -75,8 +74,6 @@ private slots:
 private:
     QOrientationReading *orientationReading;
     qreal reflectance;
-
-    QTimer *timer2;
     bool hoverOk;
     bool detecting;
 
@@ -85,6 +82,11 @@ private:
     qreal initialReflectance;
     bool checkForHovering();
     bool useHack;
+
+    quint64 lastTimestamp;
+
+    bool timer2Active;
+    quint64 lapsedTime2;
 
 };
 QT_END_NAMESPACE

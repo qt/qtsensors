@@ -43,7 +43,6 @@
 #define QSHAKERECOGNIZER_H
 
 #include <QDebug>
-#include <QTimer>
 
 #include <qsensorgesturerecognizer.h>
 
@@ -81,7 +80,6 @@ public:
     bool stop();
     bool isActive();
 
-    QTimer *timer;
     int timerTimeout;
 
 
@@ -112,6 +110,9 @@ private:
     int threshold;
 
     bool isNegative(qreal num);
+    qreal lapsedTime;
+    quint64 lastTimestamp;
+    bool timerActive;
 };
 QT_END_NAMESPACE
 #endif // QSHAKERECOGNIZER_H

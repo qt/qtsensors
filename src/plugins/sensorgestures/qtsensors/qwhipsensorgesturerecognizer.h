@@ -73,7 +73,6 @@ private slots:
 
 private:
     QOrientationReading *orientationReading;
-    QTimer *timer;
     qreal accelRange;
     bool active;
 
@@ -91,6 +90,12 @@ private:
     QList <bool> negativeList;
 
     QList<qreal> zList;
+
+    quint64 lastTimestamp;
+
+    bool timerActive;
+    quint64 lapsedTime;
+
 };
 
 QT_END_NAMESPACE

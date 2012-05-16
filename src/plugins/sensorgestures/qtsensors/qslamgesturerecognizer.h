@@ -92,6 +92,9 @@ private:
     bool resting;
 
     bool hasBeenResting();
+    quint64 lastTimestamp;
+    quint64 lapsedTime;
+    bool timerActive;
 };
 
 QT_END_NAMESPACE
