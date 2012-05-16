@@ -112,7 +112,6 @@ Rectangle {
             PropertyChanges { target: triangle1; rotation: 0;
                 x: parent.width / 2 - (triangle1.width / 2)
                 y: parent.height / 2 - (triangle1.height);
-                transformOrigin: triangle1.Center
             }
             PropertyChanges { target: triangle2; rotation: 0;
                 x: parent.width / 2 - (triangle1.width + triangle2.width / 2)
@@ -217,7 +216,6 @@ Rectangle {
         Transition {
 
         ParallelAnimation {
-            running: true
             NumberAnimation { properties: "x,y"; easing.type: Easing.OutBounce;duration: 2000; }
             RotationAnimation { id: t1Rotation; target: triangle1; duration: 1000;
                 direction: RotationAnimation.Clockwise }
