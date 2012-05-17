@@ -225,9 +225,9 @@ void QSensorGestureManagerPrivate::recognizerStarted()
 {
     QSensorGestureRecognizer *recognizer = qobject_cast<QSensorGestureRecognizer *>(sender());
     QStringList list = recognizer->gestureSignals();
-    list.removeOne("detected(QString)");
-    list.removeOne("started()");
-    list.removeOne("stopped()");
+    list.removeOne(QLatin1String("detected(QString)"));
+    list.removeOne(QLatin1String("started()"));
+    list.removeOne(QLatin1String("stopped()"));
     Q_EMIT newSensorGestures(list);
 }
 
@@ -235,9 +235,9 @@ void QSensorGestureManagerPrivate::recognizerStopped()
 {
     QSensorGestureRecognizer *recognizer = qobject_cast<QSensorGestureRecognizer *>(sender());
     QStringList list = recognizer->gestureSignals();
-    list.removeOne("detected(QString)");
-    list.removeOne("started()");
-    list.removeOne("stopped()");
+    list.removeOne(QLatin1String("detected(QString)"));
+    list.removeOne(QLatin1String("started()"));
+    list.removeOne(QLatin1String("stopped()"));
     Q_EMIT removeSensorGestures(list);
 }
 
