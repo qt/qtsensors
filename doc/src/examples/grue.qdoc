@@ -57,7 +57,7 @@
 */
 
 /*!
-    \example sensors/grue/lib
+    \example QtSensors/grue/lib
     \title Grue Sensor Definition
     \brief The Grue sensor is defined in a library so that applications can use it.
 
@@ -78,7 +78,7 @@
 */
 
 /*!
-    \example sensors/grue/plugin
+    \example QtSensors/grue/plugin
     \title Grue Sensor Implementation
     \brief The Grue sensor implementation lives in a plugin that is loaded by the Qt Sensors library.
 
@@ -94,13 +94,13 @@
     light sensor. In the start method, the backend should be sure to call the
     sensorStopped() or sensorBusy() methods if it cannot start.
 
-    \snippet ../examples/sensors/grue/plugin/gruesensorimpl.cpp start
+    \snippet ../examples/QtSensors/grue/plugin/gruesensorimpl.cpp start
 
     The setReading method is needed so that the sensors library knows where the
     readings are coming from. This backend has a local copy of the reading so
     it passes a pointer to the function.
 
-    \snippet ../examples/sensors/grue/plugin/gruesensorimpl.cpp setReading
+    \snippet ../examples/QtSensors/grue/plugin/gruesensorimpl.cpp setReading
 
     However it is also possible to pass null to the setReading method in which
     case the sensors library will create an instance and return a pointer.
@@ -123,7 +123,7 @@
 */
 
 /*!
-    \example sensors/grue/console_app
+    \example QtSensors/grue/console_app
     \title Grue Sensor Console Application
     \brief The Grue sensor console application demonstrates use of the Grue sensor.
 
@@ -135,7 +135,7 @@
 */
 
 /*!
-    \example sensors/grue/import
+    \example QtSensors/grue/import
     \title Grue Sensor QML Import
     \brief The Grue sensor QML import exports the GrueSensor class as a QML element.
 
@@ -145,7 +145,7 @@
 */
 
 /*!
-    \example sensors/grue/qml_app
+    \example QtSensors/grue/qml_app
     \title Grue Sensor QML Application
     \brief The Grue sensor QML application demonstrates use of the GrueSensor QML element.
 

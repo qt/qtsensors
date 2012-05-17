@@ -55,7 +55,7 @@
 
     The emulator supports simulating the Ambient Light, Orientation, Compass and Proximity sensors.
 
-    The \l {Qt Sensors - Simple QML Example} contains code for using the the \l TiltSensor, \l AmbientLightSensor
+    The \l {Qt Sensors - QML example} contains code for using the the \l TiltSensor, \l AmbientLightSensor
     and ProximitySensor elements.
 
     \section1 QML Elements

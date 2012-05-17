@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -39,60 +39,41 @@
 **
 ****************************************************************************/
 
-#include "qsensor2proximity.h"
-#include <QtCore/QDebug>
+#ifndef QSEONSOREXPLORER_H
+#define QSEONSOREXPLORER_H
+
+#include <QtQml/QtQml>
+#include <QtQml/QQmlListProperty>
+#include "sensoritem.h"
 
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmlclass ProximitySensor QSensor2Proximity
-    \inherits QtSensors5::Sensor
-    \inqmlmodule QtSensors 5
-    \ingroup qml-QtSensors5
-    \since QtSensors 5.0
-    \brief Provides access to the proximity sensor.
-
-    This element allows determining if something is held in close proximity to the device, such
-    as determining if the user is holding the device to their ear.
-
-    This element is part of the \b{QtSensors 5} module.
-
-    The \l {Qt Sensors - QML example} is an example how to use this QML element.
-
-*/
-
-QSensor2Proximity::QSensor2Proximity(QObject* parent)
-    : qsensor2common(parent)
-    , _near(false)
+class QSensorExplorer : public QObject
 {
-    _proximity = new QProximitySensor(this);
-    _proximity->addFilter(this);
-}
+    Q_OBJECT
+    Q_PROPERTY(QQmlListProperty<QSensorItem> availableSensors READ availableSensors NOTIFY availableSensorsChanged)
+    Q_PROPERTY(QSensorItem* selectedSensorItem READ selectedSensorItem WRITE setSelectedSensorItem NOTIFY selectedSensorItemChanged)
+public:
+    QSensorExplorer(QObject* parent = 0);
+    virtual ~QSensorExplorer();
 
-QSensor2Proximity::~QSensor2Proximity()
-{
-}
+private:
+    QQmlListProperty<QSensorItem> availableSensors();
+    void loadSensors();
+    void setSelectedSensorItem(QSensorItem* selitem);
+    QSensorItem* selectedSensorItem();
 
-/*!
-    \qmlproperty bool QtSensors5::ProximitySensor::near
-    This property holds whether the sensor has detected something in close proximity.
-    The definition of close proximity is device dependent, but it
-    typically stands for a distance of 1-2 cm.
-*/
-bool QSensor2Proximity::near()
-{
-    return _near;
-}
+Q_SIGNALS:
+    void availableSensorsChanged();
+    void selectedSensorItemChanged();
 
-bool QSensor2Proximity::filter(QProximityReading *reading)
-{
-    bool cl = reading->close();
-    if (_near != cl){
-        _near = cl;
-        emit nearChanged();
-    }
-
-    return false;
-}
+private:
+    QList<QSensorItem*> _availableSensors;
+    QSensorItem* _selectedSensorItem;
+};
 
 QT_END_NAMESPACE
+
+QML_DECLARE_TYPE(QSensorExplorer)
+
+#endif // QSEONSOREXPLORER_H

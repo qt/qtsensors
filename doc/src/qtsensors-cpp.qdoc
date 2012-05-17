@@ -101,7 +101,7 @@ This code does not require any compile-time links to \l QAccelerometer or
 
 \snippet snippets/sensors/start.cpp Starting a sensor
 
-You can discover all of this information at runtime too. The sensor_explorer example
+You can discover all of this information at runtime too. The QtSensors_sensor_explorer example
 shows you information about available sensors.
 
 \section1 Front end, back end

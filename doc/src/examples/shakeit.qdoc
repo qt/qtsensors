@@ -26,40 +26,39 @@
 ****************************************************************************/
 
 /*!
-    \example sensors/shakeit
-    \title ShakeIt! QML Sensor Gestures Example
+    \example QtSensors/QtSensors_shakeit
+    \title Qt Sensors - ShakeIt QML Example
     \ingroup qtsensors-examples
+    \image shakeit.png
+
+    \section2 ShakeIt in QML
     \brief The sensor gesture example demonstrates the steps for creating a QML application
      that uses sensor gestures and the included shake sensor.
-    \image shakeit.jpg
 
-    \section1 Overview
-        Writing a QML application that uses the Shake QML sensorgestures element
-     requires the following steps:
+    Writing a QML application that uses the Shake QML sensorgestures element requires the following steps:
 
-        Import the Sensors Declarative module.
+    Import the Sensors Declarative module.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 0
+    \snippet ../examples/QtSensors/QtSensors_shakeit/QtSensors_shakeit.qml 0
 
-        Add a SensorGesture QML element.
+    Add a SensorGesture QML element.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 1
+    \snippet ../examples/QtSensors/QtSensors_shakeit/QtSensors_shakeit.qml 1
 
-       In the SensorGesture element, specify which gesture to be used.
-      Note that this can be a comma separated list. Here we are only interested in one
-      gesture recognizer.
+    In the SensorGesture element, specify which gesture to be used.
+    Note that this can be a comma separated list. Here we are only interested in one
+    gesture recognizer.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 2
+    \snippet ../examples/QtSensors/QtSensors_shakeit/QtSensors_shakeit.qml 2
 
-        Use the 'enabled' property to start the sensor gesture.
+    Use the 'enabled' property to start the sensor gesture.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 3
+    \snippet ../examples/QtSensors/QtSensors_shakeit/QtSensors_shakeit.qml 3
 
-        Use the onDetected signal to do stuff.
+    Use the onDetected signal to do stuff.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 4
+    \snippet ../examples/QtSensors/QtSensors_shakeit/QtSensors_shakeit.qml 4
 
-       There are additional gestures to shake which are supported:
-           whip, twistRight, hover, cover, turnover and pickup.
-
+    There are additional gestures to shake which are supported:
+    whip, twistRight, hover, cover, turnover and pickup.
 */

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Copyright (C) 2011 Nokia Corporation and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -39,60 +39,45 @@
 **
 ****************************************************************************/
 
-#include "qsensor2proximity.h"
-#include <QtCore/QDebug>
+#ifndef QPROPERTYINFO_H
+#define QPROPERTYINFO_H
+
+#include <QtQml/QtQml>
+#include <QtCore/QString>
 
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmlclass ProximitySensor QSensor2Proximity
-    \inherits QtSensors5::Sensor
-    \inqmlmodule QtSensors 5
-    \ingroup qml-QtSensors5
-    \since QtSensors 5.0
-    \brief Provides access to the proximity sensor.
-
-    This element allows determining if something is held in close proximity to the device, such
-    as determining if the user is holding the device to their ear.
-
-    This element is part of the \b{QtSensors 5} module.
-
-    The \l {Qt Sensors - QML example} is an example how to use this QML element.
-
-*/
-
-QSensor2Proximity::QSensor2Proximity(QObject* parent)
-    : qsensor2common(parent)
-    , _near(false)
+class QPropertyInfo : public QObject
 {
-    _proximity = new QProximitySensor(this);
-    _proximity->addFilter(this);
-}
+    Q_OBJECT
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString typeName READ typeName CONSTANT)
+    Q_PROPERTY(QString value READ value NOTIFY valueChanged)
+    Q_PROPERTY(bool isWriteable READ isWriteable CONSTANT)
 
-QSensor2Proximity::~QSensor2Proximity()
-{
-}
+public:
+    QPropertyInfo(QObject* parent = 0);
+    QPropertyInfo(const QString& name, int index, bool writeable, const QString& typeName, const QString& value, QObject* parent=0);
+    QString name();
+    QString typeName();
+    QString value();
+    void setValue(const QString& value);
+    int index();
+    bool isWriteable();
 
-/*!
-    \qmlproperty bool QtSensors5::ProximitySensor::near
-    This property holds whether the sensor has detected something in close proximity.
-    The definition of close proximity is device dependent, but it
-    typically stands for a distance of 1-2 cm.
-*/
-bool QSensor2Proximity::near()
-{
-    return _near;
-}
+Q_SIGNALS:
+    void valueChanged();
 
-bool QSensor2Proximity::filter(QProximityReading *reading)
-{
-    bool cl = reading->close();
-    if (_near != cl){
-        _near = cl;
-        emit nearChanged();
-    }
-
-    return false;
-}
+private:
+    int _index;
+    bool _isWriteable;
+    QString _name;
+    QString _typeName;
+    QString _value;
+};
 
 QT_END_NAMESPACE
+
+QML_DECLARE_TYPE(QPropertyInfo)
+
+#endif // QPROPERTYINFO_H

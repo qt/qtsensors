@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS += sensors
+SUBDIRS += QtSensors
