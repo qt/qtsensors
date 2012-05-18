@@ -84,6 +84,8 @@ private:
     qreal detectedHigh;
     qreal lastProx;
     bool active;
+    qreal initialReflectance;
+
 
 };
 QT_END_NAMESPACE

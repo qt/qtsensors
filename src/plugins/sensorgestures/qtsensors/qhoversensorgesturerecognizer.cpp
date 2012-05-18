@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
 
 QHoverSensorGestureRecognizer::QHoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
-    hoverOk(0), lastLightReading(0), detecting(0), active(0)
+    hoverOk(0), lastLightReading(0), detecting(0), active(0), initialReflectance(0)
 {
 }
 
@@ -94,6 +94,7 @@ bool QHoverSensorGestureRecognizer::stop()
     active = false;
     timer->stop();
     timer2->stop();
+    initialReflectance = 0;
     return active;
 }
 
@@ -105,15 +106,19 @@ bool QHoverSensorGestureRecognizer::isActive()
 void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReading *reading)
 {
     reflectance = reading->reflectance();
-    if (!detecting && (reflectance > .25 && reflectance < .50)) {
+
+    if (initialReflectance == 0)
+        initialReflectance = reflectance;
+
+    if (!detecting &&  reflectance - initialReflectance > 0.1) {
         detecting = true;
         timer->start();
         timer2->start();
         detectedHigh = reflectance;
 
     } else if (hoverOk && detecting
-               && reflectance < .33
-               ) {
+               && reflectance - initialReflectance < 0
+               && initialReflectance / reflectance > 0.98) {
         // went light again after 1 seconds
         Q_EMIT hover();
         Q_EMIT detected("hover");
