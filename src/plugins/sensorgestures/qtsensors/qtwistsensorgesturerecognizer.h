@@ -72,6 +72,7 @@ private slots:
     void accelChanged(QAccelerometerReading *reading);
     void orientationReadingChanged(QOrientationReading *reading);
     void timeout();
+    void checkTwist();
 
 private:
 

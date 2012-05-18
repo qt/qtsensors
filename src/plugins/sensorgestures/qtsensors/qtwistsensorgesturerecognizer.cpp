@@ -167,19 +167,13 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         if (detecting
                 && qAbs(degrees) < RESTING_VARIANCE
                 && qAbs(pitch) < RESTING_VARIANCE
-                && (qAbs(lastRoll + degrees) > (degrees / 2))
-                ) {
-            if (lastRoll > 0 ) {
-                Q_EMIT twistLeft();
-                Q_EMIT detected("twistLeft");
-            } else {
-                Q_EMIT twistRight();
-                Q_EMIT detected("twistRight");
-            }
+                && (qAbs(lastRoll + degrees) > (degrees / 2))) {
+
+            QTimer::singleShot(0,this,SLOT(checkTwist()));
             // don't give two signals for same gestures
-                detecting = false;
-                timer->stop();
-                lastRoll = degrees;
+            detecting = false;
+            timer->stop();
+            lastRoll = degrees;
         }
 
         if (orientationReading->orientation() == QOrientationReading::FaceUp
@@ -205,6 +199,17 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     rollList.insert(0,degrees);
     lastDegree = degrees;
     lastX = x; lastY = y;
+}
+
+void QTwistSensorGestureRecognizer::checkTwist()
+{
+    if (lastRoll > 0 && orientationReading->orientation() == QOrientationReading::RightUp) {
+        Q_EMIT twistLeft();
+        Q_EMIT detected("twistLeft");
+    } else if (orientationReading->orientation() == QOrientationReading::LeftUp){
+        Q_EMIT twistRight();
+        Q_EMIT detected("twistRight");
+    }
 }
 
 void QTwistSensorGestureRecognizer::timeout()
