@@ -73,10 +73,6 @@ public:
 
 Q_SIGNALS:
     void detected(const QString &);
-#ifdef SIMULATOR_BUILD
-    void started();
-    void stopped();
-#endif
 
 protected:
     virtual void create() = 0;

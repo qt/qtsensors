@@ -52,6 +52,8 @@
 #include "simulatorgesturescommon_p.h"
 #endif
 
+Q_GLOBAL_STATIC(QSensorGestureManagerPrivate, sensorGestureManagerPrivate)
+
 QT_BEGIN_NAMESPACE
 
 QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
@@ -149,11 +151,6 @@ bool QSensorGestureManagerPrivate::loadRecognizer(const QString &recognizerId)
                             delete recognizer;
                         } else {
                             registeredSensorGestures.insert(recognizer->id(),recognizer);
-
-#ifdef SIMULATOR_BUILD
-                            connect(recognizer, SIGNAL(started()), this, SLOT(recognizerStarted()), Qt::UniqueConnection);
-                            connect(recognizer, SIGNAL(stopped()), this, SLOT(recognizerStopped()), Qt::UniqueConnection);
-#endif
                         }
                     }
                 }
@@ -221,27 +218,26 @@ void QSensorGestureManagerPrivate::sensorGestureDetected()
     }
 }
 
-void QSensorGestureManagerPrivate::recognizerStarted()
+void QSensorGestureManagerPrivate::recognizerStarted(const QSensorGestureRecognizer *recognizer)
 {
-    QSensorGestureRecognizer *recognizer = qobject_cast<QSensorGestureRecognizer *>(sender());
     QStringList list = recognizer->gestureSignals();
     list.removeOne(QLatin1String("detected(QString)"));
-    list.removeOne(QLatin1String("started()"));
-    list.removeOne(QLatin1String("stopped()"));
     Q_EMIT newSensorGestures(list);
 }
 
-void QSensorGestureManagerPrivate::recognizerStopped()
+void QSensorGestureManagerPrivate::recognizerStopped(const QSensorGestureRecognizer *recognizer)
 {
-    QSensorGestureRecognizer *recognizer = qobject_cast<QSensorGestureRecognizer *>(sender());
     QStringList list = recognizer->gestureSignals();
     list.removeOne(QLatin1String("detected(QString)"));
-    list.removeOne(QLatin1String("started()"));
-    list.removeOne(QLatin1String("stopped()"));
     Q_EMIT removeSensorGestures(list);
 }
 
 #endif
+
+QSensorGestureManagerPrivate * QSensorGestureManagerPrivate::instance()
+{
+    return sensorGestureManagerPrivate();
+}
 
 
 QT_END_NAMESPACE

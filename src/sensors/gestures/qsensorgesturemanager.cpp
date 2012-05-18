@@ -42,8 +42,6 @@
 #include "qsensorgesturemanager.h"
 #include "qsensorgesturemanagerprivate_p.h"
 
-Q_GLOBAL_STATIC(QSensorGestureManagerPrivate, sensorGestureManagerPrivate)
-
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -70,7 +68,7 @@ QT_BEGIN_NAMESPACE
 QSensorGestureManager::QSensorGestureManager(QObject *parent)
     : QObject(parent)
 {
-    connect(sensorGestureManagerPrivate(),SIGNAL(newSensorGestureAvailable()),
+    connect(QSensorGestureManagerPrivate::instance(),SIGNAL(newSensorGestureAvailable()),
             this,SIGNAL(newSensorGestureAvailable()));
 }
 
@@ -91,7 +89,7 @@ QSensorGestureManager::~QSensorGestureManager()
 
  bool QSensorGestureManager::registerSensorGestureRecognizer(QSensorGestureRecognizer *recognizer)
  {
-     bool ok = sensorGestureManagerPrivate()->registerSensorGestureRecognizer(recognizer);
+     bool ok = QSensorGestureManagerPrivate::instance()->registerSensorGestureRecognizer(recognizer);
      if (!ok)
          delete recognizer;
 
@@ -105,7 +103,7 @@ QSensorGestureManager::~QSensorGestureManager()
    */
   QStringList QSensorGestureManager::gestureIds() const
  {
-      return sensorGestureManagerPrivate()->gestureIds();
+      return QSensorGestureManagerPrivate::instance()->gestureIds();
  }
 
   /*!
@@ -125,7 +123,7 @@ QSensorGestureManager::~QSensorGestureManager()
   */
 QSensorGestureRecognizer *QSensorGestureManager::sensorGestureRecognizer(const QString &id)
 {
-    return sensorGestureManagerPrivate()->sensorGestureRecognizer(id);
+    return QSensorGestureManagerPrivate::instance()->sensorGestureRecognizer(id);
 }
 
 QT_END_NAMESPACE

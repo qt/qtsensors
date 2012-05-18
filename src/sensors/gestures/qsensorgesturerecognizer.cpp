@@ -41,8 +41,11 @@
 
 #include "qsensorgesturerecognizer.h"
 #include "qsensorgesture_p.h"
-#include "qsensorgesturemanager.h"
 
+#include "qsensorgesturemanager.h"
+#ifdef SIMULATOR_BUILD
+#include "qsensorgesturemanagerprivate_p.h"
+#endif
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -184,7 +187,7 @@ void QSensorGestureRecognizer::startBackend()
   if (d_ptr->count++ == 0) {
       start();
 #ifdef SIMULATOR_BUILD
-      Q_EMIT started();
+      QSensorGestureManagerPrivate::instance()->recognizerStarted(this);
 #endif
   }
 }
@@ -204,7 +207,7 @@ void QSensorGestureRecognizer::stopBackend()
     if (--d_ptr->count == 0) {
         stop();
 #ifdef SIMULATOR_BUILD
-        Q_EMIT stopped();
+        QSensorGestureManagerPrivate::instance()->recognizerStopped(this);
 #endif
     }
 }

@@ -101,6 +101,7 @@ void SensorGesturesConnection::newSensorGestures(const QStringList &gestures)
             }
         }
     }
+
     mWorker->call("setSensorGestures", allGestures);
 }
 
