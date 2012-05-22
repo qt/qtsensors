@@ -57,6 +57,8 @@ public:
 private Q_SLOTS:
     void initTestCase();
 
+    void testNotHover();
+
     void testSingleGestures();
     void testSingleGestures_data();
 
@@ -320,6 +322,28 @@ void tst_sensorgestures_gestures::testAllGestures()
     QCOMPARE(arguments.at(0).toString(), QString(gestureSignal));
 }
 
+void tst_sensorgestures_gestures::testNotHover()
+{
+    QString name = "mock_data/sensordata_nothover.dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QStringList gestStringList;
+
+    gestStringList << "QtSensors.hover";
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
+
+    QCOMPARE(gesture->invalidIds().count(),0);
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),0, 2000);
+
+}
 
 QTEST_MAIN(tst_sensorgestures_gestures)
 

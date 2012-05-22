@@ -72,20 +72,17 @@ private slots:
     void timeout();
     void timeout2();
 private:
-//    bool proximity;
     qreal reflectance;
 
-    QTimer *timer;
     QTimer *timer2;
     bool hoverOk;
-    qreal lastLightReading;
     bool detecting;
 
     qreal detectedHigh;
-    qreal lastProx;
     bool active;
     qreal initialReflectance;
-
+    bool checkForHovering();
+    bool useHack;
 
 };
 QT_END_NAMESPACE
