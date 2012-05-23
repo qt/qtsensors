@@ -138,10 +138,10 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     Q_FOREACH (qreal az, zList) {
         averageZ += az;
     }
-    averageZ += z;
-    averageZ /= zList.count() + 1;
+//    averageZ += z;
+    averageZ /= zList.count();
 
-    zList.insert(0,qAbs(averageZ));
+    zList.insert(0,z);
 
     if (orientationReading == 0)
         return;
@@ -159,7 +159,10 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 
     if (whipMap.count() > 5)
         whipMap.removeLast();
-//qDebug() << z << qAbs(diffX) << qAbs(lastX)  << qAbs(x) ;
+
+    if (negativeList.count() > 5)
+        negativeList.removeLast();
+
 
     if (z < WHIP_FACTOR
             && qAbs(diffX) > -(accelRange * .1285)//-5.0115
@@ -169,16 +172,12 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         if (!detecting && !timer->isActive()) {
             timer->start();
             detecting = true;
-//            qDebug() << "start detecting";
         }
     } else {
         whipMap.insert(0,false);
     }
-    lastZ = z;
 
-    if (negativeList.count() > 5)
-        negativeList.removeLast();
-
+    // check if shaking
     if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0))
          && qAbs(diffX) > (accelRange   * 0.7)) //27.3
             || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0))
@@ -188,8 +187,9 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         negativeList.insert(0,false);
     }
 
-    lastX = x; lastY = y;
-
+    lastX = x;
+    lastY = y;
+    lastZ = z;
 }
 
 void QWhipSensorGestureRecognizer::timeout()
@@ -200,32 +200,17 @@ void QWhipSensorGestureRecognizer::timeout()
 
 void QWhipSensorGestureRecognizer::checkForWhip()
 {
- //   qDebug() << __FUNCTION__;
-
     whipOk = false;
 
-    qreal averageZ = 0;
+    int check = 0;
     Q_FOREACH (qreal az, zList) {
-        averageZ += az;
+        if (az < -10)
+            check++;
     }
-    averageZ /= zList.count();
- //   qDebug() << qAbs(averageZ) << zList << whipMap;
-
-    if (qAbs(averageZ) < 5.0)
+    if (check >= 4)
+        whipOk = true;
+    else
         return;
-
-    for (int i = 0; i < 3; i++) {
-        if (!whipMap.at(i)) {
-            whipOk = true;
-        } else {
-            detecting = false;
-            whipOk = false;
-            timer->stop();
-
-            return;
-        }
-    }
-
     if (whipOk) {
         bool ok = true;
         for (int i = 0; i < negativeList.count() - 1; i++) {
@@ -233,7 +218,6 @@ void QWhipSensorGestureRecognizer::checkForWhip()
                 ok = false;
             }
         }
-
         if (ok) {
             Q_EMIT whip();
             Q_EMIT detected("whip");
@@ -243,4 +227,5 @@ void QWhipSensorGestureRecognizer::checkForWhip()
         timer->stop();
     }
 }
+
 QT_END_NAMESPACE

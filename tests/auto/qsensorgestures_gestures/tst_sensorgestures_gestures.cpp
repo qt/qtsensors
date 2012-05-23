@@ -58,6 +58,7 @@ private Q_SLOTS:
     void initTestCase();
 
     void testNotHover();
+    void testNotWhip();
 
     void testSingleGestures();
     void testSingleGestures_data();
@@ -75,6 +76,7 @@ private Q_SLOTS:
 
     void testAllGestures();
     void testAllGestures_data();
+
 
 protected:
     mockSensorPlugin plugin;
@@ -332,6 +334,30 @@ void tst_sensorgestures_gestures::testNotHover()
     QStringList gestStringList;
 
     gestStringList << "QtSensors.hover";
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
+
+    QCOMPARE(gesture->invalidIds().count(),0);
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),0, 2000);
+
+}
+
+void tst_sensorgestures_gestures::testNotWhip()
+{
+
+    QString name = "mock_data/sensordata_notwhip.dat";
+
+    QSensorGestureManager manager;
+    QStringList idList = manager.gestureIds();
+
+    QStringList gestStringList;
+
+    gestStringList << "QtSensors.whip";
     QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
 
     QCOMPARE(gesture->invalidIds().count(),0);
