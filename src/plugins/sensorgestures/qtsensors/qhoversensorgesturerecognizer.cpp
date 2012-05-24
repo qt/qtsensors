@@ -47,6 +47,7 @@ QT_BEGIN_NAMESPACE
 
 QHoverSensorGestureRecognizer::QHoverSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent),
+    orientationReading(0),
     hoverOk(0), detecting(0), active(0), initialReflectance(0), useHack(0)
 {
 }
@@ -174,6 +175,9 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
 
 bool QHoverSensorGestureRecognizer::checkForHovering()
 {
+    if (orientationReading == 0) {
+        return false;
+    }
     if (orientationReading->orientation() != QOrientationReading::FaceUp)
         return false;
     if ( (reflectance > 0.2 && reflectance < 0.4)
