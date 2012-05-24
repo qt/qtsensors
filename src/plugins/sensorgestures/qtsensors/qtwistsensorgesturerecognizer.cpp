@@ -51,15 +51,9 @@ QT_BEGIN_NAMESPACE
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
     , orientationReading(0)
-    , accelRange(0)
-    , lastRoll(0)
     , active(0)
-    , pitch(0)
     , detecting(0)
-    , lastDegree(0)
-    , lastX(0)
-    , lastY(0)
-    , lastZ()
+    , checking(0)
 {
 }
 
@@ -69,10 +63,6 @@ QTwistSensorGestureRecognizer::~QTwistSensorGestureRecognizer()
 
 void QTwistSensorGestureRecognizer::create()
 {
-    timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(timeout()));
-    timer->setSingleShot(true);
-    timer->setInterval(750);
 }
 
 QString QTwistSensorGestureRecognizer::id() const
@@ -84,7 +74,6 @@ bool QTwistSensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
         if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
-            accelRange = QtSensorGestureSensorHandler::instance()->accelRange;
             active = true;
             connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
                     this,SLOT(orientationReadingChanged(QOrientationReading *)));
@@ -111,7 +100,9 @@ bool QTwistSensorGestureRecognizer::stop()
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
     active = false;
-    timer->stop();
+    detecting = false;
+    checking = false;
+    dataList.clear();
     return active;
 }
 
@@ -120,113 +111,106 @@ bool QTwistSensorGestureRecognizer::isActive()
     return active;
 }
 
-#define RESTING_VARIANCE 25
-#define THRESHOLD_DEGREES 50
-
 void QTwistSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
 {
     orientationReading = reading;
+    checkOrientation();
 }
+
+bool QTwistSensorGestureRecognizer::checkOrientation()
+{
+    if (orientationReading->orientation() == QOrientationReading::TopUp
+            || orientationReading->orientation() == QOrientationReading::TopDown
+            || orientationReading->orientation() == QOrientationReading::FaceDown) {
+        reset();
+        return false;
+    }
+    return true;
+}
+
 
 void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
 {
+    if (orientationReading == 0)
+        return;
+
     const qreal x = reading->x();
     const qreal y = reading->y();
     const qreal z = reading->z();
 
-    const qreal diffX = lastX - x;
-    const qreal diffY = lastY - y;
-    pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
+    if (!detecting && !checking&& dataList.count() > 21)
+        dataList.removeLast();
 
-    const qreal degrees = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
-
-    if (orientationReading == 0)
-        return;
-
-    if (negativeList.count() > 5)
-        negativeList.removeLast();
-
-    if ((((x < 0 && lastX > 0) || (x > 0 && lastX < 0)) && qAbs(diffX) > (accelRange * 0.35))
-            || (x < 0 && lastX < 0 && qAbs(diffX > accelRange * 0.35))
-            || (x > 0 && lastX > 0 && qAbs(diffX > accelRange * 0.35))
-            || (((y < 0 && lastY > 0) || (y > 0 && lastY < 0)) && qAbs(diffY) > (accelRange * 0.35))) {
-        negativeList.insert(0,true);
-    } else {
-        negativeList.insert(0,false);
+    twistAccelData data;
+    data.x = x;
+    data.y = y;
+    data.z = z;
+    if (qAbs(x) > 1)
+        dataList.append(data);
+    if (qAbs(z) > 15.0) {
+        reset();
     }
-
     if (detecting
-            && isShake()) {
-        // if shake-like:
-        detecting = false;
-        timer->stop();
-        lastRoll = degrees;
+            && dataList.count() > 5
+            && z > 9.0
+            && qAbs(x) < 2) {
+        //possible pickup
+        if (!checking)
+            checkTwist();
     }
 
-    if (rollList.count() > 4) {
-        if (detecting
-                && qAbs(degrees) < RESTING_VARIANCE
-                && qAbs(pitch) < RESTING_VARIANCE
-                && (qAbs(lastRoll + degrees) > (degrees / 2))) {
-
-            QTimer::singleShot(0,this,SLOT(checkTwist()));
-            // don't give two signals for same gestures
-            detecting = false;
-            timer->stop();
-            lastRoll = degrees;
-        }
-
-        if (orientationReading->orientation() == QOrientationReading::FaceUp
-                && !detecting && qAbs(degrees) > THRESHOLD_DEGREES
-                && pitch < RESTING_VARIANCE) {
-
-            detecting = true;
-            timer->start();
-            lastRoll = degrees;
-        }
-
-        if (detecting && (orientationReading->orientation() == QOrientationReading::TopUp
-                || orientationReading->orientation() == QOrientationReading::TopDown)) {
-
-            detecting = false;
-            timer->stop();
-            lastRoll = degrees;
-        }
+    if (!detecting && z < 0 && checkOrientation()) {
+        detecting = true;
     }
-
-    if (rollList.count() > 5)
-        rollList.removeLast();
-    rollList.insert(0,degrees);
-    lastDegree = degrees;
-    lastX = x; lastY = y;
 }
 
 void QTwistSensorGestureRecognizer::checkTwist()
 {
-    if (lastRoll > 0 && orientationReading->orientation() == QOrientationReading::RightUp) {
-        Q_EMIT twistLeft();
-        Q_EMIT detected("twistLeft");
-    } else if (orientationReading->orientation() == QOrientationReading::LeftUp){
-        Q_EMIT twistRight();
-        Q_EMIT detected("twistRight");
+    checking = true;
+    int lastx = 0;
+    bool ok = false;
+    bool spinpoint = false;
+    qreal degrees = 0;
+    for (int i = 0; i < dataList.count(); i++) {
+        twistAccelData curData = dataList.at(i);
+
+        if (!spinpoint && qAbs(curData.x) < 1)
+            continue;
+        if (curData.z >= 0 ) {
+            if (!spinpoint && (curData.x > lastx ||  curData.x < lastx)) {
+                ok = true;
+            } else if (spinpoint && (curData.x < lastx || curData.x > lastx)) {
+                ok = true;
+            } else {
+                ok = false;
+            }
+        } else if (!spinpoint && curData.z < 0) {
+            spinpoint = true;
+            degrees = qAtan(curData.x / qSqrt(curData.y*curData.y + curData.z*curData.z)) * RADIANS_TO_DEGREES;
+        } else if (spinpoint && curData.z > 9) {
+            break;
+        }
+
+        lastx = curData.x;
     }
-}
 
-void QTwistSensorGestureRecognizer::timeout()
-{
-    detecting = false;
-    lastRoll = 0;
-}
-
-bool QTwistSensorGestureRecognizer::isShake()
-{
-    int count = 0;
-    for (int i = 1; i < negativeList.count() - 1; i++) {
-        if (negativeList.at(i)) {
-            count++;
+    if (ok) {
+        if (degrees > 0) {
+            Q_EMIT twistLeft();
+            Q_EMIT detected("twistLeft");
+        } else {
+            Q_EMIT twistRight();
+            Q_EMIT detected("twistRight");
         }
     }
-    return (count > 1);
+    reset();
+}
+
+void QTwistSensorGestureRecognizer::reset()
+{
+    detecting = false;
+    checking = false;
+    dataList.clear();
 }
 
 
