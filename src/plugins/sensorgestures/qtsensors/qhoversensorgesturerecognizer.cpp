@@ -71,12 +71,20 @@ QString QHoverSensorGestureRecognizer::id() const
 bool QHoverSensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::IrProximity)) {
-        active = true;
-        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
-                this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
+        if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
+            active = true;
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
+                    this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+        } else {
+            QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
+            active = false;
+        }
     } else {
         active = false;
     }
+
     detecting = false;
     detectedHigh = 0;
     initialReflectance = 0;
@@ -87,8 +95,11 @@ bool QHoverSensorGestureRecognizer::start()
 bool QHoverSensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
+    QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
             this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
+            this,SLOT(orientationReadingChanged(QOrientationReading *)));
     active = false;
     return active;
 }
@@ -96,6 +107,12 @@ bool QHoverSensorGestureRecognizer::stop()
 bool QHoverSensorGestureRecognizer::isActive()
 {
     return active;
+}
+
+
+void QHoverSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
+{
+    orientationReading = reading;
 }
 
 void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReading *reading)
@@ -157,6 +174,8 @@ void QHoverSensorGestureRecognizer::irProximityReadingChanged(QIRProximityReadin
 
 bool QHoverSensorGestureRecognizer::checkForHovering()
 {
+    if (orientationReading->orientation() != QOrientationReading::FaceUp)
+        return false;
     if ( (reflectance > 0.2 && reflectance < 0.4)
          && (initialReflectance - reflectance) < -0.1)
         return true;

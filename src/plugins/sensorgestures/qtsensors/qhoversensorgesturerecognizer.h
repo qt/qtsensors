@@ -68,10 +68,12 @@ Q_SIGNALS:
     void hover();
 
 private slots:
+    void orientationReadingChanged(QOrientationReading *reading);
     void irProximityReadingChanged(QIRProximityReading *reading);
     void timeout();
     void timeout2();
 private:
+    QOrientationReading *orientationReading;
     qreal reflectance;
 
     QTimer *timer2;
