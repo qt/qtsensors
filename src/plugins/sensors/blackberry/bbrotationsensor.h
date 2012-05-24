@@ -58,7 +58,16 @@ protected:
     bool addDefaultRange();
     qreal convertValue(float bbValue);
     bool updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading);
+    bool isAutoAxisRemappingEnabled() const;
 
+    bool eventFilter(QObject *object, QEvent *event);
+
+private:
+    void updateOrientation();
+
+    Qt::ScreenOrientation m_orientation;
+    Qt::ScreenOrientation m_nativeOrientation;
+    float m_mappingMatrix[4];
 };
 
 #endif
