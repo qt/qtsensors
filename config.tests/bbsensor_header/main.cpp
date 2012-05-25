@@ -39,18 +39,16 @@
 **
 ****************************************************************************/
 #include <QtCore/qglobal.h>
-
-#ifdef Q_OS_BLACKBERRY
-#include <sensor/sensor.h>
+#ifndef Q_OS_BLACKBERRY
+#error "Missing Q_OS_BLACKBERRY"
 #endif
+#include <sensor/sensor.h>
 
 int main(int argc, char** argv)
 {
     Q_UNUSED(argc);
     Q_UNUSED(argv);
-#ifdef Q_OS_BLACKBERRY
     sensor_event_t event;
     Q_UNUSED(event);
-#endif
     return 0;
 }
