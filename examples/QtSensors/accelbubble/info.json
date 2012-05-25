@@ -1,14 +1,14 @@
 {
     "info-version": "1.0",
     "dict": {
-        "Category": "application",
-        "Runtime": "qml",
-        "DisplayName": "Accel Bubble",
-        "Subcategory": "utility",
-        "MainQML": "main.qml",
-        "Version": "1.0",
-        "Identifier": "com.nokia.mt.accelbubble",
-        "Summary": "QtSensors Accel Bubble",
-        "Author": "Qt"
+        "displayName": {
+            "en_US": "Accel Bubble"
+        },
+        "identifier": "com.nokia.mt.accelbubble",
+        "runtime": "qml",
+        "main": "main.qml",
+        "version": "1.0.0",
+        "category": "application",
+        "subcategory": "utility"
     }
 }

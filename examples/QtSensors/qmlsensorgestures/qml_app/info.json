@@ -1,14 +1,14 @@
 {
-  "info-version": "1.0",
-  "dict": {
-      "Category": "application",
-      "Runtime": "qml",
-      "DisplayName": "Gesture",
-      "Subcategory": "utility",
-      "MainQML": "Gesture.qml",
-      "Version": "1.0",
-      "Identifier": "com.nokia.mt.qmlsensorsgesture",
-      "Summary": "QML Sensors Gesture demo",
-      "Author": "Qt"
-  }
+    "info-version": "1.0",
+    "dict": {
+        "displayName": {
+            "en_US": "Gesture"
+        },
+        "identifier": "com.nokia.mt.qmlsensorsgesture",
+        "runtime": "qml",
+        "main": "Gesture.qml",
+        "version": "1.0.0",
+        "category": "application",
+        "subcategory": "utility"
+    }
 }
