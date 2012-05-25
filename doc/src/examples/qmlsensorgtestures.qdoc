@@ -26,8 +26,8 @@
 ****************************************************************************/
 
 /*!
-    \example QtSensors/qmlsensorgestures/qml_app
-    \title SensorGesture QML Element example
+    \example QtSensors/QtSensors_qmlsensorgestures
+    \title Qt Sensors - SensorGesture QML Element example
     \ingroup qtsensors-examples
 
     \brief This example demonstrates use of the SensorGesture QML element.
@@ -37,25 +37,25 @@
 
     Import the QtSensors 5.x declarative plugin:
 
-\snippet ../examples/QtSensors/qmlsensorgestures/qml_app/GestureView.qml 0
+\snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/GestureView.qml 0
 
    Add the SensorGesture QML element into your qml file.
 
-\snippet ../examples/QtSensors/qmlsensorgestures/qml_app/GestureView.qml 1
+\snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/GestureView.qml 1
 
    Each SensorGesture QML element contains a property called gestures.
 
    In this example an alias 'gestureid' for this property is used.
 
-\snippet ../examples/QtSensors/qmlsensorgestures/qml_app/GestureView.qml 2
+\snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/GestureView.qml 2
 
    By using this alias property you define which gestures should be used:
 
-\snippet ../examples/QtSensors/qmlsensorgestures/qml_app/Gesture.qml 3
+\snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/QtSensors_qmlsensorgestures.qml 3
 
    A list of all available gestures can be created by calling the 'availableGestures' property:
 
-\snippet ../examples/QtSensors/qmlsensorgestures/qml_app/GestureList.qml 4
+\snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/GestureList.qml 4
 
 \sa {Qt Sensors - ShakeIt QML Example}
 \sa {Qt Sensor Gestures}

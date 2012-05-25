@@ -6,7 +6,7 @@
         },
         "identifier": "com.nokia.mt.grue",
         "runtime": "qml",
-        "main": "main.qml",
+        "main": "QtSensors_grue.qml",
         "version": "1.0.0",
         "category": "application",
         "subcategory": "utility"

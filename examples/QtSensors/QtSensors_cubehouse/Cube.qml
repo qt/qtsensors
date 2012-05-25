@@ -75,7 +75,7 @@ Cube {
 
     effect: Effect {
         color: "#aaca00"
-        texture: "images/qtlogo.png"
+        texture: "content/qtlogo.png"
         decal: true
     }
 }

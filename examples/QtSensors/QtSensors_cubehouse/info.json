@@ -2,11 +2,11 @@
     "info-version": "1.0",
     "dict": {
         "displayName": {
-            "en_US": "Accel Bubble"
+            "en_US": "Cubehouse"
         },
-        "identifier": "com.nokia.mt.accelbubble",
+        "identifier": "com.nokia.mt.cubehouse",
         "runtime": "qml",
-        "main": "main.qml",
+        "main": "QtSensors_cubehouse.qml",
         "version": "1.0.0",
         "category": "application",
         "subcategory": "utility"

@@ -56,8 +56,8 @@
             \li \l {Qt Sensors Backend}{Backend}
             \li Information about the Qt Sensors back end
         \row
-            \li \l {Grue Sensor Example}
-            \li The Grue Sensor Example demonstrates creation of a sensor backend
+            \li \l {Qt Sensors - Grue Sensor Example}
+            \li The Qt Sensors - Grue Sensor Example demonstrates creation of a sensor backend
     \endtable
 
     \section1 Compatibility with QtMobility Sensors API

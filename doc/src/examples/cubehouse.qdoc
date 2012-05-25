@@ -26,8 +26,8 @@
 ****************************************************************************/
 
 /*!
-    \example QtSensors/cubehouse
-    \title Cube House QML Accelerometer example
+    \example QtSensors/QtSensors_cubehouse
+    \title Qt Sensors - Cube House QML Accelerometer example
     \ingroup qtsensors-examples
     \brief The Cube House example demonstrates the use of the accelerometer to drive a camera to create a pseudo-3D effect.
     \image cubehouse.png
@@ -37,24 +37,24 @@
 
     Import the QtMobility.sensors declarative plugin:
 
-\snippet ../examples/QtSensors/cubehouse/Cubehouse.qml 0
+\snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 0
 
     Add the Accelerometer QML elements into your qml file.
 
-\snippet ../examples/QtSensors/cubehouse/Cubehouse.qml 1
+\snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 1
 
     In additional two properties are added to save the calculated pitch and roll values:
 
-\snippet ../examples/QtSensors/cubehouse/Cubehouse.qml 2
+\snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 2
 
     Reading out the Accelerometer data can be done by implementing the 'onReadingChanged' slot and
     accessing the 'reading' property from the Accelerometer element:
 
-\snippet ../examples/QtSensors/cubehouse/Cubehouse.qml 3
+\snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 3
 
     By using a timer the view can be rotated using the pitch and roll properties from the Accelerometer element:
 
-\snippet ../examples/QtSensors/cubehouse/Cubehouse.qml 4
+\snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 4
 
 */
 

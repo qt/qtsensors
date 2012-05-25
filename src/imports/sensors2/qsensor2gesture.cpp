@@ -61,7 +61,7 @@ QT_BEGIN_NAMESPACE
     displays the detected gesture in a text element.
 
     QtSensors.shake gesture is available with the Qt Sensors API, but the QtSensors.SecondCounter
-    sensor gesture is provided as example code for the \l {SensorGesture QML Element example}
+    sensor gesture is provided as example code for the \l {Qt Sensors - SensorGesture QML Element example}
 
     \qml
     Item {

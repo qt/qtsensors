@@ -6,7 +6,7 @@
         },
         "identifier": "com.nokia.mt.qmlsensorsgesture",
         "runtime": "qml",
-        "main": "Gesture.qml",
+        "main": "QtSensors_qmlsensorgestures.qml",
         "version": "1.0.0",
         "category": "application",
         "subcategory": "utility"

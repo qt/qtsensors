@@ -83,7 +83,7 @@ Rectangle {
 
     Image {
         id: bubble
-        source: "images/Bluebubble2.png"
+        source: "content/Bluebubble2.png"
         property real centerX: parent.width / 2
         property real centerY: parent.height / 2;
         property real bubbleCenter: bubble.width / 2

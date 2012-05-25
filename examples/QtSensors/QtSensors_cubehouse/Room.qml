@@ -105,7 +105,7 @@ Item3D{
         id: frontWall
         scale: room.scale
         effect: Effect {
-            texture: "images/wall.jpg"
+            texture: "content/wall.jpg"
         }
         transform: [
             Translation3D {
@@ -130,7 +130,7 @@ Item3D{
         id: ground
         scale: room.scale
         effect: Effect {
-            texture: "images/ground.jpg"
+            texture: "content/ground.jpg"
         }
         transform: [
             Translation3D {
@@ -155,7 +155,7 @@ Item3D{
         id: leftWall
         scale: room.scale
         effect: Effect {
-            texture: "images/wall.jpg"
+            texture: "content/wall.jpg"
         }
         transform: [
             Translation3D {
@@ -180,7 +180,7 @@ Item3D{
         id: rightWall
         scale: room.scale
         effect: Effect {
-            texture: "images/wall.jpg"
+            texture: "content/wall.jpg"
         }
         transform: [
             Translation3D {
@@ -205,7 +205,7 @@ Item3D{
         id: roof
         scale: room.scale
         effect: Effect {
-            texture: "images/roof.jpg"
+            texture: "content/roof.jpg"
         }
         transform: [
             Translation3D {
@@ -230,7 +230,7 @@ Item3D{
         id: backWall
         scale: room.scale
         effect: Effect {
-            texture: "images/wall.jpg"
+            texture: "content/wall.jpg"
         }
         transform: [
             Translation3D {
