@@ -139,7 +139,7 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     const qreal z = reading->z();
 
     if (!detecting && !checking&& dataList.count() > 21)
-        dataList.removeLast();
+        dataList.removeFirst();
 
     twistAccelData data;
     data.x = x;
