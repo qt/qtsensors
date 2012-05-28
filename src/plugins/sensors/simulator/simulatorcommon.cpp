@@ -80,6 +80,7 @@ public:
 signals:
     void queueConnectToServer();
 
+    void connectionFailed();
     void initialSensorsDataSent();
     void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
     void setLightData(const QtMobility::QLightReadingData &);
@@ -97,6 +98,7 @@ private slots:
         mWorker.reset(mConnection->connectToServer(Connection::simulatorHostName(true), 0xbeef+1));
         if (!mWorker) {
             qWarning("QtSensors simulator backend could not connect to the simulator!");
+            emit connectionFailed();
             return;
         }
         mWorker->addReceiver(this);
@@ -111,11 +113,14 @@ private:
 SensorsConnection::SensorsConnection(QObject *parent)
     : QObject(parent)
     , mInitialDataSent(false)
+    , mConnectionFailed(false)
 {
     mConnection = new SimulatorAsyncConnection();
 
     connect(mConnection, SIGNAL(initialSensorsDataSent()),
             this, SLOT(initialSensorsDataSent()));
+    connect(mConnection, SIGNAL(connectionFailed()),
+            this, SLOT(slotConnectionFailed()));
     connect(mConnection, SIGNAL(setAmbientLightData(QtMobility::QAmbientLightReadingData)),
             this, SLOT(setAmbientLightData(QtMobility::QAmbientLightReadingData)));
     connect(mConnection, SIGNAL(setLightData(QtMobility::QLightReadingData)),
@@ -187,6 +192,12 @@ void SensorsConnection::initialSensorsDataSent()
     mInitialDataSent = true;
 }
 
+void SensorsConnection::slotConnectionFailed()
+{
+    mInitialDataSent = false;
+    mConnectionFailed = true;
+}
+
 SimulatorCommon::SimulatorCommon(QSensor *sensor)
     : QSensorBackend(sensor)
     , m_timerid(0)
@@ -229,7 +240,7 @@ void SimulatorCommon::stop()
 void SimulatorCommon::timerEvent(QTimerEvent * /*event*/)
 {
     SensorsConnection *connection = SensorsConnection::instance();
-    if (!connection) {
+    if (!connection || connection->connectionFailed()) {
         stop();
         sensorStopped();
     }

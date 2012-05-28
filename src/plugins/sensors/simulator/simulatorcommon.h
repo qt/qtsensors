@@ -58,6 +58,7 @@ public:
 
     static SensorsConnection *instance();
     bool safe() const { return mInitialDataSent; }
+    bool connectionFailed() const { return mConnectionFailed; }
 
 public slots:
     void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
@@ -68,10 +69,12 @@ public slots:
     void setProximityData(const QtMobility::QProximityReadingData &);
     void setIRProximityData(const QtMobility::QIRProximityReadingData &);
     void initialSensorsDataSent();
+    void slotConnectionFailed();
 
 private:
     SimulatorAsyncConnection *mConnection;
     bool mInitialDataSent;
+    bool mConnectionFailed;
 
 public:
     QtMobility::QAmbientLightReadingData qtAmbientLightData;
