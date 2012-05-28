@@ -172,6 +172,8 @@ static void initPlugin(QObject *o)
     if (!o) return;
 
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return; // hardly likely but just in case...
+
     if (d->seenPlugins.contains(o))
         return;
 
@@ -242,6 +244,7 @@ void QSensorManager::registerBackend(const QByteArray &type, const QByteArray &i
     Q_ASSERT(identifier.count());
     Q_ASSERT(factory);
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return; // hardly likely but just in case...
     if (!d->backendsByType.contains(type)) {
         (void)d->backendsByType[type];
         d->firstIdentifierForType[type] = identifier;
@@ -272,6 +275,7 @@ void QSensorManager::registerBackend(const QByteArray &type, const QByteArray &i
 void QSensorManager::unregisterBackend(const QByteArray &type, const QByteArray &identifier)
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return; // hardly likely but just in case...
     if (!d->backendsByType.contains(type)) {
         qWarning() << "No backends of type" << type << "are registered";
         return;
@@ -316,6 +320,7 @@ QSensorBackend *QSensorManager::createBackend(QSensor *sensor)
     Q_ASSERT(sensor);
 
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return 0; // hardly likely but just in case...
     d->loadPlugins();
 
     SENSORLOG() << "QSensorManager::createBackend" << "type" << sensor->type() << "identifier" << sensor->identifier();
@@ -376,6 +381,7 @@ QSensorBackend *QSensorManager::createBackend(QSensor *sensor)
 bool QSensorManager::isBackendRegistered(const QByteArray &type, const QByteArray &identifier)
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return false; // hardly likely but just in case...
     d->loadPlugins();
 
     if (!d->backendsByType.contains(type))
@@ -394,6 +400,7 @@ bool QSensorManager::isBackendRegistered(const QByteArray &type, const QByteArra
 void QSensorManager::setDefaultBackend(const QByteArray &type, const QByteArray &identifier)
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return; // hardly likely but just in case...
     d->defaultIdentifierForType.insert(type, identifier);
 }
 
@@ -406,6 +413,7 @@ void QSensorManager::setDefaultBackend(const QByteArray &type, const QByteArray 
 QList<QByteArray> QSensor::sensorTypes()
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return QList<QByteArray>(); // hardly likely but just in case...
     d->loadPlugins();
 
     return d->backendsByType.keys();
@@ -418,6 +426,7 @@ QList<QByteArray> QSensor::sensorTypes()
 QList<QByteArray> QSensor::sensorsForType(const QByteArray &type)
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return QList<QByteArray>(); // hardly likely but just in case...
     d->loadPlugins();
 
     // no sensors of that type exist
@@ -443,6 +452,7 @@ QList<QByteArray> QSensor::sensorsForType(const QByteArray &type)
 QByteArray QSensor::defaultSensorForType(const QByteArray &type)
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return QByteArray(); // hardly likely but just in case...
     d->loadPlugins();
 
     // no sensors of that type exist
@@ -466,6 +476,7 @@ QByteArray QSensor::defaultSensorForType(const QByteArray &type)
 void QSensor::registerInstance()
 {
     QSensorManagerPrivate *d = sensorManagerPrivate();
+    if (!d) return; // hardly likely but just in case...
     connect(d, SIGNAL(availableSensorsChanged()), this, SIGNAL(availableSensorsChanged()));
 }
 
