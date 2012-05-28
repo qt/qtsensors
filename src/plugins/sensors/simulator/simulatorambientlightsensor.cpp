@@ -53,7 +53,7 @@ SimulatorAmbientLightSensor::SimulatorAmbientLightSensor(QSensor *sensor)
 
 void SimulatorAmbientLightSensor::poll()
 {
-    QtMobility::QAmbientLightReadingData data = get_qtAmbientLightData();
+    QtMobility::QAmbientLightReadingData data = SensorsConnection::instance()->qtAmbientLightData;
     QAmbientLightReading::LightLevel convertedLightLevel;
     switch (data.lightLevel) {
     case QtMobility::Dark:

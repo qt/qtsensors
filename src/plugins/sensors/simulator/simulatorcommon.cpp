@@ -47,13 +47,6 @@
 
 using namespace Simulator;
 
-Q_GLOBAL_STATIC(QtMobility::QAmbientLightReadingData, qtAmbientLightData)
-Q_GLOBAL_STATIC(QtMobility::QLightReadingData, qtLightData)
-Q_GLOBAL_STATIC(QtMobility::QAccelerometerReadingData, qtAccelerometerData)
-Q_GLOBAL_STATIC(QtMobility::QMagnetometerReadingData, qtMagnetometerData)
-Q_GLOBAL_STATIC(QtMobility::QCompassReadingData, qtCompassData)
-Q_GLOBAL_STATIC(QtMobility::QProximityReadingData, qtProximityData)
-Q_GLOBAL_STATIC(QtMobility::QIRProximityReadingData, qtIRProximityData)
 Q_GLOBAL_STATIC(SensorsConnection, sensorsConnection)
 
 class SimulatorAsyncConnection: public QThread
@@ -146,39 +139,47 @@ SensorsConnection::~SensorsConnection()
     delete mConnection;
 }
 
+SensorsConnection *SensorsConnection::instance()
+{
+    SensorsConnection *connection = sensorsConnection();
+    // It's safe to return 0 because this is checked when used
+    //if (!connection) qFatal("Cannot return from SensorsConnection::instance because sensorsConnection() returned 0");
+    return connection;
+}
+
 void SensorsConnection::setAmbientLightData(const QtMobility::QAmbientLightReadingData &data)
 {
-    *qtAmbientLightData() = data;
+    qtAmbientLightData = data;
 }
 
 void SensorsConnection::setLightData(const QtMobility::QLightReadingData &data)
 {
-    *qtLightData() = data;
+    qtLightData = data;
 }
 
 void SensorsConnection::setAccelerometerData(const QtMobility::QAccelerometerReadingData &data)
 {
-    *qtAccelerometerData() = data;
+    qtAccelerometerData = data;
 }
 
 void SensorsConnection::setMagnetometerData(const QtMobility::QMagnetometerReadingData &data)
 {
-    *qtMagnetometerData() = data;
+    qtMagnetometerData = data;
 }
 
 void SensorsConnection::setCompassData(const QtMobility::QCompassReadingData &data)
 {
-    *qtCompassData() = data;
+    qtCompassData = data;
 }
 
 void SensorsConnection::setProximityData(const QtMobility::QProximityReadingData &data)
 {
-    *qtProximityData() = data;
+    qtProximityData = data;
 }
 
 void SensorsConnection::setIRProximityData(const QtMobility::QIRProximityReadingData &data)
 {
-    *qtIRProximityData() = data;
+    qtIRProximityData = data;
 }
 
 void SensorsConnection::initialSensorsDataSent()
@@ -192,11 +193,17 @@ SimulatorCommon::SimulatorCommon(QSensor *sensor)
 {
     addDataRate(1, 100);
     sensor->setDataRate(20);
-    (void)sensorsConnection(); // Ensure this exists
+    (void)SensorsConnection::instance(); // Ensure this exists
 }
 
 void SimulatorCommon::start()
 {
+    SensorsConnection *connection = SensorsConnection::instance();
+    if (!connection) {
+        sensorStopped();
+        return;
+    }
+
     if (m_timerid)
         return;
 
@@ -221,43 +228,13 @@ void SimulatorCommon::stop()
 
 void SimulatorCommon::timerEvent(QTimerEvent * /*event*/)
 {
-    if (!sensorsConnection()->safe()) return; // wait until it's safe to read the data
+    SensorsConnection *connection = SensorsConnection::instance();
+    if (!connection) {
+        stop();
+        sensorStopped();
+    }
+    if (!connection->safe()) return; // wait until it's safe to read the data
     poll();
-}
-
-QtMobility::QAccelerometerReadingData get_qtAccelerometerData()
-{
-    return *qtAccelerometerData();
-}
-
-QtMobility::QMagnetometerReadingData get_qtMagnetometerData()
-{
-    return *qtMagnetometerData();
-}
-
-QtMobility::QAmbientLightReadingData get_qtAmbientLightData()
-{
-    return *qtAmbientLightData();
-}
-
-QtMobility::QLightReadingData get_qtLightData()
-{
-    return *qtLightData();
-}
-
-QtMobility::QCompassReadingData get_qtCompassData()
-{
-    return *qtCompassData();
-}
-
-QtMobility::QProximityReadingData get_qtProximityData()
-{
-    return *qtProximityData();
-}
-
-QtMobility::QIRProximityReadingData get_qtIRProximityData()
-{
-    return *qtIRProximityData();
 }
 
 #include "simulatorcommon.moc"

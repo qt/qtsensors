@@ -56,6 +56,7 @@ public:
     explicit SensorsConnection(QObject *parent = 0);
     virtual ~SensorsConnection();
 
+    static SensorsConnection *instance();
     bool safe() const { return mInitialDataSent; }
 
 public slots:
@@ -71,6 +72,15 @@ public slots:
 private:
     SimulatorAsyncConnection *mConnection;
     bool mInitialDataSent;
+
+public:
+    QtMobility::QAmbientLightReadingData qtAmbientLightData;
+    QtMobility::QLightReadingData qtLightData;
+    QtMobility::QAccelerometerReadingData qtAccelerometerData;
+    QtMobility::QMagnetometerReadingData qtMagnetometerData;
+    QtMobility::QCompassReadingData qtCompassData;
+    QtMobility::QProximityReadingData qtProximityData;
+    QtMobility::QIRProximityReadingData qtIRProximityData;
 };
 
 class SimulatorCommon : public QSensorBackend
@@ -86,14 +96,6 @@ public:
 private:
     int m_timerid;
 };
-
-QtMobility::QAccelerometerReadingData get_qtAccelerometerData();
-QtMobility::QMagnetometerReadingData get_qtMagnetometerData();
-QtMobility::QAmbientLightReadingData get_qtAmbientLightData();
-QtMobility::QLightReadingData get_qtLightData();
-QtMobility::QCompassReadingData get_qtCompassData();
-QtMobility::QProximityReadingData get_qtProximityData();
-QtMobility::QIRProximityReadingData get_qtIRProximityData();
 
 #endif
 

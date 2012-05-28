@@ -53,7 +53,7 @@ SimulatorAccelerometer::SimulatorAccelerometer(QSensor *sensor)
 
 void SimulatorAccelerometer::poll()
 {
-    QtMobility::QAccelerometerReadingData data = get_qtAccelerometerData();
+    QtMobility::QAccelerometerReadingData data = SensorsConnection::instance()->qtAccelerometerData;
     quint64 newTimestamp;
     if (!data.timestamp.isValid())
         newTimestamp = QDateTime::currentDateTime().toTime_t();

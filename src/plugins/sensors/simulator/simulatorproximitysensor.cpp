@@ -53,7 +53,7 @@ SimulatorProximitySensor::SimulatorProximitySensor(QSensor *sensor)
 
 void SimulatorProximitySensor::poll()
 {
-    QtMobility::QProximityReadingData data = get_qtProximityData();
+    QtMobility::QProximityReadingData data = SensorsConnection::instance()->qtProximityData;
     quint64 newTimestamp;
     if (!data.timestamp.isValid())
         newTimestamp = QDateTime::currentDateTime().toTime_t();

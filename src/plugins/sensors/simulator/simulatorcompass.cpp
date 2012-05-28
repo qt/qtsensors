@@ -53,7 +53,7 @@ SimulatorCompass::SimulatorCompass(QSensor *sensor)
 
 void SimulatorCompass::poll()
 {
-    QtMobility::QCompassReadingData data = get_qtCompassData();
+    QtMobility::QCompassReadingData data = SensorsConnection::instance()->qtCompassData;
     quint64 newTimestamp;
     if (!data.timestamp.isValid())
         newTimestamp = QDateTime::currentDateTime().toTime_t();
