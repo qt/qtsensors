@@ -60,6 +60,9 @@ public:
     bool safe() const { return mInitialDataSent; }
     bool connectionFailed() const { return mConnectionFailed; }
 
+signals:
+    void setAvailableFeatures(quint32 features);
+
 public slots:
     void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
     void setLightData(const QtMobility::QLightReadingData &);

@@ -56,6 +56,13 @@ class SimulatorSensorPlugin : public QObject, public QSensorPluginInterface, pub
     Q_PLUGIN_METADATA(IID "com.nokia.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
     Q_INTERFACES(QSensorPluginInterface)
 public:
+    SimulatorSensorPlugin()
+    {
+        SensorsConnection *connection = SensorsConnection::instance();
+        if (!connection) return; // hardly likely but just in case...
+        connect(connection, SIGNAL(setAvailableFeatures(quint32)), this, SLOT(setAvailableFeatures(quint32)));
+    }
+
     void registerSensors()
     {
         QSensorManager::registerBackend(QAccelerometer::type, SimulatorAccelerometer::id, this);
@@ -98,6 +105,39 @@ public:
         }
 
         return 0;
+    }
+
+    // Copied from the emulator codebase
+    enum Features {
+        Accelerometer  = 0x01,
+        Magnetometer   = 0x02,
+        Compass        = 0x04,
+        Infraredsensor = 0x08,
+        Lightsensor    = 0x10
+    };
+
+public slots:
+    void setAvailableFeatures(quint32 features)
+    {
+        check(features&Accelerometer,  QAccelerometer::type,      SimulatorAccelerometer::id);
+        check(features&Lightsensor,    QLightSensor::type,        SimulatorLightSensor::id);
+        check(features&Lightsensor,    QAmbientLightSensor::type, SimulatorAmbientLightSensor::id);
+        check(features&Magnetometer,   QMagnetometer::type,       SimulatorMagnetometer::id);
+        check(features&Compass,        QCompass::type,            SimulatorCompass::id);
+        check(features&Infraredsensor, QIRProximitySensor::type,  SimulatorIRProximitySensor::id);
+        check(features&Infraredsensor, QProximitySensor::type,    SimulatorProximitySensor::id);
+    }
+
+private:
+    void check(bool test, const QByteArray &type, const QByteArray &id)
+    {
+        if (test) {
+            if (!QSensorManager::isBackendRegistered(type, id))
+                QSensorManager::registerBackend(type, id, this);
+        } else {
+            if (QSensorManager::isBackendRegistered(type, id))
+                QSensorManager::unregisterBackend(type, id);
+        }
     }
 };
 

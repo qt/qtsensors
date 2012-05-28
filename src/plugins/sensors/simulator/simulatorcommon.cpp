@@ -80,8 +80,9 @@ public:
 signals:
     void queueConnectToServer();
 
-    void connectionFailed();
     void initialSensorsDataSent();
+    void connectionFailed();
+    void setAvailableFeatures(quint32 features);
     void setAmbientLightData(const QtMobility::QAmbientLightReadingData &);
     void setLightData(const QtMobility::QLightReadingData &);
     void setAccelerometerData(const QtMobility::QAccelerometerReadingData &);
@@ -121,6 +122,8 @@ SensorsConnection::SensorsConnection(QObject *parent)
             this, SLOT(initialSensorsDataSent()));
     connect(mConnection, SIGNAL(connectionFailed()),
             this, SLOT(slotConnectionFailed()));
+    connect(mConnection, SIGNAL(setAvailableFeatures(quint32)),
+            this, SIGNAL(setAvailableFeatures(quint32)));
     connect(mConnection, SIGNAL(setAmbientLightData(QtMobility::QAmbientLightReadingData)),
             this, SLOT(setAmbientLightData(QtMobility::QAmbientLightReadingData)));
     connect(mConnection, SIGNAL(setLightData(QtMobility::QLightReadingData)),
