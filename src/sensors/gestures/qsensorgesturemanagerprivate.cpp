@@ -236,7 +236,10 @@ void QSensorGestureManagerPrivate::recognizerStopped(const QSensorGestureRecogni
 
 QSensorGestureManagerPrivate * QSensorGestureManagerPrivate::instance()
 {
-    return sensorGestureManagerPrivate();
+    QSensorGestureManagerPrivate *priv = sensorGestureManagerPrivate();
+    // It's safe to return 0 because this is checked when used
+    //if (!priv) qFatal("Cannot return from QSensorGestureManagerPrivate::instance() because sensorGestureManagerPrivate() returned 0.");
+    return priv;
 }
 
 

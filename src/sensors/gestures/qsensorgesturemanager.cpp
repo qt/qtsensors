@@ -68,7 +68,9 @@ QT_BEGIN_NAMESPACE
 QSensorGestureManager::QSensorGestureManager(QObject *parent)
     : QObject(parent)
 {
-    connect(QSensorGestureManagerPrivate::instance(),SIGNAL(newSensorGestureAvailable()),
+    QSensorGestureManagerPrivate *d = QSensorGestureManagerPrivate::instance();
+    if (!d) return; // hardly likely but just in case...
+    connect(d,SIGNAL(newSensorGestureAvailable()),
             this,SIGNAL(newSensorGestureAvailable()));
 }
 
@@ -89,7 +91,12 @@ QSensorGestureManager::~QSensorGestureManager()
 
  bool QSensorGestureManager::registerSensorGestureRecognizer(QSensorGestureRecognizer *recognizer)
  {
-     bool ok = QSensorGestureManagerPrivate::instance()->registerSensorGestureRecognizer(recognizer);
+     QSensorGestureManagerPrivate *d = QSensorGestureManagerPrivate::instance();
+     if (!d) { // hardly likely but just in case...
+         delete recognizer;
+         return false;
+     }
+     bool ok = d->registerSensorGestureRecognizer(recognizer);
      if (!ok)
          delete recognizer;
 
@@ -103,7 +110,9 @@ QSensorGestureManager::~QSensorGestureManager()
    */
   QStringList QSensorGestureManager::gestureIds() const
  {
-      return QSensorGestureManagerPrivate::instance()->gestureIds();
+      QSensorGestureManagerPrivate *d = QSensorGestureManagerPrivate::instance();
+      if (!d) return QStringList(); // hardly likely but just in case...
+      return d->gestureIds();
  }
 
   /*!
@@ -123,7 +132,9 @@ QSensorGestureManager::~QSensorGestureManager()
   */
 QSensorGestureRecognizer *QSensorGestureManager::sensorGestureRecognizer(const QString &id)
 {
-    return QSensorGestureManagerPrivate::instance()->sensorGestureRecognizer(id);
+    QSensorGestureManagerPrivate *d = QSensorGestureManagerPrivate::instance();
+    if (!d) return 0; // hardly likely but just in case...
+    return d->sensorGestureRecognizer(id);
 }
 
 QT_END_NAMESPACE
