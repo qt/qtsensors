@@ -228,19 +228,19 @@ function canMove(x, y)
     var dy = ycenter - (idy * cellDimension + ( cellDimension / 2 ));
 
     if (dx > 0){
-        if (labyrinth[idx + 1][idy] == 1)
+        if (labyrinth[idx][idy] == 1)
             return false;
     }
     if (dx < 0){
-        if (labyrinth[idx - 1][idy] == 1)
+        if (labyrinth[idx][idy] == 1)
             return false;
     }
     if (dy > 0){
-        if (labyrinth[idx][idy + 1] == 1)
+        if (labyrinth[idx][idy] == 1)
             return false;
     }
     if (dy < 0){
-        if (labyrinth[idx][idy - 1] == 1)
+        if (labyrinth[idx][idy] == 1)
             return false;
     }
     //check if won

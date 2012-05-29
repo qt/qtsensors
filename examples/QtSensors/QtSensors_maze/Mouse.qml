@@ -51,66 +51,46 @@ Item {
     y: 0
     width: Lib.cellDimension
     height: Lib.cellDimension
-    state: 'right'
+    property int angle
 
     AnimatedImage {
         id: img
+        source: "content/mouse_down.gif"
         anchors.fill: parent
         visible:  true
     }
 
-    //for different moves we have different gif animations
-    states: [
-        State {
-           name: "up"
-           PropertyChanges { target: img; source: "content/mouse_up.gif" }
-        },
-        State {
-           name: "down"
-           PropertyChanges { target: img; source: "content/mouse_down.gif" }
-        },
-        State {
-           name: "left"
-           PropertyChanges { target: img; source: "content/mouse_left.gif" }
-        },
-        State {
-           name: "right"
-           PropertyChanges { target: img; source: "content/mouse_right.gif" }
-        },
-
-        State {
-           name: "rightup"
-           PropertyChanges { target: img; source: "content/mouse_rightup.gif" }
-        },
-        State {
-           name: "rightdown"
-           PropertyChanges { target: img; source: "content/mouse_rightdown.gif" }
-        },
-        State {
-           name: "leftup"
-           PropertyChanges { target: img; source: "content/mouse_leftup.gif" }
-        },
-        State {
-           name: "leftdown"
-           PropertyChanges { target: img; source: "content/mouse_leftdown.gif" }
-        }
-
-    ]
+    function distance(origX, origY, newX, newY) {
+      return Math.sqrt((Math.pow((newX - origX),2)) + (Math.pow((newY - origY),2)))
+    }
 
     //Function for moving the mouse
     function move(newx, newy)
     {
-        var newstatus = "";
-        if (mouse.x < newx)
-            newstatus += "right";
-        else if (mouse.x > newx)
-            newstatus += "left";
-        if (mouse.y < newy)
-            newstatus += "down";
-        else if (mouse.y > newy)
-            newstatus += "up";
-        mouse.state = newstatus;
+        if (mouse.x === newx && mouse.y === newy)
+            return
+        // somehow this actually works
+//! [0]
+        var a = newy - mouse.y
+        var b = newx - mouse.x
+        var c = distance(mouse.x, mouse.y, newx, newy)
+        var radians_to_degrees = 57.2957795
+
+        if (a > 0)
+            angle = -Math.acos(a / b) * radians_to_degrees
+        else
+            angle = -Math.asin(b / c) * radians_to_degrees
+        if (b > 0)
+             angle = -Math.acos(a / c) * radians_to_degrees
+        else
+            angle = Math.acos(a / c) * radians_to_degrees
+
+        if (angle < 0)
+            angle = 360 + angle
+
+        img.rotation = angle
         mouse.x = newx;
         mouse.y = newy;
+//! [0]
     }
 }

@@ -75,6 +75,7 @@ import "components"
 //! [0]
 import QtSensors 5.0
 //! [0]
+import QtSystemInfo 5.0
 
 //Import the javascript functions for this game
 import "lib.js" as Lib
@@ -85,6 +86,7 @@ ApplicationWindow {
     property Mouse mouseCtrl;
     property LabyrinthSquare cheeseSquare;
     property Congratulation congratulation;
+    ScreenSaver { screenSaverEnabled: !tiltTimer.running }
 
     Rectangle {
         id: gameRect
@@ -108,17 +110,17 @@ ApplicationWindow {
 
                 //create labyrinth elements (only at the first time)
                 var needloadcomponent = false;
-                if (Lib.objectArray === null){
+                if (Lib.objectArray === null) {
                     needloadcomponent = true;
                     Lib.objectArray = new Array(Lib.dimension * Lib.dimension);
                 }
                 var idx = 0;
-                for (var y = 0; y < Lib.dimension; y++ ){
-                    for (var x = 0; x < Lib.dimension; x++ ){
+                for (var y = 0; y < Lib.dimension; y++ ) {
+                    for (var x = 0; x < Lib.dimension; x++ ) {
                         var component = null;
 
                         //create labyrinth components (only at the first time)
-                        if (needloadcomponent){
+                        if (needloadcomponent) {
                             component = Qt.createComponent("LabyrinthSquare.qml");
                             if (component.status == Component.Ready) {
                                 var square = component.createObject(parent);
@@ -127,7 +129,7 @@ ApplicationWindow {
                                 square.val = Lib.labyrinth[x][y];
                                 square.updateImage();
                                 Lib.objectArray[idx] = square;
-                                if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)){
+                                if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)) {
                                     cheeseSquare = square;
                                     var component1 = Qt.createComponent("Congratulation.qml");
                                     if (component1.status == Component.Ready) {
@@ -140,7 +142,7 @@ ApplicationWindow {
                         else{
                             Lib.objectArray[idx].val = Lib.labyrinth[x][y];
                             Lib.objectArray[idx].updateImage();
-                            if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)){
+                            if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)) {
                                 cheeseSquare = Lib.objectArray[idx];
                                 congratulation.visible = false;
                             }
@@ -152,7 +154,7 @@ ApplicationWindow {
                 //Lib.printLab(); //this is for debug. Labyrinth will be printed out in the console
 
                 //Create the mouse control  (only at the first time)
-                if (mouseCtrl === null){
+                if (mouseCtrl === null) {
                     var component = Qt.createComponent("Mouse.qml");
                     if (component.status == Component.Ready) {
                         mouseCtrl = component.createObject(parent);
@@ -164,7 +166,6 @@ ApplicationWindow {
 
                 //Start the Tilt reader timer
                 tiltTimer.running = true;
-                tiltSensor.calibrate();
             }
         }
     }
@@ -193,7 +194,7 @@ ApplicationWindow {
                 return;
 
             //check if already solved
-            if (Lib.won !== true){
+            if (Lib.won !== true) {
                 Lib.sec += 0.05;
                 timePlayingLabel.text = Math.floor(Lib.sec) + " seconds";
 
@@ -203,60 +204,45 @@ ApplicationWindow {
 
 //! [3]
                 var xstep = 0;
-                if (tiltSensor.yRotation > 0)
-                    xstep = 1;
-                else if (tiltSensor.yRotation < 0)
-                    xstep = -1;
+                xstep = tiltSensor.yRotation * 0.1 //acceleration
+
                 var ystep = 0;
-                if (tiltSensor.xRotation > 0)
-                    ystep = 1;
-                else if (tiltSensor.xRotation < 0)
-                    ystep = -1;
+                ystep = tiltSensor.xRotation * 0.1 //acceleration
 //! [3]
+//! [4]
+                if (xstep < 1 && xstep > 0)
+                    xstep = 0
+                else if (xstep > -1 && xstep < 0)
+                    xstep = 0
 
-                if (xstep < 0){
-                    if (mouseCtrl.x > 0){
-                        if (Lib.canMove(mouseCtrl.x + xstep, mouseCtrl.y)){
-                            xval = mouseCtrl.x + xstep;
-                        }
-                    }
-                }
-                else if (xstep > 0){
-                    if (mouseCtrl.x < (Lib.cellDimension * (Lib.dimension - 1))){
-                        if (Lib.canMove(mouseCtrl.x + xstep, mouseCtrl.y)){
-                            xval = mouseCtrl.x + xstep;
-                        }
-                    }
-                }
-                if (ystep < 0){
-                    if (mouseCtrl.y > 0){
-                        if (Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)){
-                            yval = mouseCtrl.y + ystep;
-                        }
-                    }
-                }
-                else if (ystep > 0){
-                    if (mouseCtrl.y < (Lib.cellDimension * (Lib.dimension - 1))){
-                        if (Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)){
-                            yval = mouseCtrl.y + ystep;
-                        }
-                    }
-                }
-                if (xval >= 0 && yval >= 0)
-                    mouseCtrl.move(xval, yval);
+                if (ystep < 1 && ystep > 0)
+                    ystep = 0;
+                else if (ystep > -1 && ystep < 0)
+                    ystep = 0;
 
-                //move the mouse in the allwed position
-                else{
-                    if (xval >= 0){
-                        mouseCtrl.move(xval, mouseCtrl.y);
-                    }
-                    if (yval >= 0){
-                        mouseCtrl.move(mouseCtrl.x, yval);
-                    }
-                }
-            }
-            else{
+                if ((xstep < 0 && mouseCtrl.x > 0
+                     && Lib.canMove(mouseCtrl.x + xstep,mouseCtrl.y))) {
+                    xval = mouseCtrl.x + xstep;
 
+                } else if (xstep > 0 && mouseCtrl.x < (Lib.cellDimension * (Lib.dimension - 1))
+                    && Lib.canMove(mouseCtrl.x + xstep,mouseCtrl.y)) {
+                    xval = mouseCtrl.x + xstep;
+                } else
+                    xval = mouseCtrl.x;
+
+                if (ystep < 0 && mouseCtrl.y > 0
+                     && Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)) {
+                    yval = mouseCtrl.y + ystep;
+                } else if (ystep > 0 && (mouseCtrl.y < (Lib.cellDimension * (Lib.dimension - 1)))
+                         && Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)) {
+                    yval = mouseCtrl.y + ystep;
+                } else
+                    yval = mouseCtrl.y
+
+                mouseCtrl.move(xval, yval);
+//! [4]
+
+            } else {
                 //game won, stop the tilt meter
                 mainWnd.cheeseSquare.val = 4;
                 mainWnd.cheeseSquare.updateImage();
@@ -266,6 +252,7 @@ ApplicationWindow {
             }
         }
     }
+
 
     //Button to start a new Game
     Button{
@@ -280,6 +267,18 @@ ApplicationWindow {
         onClicked: {
             newGameButton.enabled = false;
             startTimer.start();
+        }
+    }
+    Button{
+        id: calibrateButton
+        anchors.left: gameRect.left
+        anchors.top: newGameButton.bottom
+        anchors.topMargin: 5
+        height: 30
+        width: 100
+        text: "calibrate"
+        onClicked: {
+            tiltSensor.calibrate();
         }
     }
 

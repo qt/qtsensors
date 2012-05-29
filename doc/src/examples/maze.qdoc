@@ -51,8 +51,17 @@
 
     \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 2
 
-    To determine the walk direction of the mouse we use the following if -else statements:
+    The mouse should move by a factor of the tilt value:
 
     \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 3
+
+    The walk direction of the mouse takes into account some collision detection:
+
+    \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 4
+
+    The rotation of the mouse image is determined according to the angle that the mouse is moving.
+
+    \snippet ../examples/QtSensors/QtSensors_maze/Mouse.qml 0
+
 */
 
