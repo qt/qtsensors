@@ -5,5 +5,5 @@ SOURCES+=main.cpp\
     creating.cpp\
     plugin.cpp
 HEADERS+=myplugin.h
-*g++*:LIBS+=-rdynamic
+!win32:*g++*:LIBS+=-rdynamic
 QT+=widgets
