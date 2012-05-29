@@ -2,8 +2,9 @@ TEMPLATE = aux
 
 app.files = \
     info.json \
-    main.qml \
+    QtSensors_accelbubble.qml \
     icon.png \
+    content \
     images
 
 MT_SYSROOT=$$(MT_SYSROOT)
