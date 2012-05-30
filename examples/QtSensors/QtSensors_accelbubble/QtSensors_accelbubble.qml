@@ -45,41 +45,46 @@ import QtMobility.sensors 1.2
 
 
 Rectangle {
-    width: 360
-    height: 360
     id: mainPage
 
 //! [1]
     Accelerometer {
         id: accel
+        dataRate: 100
 //! [1]
-//! [3]
+//! [2]
         active:true
+//! [2]
+
+        onReadingChanged: {
 //! [3]
-        property real accelY;
-        property real accelX;
+            var newx = (bubble.x + calcRoll(accel.reading.x, accel.reading.y, accel.reading.z) * .1)
+            var newy = (bubble.y - calcPitch(accel.reading.x, accel.reading.y, accel.reading.z) * .1)
+
+            if (newx < 0)
+                newx = 0
+
+            if (newx > mainPage.width - bubble.width)
+                newx = mainPage.width - bubble.width
+
+            if (newy < 18)
+                newy = 18
+
+            if (newy > mainPage.height - bubble.height)
+                newy = mainPage.height - bubble.height
+
+                bubble.x = newx
+                bubble.y = newy
+//! [4]
+        }
     }
 
-//! [2]
-    Timer {
-         interval: 500; running: true; repeat: true
-
-         property real xdiff;
-         property real ydiff;
-
-         onTriggered: {
-             xdiff = accel.reading.x - accel.accelX;
-             ydiff = accel.reading.y - accel.accelY;
-
-             if (Math.abs(xdiff) > 0.3) {
-                 accel.accelX = -accel.reading.x
-             }
-             if (Math.abs(ydiff) > 0.3) {
-                 accel.accelY = accel.reading.y
-             }
-         }
-     }
-//! [2]
+    function calcPitch(x,y,z) {
+        return Math.atan(y / Math.sqrt(x*x + z*z)) * 57.2957795;
+    }
+    function calcRoll(x,y,z) {
+         return Math.atan(x / Math.sqrt(y*y + z*z)) * 57.2957795;
+    }
 
     Image {
         id: bubble
@@ -87,45 +92,21 @@ Rectangle {
         property real centerX: parent.width / 2
         property real centerY: parent.height / 2;
         property real bubbleCenter: bubble.width / 2
-
-        function calX() {
-            var newX = centerX + accel.accelX  / -1 * centerX
-
-            if ((newX - bubbleCenter) < 0) {
-                return 0
-            }
-            else if ((newX + bubbleCenter) > parent.width) {
-                return parent.width - 2 * bubbleCenter
-            }
-            return newX - bubbleCenter;
-        }
-        x: calX();
-
-        function calY() {
-            var newY = centerY + accel.accelY / -1 * centerY
-
-            if ((newY - bubbleCenter) < 0) {
-                return 0
-            }
-            else if ((newY + bubbleCenter) > parent.height) {
-                return parent.height - 2 * bubbleCenter
-            }
-            return newY - bubbleCenter;
-        }
-        y: calY();
+        x: centerX - bubbleCenter
+        y: centerY - bubbleCenter
 
         smooth: true
 
         Behavior on y {
             SmoothedAnimation {
                 easing.type: Easing.Linear
-                duration: 2500
+                duration: 100
             }
         }
         Behavior on x {
             SmoothedAnimation {
                 easing.type: Easing.Linear
-                duration: 2500
+                duration: 100
             }
         }
     }

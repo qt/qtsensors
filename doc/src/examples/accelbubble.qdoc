@@ -42,11 +42,11 @@
 
 \snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml  1
 
-    The accelerometer might run too fast for what we need, so add a timer to read the accelerometer's readings.
+    Use the 'active' property to start the sensor
 
 \snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml  2
 
-    Use the 'active' property to start the sensor
+    Move the bubble according to a factor of the accelerator sensor
 
 \snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml  3
 
