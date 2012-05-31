@@ -69,15 +69,17 @@ cleanup: function() {
     Device_Rotational_Position: function()
     {
         // Test meta data
-        testApplication = "qmlsensors2";
-        testBinary = "Sensors2"; // Running QML using qmlrunner will insert test app binary name when compiled
+        testTitle = "device position (rotation angles from X and Y Axis)";
+        testBinary = "QML QtSensors";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_qmlqtsensors";
         testGoal = "Verify that the values of the X and Y axis are returned from the application and match those of the actual phone";
         testPreconditions = "Nil.";
-        testGroups = "BAT";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
       // Test steps
 //        mouseClick(findByProperty("label", testBinary)); wait(500);
-        prompt(twiki("---+++ " + testApplication + "<br><br>
+        prompt(twiki("---+++ " + testTitle + "<br><br>
             *Goal:* " + testGoal + "<br>
             *Pre-Requisites:* " + testPreconditions + "<br>
             *Tested Binary:* " + testBinary + "<br>
@@ -100,15 +102,17 @@ cleanup: function() {
     Calibrate_Current_Device_Position: function()
     {
         // Test meta data
-        testApplication = "qmlsensors2";
-        testBinary = "Sensors2";
+        testTitle = "Accelerometer Calibration";
+        testBinary = "QML QtSensors";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_qmlqtsensors"
         testGoal = "Verify that the application can be set to read an X and Y value of zero for the current phone position";
         testPreconditions = "Nil.";
-        testGroups = "BAT";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
         // Test steps
 //        mouseClick(findByProperty("label", testBinary)); wait(500);
-        prompt(twiki("---+++ " + testApplication + "<br><br>
+        prompt(twiki("---+++ " + testTitle + "<br><br>
            *Goal:* " + testGoal + "<br>
            *Pre-Requisites:* " + testPreconditions + "<br>
            *Tested Binary:* " + testBinary + "<br>
@@ -130,30 +134,32 @@ cleanup: function() {
 
     // As a QML Application developer I want to find the device orientation
         Show_Device_Orientation: function()
-        {
-            // Test meta data
-            testApplication = "qmlsensors2";
-            testBinary = "QtSensor...";
-            testGoal = "Verify that the application can be set to read an X and Y value of zero for the current phone position";
-            testPreconditions = "Nil.";
-            testGroups = "BAT";
+     {
+        // Test meta data
+        testTitle = "Phone Orientation";
+        testBinary = "sensor explorer";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_sensor_explorer"
+        testGoal = "Verify that the application can show the orientation of the phone";
+        testPreconditions = "Nil.";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
             // Test steps
 //            mouseClick(findByProperty("label", testBinary)); wait(500);
-            prompt(twiki("---+++ " + testApplication + "<br><br>
+            prompt(twiki("---+++ " + testTitle + "<br><br>
                *Goal:* " + testGoal + "<br>
                *Pre-Requisites:* " + testPreconditions + "<br>
                *Tested Binary:* " + testBinary + "<br>
 
                | *Step* | *Verification* |
                | Launch " + testBinary + " | App launches normally |
-               | Press the *Start* button for the accelerometer | The button now displays *running* and numeric values are displayed for X and Y Rotation |
-               | Select the *Facing Up* radio button | Verify that when the device is orientated with the screen facing up the x, y rotation shows approximatly 0,0 |
-               | Select the *Left Up* radio button | Verify that when the device is orientated with the left up up (starting from portrait) the x, y rotation shows approximatly 0,0 |
-               | Select the *Top Down* radio button | Verify that when the device is orientated with the top edge down (starting from portrait) the x, y rotation shows approximatly 0,0 |
-               | Select the *Face Down* radio button | Verify that when the device is orientated with the face down the x, y rotation shows approximatly 0,0 |
-               | Select the *Right Up* radio button | Verify that when the device is orientated with the right edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
-               | Select the *Top Up* radio button | Verify that when the device is orientated with the top edge up (starting from portrait) the x, y rotation shows approximatly 0,0 |
+               | Select orientation from the sensor list and press start | *Orientation* is highlighted and orientation type shows the current orientation |
+               | Orient the device with the screen facing up | Verify that the orientation type shows *FaceUp* |
+               | Orient the device with the left side facing up | Verify that the orientation type shows *LeftUp* |
+               | Orient the device with the top down | Verify that the orientation type shows *TopDown* |
+               | Orient the device with the face down | Verify that the orientation type shows *FaceDown* |
+               | Orient the device with the right side facing up | Verify that the orientation type shows *FaceUp* |
+               | Orient the device with the top facing up | Verify that the orientation type shows *TopUp* |
            "));
         },
 
@@ -161,16 +167,18 @@ cleanup: function() {
 // MTMW-427 QML System Test - Using only Proximity sensor does not start the sensor hardware
     Display_All_Sensor_Types: function()
     {
-          // Test meta data
-          testApplication = "qmlsensors2";
-          testBinary = "Sensors2";
-          testGoal = "Verify that all sensor types are shown by the application";
-          testPreconditions = "Nil.";
-          testGroups = "BAT";
+        // Test meta data
+        testTitle = "List Sensor Types";
+        testBinary = "sensor explorer";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_sensor_explorer"
+        testGoal = "Verify that all sensor types are shown by the application";
+        testPreconditions = "Nil.";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
           // Test steps
 //          mouseClick(findByProperty("label", testBinary)); wait(500);
-          prompt(twiki("---+++ " + testApplication + "<br><br>
+          prompt(twiki("---+++ " + testTitle + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
               *Tested Binary:* " + testBinary + "<br>
@@ -191,16 +199,18 @@ cleanup: function() {
 // As a QML Application developer I would like to receive the rotation angles in Radian or Degree
     Display_Angles_Radian_Degrees: function()
     {
-          // Test meta data
-          testApplication = "qmlsensors2";
-          testBinary = "Sensors2";
-          testGoal = "Verify that the read values for the X and Y axis can be displayed in radians and degrees";
-          testPreconditions = "Nil.";
-          testGroups = "BAT";
+        // Test meta data
+        testTitle = "Rotation Units";
+        testBinary = "QML QtSensors";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_qmlqtsensors"
+        testGoal = "Verify that the read values for the X and Y axis can be displayed in radians or degrees";
+        testPreconditions = "Nil.";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
           // Test steps
 //          mouseClick(findByProperty("label", testBinary)); wait(500);
-          prompt(twiki("---+++ " + testApplication + "<br><br>
+          prompt(twiki("---+++ " + testTitle + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
               *Tested Binary:* " + testBinary + "<br>
@@ -218,16 +228,19 @@ cleanup: function() {
 // As a QML Application developer I would like to change my UI dependent of the ambient light
     Ambient_Light_Detection: function()
     {
-          // Test meta data
-          testApplication = "qmlsensors2";
-          testBinary = "Sensors2";
-          testGoal = "Verify that the ambient light values can be read";
-          testPreconditions = "Nil.";
-          testGroups = "BAT";
+        // Test meta data
+        testTitle = "Ambient Light Sensor";
+        testBinary = "QML QtSensors";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_qmlqtsensors";
+        testGoal = "Verify that the ambient light values can be read";
+        testPreconditions = "Nil.";
+        testGroups = "BAT, 5.0";
+        testRequirements = "A bright light source such as a desk lamp";
+
 
           // Test steps
 //          mouseClick(findByProperty("label", testBinary)); wait(500);
-          prompt(twiki("---+++ " + testApplication + "<br><br>
+          prompt(twiki("---+++ " + testTitle + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
               *Tested Binary:* " + testBinary + "<br>
@@ -235,9 +248,10 @@ cleanup: function() {
               | *Step* | *Verification* |
               | Launch " + testBinary + " | App launches normally |
               | Press the *Start* button for the ambient light sensor | The button now displays *running* and a value is displayed for *Ambient Light* |
-              | Place the device under normal room lighting | Verify that the Ambient Light is reported as *Bright* |
-              | Place the light sensor element under a partial shadow, i.e. by holding your hand above the device | Verify that the Ambient Light is reported as *Light*, note that the amount of shadow may need to be adjusted by moving your hand to achieve this |
-              | Make the shadow darker by moving your hand closer to the sensor | Verify that the Ambient Light now reads *Twilight* |
+              | Place the device close under a bright light | Verify that the Ambient Light is reported as *Sunny* |
+              | Move the device a bit futher away from the light source | Verify that the Ambient Light is reported as *Bright* |
+              | Move the device even futher away from the light source | Verify that the Ambient Light is reported as *Light* |
+              | Place the light sensor element under a partial shadow, i.e. by holding your hand above the device | Verify that the Ambient Light is reported as *Twilight*, note that the amount of shadow may need to be adjusted by moving your hand to achieve this |
               | Place your finger over the sensor element | Verify that the Ambient Light now reads as *Dark* |
         "));
     },
@@ -245,51 +259,55 @@ cleanup: function() {
 // As a QML Application developer I would like to deactivate the touchscreen as soon the proximity of the user is close - no need for test app to lock screen, testing that the proximity is detected is sufficient
     Proximity_Detection: function()
     {
-          // Test meta data
-          testApplication = "qmlsensors2";
-          testBinary = "Sensors2";
-          testGoal = "Verify that the touch screen deactivates when the proximity of the user is less than a predefined value";
-          testPreconditions = "Nil.";
-          testGroups = "BAT";
+        // Test meta data
+        testTitle = "Proximity";
+        testBinary = "QML QtSensors";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_qmlqtsensors";
+        testGoal = "Verify that close proximity can be detected";
+        testPreconditions = "Nil.";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
           // Test steps
 //          mouseClick(findByProperty("label", testBinary)); wait(500);
-          prompt(twiki("---+++ " + testApplication + "<br><br>
+          prompt(twiki("---+++ " + testTitle + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
               *Tested Binary:* " + testBinary + "<br>
               | *Step* | *Verification* |
               | Launch " + testBinary + " | App launches normally |
               | Press the *Start* button for the *Proximity* | The button now displays *running* and a value is displayed for *Proximity* |
-              | Confirm that nothing is close to the proximity detector | Verify that the Proximity reads *false* |
-              | Bring your hand to within 1 cm of the proximity sensor | Verify that the Proximity now reads *true* |
-              | Move your hand away from the proximity sensor | Verify that the Proximity now reads *false* |
+              | Confirm that nothing is close to the proximity detector | Verify that the Proximity reads *far* |
+              | Bring your hand to within 1 cm of the proximity sensor | Verify that the Proximity now reads *near* |
+              | Move your hand away from the proximity sensor | Verify that the Proximity now reads *far* |
         "));
     },
 
 // MTMW-426   Handle service errors gracefully
     Service_Errors: function()
     {
-          // Test meta data
-          testApplication = "Grue Sensor";
-          testBinary = "Grue Sensor";
-          testGoal = "Verify that service errors are handled so as to prevent baldr crashes if the sensor daemon stops unexpectedly";
-          testPreconditions = "Nil.";
-          testGroups = "BAT";
+        // Test meta data
+        testTitle = "Error Handling";
+        testBinary = "QML QtSensors";
+        testSource = "$QTDIR/qtsensors/examples/QtSensors/QtSensors_qmlqtsensors";
+        testGoal = "Verify that service errors are handled so as to prevent baldr crashes if the sensor daemon stops unexpectedly";
+        testPreconditions = "Nil.";
+        testGroups = "BAT, 5.0";
+        testRequirements = "";
 
           // Test steps
 //          mouseClick(findByProperty("label", testBinary)); wait(500);
-          prompt(twiki("---+++ " + testApplication + "<br><br>
+          prompt(twiki("---+++ " + testTitle + "<br><br>
               *Goal:* " + testGoal + "<br>
               *Pre-Requisites:* " + testPreconditions + "<br>
               *Tested Binary:* " + testBinary + "<br>
               | *Step* | *Verification* |
               | Launch " + testBinary + " | App launches normally |
-              | Bring your hand to within 1 cm of the proximity sensor | Verify that the Proximity sensor is operating |
-              | Log into the device using a console and enter the following commands: <literal>ps -A | grep sensorq</literal> | Verify that the process ID number for sensorq is displayed |
+              | Press start on the three sensors | Verify that the sensors are operating |
+              | Log into the device using a console and enter the following commands: ps -A &#124; grep sensorq | Verify that the process ID number for sensorq is displayed |
               | Using the process ID from the previous step stop sensorq by typing kill processID at the console |  |
-              | View the baldr log | Verify that sensorq is killed and restarted by baldr |
-              | Repeat the previous steps to find the process ID and kill sensorq a second time | View the baldr logs again to verify that sensorq has started again |
+              | Check the sensors on " + testBinary + " | Verify that the sensors are still operating |
+              | Repeat the previous steps to find the process ID and kill sensorq a second time | Verify the sensors are still operating and sensorq still has a process ID |
         "));
     },
 }
