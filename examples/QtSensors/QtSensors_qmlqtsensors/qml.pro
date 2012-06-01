@@ -2,7 +2,7 @@ TEMPLATE = aux
 
 app.files = \
     info.json \
-    QtSensors_qmlqtsensors.qml \
+    $$files(*.qml) \
     icon.png \
     components
 

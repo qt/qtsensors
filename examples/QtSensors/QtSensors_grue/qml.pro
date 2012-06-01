@@ -3,7 +3,7 @@ TEMPLATE = aux
 app.files = \
     icon.png \
     info.json \
-    main.qml \
+    $$files(*.qml) \
     grue.png
 
 MT_SYSROOT=$$(MT_SYSROOT)

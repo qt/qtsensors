@@ -1,10 +1,7 @@
 TEMPLATE = aux
 
 app.files = \
-    Cube.qml \
-    Cubehouse.qml \
-    Room.qml \
-    Table.qml \
+    $$files(*.qml) \
     icon.png \
     images \
     info.json \

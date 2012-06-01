@@ -2,7 +2,7 @@ TEMPLATE = aux
 
 app.files = \
     info.json \
-    QtSensors_shakeit.qml \
+    $$files(*.qml) \
     icon.png \
     audio \
     content

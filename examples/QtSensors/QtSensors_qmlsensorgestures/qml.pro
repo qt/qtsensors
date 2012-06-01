@@ -1,12 +1,8 @@
 TEMPLATE = aux
 
 app.files = \
-    Button.qml \
-    GestureList.qml \
-    GesturesView.qml \
+    $$files(*.qml) \
     info.json \
-    Gesture.qml \
-    GestureView.qml \
     icon.png
 
 MT_SYSROOT=$$(MT_SYSROOT)

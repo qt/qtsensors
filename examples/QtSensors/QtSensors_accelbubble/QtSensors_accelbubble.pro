@@ -2,7 +2,7 @@ TEMPLATE = aux
 
 app.files = \
     info.json \
-    QtSensors_accelbubble.qml \
+    $$files(*.qml) \
     icon.png \
     content \
     images

@@ -3,11 +3,8 @@ TEMPLATE = aux
 app.files = \
     components \
     info.json \
-    Congratulation.qml \
-    LabyrinthSquare.qml \
-    lib.js \
-    QtSensors_maze.qml \
-    Mouse.qml \
+    $$files(*.qml) \
+    $$files(*.js) \
     icon.png \
     content
 
