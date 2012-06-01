@@ -104,6 +104,7 @@ Rectangle {
             focus: true
             currentIndex: -1
             delegate: gestureListDelegate
+            clip: true
         }
 //! [4]
         Component {
