@@ -224,8 +224,7 @@ void QSensorBackend::addDataRate(qreal min, qreal max)
     setDataRates(otherSensor);
     \endcode
 
-    Note that this function should be called from the constructor so that the information
-    is available immediately.
+    Note that this function must be called from the constructor.
 
     \sa QSensor::availableDataRates, addDataRate()
 */
@@ -239,9 +238,12 @@ void QSensorBackend::setDataRates(const QSensor *otherSensor)
         qWarning() << "ERROR: Cannot call QSensorBackend::setDataRates with an invalid sensor";
         return;
     }
+    if (m_sensor->isConnectedToBackend()) {
+        qWarning() << "ERROR: Cannot call QSensorBackend::setDataRates outside of the constructor";
+        return;
+    }
     QSensorPrivate *d = m_sensor->d_func();
     d->availableDataRates = otherSensor->availableDataRates();
-    d->dataRate = otherSensor->dataRate();
 }
 
 /*!

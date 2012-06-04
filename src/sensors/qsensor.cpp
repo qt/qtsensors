@@ -263,19 +263,22 @@ bool QSensor::connectToBackend()
     if (isConnectedToBackend())
         return true;
 
+    int dataRate = d->dataRate;
+    int outputRange = d->outputRange;
+
     d->backend = QSensorManager::createBackend(this);
 
-    // Reset the properties to their default values and re-set them now so
-    // that the logic we've put into the setters gets called.
-    if (d->dataRate != 0) {
-        int tmp = d->dataRate;
-        d->dataRate = 0;
-        setDataRate(tmp);
-    }
-    if (d->outputRange != -1) {
-        int tmp = d->outputRange;
-        d->outputRange = -1;
-        setOutputRange(tmp);
+    if (d->backend) {
+        // Reset the properties to their default values and re-set them now so
+        // that the logic we've put into the setters gets called.
+        if (dataRate != 0) {
+            d->dataRate = 0;
+            setDataRate(dataRate);
+        }
+        if (outputRange != -1) {
+            d->outputRange = -1;
+            setOutputRange(outputRange);
+        }
     }
 
     return isConnectedToBackend();

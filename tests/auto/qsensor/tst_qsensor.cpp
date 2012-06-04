@@ -353,6 +353,28 @@ private slots:
             QCOMPARE(actual, expected);
         }
 
+        // Test that a previously-set, valid data rate is retained
+        {
+            TestSensor sensor;
+            sensor.setDataRate(100);
+            sensor.setProperty("doThis", "rates");
+            sensor.connectToBackend();
+            int actual = sensor.dataRate();
+            int expected = 100;
+            QCOMPARE(actual, expected);
+        }
+
+        // Test that a previously-set, invalid data rate is reset to 0
+        {
+            TestSensor sensor;
+            sensor.setDataRate(50);
+            sensor.setProperty("doThis", "rates");
+            sensor.connectToBackend();
+            int actual = sensor.dataRate();
+            int expected = 0;
+            QCOMPARE(actual, expected);
+        }
+
         {
             TestSensor sensor;
             sensor.setProperty("doThis", "rates(0)");
