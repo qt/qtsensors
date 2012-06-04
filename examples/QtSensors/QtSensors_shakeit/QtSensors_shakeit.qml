@@ -43,8 +43,7 @@ import QtQuick 2.0
 //! [0]
 import QtSensors 5.0
 //! [0]
-//import QtMultimedia 4.0
-import Qt.multimediakit 4.0
+import QtMultimedia 5.0
 
 
 
