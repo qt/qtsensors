@@ -88,6 +88,13 @@ private:
     bool checking;
     void reset();
     bool checkOrientation();
+    int increaseCount;
+    int decreaseCount;
+    qreal lastAngle;
+    QList <QOrientationReading::Orientation> orientationList;
+
+    qreal detectedAngle;
+
 };
 QT_END_NAMESPACE
 #endif // QWFLICKSENSORGESTURERECOGNIZER_H

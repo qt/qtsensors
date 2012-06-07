@@ -54,6 +54,10 @@ QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent)
     , active(0)
     , detecting(0)
     , checking(0)
+    , increaseCount(0)
+    , decreaseCount(0)
+    , lastAngle(0)
+    , detectedAngle(0)
 {
 }
 
@@ -85,6 +89,7 @@ bool QTwistSensorGestureRecognizer::start()
             active = false;
         }
     } else {
+
         active = false;
     }
     return active;
@@ -99,10 +104,10 @@ bool QTwistSensorGestureRecognizer::stop()
 
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
             this,SLOT(accelChanged(QAccelerometerReading *)));
+
+    reset();
+    orientationList.clear();
     active = false;
-    detecting = false;
-    checking = false;
-    dataList.clear();
     return active;
 }
 
@@ -114,13 +119,24 @@ bool QTwistSensorGestureRecognizer::isActive()
 void QTwistSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
 {
     orientationReading = reading;
+    if (orientationList.count() == 3)
+        orientationList.removeFirst();
+
+    orientationList.append(reading->orientation());
+
+    if (orientationList.count() == 3
+            &&  orientationList.at(2) == QOrientationReading::FaceUp
+            && (orientationList.at(1) == QOrientationReading::RightUp
+                || orientationList.at(1) == QOrientationReading::LeftUp)) {
+        checkTwist();
+    }
+
     checkOrientation();
 }
 
 bool QTwistSensorGestureRecognizer::checkOrientation()
 {
-    if (orientationReading->orientation() == QOrientationReading::TopUp
-            || orientationReading->orientation() == QOrientationReading::TopDown
+    if (orientationReading->orientation() == QOrientationReading::TopDown
             || orientationReading->orientation() == QOrientationReading::FaceDown) {
         reset();
         return false;
@@ -141,27 +157,52 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (!detecting && !checking&& dataList.count() > 21)
         dataList.removeFirst();
 
+    qreal angle = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+
+    if (qAbs(angle) > 2) {
+        if (detecting){
+            if ((angle > 0 && angle < lastAngle)
+                    || (angle < 0 && angle > lastAngle)) {
+                decreaseCount++;
+            } else {
+                if (decreaseCount > 0)
+                decreaseCount--;
+            }
+        }
+
+        if (!detecting && ((angle > 0 && angle > lastAngle)
+                || (angle < 0 && angle < lastAngle))
+                && ((angle > 0 && lastAngle > 0)
+                    || (angle < 0 && lastAngle < 0))) {
+            increaseCount++;
+        } else
+        if (!detecting && increaseCount > 3 && qAbs(angle) > 30) {
+            decreaseCount = 0;
+            detecting = true;
+            detectedAngle = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
+        }
+    } else {
+        increaseCount = 0;
+        increaseCount = 0;
+    }
+
+    lastAngle = angle;
+    if (detecting && decreaseCount >= 4 && qAbs(angle) < 25) {
+        checkTwist();
+    }
+
     twistAccelData data;
     data.x = x;
     data.y = y;
     data.z = z;
+
     if (qAbs(x) > 1)
         dataList.append(data);
+
     if (qAbs(z) > 15.0) {
         reset();
     }
-    if (detecting
-            && dataList.count() > 5
-            && z > 9.0
-            && qAbs(x) < 2) {
-        //possible pickup
-        if (!checking)
-            checkTwist();
-    }
 
-    if (!detecting && z < 0 && checkOrientation()) {
-        detecting = true;
-    }
 }
 
 void QTwistSensorGestureRecognizer::checkTwist()
@@ -170,32 +211,64 @@ void QTwistSensorGestureRecognizer::checkTwist()
     int lastx = 0;
     bool ok = false;
     bool spinpoint = false;
-    qreal degrees = 0;
-    for (int i = 0; i < dataList.count(); i++) {
-        twistAccelData curData = dataList.at(i);
 
-        if (!spinpoint && qAbs(curData.x) < 1)
-            continue;
-        if (curData.z >= 0 ) {
-            if (!spinpoint && (curData.x > lastx ||  curData.x < lastx)) {
-                ok = true;
-            } else if (spinpoint && (curData.x < lastx || curData.x > lastx)) {
-                ok = true;
-            } else {
+    if (detectedAngle < 0) {
+        reset();
+        return;
+    }
+
+    //// check for orientation changes first
+    if (orientationList.count() < 2)
+        return;
+
+    if (orientationList.count() > 2)
+        if (orientationList.at(0) == orientationList.at(2)
+                && (orientationList.at(1) == QOrientationReading::LeftUp
+                    || orientationList.at(1) == QOrientationReading::RightUp)) {
+            ok = true;
+            if (orientationList.at(1) == QOrientationReading::RightUp)
+                detectedAngle = 1;
+            else
+                detectedAngle = -1;
+        }
+
+    // now the manual increase/decrease count
+    if (!ok) {
+        if (increaseCount < 1 || decreaseCount < 3)
+            return;
+
+        if (increaseCount > 6 && decreaseCount > 4) {
+            ok = true;
+            if (orientationList.at(1) == QOrientationReading::RightUp)
+                detectedAngle = 1;
+            else
+                detectedAngle = -1;
+        }
+    }
+    // now we're really grasping for anything
+    if (!ok)
+        for (int i = 0; i < dataList.count(); i++) {
+            twistAccelData curData = dataList.at(i);
+            if (!spinpoint && qAbs(curData.x) < 1)
+                continue;
+            if (curData.z >= 0 ) {
+                if (!spinpoint && (curData.x > lastx ||  curData.x < lastx) && curData.x - lastx  > 1) {
+                    ok = true;
+                } else if (spinpoint && (curData.x < lastx || curData.x > lastx)&& lastx - curData.x > 1) {
+                    ok = true;
+                } else {
                 ok = false;
             }
         } else if (!spinpoint && curData.z < 0) {
             spinpoint = true;
-            degrees = qAtan(curData.x / qSqrt(curData.y*curData.y + curData.z*curData.z)) * RADIANS_TO_DEGREES;
         } else if (spinpoint && curData.z > 9) {
             break;
         }
 
         lastx = curData.x;
     }
-
     if (ok) {
-        if (degrees > 0) {
+        if (detectedAngle > 0) {
             Q_EMIT twistLeft();
             Q_EMIT detected("twistLeft");
         } else {
@@ -211,6 +284,9 @@ void QTwistSensorGestureRecognizer::reset()
     detecting = false;
     checking = false;
     dataList.clear();
+    increaseCount = 0;
+    decreaseCount = 0;
+    lastAngle = 0;
 }
 
 

@@ -57,6 +57,7 @@ public:
 private Q_SLOTS:
     void initTestCase();
 
+    void testTiltedTwist();
     void testNotHover2();
     void testNotHover();
     void testNotWhip();
@@ -396,6 +397,31 @@ void tst_sensorgestures_gestures::testNotHover2()
     QList<QVariant> arguments = spy_gesture.takeFirst();
     QCOMPARE(arguments.at(0).toString(), QLatin1String("slam"));
 }
+
+void tst_sensorgestures_gestures::testTiltedTwist()
+{
+    QString name = "mock_data/sensordata_tiltedtwist.dat";
+
+    QStringList gestStringList;
+
+    gestStringList << "QtSensors.twist";
+
+    QScopedPointer<QSensorGesture> gesture(new QSensorGesture(gestStringList));
+
+    QCOMPARE(gesture->invalidIds().count(),0);
+    QSignalSpy spy_gesture(gesture.data(), SIGNAL(detected(QString)));
+
+    QCOMPARE(mockcommonPrivate::instance()->setFile(name), true);
+    gesture.data()->startDetection();
+    QCOMPARE(gesture->isActive(),true);
+
+    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+
+    QList<QVariant> arguments = spy_gesture.takeFirst();
+    QCOMPARE(arguments.at(0).toString(), QLatin1String("twistLeft"));
+}
+
+
 
 QTEST_MAIN(tst_sensorgestures_gestures)
 
