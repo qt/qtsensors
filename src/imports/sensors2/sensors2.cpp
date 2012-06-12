@@ -59,9 +59,6 @@ public:
         qDebug() << "QSensors2DeclarativeModule::registerTypes(const char *uri)";
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtSensors"));
 
-        // Force all of the sensors initialization to happen now, while we don't have a UI thread to interrupt
-        (void)QSensor::sensorTypes();
-
         qmlRegisterUncreatableType<qsensor2common      >(uri, 5, 0, "Sensor", QLatin1String("Cannot create Sensor"));
         qmlRegisterType           <QSensor2Tilt        >(uri, 5, 0, "TiltSensor");
         qmlRegisterType           <QSensor2AmbientLight>(uri, 5, 0, "AmbientLightSensor");
