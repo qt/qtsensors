@@ -51,6 +51,9 @@
 #include <qsensorgesturerecognizer.h>
 #include <qsensorgestureplugininterface.h>
 
+Q_IMPORT_PLUGIN(QTestSensorGesturePlugin)
+Q_IMPORT_PLUGIN(QTestSensorGestureDupPlugin)
+
 static QString removeParens(const QString &arg)
 {
     return arg.left(arg.indexOf("("));

@@ -48,7 +48,7 @@
 class QTestSensorGesturePlugin : public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    //Q_PLUGIN_METADATA(IID "com.Nokia.QSensorGesturePluginInterface" FILE "plugin.json")
+    Q_PLUGIN_METADATA(IID "com.Nokia.QSensorGesturePluginInterface")
     Q_INTERFACES(QSensorGesturePluginInterface)
 
 public:

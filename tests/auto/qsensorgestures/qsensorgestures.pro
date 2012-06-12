@@ -1,6 +1,7 @@
 TEMPLATE = app
 TARGET = tst_qsensorgesturetest
 CONFIG += testcase
+DEFINES += QT_STATICPLUGIN
 
 QT += core testlib sensors
 QT -= gui
