@@ -12,7 +12,7 @@
     "QtSensors" => "$basedir/modules/qt_sensors.pri",
 );
 %dependencies = (
-    "qtbase" => "67fc1b893d6bbcd135497341cfaa4ea74ffeb29b",
+    "qtbase" => "refs/heads/master",
     "qtdeclarative" => "refs/heads/master",
     "qtjsbackend" => "refs/heads/master",
 );
