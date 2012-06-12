@@ -3,6 +3,7 @@ TARGET = tst_qsensor
 
 CONFIG += testcase
 QT = core testlib sensors-private
+DEFINES += QT_STATICPLUGIN
 
 SOURCES += \
     tst_qsensor.cpp

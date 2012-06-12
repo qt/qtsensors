@@ -78,10 +78,6 @@ An example follows.
 
 \snippet snippets/sensors/plugin.cpp Plugin
 
-If you would like to build a backend into a library or application you can use the
-REGISTER_STATIC_PLUGIN() macro although it may not work in all situations as it
-uses static initialization.
-
 */
 
 /*!
