@@ -112,11 +112,11 @@ QT_END_NAMESPACE
     \qmlclass GrueSensor GrueSensor
     \inherits QtMobility.sensors1::Sensor
     \inqmlmodule Grue 1
-    \brief The GrueSensor element reports on your chance of being eaten by a Grue.
+    \brief The GrueSensor type reports on your chance of being eaten by a Grue.
 
-    The GrueSensor element reports on your chance of being eaten by a Grue.
+    The GrueSensor type reports on your chance of being eaten by a Grue.
 
-    This element wraps the GrueSensor class. Please see the documentation for
+    This type wraps the GrueSensor class. Please see the documentation for
     GrueSensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -126,14 +126,14 @@ QT_END_NAMESPACE
     \qmlclass GrueSensorReading GrueSensorReading
     \inherits QtMobility.sensors1::SensorReading
     \inqmlmodule Grue 1
-    \brief The GrueSensorReading element holds the most recent GrueSensor reading.
+    \brief The GrueSensorReading type holds the most recent GrueSensor reading.
 
-    The GrueSensorReading element holds the most recent GrueSensor reading.
+    The GrueSensorReading type holds the most recent GrueSensor reading.
 
-    This element wraps the GrueSensorReading class. Please see the documentation for
+    This type wraps the GrueSensorReading class. Please see the documentation for
     GrueSensorReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*

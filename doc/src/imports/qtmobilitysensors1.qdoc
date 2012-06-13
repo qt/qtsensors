@@ -57,19 +57,19 @@
     \li The QTapSensor::returnDoubleTapEvents property cannot be used because QML cannot access dynamic properties.
     \endlist
 
-    \section1 QML Sensor Elements
+    \section1 QML Sensor types
 
-    These elements represent specific types of sensors.
+    These types represent specific types of sensors.
 
     \annotatedlist qml-sensors_type
 
-    \section1 QML Reading Elements
+    \section1 QML Reading Types
 
     The data from a sensor comes through a reading class.
 
     \annotatedlist qml-sensors_reading
 
-    \section1 Alphabetical Listing of QML Elements
+    \section1 Alphabetical Listing of QML Types
 
 */
 

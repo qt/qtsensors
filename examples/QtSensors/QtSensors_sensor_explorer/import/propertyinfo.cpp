@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
 
 /*
     \class QPropertyInfo
-    \brief The QPropertyInfo element provides an easy access for reading and writing the property values.
+    \brief The QPropertyInfo type provides an easy access for reading and writing the property values.
 */
 
 /*

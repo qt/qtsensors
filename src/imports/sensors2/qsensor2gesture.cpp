@@ -53,15 +53,15 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief Provides notifications when sensor-based gestures are detected.
 
-    This element provides notification when sensor gestures are triggered.
+    This type provides notification when sensor gestures are triggered.
 
-    This element is part of the \b{QtSensors 5} module.
+    This type is part of the \b{QtSensors 5} module.
 
-    The following QML code creates a "shake" and "template" SensorGesture QML element, and
-    displays the detected gesture in a text element.
+    The following QML code creates a "shake" and "template" SensorGesture QML type, and
+    displays the detected gesture in a text type.
 
     QtSensors.shake gesture is available with the Qt Sensors API, but the QtSensors.SecondCounter
-    sensor gesture is provided as example code for the \l {Qt Sensors - SensorGesture QML Element example}
+    sensor gesture is provided as example code for the \l {Qt Sensors - SensorGesture QML Type example}
 
     \qml
     Item {
@@ -134,7 +134,7 @@ QStringList QSensor2Gesture::availableGestures()
 /*!
     \qmlproperty stringlist QtSensors5::SensorGesture::gestures
     Set this property to a list of the gestures that the application is interested in detecting.
-    This property cannot be changed while the element is enabled.
+    This property cannot be changed while the type is enabled.
 
     The properties validGestures and invalidGestures will be set as appropriate immediately.
     To determine all available getures on the system please use the

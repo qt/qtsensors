@@ -32,16 +32,16 @@
     \image maze.png
 
     \section2 Maze in QML
-    \brief The Maze example demonstrates the TiltSensor QML element.
+    \brief The Maze example demonstrates the TiltSensor QML type.
 
 
-    To write a QML application that will use the TiltSensor QML sensors element you need to do the following steps:
+    To write a QML application that will use the TiltSensor QML sensors type you need to do the following steps:
 
     Import the QtSensors 5.x declarative plugin:
 
     \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 0
 
-    Add the Sensor QML elements into your qml file.
+    Add the Sensor QML types into your qml file.
 
     In this example we use the TiltSensor with values based in degrees and an accuracy of 5 degree:
 

@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 
 /*
     \class QSensorExplorer
-    \brief The QSensorExplorer element provides an easy access for reading all avalaible sensors installed on the system.
+    \brief The QSensorExplorer type provides an easy access for reading all avalaible sensors installed on the system.
 */
 
 /*

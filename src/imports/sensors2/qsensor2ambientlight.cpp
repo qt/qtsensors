@@ -52,12 +52,12 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief Provides access to the current ambient light level.
 
-    This element provides easy access to determine the ambient light by using the ambient light sensor.
+    This type provides easy access to determine the ambient light by using the ambient light sensor.
     For example brightening the screen according to whether the device is in full sunlight or not.
 
-    This element is part of the \b{QtSensors 5} module.
+    This type is part of the \b{QtSensors 5} module.
 
-    The \l {Qt Sensors - QML example} is an example how to use this QML element.
+    The \l {Qt Sensors - QML example} is an example how to use this QML type.
 */
 QSensor2AmbientLight::QSensor2AmbientLight(QObject* parent)
     : qsensor2common(parent)

@@ -27,10 +27,10 @@
 
 /*!
     \example QtSensors/QtSensors_qmlsensorgestures
-    \title Qt Sensors - SensorGesture QML Element example
+    \title Qt Sensors - SensorGesture QML Type example
     \ingroup qtsensors-examples
 
-    \brief This example demonstrates use of the SensorGesture QML element.
+    \brief This example demonstrates use of the SensorGesture QML type.
 
 \section1 Overview
     To write a QML application that will use the gesture plugin you need to to the following steps:
@@ -39,11 +39,11 @@
 
 \snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/GestureView.qml 0
 
-   Add the SensorGesture QML element into your qml file.
+   Add the SensorGesture QML type into your qml file.
 
 \snippet ../examples/QtSensors/QtSensors_qmlsensorgestures/GestureView.qml 1
 
-   Each SensorGesture QML element contains a property called gestures.
+   Each SensorGesture QML type contains a property called gestures.
 
    In this example an alias 'gestureid' for this property is used.
 

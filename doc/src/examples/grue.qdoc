@@ -137,7 +137,7 @@
 /*!
     \example QtSensors/QtSensors_grue/import
     \title Grue Sensor QML Import
-    \brief The Grue sensor QML import exports the GrueSensor class as a QML element.
+    \brief The Grue sensor QML import exports the GrueSensor class as a QML type.
 
     This example creates the \e {Grue 1.0} import.
 
@@ -147,7 +147,7 @@
 /*!
     \example QtSensors/QtSensors_grue
     \title Grue Sensor QML Application
-    \brief The Grue sensor QML application demonstrates use of the GrueSensor QML element.
+    \brief The Grue sensor QML application demonstrates use of the GrueSensor QML type.
 
     This is a pure QML application that can be run from Qt Creator or directly using the
     \c qmlscene binary. You should install the other projects before trying to run

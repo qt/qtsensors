@@ -48,11 +48,11 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmlclass Sensor qsensor2common
     \inqmlmodule QtSensors 5
-    \brief The Sensor element serves as a base type for sensors.
+    \brief The Sensor type serves as a base type for sensors.
 
-    The Sensor element serves as a base type for sensors.
+    The Sensor type serves as a base type for sensors.
 
-    This element cannot be directly created. Please use one of the sub-classes instead.
+    This type cannot be directly created. Please use one of the sub-classes instead.
 */
 
 qsensor2common::qsensor2common(QObject *parent)

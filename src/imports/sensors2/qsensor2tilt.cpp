@@ -57,13 +57,13 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief Provides access to the current X and Y axis rotation angles of the device.
 
-     This element provides tilt data from the rotation around the x and y axis of the device using
+     This type provides tilt data from the rotation around the x and y axis of the device using
     the accelerometer sensor. Like for a marble and maze game, where the marble is rolled
     around the screen according to the user tilting the device.
 
-    This element is part of the \b{QtSensors 5} module.
+    This type is part of the \b{QtSensors 5} module.
 
-    The \l {Qt Sensors - QML example} is an example how to use this QML element.
+    The \l {Qt Sensors - QML example} is an example how to use this QML type.
 
 */
 QSensor2Tilt::QSensor2Tilt(QObject* parent)

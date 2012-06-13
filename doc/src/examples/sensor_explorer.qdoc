@@ -51,7 +51,7 @@
     qmlscene main.qml
     \endcode
 
-    To write a QML application that will use the Explorer QML element you need to do the following steps:
+    To write a QML application that will use the Explorer QML type you need to do the following steps:
 
     Import the Explorer 1.0 declarative plugin:
 
@@ -83,7 +83,7 @@
     \title Sensor Explorer QML Import
 
     \section2 Sensor Explorer Declarative Plugin
-    \brief The Sensor Explorer QML import exports the QSensorExplorer, QPropertyInfo and the QSensorItem class as a QML element.
+    \brief The Sensor Explorer QML import exports the QSensorExplorer, QPropertyInfo and the QSensorItem class as a QML type.
 
     This example creates the \e {Explorer 1.0} import.
 

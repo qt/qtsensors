@@ -43,7 +43,7 @@
     QML import. QML applications should not require any changes to continue operating.
 
     Applications using the legacy QML import may not be able to trivially port over
-    to the new QML import because the new QML import does not provide elements for
+    to the new QML import because the new QML import does not provide types for
     every sensor like the legacy QML import does.
 
     \table

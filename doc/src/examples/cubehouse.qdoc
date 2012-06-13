@@ -33,13 +33,13 @@
     \image cubehouse.png
 
 \section1 Overview
-    To write a QML application that will use the QML Accelerometer element from the QtMobility.sensors import you need to to the following steps:
+    To write a QML application that will use the QML Accelerometer type from the QtMobility.sensors import you need to to the following steps:
 
     Import the QtMobility.sensors declarative plugin:
 
 \snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 0
 
-    Add the Accelerometer QML elements into your qml file.
+    Add the Accelerometer QML types into your qml file.
 
 \snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 1
 
@@ -48,11 +48,11 @@
 \snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 2
 
     Reading out the Accelerometer data can be done by implementing the 'onReadingChanged' slot and
-    accessing the 'reading' property from the Accelerometer element:
+    accessing the 'reading' property from the Accelerometer type:
 
 \snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 3
 
-    By using a timer the view can be rotated using the pitch and roll properties from the Accelerometer element:
+    By using a timer the view can be rotated using the pitch and roll properties from the Accelerometer type:
 
 \snippet ../examples/QtSensors/QtSensors_cubehouse/QtSensors_cubehouse.qml 4
 

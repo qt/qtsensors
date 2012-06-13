@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
 
 /*
     \class QSensorItem
-    \brief The QSensorItem element provides information about the meta-datas from a sensors installed on the system.
+    \brief The QSensorItem type provides information about the meta-datas from a sensors installed on the system.
 */
 
 /*

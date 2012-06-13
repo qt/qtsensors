@@ -192,14 +192,14 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::Sensor QSensor
     \inqmlmodule QtMobility.sensors 1
-    \brief The Sensor element serves as a base type for sensors.
+    \brief The Sensor type serves as a base type for sensors.
 
-    The Sensor element serves as a base type for sensors.
+    The Sensor type serves as a base type for sensors.
 
-    This element wraps the QSensor class. Please see the documentation for
+    This type wraps the QSensor class. Please see the documentation for
     QSensor for details.
 
-    This element cannot be directly created. Please use one of the sub-classes instead.
+    This type cannot be directly created. Please use one of the sub-classes instead.
 
     \sa {QtMobility.sensors QML Limitations}
 */
@@ -237,14 +237,14 @@ QT_END_NAMESPACE
 /*!
     \qmlclass SensorReading QSensorReading
     \inqmlmodule QtMobility.sensors 1
-    \brief The SensorReading element serves as a base type for sensor readings.
+    \brief The SensorReading type serves as a base type for sensor readings.
 
-    The SensorReading element serves as a base type for sensor readings.
+    The SensorReading type serves as a base type for sensor readings.
 
-    This element wraps the QSensorReading class. Please see the documentation for
+    This type wraps the QSensorReading class. Please see the documentation for
     QSensorReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -258,13 +258,13 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The Accelerometer element reports on linear acceleration
+    \brief The Accelerometer type reports on linear acceleration
            along the X, Y and Z axes.
 
-    The Accelerometer element reports on linear acceleration
+    The Accelerometer type reports on linear acceleration
     along the X, Y and Z axes.
 
-    This element wraps the QAccelerometer class. Please see the documentation for
+    This type wraps the QAccelerometer class. Please see the documentation for
     QAccelerometer for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -287,14 +287,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The AccelerometerReading element holds the most recent Accelerometer reading.
+    \brief The AccelerometerReading type holds the most recent Accelerometer reading.
 
-    The AccelerometerReading element holds the most recent Accelerometer reading.
+    The AccelerometerReading type holds the most recent Accelerometer reading.
 
-    This element wraps the QAccelerometerReading class. Please see the documentation for
+    This type wraps the QAccelerometerReading class. Please see the documentation for
     QAccelerometerReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -317,11 +317,11 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The AmbientLightSensor element repors on ambient lighting conditions.
+    \brief The AmbientLightSensor type repors on ambient lighting conditions.
 
-    The AmbientLightSensor element repors on ambient lighting conditions.
+    The AmbientLightSensor type repors on ambient lighting conditions.
 
-    This element wraps the QAmbientLightSensor class. Please see the documentation for
+    This type wraps the QAmbientLightSensor class. Please see the documentation for
     QAmbientLightSensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -344,14 +344,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The AmbientLightReading element holds the most AmbientLightSensor reading.
+    \brief The AmbientLightReading type holds the most AmbientLightSensor reading.
 
-    The AmbientLightReading element holds the most AmbientLightSensor reading.
+    The AmbientLightReading type holds the most AmbientLightSensor reading.
 
-    This element wraps the QAmbientLightReading class. Please see the documentation for
+    This type wraps the QAmbientLightReading class. Please see the documentation for
     QAmbientLightReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -374,11 +374,11 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The Compass element reports on heading using magnetic north as a reference.
+    \brief The Compass type reports on heading using magnetic north as a reference.
 
-    The Compass element reports on heading using magnetic north as a reference.
+    The Compass type reports on heading using magnetic north as a reference.
 
-    This element wraps the QCompass class. Please see the documentation for
+    This type wraps the QCompass class. Please see the documentation for
     QCompass for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -401,14 +401,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The CompassReading element holds the most recent Compass reading.
+    \brief The CompassReading type holds the most recent Compass reading.
 
-    The CompassReading element holds the most recent Compass reading.
+    The CompassReading type holds the most recent Compass reading.
 
-    This element wraps the QCompassReading class. Please see the documentation for
+    This type wraps the QCompassReading class. Please see the documentation for
     QCompassReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -426,13 +426,13 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The Magnetometer element reports on magnetic field strength
+    \brief The Magnetometer type reports on magnetic field strength
            along the Z, Y and Z axes.
 
-    The Magnetometer element reports on magnetic field strength
+    The Magnetometer type reports on magnetic field strength
     along the Z, Y and Z axes.
 
-    This element wraps the QMagnetometer class. Please see the documentation for
+    This type wraps the QMagnetometer class. Please see the documentation for
     QMagnetometer for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -455,14 +455,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The MagnetometerReading element holds the most recent Magnetometer reading.
+    \brief The MagnetometerReading type holds the most recent Magnetometer reading.
 
-    The MagnetometerReading element holds the most recent Magnetometer reading.
+    The MagnetometerReading type holds the most recent Magnetometer reading.
 
-    This element wraps the QMagnetometerReading class. Please see the documentation for
+    This type wraps the QMagnetometerReading class. Please see the documentation for
     QMagnetometerReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -490,11 +490,11 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The OrientationSensor element reports device orientation.
+    \brief The OrientationSensor type reports device orientation.
 
-    The OrientationSensor element reports device orientation.
+    The OrientationSensor type reports device orientation.
 
-    This element wraps the QOrientationSensor class. Please see the documentation for
+    This type wraps the QOrientationSensor class. Please see the documentation for
     QOrientationSensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -517,14 +517,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The OrientationReading element holds the most recent OrientationSensor reading.
+    \brief The OrientationReading type holds the most recent OrientationSensor reading.
 
-    The OrientationReading element holds the most recent OrientationSensor reading.
+    The OrientationReading type holds the most recent OrientationSensor reading.
 
-    This element wraps the QOrientationReading class. Please see the documentation for
+    This type wraps the QOrientationReading class. Please see the documentation for
     QOrientationReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -547,11 +547,11 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The ProximitySensor element reports on object proximity.
+    \brief The ProximitySensor type reports on object proximity.
 
-    The ProximitySensor element reports on object proximity.
+    The ProximitySensor type reports on object proximity.
 
-    This element wraps the QProximitySensor class. Please see the documentation for
+    This type wraps the QProximitySensor class. Please see the documentation for
     QProximitySensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -574,14 +574,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The ProximityReading element holds the most recent ProximitySensor reading.
+    \brief The ProximityReading type holds the most recent ProximitySensor reading.
 
-    The ProximityReading element holds the most recent ProximitySensor reading.
+    The ProximityReading type holds the most recent ProximitySensor reading.
 
-    This element wraps the QProximityReading class. Please see the documentation for
+    This type wraps the QProximityReading class. Please see the documentation for
     QProximityReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -594,13 +594,13 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The RotationSensor element reports on device rotation
+    \brief The RotationSensor type reports on device rotation
            around the X, Y and Z axes.
 
-    The RotationSensor element reports on device rotation
+    The RotationSensor type reports on device rotation
     around the X, Y and Z axes.
 
-    This element wraps the QRotationSensor class. Please see the documentation for
+    This type wraps the QRotationSensor class. Please see the documentation for
     QRotationSensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -623,14 +623,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The RotationReading element holds the most recent RotationSensor reading.
+    \brief The RotationReading type holds the most recent RotationSensor reading.
 
-    The RotationReading element holds the most recent RotationSensor reading.
+    The RotationReading type holds the most recent RotationSensor reading.
 
-    This element wraps the QRotationReading class. Please see the documentation for
+    This type wraps the QRotationReading class. Please see the documentation for
     QRotationReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -653,13 +653,13 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::Sensor
-    \brief The TapSensor element reports tap and double tap events
+    \brief The TapSensor type reports tap and double tap events
            along the X, Y and Z axes.
 
-    The TapSensor element reports tap and double tap events
+    The TapSensor type reports tap and double tap events
     along the X, Y and Z axes.
 
-    This element wraps the QTapSensor class. Please see the documentation for
+    This type wraps the QTapSensor class. Please see the documentation for
     QTapSensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -682,14 +682,14 @@ QT_END_NAMESPACE
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1
     \inherits QtMobility.sensors1::SensorReading
-    \brief The TapReading element holds the most recent TapSensor reading.
+    \brief The TapReading type holds the most recent TapSensor reading.
 
-    The TapReading element holds the most recent TapSensor reading.
+    The TapReading type holds the most recent TapSensor reading.
 
-    This element wraps the QTapReading class. Please see the documentation for
+    This type wraps the QTapReading class. Please see the documentation for
     QTapReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -718,11 +718,11 @@ QT_END_NAMESPACE
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::Sensor
-    \brief The LightSensor element reports on light levels using LUX.
+    \brief The LightSensor type reports on light levels using LUX.
 
-    The LightSensor element reports on light levels using LUX.
+    The LightSensor type reports on light levels using LUX.
 
-    This element wraps the QLightSensor class. Please see the documentation for
+    This type wraps the QLightSensor class. Please see the documentation for
     QLightSensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -746,14 +746,14 @@ QT_END_NAMESPACE
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::SensorReading
-    \brief The LightReading element holds the most recent LightSensor reading.
+    \brief The LightReading type holds the most recent LightSensor reading.
 
-    The LightReading element holds the most recent LightSensor reading.
+    The LightReading type holds the most recent LightSensor reading.
 
-    This element wraps the QLightReading class. Please see the documentation for
+    This type wraps the QLightReading class. Please see the documentation for
     QLightReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -767,10 +767,10 @@ QT_END_NAMESPACE
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::Sensor
-    \brief The Gyroscope element reports on rotational acceleration
+    \brief The Gyroscope type reports on rotational acceleration
            around the X, Y and Z axes.
 
-    This element wraps the QGyroscope class. Please see the documentation for
+    This type wraps the QGyroscope class. Please see the documentation for
     QGyroscope for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -794,14 +794,14 @@ QT_END_NAMESPACE
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::SensorReading
-    \brief The GyroscopeReading element holds the most recent Gyroscope reading.
+    \brief The GyroscopeReading type holds the most recent Gyroscope reading.
 
-    The GyroscopeReading element holds the most recent Gyroscope reading.
+    The GyroscopeReading type holds the most recent Gyroscope reading.
 
-    This element wraps the QGyroscopeReading class. Please see the documentation for
+    This type wraps the QGyroscopeReading class. Please see the documentation for
     QGyroscopeReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!
@@ -825,9 +825,9 @@ QT_END_NAMESPACE
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
-    \brief The IRProximitySensor element reports on infra-red reflectance values.
+    \brief The IRProximitySensor type reports on infra-red reflectance values.
 
-    This element wraps the QIRProximitySensor class. Please see the documentation for
+    This type wraps the QIRProximitySensor class. Please see the documentation for
     QIRProximitySensor for details.
 
     \sa {QtMobility.sensors QML Limitations}
@@ -851,14 +851,14 @@ QT_END_NAMESPACE
     \inqmlmodule QtMobility.sensors 1
     \since QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
-    \brief The IRProximityReading element holds the most recent IR proximity reading.
+    \brief The IRProximityReading type holds the most recent IR proximity reading.
 
-    The IRProximityReading element holds the most recent IR proximity reading.
+    The IRProximityReading type holds the most recent IR proximity reading.
 
-    This element wraps the QIRProximityReading class. Please see the documentation for
+    This type wraps the QIRProximityReading class. Please see the documentation for
     QIRProximityReading for details.
 
-    This element cannot be directly created.
+    This type cannot be directly created.
 */
 
 /*!

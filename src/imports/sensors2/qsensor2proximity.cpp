@@ -52,12 +52,12 @@ QT_BEGIN_NAMESPACE
     \since QtSensors 5.0
     \brief Provides access to the proximity sensor.
 
-    This element allows determining if something is held in close proximity to the device, such
+    This type allows determining if something is held in close proximity to the device, such
     as determining if the user is holding the device to their ear.
 
-    This element is part of the \b{QtSensors 5} module.
+    This type is part of the \b{QtSensors 5} module.
 
-    The \l {Qt Sensors - QML example} is an example how to use this QML element.
+    The \l {Qt Sensors - QML example} is an example how to use this QML type.
 
 */
 
