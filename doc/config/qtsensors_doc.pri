@@ -36,13 +36,6 @@ QMAKE_CLEAN += \
 
 
 OTHER_FILES += \
-    doc/src/porting.qdoc \
-    doc/src/qmlsensorgestures.qdoc \
-    doc/src/qtsensorgestures-cpp.qdoc \
-    doc/src/qtsensorgestures-emulator \
-    doc/src/qtsensorgestures-plugins \
-    doc/src/qtsensors-backend.qdoc \
-    doc/src/qtsensors-cpp.qdoc \
-    doc/src/imports/qtmobilitysensors1.qdoc \
-    doc/src/imports/qtsensors5.qdoc \
-    doc/src/qtsensors.qdoc
+    doc/src/*.qdoc \
+    doc/src/examples/*.qdoc \
+    doc/src/imports/*.qdoc
