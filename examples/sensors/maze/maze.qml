@@ -91,7 +91,7 @@ ApplicationWindow {
     Rectangle {
         id: gameRect
         x: (mainWnd.width - width) / 2
-        y: 25
+        y: 5
         width: Lib.dimension * Lib.cellDimension
         height: Lib.dimension * Lib.cellDimension
         color: "transparent"

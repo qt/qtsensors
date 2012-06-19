@@ -38,52 +38,14 @@
 **
 ****************************************************************************/
 
-#include <QtCore>
-#include <qsensor.h>
+#include <QGuiApplication>
+#include <QQuickView>
 
-class Filter : public QSensorFilter
-{
-    int lastPercent;
-public:
-    Filter()
-        : QSensorFilter()
-        , lastPercent(0)
-    {
-    }
-
-    bool filter(QSensorReading *reading)
-    {
-        int percent = reading->property("chanceOfBeingEaten").value<int>();
-        if (percent == 0) {
-            qDebug() << "It is light. You are safe from Grues.";
-        } else if (lastPercent == 0) {
-            qDebug() << "It is dark. You are likely to be eaten by a Grue.";
-        }
-        if (percent == 100) {
-            qDebug() << "You have been eaten by a Grue!";
-            QCoreApplication::instance()->quit();
-        } else if (percent)
-            qDebug() << "Your chance of being eaten by a Grue:" << percent << "percent.";
-        lastPercent = percent;
-        return false;
-    }
-};
-
-int main(int argc, char **argv)
-{
-    QCoreApplication app(argc, argv);
-
-    QSensor sensor("GrueSensor");
-
-    Filter filter;
-    sensor.addFilter(&filter);
-    sensor.start();
-
-    if (!sensor.isActive()) {
-        qWarning("The Grue sensor didn't start. You're on your own!");
-        return 1;
-    }
-
-    return app.exec();
+#define SENSORS_EXAMPLE_MAIN(NAME) int main(int argc, char **argv) \
+{\
+    QGuiApplication app(argc,argv);\
+    QQuickView view;\
+    view.setSource(QUrl::fromLocalFile(#NAME ".qml"));\
+    view.show();\
+    return app.exec();\
 }
-

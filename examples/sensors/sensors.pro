@@ -14,3 +14,4 @@ SUBDIRS += \
 !isEmpty(QT.widgets.name):SUBDIRS += \
     sensorgestures
 
+OTHER_FILES = stub.h

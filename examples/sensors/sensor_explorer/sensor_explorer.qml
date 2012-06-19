@@ -58,7 +58,7 @@ ApplicationWindow {
     SensorList {
         id: sensorList
         anchors.top: parent.top
-        anchors.topMargin: 20
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
         height: 170

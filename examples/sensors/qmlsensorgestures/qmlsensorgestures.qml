@@ -77,7 +77,6 @@ Rectangle {
     id: viewArea
     width: 320
     height: 460
-    y: 20
     color: '#d6d6d6'
 
     GestureList {

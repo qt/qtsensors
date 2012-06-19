@@ -43,8 +43,8 @@ import QtMobility.sensors 1.3
 import Grue 1.0
 
 Rectangle {
-    width: 240
-    height: 320
+    width: 320
+    height: 480
     color: "black"
 
     GrueSensor {
@@ -76,7 +76,7 @@ Rectangle {
     Text {
         id: text
         anchors.top: parent.top
-        anchors.topMargin: 20
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.right: parent.right
         text: "I can't tell if you're going to be eaten by a Grue or not. You're on your own!"

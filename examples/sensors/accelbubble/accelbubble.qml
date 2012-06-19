@@ -46,6 +46,8 @@ import QtMobility.sensors 1.2
 
 Rectangle {
     id: mainPage
+    width: 320
+    height: 480
 
 //! [1]
     Accelerometer {

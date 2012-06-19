@@ -108,7 +108,7 @@ ApplicationWindow {
         Text {
             id: labelTitle
             anchors.top: mainWnd.top
-            anchors.topMargin: 25
+            anchors.topMargin: 5
             anchors.left: mainWnd.left
             anchors.right: mainWnd.right
 

@@ -49,6 +49,8 @@ import QtMultimedia 5.0
 
 Rectangle {
     id: window
+    width: 320
+    height: 480
 
     state: "default"
 
