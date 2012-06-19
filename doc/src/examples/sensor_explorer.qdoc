@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \example QtSensors/QtSensors_sensor_explorer
+    \example sensors/sensor_explorer
     \title Qt Sensors - Explorer QML example
     \ingroup qtsensors-examples
     \image sensorexplorer.png
@@ -55,31 +55,31 @@
 
     Import the Explorer 1.0 declarative plugin:
 
-    \snippet ../examples/QtSensors/QtSensors_sensor_explorer/QtSensors_sensor_explorer.qml 0
+    \snippet ../examples/sensors/sensor_explorer/sensor_explorer.qml 0
 
     Create a SensorExplorer QML item:
 
-    \snippet ../examples/QtSensors/QtSensors_sensor_explorer/QtSensors_sensor_explorer.qml 1
+    \snippet ../examples/sensors/sensor_explorer/sensor_explorer.qml 1
 
     You can retrieve a list of all available sensors using the SensorExplorer:
 
-    \snippet ../examples/QtSensors/QtSensors_sensor_explorer/QtSensors_sensor_explorer.qml 2
+    \snippet ../examples/sensors/sensor_explorer/sensor_explorer.qml 2
 
     To retrieve the properties of a SensorItem use:
 
-    \snippet ../examples/QtSensors/QtSensors_sensor_explorer/QtSensors_sensor_explorer.qml 3
+    \snippet ../examples/sensors/sensor_explorer/sensor_explorer.qml 3
 
     Changing a property value can be done like:
 
-    \snippet ../examples/QtSensors/QtSensors_sensor_explorer/QtSensors_sensor_explorer.qml 4
+    \snippet ../examples/sensors/sensor_explorer/sensor_explorer.qml 4
 
     Starting and stopping a sensor can be done like:
 
-    \snippet ../examples/QtSensors/QtSensors_sensor_explorer/QtSensors_sensor_explorer.qml 5
+    \snippet ../examples/sensors/sensor_explorer/sensor_explorer.qml 5
 */
 
 /*!
-    \example QtSensors/QtSensors_sensor_explorer/import
+    \example sensors/sensor_explorer/import
     \title Sensor Explorer QML Import
 
     \section2 Sensor Explorer Declarative Plugin

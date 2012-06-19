@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \example QtSensors/QtSensors_accelbubble
+    \example sensors/accelbubble
     \title Qt Sensors - Accel Bubble
     \brief The AccelBubble example demonstrates the Legacy Accelerometer QML type.
     \ingroup qtsensors-examples
@@ -36,19 +36,19 @@
 
     Import the Legacy Sensors Declarative module.
 
-\snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml 0
+\snippet ../examples/sensors/accelbubble/accelbubble.qml 0
 
     Add an Accelerometer QML type.
 
-\snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml  1
+\snippet ../examples/sensors/accelbubble/accelbubble.qml  1
 
     Use the 'active' property to start the sensor
 
-\snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml  2
+\snippet ../examples/sensors/accelbubble/accelbubble.qml  2
 
     Move the bubble according to a factor of the accelerator sensor
 
-\snippet ../examples/QtSensors/QtSensors_accelbubble/QtSensors_accelbubble.qml  3
+\snippet ../examples/sensors/accelbubble/accelbubble.qml  3
 
 */
 

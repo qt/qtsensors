@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \example QtSensors/QtSensors_qmlqtsensors
+    \example sensors/qmlqtsensors
     \title Qt Sensors - QML example
     \ingroup qtsensors-examples
     \image qmlqtsensors.png
@@ -39,32 +39,32 @@
 
     Import the QtSensors 5.x declarative plugin:
 
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 0
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 0
 
     Add the Sensor QML types into your qml file.
 
     In this example we use the TiltSensor:
 
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 1
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 1
 
     The Tilt-, AmbientLight- and the Proximity QML sensor types have the 'enabled' property in common.
     To start or stop the sensor set this property to true or false.
 
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 2
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 2
 
     Reading the data can be done for each sensor type like following:
 
     \l {QtSensors5::TiltSensor} {TiltSensor}
 
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 3
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 4
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 3
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 4
 
     \l {QtSensors5::AmbientLightSensor} {AmbientLightSensor}
 
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 5
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 5
 
     \l {QtSensors5::ProximitySensor} {ProximitySensor}
 
-    \snippet ../examples/QtSensors/QtSensors_qmlqtsensors/QtSensors_qmlqtsensors.qml 6
+    \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 6
 */
 

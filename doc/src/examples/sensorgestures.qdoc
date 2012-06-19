@@ -45,17 +45,17 @@
     In order to know about custom signals that may be available, we need to ask the QSensorGestureManager about them,
 
     Using the QSensorGesture::gestureIds() function, the manager will return a QStringList of known and valid gesture Ids.
-    \snippet ../examples/QtSensors/QtSensors_sensorgestures/mainwindow.cpp 0
+    \snippet ../examples/sensors/sensorgestures/mainwindow.cpp 0
 
     We can then use this to create a QSensorGesture object that we can use to connect signals to,
     and start the detection process. A QSensorGesture object will take a list of one or more
     recognizer ids in it's constructor.
 
-    \snippet ../examples/QtSensors/QtSensors_sensorgestures/mainwindow.cpp 1
+    \snippet ../examples/sensors/sensorgestures/mainwindow.cpp 1
 
     and later stop the detection process.
 
-    \snippet ../examples/QtSensors/QtSensors_sensorgestures/mainwindow.cpp 2
+    \snippet ../examples/sensors/sensorgestures/mainwindow.cpp 2
 
     The QSensorGesture object will contain all the signals of the valid  requested recognizers found on the system.
 

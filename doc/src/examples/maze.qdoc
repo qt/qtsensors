@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \example QtSensors/QtSensors_maze
+    \example sensors/maze
     \title Qt Sensors - Maze QML Example
     \ingroup qtsensors-examples
     \image maze.png
@@ -39,29 +39,29 @@
 
     Import the QtSensors 5.x declarative plugin:
 
-    \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 0
+    \snippet ../examples/sensors/maze/maze.qml 0
 
     Add the Sensor QML types into your qml file.
 
     In this example we use the TiltSensor with values based in degrees and an accuracy of 5 degree:
 
-    \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 1
+    \snippet ../examples/sensors/maze/maze.qml 1
 
     Starting the sensor can be done by setting the 'enabled' property to true:
 
-    \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 2
+    \snippet ../examples/sensors/maze/maze.qml 2
 
     The mouse should move by a factor of the tilt value:
 
-    \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 3
+    \snippet ../examples/sensors/maze/maze.qml 3
 
     The walk direction of the mouse takes into account some collision detection:
 
-    \snippet ../examples/QtSensors/QtSensors_maze/QtSensors_maze.qml 4
+    \snippet ../examples/sensors/maze/maze.qml 4
 
     The rotation of the mouse image is determined according to the angle that the mouse is moving.
 
-    \snippet ../examples/QtSensors/QtSensors_maze/Mouse.qml 0
+    \snippet ../examples/sensors/maze/Mouse.qml 0
 
 */
 
