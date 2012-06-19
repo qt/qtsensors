@@ -39,73 +39,52 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#include "qmlsensorrange.h"
 
-QT_BEGIN_NAMESPACE
-
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
-
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+QmlSensorRange::QmlSensorRange(QObject *parent)
+    : QObject(parent),
+      min(0),
+      max(0)
 {
 }
 
-qsensor2common::~qsensor2common()
+QmlSensorRange::~QmlSensorRange()
 {
 }
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
-
-bool qsensor2common::enabled()
+int QmlSensorRange::minimum() const
 {
-    return sensor()->isActive();
+    return min;
 }
 
-void qsensor2common::setEnabled(bool val)
+int QmlSensorRange::maximum() const
 {
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
+    return max;
 }
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
+QmlSensorOutputRange::QmlSensorOutputRange(QObject *parent)
+    : QObject(parent),
+      min(0),
+      max(0),
+      acc(0)
 {
-    return sensor()->isAlwaysOn();
 }
 
-void qsensor2common::setAlwaysOn(bool alwaysOn)
+QmlSensorOutputRange::~QmlSensorOutputRange()
 {
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
 }
 
-QT_END_NAMESPACE
+qreal QmlSensorOutputRange::minimum() const
+{
+    return min;
+}
 
+qreal QmlSensorOutputRange::maximum() const
+{
+    return max;
+}
+
+qreal QmlSensorOutputRange::accuracy() const
+{
+    return acc;
+}

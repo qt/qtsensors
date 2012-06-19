@@ -89,7 +89,7 @@ bool QSensor2Proximity::filter(QProximityReading *reading)
     bool cl = reading->close();
     if (_near != cl){
         _near = cl;
-        emit nearChanged();
+        Q_EMIT nearChanged();
     }
 
     return false;

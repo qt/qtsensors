@@ -160,7 +160,7 @@ void QSensor2Gesture::setGestures(const QStringList& value)
     _gestures.clear();
     _gestures = value;
     createGesture();
-    emit gesturesChanged();
+    Q_EMIT gesturesChanged();
 }
 
 
@@ -207,19 +207,19 @@ void QSensor2Gesture::setEnabled(bool value)
         _oldEnabled = _enabled;
         if (_sensorGesture){
             if (_enabled){
-#ifdef LOGGESTURQMLAPI
+#ifdef LOGGESTUREQMLAPI
                 qDebug() << "start detection" << _gestureIds;
 #endif
                 _sensorGesture->startDetection();
             }
             else {
-#ifdef LOGGESTURQMLAPI
+#ifdef LOGGESTUREQMLAPI
                 qDebug() << "stop detection" << _gestureIds;
 #endif
                 _sensorGesture->stopDetection();
             }
         }
-        emit enabledChanged();
+        Q_EMIT enabledChanged();
     }
 }
 
@@ -245,10 +245,10 @@ void QSensor2Gesture::deleteGesture()
         _sensorGesture = 0;
 
         if (emitinvalidchange){
-            emit invalidGesturesChanged();
+            Q_EMIT invalidGesturesChanged();
         }
         if (emitvalidchange){
-            emit validGesturesChanged();
+            Q_EMIT validGesturesChanged();
         }
     }
 }
@@ -268,10 +268,10 @@ void QSensor2Gesture::createGesture()
                          , SIGNAL(detected(QString))
                          , this
                          , SIGNAL(detected(QString)));
-        emit validGesturesChanged();
+        Q_EMIT validGesturesChanged();
     }
     if (!invalidGestures().isEmpty())
-        emit invalidGesturesChanged();
+        Q_EMIT invalidGesturesChanged();
 }
 
 /*

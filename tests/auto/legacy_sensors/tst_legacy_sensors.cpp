@@ -43,6 +43,7 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <QSensor>
+#include "test_backends.h"
 
 class tst_legacy_sensors : public QObject
 {
@@ -51,6 +52,8 @@ public:
     tst_legacy_sensors(QObject *parent = 0)
         : QObject(parent)
     {
+        qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
+        register_test_backends();
     }
 
 private slots:
@@ -144,6 +147,8 @@ private slots:
         QTest::newRow("1.2 Gyroscope") << "1.2" << "Gyroscope" << true;
         QTest::newRow("1.2 GyroscopeReading") << "1.2" << "GyroscopeReading" << false;
 
+        QTest::newRow("1.3 Range") << "1.3" << "Range" << false;
+        QTest::newRow("1.3 OutputRange") << "1.3" << "OutputRange" << false;
         QTest::newRow("1.3 Sensor") << "1.3" << "Sensor" << false;
         QTest::newRow("1.3 SensorReading") << "1.3" << "SensorReading" << false;
         QTest::newRow("1.3 Accelerometer") << "1.3" << "Accelerometer" << true;
@@ -257,6 +262,72 @@ private slots:
         } else {
             QCOMPARE(obj, static_cast<QObject*>(0));
         }
+    }
+
+    void namespace_api_data()
+    {
+        QTest::addColumn<QString>("qmlcode");
+        QTest::addColumn<QVariant>("expected");
+
+        QVariant expected;
+        QStringList sl;
+        foreach (const QByteArray &type, QSensor::sensorTypes()) {
+            sl << QString::fromLocal8Bit(type);
+            qDebug() << type;
+        }
+        expected = sl;
+        QTest::newRow("Sensors.sensorTypes()")
+                <<  "Item {\n"
+                        "property var result\n"
+                        "Component.onCompleted: {\n"
+                            "result = Sensors.sensorTypes();\n"
+                        "}\n"
+                    "}"
+                 << expected;
+
+        foreach (const QByteArray &type, QSensor::sensorTypes()) {
+            sl.clear();
+            foreach (const QByteArray &identifier, QSensor::sensorsForType(type)) {
+                sl << QString::fromLocal8Bit(identifier);
+            }
+            expected = sl;
+            QTest::newRow(QString("Sensors.sensorsForType(\"%1\")").arg(QString::fromLocal8Bit(type)).toLocal8Bit().constData())
+                    <<  QString(
+                            "Item {\n"
+                                "property var result\n"
+                                "Component.onCompleted: {\n"
+                                    "result = Sensors.sensorsForType(\"%1\");\n"
+                                "}\n"
+                            "}").arg(QString::fromLocal8Bit(type))
+                     << expected;
+
+            expected = QString::fromLocal8Bit(QSensor::defaultSensorForType(type));
+            QTest::newRow(QString("Sensors.defaultSensorForType(\"%1\")").arg(QString::fromLocal8Bit(type)).toLocal8Bit().constData())
+                    <<  QString(
+                            "Item {\n"
+                                "property var result\n"
+                                "Component.onCompleted: {\n"
+                                    "result = Sensors.defaultSensorForType(\"%1\");\n"
+                                "}\n"
+                            "}").arg(QString::fromLocal8Bit(type))
+                     << expected;
+        }
+    }
+
+    void namespace_api()
+    {
+        QFETCH(QString, qmlcode);
+        QFETCH(QVariant, expected);
+
+        QQmlEngine engine;
+        QString qml = QString("import QtQuick 2.0\nimport QtMobility.sensors 1.3 as Sensors\n%1").arg(qmlcode);
+        QQmlComponent c(&engine);
+        c.setData(qml.toLocal8Bit(), QUrl::fromLocalFile(QDir::currentPath()));
+        QObject *obj = c.create();
+        QVERIFY(obj);
+        QVariant result = obj->property("result");
+        QCOMPARE(expected, result);
+        delete obj;
     }
 
 };

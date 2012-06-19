@@ -39,73 +39,54 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#ifndef QMLCOMPASS_H
+#define QMLCOMPASS_H
 
+#include "qmlsensor.h"
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
+class QCompass;
 
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+class QmlCompass : public QmlSensor
 {
-}
+    Q_OBJECT
+public:
+    explicit QmlCompass(QObject *parent = 0);
+    ~QmlCompass();
 
-qsensor2common::~qsensor2common()
+
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QCompass *m_sensor;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+};
+
+class QmlCompassReading : public QmlSensorReading
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(qreal azimuth READ azimuth NOTIFY azimuthChanged)
+    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel NOTIFY calibrationLevelChanged)
+public:
+    explicit QmlCompassReading(QCompass *sensor);
+    ~QmlCompassReading();
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
+    qreal azimuth() const;
+    qreal calibrationLevel() const;
 
-bool qsensor2common::enabled()
-{
-    return sensor()->isActive();
-}
+Q_SIGNALS:
+    void azimuthChanged();
+    void calibrationLevelChanged();
 
-void qsensor2common::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
-}
-
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
-{
-    return sensor()->isAlwaysOn();
-}
-
-void qsensor2common::setAlwaysOn(bool alwaysOn)
-{
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
-}
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+    QCompass *m_sensor;
+    qreal m_azimuth;
+    qreal m_calibrationLevel;
+};
 
 QT_END_NAMESPACE
-
+QT_END_HEADER
+#endif

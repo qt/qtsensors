@@ -80,7 +80,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
 
     Q_OBJECT
     Q_ENUMS(Feature)
-    Q_PROPERTY(QByteArray sensorid READ identifier WRITE setIdentifier)
+    Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier)
     Q_PROPERTY(QByteArray type READ type)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
     Q_PROPERTY(qrangelist availableDataRates READ availableDataRates)

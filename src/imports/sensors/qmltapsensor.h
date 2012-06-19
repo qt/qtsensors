@@ -39,73 +39,63 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#ifndef QMLTAPSENSOR_H
+#define QMLTAPSENSOR_H
 
+#include "qmlsensor.h"
+#include <QTapSensor>
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
+class QTapSensor;
 
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+class QmlTapSensor : public QmlSensor
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(bool returnDoubleTapEvents READ returnDoubleTapEvents WRITE setReturnDoubleTapEvents NOTIFY returnDoubleTapEventsChanged)
+public:
+    explicit QmlTapSensor(QObject *parent = 0);
+    ~QmlTapSensor();
 
-qsensor2common::~qsensor2common()
+    bool returnDoubleTapEvents() const;
+    void setReturnDoubleTapEvents(bool ret);
+
+
+Q_SIGNALS:
+    void returnDoubleTapEventsChanged();
+
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QTapSensor *m_sensor;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+};
+
+class QmlTapSensorReading : public QmlSensorReading
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(QTapReading::TapDirection tapDirection READ tapDirection NOTIFY tapDirectionChanged)
+    Q_PROPERTY(bool doubleTap READ isDoubleTap NOTIFY isDoubleTapChanged)
+public:
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
+    explicit QmlTapSensorReading(QTapSensor *sensor);
+    ~QmlTapSensorReading();
 
-bool qsensor2common::enabled()
-{
-    return sensor()->isActive();
-}
+    QTapReading::TapDirection tapDirection() const;
+    bool isDoubleTap() const;
 
-void qsensor2common::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
-}
+Q_SIGNALS:
+    void tapDirectionChanged();
+    void isDoubleTapChanged();
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
-{
-    return sensor()->isAlwaysOn();
-}
-
-void qsensor2common::setAlwaysOn(bool alwaysOn)
-{
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
-}
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+    QTapSensor *m_sensor;
+    QTapReading::TapDirection m_tapDirection;
+    bool m_isDoubleTap;
+};
 
 QT_END_NAMESPACE
-
+QT_END_HEADER
+#endif

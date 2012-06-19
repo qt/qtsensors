@@ -173,7 +173,7 @@ void QSensor2Tilt::setSpeed(const QSensor2Tilt::Speed val)
     if (_dataRate.keys().contains(val)){
         if (_dataRate.value(val) != _accel->dataRate()){
             _accel->setDataRate(_dataRate.value(val));
-            emit speedChanged();
+            Q_EMIT speedChanged();
         }
     }
     _speed = val;
@@ -195,7 +195,7 @@ void QSensor2Tilt::setEnabled(const bool val)
         }
         else
             _accel->stop();
-        emit enabledChanged();
+        Q_EMIT enabledChanged();
     }
 }
 
@@ -221,7 +221,7 @@ void QSensor2Tilt::setUnit(const QSensor2Tilt::Unit val)
 {
     if (_unit != val){
         _unit = val;
-        emit unitChanged();
+        Q_EMIT unitChanged();
     }
 }
 
@@ -431,19 +431,19 @@ bool QSensor2Tilt::filter(QAccelerometerReading* reading)
     bool change = false;
     if (dxrot >= _radAccuracy){
         _xRotation = xrot;
-        emit xRotationChanged();
+        Q_EMIT xRotationChanged();
         change = true;
     }
     if (dyrot >= _radAccuracy){
         _yRotation = yrot;
-        emit yRotationChanged();
+        Q_EMIT yRotationChanged();
         change = true;
     }
     if (change){
         if (_unit == QSensor2Tilt::Degrees)
-            emit tiltChanged(dxrot * 180 / M_PI, dyrot * 180 / M_PI);
+            Q_EMIT tiltChanged(dxrot * 180 / M_PI, dyrot * 180 / M_PI);
         else
-            emit tiltChanged(dxrot, dyrot);
+            Q_EMIT tiltChanged(dxrot, dyrot);
     }
     return false;
 }

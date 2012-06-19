@@ -35,35 +35,32 @@
     This is the legacy QML import. It exists for compatibility with the QtMobiltiy 1.2 release
     and is not recommended for new applications.
 
-    The QtMobility.sensors import has the Qt Sensors C++ classes directly exported into the QML environment.
-    This causes some limitations due to the use of types that do not work in the QML environment.
-    See \l{QtMobility.sensors QML Limitations}{below} for a list of the known limitations.
+    See \l{Qt Sensors} for more information about the Sensors API.
 
-    See \l Qt Sensors for more information about the Sensors API.
+    \section1 QML Module API
 
-    \section1 QtMobility.sensors QML Limitations
+    If the module is imported into a namespace, some additional methods become available.
 
-    The following limitations affect all versions of the QtMobility.sensors import.
+    \code
+    import QtMobility.sensors 1.3 as Sensors
+    ...
+        Component.onCompleted: {
+            var types = Sensors.sensorTypes();
+            console.log(types.join(", "));
+        }
+    \endcode
 
-    \list 1
-    \li The QSensor::sensorid property cannot be set because QML does not support QByteArray.
-       This means that it is not possible to specify a particular sensor when two or more have
-       been registered with the same type.
-    \li The QSensor::availableDataRates property cannot be used because QML does not support \l qrangelist.
-    \li The QSensor::outputRanges property cannot be used because QML does not support \l qoutputrangelist.
-    \li The QLightSensor::fieldOfView property cannot be used because QML cannot access dynamic properties.
-    \li The QMagnetometer::returnGeoValues property cannot be used because QML cannot access dynamic properties.
-    \li The QRotationSensor::hasZ property cannot be used because QML cannot access dynamic properties.
-    \li The QTapSensor::returnDoubleTapEvents property cannot be used because QML cannot access dynamic properties.
-    \endlist
+    The documentation for the module API can be found in SensorGlobal.
 
     \section1 QML Sensor types
 
     These types represent specific types of sensors.
 
+    Note that most properties come from the abstract \l{QtMobility.sensors1::Sensor}{Sensor} element.
+
     \annotatedlist qml-sensors_type
 
-    \section1 QML Reading Types
+    \section1 QML Reading types
 
     The data from a sensor comes through a reading class.
 

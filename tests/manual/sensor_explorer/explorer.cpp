@@ -224,7 +224,7 @@ void Explorer::loadSensorProperties()
     for (int i = firstProperty; i < mo->propertyCount(); ++i) {
         int row = i - firstProperty - offset;
         QLatin1String name(mo->property(i).name());
-        if (name == "sensorid" ||
+        if (name == "identifier" ||
             //name == "type" ||
             name == "reading" ||
             name == "connected" ||

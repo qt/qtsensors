@@ -39,73 +39,52 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#ifndef QMLORIENTATIONSENSOR_H
+#define QMLORIENTATIONSENSOR_H
 
+#include "qmlsensor.h"
+#include <QOrientationSensor>
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
+class QOrientationSensor;
 
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+class QmlOrientationSensor : public QmlSensor
 {
-}
+    Q_OBJECT
+public:
+    explicit QmlOrientationSensor(QObject *parent = 0);
+    ~QmlOrientationSensor();
 
-qsensor2common::~qsensor2common()
+
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QOrientationSensor *m_sensor;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+};
+
+class QmlOrientationSensorReading : public QmlSensorReading
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(QOrientationReading::Orientation orientation READ orientation NOTIFY orientationChanged)
+public:
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
+    explicit QmlOrientationSensorReading(QOrientationSensor *sensor);
+    ~QmlOrientationSensorReading();
 
-bool qsensor2common::enabled()
-{
-    return sensor()->isActive();
-}
+    QOrientationReading::Orientation orientation() const;
 
-void qsensor2common::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
-}
+Q_SIGNALS:
+    void orientationChanged();
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
-{
-    return sensor()->isAlwaysOn();
-}
-
-void qsensor2common::setAlwaysOn(bool alwaysOn)
-{
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
-}
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+    QOrientationSensor *m_sensor;
+    QOrientationReading::Orientation m_orientation;
+};
 
 QT_END_NAMESPACE
-
+QT_END_HEADER
+#endif

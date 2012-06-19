@@ -108,7 +108,7 @@ bool QSensor2AmbientLight::filter(QAmbientLightReading *reading)
     QSensor2AmbientLight::LightLevel lv = (QSensor2AmbientLight::LightLevel)reading->lightLevel();
     if (lv != _lightLevel){
         _lightLevel = lv;
-        emit lightLevelChanged();
+        Q_EMIT lightLevelChanged();
     }
     return false;
 }

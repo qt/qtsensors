@@ -39,73 +39,52 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#ifndef QMLAMBIENTLIGHTSENSOR_H
+#define QMLAMBIENTLIGHTSENSOR_H
 
+#include "qmlsensor.h"
+#include <QAmbientLightSensor>
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
+class QAmbientLightSensor;
 
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+class QmlAmbientLightSensor : public QmlSensor
 {
-}
+    Q_OBJECT
+public:
+    explicit QmlAmbientLightSensor(QObject *parent = 0);
+    ~QmlAmbientLightSensor();
 
-qsensor2common::~qsensor2common()
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QAmbientLightSensor *m_sensor;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+
+};
+
+class QmlAmbientLightSensorReading : public QmlSensorReading
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(QAmbientLightReading::LightLevel lightLevel READ lightLevel NOTIFY lightLevelChanged)
+public:
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
+    explicit QmlAmbientLightSensorReading(QAmbientLightSensor *sensor);
+    ~QmlAmbientLightSensorReading();
 
-bool qsensor2common::enabled()
-{
-    return sensor()->isActive();
-}
+    QAmbientLightReading::LightLevel lightLevel() const;
 
-void qsensor2common::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
-}
+Q_SIGNALS:
+    void lightLevelChanged();
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
-{
-    return sensor()->isAlwaysOn();
-}
-
-void qsensor2common::setAlwaysOn(bool alwaysOn)
-{
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
-}
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+    QAmbientLightSensor *m_sensor;
+    QAmbientLightReading::LightLevel m_lightLevel;
+};
 
 QT_END_NAMESPACE
-
+QT_END_HEADER
+#endif

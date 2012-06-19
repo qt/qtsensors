@@ -39,73 +39,36 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#ifndef QMLSENSORGLOBAL_H
+#define QMLSENSORGLOBAL_H
 
+#include <QObject>
+#include <QStringList>
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
+class QSensor;
 
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+class QmlSensorGlobal : public QObject
 {
-}
+    Q_OBJECT
+public:
+    explicit QmlSensorGlobal(QObject *parent = 0);
+    ~QmlSensorGlobal();
 
-qsensor2common::~qsensor2common()
-{
-}
+    Q_INVOKABLE QStringList sensorTypes() const;
+    Q_INVOKABLE QStringList sensorsForType(const QString &type) const;
+    Q_INVOKABLE QString defaultSensorForType(const QString &type) const;
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
+Q_SIGNALS:
+    void availableSensorsChanged();
 
-bool qsensor2common::enabled()
-{
-    return sensor()->isActive();
-}
-
-void qsensor2common::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
-}
-
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
-{
-    return sensor()->isAlwaysOn();
-}
-
-void qsensor2common::setAlwaysOn(bool alwaysOn)
-{
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
-}
+private:
+    QSensor *m_sensor;
+};
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
+#endif

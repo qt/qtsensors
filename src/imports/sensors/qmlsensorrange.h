@@ -39,73 +39,60 @@
 **
 ****************************************************************************/
 
-#include "qsensor2common.h"
-#include <QSensor>
-#include <QDebug>
+#ifndef QMLSENSORRANGE_H
+#define QMLSENSORRANGE_H
 
+#include <QObject>
+
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-/*!
-    \qmltype Sensor
-    \instantiates qsensor2common
-    \inqmlmodule QtSensors 5.0
-    \brief The Sensor type serves as a base type for sensors.
-
-    The Sensor type serves as a base type for sensors.
-
-    This type cannot be directly created. Please use one of the sub-classes instead.
-*/
-
-qsensor2common::qsensor2common(QObject *parent)
-    : QObject(parent)
+class QmlSensorRange : public QObject
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(int minimum READ minimum)
+    Q_PROPERTY(int maximum READ maximum)
+public:
+    explicit QmlSensorRange(QObject *parent = 0);
+    ~QmlSensorRange();
 
-qsensor2common::~qsensor2common()
+    int minimum() const;
+    void setMinumum(int mini) { min = mini; }
+
+    int maximum() const;
+    void setMaximum(int maxi) { max = maxi; }
+
+private:
+
+    int min;
+    int max;
+};
+
+class QmlSensorOutputRange : public QObject
 {
-}
+    Q_OBJECT
+    Q_PROPERTY(qreal minimum READ minimum)
+    Q_PROPERTY(qreal maximum READ maximum)
+    Q_PROPERTY(qreal accuracy READ accuracy)
+public:
+    explicit QmlSensorOutputRange(QObject *parent = 0);
+    ~QmlSensorOutputRange();
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::enabled
-    Starts or stops the sensor. Default value is false.
-*/
+    qreal minimum() const;
+    void setMinimum(int mini) { min = mini; }
 
-bool qsensor2common::enabled()
-{
-    return sensor()->isActive();
-}
+    qreal maximum() const;
+    void setMaximum(int maxi) { max = maxi; }
 
-void qsensor2common::setEnabled(bool val)
-{
-    bool active = enabled();
-    if (active != val){
-        if (val){
-            bool ret = sensor()->start();
-            if (!ret)
-                qWarning() << "couldn't start the sensor.";
-        }
-        else
-            sensor()->stop();
-        Q_EMIT enabledChanged();
-    }
-}
+    qreal accuracy() const;
+    void setAccuracy(int accu) { acc = accu; }
 
-/*!
-    \qmlproperty bool QtSensors5::Sensor::alwaysOn
-    Keeps the sensor running when the screen turns off. Default value is false.
-*/
-
-bool qsensor2common::alwaysOn()
-{
-    return sensor()->isAlwaysOn();
-}
-
-void qsensor2common::setAlwaysOn(bool alwaysOn)
-{
-    if (sensor()->isAlwaysOn() == alwaysOn) return;
-    sensor()->setAlwaysOn(alwaysOn);
-    Q_EMIT alwaysOnChanged();
-}
+private:
+    qreal min;
+    qreal max;
+    qreal acc;
+};
 
 QT_END_NAMESPACE
-
+QT_END_HEADER
+#endif

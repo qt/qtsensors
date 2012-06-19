@@ -220,7 +220,7 @@ bool QSensorItem::ignoreProperty(const QString& propertyname)
 {
     if (propertyname == "reading" ||
         propertyname == "active" ||
-        propertyname == "sensorid" ||
+        propertyname == "identifier" ||
         propertyname == "connectedToBackend" ||
         propertyname == "busy")
         return true;

@@ -260,7 +260,7 @@ bool QSensor::isConnectedToBackend() const
 }
 
 /*!
-    \property QSensor::sensorid
+    \property QSensor::identifier
     \brief the backend identifier for the sensor.
 
     Note that the identifier is filled out automatically
