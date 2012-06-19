@@ -56,8 +56,8 @@ Rectangle {
         active:true
 //! [2]
 
-        onReadingChanged: {
 //! [3]
+        onReadingChanged: {
             var newx = (bubble.x + calcRoll(accel.reading.x, accel.reading.y, accel.reading.z) * .1)
             var newy = (bubble.y - calcPitch(accel.reading.x, accel.reading.y, accel.reading.z) * .1)
 
@@ -75,8 +75,8 @@ Rectangle {
 
                 bubble.x = newx
                 bubble.y = newy
-//! [4]
         }
+//! [3]
     }
 
     function calcPitch(x,y,z) {
