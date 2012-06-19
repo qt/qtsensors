@@ -318,7 +318,7 @@ inline qreal calcRoll(double Ax, double Ay, double Az)
     This signal is emitted whenever the change from at leat one of the rotation values was higher than the accuracy.
     The angle value is based on the specified unit (Degree or Radian).
 
-    \sa {QtSensors5::TiltSensor::unit}, {TiltSensor.unit}
+    \sa {QtSensors5::TiltSensor::unit}
 */
 qreal QSensor2Tilt::accuracy()
 {
