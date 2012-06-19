@@ -191,7 +191,7 @@ QT_END_NAMESPACE
 
 /*!
     \qmlclass QtMobility.sensors1::Sensor QSensor
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \brief The Sensor type serves as a base type for sensors.
 
     The Sensor type serves as a base type for sensors.
@@ -236,7 +236,7 @@ QT_END_NAMESPACE
 
 /*!
     \qmlclass SensorReading QSensorReading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \brief The SensorReading type serves as a base type for sensor readings.
 
     The SensorReading type serves as a base type for sensor readings.
@@ -256,7 +256,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::Accelerometer QAccelerometer
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The Accelerometer type reports on linear acceleration
            along the X, Y and Z axes.
@@ -285,7 +285,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass AccelerometerReading QAccelerometerReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The AccelerometerReading type holds the most recent Accelerometer reading.
 
@@ -315,7 +315,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::AmbientLightSensor QAmbientLightSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The AmbientLightSensor type repors on ambient lighting conditions.
 
@@ -342,7 +342,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass AmbientLightReading QAmbientLightReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The AmbientLightReading type holds the most AmbientLightSensor reading.
 
@@ -372,7 +372,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::Compass QCompass
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The Compass type reports on heading using magnetic north as a reference.
 
@@ -399,7 +399,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass CompassReading QCompassReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The CompassReading type holds the most recent Compass reading.
 
@@ -424,7 +424,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::Magnetometer QMagnetometer
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The Magnetometer type reports on magnetic field strength
            along the Z, Y and Z axes.
@@ -453,7 +453,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass MagnetometerReading QMagnetometerReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The MagnetometerReading type holds the most recent Magnetometer reading.
 
@@ -488,7 +488,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::OrientationSensor QOrientationSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The OrientationSensor type reports device orientation.
 
@@ -515,7 +515,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass OrientationReading QOrientationReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The OrientationReading type holds the most recent OrientationSensor reading.
 
@@ -545,7 +545,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::ProximitySensor QProximitySensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The ProximitySensor type reports on object proximity.
 
@@ -572,7 +572,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass ProximityReading QProximityReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The ProximityReading type holds the most recent ProximitySensor reading.
 
@@ -592,7 +592,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::RotationSensor QRotationSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The RotationSensor type reports on device rotation
            around the X, Y and Z axes.
@@ -621,7 +621,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass RotationReading QRotationReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The RotationReading type holds the most recent RotationSensor reading.
 
@@ -651,7 +651,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::TapSensor QTapSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The TapSensor type reports tap and double tap events
            along the X, Y and Z axes.
@@ -680,7 +680,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass TapReading QTapReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The TapReading type holds the most recent TapSensor reading.
 
@@ -715,7 +715,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::LightSensor QLightSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::Sensor
     \brief The LightSensor type reports on light levels using LUX.
@@ -743,7 +743,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass LightReading QLightReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::SensorReading
     \brief The LightReading type holds the most recent LightSensor reading.
@@ -764,7 +764,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::Gyroscope QGyroscope
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::Sensor
     \brief The Gyroscope type reports on rotational acceleration
@@ -791,7 +791,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass GyroscopeReading QGyroscopeReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
     \inherits QtMobility.sensors1::SensorReading
     \brief The GyroscopeReading type holds the most recent Gyroscope reading.
@@ -822,7 +822,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass QtMobility.sensors1::IRProximitySensor QIRProximitySensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
     \brief The IRProximitySensor type reports on infra-red reflectance values.
@@ -848,7 +848,7 @@ QT_END_NAMESPACE
 /*!
     \qmlclass IRProximityReading QIRProximityReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1
+    \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
     \brief The IRProximityReading type holds the most recent IR proximity reading.

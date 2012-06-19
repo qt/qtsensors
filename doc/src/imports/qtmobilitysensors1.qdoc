@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \qmlmodule QtMobility.sensors 1
+    \qmlmodule QtMobility.sensors 1.3
     \title QtMobility.sensors 1.x
     \brief Legacy QML import for QtSensors
 

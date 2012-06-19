@@ -52,8 +52,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmlclass TiltSensor QSensor2Tilt
     \inherits QtSensors5::Sensor
-    \inqmlmodule QtSensors 5
-    \ingroup qml-QtSensors5
+    \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
     \brief Provides access to the current X and Y axis rotation angles of the device.
 

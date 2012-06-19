@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmlclass AmbientLightSensor QSensor2AmbientLight
     \inherits QtSensors5::Sensor
-    \inqmlmodule QtSensors 5
+    \inqmlmodule QtSensors 5.0
     \ingroup qml-QtSensors5
     \since QtSensors 5.0
     \brief Provides access to the current ambient light level.

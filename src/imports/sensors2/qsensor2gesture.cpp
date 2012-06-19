@@ -49,7 +49,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmlclass SensorGesture QSensor2Gesture
-    \inqmlmodule QtSensors 5
+    \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
     \brief Provides notifications when sensor-based gestures are detected.
 
