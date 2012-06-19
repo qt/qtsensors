@@ -27,13 +27,6 @@ module_qtsensors_snippets.depends = module_qtsensors_src
 
 include(doc/config/qtsensors_doc.pri)
 
-!isEmpty(MIDDLEWARE):exists($$MIDDLEWARE/$$MIDDLEWARE.pro) {
-    SUBDIRS += module_qtsensors_middleware
-    module_qtsensors_middleware.subdir = $$MIDDLEWARE
-    module_qtsensors_middleware.target = module-qtsensors-middleware
-    module_qtsensors_middleware.depends = module_qtsensors_src
-}
-
 # Commands to rebuild the plugin.qmltypes files for our imports
 # Run "make rebuild_qmltypes" after completing a build
 sensors_qmltypes.commands = qmlplugindump QtMobility.sensors 1.3 $$QT.sensors.imports > $$PWD/src/imports/sensors/plugin.qmltypes
