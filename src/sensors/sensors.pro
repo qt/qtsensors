@@ -22,6 +22,7 @@ simulator {
 load(qt_module_config)
 HEADERS += qtsensorsversion.h
 
+QMAKE_DOCS = $$PWD/../../doc/config/qtsensors.qdocconf
 
 symbian {
     TARGET.CAPABILITY = ALL -TCB
@@ -39,10 +40,6 @@ symbian {
     INCLUDEPATH *= $$MW_LAYER_SYSTEMINCLUDE
 
 }
-
-
-#INCLUDEPATH += .
-#DEPENDPATH += .
 
 PUBLIC_HEADERS += \
            qsensorbackend.h\

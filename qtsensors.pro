@@ -25,8 +25,6 @@ module_qtsensors_snippets.subdir = doc/src/snippets
 module_qtsensors_snippets.target = module-qtsensors-snippets
 module_qtsensors_snippets.depends = module_qtsensors_src
 
-include(doc/config/qtsensors_doc.pri)
-
 # Commands to rebuild the plugin.qmltypes files for our imports
 # Run "make rebuild_qmltypes" after completing a build
 sensors_qmltypes.commands = qmlplugindump QtMobility.sensors 1.3 $$QT.sensors.imports > $$PWD/src/imports/sensors/plugin.qmltypes
