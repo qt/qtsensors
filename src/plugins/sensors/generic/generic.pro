@@ -18,15 +18,5 @@ SOURCES += genericorientationsensor.cpp\
 
 OTHER_FILES = plugin.json
 
-symbian {
-    TARGET.EPOCALLOWDLLDATA = 1
-    TARGET.UID3 = 0x2002BFC3
-    TARGET.CAPABILITY = ALL -TCB
-
-    pluginDep.sources = $${TARGET}.dll
-    pluginDep.path = $${QT_PLUGINS_BASE_DIR}/$${PLUGIN_TYPE}
-    DEPLOYMENT += pluginDep
-}
-
 target.path += $$[QT_INSTALL_PLUGINS]/sensors
 INSTALLS += target

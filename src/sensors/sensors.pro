@@ -24,23 +24,6 @@ HEADERS += qtsensorsversion.h
 
 QMAKE_DOCS = $$PWD/../../doc/config/qtsensors.qdocconf
 
-symbian {
-    TARGET.CAPABILITY = ALL -TCB
-    TARGET.UID3 = 0x2002BFC0
-
-    ### Sensors
-    # Main library
-    SENSORS_DEPLOYMENT.sources = QtSensors.dll
-    SENSORS_DEPLOYMENT.path = /sys/bin
-    DEPLOYMENT += SENSORS_DEPLOYMENT
-    LIBS += -lefsrv
-
-    # We break on Symbian^3 unless we have this include (normally obtained by linking to QtGui)
-    load(platform_paths)
-    INCLUDEPATH *= $$MW_LAYER_SYSTEMINCLUDE
-
-}
-
 PUBLIC_HEADERS += \
            qsensorbackend.h\
            qsensormanager.h\

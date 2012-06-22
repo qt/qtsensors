@@ -5,8 +5,6 @@ load(qt_plugin)
 
 DESTDIR = $$QT.sensors.plugins/sensors
 
-symbian:TARGET.EPOCALLOWDLLDATA = 1
-
 QT=core gui network sensors simulator
 
 target.path += $$[QT_INSTALL_PLUGINS]/sensors
