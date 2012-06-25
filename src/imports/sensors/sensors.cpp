@@ -56,44 +56,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// QtQml doesn't have this for some reason. It has qmlRegisterRevision<T,int>
-// and qmlRegisterUncreatableType<T> but they both only do half the job. This one
-// registers an uncreatable type and sets the revision so that derived classes will
-// pick up new properties.
-template<typename T, int metaObjectRevision>
-int qmlRegisterUncreatableType(const char *uri, int versionMajor, int versionMinor, const char *qmlName, const QString& reason)
-{
-    QByteArray name(T::staticMetaObject.className());
-
-    QByteArray pointerName(name + '*');
-    QByteArray listName("QQmlListProperty<" + name + ">");
-
-    QQmlPrivate::RegisterType type = {
-        1,
-
-        qRegisterMetaType<T *>(pointerName.constData()),
-        qRegisterMetaType<QQmlListProperty<T> >(listName.constData()),
-        0, 0,
-        reason,
-
-        uri, versionMajor, versionMinor, qmlName, &T::staticMetaObject,
-
-        QQmlPrivate::attachedPropertiesFunc<T>(),
-        QQmlPrivate::attachedPropertiesMetaObject<T>(),
-
-        QQmlPrivate::StaticCastSelector<T,QQmlParserStatus>::cast(),
-        QQmlPrivate::StaticCastSelector<T,QQmlPropertyValueSource>::cast(),
-        QQmlPrivate::StaticCastSelector<T,QQmlPropertyValueInterceptor>::cast(),
-
-        0, 0,
-
-        0,
-        metaObjectRevision
-    };
-
-    return QQmlPrivate::qmlregister(QQmlPrivate::TypeRegistration, &type);
-}
-
 class QSensorsDeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
