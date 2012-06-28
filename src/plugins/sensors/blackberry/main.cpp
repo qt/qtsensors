@@ -65,7 +65,7 @@ static const char *bbOrientationSensorId = "bbOrientationSensor";
 static const char *bbPressureSensorId = "bbPressureSensor";
 static const char *bbProximitySensorId = "bbProximitySensor";
 static const char *bbRotationSensorId = "bbRotationSensor";
-static const char *bbTemperatureSensorId = "bbTemperatureSensorId";
+static const char *bbTemperatureSensorId = "bbTemperatureSensor";
 
 class BbSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
@@ -77,27 +77,27 @@ public:
     void registerSensors()
     {
         if (sensorSupported(BbAccelerometer::devicePath()))
-            QSensorManager::registerBackend("QAccelerometer", bbAccelerometerId, this);
+            QSensorManager::registerBackend(QAccelerometer::type, bbAccelerometerId, this);
         if (sensorSupported(BbAltimeter::devicePath()))
             QSensorManager::registerBackend("BbAltimeter", bbAltitmeterId, this);
         if (sensorSupported(BbCompass::devicePath()))
-            QSensorManager::registerBackend("BbCompass", bbCompassId, this);
+            QSensorManager::registerBackend(QCompass::type, bbCompassId, this);
         if (sensorSupported(BbGyroscope::devicePath()))
-            QSensorManager::registerBackend("QGyroscope", bbGyroscopeId, this);
+            QSensorManager::registerBackend(QGyroscope::type, bbGyroscopeId, this);
         if (sensorSupported(BbIRProximitySensor::devicePath()))
-            QSensorManager::registerBackend("QIRProximitySensor", bbIRProximitySensorId, this);
+            QSensorManager::registerBackend(QIRProximitySensor::type, bbIRProximitySensorId, this);
         if (sensorSupported(BbLightSensor::devicePath()))
-            QSensorManager::registerBackend("QLightSensor", bbLightSensorId, this);
+            QSensorManager::registerBackend(QLightSensor::type, bbLightSensorId, this);
         if (sensorSupported(BbMagnetometer::devicePath()))
-            QSensorManager::registerBackend("QMagnetometer", bbMagnetometerId, this);
+            QSensorManager::registerBackend(QMagnetometer::type, bbMagnetometerId, this);
         if (sensorSupported(BbOrientationSensor::devicePath()))
-            QSensorManager::registerBackend("QOrientationSensor", bbOrientationSensorId, this);
+            QSensorManager::registerBackend(QOrientationSensor::type, bbOrientationSensorId, this);
         if (sensorSupported(BbPressureSensor::devicePath()))
             QSensorManager::registerBackend("BbPressureSensor", bbPressureSensorId, this);
         if (sensorSupported(BbProximitySensor::devicePath()))
-            QSensorManager::registerBackend("QProximitySensor", bbProximitySensorId, this);
+            QSensorManager::registerBackend(QProximitySensor::type, bbProximitySensorId, this);
         if (sensorSupported(BbRotationSensor::devicePath()))
-            QSensorManager::registerBackend("QRotationSensor", bbRotationSensorId, this);
+            QSensorManager::registerBackend(QRotationSensor::type, bbRotationSensorId, this);
         if (sensorSupported(BbTemperatureSensor::devicePath()))
             QSensorManager::registerBackend("BbTemperatureSensor", bbTemperatureSensorId, this);
     }
