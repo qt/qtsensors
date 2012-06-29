@@ -65,8 +65,8 @@ public:
 
     void initSensorInfo();
 
-    void start();
-    void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
 
 protected:
     QFile& deviceFile();

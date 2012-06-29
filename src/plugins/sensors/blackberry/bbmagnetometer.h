@@ -54,8 +54,8 @@ public:
     static QString devicePath();
 
 protected:
-    qreal convertValue(float bbValue);
-    bool updateReadingFromEvent(const sensor_event_t &event, QMagnetometerReading *reading);
+    qreal convertValue(float bbValue) Q_DECL_OVERRIDE;
+    bool updateReadingFromEvent(const sensor_event_t &event, QMagnetometerReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

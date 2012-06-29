@@ -80,7 +80,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbProximityReading *reading);
+    bool updateReadingFromEvent(const sensor_event_t &event, BbProximityReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

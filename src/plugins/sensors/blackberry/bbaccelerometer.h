@@ -54,7 +54,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QAccelerometerReading *reading);
+    bool updateReadingFromEvent(const sensor_event_t &event, QAccelerometerReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

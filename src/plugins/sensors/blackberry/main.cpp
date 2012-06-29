@@ -76,7 +76,7 @@ class BbSensorPlugin : public QObject, public QSensorPluginInterface, public QSe
     Q_INTERFACES(QSensorPluginInterface)
 
 public:
-    void registerSensors()
+    void registerSensors() Q_DECL_OVERRIDE
     {
         if (sensorSupported(BbAccelerometer::devicePath()))
             QSensorManager::registerBackend(QAccelerometer::type, bbAccelerometerId, this);
@@ -106,7 +106,7 @@ public:
             QSensorManager::registerBackend("BbTemperatureSensor", bbTemperatureSensorId, this);
     }
 
-    QSensorBackend *createBackend(QSensor *sensor)
+    QSensorBackend *createBackend(QSensor *sensor) Q_DECL_OVERRIDE
     {
         BbSensorBackendBase *backend = 0;
         if (sensor->identifier() == bbAccelerometerId)

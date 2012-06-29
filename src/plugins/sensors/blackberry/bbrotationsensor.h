@@ -54,13 +54,13 @@ public:
     static QString devicePath();
 
 protected:
-    void additionalDeviceInit();
-    bool addDefaultRange();
-    qreal convertValue(float bbValue);
-    bool updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading);
+    void additionalDeviceInit() Q_DECL_OVERRIDE;
+    bool addDefaultRange() Q_DECL_OVERRIDE;
+    qreal convertValue(float bbValue) Q_DECL_OVERRIDE;
+    bool updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading) Q_DECL_OVERRIDE;
     bool isAutoAxisRemappingEnabled() const;
 
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject *object, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     void updateOrientation();

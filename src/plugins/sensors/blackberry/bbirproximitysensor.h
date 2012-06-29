@@ -54,7 +54,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QIRProximityReading *reading);
+    bool updateReadingFromEvent(const sensor_event_t &event, QIRProximityReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

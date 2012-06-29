@@ -65,7 +65,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbAltimeterReading *reading);
+    bool updateReadingFromEvent(const sensor_event_t &event, BbAltimeterReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

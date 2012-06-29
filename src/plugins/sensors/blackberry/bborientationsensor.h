@@ -56,7 +56,7 @@ class BbOrientationReading : public QOrientationReading
 public:
     explicit BbOrientationReading(QObject *parent = 0);
     ~BbOrientationReading();
-    void copyValuesFrom(QSensorReading *other);
+    void copyValuesFrom(QSensorReading *other) Q_DECL_OVERRIDE;
     int rotation() const;
     void setRotation(int rotation);
 
@@ -73,12 +73,12 @@ public:
 
     static QString devicePath();
 
-    void start();
-    void additionalDeviceInit();
-    bool addDefaultRange();
+    void start() Q_DECL_OVERRIDE;
+    void additionalDeviceInit() Q_DECL_OVERRIDE;
+    bool addDefaultRange() Q_DECL_OVERRIDE;
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbOrientationReading *reading);
+    bool updateReadingFromEvent(const sensor_event_t &event, BbOrientationReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif
