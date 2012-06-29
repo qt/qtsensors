@@ -13,6 +13,7 @@ DESTDIR = $$QT.sensors.plugins/sensors
 HEADERS += bbsensorbackend.h \
     bbaccelerometer.h \
     bbaltimeter.h \
+    bbambientlightsensor.h \
     bbcompass.h \
     bbgyroscope.h \
     bbirproximitysensor.h \
@@ -28,6 +29,7 @@ HEADERS += bbsensorbackend.h \
 SOURCES += bbsensorbackend.cpp \
     bbaccelerometer.cpp \
     bbaltimeter.cpp \
+    bbambientlightsensor.cpp \
     bbcompass.cpp \
     bbgyroscope.cpp \
     bbirproximitysensor.cpp \
