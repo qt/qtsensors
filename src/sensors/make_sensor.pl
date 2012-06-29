@@ -89,6 +89,7 @@ if (! -e $pheader) {
 // We mean it.
 //
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class '.$reading_private.'
@@ -109,6 +110,7 @@ public:
 };
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 ';
@@ -124,7 +126,10 @@ if (! -e $header) {
 
 #include <qsensor.h>
 
+QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
+
+QT_MODULE(QtSensors)
 
 class '.$reading_private.';
 
@@ -143,7 +148,8 @@ class Q_SENSORS_EXPORT '.$filter.' : public QSensorFilter
 public:
     virtual bool filter('.$reading.' *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<'.$reading.'*>(reading)); }
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
+        { return filter(static_cast<'.$reading.'*>(reading)); }
 };
 
 class Q_SENSORS_EXPORT '.$sensor.' : public QSensor
@@ -157,6 +163,7 @@ public:
 };
 
 QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
 ';
