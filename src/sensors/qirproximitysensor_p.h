@@ -64,13 +64,6 @@ public:
     {
     }
 
-
-
-    /*
-     * Note that this class is copied so you may need to implement
-     * a copy constructor if you have complex types or pointers
-     * as values.
-     */
     qreal reflectance;
 };
 
