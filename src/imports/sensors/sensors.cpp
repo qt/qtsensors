@@ -158,42 +158,42 @@ QT_END_NAMESPACE
 
     The Sensor type serves as a base type for sensors.
 
-    This type wraps the QSensor class. Please see the documentation for
-    QSensor for details.
+    This type wraps the QSensor class.
 
     This type cannot be directly created. Please use one of the sub-classes instead.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QSensor
 */
 
 /*!
     \qmlproperty int QtMobility.sensors1::Sensor::dataRate
     Sets the rate at which data is returned by the sensor.
-    Please see QSensor::dataRate for information about this property.
+    \sa QSensor::dataRate
 */
 
 /*!
     \qmlproperty bool QtMobility.sensors1::Sensor::active
     Starts or stops the sensor.
-    Please see QSensor::active for information about this property.
+    \sa QSensor::active
 */
 
 /*!
     \qmlproperty SensorReading QtMobility.sensors1::Sensor::reading
     Holds the most recent sensor reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlproperty bool QtMobility.sensors1::Sensor::alwaysOn
     Keeps the sensor running when the display turns off.
-    Please see QSensor::alwaysOn for information about this property.
+    \sa QSensor::alwaysOn
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::Sensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -203,16 +203,17 @@ QT_END_NAMESPACE
 
     The SensorReading type serves as a base type for sensor readings.
 
-    This type wraps the QSensorReading class. Please see the documentation for
-    QSensorReading for details.
+    This type wraps the QSensorReading class.
 
     This type cannot be directly created.
+
+    \sa QSensorReading
 */
 
 /*!
     \qmlproperty quint64 QtMobility.sensors1::SensorReading::timestamp
     A timestamp for the reading.
-    Please see QSensorReading::timestamp for information about this property.
+    \sa QSensorReading::timestamp
 */
 
 /*!
@@ -226,22 +227,22 @@ QT_END_NAMESPACE
     The Accelerometer type reports on linear acceleration
     along the X, Y and Z axes.
 
-    This type wraps the QAccelerometer class. Please see the documentation for
-    QAccelerometer for details.
+    This type wraps the QAccelerometer class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QAccelerometer
 */
 
 /*!
     \qmlproperty AccelerometerReading QtMobility.sensors1::Accelerometer::reading
     Holds the most recent accelerometer reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::Accelerometer::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -253,25 +254,26 @@ QT_END_NAMESPACE
 
     The AccelerometerReading type holds the most recent Accelerometer reading.
 
-    This type wraps the QAccelerometerReading class. Please see the documentation for
-    QAccelerometerReading for details.
+    This type wraps the QAccelerometerReading class.
 
     This type cannot be directly created.
+
+    \sa QAccelerometerReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::AccelerometerReading::x
-    Please see QAccelerometerReading::x for information about this property.
+    \sa QAccelerometerReading::x
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::AccelerometerReading::y
-    Please see QAccelerometerReading::y for information about this property.
+    \sa QAccelerometerReading::y
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::AccelerometerReading::z
-    Please see QAccelerometerReading::z for information about this property.
+    \sa QAccelerometerReading::z
 */
 
 /*!
@@ -283,22 +285,22 @@ QT_END_NAMESPACE
 
     The AmbientLightSensor type repors on ambient lighting conditions.
 
-    This type wraps the QAmbientLightSensor class. Please see the documentation for
-    QAmbientLightSensor for details.
+    This type wraps the QAmbientLightSensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QAmbientLightSensor
 */
 
 /*!
     \qmlproperty AmbientLightReading QtMobility.sensors1::AmbientLightSensor::reading
     Holds the most recent ambient light reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::AmbientLightSensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -310,15 +312,14 @@ QT_END_NAMESPACE
 
     The AmbientLightReading type holds the most AmbientLightSensor reading.
 
-    This type wraps the QAmbientLightReading class. Please see the documentation for
-    QAmbientLightReading for details.
+    This type wraps the QAmbientLightReading class.
 
     This type cannot be directly created.
+    \sa QAmbientLightReading
 */
 
 /*!
     \qmlproperty QAmbientLightReading::LightLevel QtMobility.sensors1::AmbientLightReading::lightLevel
-    Please see QAmbientLightReading::lightLevel for information about this property.
 
     LightLevel constants are exposed through the AmbientLightReading class.
     \code
@@ -329,6 +330,8 @@ QT_END_NAMESPACE
             }
         }
     \endcode
+
+    \sa QAmbientLightReading::lightLevel
 */
 
 /*!
@@ -340,22 +343,22 @@ QT_END_NAMESPACE
 
     The Compass type reports on heading using magnetic north as a reference.
 
-    This type wraps the QCompass class. Please see the documentation for
-    QCompass for details.
+    This type wraps the QCompass class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QCompass
 */
 
 /*!
     \qmlproperty CompassReading QtMobility.sensors1::Compass::reading
     Holds the most recent compass reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::Compass::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -367,20 +370,21 @@ QT_END_NAMESPACE
 
     The CompassReading type holds the most recent Compass reading.
 
-    This type wraps the QCompassReading class. Please see the documentation for
-    QCompassReading for details.
+    This type wraps the QCompassReading class.
 
     This type cannot be directly created.
+
+    \sa QCompassReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::CompassReading::azimuth
-    Please see QCompassReading::azimuth for information about this property.
+    \sa QCompassReading::azimuth
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::CompassReading::calibrationLevel
-    Please see QCompassReading::calibrationLevel for information about this property.
+    \sa QCompassReading::calibrationLevel
 */
 
 /*!
@@ -394,22 +398,22 @@ QT_END_NAMESPACE
     The Magnetometer type reports on magnetic field strength
     along the Z, Y and Z axes.
 
-    This type wraps the QMagnetometer class. Please see the documentation for
-    QMagnetometer for details.
+    This type wraps the QMagnetometer class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QMagnetometer
 */
 
 /*!
     \qmlproperty MagnetometerReading QtMobility.sensors1::Magnetometer::reading
     Holds the most recent magnetometer reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::Magnetometer::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -421,30 +425,31 @@ QT_END_NAMESPACE
 
     The MagnetometerReading type holds the most recent Magnetometer reading.
 
-    This type wraps the QMagnetometerReading class. Please see the documentation for
-    QMagnetometerReading for details.
+    This type wraps the QMagnetometerReading class.
 
     This type cannot be directly created.
+
+    \sa QMagnetometerReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::x
-    Please see QMagnetometerReading::x for information about this property.
+    \sa QMagnetometerReading::x
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::y
-    Please see QMagnetometerReading::y for information about this property.
+    \sa QMagnetometerReading::y
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::z
-    Please see QMagnetometerReading::z for information about this property.
+    \sa QMagnetometerReading::z
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::calibrationLevel
-    Please see QMagnetometerReading::calibrationLevel for information about this property.
+    \sa QMagnetometerReading::calibrationLevel
 */
 
 /*!
@@ -456,22 +461,22 @@ QT_END_NAMESPACE
 
     The OrientationSensor type reports device orientation.
 
-    This type wraps the QOrientationSensor class. Please see the documentation for
-    QOrientationSensor for details.
+    This type wraps the QOrientationSensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QOrientationSensor
 */
 
 /*!
     \qmlproperty OrientationReading QtMobility.sensors1::OrientationSensor::reading
     Holds the most recent orientation reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::OrientationSensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -483,15 +488,15 @@ QT_END_NAMESPACE
 
     The OrientationReading type holds the most recent OrientationSensor reading.
 
-    This type wraps the QOrientationReading class. Please see the documentation for
-    QOrientationReading for details.
+    This type wraps the QOrientationReading class.
 
     This type cannot be directly created.
+
+    \sa QOrientationReading
 */
 
 /*!
     \qmlproperty QOrientationReading::Orientation QtMobility.sensors1::OrientationReading::orientation
-    Please see QOrientationReading::orientation for information about this property.
 
     Orientation constants are exposed through the OrientationReading class.
     \code
@@ -502,6 +507,8 @@ QT_END_NAMESPACE
             }
         }
     \endcode
+
+    \sa QOrientationReading::orientation
 */
 
 /*!
@@ -513,22 +520,22 @@ QT_END_NAMESPACE
 
     The ProximitySensor type reports on object proximity.
 
-    This type wraps the QProximitySensor class. Please see the documentation for
-    QProximitySensor for details.
+    This type wraps the QProximitySensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QProximitySensor
 */
 
 /*!
     \qmlproperty ProximityReading QtMobility.sensors1::ProximitySensor::reading
     Holds the most recent proximity reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::ProximitySensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -540,15 +547,16 @@ QT_END_NAMESPACE
 
     The ProximityReading type holds the most recent ProximitySensor reading.
 
-    This type wraps the QProximityReading class. Please see the documentation for
-    QProximityReading for details.
+    This type wraps the QProximityReading class.
 
     This type cannot be directly created.
+
+    \sa QProximityReading
 */
 
 /*!
     \qmlproperty bool QtMobility.sensors1::ProximityReading::close
-    Please see QProximityReading::close for information about this property.
+    \sa QProximityReading::close
 */
 
 /*!
@@ -562,22 +570,22 @@ QT_END_NAMESPACE
     The RotationSensor type reports on device rotation
     around the X, Y and Z axes.
 
-    This type wraps the QRotationSensor class. Please see the documentation for
-    QRotationSensor for details.
+    This type wraps the QRotationSensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QRotationSensor
 */
 
 /*!
     \qmlproperty RotationReading QtMobility.sensors1::RotationSensor::reading
     Holds the most recent rotation reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::RotationSensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -589,25 +597,26 @@ QT_END_NAMESPACE
 
     The RotationReading type holds the most recent RotationSensor reading.
 
-    This type wraps the QRotationReading class. Please see the documentation for
-    QRotationReading for details.
+    This type wraps the QRotationReading class.
 
     This type cannot be directly created.
+
+    \sa QRotationReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::RotationReading::x
-    Please see QRotationReading::x for information about this property.
+    \sa QRotationReading::x
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::RotationReading::y
-    Please see QRotationReading::y for information about this property.
+    \sa QRotationReading::y
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::RotationReading::z
-    Please see QRotationReading::z for information about this property.
+    \sa QRotationReading::z
 */
 
 /*!
@@ -621,22 +630,22 @@ QT_END_NAMESPACE
     The TapSensor type reports tap and double tap events
     along the X, Y and Z axes.
 
-    This type wraps the QTapSensor class. Please see the documentation for
-    QTapSensor for details.
+    This type wraps the QTapSensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QTapSensor
 */
 
 /*!
     \qmlproperty TapReading QtMobility.sensors1::TapSensor::reading
     Holds the most recent tap sensor reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::TapSensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -648,20 +657,20 @@ QT_END_NAMESPACE
 
     The TapReading type holds the most recent TapSensor reading.
 
-    This type wraps the QTapReading class. Please see the documentation for
-    QTapReading for details.
+    This type wraps the QTapReading class.
 
     This type cannot be directly created.
+
+    \sa QTapReading
 */
 
 /*!
     \qmlproperty bool QtMobility.sensors1::TapReading::doubleTap
-    Please see QTapReading::doubleTap for information about this property.
+    \sa QTapReading::doubleTap
 */
 
 /*!
     \qmlproperty QTapReading::TapDirection QtMobility.sensors1::TapReading::tapDirection
-    Please see QTapReading::tapDirection for information about this property.
 
     TapDirection constants are exposed through the TapReading class.
     \code
@@ -672,6 +681,8 @@ QT_END_NAMESPACE
             }
         }
     \endcode
+
+    \sa QTapReading::tapDirection
 */
 
 /*!
@@ -684,22 +695,22 @@ QT_END_NAMESPACE
 
     The LightSensor type reports on light levels using LUX.
 
-    This type wraps the QLightSensor class. Please see the documentation for
-    QLightSensor for details.
+    This type wraps the QLightSensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QLightSensor
 */
 
 /*!
     \qmlproperty LightReading QtMobility.sensors1::LightSensor::reading
     Holds the most recent light sensor reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::LightSensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -712,15 +723,15 @@ QT_END_NAMESPACE
 
     The LightReading type holds the most recent LightSensor reading.
 
-    This type wraps the QLightReading class. Please see the documentation for
-    QLightReading for details.
+    This type wraps the QLightReading class.
 
     This type cannot be directly created.
+    \sa QLightReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::LightReading::lux
-    Please see QLightReading::lux for information about this property.
+    \sa QLightReading::lux
 */
 
 /*!
@@ -732,22 +743,22 @@ QT_END_NAMESPACE
     \brief The Gyroscope type reports on rotational acceleration
            around the X, Y and Z axes.
 
-    This type wraps the QGyroscope class. Please see the documentation for
-    QGyroscope for details.
+    This type wraps the QGyroscope class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QGyroscope
 */
 
 /*!
     \qmlproperty GyroscopeReading QtMobility.sensors1::Gyroscope::reading
     Holds the most recent gyroscope reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::Gyroscope::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -760,25 +771,26 @@ QT_END_NAMESPACE
 
     The GyroscopeReading type holds the most recent Gyroscope reading.
 
-    This type wraps the QGyroscopeReading class. Please see the documentation for
-    QGyroscopeReading for details.
+    This type wraps the QGyroscopeReading class.
 
     This type cannot be directly created.
+
+    \sa QGyroscopeReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::GyroscopeReading::x
-    Please see QGyroscopeReading::x for information about this property.
+    \sa QGyroscopeReading::x
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::GyroscopeReading::y
-    Please see QGyroscopeReading::y for information about this property.
+    \sa QGyroscopeReading::y
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::GyroscopeReading::z
-    Please see QGyroscopeReading::z for information about this property.
+    \sa QGyroscopeReading::z
 */
 
 /*!
@@ -789,22 +801,22 @@ QT_END_NAMESPACE
     \inherits QtMobility.sensors1::Sensor
     \brief The IRProximitySensor type reports on infra-red reflectance values.
 
-    This type wraps the QIRProximitySensor class. Please see the documentation for
-    QIRProximitySensor for details.
+    This type wraps the QIRProximitySensor class.
 
     \sa {QtMobility.sensors QML Limitations}
+    \sa QIRProximitySensor
 */
 
 /*!
     \qmlproperty IRProximityReading QtMobility.sensors1::IRProximitySensor::reading
     Holds the most recent IR proximity reading.
-    Please see QSensor::reading for information about this property.
+    \sa QSensor::reading
 */
 
 /*!
     \qmlsignal QtMobility.sensors1::IRProximitySensor::onReadingChanged()
     Called when the reading object changes.
-    Please see QSensor::readingChanged() for information about this signal.
+    \sa QSensor::readingChanged()
 */
 
 /*!
@@ -817,14 +829,15 @@ QT_END_NAMESPACE
 
     The IRProximityReading type holds the most recent IR proximity reading.
 
-    This type wraps the QIRProximityReading class. Please see the documentation for
-    QIRProximityReading for details.
+    This type wraps the QIRProximityReading class.
 
     This type cannot be directly created.
+
+    \sa QIRProximityReading
 */
 
 /*!
     \qmlproperty qreal QtMobility.sensors1::IRProximityReading::reflectance
-    Please see QIRProximityReading::reflectance for information about this property.
+    \sa QIRProximityReading::reflectance
 */
 
