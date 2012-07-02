@@ -41,6 +41,8 @@ QObject.log
 tst_*
 !tst_*.*
 tst_*.log
+tst_*.moc
+tst_*.o
 tst_*.debug
 tst_*~
 
@@ -79,6 +81,8 @@ doc/src/snippets/sensors/sensorsdocsnippet
 # ---------------------
 
 include
+mkspecs
+doc/qtsensors
 
 # These shouldn't even be in the source directory!
 src/sensors/qtsensorsversion.h
