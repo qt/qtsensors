@@ -185,6 +185,7 @@ IMPLEMENT_READING('.$reading.')
     \class '.$reading.'
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since QtSensors 5.[INSERT VERSION HERE]
 
     \brief The '.$reading.' class holds readings from the [X] sensor.
 
@@ -222,6 +223,7 @@ void '.$reading.'::setMyprop(qreal myprop)
     \class '.$filter.'
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since QtSensors 5.[INSERT VERSION HERE]
 
     \brief The '.$filter.' class is a convenience wrapper around QSensorFilter.
 
@@ -243,6 +245,7 @@ char const * const '.$sensor.'::type("'.$sensor.'");
     \class '.$sensor.'
     \ingroup sensors_type
     \inmodule QtSensors
+    \since QtSensors 5.[INSERT VERSION HERE]
 
     \brief The '.$sensor.' class is a convenience wrapper around QSensor.
 
