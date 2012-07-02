@@ -44,27 +44,7 @@
 #include "bbsensorbackend.h"
 #include <qorientationsensor.h>
 
-class BbOrientationReadingPrivate;
-
-// We extend QOrientationReading with the "rotation" property
-class BbOrientationReading : public QOrientationReading
-{
-    Q_OBJECT
-
-    // Screen Rotation in degrees - 0, 90, 180 or 270
-    Q_PROPERTY(int rotation READ rotation)
-public:
-    explicit BbOrientationReading(QObject *parent = 0);
-    ~BbOrientationReading();
-    void copyValuesFrom(QSensorReading *other) Q_DECL_OVERRIDE;
-    int rotation() const;
-    void setRotation(int rotation);
-
-private:
-    QScopedPointer<BbOrientationReadingPrivate> d;
-};
-
-class BbOrientationSensor : public BbSensorBackend<BbOrientationReading>
+class BbOrientationSensor : public BbSensorBackend<QOrientationReading>
 {
     Q_OBJECT
 
@@ -78,7 +58,7 @@ public:
     bool addDefaultRange() Q_DECL_OVERRIDE;
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbOrientationReading *reading) Q_DECL_OVERRIDE;
+    bool updateReadingFromEvent(const sensor_event_t &event, QOrientationReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

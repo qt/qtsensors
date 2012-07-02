@@ -40,47 +40,8 @@
 ****************************************************************************/
 #include "bborientationsensor.h"
 
-class BbOrientationReadingPrivate
-{
-public:
-    BbOrientationReadingPrivate()
-        : rotation(0)
-    {
-    }
-
-    int rotation;
-};
-
-BbOrientationReading::BbOrientationReading(QObject *parent)
-    : QOrientationReading(parent),
-      d(new BbOrientationReadingPrivate)
-{
-}
-
-BbOrientationReading::~BbOrientationReading()
-{
-}
-
-void BbOrientationReading::copyValuesFrom(QSensorReading *other)
-{
-    QOrientationReading::copyValuesFrom(other);
-    const BbOrientationReading * const reading = qobject_cast<const BbOrientationReading *>(other);
-    if (reading)
-        d->rotation = reading->rotation();
-}
-
-int BbOrientationReading::rotation() const
-{
-    return d->rotation;
-}
-
-void BbOrientationReading::setRotation(int rotation)
-{
-    d->rotation = rotation;
-}
-
 BbOrientationSensor::BbOrientationSensor(QSensor *sensor)
-    : BbSensorBackend<BbOrientationReading>(devicePath(), SENSOR_TYPE_ORIENTATION, sensor)
+    : BbSensorBackend<QOrientationReading>(devicePath(), SENSOR_TYPE_ORIENTATION, sensor)
 {
     setDescription(QLatin1String("Device orientation"));
 }
@@ -92,7 +53,7 @@ QString BbOrientationSensor::devicePath()
 
 void BbOrientationSensor::start()
 {
-    BbSensorBackend<BbOrientationReading>::start();
+    BbSensorBackend<QOrientationReading>::start();
 
     // Orientation rarely changes, so enable skiping of duplicates
     sensor_devctl_skipdupevent_u deviceSkip;
@@ -117,7 +78,7 @@ bool BbOrientationSensor::addDefaultRange()
     return false;
 }
 
-bool BbOrientationSensor::updateReadingFromEvent(const sensor_event_t &event, BbOrientationReading *reading)
+bool BbOrientationSensor::updateReadingFromEvent(const sensor_event_t &event, QOrientationReading *reading)
 {
     QOrientationReading::Orientation qtOrientation = QOrientationReading::Undefined;
     const QByteArray face(event.orientation.face);
@@ -129,6 +90,5 @@ bool BbOrientationSensor::updateReadingFromEvent(const sensor_event_t &event, Bb
     else if (face == "FACE_DOWN") qtOrientation = QOrientationReading::FaceDown;
 
     reading->setOrientation(qtOrientation);
-    reading->setRotation(event.orientation.screen);
     return true;
 }
