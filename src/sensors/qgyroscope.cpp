@@ -167,16 +167,19 @@ char const * const QGyroscope::type("QGyroscope");
 */
 
 /*!
-    \fn QGyroscope::QGyroscope(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QGyroscope::QGyroscope(QObject *parent)
+    : QSensor(QGyroscope::type, parent)
+{
+}
 
 /*!
-    \fn QGyroscope::~QGyroscope()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QGyroscope::~QGyroscope()
+{
+}
 
 /*!
     \fn QGyroscope::reading() const

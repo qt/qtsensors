@@ -155,16 +155,19 @@ char const * const QCompass::type("QCompass");
 */
 
 /*!
-    \fn QCompass::QCompass(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QCompass::QCompass(QObject *parent)
+    : QSensor(QCompass::type, parent)
+{
+}
 
 /*!
-    \fn QCompass::~QCompass()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QCompass::~QCompass()
+{
+}
 
 /*!
     \fn QCompass::reading() const

@@ -207,16 +207,19 @@ char const * const QMagnetometer::type("QMagnetometer");
 */
 
 /*!
-    \fn QMagnetometer::QMagnetometer(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QMagnetometer::QMagnetometer(QObject *parent)
+    : QSensor(QMagnetometer::type, parent)
+{
+}
 
 /*!
-    \fn QMagnetometer::~QMagnetometer()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QMagnetometer::~QMagnetometer()
+{
+}
 
 /*!
     \fn QMagnetometer::reading() const

@@ -145,16 +145,19 @@ char const * const QAmbientLightSensor::type("QAmbientLightSensor");
 */
 
 /*!
-    \fn QAmbientLightSensor::QAmbientLightSensor(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QAmbientLightSensor::QAmbientLightSensor(QObject *parent)
+    : QSensor(QAmbientLightSensor::type, parent)
+{
+}
 
 /*!
-    \fn QAmbientLightSensor::~QAmbientLightSensor()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QAmbientLightSensor::~QAmbientLightSensor()
+{
+}
 
 /*!
     \fn QAmbientLightSensor::reading() const

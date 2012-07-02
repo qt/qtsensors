@@ -84,10 +84,13 @@ class Q_SENSORS_EXPORT QRotationSensor : public QSensor
     Q_PROPERTY(bool hasZ)
 #endif
 public:
-    explicit QRotationSensor(QObject *parent = 0) : QSensor(QRotationSensor::type, parent) {}
-    virtual ~QRotationSensor() {}
+    explicit QRotationSensor(QObject *parent = 0);
+    virtual ~QRotationSensor();
     QRotationReading *reading() const { return static_cast<QRotationReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QRotationSensor)
 };
 
 QT_END_NAMESPACE

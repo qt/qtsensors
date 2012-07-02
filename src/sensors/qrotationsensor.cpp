@@ -205,16 +205,19 @@ char const * const QRotationSensor::type("QRotationSensor");
 */
 
 /*!
-    \fn QRotationSensor::QRotationSensor(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QRotationSensor::QRotationSensor(QObject *parent)
+    : QSensor(QRotationSensor::type, parent)
+{
+}
 
 /*!
-    \fn QRotationSensor::~QRotationSensor()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QRotationSensor::~QRotationSensor()
+{
+}
 
 /*!
     \fn QRotationSensor::reading() const

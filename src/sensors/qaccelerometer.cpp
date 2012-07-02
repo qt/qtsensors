@@ -169,16 +169,19 @@ char const * const QAccelerometer::type("QAccelerometer");
 */
 
 /*!
-    \fn QAccelerometer::QAccelerometer(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QAccelerometer::QAccelerometer(QObject *parent)
+    : QSensor(QAccelerometer::type, parent)
+{
+}
 
 /*!
-    \fn QAccelerometer::~QAccelerometer()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QAccelerometer::~QAccelerometer()
+{
+}
 
 /*!
     \fn QAccelerometer::reading() const

@@ -208,16 +208,19 @@ char const * const QTapSensor::type("QTapSensor");
 */
 
 /*!
-    \fn QTapSensor::QTapSensor(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QTapSensor::QTapSensor(QObject *parent)
+    : QSensor(QTapSensor::type, parent)
+{
+}
 
 /*!
-    \fn QTapSensor::~QTapSensor()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QTapSensor::~QTapSensor()
+{
+}
 
 /*!
     \fn QTapSensor::reading() const

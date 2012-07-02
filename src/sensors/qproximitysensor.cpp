@@ -124,16 +124,19 @@ char const * const QProximitySensor::type("QProximitySensor");
 */
 
 /*!
-    \fn QProximitySensor::QProximitySensor(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QProximitySensor::QProximitySensor(QObject *parent)
+    : QSensor(QProximitySensor::type, parent)
+{
+}
 
 /*!
-    \fn QProximitySensor::~QProximitySensor()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QProximitySensor::~QProximitySensor()
+{
+}
 
 /*!
     \fn QProximitySensor::reading() const

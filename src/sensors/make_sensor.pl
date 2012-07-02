@@ -156,10 +156,13 @@ class Q_SENSORS_EXPORT '.$sensor.' : public QSensor
 {
     Q_OBJECT
 public:
-    explicit '.$sensor.'(QObject *parent = 0) : QSensor('.$sensor.'::type, parent) {}
-    virtual ~'.$sensor.'() {}
+    explicit '.$sensor.'(QObject *parent = 0);
+    ~'.$sensor.'();
     '.$reading.' *reading() const { return static_cast<'.$reading.'*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY('.$sensor.')
 };
 
 QT_END_NAMESPACE
@@ -259,16 +262,19 @@ char const * const '.$sensor.'::type("'.$sensor.'");
 */
 
 /*!
-    \fn '.$sensor.'::'.$sensor.'(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+'.$sensor.'::'.$sensor.'(QObject *parent)
+    : QSensor('.$sensor.'::type, parent)
+{
+}
 
 /*!
-    \fn '.$sensor.'::~'.$sensor.'()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+'.$sensor.'::~'.$sensor.'()
+{
+}
 
 /*!
     \fn '.$sensor.'::reading() const

@@ -158,14 +158,13 @@ Q_SIGNALS:
     void alwaysOnChanged();
 
 protected:
-    // called by the back end
-    QSensorPrivate *d_func() const { return d.data(); }
+    explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);
 
 private:
     void registerInstance();
 
-    QScopedPointer<QSensorPrivate> d;
     Q_DISABLE_COPY(QSensor)
+    Q_DECLARE_PRIVATE(QSensor)
 };
 
 class Q_SENSORS_EXPORT QSensorFilter

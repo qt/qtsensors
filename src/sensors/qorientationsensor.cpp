@@ -168,16 +168,19 @@ char const * const QOrientationSensor::type("QOrientationSensor");
 */
 
 /*!
-    \fn QOrientationSensor::QOrientationSensor(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QOrientationSensor::QOrientationSensor(QObject *parent)
+    : QSensor(QOrientationSensor::type, parent)
+{
+}
 
 /*!
-    \fn QOrientationSensor::~QOrientationSensor()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QOrientationSensor::~QOrientationSensor()
+{
+}
 
 /*!
     \fn QOrientationSensor::reading() const

@@ -97,10 +97,13 @@ class Q_SENSORS_EXPORT QTapSensor : public QSensor
     Q_PROPERTY(bool returnDoubleTapEvents)
 #endif
 public:
-    explicit QTapSensor(QObject *parent = 0) : QSensor(QTapSensor::type, parent) {}
-    virtual ~QTapSensor() {}
+    explicit QTapSensor(QObject *parent = 0);
+    virtual ~QTapSensor();
     QTapReading *reading() const { return static_cast<QTapReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QTapSensor);
 };
 
 QT_END_NAMESPACE

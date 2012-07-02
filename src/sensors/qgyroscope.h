@@ -81,10 +81,13 @@ class Q_SENSORS_EXPORT QGyroscope : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QGyroscope(QObject *parent = 0) : QSensor(QGyroscope::type, parent) {}
-    virtual ~QGyroscope() {}
+    explicit QGyroscope(QObject *parent = 0);
+    virtual ~QGyroscope();
     QGyroscopeReading *reading() const { return static_cast<QGyroscopeReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QGyroscope)
 };
 
 QT_END_NAMESPACE

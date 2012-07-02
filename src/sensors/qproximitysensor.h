@@ -73,10 +73,13 @@ class Q_SENSORS_EXPORT QProximitySensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QProximitySensor(QObject *parent = 0) : QSensor(QProximitySensor::type, parent) {}
-    virtual ~QProximitySensor() {}
+    explicit QProximitySensor(QObject *parent = 0);
+    virtual ~QProximitySensor();
     QProximityReading *reading() const { return static_cast<QProximityReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QProximitySensor)
 };
 
 QT_END_NAMESPACE

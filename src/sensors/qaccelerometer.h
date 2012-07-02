@@ -81,10 +81,13 @@ class Q_SENSORS_EXPORT QAccelerometer : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QAccelerometer(QObject *parent = 0) : QSensor(QAccelerometer::type, parent) {}
-    virtual ~QAccelerometer() {}
+    explicit QAccelerometer(QObject *parent = 0);
+    virtual ~QAccelerometer();
     QAccelerometerReading *reading() const { return static_cast<QAccelerometerReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QAccelerometer)
 };
 
 QT_END_NAMESPACE

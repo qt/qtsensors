@@ -55,13 +55,16 @@
 
 #include "qsensor.h"
 
+#include "private/qobject_p.h"
+
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 typedef QList<QSensorFilter*> QFilterList;
 
-class QSensorPrivate
+class QSensorPrivate : public QObjectPrivate
 {
+    Q_DECLARE_PUBLIC(QSensor)
 public:
     QSensorPrivate()
         : identifier()
@@ -78,6 +81,8 @@ public:
         , alwaysOn(false)
     {
     }
+
+    void init(const QByteArray &sensorType);
 
     // meta-data
     QByteArray identifier;

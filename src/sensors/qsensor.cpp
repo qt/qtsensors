@@ -149,6 +149,13 @@ static int qoutputrangelist_id = qRegisterMetaType<qoutputrangelist>("qoutputran
 
 // =====================================================================
 
+void QSensorPrivate::init(const QByteArray &sensorType)
+{
+    Q_Q(QSensor);
+    type = sensorType;
+    q->registerInstance(); // so the availableSensorsChanged() signal works
+}
+
 /*!
     \class QSensor
     \ingroup sensors_main
@@ -175,11 +182,19 @@ static int qoutputrangelist_id = qRegisterMetaType<qoutputrangelist>("qoutputran
     Construct the \a type sensor as a child of \a parent.
 */
 QSensor::QSensor(const QByteArray &type, QObject *parent)
-    : QObject(parent)
-    , d(new QSensorPrivate)
+    : QObject(*new QSensorPrivate, parent)
 {
-    d->type = type;
-    registerInstance(); // so the availableSensorsChanged() signal works
+    Q_D(QSensor);
+    d->init(type);
+}
+
+/*! \internal
+ */
+QSensor::QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent)
+    : QObject(dd, parent)
+{
+    Q_D(QSensor);
+    d->init(type);
 }
 
 /*!
@@ -187,6 +202,7 @@ QSensor::QSensor(const QByteArray &type, QObject *parent)
 */
 QSensor::~QSensor()
 {
+    Q_D(QSensor);
     stop();
     Q_FOREACH (QSensorFilter *filter, d->filters)
         filter->setSensor(0);
@@ -212,6 +228,7 @@ QSensor::~QSensor()
 
 bool QSensor::isConnectedToBackend() const
 {
+    Q_D(const QSensor);
     return (d->backend != 0);
 }
 
@@ -227,11 +244,13 @@ bool QSensor::isConnectedToBackend() const
 
 QByteArray QSensor::identifier() const
 {
+    Q_D(const QSensor);
     return d->identifier;
 }
 
 void QSensor::setIdentifier(const QByteArray &identifier)
 {
+    Q_D(QSensor);
     if (isConnectedToBackend()) {
         qWarning() << "ERROR: Cannot call QSensor::setIdentifier while connected to a backend!";
         return;
@@ -246,6 +265,7 @@ void QSensor::setIdentifier(const QByteArray &identifier)
 
 QByteArray QSensor::type() const
 {
+    Q_D(const QSensor);
     return d->type;
 }
 
@@ -260,6 +280,7 @@ QByteArray QSensor::type() const
 */
 bool QSensor::connectToBackend()
 {
+    Q_D(QSensor);
     if (isConnectedToBackend())
         return true;
 
@@ -301,6 +322,7 @@ bool QSensor::connectToBackend()
 
 bool QSensor::isBusy() const
 {
+    Q_D(const QSensor);
     return d->busy;
 }
 
@@ -340,6 +362,7 @@ void QSensor::setActive(bool active)
 
 bool QSensor::isActive() const
 {
+    Q_D(const QSensor);
     return d->active;
 }
 
@@ -357,6 +380,7 @@ bool QSensor::isActive() const
 */
 void QSensor::setAlwaysOn(bool alwaysOn)
 {
+    Q_D(QSensor);
     if (d->alwaysOn == alwaysOn) return;
     d->alwaysOn = alwaysOn;
     emit alwaysOnChanged();
@@ -364,6 +388,7 @@ void QSensor::setAlwaysOn(bool alwaysOn)
 
 bool QSensor::isAlwaysOn() const
 {
+    Q_D(const QSensor);
     return d->alwaysOn;
 }
 
@@ -389,6 +414,7 @@ bool QSensor::isAlwaysOn() const
 
 qrangelist QSensor::availableDataRates() const
 {
+    Q_D(const QSensor);
     return d->availableDataRates;
 }
 
@@ -420,11 +446,13 @@ qrangelist QSensor::availableDataRates() const
 
 int QSensor::dataRate() const
 {
+    Q_D(const QSensor);
     return d->dataRate;
 }
 
 void QSensor::setDataRate(int rate)
 {
+    Q_D(QSensor);
     if (rate == 0 || !isConnectedToBackend()) {
         d->dataRate = rate;
         return;
@@ -475,6 +503,7 @@ void QSensor::setDataRate(int rate)
 */
 bool QSensor::start()
 {
+    Q_D(QSensor);
     if (isActive())
         return true;
     if (!connectToBackend())
@@ -497,6 +526,7 @@ bool QSensor::start()
 */
 void QSensor::stop()
 {
+    Q_D(QSensor);
     if (!isConnectedToBackend() || !isActive())
         return;
     d->active = false;
@@ -523,6 +553,7 @@ void QSensor::stop()
 
 QSensorReading *QSensor::reading() const
 {
+    Q_D(const QSensor);
     return d->cache_reading;
 }
 
@@ -536,6 +567,7 @@ QSensorReading *QSensor::reading() const
 */
 void QSensor::addFilter(QSensorFilter *filter)
 {
+    Q_D(QSensor);
     if (!filter) {
         qWarning() << "addFilter: passed a null filter!";
         return;
@@ -551,6 +583,7 @@ void QSensor::addFilter(QSensorFilter *filter)
 */
 void QSensor::removeFilter(QSensorFilter *filter)
 {
+    Q_D(QSensor);
     if (!filter) {
         qWarning() << "removeFilter: passed a null filter!";
         return;
@@ -566,13 +599,9 @@ void QSensor::removeFilter(QSensorFilter *filter)
 */
 QList<QSensorFilter*> QSensor::filters() const
 {
+    Q_D(const QSensor);
     return d->filters;
 }
-
-/*!
-    \fn QSensor::d_func() const
-    \internal
-*/
 
 /*!
     \fn QSensor::readingChanged()
@@ -614,6 +643,7 @@ QList<QSensorFilter*> QSensor::filters() const
 
 qoutputrangelist QSensor::outputRanges() const
 {
+    Q_D(const QSensor);
     return d->outputRanges;
 }
 
@@ -637,11 +667,13 @@ qoutputrangelist QSensor::outputRanges() const
 
 int QSensor::outputRange() const
 {
+    Q_D(const QSensor);
     return d->outputRange;
 }
 
 void QSensor::setOutputRange(int index)
 {
+    Q_D(QSensor);
     if (index == -1 || !isConnectedToBackend()) {
         d->outputRange = index;
         return;
@@ -663,6 +695,7 @@ void QSensor::setOutputRange(int index)
 
 QString QSensor::description() const
 {
+    Q_D(const QSensor);
     return d->description;
 }
 
@@ -675,6 +708,7 @@ QString QSensor::description() const
 
 int QSensor::error() const
 {
+    Q_D(const QSensor);
     return d->error;
 }
 

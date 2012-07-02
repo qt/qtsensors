@@ -127,16 +127,19 @@ char const * const QIRProximitySensor::type("QIRProximitySensor");
 */
 
 /*!
-    \fn QIRProximitySensor::QIRProximitySensor(QObject *parent)
-
     Construct the sensor as a child of \a parent.
 */
+QIRProximitySensor::QIRProximitySensor(QObject *parent)
+    : QSensor(QIRProximitySensor::type, parent)
+{
+}
 
 /*!
-    \fn QIRProximitySensor::~QIRProximitySensor()
-
     Destroy the sensor. Stops the sensor if it has not already been stopped.
 */
+QIRProximitySensor::~QIRProximitySensor()
+{
+}
 
 /*!
     \fn QIRProximitySensor::reading() const

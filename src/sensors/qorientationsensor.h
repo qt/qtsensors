@@ -84,10 +84,13 @@ class Q_SENSORS_EXPORT QOrientationSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QOrientationSensor(QObject *parent = 0) : QSensor(QOrientationSensor::type, parent) {}
-    virtual ~QOrientationSensor() {}
+    explicit QOrientationSensor(QObject *parent = 0);
+    virtual ~QOrientationSensor();
     QOrientationReading *reading() const { return static_cast<QOrientationReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QOrientationSensor)
 };
 
 QT_END_NAMESPACE

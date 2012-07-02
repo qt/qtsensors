@@ -76,10 +76,13 @@ class Q_SENSORS_EXPORT QLightSensor : public QSensor
     Q_PROPERTY(qreal fieldOfView)
 #endif
 public:
-    explicit QLightSensor(QObject *parent = 0) : QSensor(QLightSensor::type, parent) {}
-    virtual ~QLightSensor() {}
+    explicit QLightSensor(QObject *parent = 0);
+    virtual ~QLightSensor();
     QLightReading *reading() const { return static_cast<QLightReading*>(QSensor::reading()); }
     static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QLightSensor)
 };
 
 QT_END_NAMESPACE
