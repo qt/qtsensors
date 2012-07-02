@@ -182,32 +182,3 @@ Existing instances of the backend should report error states to the application 
 handle the situation gracefully.
 
 */
-
-/*!
-\page meego-integration-notes.html
-\title MeeGo Integration Notes
-\ingroup sensors_backend_topics
-
-\section1 MeeGo Integration Notes
-
-The implementation of the API builds on top of the MeeGo Sensor Framework
-that provides all the sensors specified in 1.2 API version.
-
-\section2 Available sensors
-
-If HW sensor is missing, the configuration file "Sensors.conf"
-must be updated and sensor removed. The file
-has the following format:
-
-\code
-[Default]
-QAccelerometer=meego.accelerometer
-QAmbientLightSensor=meego.als
-\endcode
-
-It lists sensor types and type's default implementation by giving the sensor id.
-If the type is omitted then the backend does not support it in this device; this
-gives a way of controlling and differentiating the supported sensor set.
-
-*/
-
