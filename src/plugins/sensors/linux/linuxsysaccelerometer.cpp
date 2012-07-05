@@ -1,0 +1,194 @@
+/****************************************************************************
+**
+** Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies).
+** Contact: http://www.qt-project.org/
+**
+** This file is part of the QtSensors module of the Qt Toolkit.
+**
+** $QT_BEGIN_LICENSE:LGPL$
+** GNU Lesser General Public License Usage
+** This file may be used under the terms of the GNU Lesser General Public
+** License version 2.1 as published by the Free Software Foundation and
+** appearing in the file LICENSE.LGPL included in the packaging of this
+** file. Please review the following information to ensure the GNU Lesser
+** General Public License version 2.1 requirements will be met:
+** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+** In addition, as a special exception, Nokia gives you certain additional
+** rights. These rights are described in the Nokia Qt LGPL Exception
+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU General
+** Public License version 3.0 as published by the Free Software Foundation
+** and appearing in the file LICENSE.GPL included in the packaging of this
+** file. Please review the following information to ensure the GNU General
+** Public License version 3.0 requirements will be met:
+** http://www.gnu.org/copyleft/gpl.html.
+**
+** Other Usage
+** Alternatively, this file may be used in accordance with the terms and
+** conditions contained in a signed written agreement between you and Nokia.
+**
+**
+**
+**
+**
+**
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+#include "linuxsysaccelerometer.h"
+#include <QtCore/QDebug>
+#include <QtCore/QtGlobal>
+#include <QtCore/QFile>
+#include <QtCore/QDebug>
+#include <QtCore/QTimer>
+
+#include <QtCore/QStringList>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <fcntl.h>
+
+char const * const LinuxSysAccelerometer::id("linuxsys.accelerometer");
+
+// This plugin reads the accelerometer from a sys interface.
+
+// test machine (laptop):
+// QT_ACCEL_FILEPATH=/sys/devices/platform/lis3lv02d/position
+// QT_ACCEL_DATADIVISOR=7
+// QT_ACCEL_DELIMITER=,
+
+quint64 produceTimestamp()
+{
+    struct timespec tv;
+    int ok;
+
+#ifdef CLOCK_MONOTONIC_RAW
+    ok = clock_gettime(CLOCK_MONOTONIC_RAW, &tv);
+    if (ok != 0)
+#endif
+    ok = clock_gettime(CLOCK_MONOTONIC, &tv);
+    Q_ASSERT(ok == 0);
+
+    quint64 result = (tv.tv_sec * 1000000ULL) + (tv.tv_nsec * 0.001); // scale to microseconds
+    return result;
+}
+
+// TODO get output template from env and apply
+// Currently this assumes the output is like:
+// (x,y,z) or x,y,z
+
+LinuxSysAccelerometer::LinuxSysAccelerometer(QSensor *sensor)
+    : QSensorBackend(sensor)
+    , m_timerid(0)
+    , fd(0)
+    , path(QString())
+    , divisor(0)
+    , delimiter(QString())
+{
+    setReading<QAccelerometerReading>(&m_reading);
+    addDataRate(1, 100); // 100Hz
+    addOutputRange(-22.418, 22.418, 0.17651); // 2G
+// not sure how to retrieve proper range
+
+    path = QString::fromLatin1(qgetenv("QT_ACCEL_FILEPATH"));
+    bool ok;
+    divisor = QString::fromLatin1(qgetenv("QT_ACCEL_DATADIVISOR")).toInt(&ok);
+    if (divisor == 0 || !ok) {
+        divisor = 1;
+    }
+    delimiter = QString::fromLatin1(qgetenv("QT_ACCEL_DELIMITER"));
+    file.setFileName(path);
+}
+
+LinuxSysAccelerometer::~LinuxSysAccelerometer()
+{
+    closeFile();
+}
+
+void LinuxSysAccelerometer::start()
+{
+    if (m_timerid)
+        return;
+
+    if (!openFile())
+        return;
+
+    int dataRate = sensor()->dataRate();
+    if (dataRate == 0) {
+        if (sensor()->availableDataRates().count())
+            dataRate = sensor()->availableDataRates().first().second;
+        else
+            dataRate = 1;
+    }
+
+    int interval = 1000 / dataRate;
+
+    if (interval)
+        m_timerid = startTimer(interval);
+}
+
+void LinuxSysAccelerometer::stop()
+{
+    if (m_timerid) {
+        killTimer(m_timerid);
+        m_timerid = 0;
+    }
+    closeFile();
+}
+
+void LinuxSysAccelerometer::poll()
+{
+    if (!file.isOpen())
+        return;
+
+    file.seek(0);
+    QString str = file.readLine();
+    if (str.isEmpty()) {
+        return;
+    }
+    str = str.simplified();
+
+    if (!str.at(0).isNumber() && str.at(0) != '-') {
+        str.remove(0,1);
+    }
+
+    if (!str.at(str.size()-1).isNumber()) {
+        str.chop(1);
+    }
+
+    QStringList accelDataList = str.split(delimiter);
+
+    m_reading.setTimestamp(produceTimestamp());
+    m_reading.setX(-accelDataList.at(0).toFloat() / divisor);
+    m_reading.setY(-accelDataList.at(1).toFloat() / divisor);
+    m_reading.setZ(-accelDataList.at(2).toFloat() / divisor);
+
+    newReadingAvailable();
+}
+
+void LinuxSysAccelerometer::timerEvent(QTimerEvent * /*event*/)
+{
+    poll();
+}
+
+bool LinuxSysAccelerometer::openFile()
+{
+    if (!path.isEmpty()
+            && !file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Could not open file" << strerror(errno);
+        return false;
+    }
+    return true;
+}
+
+void LinuxSysAccelerometer::closeFile()
+{
+    ::close(fd);
+}
+
+
