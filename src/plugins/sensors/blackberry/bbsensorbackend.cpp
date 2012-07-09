@@ -45,6 +45,7 @@
 #include <fcntl.h>
 
 static const int microSecondsPerSecond = 1000 * 1000;
+static const int defaultBufferSize = 10;
 
 static int microSecondsToHertz(uint microSeconds)
 {
@@ -62,6 +63,10 @@ BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_
 {
     QCoreApplication::instance()->installEventFilter(this);
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
+
+    // Set some sensible default values
+    sensor->setProperty("efficientBufferSize", defaultBufferSize);
+    sensor->setProperty("maxBufferSize", defaultBufferSize);
 }
 
 QFile &BbSensorBackendBase::deviceFile()
@@ -167,6 +172,24 @@ void BbSensorBackendBase::start()
         sensorError(errno);
         stop();
         return;
+    }
+
+    // Activate event queuing if needed
+    bool ok = false;
+    const int requestedBufferSize = sensor()->property("bufferSize").toInt(&ok);
+    if (ok && requestedBufferSize > 1) {
+        sensor_devctl_queue_u queueControl;
+        queueControl.tx.enable = 1;
+        const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_QUEUE, &queueControl, sizeof(queueControl), NULL);
+        if (result != EOK) {
+            perror(QString::fromLatin1("Enabling sensor queuing for %1 failed")
+                   .arg(m_deviceFile.fileName()).toLocal8Bit());
+        }
+
+        const int actualBufferSize = queueControl.rx.size;
+        sensor()->setProperty("bufferSize", actualBufferSize);
+        sensor()->setProperty("efficientBufferSize", actualBufferSize);
+        sensor()->setProperty("maxBufferSize", actualBufferSize);
     }
 
     applyAlwaysOnProperty();
