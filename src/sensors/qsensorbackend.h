@@ -60,6 +60,8 @@ public:
     virtual void start() = 0;
     virtual void stop() = 0;
 
+    virtual bool isFeatureSupported(QSensor::Feature feature) const;
+
     // used by the backend to set metadata properties
     void addDataRate(qreal min, qreal max);
     void setDataRates(const QSensor *otherSensor);

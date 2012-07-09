@@ -179,6 +179,33 @@ void QSensorPrivate::init(const QByteArray &sensorType)
 */
 
 /*!
+    \enum QSensor::Feature
+    \brief Lists optional features a backend might support.
+
+    The features common to all sensor types are:
+
+    \value Buffering The backend supports buffering of readings, controlled by the
+                     QSensor::bufferSize property.
+    \value AlwaysOn The backend supports changing the policy on whether to suspend when idle,
+                    controlled by the QSensor::alwaysOn property.
+
+    The features of QMagnetometer are:
+
+    \value GeoValues The backend supports returning geo values, which can be
+                     controlled with the QMagnetometer::returnGeoValues property.
+
+    The features of QLightSensor are:
+
+    \value FieldOfView The backend specifies its field of view, which can be
+                       read from the QLightSensor::fieldOfView property.
+
+    \omitvalue Reserved
+
+    \sa QSensor::isFeatureSupported()
+    \since 5.0
+*/
+
+/*!
     Construct the \a type sensor as a child of \a parent.
 */
 QSensor::QSensor(const QByteArray &type, QObject *parent)
@@ -468,6 +495,28 @@ void QSensor::setDataRate(int rate)
     if (warn) {
         qWarning() << "setDataRate:" << rate << "is not supported by the sensor.";
     }
+}
+
+/*!
+   Checks if a specific feature is supported by the backend.
+
+   QtSensors supports a rich API for controlling and providing information about sensors. Naturally,
+   not all of this functionality can be supported by all of the backends.
+
+   To check if the current backend supports the feature \a feature, call this function.
+
+   The backend needs to be connected, otherwise false will be returned. Calling connectToBackend()
+   or start() will create a connection to the backend.
+
+   Backends have to implement QSensorBackend::isFeatureSupported() to make this work.
+
+   \return whether or not the feature is supported if the backend is connected, or false if the backend is not connected.
+   \since 5.0
+ */
+bool QSensor::isFeatureSupported(Feature feature) const
+{
+    Q_D(const QSensor);
+    return d->backend && d->backend->isFeatureSupported(feature);
 }
 
 /*!

@@ -72,6 +72,21 @@ QSensorBackend::~QSensorBackend()
 }
 
 /*!
+   Checks whether a feature is supported by this sensor backend.
+
+   This is the backend side of QSensor::isFeatureSupported(). Reimplement this function if the
+   backend supports one of the additional sensor features of QSensor::Feature.
+
+   \return whether the feature \a feature is supported by this backend. The default implementation returns false.
+   \since 5.0
+ */
+bool QSensorBackend::isFeatureSupported(QSensor::Feature feature) const
+{
+    Q_UNUSED(feature);
+    return false;
+}
+
+/*!
     Notify the QSensor class that a new reading is available.
 */
 void QSensorBackend::newReadingAvailable()

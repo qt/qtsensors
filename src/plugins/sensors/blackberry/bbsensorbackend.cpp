@@ -204,6 +204,20 @@ void BbSensorBackendBase::stop()
     m_deviceFile.close();
 }
 
+bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
+{
+    switch (feature) {
+    case QSensor:: AlwaysOn:
+        return true;
+    case QSensor::Buffering:
+    case QSensor::GeoValues:
+    case QSensor::FieldOfView:
+        break;
+    }
+
+    return false;
+}
+
 void BbSensorBackendBase::dataAvailable()
 {
     Q_FOREVER {

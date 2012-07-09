@@ -946,6 +946,27 @@ private slots:
         sensor2.start();
         QVERIFY(sensor2.isActive());
     }
+
+    void testSupportedFeatures()
+    {
+        TestSensor sensor;
+
+        // Not connected to backend - should report false for any feature
+        QVERIFY(!sensor.isConnectedToBackend());
+        QVERIFY(!sensor.isFeatureSupported(QSensor::AlwaysOn));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::GeoValues));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
+
+        // Connect to backend - according to the testsensorimpl implementation, AlwaysOn and
+        // GeoValues should be supported afterwards
+        QVERIFY(sensor.connectToBackend());
+
+        QVERIFY(sensor.isFeatureSupported(QSensor::AlwaysOn));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
+        QVERIFY(sensor.isFeatureSupported(QSensor::GeoValues));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
+    }
 };
 
 QT_END_NAMESPACE

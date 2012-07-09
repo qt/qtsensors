@@ -200,6 +200,15 @@ Module {
         prototype: "QObject"
         exports: ["Sensor 1.2", "Sensor 1.3"]
         exportMetaObjectRevisions: [0, 1]
+        Enum {
+            name: "Feature"
+            values: {
+                "Buffering": 0,
+                "AlwaysOn": 1,
+                "GeoValues": 2,
+                "FieldOfView": 3
+            }
+        }
         Property { name: "sensorid"; type: "QByteArray" }
         Property { name: "type"; type: "QByteArray"; isReadonly: true }
         Property { name: "connectedToBackend"; type: "bool"; isReadonly: true }
@@ -221,6 +230,11 @@ Module {
         Method { name: "start"; type: "bool" }
         Method { name: "stop" }
         Method { name: "connectToBackend"; type: "bool" }
+        Method {
+            name: "isFeatureSupported"
+            type: "bool"
+            Parameter { name: "feature"; type: "Feature" }
+        }
     }
     Component {
         name: "QSensorReading"

@@ -79,6 +79,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     friend class QSensorBackend;
 
     Q_OBJECT
+    Q_ENUMS(Feature)
     Q_PROPERTY(QByteArray sensorid READ identifier WRITE setIdentifier)
     Q_PROPERTY(QByteArray type READ type)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
@@ -98,6 +99,14 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(int bufferSize)
 #endif
 public:
+    enum Feature {
+        Buffering,
+        AlwaysOn,
+        GeoValues,
+        FieldOfView,
+        Reserved = 257 // Make sure at least 2 bytes are used for the enum to avoid breaking BC later
+    };
+
     explicit QSensor(const QByteArray &type, QObject *parent = 0);
     virtual ~QSensor();
 
@@ -141,6 +150,8 @@ public:
     static QList<QByteArray> sensorTypes();
     static QList<QByteArray> sensorsForType(const QByteArray &type);
     static QByteArray defaultSensorForType(const QByteArray &type);
+
+    Q_INVOKABLE bool isFeatureSupported(Feature feature) const;
 
 public Q_SLOTS:
     // Start receiving values from the sensor
