@@ -116,14 +116,6 @@ qreal QRotationReading::x() const
 }
 
 /*!
-    Sets the rotation around the x axis to \a x.
-*/
-void QRotationReading::setX(qreal x)
-{
-    d->x = x;
-}
-
-/*!
     \property QRotationReading::y
     \brief the rotation around the y axis.
 
@@ -134,14 +126,6 @@ void QRotationReading::setX(qreal x)
 qreal QRotationReading::y() const
 {
     return d->y;
-}
-
-/*!
-    Sets the rotation around the y axis to \a y.
-*/
-void QRotationReading::setY(qreal y)
-{
-    d->y = y;
 }
 
 /*!
@@ -158,10 +142,19 @@ qreal QRotationReading::z() const
 }
 
 /*!
-    Sets the rotation around the z axis to \a z.
-*/
-void QRotationReading::setZ(qreal z)
+   \brief Sets the rotation from three euler angles.
+
+   This is to be called from the backend.
+
+   The angles are measured in degrees. The order of the rotations matters, as first the \a z rotation
+   is applied, then the \a x rotation and finally the \a y rotation.
+
+   \since 5.0
+ */
+void QRotationReading::setFromEuler(qreal x, qreal y, qreal z)
 {
+    d->x = x;
+    d->y = y;
     d->z = z;
 }
 

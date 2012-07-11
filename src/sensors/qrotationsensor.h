@@ -60,13 +60,10 @@ class Q_SENSORS_EXPORT QRotationReading : public QSensorReading
     DECLARE_READING(QRotationReading)
 public:
     qreal x() const;
-    void setX(qreal x);
-
     qreal y() const;
-    void setY(qreal y);
-
     qreal z() const;
-    void setZ(qreal z);
+
+    void setFromEuler(qreal x, qreal y, qreal z);
 };
 
 class Q_SENSORS_EXPORT QRotationFilter : public QSensorFilter

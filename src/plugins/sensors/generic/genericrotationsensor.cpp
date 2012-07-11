@@ -107,9 +107,7 @@ bool genericrotationsensor::filter(QSensorReading *reading)
     }
 
     m_reading.setTimestamp(ar->timestamp());
-    m_reading.setX(pitch);
-    m_reading.setY(roll);
-    m_reading.setZ(0);
+    m_reading.setFromEuler(pitch, roll, 0);
     newReadingAvailable();
     return false;
 }

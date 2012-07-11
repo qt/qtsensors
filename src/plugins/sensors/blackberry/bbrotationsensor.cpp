@@ -137,9 +137,9 @@ bool BbRotationSensor::updateReadingFromEvent(const sensor_event_t &event, QRota
         matrixToEulerZXY(event.rotation_matrix, xRad, yRad, zRad);
     }
 
-    reading->setX(radiansToDegrees(xRad));
-    reading->setY(radiansToDegrees(yRad));
-    reading->setZ(radiansToDegrees(zRad));
+    reading->setFromEuler(radiansToDegrees(xRad),
+                          radiansToDegrees(yRad),
+                          radiansToDegrees(zRad));
 
     return true;
 }

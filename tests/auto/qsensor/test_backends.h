@@ -123,9 +123,7 @@ PREPARE_SENSORINTERFACE(QProximitySensor, QProximityReading, QProximityFilter, {
     reading->setClose(true);
 })
 PREPARE_SENSORINTERFACE(QRotationSensor, QRotationReading, QRotationFilter, {
-    reading->setX(1.0);
-    reading->setY(1.0);
-    reading->setZ(1.0);
+    reading->setFromEuler(1.0, 1.0, 1.0);
 })
 PREPARE_SENSORINTERFACE(QTapSensor, QTapReading, QTapFilter, {
     reading->setTapDirection(QTapReading::Z_Both);
