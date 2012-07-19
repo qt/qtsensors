@@ -56,6 +56,8 @@
 #include "sensor.h"
 #endif
 
+class BbGuiHelper;
+
 class BbSensorBackendBase : public QSensorBackend
 {
     Q_OBJECT
@@ -64,12 +66,14 @@ public:
     BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType, QSensor *sensor);
 
     void initSensorInfo();
+    virtual void setGuiHelper(BbGuiHelper *guiHelper);
 
     void start() Q_DECL_OVERRIDE;
     void stop() Q_DECL_OVERRIDE;
     bool isFeatureSupported(QSensor::Feature feature) const Q_DECL_OVERRIDE;
 
 protected:
+    BbGuiHelper *guiHelper() const;
     QFile& deviceFile();
     sensor_type_e sensorType() const;
 
@@ -90,17 +94,17 @@ protected:
 
     virtual void processEvent(const sensor_event_t &sensorEvent) = 0;
 
-    virtual bool eventFilter(QObject *object, QEvent *event);
-
 private slots:
     void dataAvailable();
     void applyAlwaysOnProperty();
     void setPaused(bool paused);
+    void updatePauseState();
 
 private:
     QFile m_deviceFile;
     QScopedPointer<QSocketNotifier> m_socketNotifier;
     sensor_type_e m_sensorType;
+    BbGuiHelper *m_guiHelper;
 };
 
 template<class SensorReading>

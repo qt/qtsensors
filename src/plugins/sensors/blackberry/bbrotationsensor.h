@@ -53,6 +53,8 @@ public:
 
     static QString devicePath();
 
+    void setGuiHelper(BbGuiHelper *guiHelper) Q_DECL_OVERRIDE;
+
 protected:
     void additionalDeviceInit() Q_DECL_OVERRIDE;
     bool addDefaultRange() Q_DECL_OVERRIDE;
@@ -60,13 +62,10 @@ protected:
     bool updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading) Q_DECL_OVERRIDE;
     bool isAutoAxisRemappingEnabled() const;
 
-    bool eventFilter(QObject *object, QEvent *event) Q_DECL_OVERRIDE;
-
-private:
+private slots:
     void updateOrientation();
 
-    Qt::ScreenOrientation m_orientation;
-    Qt::ScreenOrientation m_nativeOrientation;
+private:
     float m_mappingMatrix[4];
 };
 

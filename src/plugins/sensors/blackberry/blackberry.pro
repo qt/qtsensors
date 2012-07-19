@@ -1,7 +1,7 @@
 load(qt_build_config)
 
 TARGET = qtsensors_blackberry
-QT = sensors core gui gui-private
+QT = sensors core
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 load(qt_plugin)
@@ -24,6 +24,7 @@ HEADERS += bbsensorbackend.h \
     bbproximitysensor.h \
     bbrotationsensor.h \
     bbtemperaturesensor.h \
+    bbguihelper.h \
     bbutil.h
 
 SOURCES += bbsensorbackend.cpp \
@@ -40,6 +41,7 @@ SOURCES += bbsensorbackend.cpp \
     bbproximitysensor.cpp \
     bbrotationsensor.cpp \
     bbtemperaturesensor.cpp \
+    bbguihelper.cpp \
     bbutil.cpp \
     main.cpp
 

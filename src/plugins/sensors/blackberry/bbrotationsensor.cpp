@@ -40,26 +40,30 @@
 ****************************************************************************/
 #include "bbrotationsensor.h"
 
+#include "bbguihelper.h"
 #include "bbutil.h"
 #include <QtCore/qmath.h>
-#include <QGuiApplication>
-#include <QScreen>
-#include <qpa/qplatformscreen.h>
 
 using namespace BbUtil;
 
 BbRotationSensor::BbRotationSensor(QSensor *sensor)
-    : BbSensorBackend<QRotationReading>(devicePath(), SENSOR_TYPE_ROTATION_MATRIX, sensor),
-      m_orientation(Qt::PrimaryOrientation),
-      m_nativeOrientation(Qt::PrimaryOrientation)
+    : BbSensorBackend<QRotationReading>(devicePath(), SENSOR_TYPE_ROTATION_MATRIX, sensor)
 {
-    updateOrientation();
     setDescription(QLatin1String("Device rotation in degrees"));
+    m_mappingMatrix[0] = m_mappingMatrix[2] = 1;
+    m_mappingMatrix[1] = m_mappingMatrix[3] = 0;
 }
 
 QString BbRotationSensor::devicePath()
 {
     return QLatin1String("/dev/sensor/rotMatrix");
+}
+
+void BbRotationSensor::setGuiHelper(BbGuiHelper *guiHelper)
+{
+    BbSensorBackend<QRotationReading>::setGuiHelper(guiHelper);
+    connect(guiHelper, SIGNAL(orientationChanged()), this, SLOT(updateOrientation()));
+    updateOrientation();
 }
 
 void BbRotationSensor::additionalDeviceInit()
@@ -94,7 +98,6 @@ static void remapMatrix(const float inputMatrix[3*3],
     }
 }
 
-
 bool BbRotationSensor::updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading)
 {
     // sensor_event_t has euler angles for a Z-Y'-X'' system, but the QtMobility API
@@ -102,7 +105,7 @@ bool BbRotationSensor::updateReadingFromEvent(const sensor_event_t &event, QRota
     // So extract the euler angles using the Z-X'-Y'' system from the matrix.
     float xRad, yRad, zRad;
 
-    if (isAutoAxisRemappingEnabled() && m_orientation!=m_nativeOrientation) {
+    if (isAutoAxisRemappingEnabled() && guiHelper()->currentOrientation() != 0) {
         float mappedRotationMatrix[3*3];
         remapMatrix(event.rotation_matrix, m_mappingMatrix, mappedRotationMatrix);
         matrixToEulerZXY(mappedRotationMatrix, xRad, yRad, zRad);
@@ -127,27 +130,14 @@ bool BbRotationSensor::isAutoAxisRemappingEnabled() const
     return sensor()->property("automaticAxisRemapping").toBool();
 }
 
-bool BbRotationSensor::eventFilter(QObject *object, QEvent *event)
-{
-    if (object == QCoreApplication::instance() && event->type() == QEvent::OrientationChange)
-        updateOrientation();
-
-    return BbSensorBackend<QRotationReading>::eventFilter(object, event);
-}
-
 void BbRotationSensor::updateOrientation()
 {
-    QScreen *screen = QGuiApplication::primaryScreen();
-    if (screen) {
-        const QPlatformScreen * const platformScreen = screen->handle();
-        m_nativeOrientation = platformScreen->nativeOrientation();
-        m_orientation = screen->orientation();
+    // ### I can't really test this, the rotation matrix has too many glitches and drifts over time,
+    // making any measurement quite hard
+    const int rotationAngle = guiHelper()->currentOrientation();
 
-        const int rotationAngle = screen->angleBetween(m_nativeOrientation, m_orientation);
-
-        m_mappingMatrix[0] = cos(rotationAngle*M_PI/180);
-        m_mappingMatrix[1] = sin(rotationAngle*M_PI/180);
-        m_mappingMatrix[2] = -sin(rotationAngle*M_PI/180);
-        m_mappingMatrix[3] = cos(rotationAngle*M_PI/180);
-    }
+    m_mappingMatrix[0] = cos(rotationAngle*M_PI/180);
+    m_mappingMatrix[1] = sin(rotationAngle*M_PI/180);
+    m_mappingMatrix[2] = -sin(rotationAngle*M_PI/180);
+    m_mappingMatrix[3] = cos(rotationAngle*M_PI/180);
 }

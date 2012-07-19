@@ -40,8 +40,8 @@
 ****************************************************************************/
 #include "bbsensorbackend.h"
 
+#include "bbguihelper.h"
 #include <QtCore/QDebug>
-#include <QtGui/QGuiApplication>
 #include <fcntl.h>
 
 static const int microSecondsPerSecond = 1000 * 1000;
@@ -59,14 +59,18 @@ static uint hertzToMicroSeconds(int hertz)
 
 BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType,
                                          QSensor *sensor)
-    : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType)
+    : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType), m_guiHelper(0)
 {
-    QCoreApplication::instance()->installEventFilter(this);
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
 
     // Set some sensible default values
     sensor->setProperty("efficientBufferSize", defaultBufferSize);
     sensor->setProperty("maxBufferSize", defaultBufferSize);
+}
+
+BbGuiHelper *BbSensorBackendBase::guiHelper() const
+{
+    return m_guiHelper;
 }
 
 QFile &BbSensorBackendBase::deviceFile()
@@ -107,6 +111,13 @@ void BbSensorBackendBase::initSensorInfo()
     }
 }
 
+void BbSensorBackendBase::setGuiHelper(BbGuiHelper *guiHelper)
+{
+    Q_ASSERT(!m_guiHelper);
+    m_guiHelper = guiHelper;
+    connect(m_guiHelper, SIGNAL(applicationActiveChanged()), this, SLOT(updatePauseState()));
+}
+
 void BbSensorBackendBase::additionalDeviceInit()
 {
 }
@@ -121,27 +132,10 @@ qreal BbSensorBackendBase::convertValue(float bbValue)
     return bbValue;
 }
 
-bool BbSensorBackendBase::eventFilter(QObject *object, QEvent *event)
-{
-    if (object == QCoreApplication::instance()) {
-        switch (event->type()) {
-        case QEvent::ApplicationActivate:
-            setPaused(false);
-            break;
-        case QEvent::ApplicationDeactivate:
-            if (!sensor()->isAlwaysOn())
-                setPaused(true);
-            break;
-        default:
-            break;
-        }
-    }
-
-    return QSensorBackend::eventFilter(object, event);
-}
-
 void BbSensorBackendBase::start()
 {
+    Q_ASSERT(m_guiHelper);
+
     if (!m_deviceFile.open(QFile::ReadOnly | QFile::Unbuffered)) {
         qDebug() << "Starting sensor" << m_deviceFile.fileName()
                  << "failed:" << m_deviceFile.errorString();
@@ -250,7 +244,7 @@ void BbSensorBackendBase::applyAlwaysOnProperty()
     }
 
     // We might need to pause now
-    setPaused(QGuiApplication::focusWindow() == 0 && !sensor()->isAlwaysOn());
+    updatePauseState();
 }
 
 void BbSensorBackendBase::setPaused(bool paused)
@@ -267,4 +261,9 @@ void BbSensorBackendBase::setPaused(bool paused)
                .arg(paused)
                .arg(m_deviceFile.fileName()).toLocal8Bit());
     }
+}
+
+void BbSensorBackendBase::updatePauseState()
+{
+    setPaused(!sensor()->isAlwaysOn() && !m_guiHelper->applicationActive());
 }

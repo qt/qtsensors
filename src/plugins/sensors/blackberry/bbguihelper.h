@@ -38,16 +38,39 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BBUTIL_H
-#define BBUTIL_H
+#ifndef BBGUIHELPER_H
+#define BBGUIHELPER_H
 
-#include <QtCore/qglobal.h>
+#include <QtCore/QAbstractNativeEventFilter>
+#include <QtCore/QObject>
 
-namespace BbUtil {
+struct bps_event_t;
 
-void matrixToEulerZXY(const float matrix[3*3], float &thetaX, float &thetaY, float& thetaZ);
-qreal radiansToDegrees(qreal radians);
+// We can't depend on QtGui in this plugin, only on BPS.
+// This class provides replacements for some QtGui functions, implemented using BPS.
+class BbGuiHelper : public QObject, public QAbstractNativeEventFilter
+{
+    Q_OBJECT
+public:
+    explicit BbGuiHelper(QObject *parent = 0);
+    ~BbGuiHelper();
 
-}
+    // Orientation 0 is device held in normal position (Blackberry logo readable), then orientation
+    // increases in 90 degrees steps counter-clockwise, i.e. rotating the device to the left.
+    // Therefore the range is 0 to 270 degrees.
+    int currentOrientation() const;
+
+    bool applicationActive() const;
+
+    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) Q_DECL_OVERRIDE;
+
+signals:
+    void orientationChanged();
+    void applicationActiveChanged();
+
+private:
+    int m_currentOrientation;
+    bool m_applicationActive;
+};
 
 #endif

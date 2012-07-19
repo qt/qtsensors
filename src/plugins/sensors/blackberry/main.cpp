@@ -51,6 +51,7 @@
 #include "bbproximitysensor.h"
 #include "bbrotationsensor.h"
 #include "bbtemperaturesensor.h"
+#include "bbguihelper.h"
 
 #include <qsensormanager.h>
 #include <qsensorplugin.h>
@@ -136,6 +137,7 @@ public:
         if (sensor->identifier() == bbTemperatureSensorId)
             backend = new BbTemperatureSensor(sensor);
         backend->initSensorInfo();
+        backend->setGuiHelper(&m_guiHelper);
         return backend;
     }
 
@@ -144,6 +146,8 @@ private:
     {
         return QFile::exists(devicePath);
     }
+
+    BbGuiHelper m_guiHelper;
 };
 
 #include "main.moc"
