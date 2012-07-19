@@ -40,6 +40,7 @@ SOURCES += bbsensorbackend.cpp \
     bbproximitysensor.cpp \
     bbrotationsensor.cpp \
     bbtemperaturesensor.cpp \
+    bbutil.cpp \
     main.cpp
 
 OTHER_FILES = plugin.json

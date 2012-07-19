@@ -46,6 +46,8 @@
 #include <QScreen>
 #include <qpa/qplatformscreen.h>
 
+using namespace BbUtil;
+
 BbRotationSensor::BbRotationSensor(QSensor *sensor)
     : BbSensorBackend<QRotationReading>(devicePath(), SENSOR_TYPE_ROTATION_MATRIX, sensor),
       m_orientation(Qt::PrimaryOrientation),
@@ -70,35 +72,6 @@ bool BbRotationSensor::addDefaultRange()
     // The range we get from the OS service is only -1 to 1, which are the values of the matrix.
     // We need the values of the axes in degrees.
     return false;
-}
-
-static float getMatrixElement(const float matrix[3*3], int index0, int index1)
-{
-    return matrix[index0 * 3 + index1];
-}
-
-static void matrixToEulerZXY(const float matrix[3*3],
-                             float &thetaX, float &thetaY, float& thetaZ)
-{
-    thetaX = asin( getMatrixElement(matrix, 2, 1));
-    if ( thetaX < M_PI_2 ) {
-        if ( thetaX > -M_PI_2 ) {
-            thetaZ = atan2( -getMatrixElement(matrix, 0, 1),
-                             getMatrixElement(matrix, 1, 1) );
-            thetaY = atan2( -getMatrixElement(matrix, 2, 0),
-                             getMatrixElement(matrix, 2, 2) );
-        } else {
-            // Not a unique solution
-            thetaZ = -atan2( getMatrixElement(matrix, 0, 2),
-                             getMatrixElement(matrix, 0, 0) );
-            thetaY = 0.0;
-        }
-    } else {
-        // Not a unique solution
-        thetaZ = atan2( getMatrixElement(matrix, 0, 2),
-                        getMatrixElement(matrix, 0, 0) );
-        thetaY = 0.0;
-    }
 }
 
 static void remapMatrix(const float inputMatrix[3*3],

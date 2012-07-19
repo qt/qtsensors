@@ -39,16 +39,26 @@
 **
 ****************************************************************************/
 #include "bbcompass.h"
+#include "bbutil.h"
+
+using namespace BbUtil;
 
 BbCompass::BbCompass(QSensor *sensor)
-    : BbSensorBackend<QCompassReading>(devicePath(), SENSOR_TYPE_AZIMUTH_PITCH_ROLL, sensor)
+    : BbSensorBackend<QCompassReading>(devicePath(), SENSOR_TYPE_ROTATION_MATRIX, sensor)
 {
     setDescription(QLatin1String("Azimuth in degrees from magnetic north"));
 }
 
 bool BbCompass::updateReadingFromEvent(const sensor_event_t &event, QCompassReading *reading)
 {
-    reading->setAzimuth(event.apr.azimuth);
+    float xRad, yRad, zRad;
+    matrixToEulerZXY(event.rotation_matrix, xRad, yRad, zRad);
+    float azimuth = radiansToDegrees(zRad);
+    if (azimuth < 0)
+        azimuth = -azimuth;
+    else
+        azimuth = 360.0f - azimuth;
+    reading->setAzimuth(azimuth);
 
     switch (event.accuracy) {
     case SENSOR_ACCURACY_UNRELIABLE:
@@ -75,5 +85,5 @@ bool BbCompass::updateReadingFromEvent(const sensor_event_t &event, QCompassRead
 
 QString BbCompass::devicePath()
 {
-    return QLatin1String("/dev/sensor/apr");
+    return QLatin1String("/dev/sensor/rotMatrix");
 }

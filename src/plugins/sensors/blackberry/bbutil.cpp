@@ -38,34 +38,45 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include "bbgyroscope.h"
-
 #include "bbutil.h"
+
 #include <QtCore/qmath.h>
 
-using namespace BbUtil;
+namespace BbUtil {
 
-BbGyroscope::BbGyroscope(QSensor *sensor)
-    : BbSensorBackend<QGyroscopeReading>(devicePath(), SENSOR_TYPE_GYROSCOPE, sensor)
+static float getMatrixElement(const float matrix[3*3], int index0, int index1)
 {
-    setDescription(QLatin1String("Angular velocities around x, y, and z axis in degrees per second"));
+    return matrix[index0 * 3 + index1];
 }
 
-bool BbGyroscope::updateReadingFromEvent(const sensor_event_t &event, QGyroscopeReading *reading)
+void matrixToEulerZXY(const float matrix[3*3],
+                      float &thetaX, float &thetaY, float& thetaZ)
 {
-    reading->setX(radiansToDegrees(event.motion.dsp.x));
-    reading->setY(radiansToDegrees(event.motion.dsp.y));
-    reading->setZ(radiansToDegrees(event.motion.dsp.z));
-
-    return true;
+    thetaX = asin( getMatrixElement(matrix, 2, 1));
+    if ( thetaX < M_PI_2 ) {
+        if ( thetaX > -M_PI_2 ) {
+            thetaZ = atan2( -getMatrixElement(matrix, 0, 1),
+                             getMatrixElement(matrix, 1, 1) );
+            thetaY = atan2( -getMatrixElement(matrix, 2, 0),
+                             getMatrixElement(matrix, 2, 2) );
+        } else {
+            // Not a unique solution
+            thetaZ = -atan2( getMatrixElement(matrix, 0, 2),
+                             getMatrixElement(matrix, 0, 0) );
+            thetaY = 0.0;
+        }
+    } else {
+        // Not a unique solution
+        thetaZ = atan2( getMatrixElement(matrix, 0, 2),
+                        getMatrixElement(matrix, 0, 0) );
+        thetaY = 0.0;
+    }
 }
 
-QString BbGyroscope::devicePath()
+qreal radiansToDegrees(qreal radians)
 {
-    return QLatin1String("/dev/sensor/gyro");
+    static const qreal radToDeg = 180.0f / M_PI;
+    return radians * radToDeg;
 }
 
-qreal BbGyroscope::convertValue(float valueInRadiansPerSecond)
-{
-    return radiansToDegrees(valueInRadiansPerSecond);
 }

@@ -41,14 +41,14 @@
 #ifndef BBUTIL_H
 #define BBUTIL_H
 
-#include <QtCore/qmath.h>
+#include <QtCore/qglobal.h>
 
-namespace {
-qreal radiansToDegrees(qreal radians)
-{
-    static const qreal radToDeg = 180.0f / M_PI;
-    return radians * radToDeg;
-}
+namespace BbUtil {
+
+void matrixToEulerZXY(const float matrix[3*3], float &thetaX, float &thetaY, float& thetaZ);
+
+qreal radiansToDegrees(qreal radians);
+
 }
 
 #endif
