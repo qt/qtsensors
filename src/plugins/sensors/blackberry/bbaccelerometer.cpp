@@ -48,9 +48,13 @@ BbAccelerometer::BbAccelerometer(QSensor *sensor)
 
 bool BbAccelerometer::updateReadingFromEvent(const sensor_event_t &event, QAccelerometerReading *reading)
 {
-    reading->setX(event.motion.dsp.x);
-    reading->setY(event.motion.dsp.y);
-    reading->setZ(event.motion.dsp.z);
+    float x = event.motion.dsp.x;
+    float y = event.motion.dsp.y;
+    float z = event.motion.dsp.z;
+    remapAxes(&x, &y, &z);
+    reading->setX(x);
+    reading->setY(y);
+    reading->setZ(z);
     return true;
 }
 

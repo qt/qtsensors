@@ -53,9 +53,13 @@ BbGyroscope::BbGyroscope(QSensor *sensor)
 
 bool BbGyroscope::updateReadingFromEvent(const sensor_event_t &event, QGyroscopeReading *reading)
 {
-    reading->setX(radiansToDegrees(event.motion.dsp.x));
-    reading->setY(radiansToDegrees(event.motion.dsp.y));
-    reading->setZ(radiansToDegrees(event.motion.dsp.z));
+    float x = radiansToDegrees(event.motion.dsp.x);
+    float y = radiansToDegrees(event.motion.dsp.y);
+    float z = radiansToDegrees(event.motion.dsp.z);
+    remapAxes(&x, &y, &z);
+    reading->setX(x);
+    reading->setY(y);
+    reading->setZ(z);
 
     return true;
 }

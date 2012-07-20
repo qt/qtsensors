@@ -53,20 +53,11 @@ public:
 
     static QString devicePath();
 
-    void setGuiHelper(BbGuiHelper *guiHelper) Q_DECL_OVERRIDE;
-
 protected:
     void additionalDeviceInit() Q_DECL_OVERRIDE;
     bool addDefaultRange() Q_DECL_OVERRIDE;
     qreal convertValue(float bbValue) Q_DECL_OVERRIDE;
     bool updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading) Q_DECL_OVERRIDE;
-    bool isAutoAxisRemappingEnabled() const;
-
-private slots:
-    void updateOrientation();
-
-private:
-    float m_mappingMatrix[4];
 };
 
 #endif

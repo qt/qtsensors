@@ -44,8 +44,6 @@
 #include <QtCore/QAbstractNativeEventFilter>
 #include <QtCore/QObject>
 
-struct bps_event_t;
-
 // We can't depend on QtGui in this plugin, only on BPS.
 // This class provides replacements for some QtGui functions, implemented using BPS.
 class BbGuiHelper : public QObject, public QAbstractNativeEventFilter

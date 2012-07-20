@@ -42,6 +42,7 @@
 
 #include "bbguihelper.h"
 #include <QtCore/QDebug>
+#include <QtCore/qmath.h>
 #include <fcntl.h>
 
 static const int microSecondsPerSecond = 1000 * 1000;
@@ -57,10 +58,32 @@ static uint hertzToMicroSeconds(int hertz)
     return microSecondsPerSecond / hertz;
 }
 
+static void remapMatrix(const float inputMatrix[3*3],
+                        const float mappingMatrix[4],
+                        float outputMatrix[3*3])
+{
+    int i,j,k;
+
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 2; j++) { //only goto 2 because last column stays unchanged
+
+            outputMatrix[i*3+j] = 0;
+
+            for (k = 0; k < 2; k++) { //only goto 2 because we know rotation matrix is zero in bottom row
+                outputMatrix[i*3+j] += inputMatrix[i*3+k] * mappingMatrix[k*2+j];
+            }
+        }
+
+        outputMatrix[i*3+2] = inputMatrix[i*3+2];
+    }
+}
+
 BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType,
                                          QSensor *sensor)
     : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType), m_guiHelper(0)
 {
+    m_mappingMatrix[0] = m_mappingMatrix[3] = 1;
+    m_mappingMatrix[1] = m_mappingMatrix[2] = 0;
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
 
     // Set some sensible default values
@@ -116,6 +139,8 @@ void BbSensorBackendBase::setGuiHelper(BbGuiHelper *guiHelper)
     Q_ASSERT(!m_guiHelper);
     m_guiHelper = guiHelper;
     connect(m_guiHelper, SIGNAL(applicationActiveChanged()), this, SLOT(updatePauseState()));
+    connect(guiHelper, SIGNAL(orientationChanged()), this, SLOT(updateOrientation()));
+    updateOrientation();
 }
 
 void BbSensorBackendBase::additionalDeviceInit()
@@ -130,6 +155,48 @@ bool BbSensorBackendBase::addDefaultRange()
 qreal BbSensorBackendBase::convertValue(float bbValue)
 {
     return bbValue;
+}
+
+bool BbSensorBackendBase::isAutoAxisRemappingEnabled() const
+{
+    return sensor()->property("automaticAxisRemapping").toBool();
+}
+
+void BbSensorBackendBase::remapMatrix(const float inputMatrix[], float outputMatrix[])
+{
+    if (!isAutoAxisRemappingEnabled() || m_guiHelper->currentOrientation() == 0) {
+        memcpy(outputMatrix, inputMatrix, sizeof(float) * 9);
+        return;
+    }
+
+    ::remapMatrix(inputMatrix, m_mappingMatrix, outputMatrix);
+}
+
+void BbSensorBackendBase::remapAxes(float *x, float *y, float *z)
+{
+    Q_ASSERT(x && y && z);
+    if (!isAutoAxisRemappingEnabled() || m_guiHelper->currentOrientation() == 0)
+        return;
+
+    const int angle = m_guiHelper->currentOrientation();
+
+    const float oldX = *x;
+    const float oldY = *y;
+
+    switch (angle) {
+    case 90:
+        *x = -oldY;
+        *y = oldX;
+    break;
+    case 180:
+        *x = -oldX;
+        *y = -oldY;
+    break;
+    case 270:
+        *x = oldY;
+        *y = -oldX;
+    break;
+    }
 }
 
 void BbSensorBackendBase::start()
@@ -266,4 +333,16 @@ void BbSensorBackendBase::setPaused(bool paused)
 void BbSensorBackendBase::updatePauseState()
 {
     setPaused(!sensor()->isAlwaysOn() && !m_guiHelper->applicationActive());
+}
+
+void BbSensorBackendBase::updateOrientation()
+{
+    // ### I can't really test this, the rotation matrix has too many glitches and drifts over time,
+    // making any measurement quite hard
+    const int rotationAngle = guiHelper()->currentOrientation();
+
+    m_mappingMatrix[0] = cos(rotationAngle*M_PI/180);
+    m_mappingMatrix[1] = sin(rotationAngle*M_PI/180);
+    m_mappingMatrix[2] = -sin(rotationAngle*M_PI/180);
+    m_mappingMatrix[3] = cos(rotationAngle*M_PI/180);
 }

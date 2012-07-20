@@ -55,9 +55,13 @@ bool BbMagnetometer::updateReadingFromEvent(const sensor_event_t &event, QMagnet
 {
     // TODO: In the future, support returnGeoValues here. Right now, /dev/sensors/mag has no
     //       geomagnatic mode, but will gain it in the future.
-    reading->setX(convertValue(event.motion.dsp.x));
-    reading->setY(convertValue(event.motion.dsp.y));
-    reading->setZ(convertValue(event.motion.dsp.z));
+    float x = convertValue(event.motion.dsp.x);
+    float y = convertValue(event.motion.dsp.y);
+    float z = convertValue(event.motion.dsp.z);
+    remapAxes(&x, &y, &z);
+    reading->setX(x);
+    reading->setY(y);
+    reading->setZ(z);
 
     const bool returnGeoValues = sensor()->property("returnGeoValues").toBool();
     if (returnGeoValues) {

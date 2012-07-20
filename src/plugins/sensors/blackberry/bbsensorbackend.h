@@ -66,7 +66,7 @@ public:
     BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType, QSensor *sensor);
 
     void initSensorInfo();
-    virtual void setGuiHelper(BbGuiHelper *guiHelper);
+    void setGuiHelper(BbGuiHelper *guiHelper);
 
     void start() Q_DECL_OVERRIDE;
     void stop() Q_DECL_OVERRIDE;
@@ -92,6 +92,13 @@ protected:
     // QtSensors expects tesla. This function would therefore convert from microtesla to tesla.
     virtual qreal convertValue(float bbValue);
 
+    bool isAutoAxisRemappingEnabled() const;
+
+    // These functions will automatically remap the matrix or the axes if auto axes remapping is
+    // enabled
+    void remapMatrix(const float inputMatrix[3*3], float outputMatrix[3*3]);
+    void remapAxes(float *x, float *y, float *z);
+
     virtual void processEvent(const sensor_event_t &sensorEvent) = 0;
 
 private slots:
@@ -99,12 +106,14 @@ private slots:
     void applyAlwaysOnProperty();
     void setPaused(bool paused);
     void updatePauseState();
+    void updateOrientation();
 
 private:
     QFile m_deviceFile;
     QScopedPointer<QSocketNotifier> m_socketNotifier;
     sensor_type_e m_sensorType;
     BbGuiHelper *m_guiHelper;
+    float m_mappingMatrix[4];
 };
 
 template<class SensorReading>
