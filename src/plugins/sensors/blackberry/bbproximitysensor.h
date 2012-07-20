@@ -44,33 +44,7 @@
 #include "bbsensorbackend.h"
 #include <qproximitysensor.h>
 
-class BbProximityReadingPrivate;
-
-// We extend QProximityReading with two new properties
-class BbProximityReading : public QProximityReading
-{
-    Q_OBJECT
-
-    // Distance in cm
-    Q_PROPERTY(qreal distance READ distance)
-
-    // Same as in QIRProximityReading
-    Q_PROPERTY(qreal reflectance READ reflectance)
-
-public:
-    explicit BbProximityReading(QObject *parent = 0);
-    ~BbProximityReading();
-    void copyValuesFrom(QSensorReading *other);
-    qreal distance() const;
-    void setDistance(qreal distance);
-    qreal reflectance() const;
-    void setReflectance(qreal reflectance);
-
-private:
-    QScopedPointer<BbProximityReadingPrivate> d;
-};
-
-class BbProximitySensor : public BbSensorBackend<BbProximityReading>
+class BbProximitySensor : public BbSensorBackend<QProximityReading>
 {
     Q_OBJECT
 
@@ -80,7 +54,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbProximityReading *reading) Q_DECL_OVERRIDE;
+    bool updateReadingFromEvent(const sensor_event_t &event, QProximityReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif
