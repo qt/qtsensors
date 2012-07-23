@@ -45,6 +45,7 @@ tst_*.moc
 tst_*.o
 tst_*.debug
 tst_*~
+tests/auto/cmake/build
 
 # xemacs temporary files
 *.flc
