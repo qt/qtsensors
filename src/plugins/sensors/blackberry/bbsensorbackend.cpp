@@ -268,9 +268,10 @@ void BbSensorBackendBase::stop()
 bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
 {
     switch (feature) {
-    case QSensor:: AlwaysOn:
-        return true;
+    case QSensor::AlwaysOn:
     case QSensor::Buffering:
+        return true;
+    case QSensor::Reserved:
     case QSensor::GeoValues:
     case QSensor::FieldOfView:
         break;
