@@ -42,6 +42,8 @@
 
 #include <QtCore/QAbstractEventDispatcher>
 #include <QtCore/QCoreApplication>
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
 #include <bps/navigator.h>
 
 BbGuiHelper::BbGuiHelper(QObject *parent)
@@ -49,14 +51,8 @@ BbGuiHelper::BbGuiHelper(QObject *parent)
       m_currentOrientation(0),
       m_applicationActive(true)
 {
-    // There is no API to get the current orientation or application active state at the moment.
-    // Therefore, we assume the application is active when this is called, and that the inital
-    // orientation that is set in the environment variable hasn't changed yet.
-    // These assumptions don't always hold, but it is the best we got so far.
-    // The navigator will at least inform us about updates.
-    const QByteArray orientationText = qgetenv("ORIENTATION");
-    if (!orientationText.isEmpty())
-        m_currentOrientation = orientationText.toInt();
+    readApplicationActiveState();
+    readOrientation();
 
     QCoreApplication::eventDispatcher()->installNativeEventFilter(this);
 }
@@ -101,4 +97,46 @@ bool BbGuiHelper::nativeEventFilter(const QByteArray &eventType, void *message, 
     }
 
     return false;
+}
+
+void BbGuiHelper::readApplicationActiveState()
+{
+    const QLatin1String fileName("/pps/services/navigator/state");
+    QFile navigatorState(fileName);
+    if (!navigatorState.open(QFile::ReadOnly))
+        return;
+
+    const QString separator(QLatin1String("::"));
+    QTextStream stream(&navigatorState);
+    Q_FOREVER {
+        const QString line = stream.readLine();
+        if (line.isNull())
+            break;
+
+        const int separatorPos = line.indexOf(separator);
+        if (separatorPos != -1) {
+            const QString key = line.left(separatorPos);
+            const QString value = line.mid(separatorPos + separator.length());
+
+            if (key.endsWith(QLatin1String("fullscreen"))) {
+                bool ok = false;
+                const int fullscreenPid = value.toInt(&ok);
+                if (ok)
+                    m_applicationActive = (fullscreenPid == QCoreApplication::applicationPid());
+                break;
+            }
+        }
+    }
+}
+
+void BbGuiHelper::readOrientation()
+{
+    // There is no API to get the current orientation at the moment.
+    // Therefore, we assume that the inital orientation that is set in the environment variable
+    // hasn't changed yet.
+    // This assumptions don't always hold, but it is the best we got so far.
+    // The navigator will at least inform us about updates.
+    const QByteArray orientationText = qgetenv("ORIENTATION");
+    if (!orientationText.isEmpty())
+        m_currentOrientation = orientationText.toInt();
 }

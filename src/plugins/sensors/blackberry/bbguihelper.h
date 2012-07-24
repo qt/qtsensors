@@ -67,6 +67,9 @@ signals:
     void applicationActiveChanged();
 
 private:
+    void readOrientation();
+    void readApplicationActiveState();
+
     int m_currentOrientation;
     bool m_applicationActive;
 };
