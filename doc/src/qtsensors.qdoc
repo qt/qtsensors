@@ -99,5 +99,14 @@
             \li Information about Qt SensorGestures use in the Emulator.
     \endtable
 
+    \section1 Platform-specific Information
+    \table
+        \row
+            \li \l {Compatibility Map}{Compatibility Map}
+            \li Compatibility map of all supported platforms.
+        \row
+            \li \l {Generic Backend}{Generic Backend}
+            \li Information about the generic sensor backend.
+    \endtable
 */
 
