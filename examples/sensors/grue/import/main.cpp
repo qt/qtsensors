@@ -109,7 +109,8 @@ QT_END_NAMESPACE
 #include "main.moc"
 
 /*
-    \qmlclass GrueSensor GrueSensor
+    \qmltype GrueSensor
+    \instantiates GrueSensor
     \inherits QtMobility.sensors1::Sensor
     \inqmlmodule Grue 1
     \brief The GrueSensor type reports on your chance of being eaten by a Grue.
@@ -123,7 +124,8 @@ QT_END_NAMESPACE
 */
 
 /*
-    \qmlclass GrueSensorReading GrueSensorReading
+    \qmltype GrueSensorReading
+    \instantiates GrueSensorReading
     \inherits QtMobility.sensors1::SensorReading
     \inqmlmodule Grue 1
     \brief The GrueSensorReading type holds the most recent GrueSensor reading.

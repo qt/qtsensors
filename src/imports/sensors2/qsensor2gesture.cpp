@@ -48,7 +48,8 @@ QT_BEGIN_NAMESPACE
 //#define LOGGESTURQMLAPI
 
 /*!
-    \qmlclass SensorGesture QSensor2Gesture
+    \qmltype SensorGesture
+    \instantiates QSensor2Gesture
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
     \brief Provides notifications when sensor-based gestures are detected.

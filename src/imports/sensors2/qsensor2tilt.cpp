@@ -50,7 +50,8 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-    \qmlclass TiltSensor QSensor2Tilt
+    \qmltype TiltSensor
+    \instantiates QSensor2Tilt
     \inherits QtSensors5::Sensor
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0

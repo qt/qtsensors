@@ -152,7 +152,8 @@ QT_END_NAMESPACE
 // =====================================================================
 
 /*!
-    \qmlclass QtMobility.sensors1::Sensor QSensor
+    \qmltype QtMobility.sensors1::Sensor
+    \instantiates QSensor
     \inqmlmodule QtMobility.sensors 1.3
     \brief The Sensor type serves as a base type for sensors.
 
@@ -197,7 +198,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass SensorReading QSensorReading
+    \qmltype SensorReading
+    \instantiates QSensorReading
     \inqmlmodule QtMobility.sensors 1.3
     \brief The SensorReading type serves as a base type for sensor readings.
 
@@ -217,7 +219,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::Accelerometer QAccelerometer
+    \qmltype QtMobility.sensors1::Accelerometer
+    \instantiates QAccelerometer
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -246,7 +249,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass AccelerometerReading QAccelerometerReading
+    \qmltype AccelerometerReading
+    \instantiates QAccelerometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -277,7 +281,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::AmbientLightSensor QAmbientLightSensor
+    \qmltype QtMobility.sensors1::AmbientLightSensor
+    \instantiates QAmbientLightSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -304,7 +309,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass AmbientLightReading QAmbientLightReading
+    \qmltype AmbientLightReading
+    \instantiates QAmbientLightReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -335,7 +341,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::Compass QCompass
+    \qmltype QtMobility.sensors1::Compass
+    \instantiates QCompass
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -362,7 +369,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass CompassReading QCompassReading
+    \qmltype CompassReading
+    \instantiates QCompassReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -388,7 +396,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::Magnetometer QMagnetometer
+    \qmltype QtMobility.sensors1::Magnetometer
+    \instantiates QMagnetometer
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -417,7 +426,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass MagnetometerReading QMagnetometerReading
+    \qmltype MagnetometerReading
+    \instantiates QMagnetometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -453,7 +463,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::OrientationSensor QOrientationSensor
+    \qmltype QtMobility.sensors1::OrientationSensor
+    \instantiates QOrientationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -480,7 +491,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass OrientationReading QOrientationReading
+    \qmltype OrientationReading
+    \instantiates QOrientationReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -512,7 +524,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::ProximitySensor QProximitySensor
+    \qmltype QtMobility.sensors1::ProximitySensor
+    \instantiates QProximitySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -539,7 +552,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass ProximityReading QProximityReading
+    \qmltype ProximityReading
+    \instantiates QProximityReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -560,7 +574,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::RotationSensor QRotationSensor
+    \qmltype QtMobility.sensors1::RotationSensor
+    \instantiates QRotationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -589,7 +604,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass RotationReading QRotationReading
+    \qmltype RotationReading
+    \instantiates QRotationReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -620,7 +636,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::TapSensor QTapSensor
+    \qmltype QtMobility.sensors1::TapSensor
+    \instantiates QTapSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::Sensor
@@ -649,7 +666,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass TapReading QTapReading
+    \qmltype TapReading
+    \instantiates QTapReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \inherits QtMobility.sensors1::SensorReading
@@ -686,7 +704,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::LightSensor QLightSensor
+    \qmltype QtMobility.sensors1::LightSensor
+    \instantiates QLightSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
@@ -714,7 +733,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass LightReading QLightReading
+    \qmltype LightReading
+    \instantiates QLightReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
@@ -735,7 +755,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::Gyroscope QGyroscope
+    \qmltype QtMobility.sensors1::Gyroscope
+    \instantiates QGyroscope
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
@@ -762,7 +783,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass GyroscopeReading QGyroscopeReading
+    \qmltype GyroscopeReading
+    \instantiates QGyroscopeReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.2
@@ -794,7 +816,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass QtMobility.sensors1::IRProximitySensor QIRProximitySensor
+    \qmltype QtMobility.sensors1::IRProximitySensor
+    \instantiates QIRProximitySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.3
@@ -820,7 +843,8 @@ QT_END_NAMESPACE
 */
 
 /*!
-    \qmlclass IRProximityReading QIRProximityReading
+    \qmltype IRProximityReading
+    \instantiates QIRProximityReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtMobility.sensors 1.3
     \since QtMobility.sensors 1.3

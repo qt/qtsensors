@@ -46,7 +46,8 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-    \qmlclass Sensor qsensor2common
+    \qmltype Sensor
+    \instantiates qsensor2common
     \inqmlmodule QtSensors 5.0
     \brief The Sensor type serves as a base type for sensors.
 

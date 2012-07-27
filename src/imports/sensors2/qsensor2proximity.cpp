@@ -45,7 +45,8 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-    \qmlclass ProximitySensor QSensor2Proximity
+    \qmltype ProximitySensor
+    \instantiates QSensor2Proximity
     \inherits QtSensors5::Sensor
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0

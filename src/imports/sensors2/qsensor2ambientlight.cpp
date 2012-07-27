@@ -45,7 +45,8 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-    \qmlclass AmbientLightSensor QSensor2AmbientLight
+    \qmltype AmbientLightSensor
+    \instantiates QSensor2AmbientLight
     \inherits QtSensors5::Sensor
     \inqmlmodule QtSensors 5.0
     \ingroup qml-QtSensors5
