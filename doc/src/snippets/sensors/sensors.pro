@@ -7,5 +7,4 @@ SOURCES+=main.cpp\
     plugin.cpp
 HEADERS+=mybackend.h
 !win32:*g++*:LIBS+=-rdynamic
-QT+=widgets
 OTHER_FILES += *.qml
