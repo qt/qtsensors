@@ -4,3 +4,4 @@ TARGET=tst_legacy_sensors
 QT = core testlib gui qml sensors
 SOURCES += tst_legacy_sensors.cpp
 
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0

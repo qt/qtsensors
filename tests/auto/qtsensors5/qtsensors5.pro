@@ -4,3 +4,4 @@ TARGET=tst_qtsensors5
 QT = core testlib gui qml
 SOURCES += tst_qtsensors5.cpp
 
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0

@@ -16,3 +16,4 @@ SOURCES += qtestsensorgestureplugindup.cpp \
 
 target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
 INSTALLS += target
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
