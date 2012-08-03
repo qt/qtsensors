@@ -69,7 +69,7 @@ private:
     int fd;
     QString path;
     QFile file;
-    int divisor;
+    float divisor;
     QString delimiter;
 };
 
