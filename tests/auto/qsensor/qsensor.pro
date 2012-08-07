@@ -2,7 +2,7 @@ TEMPLATE = app
 TARGET = tst_qsensor
 
 CONFIG += testcase
-QT = core testlib sensors-private
+QT = core-private testlib sensors-private
 DEFINES += QT_STATICPLUGIN
 
 SOURCES += \
