@@ -12,7 +12,7 @@ simulator {
     QT += simulator
 }
 
-load(qt_module_config)
+load(qt_module)
 
 QMAKE_DOCS = $$PWD/../../doc/config/qtsensors.qdocconf
 
