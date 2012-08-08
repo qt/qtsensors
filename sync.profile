@@ -8,10 +8,3 @@
     "qtdeclarative" => "refs/heads/master",
     "qtjsbackend" => "refs/heads/master",
 );
-
-# Compile tests
-%configtests = (
-    # Blackberry tests
-    "bbsensor_header" => {},
-);
-

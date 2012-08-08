@@ -6,7 +6,9 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 load(qt_plugin)
 
-contains(config_test_bbsensor_header, yes):DEFINES += HAVE_NDK_SENSOR_H
+config_bbsensor_header {
+    DEFINES += HAVE_NDK_SENSOR_H
+}
 
 DESTDIR = $$QT.sensors.plugins/sensors
 

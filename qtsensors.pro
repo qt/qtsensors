@@ -1,3 +1,8 @@
+load(configure)
+blackberry {
+    qtCompileTest(bbsensor_header)
+}
+
 load(qt_parts)
 
 SUBDIRS += module_qtsensors_snippets
