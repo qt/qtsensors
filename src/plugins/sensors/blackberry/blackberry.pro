@@ -9,6 +9,9 @@ load(qt_plugin)
 config_bbsensor_header {
     DEFINES += HAVE_NDK_SENSOR_H
 }
+config_bbsensor_compass {
+    DEFINES += HAVE_COMPASS_SENSOR
+}
 
 DESTDIR = $$QT.sensors.plugins/sensors
 

@@ -44,13 +44,20 @@
 using namespace BbUtil;
 
 BbCompass::BbCompass(QSensor *sensor)
+#ifdef HAVE_COMPASS_SENSOR
+    : BbSensorBackend<QCompassReading>(devicePath(), SENSOR_TYPE_COMPASS, sensor)
+#else
     : BbSensorBackend<QCompassReading>(devicePath(), SENSOR_TYPE_ROTATION_MATRIX, sensor)
+#endif
 {
     setDescription(QLatin1String("Azimuth in degrees from magnetic north"));
 }
 
 bool BbCompass::updateReadingFromEvent(const sensor_event_t &event, QCompassReading *reading)
 {
+#ifdef HAVE_COMPASS_SENSOR
+    reading->setAzimuth(event.compass_s.azimuth);
+#else
     float xRad, yRad, zRad;
     matrixToEulerZXY(event.rotation_matrix, xRad, yRad, zRad);
     float azimuth = radiansToDegrees(zRad);
@@ -59,6 +66,7 @@ bool BbCompass::updateReadingFromEvent(const sensor_event_t &event, QCompassRead
     else
         azimuth = 360.0f - azimuth;
     reading->setAzimuth(azimuth);
+#endif
 
     switch (event.accuracy) {
     case SENSOR_ACCURACY_UNRELIABLE:
@@ -85,5 +93,9 @@ bool BbCompass::updateReadingFromEvent(const sensor_event_t &event, QCompassRead
 
 QString BbCompass::devicePath()
 {
+#ifdef HAVE_COMPASS_SENSOR
+    return QLatin1String("/dev/sensor/compass");
+#else
     return QLatin1String("/dev/sensor/rotMatrix");
+#endif
 }
