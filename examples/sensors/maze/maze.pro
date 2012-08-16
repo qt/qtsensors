@@ -10,6 +10,6 @@ app.files = \
     icon.png \
     content
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/maze
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/maze
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/maze
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/maze
 INSTALLS += target app

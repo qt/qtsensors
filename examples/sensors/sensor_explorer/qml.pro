@@ -9,6 +9,6 @@ app.files = \
     components \
     content
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/sensor_explorer
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/sensor_explorer
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer
 INSTALLS += target app

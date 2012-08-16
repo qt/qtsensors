@@ -8,6 +8,6 @@ app.files = \
     icon.png \
     components
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/qmlqtsensors
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/qmlqtsensors
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/qmlqtsensors
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/qmlqtsensors
 INSTALLS += target app

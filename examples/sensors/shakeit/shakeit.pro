@@ -9,6 +9,6 @@ app.files = \
     audio \
     content
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/shakeit
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/shakeit
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/shakeit
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/shakeit
 INSTALLS += target app

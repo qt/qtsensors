@@ -9,6 +9,6 @@ app.files = \
     content \
     images
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/accelbubble
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/accelbubble
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/accelbubble
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/accelbubble
 INSTALLS += target app

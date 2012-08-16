@@ -9,7 +9,7 @@ HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/sensorgestures
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensorgestures
 app.files = gesture.png
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/sensorgestures
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensorgestures
 INSTALLS += target app

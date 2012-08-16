@@ -7,6 +7,6 @@ app.files = \
     $$files(*.qml) \
     icon.png
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/qmlsensorgestures
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/qmlsensorgestures
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/qmlsensorgestures
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/qmlsensorgestures
 INSTALLS += target app
