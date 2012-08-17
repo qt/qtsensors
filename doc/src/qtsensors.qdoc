@@ -39,7 +39,7 @@
 
     \table
         \row
-            \li \l {Qt Sensors QML API}{QML API}
+            \li \l {QtMobility.sensors 1.x}{QML API}
             \li Information about the Qt Sensors QML API
         \row
             \li \l {Qt Sensors C++ API}{C++ API}

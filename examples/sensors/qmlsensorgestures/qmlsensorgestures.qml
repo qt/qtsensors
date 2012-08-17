@@ -40,7 +40,7 @@
 
 //Import the declarative plugins
 import QtQuick 2.0
-import QtSensors 5.0
+import QtMobility.sensors 1.3
 
 /* Layout
 --------------------------------------------------

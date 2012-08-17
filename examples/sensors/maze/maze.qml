@@ -73,7 +73,7 @@ import QtQuick 2.0
 import "components"
 
 //! [0]
-import QtSensors 5.0
+import QtMobility.sensors 1.3
 //! [0]
 import QtSystemInfo 5.0
 
@@ -202,10 +202,10 @@ ApplicationWindow {
 
 //! [3]
                 var xstep = 0;
-                xstep = tiltSensor.yRotation * 0.1 //acceleration
+                xstep = tiltSensor.reading.yRotation * 0.1 //acceleration
 
                 var ystep = 0;
-                ystep = tiltSensor.xRotation * 0.1 //acceleration
+                ystep = tiltSensor.reading.xRotation * 0.1 //acceleration
 //! [3]
 //! [4]
                 if (xstep < 1 && xstep > 0)

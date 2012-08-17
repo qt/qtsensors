@@ -115,7 +115,6 @@ QmlTiltSensorReading::QmlTiltSensorReading(QTiltSensor *sensor)
     : QmlSensorReading(sensor)
     , m_sensor(sensor)
 {
-    update();
 }
 
 QmlTiltSensorReading::~QmlTiltSensorReading()

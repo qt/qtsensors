@@ -88,7 +88,7 @@ import QtQuick 2.0
 import "components"
 
 //! [0]
-import QtSensors 5.0
+import QtMobility.sensors 1.3
 //! [0]
 
 ApplicationWindow {
@@ -147,81 +147,11 @@ ApplicationWindow {
 //! [1]
         TiltSensor {
             id: tilt
-            enabled: false
-            speed: TiltSensor.Slow
+            active: false
         }
 //! [1]
 
         Rectangle{
-            id: speedRect
-            anchors.top: labelTilt.bottom
-            anchors.topMargin: 5
-            anchors.left: mainWnd.left
-            anchors.leftMargin: mainWnd.width / 2
-            anchors.right: mainWnd.right
-            anchors.rightMargin: 5
-            height: 110
-            color: "transparent"
-
-            Text{
-                id: textSpeed
-                anchors.top: speedRect.top
-                anchors.left: speedRect.left
-                text: "Speed"
-                font.bold: true
-            }
-
-            Text{
-                id: textSpeedValue
-                anchors.top: textSpeed.bottom
-                anchors.topMargin: 5
-                anchors.left: speedLower.left
-                anchors.right: speedHigher.right
-                text: mainWnd.speed
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            Button{
-                id: speedLower
-                anchors.top: textSpeedValue.bottom
-                anchors.left: speedRect.left
-                height: 30
-                width: 40
-                text: "-"
-
-                onClicked:{
-                    if (tilt.speed === TiltSensor.Fast) {
-                        mainWnd.speed = "Medium";
-                        tilt.speed = TiltSensor.Medium;
-                    }
-                    else if (tilt.speed === TiltSensor.Medium) {
-                        mainWnd.speed = "Slow";
-                        tilt.speed = TiltSensor.Slow;
-                    }
-                }
-            }
-
-            Button{
-                id: speedHigher
-                anchors.top: textSpeedValue.bottom
-                anchors.left: speedLower.right
-                height: 30
-                width: 40
-                text: "+"
-
-                onClicked:{
-                    if (tilt.speed === TiltSensor.Slow) {
-                        mainWnd.speed = "Medium";
-                        tilt.speed = TiltSensor.Medium;
-                    }
-                    else if (tilt.speed === TiltSensor.Medium) {
-                        mainWnd.speed = "Fast";
-                        tilt.speed = TiltSensor.Fast;
-                    }
-                }
-            }
-        }
-
         Button{
             id: calibrate
             anchors.left: mainWnd.left
@@ -243,11 +173,11 @@ ApplicationWindow {
             anchors.leftMargin: 5
             height: 30
             width: 80
-            text: tilt.enabled ? "Stop" : "Start"
+            text: tilt.active ? "Stop" : "Start"
 
             onClicked:{
 //! [2]
-                tilt.enabled = (tiltStart.text === "Start"  ? true: false);
+                tilt.active = (tiltStart.text === "Start");
 //! [2]
             }
         }
@@ -309,20 +239,20 @@ ApplicationWindow {
 
         AmbientLightSensor {
             id: ambientlight
-            enabled: false
+            active: false
 //! [5]
-            onLightLevelChanged:{
-                if (ambientlight.lightLevel == AmbientLightSensor.Unknown)
+            onReadingChanged:{
+                if (reading.lightLevel == AmbientLightSensor.Unknown)
                     ambientlighttext.text = "Ambient light: Unknown";
-                else if (ambientlight.lightLevel == AmbientLightSensor.Dark)
+                else if (reading.lightLevel == AmbientLightSensor.Dark)
                     ambientlighttext.text = "Ambient light: Dark";
-                else if (ambientlight.lightLevel == AmbientLightSensor.Twilight)
+                else if (reading.lightLevel == AmbientLightSensor.Twilight)
                     ambientlighttext.text = "Ambient light: Twilight";
-                else if (ambientlight.lightLevel == AmbientLightSensor.Light)
+                else if (reading.lightLevel == AmbientLightSensor.Light)
                     ambientlighttext.text = "Ambient light: Light";
-                else if (ambientlight.lightLevel == AmbientLightSensor.Bright)
+                else if (reading.lightLevel == AmbientLightSensor.Bright)
                     ambientlighttext.text = "Ambient light: Bright";
-                else if (ambientlight.lightLevel == AmbientLightSensor.Sunny)
+                else if (reading.lightLevel == AmbientLightSensor.Sunny)
                     ambientlighttext.text = "Ambient light: Sunny";
             }
 //! [5]
@@ -336,10 +266,10 @@ ApplicationWindow {
             anchors.leftMargin: 5
             height: 30
             width: 80
-            text: ambientlight.enabled ? "Stop" : "Start"
+            text: ambientlight.active ? "Stop" : "Start"
 
             onClicked:{
-                ambientlight.enabled = (ambientlightStart.text === "Start"  ? true: false);
+                ambientlight.active = (ambientlightStart.text === "Start"  ? true: false);
             }
         }
 
@@ -381,7 +311,7 @@ ApplicationWindow {
 
         ProximitySensor {
             id: proxi
-            enabled: false
+            active: false
         }
 
         Button{
@@ -392,10 +322,10 @@ ApplicationWindow {
             anchors.leftMargin: 5
             height: 30
             width: 80
-            text: proxi.enabled ? "Stop" : "Start"
+            text: proxi.active ? "Stop" : "Start"
 
             onClicked:{
-                proxi.enabled = (proxiStart.text === "Start"  ? true: false);
+                proxi.active = (proxiStart.text === "Start"  ? true: false);
             }
         }
 
@@ -407,7 +337,7 @@ ApplicationWindow {
             anchors.bottom: proxiStart.bottom
             verticalAlignment: Text.AlignVCenter
 //! [6]
-            text: "Proximity: " + (proxi.near ? "near" : "far")
+            text: "Proximity: " + (proxi.reading.near ? "near" : "far")
 //! [6]
         }
     }
