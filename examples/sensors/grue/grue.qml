@@ -39,7 +39,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtMobility.sensors 1.3
+import QtSensors 5.0
 import Grue 1.0
 
 Rectangle {

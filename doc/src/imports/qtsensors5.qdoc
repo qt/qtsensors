@@ -26,23 +26,20 @@
 ****************************************************************************/
 
 /*!
-    \qmlmodule QtMobility.sensors 1.3
-    \title QtMobility.sensors 1.x
-    \brief Legacy QML import for QtSensors
+    \qmlmodule QtSensors 5.0
+    \title Qt Sensors QML API
+    \brief QML import for QtSensors
 
     \section1 Overview
 
-    This is the legacy QML import. It exists for compatibility with the QtMobiltiy 1.2 release
-    and is not recommended for new applications.
-
-    See \l{Qt Sensors} for more information about the Sensors API.
+    This is the QtSensors QML import.
 
     \section1 QML Module API
 
     If the module is imported into a namespace, some additional methods become available.
 
     \code
-    import QtMobility.sensors 1.3 as Sensors
+    import QtSensors 5.0 as Sensors
     ...
         Component.onCompleted: {
             var types = Sensors.sensorTypes();
@@ -56,7 +53,7 @@
 
     These types represent specific types of sensors.
 
-    Note that most properties come from the abstract \l{QtMobility.sensors1::Sensor}{Sensor} element.
+    Note that most properties come from the abstract \l{QtSensors::Sensor}{Sensor} element.
 
     \annotatedlist qml-sensors_type
 

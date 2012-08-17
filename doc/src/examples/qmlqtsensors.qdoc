@@ -54,16 +54,16 @@
 
     Reading the data can be done for each sensor type like following:
 
-    \l {QtMobility.sensors1::TiltSensor} {TiltSensor}
+    \l {QtSensors::TiltSensor} {TiltSensor}
 
     \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 3
     \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 4
 
-    \l {QtMobility.sensors1::AmbientLightSensor} {AmbientLightSensor}
+    \l {QtSensors::AmbientLightSensor} {AmbientLightSensor}
 
     \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 5
 
-    \l {QtMobility.sensors1::ProximitySensor} {ProximitySensor}
+    \l {QtSensors::ProximitySensor} {ProximitySensor}
 
     \snippet ../examples/sensors/qmlqtsensors/qmlqtsensors.qml 6
 */

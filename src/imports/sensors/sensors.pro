@@ -1,7 +1,7 @@
 CXX_MODULE = sensors
 TARGET  = declarative_sensors
-TARGETPATH = QtMobility/sensors
-IMPORT_VERSION = 1.3 # Doesn't matter, as long as it's a valid version?!
+TARGETPATH = QtSensors
+IMPORT_VERSION = 5.0 # Doesn't matter, as long as it's a valid version?!
 
 include(qsensorsimport.pri)
 

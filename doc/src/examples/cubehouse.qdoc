@@ -33,9 +33,9 @@
     \image cubehouse.png
 
 \section1 Overview
-    To write a QML application that will use the QML Accelerometer type from the QtMobility.sensors import you need to to the following steps:
+    To write a QML application that will use the QML Accelerometer type from the QtSensors import you need to to the following steps:
 
-    Import the QtMobility.sensors declarative plugin:
+    Import the QtSensors declarative plugin:
 
 \snippet ../examples/sensors/cubehouse/cubehouse.qml 0
 

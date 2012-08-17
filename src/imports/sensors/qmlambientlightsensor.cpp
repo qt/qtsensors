@@ -46,9 +46,9 @@
     \qmltype AmbientLightSensor
     \instantiates QmlAmbientLightSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The AmbientLightSensor element repors on ambient lighting conditions.
 
     The AmbientLightSensor element repors on ambient lighting conditions.
@@ -83,9 +83,9 @@ QSensor *QmlAmbientLightSensor::sensor() const
     \qmltype AmbientLightReading
     \instantiates QmlAmbientLightSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The AmbientLightReading element holds the most AmbientLightSensor reading.
 
     The AmbientLightReading element holds the most AmbientLightSensor reading.
@@ -107,7 +107,7 @@ QmlAmbientLightSensorReading::~QmlAmbientLightSensorReading()
 }
 
 /*!
-    \qmlproperty LightLevel QtMobility.sensors1::AmbientLightReading::lightLevel
+    \qmlproperty LightLevel QtSensors::AmbientLightReading::lightLevel
     This property holds the ambient light level.
 
     Please see QAmbientLightReading::lightLevel for information about this property.

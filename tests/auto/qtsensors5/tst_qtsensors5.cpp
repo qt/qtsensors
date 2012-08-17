@@ -43,11 +43,11 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 
-class tst_qtsensors5 : public QObject
+class tst_QtSensors : public QObject
 {
     Q_OBJECT
 public:
-    tst_qtsensors5(QObject *parent = 0)
+    tst_QtSensors(QObject *parent = 0)
         : QObject(parent)
     {
     }
@@ -62,6 +62,6 @@ private slots:
     }
 };
 
-QTEST_MAIN(tst_qtsensors5)
+QTEST_MAIN(tst_QtSensors)
 
 #include "tst_qtsensors5.moc"

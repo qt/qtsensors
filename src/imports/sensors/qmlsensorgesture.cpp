@@ -48,8 +48,8 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype SensorGesture
     \instantiates QmlSensorGesture
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.3
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
     \brief Provides notifications when sensor-based gestures are detected.
 
     This type provides notification when sensor gestures are triggered.
@@ -117,7 +117,7 @@ void QmlSensorGesture::componentComplete()
 */
 
 /*!
-    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::availableGestures
+    \qmlproperty stringlist QtSensors::SensorGesture::availableGestures
     This property can be used to determine all available gestures on the system.
 */
 QStringList QmlSensorGesture::availableGestures()
@@ -126,13 +126,13 @@ QStringList QmlSensorGesture::availableGestures()
 }
 
 /*!
-    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::gestures
+    \qmlproperty stringlist QtSensors::SensorGesture::gestures
     Set this property to a list of the gestures that the application is interested in detecting.
     This property cannot be changed while the type is enabled.
 
     The properties validGestures and invalidGestures will be set as appropriate immediately.
     To determine all available getures on the system please use the
-    \l {QtMobility.sensors1::SensorGesture::availableGestures} {availableGestures} property.
+    \l {QtSensors::SensorGesture::availableGestures} {availableGestures} property.
 
     \sa {QtSensorGestures Plugins}
 */
@@ -157,7 +157,7 @@ void QmlSensorGesture::setGestures(const QStringList& value)
 
 
 /*!
-    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::validGestures
+    \qmlproperty stringlist QtSensors::SensorGesture::validGestures
     This property holds the requested gestures that were found on the system.
 */
 QStringList QmlSensorGesture::validGestures() const
@@ -168,7 +168,7 @@ QStringList QmlSensorGesture::validGestures() const
 }
 
 /*!
-    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::invalidGestures
+    \qmlproperty stringlist QtSensors::SensorGesture::invalidGestures
     This property holds the requested gestures that were not found on the system.
 */
 QStringList QmlSensorGesture::invalidGestures() const
@@ -179,10 +179,10 @@ QStringList QmlSensorGesture::invalidGestures() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::SensorGesture::enabled
+    \qmlproperty bool QtSensors::SensorGesture::enabled
     This property can be used to activate or deactivate the sensor gesture.
     Default value is false;
-    \sa {QtMobility.sensors1::SensorGesture::detected}, {detected}
+    \sa {QtSensors::SensorGesture::detected}, {detected}
 */
 bool QmlSensorGesture::enabled() const
 {
@@ -211,7 +211,7 @@ void QmlSensorGesture::setEnabled(bool value)
 }
 
 /*!
-    \qmlsignal QtMobility.sensors1::SensorGesture::detected(string gesture)
+    \qmlsignal QtSensors::SensorGesture::detected(string gesture)
     This signal is emitted whenever a gesture is detected.
     The gesture parameter contains the gesture that was detected.
 */

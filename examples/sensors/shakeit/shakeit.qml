@@ -41,7 +41,7 @@
 
 import QtQuick 2.0
 //! [0]
-import QtMobility.sensors 1.3
+import QtSensors 5.0
 //! [0]
 import QtMultimedia 5.0
 

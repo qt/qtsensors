@@ -43,7 +43,7 @@ import Qt3D 1.0
 import Qt3D.Shapes 1.0
 
 //! [0]
-import QtMobility.sensors 1.3
+import QtSensors 5.0
 //! [0]
 
 import "."

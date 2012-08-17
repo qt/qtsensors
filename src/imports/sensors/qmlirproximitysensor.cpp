@@ -46,9 +46,9 @@
     \qmltype IRProximitySensor
     \instantiates QmlIRProximitySensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.3
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The IRProximitySensor element reports on infra-red reflectance values.
 
     This element wraps the QIRProximitySensor class. Please see the documentation for
@@ -81,9 +81,9 @@ QSensor *QmlIRProximitySensor::sensor() const
     \qmltype IRProximityReading
     \instantiates QmlIRProximitySensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.3
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The IRProximityReading element holds the most recent IR proximity reading.
 
     The IRProximityReading element holds the most recent IR proximity reading.
@@ -105,7 +105,7 @@ QmlIRProximitySensorReading::~QmlIRProximitySensorReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::IRProximityReading::reflectance
+    \qmlproperty qreal QtSensors::IRProximityReading::reflectance
     This property holds the reflectance value.
 
     Please see QIRProximityReading::reflectance for information about this property.

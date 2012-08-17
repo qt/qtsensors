@@ -49,9 +49,9 @@ QT_END_NAMESPACE
     \qmltype TiltSensor
     \instantiates QmlTiltSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The TiltSensor element reports tilt events
            along the X and Y axes.
 
@@ -84,7 +84,7 @@ QSensor *QmlTiltSensor::sensor() const
 }
 
 /*!
-    \qmlmethod QtMobility.sensors1::TiltSensor::calibrate()
+    \qmlmethod QtSensors::TiltSensor::calibrate()
     Calibrate the tilt sensor.
 
     Please see QTiltSensor::calibrate() for information about this property.
@@ -98,9 +98,9 @@ void QmlTiltSensor::calibrate()
     \qmltype TiltReading
     \instantiates QmlTiltSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The TiltReading element holds the most recent TiltSensor reading.
 
     The TiltReading element holds the most recent TiltSensor reading.
@@ -122,7 +122,7 @@ QmlTiltSensorReading::~QmlTiltSensorReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::TiltReading::yRotation
+    \qmlproperty qreal QtSensors::TiltReading::yRotation
     This property holds the amount of tilt on the Y axis.
 
     Please see QTiltReading::yRotation for information about this property.
@@ -134,7 +134,7 @@ qreal QmlTiltSensorReading::yRotation() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::TiltReading::xRotation
+    \qmlproperty qreal QtSensors::TiltReading::xRotation
     This property holds the amount of tilt on the X axis.
 
     Please see QTiltReading::xRotation for information about this property.

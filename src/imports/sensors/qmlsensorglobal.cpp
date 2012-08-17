@@ -47,8 +47,8 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype SensorGlobal
     \instantiates QmlSensorGlobal
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.3
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
     \brief The SensorGlobal element provides the module API.
 
     The SensorGlobal element provides the module API.
@@ -56,8 +56,8 @@ QT_BEGIN_NAMESPACE
     This element cannot be directly created. It can only be accessed via a namespace import.
 
     \code
-    import QtMobility.sensors 1.3
-    import QtMobility.sensors 1.3 as Sensors
+    import QtSensors 5.0
+    import QtSensors 5.0 as Sensors
     ...
         Component.onCompleted: {
             var types = Sensors.sensorTypes();
@@ -78,7 +78,7 @@ QmlSensorGlobal::~QmlSensorGlobal()
 }
 
 /*!
-    \qmlmethod list<string> QtMobility.sensors1::SensorGlobal::sensorTypes()
+    \qmlmethod list<string> QtSensors::SensorGlobal::sensorTypes()
     Returns a list of the sensor types that have been registered.
 
     Please see QSensor::sensorTypes() for information.
@@ -92,7 +92,7 @@ QStringList QmlSensorGlobal::sensorTypes() const
 }
 
 /*!
-    \qmlmethod list<string> QtMobility.sensors1::SensorGlobal::sensorsForType(type)
+    \qmlmethod list<string> QtSensors::SensorGlobal::sensorsForType(type)
     Returns a list of the sensor identifiers that have been registered for \a type.
 
     Please see QSensor::sensorsForType() for information.
@@ -106,7 +106,7 @@ QStringList QmlSensorGlobal::sensorsForType(const QString &type) const
 }
 
 /*!
-    \qmlmethod string QtMobility.sensors1::SensorGlobal::defaultSensorForType(type)
+    \qmlmethod string QtSensors::SensorGlobal::defaultSensorForType(type)
     Returns the default sensor identifier that has been registered for \a type.
 
     Please see QSensor::defaultSensorForType() for information.

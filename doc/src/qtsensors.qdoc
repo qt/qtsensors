@@ -39,7 +39,7 @@
 
     \table
         \row
-            \li \l {QtMobility.sensors 1.x}{QML API}
+            \li \l {Qt Sensors QML API}{QML API}
             \li Information about the Qt Sensors QML API
         \row
             \li \l {Qt Sensors C++ API}{C++ API}
@@ -69,9 +69,6 @@
         \row
             \li \l {Porting Applications from QtMobility Sensors to Qt Sensors}{Porting Guide}
             \li Information about the steps needed to port applications to the Qt Sensors API.
-        \row
-            \li \l {QtMobility.sensors 1.x}{Legacy QML API}
-            \li Information about the legacy QtMobility.sensors QML API
     \endtable
 
 

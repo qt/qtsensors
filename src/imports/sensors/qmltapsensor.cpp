@@ -46,9 +46,9 @@
     \qmltype TapSensor
     \instantiates QmlTapSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The TapSensor element reports tap and double tap events
            along the X, Y and Z axes.
 
@@ -82,7 +82,7 @@ QSensor *QmlTapSensor::sensor() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::TapSensor::returnDoubleTapEvents
+    \qmlproperty bool QtSensors::TapSensor::returnDoubleTapEvents
     This property holds a value indicating if double tap events should be reported.
 
     Please see QTapSensor::returnDoubleTapEvents for information about this property.
@@ -104,9 +104,9 @@ void QmlTapSensor::setReturnDoubleTapEvents(bool ret)
     \qmltype TapReading
     \instantiates QmlTapSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The TapReading element holds the most recent TapSensor reading.
 
     The TapReading element holds the most recent TapSensor reading.
@@ -128,7 +128,7 @@ QmlTapSensorReading::~QmlTapSensorReading()
 }
 
 /*!
-    \qmlproperty TapDirection QtMobility.sensors1::TapReading::tapDirection
+    \qmlproperty TapDirection QtSensors::TapReading::tapDirection
     This property holds the direction of the tap.
 
     Please see QTapReading::tapDirection for information about this property.
@@ -150,7 +150,7 @@ QTapReading::TapDirection QmlTapSensorReading::tapDirection() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::TapReading::doubleTap
+    \qmlproperty bool QtSensors::TapReading::doubleTap
     This property holds a value indicating if there was a single or double tap.
 
     Please see QTapReading::doubleTap for information about this property.

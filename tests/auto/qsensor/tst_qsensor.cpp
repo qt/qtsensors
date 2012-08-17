@@ -41,12 +41,12 @@
 
 //TESTED_COMPONENT=src/sensors
 
-#include <QObject>
+#include <QtCore/QObject>
 #include <QTest>
-#include <QDebug>
-#include <QFile>
+#include <QtCore/QDebug>
+#include <QtCore/QFile>
 #include <QSignalSpy>
-#include <QSensorManager>
+#include <QtSensors/QSensorManager>
 
 #include "qsensor.h"
 #include "test_sensor.h"

@@ -46,9 +46,9 @@
     \qmltype LightSensor
     \instantiates QmlLightSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.2
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The LightSensor element reports on light levels using LUX.
 
     The LightSensor element reports on light levels using LUX.
@@ -80,7 +80,7 @@ QSensor *QmlLightSensor::sensor() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::LightSensor::fieldOfView
+    \qmlproperty qreal QtSensors::LightSensor::fieldOfView
     This property holds a value indicating the field of view.
 
     Please see QLightSensor::fieldOfView for information about this property.
@@ -101,9 +101,9 @@ void QmlLightSensor::_update()
     \qmltype LightReading
     \instantiates QmlLightSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.2
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The LightReading element holds the most recent LightSensor reading.
 
     The LightReading element holds the most recent LightSensor reading.

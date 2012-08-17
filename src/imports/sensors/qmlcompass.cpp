@@ -46,9 +46,9 @@
     \qmltype Compass
     \instantiates QmlCompass
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The Compass element reports on heading using magnetic north as a reference.
 
     The Compass element reports on heading using magnetic north as a reference.
@@ -83,9 +83,9 @@ QSensor *QmlCompass::sensor() const
     \qmltype CompassReading
     \instantiates QmlCompassReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The CompassReading element holds the most recent Compass reading.
 
     The CompassReading element holds the most recent Compass reading.
@@ -107,7 +107,7 @@ QmlCompassReading::~QmlCompassReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::CompassReading::azimuth
+    \qmlproperty qreal QtSensors::CompassReading::azimuth
     This property holds the azimuth of the device.
 
     Please see QCompassReading::azimuth for information about this property.
@@ -119,7 +119,7 @@ qreal QmlCompassReading::azimuth() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::CompassReading::calibrationLevel
+    \qmlproperty qreal QtSensors::CompassReading::calibrationLevel
     This property holds the calibration level of the reading.
 
     Please see QCompassReading::calibrationLevel for information about this property.

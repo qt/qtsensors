@@ -46,9 +46,9 @@
     \qmltype Accelerometer
     \instantiates QmlAccelerometer
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The Accelerometer element reports on linear acceleration
            along the X, Y and Z axes.
 
@@ -85,9 +85,9 @@ QSensor *QmlAccelerometer::sensor() const
     \qmltype AccelerometerReading
     \instantiates QmlAccelerometerReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The AccelerometerReading element holds the most recent Accelerometer reading.
 
     The AccelerometerReading element holds the most recent Accelerometer reading.
@@ -109,7 +109,7 @@ QmlAccelerometerReading::~QmlAccelerometerReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::AccelerometerReading::x
+    \qmlproperty qreal QtSensors::AccelerometerReading::x
     This property holds the acceleration on the X axis.
 
     Please see QAccelerometerReading::x for information about this property.
@@ -121,7 +121,7 @@ qreal QmlAccelerometerReading::x() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::AccelerometerReading::y
+    \qmlproperty qreal QtSensors::AccelerometerReading::y
     This property holds the acceleration on the Y axis.
 
     Please see QAccelerometerReading::y for information about this property.
@@ -133,7 +133,7 @@ qreal QmlAccelerometerReading::y() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::AccelerometerReading::z
+    \qmlproperty qreal QtSensors::AccelerometerReading::z
     This property holds the acceleration on the Z axis.
 
     Please see QAccelerometerReading::z for information about this property.

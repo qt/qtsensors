@@ -48,8 +48,8 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype Sensor
     \instantiates QmlSensor
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
     \brief The Sensor element serves as a base type for sensors.
 
     The Sensor element serves as a base type for sensors.
@@ -92,7 +92,7 @@ void QmlSensor::setIdentifier(const QString &identifier)
 }
 
 /*!
-    \qmlproperty string QtMobility.sensors1::Sensor::type
+    \qmlproperty string QtSensors::Sensor::type
     This property holds the type of the sensor.
 */
 
@@ -102,7 +102,7 @@ QString QmlSensor::type() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::Sensor::connectedToBackend
+    \qmlproperty bool QtSensors::Sensor::connectedToBackend
     This property holds a value indicating if the sensor has connected to a backend.
 
     Please see QSensor::connectedToBackend for information about this property.
@@ -114,7 +114,7 @@ bool QmlSensor::isConnectedToBackend() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::Sensor::busy
+    \qmlproperty bool QtSensors::Sensor::busy
     This property holds a value to indicate if the sensor is busy.
 
     Please see QSensor::busy for information about this property.
@@ -126,7 +126,7 @@ bool QmlSensor::isBusy() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::Sensor::active
+    \qmlproperty bool QtSensors::Sensor::active
     This property holds a value to indicate if the sensor is active.
 
     Please see QSensor::active for information about this property.
@@ -154,7 +154,7 @@ bool QmlSensor::isActive() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::Sensor::alwaysOn
+    \qmlproperty bool QtSensors::Sensor::alwaysOn
     This property holds a value to indicate if the sensor should remain running when the screen is off.
 
     Please see QSensor::alwaysOn for information about this property.
@@ -171,7 +171,7 @@ void QmlSensor::setAlwaysOn(bool alwaysOn)
 }
 
 /*!
-    \qmlproperty list<Range> QtMobility.sensors1::Sensor::availableDataRates
+    \qmlproperty list<Range> QtSensors::Sensor::availableDataRates
     This property holds the data rates that the sensor supports.
 
     Please see QSensor::availableDataRates for information about this property.
@@ -192,7 +192,7 @@ QQmlListProperty<QmlSensorRange> QmlSensor::availableDataRates() const
 }
 
 /*!
-    \qmlproperty int QtMobility.sensors1::Sensor::dataRate
+    \qmlproperty int QtSensors::Sensor::dataRate
     This property holds the data rate that the sensor should be run at.
 
     Please see QSensor::dataRate for information about this property.
@@ -212,7 +212,7 @@ void QmlSensor::setDataRate(int rate)
 }
 
 /*!
-    \qmlproperty list<OutputRange> QtMobility.sensors1::Sensor::outputRanges
+    \qmlproperty list<OutputRange> QtSensors::Sensor::outputRanges
     This property holds a list of output ranges the sensor supports.
 
     Please see QSensor::outputRanges for information about this property.
@@ -234,7 +234,7 @@ QQmlListProperty<QmlSensorOutputRange> QmlSensor::outputRanges() const
 }
 
 /*!
-    \qmlproperty int QtMobility.sensors1::Sensor::outputRange
+    \qmlproperty int QtSensors::Sensor::outputRange
     This property holds the output range in use by the sensor.
 
     Please see QSensor::outputRange for information about this property.
@@ -255,7 +255,7 @@ void QmlSensor::setOutputRange(int index)
 }
 
 /*!
-    \qmlproperty string QtMobility.sensors1::Sensor::description
+    \qmlproperty string QtSensors::Sensor::description
     This property holds a descriptive string for the sensor.
 */
 
@@ -265,7 +265,7 @@ QString QmlSensor::description() const
 }
 
 /*!
-    \qmlproperty int QtMobility.sensors1::Sensor::error
+    \qmlproperty int QtSensors::Sensor::error
     This property holds the last error code set on the sensor.
 */
 
@@ -275,7 +275,7 @@ int QmlSensor::error() const
 }
 
 /*!
-    \qmlproperty SensorReading QtMobility.sensors1::Sensor::reading
+    \qmlproperty SensorReading QtSensors::Sensor::reading
     This property holds the reading class.
 
     Please see QSensor::reading for information about this property.
@@ -288,7 +288,7 @@ QmlSensorReading *QmlSensor::reading() const
 }
 
 /*!
-    \qmlmethod bool QtMobility.sensors1::Sensor::start()
+    \qmlmethod bool QtSensors::Sensor::start()
     Start retrieving values from the sensor. Returns true if the sensor was started, false otherwise.
 
     Please see QSensor::start() for information.
@@ -301,7 +301,7 @@ bool QmlSensor::start()
 }
 
 /*!
-    \qmlmethod bool QtMobility.sensors1::Sensor::stop()
+    \qmlmethod bool QtSensors::Sensor::stop()
     Stop retrieving values from the sensor.
 
     Please see QSensor::stop() for information.
@@ -380,8 +380,8 @@ void QmlSensor::updateReading()
 /*!
     \qmltype SensorReading
     \instantiates QmlSensorReading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
     \brief The SensorReading element serves as a base type for sensor readings.
 
     The SensorReading element serves as a base type for sensor readings.
@@ -402,7 +402,7 @@ QmlSensorReading::~QmlSensorReading()
 }
 
 /*!
-    \qmlproperty quint64 QtMobility.sensors1::SensorReading::timestamp
+    \qmlproperty quint64 QtSensors::SensorReading::timestamp
     A timestamp for the reading.
 
     Please see QSensorReading::timestamp for information about this property.

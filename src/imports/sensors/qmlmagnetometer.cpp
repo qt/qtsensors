@@ -46,9 +46,9 @@
     \qmltype Magnetometer
     \instantiates QmlMagnetometer
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The Magnetometer element reports on magnetic field strength
            along the Z, Y and Z axes.
 
@@ -82,7 +82,7 @@ QSensor *QmlMagnetometer::sensor() const
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::Magnetometer::returnGeoValues
+    \qmlproperty bool QtSensors::Magnetometer::returnGeoValues
     This property holds a value indicating if geomagnetic values should be returned.
 
     Please see QMagnetometer::returnGeoValues for information about this property.
@@ -103,9 +103,9 @@ void QmlMagnetometer::setReturnGeoValues(bool geo)
     \qmltype MagnetometerReading
     \instantiates QmlMagnetometerReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The MagnetometerReading element holds the most recent Magnetometer reading.
 
     The MagnetometerReading element holds the most recent Magnetometer reading.
@@ -127,7 +127,7 @@ QmlMagnetometerReading::~QmlMagnetometerReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::x
+    \qmlproperty qreal QtSensors::MagnetometerReading::x
     This property holds the raw magnetic flux density on the X axis.
 
     Please see QMagnetometerReading::x for information about this property.
@@ -139,7 +139,7 @@ qreal QmlMagnetometerReading::x() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::y
+    \qmlproperty qreal QtSensors::MagnetometerReading::y
     This property holds the raw magnetic flux density on the Y axis.
 
     Please see QMagnetometerReading::y for information about this property.
@@ -151,7 +151,7 @@ qreal QmlMagnetometerReading::y() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::z
+    \qmlproperty qreal QtSensors::MagnetometerReading::z
     This property holds the raw magnetic flux density on the Z axis.
 
     Please see QMagnetometerReading::z for information about this property.
@@ -163,7 +163,7 @@ qreal QmlMagnetometerReading::z() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::MagnetometerReading::calibrationLevel
+    \qmlproperty qreal QtSensors::MagnetometerReading::calibrationLevel
     This property holds the accuracy of the reading.
 
     Please see QMagnetometerReading::calibrationLevel for information about this property.

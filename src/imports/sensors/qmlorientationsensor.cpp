@@ -46,9 +46,9 @@
     \qmltype OrientationSensor
     \instantiates QmlOrientationSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The OrientationSensor element reports device orientation.
 
     The OrientationSensor element reports device orientation.
@@ -83,9 +83,9 @@ QSensor *QmlOrientationSensor::sensor() const
     \qmltype OrientationReading
     \instantiates QmlOrientationSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.1
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The OrientationReading element holds the most recent OrientationSensor reading.
 
     The OrientationReading element holds the most recent OrientationSensor reading.
@@ -107,7 +107,7 @@ QmlOrientationSensorReading::~QmlOrientationSensorReading()
 }
 
 /*!
-    \qmlproperty Orientation QtMobility.sensors1::OrientationReading::orientation
+    \qmlproperty Orientation QtSensors::OrientationReading::orientation
     This property holds the orientation of the device.
 
     Please see QOrientationReading::orientation for information about this property.

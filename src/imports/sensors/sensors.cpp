@@ -74,7 +74,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QObject *global_object_13(QQmlEngine *, QJSEngine *)
+static QObject *global_object_50(QQmlEngine *, QJSEngine *)
 {
     return new QmlSensorGlobal;
 }
@@ -86,62 +86,15 @@ class QtSensorsDeclarativeModule : public QQmlExtensionPlugin
 public:
     virtual void registerTypes(const char *uri)
     {
-        char const * const package = "QtMobility.sensors";
+        char const * const package = "QtSensors";
         if (QLatin1String(uri) != QLatin1String(package)) return;
         int major;
         int minor;
 
-        // Register the 1.1 interfaces
-        major = 1;
-        minor = 1;
-        qmlRegisterUncreatableType<QSensorReading       >(package, major, minor, "SensorReading",        QLatin1String("Cannot create SensorReading"));
-        qmlRegisterType           <QAccelerometer       >(package, major, minor, "Accelerometer");
-        qmlRegisterType           <QAccelerometerReading>(package, major, minor, "AccelerometerReading");
-        qmlRegisterType           <QAmbientLightSensor  >(package, major, minor, "AmbientLightSensor");
-        qmlRegisterType           <QAmbientLightReading >(package, major, minor, "AmbientLightReading");
-        qmlRegisterType           <QCompass             >(package, major, minor, "Compass");
-        qmlRegisterType           <QCompassReading      >(package, major, minor, "CompassReading");
-        qmlRegisterType           <QMagnetometer        >(package, major, minor, "Magnetometer");
-        qmlRegisterType           <QMagnetometerReading >(package, major, minor, "MagnetometerReading");
-        qmlRegisterType           <QOrientationSensor   >(package, major, minor, "OrientationSensor");
-        qmlRegisterType           <QOrientationReading  >(package, major, minor, "OrientationReading");
-        qmlRegisterType           <QProximitySensor     >(package, major, minor, "ProximitySensor");
-        qmlRegisterType           <QProximityReading    >(package, major, minor, "ProximityReading");
-        qmlRegisterType           <QRotationSensor      >(package, major, minor, "RotationSensor");
-        qmlRegisterType           <QRotationReading     >(package, major, minor, "RotationReading");
-        qmlRegisterType           <QTapSensor           >(package, major, minor, "TapSensor");
-        qmlRegisterType           <QTapReading          >(package, major, minor, "TapReading");
-
-        // Register the 1.2 interfaces
-        major = 1;
-        minor = 2;
-        qmlRegisterUncreatableType<QSensor              >(package, major, minor, "Sensor",               QLatin1String("Cannot create Sensor"));
-        qmlRegisterUncreatableType<QSensorReading       >(package, major, minor, "SensorReading",        QLatin1String("Cannot create SensorReading"));
-        qmlRegisterType           <QAccelerometer       >(package, major, minor, "Accelerometer");
-        qmlRegisterUncreatableType<QAccelerometerReading>(package, major, minor, "AccelerometerReading", QLatin1String("Cannot create AccelerometerReading"));
-        qmlRegisterType           <QAmbientLightSensor  >(package, major, minor, "AmbientLightSensor");
-        qmlRegisterUncreatableType<QAmbientLightReading >(package, major, minor, "AmbientLightReading",  QLatin1String("Cannot create AmbientLightReading"));
-        qmlRegisterType           <QCompass             >(package, major, minor, "Compass");
-        qmlRegisterUncreatableType<QCompassReading      >(package, major, minor, "CompassReading",       QLatin1String("Cannot create CompassReading"));
-        qmlRegisterType           <QMagnetometer        >(package, major, minor, "Magnetometer");
-        qmlRegisterUncreatableType<QMagnetometerReading >(package, major, minor, "MagnetometerReading",  QLatin1String("Cannot create MagnetometerReading"));
-        qmlRegisterType           <QOrientationSensor   >(package, major, minor, "OrientationSensor");
-        qmlRegisterUncreatableType<QOrientationReading  >(package, major, minor, "OrientationReading",   QLatin1String("Cannot create OrientationReading"));
-        qmlRegisterType           <QProximitySensor     >(package, major, minor, "ProximitySensor");
-        qmlRegisterUncreatableType<QProximityReading    >(package, major, minor, "ProximityReading",     QLatin1String("Cannot create ProximityReading"));
-        qmlRegisterType           <QRotationSensor      >(package, major, minor, "RotationSensor");
-        qmlRegisterUncreatableType<QRotationReading     >(package, major, minor, "RotationReading",      QLatin1String("Cannot create RotationReading"));
-        qmlRegisterType           <QTapSensor           >(package, major, minor, "TapSensor");
-        qmlRegisterUncreatableType<QTapReading          >(package, major, minor, "TapReading",           QLatin1String("Cannot create TapReading"));
-        qmlRegisterType           <QLightSensor         >(package, major, minor, "LightSensor");
-        qmlRegisterUncreatableType<QLightReading        >(package, major, minor, "LightReading",         QLatin1String("Cannot create LightReading"));
-        qmlRegisterType           <QGyroscope           >(package, major, minor, "Gyroscope");
-        qmlRegisterUncreatableType<QGyroscopeReading    >(package, major, minor, "GyroscopeReading",     QLatin1String("Cannot create GyroscopeReading"));
-
-        // Register the 1.3 interfaces
-        major = 1;
-        minor = 3;
-        qmlRegisterSingletonType  <QmlSensorGlobal             >(package, major, minor, "QtSensors", global_object_13);
+        // Register the 5.0 interfaces
+        major = 5;
+        minor = 0;
+        qmlRegisterSingletonType  <QmlSensorGlobal             >(package, major, minor, "QmlSensors", global_object_50);
         qmlRegisterUncreatableType<QmlSensorRange              >(package, major, minor, "Range",                QLatin1String("Cannot create Range"));
         qmlRegisterUncreatableType<QmlSensorOutputRange        >(package, major, minor, "OutputRange",          QLatin1String("Cannot create OutputRange"));
         qmlRegisterUncreatableType<QmlSensor                   >(package, major, minor, "Sensor",               QLatin1String("Cannot create Sensor"));

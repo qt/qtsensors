@@ -40,7 +40,7 @@
 
 import QtQuick 2.0
 //! [0]
-import QtMobility.sensors 1.2
+import QtSensors 5.0
 //! [0]
 
 

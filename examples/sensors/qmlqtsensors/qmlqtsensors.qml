@@ -88,7 +88,7 @@ import QtQuick 2.0
 import "components"
 
 //! [0]
-import QtMobility.sensors 1.3
+import QtSensors 5.0
 //! [0]
 
 ApplicationWindow {

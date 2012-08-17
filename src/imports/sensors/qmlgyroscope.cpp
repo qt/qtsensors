@@ -46,9 +46,9 @@
     \qmltype Gyroscope
     \instantiates QmlGyroscope
     \ingroup qml-sensors_type
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.2
-    \inherits QtMobility.sensors1::Sensor
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::Sensor
     \brief The Gyroscope element reports on rotational acceleration
            around the X, Y and Z axes.
 
@@ -82,9 +82,9 @@ QSensor *QmlGyroscope::sensor() const
     \qmltype GyroscopeReading
     \instantiates QmlGyroscopeReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtMobility.sensors 1.3
-    \since QtMobility.sensors 1.2
-    \inherits QtMobility.sensors1::SensorReading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.0
+    \inherits QtSensors::SensorReading
     \brief The GyroscopeReading element holds the most recent Gyroscope reading.
 
     The GyroscopeReading element holds the most recent Gyroscope reading.
@@ -106,7 +106,7 @@ QmlGyroscopeReading::~QmlGyroscopeReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::GyroscopeReading::x
+    \qmlproperty qreal QtSensors::GyroscopeReading::x
     This property holds the angular velocity around the x axis.
 
     Please see QGyroscopeReading::x for information about this property.
@@ -118,7 +118,7 @@ qreal QmlGyroscopeReading::x() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::GyroscopeReading::y
+    \qmlproperty qreal QtSensors::GyroscopeReading::y
     This property holds the angular velocity around the y axis.
 
     Please see QGyroscopeReading::y for information about this property.
@@ -130,7 +130,7 @@ qreal QmlGyroscopeReading::y() const
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::GyroscopeReading::z
+    \qmlproperty qreal QtSensors::GyroscopeReading::z
     This property holds the angular velocity around the z axis.
 
     Please see QGyroscopeReading::z for information about this property.
