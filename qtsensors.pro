@@ -18,8 +18,8 @@ module_qtsensors_snippets.depends = sub_src
 
 # Commands to rebuild the plugin.qmltypes files for our imports
 # Run "make rebuild_qmltypes" after completing a build
-sensors_qmltypes.commands = qmlplugindump QtMobility.sensors 1.3 $$QT.sensors.imports > $$PWD/src/imports/sensors/plugin.qmltypes
-sensors2_qmltypes.commands = qmlplugindump QtSensors 5.0 $$QT.sensors.imports > $$PWD/src/imports/sensors2/plugin.qmltypes
+sensors_qmltypes.commands = qmlplugindump QtMobility.sensors 1.3 $$QT.sensors.imports > $$PWD/src/imports/sensors/plugins.qmltypes
+sensors2_qmltypes.commands = qmlplugindump QtSensors 5.0 $$QT.sensors.imports > $$PWD/src/imports/sensors2/plugins.qmltypes
 TYPES = sensors_qmltypes sensors2_qmltypes
 rebuild_qmltypes.depends = $$TYPES
 QMAKE_EXTRA_TARGETS += rebuild_qmltypes $$TYPES

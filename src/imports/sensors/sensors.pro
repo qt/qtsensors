@@ -10,4 +10,4 @@ SOURCES += sensors.cpp
 load(qml_plugin)
 
 OTHER_FILES += \
-    plugin.json
+    plugin.json qmldir plugins.qmltypes

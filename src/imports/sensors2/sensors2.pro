@@ -19,4 +19,4 @@ HEADERS += qsensor2ambientlight.h \
 load(qml_plugin)
 
 OTHER_FILES += \
-    plugin.json
+    plugin.json qmldir plugins.qmltypes

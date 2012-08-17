@@ -1,2 +1,3 @@
+module QtMobility.sensors
 plugin declarative_sensors
 typeinfo plugins.qmltypes
