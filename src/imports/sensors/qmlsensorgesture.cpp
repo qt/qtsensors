@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qsensor2gesture.h"
+#include "qmlsensorgesture.h"
 #include <qsensorgesture.h>
 #include <qsensorgesturemanager.h>
 
@@ -47,14 +47,12 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype SensorGesture
-    \instantiates QSensor2Gesture
-    \inqmlmodule QtSensors 5.0
-    \since QtSensors 5.0
+    \instantiates QmlSensorGesture
+    \inqmlmodule QtMobility.sensors 1.3
+    \since QtMobility.sensors 1.3
     \brief Provides notifications when sensor-based gestures are detected.
 
     This type provides notification when sensor gestures are triggered.
-
-    This type is part of the \b{QtSensors 5} module.
 
     The following QML code creates a "shake" and "SecondCounter" SensorGesture QML type, and
     displays the detected gesture in a text type.
@@ -76,7 +74,6 @@ QT_BEGIN_NAMESPACE
            id: detectedText
            x:5
            y:160
-           text: ""
        }
     }
     \endqml
@@ -86,7 +83,7 @@ QT_BEGIN_NAMESPACE
 
 
 */
-QSensor2Gesture::QSensor2Gesture(QObject* parent)
+QmlSensorGesture::QmlSensorGesture(QObject* parent)
     : QObject(parent)
     , isEnabled(false)
     , initDone(false)
@@ -96,18 +93,18 @@ QSensor2Gesture::QSensor2Gesture(QObject* parent)
     connect(sensorGestureManager, SIGNAL(newSensorGestureAvailable()), SIGNAL(availableGesturesChanged()));
 }
 
-QSensor2Gesture::~QSensor2Gesture()
+QmlSensorGesture::~QmlSensorGesture()
 {
 }
 
 /*
   QQmlParserStatus interface implementation
 */
-void QSensor2Gesture::classBegin()
+void QmlSensorGesture::classBegin()
 {
 }
 
-void QSensor2Gesture::componentComplete()
+void QmlSensorGesture::componentComplete()
 {
     /*
       this is needed in the case the customer defines the type(s) and set it enabled = true
@@ -120,31 +117,31 @@ void QSensor2Gesture::componentComplete()
 */
 
 /*!
-    \qmlproperty stringlist QtSensors5::SensorGesture::availableGestures
+    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::availableGestures
     This property can be used to determine all available gestures on the system.
 */
-QStringList QSensor2Gesture::availableGestures()
+QStringList QmlSensorGesture::availableGestures()
 {
     return sensorGestureManager->gestureIds();
 }
 
 /*!
-    \qmlproperty stringlist QtSensors5::SensorGesture::gestures
+    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::gestures
     Set this property to a list of the gestures that the application is interested in detecting.
     This property cannot be changed while the type is enabled.
 
     The properties validGestures and invalidGestures will be set as appropriate immediately.
     To determine all available getures on the system please use the
-    \l {QtSensors5::SensorGesture::availableGestures} {availableGestures} property.
+    \l {QtMobility.sensors1::SensorGesture::availableGestures} {availableGestures} property.
 
     \sa {QtSensorGestures Plugins}
 */
-QStringList QSensor2Gesture::gestures() const
+QStringList QmlSensorGesture::gestures() const
 {
     return gestureList;
 }
 
-void QSensor2Gesture::setGestures(const QStringList& value)
+void QmlSensorGesture::setGestures(const QStringList& value)
 {
     if (gestureList == value)
         return;
@@ -153,7 +150,6 @@ void QSensor2Gesture::setGestures(const QStringList& value)
         qWarning() << "Cannot change gestures while running.";
         return;
     }
-    gestureList.clear();
     gestureList = value;
     createGesture();
     Q_EMIT gesturesChanged();
@@ -161,10 +157,10 @@ void QSensor2Gesture::setGestures(const QStringList& value)
 
 
 /*!
-    \qmlproperty stringlist QtSensors5::SensorGesture::validGestures
+    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::validGestures
     This property holds the requested gestures that were found on the system.
 */
-QStringList QSensor2Gesture::validGestures() const
+QStringList QmlSensorGesture::validGestures() const
 {
     if (sensorGesture)
         return sensorGesture->validIds();
@@ -172,10 +168,10 @@ QStringList QSensor2Gesture::validGestures() const
 }
 
 /*!
-    \qmlproperty stringlist QtSensors5::SensorGesture::invalidGestures
+    \qmlproperty stringlist QtMobility.sensors1::SensorGesture::invalidGestures
     This property holds the requested gestures that were not found on the system.
 */
-QStringList QSensor2Gesture::invalidGestures() const
+QStringList QmlSensorGesture::invalidGestures() const
 {
     if (sensorGesture)
         return sensorGesture->invalidIds();
@@ -183,17 +179,17 @@ QStringList QSensor2Gesture::invalidGestures() const
 }
 
 /*!
-    \qmlproperty bool QtSensors5::SensorGesture::enabled
+    \qmlproperty bool QtMobility.sensors1::SensorGesture::enabled
     This property can be used to activate or deactivate the sensor gesture.
     Default value is false;
-    \sa {QtSensors5::SensorGesture::detected}, {detected}
+    \sa {QtMobility.sensors1::SensorGesture::detected}, {detected}
 */
-bool QSensor2Gesture::enabled() const
+bool QmlSensorGesture::enabled() const
 {
     return isEnabled;
 }
 
-void QSensor2Gesture::setEnabled(bool value)
+void QmlSensorGesture::setEnabled(bool value)
 {
     bool hasChanged = false;
     if (isEnabled != value) {
@@ -215,7 +211,7 @@ void QSensor2Gesture::setEnabled(bool value)
 }
 
 /*!
-    \qmlsignal QtSensors5::SensorGesture::detected(string gesture)
+    \qmlsignal QtMobility.sensors1::SensorGesture::detected(string gesture)
     This signal is emitted whenever a gesture is detected.
     The gesture parameter contains the gesture that was detected.
 */
@@ -223,7 +219,7 @@ void QSensor2Gesture::setEnabled(bool value)
 /*
   private funtion implementation
 */
-void QSensor2Gesture::deleteGesture()
+void QmlSensorGesture::deleteGesture()
 {
     if (sensorGesture) {
         bool emitInvalidChange = !invalidGestures().isEmpty();
@@ -244,7 +240,7 @@ void QSensor2Gesture::deleteGesture()
     }
 }
 
-void QSensor2Gesture::createGesture()
+void QmlSensorGesture::createGesture()
 {
     deleteGesture();
     sensorGesture = new QSensorGesture(gestureList, this);

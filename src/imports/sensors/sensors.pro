@@ -22,7 +22,8 @@ HEADERS += \
     qmltapsensor.h \
     qmlrotationsensor.h \
     qmlsensorglobal.h \
-    qmltiltsensor.h
+    qmltiltsensor.h \
+    qmlsensorgesture.h
 
 SOURCES += sensors.cpp \
     qmlsensor.cpp \
@@ -39,7 +40,8 @@ SOURCES += sensors.cpp \
     qmltapsensor.cpp \
     qmlrotationsensor.cpp \
     qmlsensorglobal.cpp \
-    qmltiltsensor.cpp
+    qmltiltsensor.cpp \
+    qmlsensorgesture.cpp
 
 
 DESTDIR = $$QT.sensors.imports/$$TARGETPATH

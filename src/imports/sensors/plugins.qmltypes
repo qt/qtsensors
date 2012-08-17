@@ -424,6 +424,26 @@ Module {
         Method { name: "stop"; type: "void" }
     }
     Component {
+        name: "QmlSensorGesture"
+        prototype: "QObject"
+        exports: ["SensorGesture 1.3"]
+        Property { name: "availableGestures"; type: "QStringList"; isReadonly: true }
+        Property { name: "gestures"; type: "QStringList" }
+        Property { name: "validGestures"; type: "QStringList"; isReadonly: true }
+        Property { name: "invalidGestures"; type: "QStringList"; isReadonly: true }
+        Property { name: "enabled"; type: "bool" }
+        Signal {
+            name: "detected"
+            type: "void"
+            Parameter { name: "gesture"; type: "string" }
+        }
+        Signal { name: "availableGesturesChanged"; type: "void" }
+        Signal { name: "gesturesChanged"; type: "void" }
+        Signal { name: "validGesturesChanged"; type: "void" }
+        Signal { name: "invalidGesturesChanged"; type: "void" }
+        Signal { name: "enabledChanged"; type: "void" }
+    }
+    Component {
         name: "QmlSensorGlobal"
         prototype: "QObject"
         Signal { name: "availableSensorsChanged"; type: "void" }

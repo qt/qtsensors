@@ -175,6 +175,8 @@ private slots:
         QTest::newRow("1.3 IRProximityReading") << "1.3" << "IRProximityReading" << false;
         QTest::newRow("1.3 TiltSensor") << "1.3" << "TiltSensor" << true;
         QTest::newRow("1.3 TiltReading") << "1.3" << "TiltReading" << false;
+
+        QTest::newRow("1.3 SensorGesture") << "1.3" << "SensorGesture" << true;
     }
 
     void elements()

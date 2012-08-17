@@ -70,6 +70,7 @@
 #include "qmlrotationsensor.h"
 #include "qmltapsensor.h"
 #include "qmltiltsensor.h"
+#include "qmlsensorgesture.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -169,6 +170,8 @@ public:
         qmlRegisterUncreatableType<QmlTapSensorReading         >(package, major, minor, "TapReading",           QLatin1String("Cannot create TapReading"));
         qmlRegisterType           <QmlTiltSensor               >(package, major, minor, "TiltSensor");
         qmlRegisterUncreatableType<QmlTiltSensorReading        >(package, major, minor, "TiltReading",          QLatin1String("Cannot create TiltReading"));
+
+        qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
     }
 };
 
