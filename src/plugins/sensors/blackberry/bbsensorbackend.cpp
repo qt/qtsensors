@@ -125,9 +125,11 @@ void BbSensorBackendBase::initSensorInfo()
                                convertValue(deviceInfo.rx.info.resolution));
             }
 
-            // Min and max intentionally swapped here, as the minimum delay is the maximum rate
-            addDataRate(microSecondsToHertz(deviceInfo.rx.info.delay_max),
-                        microSecondsToHertz(deviceInfo.rx.info.delay_min));
+            if (deviceInfo.rx.info.delay_max > 0 && deviceInfo.rx.info.delay_min > 0) {
+                // Min and max intentionally swapped here, as the minimum delay is the maximum rate
+                addDataRate(microSecondsToHertz(deviceInfo.rx.info.delay_max),
+                            microSecondsToHertz(deviceInfo.rx.info.delay_min));
+            }
         }
         additionalDeviceInit();
         m_deviceFile.close();
