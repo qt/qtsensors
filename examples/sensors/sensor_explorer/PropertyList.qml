@@ -48,13 +48,11 @@ Rectangle {
     color: "transparent"
 
     property PropertyInfo selectedItem: null;
-    signal selectedItemChanged();
     property alias listmodel: itemList.model
 
     onListmodelChanged: {
         itemList.currentIndex = -1;
         selectedItem = null;
-        selectedItemChanged();
     }
 
     Rectangle {
@@ -121,7 +119,6 @@ Rectangle {
                     onClicked: {
                         itemList.currentIndex = index;
                         selectedItem = model.modelData;
-                        selectedItemChanged();
                     }
                 }
             }
