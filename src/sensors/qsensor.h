@@ -84,7 +84,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(QByteArray type READ type)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
     Q_PROPERTY(qrangelist availableDataRates READ availableDataRates)
-    Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate)
+    Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
     Q_PROPERTY(QSensorReading* reading READ reading NOTIFY readingChanged)
     Q_PROPERTY(bool busy READ isBusy)
     Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
@@ -167,6 +167,7 @@ Q_SIGNALS:
     void sensorError(int error);
     void availableSensorsChanged();
     void alwaysOnChanged();
+    void dataRateChanged();
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);

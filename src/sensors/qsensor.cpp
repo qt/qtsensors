@@ -480,20 +480,9 @@ int QSensor::dataRate() const
 void QSensor::setDataRate(int rate)
 {
     Q_D(QSensor);
-    if (rate == 0 || !isConnectedToBackend()) {
+    if (d->dataRate != rate) {
         d->dataRate = rate;
-        return;
-    }
-    bool warn = true;
-    Q_FOREACH (const qrange &range, d->availableDataRates) {
-        if (rate >= range.first && rate <= range.second) {
-            warn = false;
-            d->dataRate = rate;
-            break;
-        }
-    }
-    if (warn) {
-        qWarning() << "setDataRate:" << rate << "is not supported by the sensor.";
+        emit dataRateChanged();
     }
 }
 

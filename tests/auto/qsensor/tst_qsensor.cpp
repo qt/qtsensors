@@ -364,14 +364,14 @@ private slots:
             QCOMPARE(actual, expected);
         }
 
-        // Test that a previously-set, invalid data rate is reset to 0
+        // Test that a previously-set, invalid data rate is retained
         {
             TestSensor sensor;
             sensor.setDataRate(50);
             sensor.setProperty("doThis", "rates");
             sensor.connectToBackend();
             int actual = sensor.dataRate();
-            int expected = 0;
+            int expected = 50;
             QCOMPARE(actual, expected);
         }
 
@@ -533,13 +533,11 @@ private slots:
         TestSensor sensor;
         sensor.connectToBackend();
 
-        QTest::ignoreMessage(QtWarningMsg, "setDataRate: 1 is not supported by the sensor. ");
         sensor.setDataRate(1);
-        QCOMPARE(sensor.dataRate(), 0);
+        QCOMPARE(sensor.dataRate(), 1);
 
-        QTest::ignoreMessage(QtWarningMsg, "setDataRate: 1000 is not supported by the sensor. ");
         sensor.setDataRate(1000);
-        QCOMPARE(sensor.dataRate(), 0);
+        QCOMPARE(sensor.dataRate(), 1000);
     }
 
     void testSetBadDataRateWhenNotConnected()
@@ -550,9 +548,8 @@ private slots:
         sensor.setDataRate(300);
         QCOMPARE(sensor.dataRate(), 300);
         sensor.setDataRate(350);
-        QTest::ignoreMessage(QtWarningMsg, "setDataRate: 350 is not supported by the sensor. ");
         sensor.connectToBackend();
-        QCOMPARE(sensor.dataRate(), 0);
+        QCOMPARE(sensor.dataRate(), 350);
     }
 
     void testSetBadOutputRange()

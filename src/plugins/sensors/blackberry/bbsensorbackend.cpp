@@ -220,8 +220,14 @@ void BbSensorBackendBase::start()
         const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_RATE, &deviceRate,
                                   sizeof(deviceRate), NULL);
         if (result != EOK) {
+            sensor()->setDataRate(0);
             perror(QString::fromLatin1("Setting sensor rate for %1 failed")
                    .arg(m_deviceFile.fileName()).toLocal8Bit());
+        } else {
+            if (deviceRate.rx.rate > 0)
+                sensor()->setDataRate(microSecondsToHertz(deviceRate.rx.rate));
+            else
+                sensor()->setDataRate(0);
         }
     }
 
