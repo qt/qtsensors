@@ -1,5 +1,3 @@
-load(qt_build_config)
-
 TARGET = qtsensors_simulator
 load(qt_plugin)
 

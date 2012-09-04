@@ -1,5 +1,3 @@
-load(qt_build_config)
-
 TARGET = QtSensors
 CONFIG += strict_flags
 QT = core-private

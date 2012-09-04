@@ -1,5 +1,3 @@
-load(qt_build_config)
-
 TARGET = qtsensors_blackberry
 QT = sensors core
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII

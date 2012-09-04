@@ -1,5 +1,3 @@
-load(qt_build_config)
-
 TARGET = qtsensorgestures_shakeplugin
 QT = core sensors
 
