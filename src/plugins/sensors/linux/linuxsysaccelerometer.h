@@ -66,7 +66,6 @@ private:
 
     bool openFile();
     void closeFile();
-    int fd;
     QString path;
     QFile file;
     float divisor;

@@ -48,10 +48,7 @@
 
 #include <QtCore/QStringList>
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
-#include <fcntl.h>
 
 char const * const LinuxSysAccelerometer::id("linuxsys.accelerometer");
 
@@ -85,7 +82,6 @@ quint64 produceTimestamp()
 LinuxSysAccelerometer::LinuxSysAccelerometer(QSensor *sensor)
     : QSensorBackend(sensor)
     , m_timerid(0)
-    , fd(0)
     , path(QString())
     , divisor(0)
     , delimiter(QString())
@@ -107,7 +103,6 @@ LinuxSysAccelerometer::LinuxSysAccelerometer(QSensor *sensor)
 
 LinuxSysAccelerometer::~LinuxSysAccelerometer()
 {
-    closeFile();
 }
 
 void LinuxSysAccelerometer::start()
@@ -188,7 +183,7 @@ bool LinuxSysAccelerometer::openFile()
 
 void LinuxSysAccelerometer::closeFile()
 {
-    ::close(fd);
+    file.close();
 }
 
 
