@@ -29,7 +29,6 @@
     \example sensors/sensor_explorer
     \title Qt Sensors - Explorer QML example
     \ingroup qtsensors-examples
-    \image sensorexplorer.png
 
     \section2 Sensor Explorer in QML
     \brief The Sensor Explorer example demonstrates how to read the meta-data of available sensors.
