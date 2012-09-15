@@ -49,6 +49,7 @@
 #include <QtCore/QStringList>
 
 #include <time.h>
+#include <errno.h>
 
 char const * const LinuxSysAccelerometer::id("linuxsys.accelerometer");
 
