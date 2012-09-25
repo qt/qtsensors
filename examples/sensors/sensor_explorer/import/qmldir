@@ -1,1 +1,2 @@
+module Explorer
 plugin declarative_explorer

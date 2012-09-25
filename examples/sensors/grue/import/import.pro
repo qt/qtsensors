@@ -9,9 +9,13 @@ QT = core gui qml sensors
 INCLUDEPATH += $$PWD/../lib
 LIBS += -L$$OUT_PWD/../lib -lgruesensor
 
+# Shared gruesensor library will be installed in parent directory.
+# Define rpath so that this plugin will know where to look for it.
+unix:!mac: QMAKE_LFLAGS += -Wl,-rpath,\\\$\$ORIGIN/..
+
 SOURCES = main.cpp
 
-DESTPATH=$$[QT_INSTALL_IMPORTS]/Grue
+DESTPATH=$$[QT_INSTALL_EXAMPLES]/qtsensors/grue/Grue
 
 target.path=$$DESTPATH
 INSTALLS += target

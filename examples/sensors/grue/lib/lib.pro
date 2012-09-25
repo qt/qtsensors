@@ -12,5 +12,5 @@ HEADERS += gruesensor.h\
 
 SOURCES += gruesensor.cpp\
 
-target.path=$$[QT_INSTALL_LIBS]
+target.path=$$[QT_INSTALL_EXAMPLES]/qtsensors/grue
 INSTALLS += target

@@ -9,7 +9,7 @@ QT += qml sensors
 SOURCES = main.cpp explorer.cpp sensoritem.cpp propertyinfo.cpp
 HEADERS = explorer.h sensoritem.h propertyinfo.h
 
-DESTPATH=$$[QT_INSTALL_IMPORTS]/Explorer
+DESTPATH=$$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer/Explorer
 
 target.path=$$DESTPATH
 INSTALLS += target

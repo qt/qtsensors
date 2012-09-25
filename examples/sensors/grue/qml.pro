@@ -8,6 +8,6 @@ app.files = \
     $$files(*.qml) \
     grue.png
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
-app.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
+target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/grue
+app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/grue
 INSTALLS += target app
