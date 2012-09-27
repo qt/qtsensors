@@ -78,6 +78,24 @@ tests/auto/cmake/build
 doc/src/snippets/sensorgestures/sensorgesturessdocsnippet
 doc/src/snippets/sensors/sensorsdocsnippet
 
+# Generated example binaries
+examples/sensors/accel/accel
+examples/sensors/accelbubble/accelbubble
+examples/sensors/cubehouse/cubehouse
+examples/sensors/grue/console_app/detect_grue
+examples/sensors/grue/grue
+examples/sensors/grue/lib/*gruesensor*
+examples/sensors/maze/maze
+examples/sensors/qmlqtsensors/qmlqtsensors
+examples/sensors/qmlsensorgestures/qmlsensorgestures
+examples/sensors/sensor_explorer/sensor_explorer
+examples/sensors/sensorgestures/gesture
+examples/sensors/shakeit/shakeit
+
+# Generated config test binaries
+config.tests/bbsensor_compass/bbsensor_compass
+config.tests/bbsensor_header/bbsensor_header
+
 # Directories to ignore
 # ---------------------
 
