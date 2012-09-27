@@ -80,7 +80,8 @@ static void remapMatrix(const float inputMatrix[3*3],
 
 BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType,
                                          QSensor *sensor)
-    : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType), m_guiHelper(0)
+    : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType), m_guiHelper(0),
+      m_started(false)
 {
     m_mappingMatrix[0] = m_mappingMatrix[3] = 1;
     m_mappingMatrix[1] = m_mappingMatrix[2] = 0;
@@ -108,8 +109,8 @@ sensor_type_e BbSensorBackendBase::sensorType() const
 
 void BbSensorBackendBase::initSensorInfo()
 {
-    if (!m_deviceFile.open(QFile::ReadOnly)) {
-        qDebug() << "initSensorInfo(): Failed to open" << m_deviceFile.fileName()
+    if (!m_deviceFile.open(QFile::ReadOnly | QFile::Unbuffered)) {
+        qDebug() << "Failed to open sensor" << m_deviceFile.fileName()
                  << ":" << m_deviceFile.errorString();
     } else {
         sensor_devctl_info_u deviceInfo;
@@ -132,7 +133,13 @@ void BbSensorBackendBase::initSensorInfo()
             }
         }
         additionalDeviceInit();
-        m_deviceFile.close();
+
+        // Instead of closing the device here and opening it again in start(), just pause the sensor.
+        // This avoids an expensive close() and open() call.
+        setPaused(true);
+
+        m_socketNotifier.reset(new QSocketNotifier(m_deviceFile.handle(), QSocketNotifier::Read));
+        connect(m_socketNotifier.data(), SIGNAL(activated(int)), this, SLOT(dataAvailable()));
     }
 }
 
@@ -205,12 +212,13 @@ void BbSensorBackendBase::start()
 {
     Q_ASSERT(m_guiHelper);
 
-    if (!m_deviceFile.open(QFile::ReadOnly | QFile::Unbuffered)) {
+    if (!m_deviceFile.isOpen() || !setPaused(false)) {
         qDebug() << "Starting sensor" << m_deviceFile.fileName()
                  << "failed:" << m_deviceFile.errorString();
         sensorError(m_deviceFile.error());
         return;
     }
+    m_started = true;
 
     const int rateInHertz = sensor()->dataRate();
     if (rateInHertz != 0) {
@@ -262,15 +270,12 @@ void BbSensorBackendBase::start()
     }
 
     applyAlwaysOnProperty();
-
-    m_socketNotifier.reset(new QSocketNotifier(m_deviceFile.handle(), QSocketNotifier::Read));
-    connect(m_socketNotifier.data(), SIGNAL(activated(int)), this, SLOT(dataAvailable()));
 }
 
 void BbSensorBackendBase::stop()
 {
-    m_socketNotifier.reset();
-    m_deviceFile.close();
+    setPaused(true);
+    m_started = false;
 }
 
 bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
@@ -290,6 +295,9 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
 
 void BbSensorBackendBase::dataAvailable()
 {
+    if (!m_started)
+        return;
+
     Q_FOREVER {
         sensor_event_t event;
         const qint64 numBytes = m_deviceFile.read(reinterpret_cast<char *>(&event),
@@ -307,7 +315,7 @@ void BbSensorBackendBase::dataAvailable()
 
 void BbSensorBackendBase::applyAlwaysOnProperty()
 {
-    if (!m_deviceFile.isOpen())
+    if (!m_deviceFile.isOpen() || !m_started)
         return;
 
     sensor_devctl_bkgrnd_u bgState;
@@ -323,10 +331,10 @@ void BbSensorBackendBase::applyAlwaysOnProperty()
     updatePauseState();
 }
 
-void BbSensorBackendBase::setPaused(bool paused)
+bool BbSensorBackendBase::setPaused(bool paused)
 {
     if (!m_deviceFile.isOpen())
-        return;
+        return false;
 
     sensor_devctl_enable_u enableState;
     enableState.tx.enable = paused ? 0 : 1;
@@ -336,11 +344,17 @@ void BbSensorBackendBase::setPaused(bool paused)
         perror(QString::fromLatin1("Setting sensor enabled (%1) for %2 failed")
                .arg(paused)
                .arg(m_deviceFile.fileName()).toLocal8Bit());
+        return false;
     }
+
+    return true;
 }
 
 void BbSensorBackendBase::updatePauseState()
 {
+    if (!m_started)
+        return;
+
     setPaused(!sensor()->isAlwaysOn() && !m_guiHelper->applicationActive());
 }
 

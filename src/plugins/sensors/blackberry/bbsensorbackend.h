@@ -104,7 +104,7 @@ protected:
 private slots:
     void dataAvailable();
     void applyAlwaysOnProperty();
-    void setPaused(bool paused);
+    bool setPaused(bool paused);
     void updatePauseState();
     void updateOrientation();
 
@@ -114,6 +114,7 @@ private:
     sensor_type_e m_sensorType;
     BbGuiHelper *m_guiHelper;
     float m_mappingMatrix[4];
+    bool m_started;
 };
 
 template<class SensorReading>
