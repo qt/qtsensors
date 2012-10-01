@@ -6,16 +6,6 @@ blackberry {
 
 load(qt_parts)
 
-# QtCreator 2.5 doesn't understand load(qt_parts)
-#qtcreator25 {
-    TEMPLATE = subdirs
-    SUBDIRS *= examples src tests
-    OTHER_FILES *= \
-        doc/src/*.qdoc doc/src/*.dia \
-        doc/src/examples/* \
-        doc/src/imports/*
-#}
-
 SUBDIRS += module_qtsensors_snippets
 module_qtsensors_snippets.subdir = doc/src/snippets
 module_qtsensors_snippets.target = sub-snippets
