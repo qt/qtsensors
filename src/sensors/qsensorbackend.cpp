@@ -77,7 +77,7 @@ QSensorBackend::~QSensorBackend()
    This is the backend side of QSensor::isFeatureSupported(). Reimplement this function if the
    backend supports one of the additional sensor features of QSensor::Feature.
 
-   \return whether the feature \a feature is supported by this backend. The default implementation returns false.
+   Returns whether the feature \a feature is supported by this backend. The default implementation returns false.
    \since 5.0
  */
 bool QSensorBackend::isFeatureSupported(QSensor::Feature feature) const

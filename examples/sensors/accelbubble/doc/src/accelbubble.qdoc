@@ -26,39 +26,29 @@
 ****************************************************************************/
 
 /*!
-\page qtsensorgestures-cpp.html
-\title QtSensorGestures C++ API
-\brief Information about the QtSensorGestures C++ API
+    \example accelbubble
+    \title Qt Sensors - Accel Bubble
+    \brief The AccelBubble example demonstrates the Legacy Accelerometer QML type.
+    \ingroup qtsensors-examples
 
-\tableofcontents
+\section1 Overview
+    Writing a QML application that uses the Legacy Accelerometer QML sensors type requires the following steps:
 
-\section1
+    Import the Legacy Sensors Declarative module.
 
+\snippet accelbubble/accelbubble.qml 0
 
-\section1 Using QtSensorGestures
+    Add an Accelerometer QML type.
 
-With QtSensorGestures, you are able to easily utilize device gesturing using
-sensors such as the accelerometer and proximity.
+\snippet accelbubble/accelbubble.qml  1
 
-A list of currently supported sensor gestures and their descriptions can be found here:
-\l  {Qt Sensor Gestures}
+    Use the 'active' property to start the sensor
 
-Using QtSensorGestures is easy. There are two main classes you will need to use.
+\snippet accelbubble/accelbubble.qml  2
 
-QSensorGestureManager can be used for determining what sensor gestures are available, and
-QSensorGesture for connecting the sensor gesture signals.
+    Move the bubble according to a factor of the accelerator sensor
 
-\snippet snippets/sensorgestures/creating.cpp Receiving sensor gesture signals
-
-More information about the sensor gesture recognizers can be found in
-\l{QtSensorGestures Plugins}.
-
-\section1 Main Classes
-
-The primary classes that make up the QtSensorGestures API.
-
-\annotatedlist sensorgestures_main
-
+\snippet accelbubble/accelbubble.qml  3
 
 */
 

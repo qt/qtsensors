@@ -76,7 +76,7 @@ that multiple sensor backends cannot be in a plugin.
 
 An example follows.
 
-\snippet snippets/sensors/plugin.cpp Plugin
+\snippet sensors/plugin.cpp Plugin
 
 */
 

@@ -26,39 +26,38 @@
 ****************************************************************************/
 
 /*!
-    \example sensors/shakeit
-    \title Qt Sensors - ShakeIt QML Example
+    \example qmlsensorgestures
+    \title Qt Sensors - SensorGesture QML Type example
     \ingroup qtsensors-examples
-    \image shakeit.png
 
-    \section2 ShakeIt in QML
-    \brief The sensor gesture example demonstrates the steps for creating a QML application
-     that uses sensor gestures and the included shake sensor.
+    \brief This example demonstrates use of the SensorGesture QML type.
 
-    Writing a QML application that uses the Shake QML sensorgestures type requires the following steps:
+\section1 Overview
+    To write a QML application that will use the gesture plugin you need to to the following steps:
 
-    Import the Sensors Declarative module.
+    Import the QtSensors 5.x declarative plugin:
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 0
+\snippet qmlsensorgestures/GestureView.qml 0
 
-    Add a SensorGesture QML type.
+   Add the SensorGesture QML type into your qml file.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 1
+\snippet qmlsensorgestures/GestureView.qml 1
 
-    In the SensorGesture type, specify which gesture to be used.
-    Note that this can be a comma separated list. Here we are only interested in one
-    gesture recognizer.
+   Each SensorGesture QML type contains a property called gestures.
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 2
+   In this example an alias 'gestureid' for this property is used.
 
-    Use the 'enabled' property to start the sensor gesture.
+\snippet qmlsensorgestures/GestureView.qml 2
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 3
+   By using this alias property you define which gestures should be used:
 
-    Use the onDetected signal to do stuff.
+\snippet qmlsensorgestures/qmlsensorgestures.qml 3
 
-    \snippet ../examples/sensors/shakeit/shakeit.qml 4
+   A list of all available gestures can be created by calling the 'availableGestures' property:
 
-    There are additional gestures to shake which are supported:
-    whip, twistRight, hover, cover, turnover and pickup.
+\snippet qmlsensorgestures/GestureList.qml 4
+
+\sa {Qt Sensors - ShakeIt QML Example}
+\sa {Qt Sensor Gestures}
 */
+

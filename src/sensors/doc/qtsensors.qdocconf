@@ -1,0 +1,47 @@
+include($QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
+include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
+
+project                 = QtSensors
+description             = Qt Contacts Reference Documentation
+url                     = http://qt-project.org/doc/qt-5.0/qtsensors-index.html
+version                 = 5.0.0
+
+qhp.projects            = QtSensors
+
+qhp.QtSensors.file                = qtsensors.qhp
+qhp.QtSensors.namespace           = org.qt-project.qtsensors.500
+qhp.QtSensors.virtualFolder       = qdoc
+qhp.QtSensors.indexTitle          = Qt Sensors Reference Documentation
+qhp.QtSensors.indexRoot           =
+
+qhp.QtSensors.filterAttributes    = qtsensors 5.0.0 qtrefdoc
+qhp.QtSensors.customFilters.Qt.name = QtSensors 5.0.0
+qhp.QtSensors.customFilters.Qt.filterAttributes = qtsensors 5.0.0
+qhp.QtSensors.subprojects         = classes overviews examples
+qhp.QtSensors.subprojects.classes.title = Classes
+qhp.QtSensors.subprojects.classes.indexTitle = Qt Sensors's Classes
+qhp.QtSensors.subprojects.classes.selectors = class fake:headerfile
+qhp.QtSensors.subprojects.classes.sortPages = true
+qhp.QtSensors.subprojects.overviews.title = Overviews
+qhp.QtSensors.subprojects.overviews.indexTitle = All Overviews and HOWTOs
+qhp.QtSensors.subprojects.overviews.selectors = fake:page,group,module
+qhp.QtSensors.subprojects.examples.title = Qt Sensors Examples
+qhp.QtSensors.subprojects.examples.indexTitle = Qt Sensors Examples
+qhp.QtSensors.subprojects.examples.selectors = fake:example
+
+outputdir               = ../../../doc/qtsensors
+tagfile                 = ../../../doc/qtsensors/qtsensors.tags
+
+headerdirs  += .. \
+                ../../imports/sensors2 \
+                ../../plugins/sensors
+
+sourcedirs  += .. \
+                ../../imports/sensors2 \
+                ../../plugins/sensors
+
+exampledirs += ../../../examples/sensors \
+               snippets/
+
+
+imagedirs   += images

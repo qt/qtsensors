@@ -26,42 +26,35 @@
 ****************************************************************************/
 
 /*!
-    \example sensors/maze
-    \title Qt Sensors - Maze QML Example
-    \ingroup qtsensors-examples
-    \image maze.png
+\page qtsensorgestures-cpp.html
+\title Sensor Gestures C++ Overview
+\brief Information about the QtSensorGestures C++ API
 
-    \section2 Maze in QML
-    \brief The Maze example demonstrates the TiltSensor QML type.
+\tableofcontents
 
+\section1 Using QtSensorGestures
 
-    To write a QML application that will use the TiltSensor QML sensors type you need to do the following steps:
+With the Sensor Gestures classes, you are able to easily utilize device gesturing using
+sensors such as the accelerometer and proximity.
 
-    Import the QtSensors 5.x declarative plugin:
+A list of currently supported sensor gestures and their descriptions can be found here:
+\l  {Qt Sensor Gestures}
 
-    \snippet ../examples/sensors/maze/maze.qml 0
+Using QtSensorGestures is easy. There are two main classes you will need to use.
 
-    Add the Sensor QML types into your qml file.
+QSensorGestureManager can be used for determining what sensor gestures are available, and
+QSensorGesture for connecting the sensor gesture signals.
 
-    In this example we use the TiltSensor with values based in degrees and an accuracy of 5 degree:
+\snippet sensorgestures/creating.cpp Receiving sensor gesture signals
 
-    \snippet ../examples/sensors/maze/maze.qml 1
+More information about the sensor gesture recognizers can be found in
+\l{QtSensorGestures Plugins}.
 
-    Starting the sensor can be done by setting the 'enabled' property to true:
+\section1 Main Classes
 
-    \snippet ../examples/sensors/maze/maze.qml 2
+The primary classes that make up the QtSensorGestures API.
 
-    The mouse should move by a factor of the tilt value:
-
-    \snippet ../examples/sensors/maze/maze.qml 3
-
-    The walk direction of the mouse takes into account some collision detection:
-
-    \snippet ../examples/sensors/maze/maze.qml 4
-
-    The rotation of the mouse image is determined according to the angle that the mouse is moving.
-
-    \snippet ../examples/sensors/maze/Mouse.qml 0
+\annotatedlist sensorgestures_main
 
 */
 

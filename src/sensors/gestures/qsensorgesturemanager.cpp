@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 
    Sensor Gesture plugins register their recognizers using the registerSensorGestureRecognizer() function.
 
-    \snippet snippets/sensorgestures/creating.cpp Receiving sensor gesture signals
+    \snippet sensorgestures/creating.cpp Receiving sensor gesture signals
 
   */
 

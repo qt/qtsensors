@@ -26,29 +26,35 @@
 ****************************************************************************/
 
 /*!
-    \example sensors/accelbubble
-    \title Qt Sensors - Accel Bubble
-    \brief The AccelBubble example demonstrates the Legacy Accelerometer QML type.
+    \example cubehouse
+    \title Qt Sensors - Cube House QML Accelerometer example
     \ingroup qtsensors-examples
+    \brief The Cube House example demonstrates the use of the accelerometer to drive a camera to create a pseudo-3D effect.
+    \image cubehouse.png
 
 \section1 Overview
-    Writing a QML application that uses the Legacy Accelerometer QML sensors type requires the following steps:
+    To write a QML application that will use the QML Accelerometer type from the QtSensors import you need to to the following steps:
 
-    Import the Legacy Sensors Declarative module.
+    Import the QtSensors declarative plugin:
 
-\snippet ../examples/sensors/accelbubble/accelbubble.qml 0
+\snippet cubehouse/cubehouse.qml 0
 
-    Add an Accelerometer QML type.
+    Add the Accelerometer QML types into your qml file.
 
-\snippet ../examples/sensors/accelbubble/accelbubble.qml  1
+\snippet cubehouse/cubehouse.qml 1
 
-    Use the 'active' property to start the sensor
+    In additional two properties are added to save the calculated pitch and roll values:
 
-\snippet ../examples/sensors/accelbubble/accelbubble.qml  2
+\snippet cubehouse/cubehouse.qml 2
 
-    Move the bubble according to a factor of the accelerator sensor
+    Reading out the Accelerometer data can be done by implementing the 'onReadingChanged' slot and
+    accessing the 'reading' property from the Accelerometer type:
 
-\snippet ../examples/sensors/accelbubble/accelbubble.qml  3
+\snippet cubehouse/cubehouse.qml 3
+
+    By using a timer the view can be rotated using the pitch and roll properties from the Accelerometer type:
+
+\snippet cubehouse/cubehouse.qml 4
 
 */
 

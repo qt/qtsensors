@@ -27,7 +27,7 @@
 
 /*!
 \page qtsensors-cpp.html
-\title Qt Sensors C++ API
+\title Qt Sensors C++ Overview
 \brief Information about the Qt Sensors C++ API
 
 \tableofcontents
@@ -77,7 +77,7 @@ The life cycle of a QSensor is typically:
 
 Here is an example of creating a sensor on the heap and on the stack.
 
-\snippet snippets/sensors/creating.cpp Creating a sensor
+\snippet sensors/creating.cpp Creating a sensor
 
 \section1 Accessing sensor data in a generic fashion
 
@@ -99,7 +99,7 @@ For example, here is an example of how you can access a property of the accelero
 This code does not require any compile-time links to \l QAccelerometer or
 \l QAccelerometerReading.
 
-\snippet snippets/sensors/start.cpp Starting a sensor
+\snippet sensors/start.cpp Starting a sensor
 
 You can discover all of this information at runtime too. The sensor_explorer example
 shows you information about available sensors.

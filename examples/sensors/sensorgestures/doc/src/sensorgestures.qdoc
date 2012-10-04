@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-    \page sensorgestureexample.html
+    \example sensorgestures
     \title Qt Sensors - C++ Sensor Gestures Example
     \ingroup qtsensors-examples
     \brief The sensor gesture example demonstrates the steps for creating a C++ application
@@ -45,17 +45,17 @@
     In order to know about custom signals that may be available, we need to ask the QSensorGestureManager about them,
 
     Using the QSensorGesture::gestureIds() function, the manager will return a QStringList of known and valid gesture Ids.
-    \snippet ../examples/sensors/sensorgestures/mainwindow.cpp 0
+    \snippet sensorgestures/mainwindow.cpp 0
 
     We can then use this to create a QSensorGesture object that we can use to connect signals to,
     and start the detection process. A QSensorGesture object will take a list of one or more
     recognizer ids in it's constructor.
 
-    \snippet ../examples/sensors/sensorgestures/mainwindow.cpp 1
+    \snippet sensorgestures/mainwindow.cpp 1
 
     and later stop the detection process.
 
-    \snippet ../examples/sensors/sensorgestures/mainwindow.cpp 2
+    \snippet sensorgestures/mainwindow.cpp 2
 
     The QSensorGesture object will contain all the signals of the valid  requested recognizers found on the system.
 

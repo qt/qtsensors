@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += accel grue
+SUBDIRS += grue
 
 !isEmpty(QT.quick.name) {
     SUBDIRS += \

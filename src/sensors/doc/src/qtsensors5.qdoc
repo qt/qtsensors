@@ -25,14 +25,26 @@
 **
 ****************************************************************************/
 
+
 /*!
-    \qmlmodule QtSensors 5.0
-    \title Qt Sensors QML API
-    \brief QML import for QtSensors
+    \module QtSensors
+    \title Qt Sensors C++ Classes
+    \ingroup modules
 
-    \section1 Overview
+    \brief The QtSensors module provides classes for reading sensor data.
 
-    This is the QtSensors QML import.
+    Mobile devices contains sensor hardware that allow detecting changes in various physical
+    properties of the device itself or its immediate environment. Examples of device properties
+    include the angle at which the device is held, whereas environmental properties include for
+    example the current level of ambient light.
+*/
+
+/*!
+    \qmlmodule QtSensors 5
+    \title Qt Sensors QML Types
+    \ingroup qmlmodules
+
+    \brief The QtSensors QML module provides types for reading sensor data.
 
     \section1 QML Module API
 
@@ -62,8 +74,5 @@
     The data from a sensor comes through a reading class.
 
     \annotatedlist qml-sensors_reading
-
-    \section1 Alphabetical Listing of QML Types
-
 */
 

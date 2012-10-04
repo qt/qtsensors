@@ -39,12 +39,21 @@
 
     \section1 QML
 
-    QtSensors ships with a QML import that is compatible with the QtMobility.sensors import.
-    The limitations of the QtMobility.sensors import have been fixed and some new properties
-    may exist so apps may need to be updated if they are using custom properties on their
-    sensor objects.
+    Compatibility for QML applications is provided by shipping the legacy \c QtMobility.sensors
+    QML import. QML applications should not require any changes to continue operating.
 
-    See \l {Qt Sensors QML API} for more information.
+    Applications using the legacy QML import may not be able to trivially port over
+    to the new QML import because the new QML import does not provide types for
+    every sensor like the legacy QML import does.
+
+    \table
+        \row
+            \li \l {Qt Sensors QML Types}{QML API}
+            \li Information about the Qt Sensors QML API
+        \row
+            \li \l {QtMobility.sensors 1.x}{Legacy QML API}
+            \li Information about the legacy QtMobility.sensors QML API
+    \endtable
 
     \section1 C++
 

@@ -26,38 +26,42 @@
 ****************************************************************************/
 
 /*!
-    \example sensors/qmlsensorgestures
-    \title Qt Sensors - SensorGesture QML Type example
+    \example maze
+    \title Qt Sensors - Maze QML Example
     \ingroup qtsensors-examples
+    \image maze.png
 
-    \brief This example demonstrates use of the SensorGesture QML type.
+    \section2 Maze in QML
+    \brief The Maze example demonstrates the TiltSensor QML type.
 
-\section1 Overview
-    To write a QML application that will use the gesture plugin you need to to the following steps:
+
+    To write a QML application that will use the TiltSensor QML sensors type you need to do the following steps:
 
     Import the QtSensors 5.x declarative plugin:
 
-\snippet ../examples/sensors/qmlsensorgestures/GestureView.qml 0
+    \snippet maze/maze.qml 0
 
-   Add the SensorGesture QML type into your qml file.
+    Add the Sensor QML types into your qml file.
 
-\snippet ../examples/sensors/qmlsensorgestures/GestureView.qml 1
+    In this example we use the TiltSensor with values based in degrees and an accuracy of 5 degree:
 
-   Each SensorGesture QML type contains a property called gestures.
+    \snippet maze/maze.qml 1
 
-   In this example an alias 'gestureid' for this property is used.
+    Starting the sensor can be done by setting the 'enabled' property to true:
 
-\snippet ../examples/sensors/qmlsensorgestures/GestureView.qml 2
+    \snippet maze/maze.qml 2
 
-   By using this alias property you define which gestures should be used:
+    The mouse should move by a factor of the tilt value:
 
-\snippet ../examples/sensors/qmlsensorgestures/qmlsensorgestures.qml 3
+    \snippet maze/maze.qml 3
 
-   A list of all available gestures can be created by calling the 'availableGestures' property:
+    The walk direction of the mouse takes into account some collision detection:
 
-\snippet ../examples/sensors/qmlsensorgestures/GestureList.qml 4
+    \snippet maze/maze.qml 4
 
-\sa {Qt Sensors - ShakeIt QML Example}
-\sa {Qt Sensor Gestures}
+    The rotation of the mouse image is determined according to the angle that the mouse is moving.
+
+    \snippet maze/Mouse.qml 0
+
 */
 

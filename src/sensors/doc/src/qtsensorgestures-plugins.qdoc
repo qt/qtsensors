@@ -57,7 +57,7 @@ This is the class in which the gesture recognizer system should be implemented f
 
 \endlist
 
-\snippet snippets/sensorgestures/plugin.cpp Plugin
+\snippet sensorgestures/plugin.cpp Plugin
 
 
 \section2 Recognizer Classes

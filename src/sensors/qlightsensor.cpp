@@ -49,7 +49,7 @@ IMPLEMENT_READING(QLightReading)
 /*!
     \class QLightReading
     \ingroup sensors_reading
-
+    \inmodule QtSensors
 
     \brief The QLightReading class represents one reading from the
            light sensor.

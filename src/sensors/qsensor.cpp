@@ -78,6 +78,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \class qoutputrange
     \relates QSensor
+    \inmodule QtSensors
     \brief The qoutputrange class holds the specifics of an output range.
 
     The class is defined as a simple struct.
@@ -507,7 +508,7 @@ void QSensor::setDataRate(int rate)
 
    Backends have to implement QSensorBackend::isFeatureSupported() to make this work.
 
-   \return whether or not the feature is supported if the backend is connected, or false if the backend is not connected.
+   Returns whether or not the feature is supported if the backend is connected, or false if the backend is not connected.
    \since 5.0
  */
 bool QSensor::isFeatureSupported(Feature feature) const
