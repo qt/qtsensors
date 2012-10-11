@@ -10,9 +10,9 @@ simulator {
     QT += simulator
 }
 
-load(qt_module)
-
 QMAKE_DOCS = $$PWD/../../doc/config/qtsensors.qdocconf
+
+load(qt_module)
 
 PUBLIC_HEADERS += \
            qsensorbackend.h\
