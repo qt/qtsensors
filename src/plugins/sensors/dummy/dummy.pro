@@ -1,5 +1,5 @@
 TARGET = qtsensors_dummy
-QT += sensors core
+QT = sensors core
 
 load(qt_plugin)
 

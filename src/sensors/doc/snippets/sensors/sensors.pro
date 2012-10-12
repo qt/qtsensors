@@ -1,6 +1,6 @@
 TEMPLATE=app
 TARGET=sensorsdocsnippet
-QT += sensors
+QT = core sensors
 SOURCES+=main.cpp\
     creating.cpp\
     start.cpp\

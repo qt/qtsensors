@@ -1,6 +1,6 @@
 TEMPLATE=app
 TARGET=sensorgesturessdocsnippet
-QT += sensors
+QT = core sensors
 SOURCES+=main.cpp\
     creating.cpp\
     plugin.cpp
