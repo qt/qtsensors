@@ -2,6 +2,7 @@ TARGET = qtsensors_blackberry
 QT = sensors core
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
+PLUGIN_TYPE = sensors
 load(qt_plugin)
 
 config_bbsensor_header {
@@ -10,8 +11,6 @@ config_bbsensor_header {
 config_bbsensor_compass {
     DEFINES += HAVE_COMPASS_SENSOR
 }
-
-DESTDIR = $$QT.sensors.plugins/sensors
 
 HEADERS += bbsensorbackend.h \
     bbaccelerometer.h \
@@ -49,6 +48,3 @@ SOURCES += bbsensorbackend.cpp \
     main.cpp
 
 OTHER_FILES = plugin.json
-
-target.path += $$[QT_INSTALL_PLUGINS]/sensors
-INSTALLS += target

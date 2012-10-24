@@ -1,10 +1,19 @@
+QT += sensors
+TARGET = qtsensorgestures_counterplugin
+
+QTDIR_build {
+# This is only for the Qt build. Do not use externally. We mean it.
+PLUGIN_TYPE = sensorgestures
+load(qt_plugin)
+} else {
+
 TEMPLATE = lib
 CONFIG += plugin
 
-TARGET = qtsensorgestures_counterplugin
+target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
+INSTALLS += target
 
-QT += sensors
-DESTDIR = $$QT.sensors.plugins/sensorgestures
+}
 
 HEADERS += \
     qcountergestureplugin.h \
@@ -12,9 +21,6 @@ HEADERS += \
 SOURCES += \
     qcountergestureplugin.cpp \
     qcounterrecognizer.cpp
-
-target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
-INSTALLS += target
 
 OTHER_FILES += \
     plugin.json

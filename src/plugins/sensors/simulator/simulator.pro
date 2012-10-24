@@ -1,12 +1,9 @@
 TARGET = qtsensors_simulator
+
+PLUGIN_TYPE = sensors
 load(qt_plugin)
 
-DESTDIR = $$QT.sensors.plugins/sensors
-
 QT=core gui network sensors simulator
-
-target.path += $$[QT_INSTALL_PLUGINS]/sensors
-INSTALLS += target
 
 HEADERS += \
     simulatorcommon.h\

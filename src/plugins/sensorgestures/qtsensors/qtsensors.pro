@@ -1,9 +1,8 @@
 TARGET = qtsensorgestures_plugin
 QT = core sensors
 
+PLUGIN_TYPE = sensorgestures
 load(qt_plugin)
-
-DESTDIR = $$QT.sensors.plugins/sensorgestures
 
 # Input
 HEADERS += qtsensorgestureplugin.h \
@@ -29,9 +28,6 @@ SOURCES += qtsensorgestureplugin.cpp \
     qtwistsensorgesturerecognizer.cpp \
     qwhipsensorgesturerecognizer.cpp \
     qtsensorgesturesensorhandler.cpp
-
-target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
-INSTALLS += target
 
 OTHER_FILES += \
     plugin.json

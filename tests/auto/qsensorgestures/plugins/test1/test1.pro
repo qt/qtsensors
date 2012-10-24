@@ -1,10 +1,9 @@
-TEMPLATE = lib
-CONFIG += plugin
-
 TARGET  = qtsensorgestures_testplugin1
 
 QT += sensors   sensorgestures
-DESTDIR = $$QT.sensorgestures.plugins/sensorgestures
+
+PLUGIN_TYPE = sensorgestures
+load(qt_plugin)
 
 # Input
 HEADERS +=  qtestsensorgestureplugindup_p.h \
@@ -14,6 +13,4 @@ SOURCES += qtestsensorgestureplugindup.cpp \
                   qtestrecognizerdup.cpp \
                   qtest2recognizerduo.cpp
 
-target.path += $$[QT_INSTALL_PLUGINS]/sensorgestures
-INSTALLS += target
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0

@@ -3,8 +3,6 @@ TARGET  = declarative_sensors
 TARGETPATH = QtSensors
 IMPORT_VERSION = 5.0 # Doesn't matter, as long as it's a valid version?!
 
-include(qsensorsimport.pri)
-
 QT += qml sensors sensors-private
 
 HEADERS += \
@@ -42,15 +40,6 @@ SOURCES += sensors.cpp \
     qmlsensorglobal.cpp \
     qmltiltsensor.cpp \
     qmlsensorgesture.cpp
-
-
-DESTDIR = $$QT.sensors.imports/$$TARGETPATH
-target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
-
-qmldir.files += $$PWD/qmldir $$PWD/plugin.qmltypes
-qmldir.path +=  $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
-
-INSTALLS += target qmldir
 
 load(qml_plugin)
 

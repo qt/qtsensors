@@ -1,9 +1,8 @@
 TARGET = qtsensors_generic
 QT = core sensors
 
+PLUGIN_TYPE = sensors
 load(qt_plugin)
-
-DESTDIR = $$QT.sensors.plugins/sensors
 
 HEADERS += genericorientationsensor.h\
            genericrotationsensor.h\
@@ -17,6 +16,3 @@ SOURCES += genericorientationsensor.cpp\
            generictiltsensor.cpp
 
 OTHER_FILES = plugin.json
-
-target.path += $$[QT_INSTALL_PLUGINS]/sensors
-INSTALLS += target
