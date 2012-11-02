@@ -45,8 +45,8 @@
 #include <QObject>
 #include <QtGlobal>
 #include <QtCore/qplugin.h>
-#include "qsensorgesture.h"
-#include "qsensorgesturerecognizer.h"
+#include <QtSensors/qsensorgesture.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE

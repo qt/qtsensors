@@ -42,7 +42,7 @@
 #ifndef QROTATIONSENSOR_H
 #define QROTATIONSENSOR_H
 
-#include "qsensor.h"
+#include <QtSensors/qsensor.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE

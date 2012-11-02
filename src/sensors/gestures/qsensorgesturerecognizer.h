@@ -46,7 +46,7 @@
 #include <QTimer>
 #include <QStringList>
 
-#include "qsensorgesture.h"
+#include <QtSensors/qsensorgesture.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
