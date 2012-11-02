@@ -2,7 +2,7 @@ include($QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
 include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
 
 project                 = QtSensors
-description             = Qt Contacts Reference Documentation
+description             = Qt Sensors Reference Documentation
 url                     = http://qt-project.org/doc/qt-5.0/qtsensors-index.html
 version                 = 5.0.0
 
