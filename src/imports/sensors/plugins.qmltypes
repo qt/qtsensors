@@ -3,7 +3,7 @@ import QtQuick.tooling 1.1
 // This file describes the plugin-supplied types contained in the library.
 // It is used for QML tooling purposes only.
 //
-// This file was auto-generated with the command 'qmlplugindump QtSensors 5.0 /home/lramsay/build/qt50/qtbase/imports'.
+// This file was auto-generated with the command 'qmlplugindump QtSensors 5.0 /home/thomas/src/qtbase/imports/'.
 
 Module {
     Component {
@@ -18,9 +18,6 @@ Module {
         Property { name: "x"; type: "double"; isReadonly: true }
         Property { name: "y"; type: "double"; isReadonly: true }
         Property { name: "z"; type: "double"; isReadonly: true }
-        Signal { name: "xChanged"; type: "void" }
-        Signal { name: "yChanged"; type: "void" }
-        Signal { name: "zChanged"; type: "void" }
     }
     Component {
         name: "QmlAmbientLightSensor"
@@ -31,19 +28,7 @@ Module {
         name: "QmlAmbientLightSensorReading"
         prototype: "QmlSensorReading"
         exports: ["AmbientLightReading 5.0"]
-        Enum {
-            name: "LightLevel"
-            values: {
-                "Undefined": 0,
-                "Dark": 1,
-                "Twilight": 2,
-                "Light": 3,
-                "Bright": 4,
-                "Sunny": 5
-            }
-        }
-        Property { name: "lightLevel"; type: "LightLevel"; isReadonly: true }
-        Signal { name: "lightLevelChanged"; type: "void" }
+        Property { name: "lightLevel"; type: "QAmbientLightReading::LightLevel"; isReadonly: true }
     }
     Component {
         name: "QmlCompass"
@@ -56,8 +41,6 @@ Module {
         exports: ["CompassReading 5.0"]
         Property { name: "azimuth"; type: "double"; isReadonly: true }
         Property { name: "calibrationLevel"; type: "double"; isReadonly: true }
-        Signal { name: "azimuthChanged"; type: "void" }
-        Signal { name: "calibrationLevelChanged"; type: "void" }
     }
     Component {
         name: "QmlGyroscope"
@@ -71,9 +54,6 @@ Module {
         Property { name: "x"; type: "double"; isReadonly: true }
         Property { name: "y"; type: "double"; isReadonly: true }
         Property { name: "z"; type: "double"; isReadonly: true }
-        Signal { name: "xChanged"; type: "void" }
-        Signal { name: "yChanged"; type: "void" }
-        Signal { name: "zChanged"; type: "void" }
     }
     Component {
         name: "QmlIRProximitySensor"
@@ -85,28 +65,23 @@ Module {
         prototype: "QmlSensorReading"
         exports: ["IRProximityReading 5.0"]
         Property { name: "reflectance"; type: "double"; isReadonly: true }
-        Signal { name: "reflectanceChanged"; type: "void" }
     }
     Component {
         name: "QmlLightSensor"
         prototype: "QmlSensor"
         exports: ["LightSensor 5.0"]
         Property { name: "fieldOfView"; type: "double"; isReadonly: true }
-        Signal { name: "fieldOfViewChanged"; type: "void" }
     }
     Component {
         name: "QmlLightSensorReading"
         prototype: "QmlSensorReading"
         exports: ["LightReading 5.0"]
-        Property { name: "lux"; type: "double"; isReadonly: true }
-        Signal { name: "luxChanged"; type: "void" }
+        Property { name: "illuminance"; type: "double"; isReadonly: true }
     }
     Component {
         name: "QmlMagnetometer"
         prototype: "QmlSensor"
         exports: ["Magnetometer 5.0"]
-        Property { name: "returnGeoValues"; type: "bool" }
-        Signal { name: "returnGeoValuesChanged"; type: "void" }
     }
     Component {
         name: "QmlMagnetometerReading"
@@ -116,10 +91,6 @@ Module {
         Property { name: "y"; type: "double"; isReadonly: true }
         Property { name: "z"; type: "double"; isReadonly: true }
         Property { name: "calibrationLevel"; type: "double"; isReadonly: true }
-        Signal { name: "xChanged"; type: "void" }
-        Signal { name: "yChanged"; type: "void" }
-        Signal { name: "zChanged"; type: "void" }
-        Signal { name: "calibrationLevelChanged"; type: "void" }
     }
     Component {
         name: "QmlOrientationSensor"
@@ -130,20 +101,7 @@ Module {
         name: "QmlOrientationSensorReading"
         prototype: "QmlSensorReading"
         exports: ["OrientationReading 5.0"]
-        Enum {
-            name: "Orientation"
-            values: {
-                "Undefined": 0,
-                "TopUp": 1,
-                "TopDown": 2,
-                "LeftUp": 3,
-                "RightUp": 4,
-                "FaceUp": 5,
-                "FaceDown": 6
-            }
-        }
-        Property { name: "orientation"; type: "Orientation"; isReadonly: true }
-        Signal { name: "orientationChanged"; type: "void" }
+        Property { name: "orientation"; type: "QOrientationReading::Orientation"; isReadonly: true }
     }
     Component {
         name: "QmlProximitySensor"
@@ -154,15 +112,13 @@ Module {
         name: "QmlProximitySensorReading"
         prototype: "QmlSensorReading"
         exports: ["ProximityReading 5.0"]
-        Property { name: "close"; type: "bool"; isReadonly: true }
-        Signal { name: "closeChanged"; type: "void" }
+        Property { name: "near"; type: "bool"; isReadonly: true }
     }
     Component {
         name: "QmlRotationSensor"
         prototype: "QmlSensor"
         exports: ["RotationSensor 5.0"]
         Property { name: "hasZ"; type: "bool"; isReadonly: true }
-        Signal { name: "hasZChanged"; type: "void" }
     }
     Component {
         name: "QmlRotationSensorReading"
@@ -171,15 +127,11 @@ Module {
         Property { name: "x"; type: "double"; isReadonly: true }
         Property { name: "y"; type: "double"; isReadonly: true }
         Property { name: "z"; type: "double"; isReadonly: true }
-        Signal { name: "xChanged"; type: "void" }
-        Signal { name: "yChanged"; type: "void" }
-        Signal { name: "zChanged"; type: "void" }
     }
     Component {
         name: "QmlSensor"
         prototype: "QObject"
         exports: ["Sensor 5.0"]
-        exportMetaObjectRevisions: [1]
         Property { name: "identifier"; type: "string" }
         Property { name: "type"; type: "string"; isReadonly: true }
         Property { name: "connectedToBackend"; type: "bool"; isReadonly: true }
@@ -192,22 +144,9 @@ Module {
         Property { name: "outputRange"; type: "int" }
         Property { name: "description"; type: "string"; isReadonly: true }
         Property { name: "error"; type: "int"; isReadonly: true }
-        Property { name: "alwaysOn"; revision: 1; type: "bool" }
-        Signal { name: "identifierChanged"; type: "void" }
-        Signal { name: "typeChanged"; type: "void" }
-        Signal { name: "connectedToBackendChanged"; type: "void" }
-        Signal { name: "availableDataRatesChanged"; type: "void" }
-        Signal { name: "dataRateChanged"; type: "void" }
-        Signal { name: "readingChanged"; type: "void" }
-        Signal { name: "busyChanged"; type: "void" }
-        Signal { name: "activeChanged"; type: "void" }
-        Signal { name: "outputRangesChanged"; type: "void" }
-        Signal { name: "outputRangeChanged"; type: "void" }
-        Signal { name: "descriptionChanged"; type: "void" }
-        Signal { name: "errorChanged"; type: "void" }
-        Signal { name: "alwaysOnChanged"; type: "void" }
+        Property { name: "alwaysOn"; type: "bool" }
         Method { name: "start"; type: "bool" }
-        Method { name: "stop"; type: "void" }
+        Method { name: "stop" }
     }
     Component {
         name: "QmlSensorGesture"
@@ -220,19 +159,14 @@ Module {
         Property { name: "enabled"; type: "bool" }
         Signal {
             name: "detected"
-            type: "void"
             Parameter { name: "gesture"; type: "string" }
         }
-        Signal { name: "availableGesturesChanged"; type: "void" }
-        Signal { name: "gesturesChanged"; type: "void" }
-        Signal { name: "validGesturesChanged"; type: "void" }
-        Signal { name: "invalidGesturesChanged"; type: "void" }
-        Signal { name: "enabledChanged"; type: "void" }
     }
     Component {
         name: "QmlSensorGlobal"
         prototype: "QObject"
-        Signal { name: "availableSensorsChanged"; type: "void" }
+        exports: ["QmlSensors 5.0"]
+        Signal { name: "availableSensorsChanged" }
         Method { name: "sensorTypes"; type: "QStringList" }
         Method {
             name: "sensorsForType"
@@ -265,48 +199,26 @@ Module {
         prototype: "QObject"
         exports: ["SensorReading 5.0"]
         Property { name: "timestamp"; type: "qulonglong"; isReadonly: true }
-        Signal { name: "timestampChanged"; type: "void" }
     }
     Component {
         name: "QmlTapSensor"
         prototype: "QmlSensor"
         exports: ["TapSensor 5.0"]
         Property { name: "returnDoubleTapEvents"; type: "bool" }
-        Signal { name: "returnDoubleTapEventsChanged"; type: "void" }
     }
     Component {
         name: "QmlTapSensorReading"
         prototype: "QmlSensorReading"
         exports: ["TapReading 5.0"]
-        Enum {
-            name: "TapDirection"
-            values: {
-                "Undefined": 0,
-                "X": 1,
-                "Y": 2,
-                "Z": 4,
-                "X_Pos": 17,
-                "Y_Pos": 34,
-                "Z_Pos": 68,
-                "X_Neg": 257,
-                "Y_Neg": 514,
-                "Z_Neg": 1028,
-                "X_Both": 273,
-                "Y_Both": 546,
-                "Z_Both": 1092
-            }
-        }
-        Property { name: "tapDirection"; type: "TapDirection"; isReadonly: true }
+        Property { name: "tapDirection"; type: "QTapReading::TapDirection"; isReadonly: true }
         Property { name: "doubleTap"; type: "bool"; isReadonly: true }
-        Signal { name: "tapDirectionChanged"; type: "void" }
-        Signal { name: "isDoubleTapChanged"; type: "void" }
+        Signal { name: "isDoubleTapChanged" }
     }
     Component {
         name: "QmlTiltSensor"
         prototype: "QmlSensor"
         exports: ["TiltSensor 5.0"]
-        }
-        Method { name: "calibrate"; type: "void" }
+        Method { name: "calibrate" }
     }
     Component {
         name: "QmlTiltSensorReading"
@@ -314,8 +226,5 @@ Module {
         exports: ["TiltReading 5.0"]
         Property { name: "yRotation"; type: "double"; isReadonly: true }
         Property { name: "xRotation"; type: "double"; isReadonly: true }
-        Signal { name: "yRotationChanged"; type: "void" }
-        Signal { name: "xRotationChanged"; type: "void" }
     }
-    ModuleApi { version: 5.0; name: "QmlSensorGlobal" }
 }
