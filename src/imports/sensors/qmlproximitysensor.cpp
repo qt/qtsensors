@@ -48,7 +48,7 @@
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::Sensor
+    \inherits Sensor
     \brief The ProximitySensor element reports on object proximity.
 
     The ProximitySensor element reports on object proximity.
@@ -85,7 +85,7 @@ QSensor *QmlProximitySensor::sensor() const
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::SensorReading
+    \inherits SensorReading
     \brief The ProximityReading element holds the most recent ProximitySensor reading.
 
     The ProximityReading element holds the most recent ProximitySensor reading.
@@ -107,7 +107,7 @@ QmlProximitySensorReading::~QmlProximitySensorReading()
 }
 
 /*!
-    \qmlproperty bool QtSensors::ProximityReading::near
+    \qmlproperty bool ProximityReading::near
     This property holds a value indicating if something is near.
 
     Please see QProximityReading::near for information about this property.

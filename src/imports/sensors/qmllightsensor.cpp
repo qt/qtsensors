@@ -48,7 +48,7 @@
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::Sensor
+    \inherits Sensor
     \brief The LightSensor element reports on light levels using LUX.
 
     The LightSensor element reports on light levels using LUX.
@@ -80,7 +80,7 @@ QSensor *QmlLightSensor::sensor() const
 }
 
 /*!
-    \qmlproperty qreal QtSensors::LightSensor::fieldOfView
+    \qmlproperty qreal LightSensor::fieldOfView
     This property holds a value indicating the field of view.
 
     Please see QLightSensor::fieldOfView for information about this property.
@@ -103,7 +103,7 @@ void QmlLightSensor::_update()
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::SensorReading
+    \inherits SensorReading
     \brief The LightReading element holds the most recent LightSensor reading.
 
     The LightReading element holds the most recent LightSensor reading.
@@ -125,7 +125,7 @@ QmlLightSensorReading::~QmlLightSensorReading()
 }
 
 /*!
-    \qmlproperty qreal QtSensors::LightReading::illuminance
+    \qmlproperty qreal LightReading::illuminance
     This property holds the light level.
 
     Please see QLightReading::illuminance for information about this property.

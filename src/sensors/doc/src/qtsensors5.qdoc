@@ -65,7 +65,7 @@
 
     These types represent specific types of sensors.
 
-    Note that most properties come from the abstract \l{QtSensors::Sensor}{Sensor} element.
+    Note that most properties come from the abstract \l{Sensor}{Sensor} element.
 
     \annotatedlist qml-sensors_type
 

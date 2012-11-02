@@ -54,16 +54,16 @@
 
     Reading the data can be done for each sensor type like following:
 
-    \l {QtSensors::TiltSensor} {TiltSensor}
+    \l {TiltSensor} {TiltSensor}
 
     \snippet qmlqtsensors/qmlqtsensors.qml 3
     \snippet qmlqtsensors/qmlqtsensors.qml 4
 
-    \l {QtSensors::AmbientLightSensor} {AmbientLightSensor}
+    \l {AmbientLightSensor} {AmbientLightSensor}
 
     \snippet qmlqtsensors/qmlqtsensors.qml 5
 
-    \l {QtSensors::ProximitySensor} {ProximitySensor}
+    \l {ProximitySensor} {ProximitySensor}
 
     \snippet qmlqtsensors/qmlqtsensors.qml 6
 */

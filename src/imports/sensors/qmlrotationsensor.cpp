@@ -48,7 +48,7 @@
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::Sensor
+    \inherits Sensor
     \brief The RotationSensor element reports on device rotation
            around the X, Y and Z axes.
 
@@ -82,7 +82,7 @@ QSensor *QmlRotationSensor::sensor() const
 }
 
 /*!
-    \qmlproperty qreal QtSensors::RotationSensor::hasZ
+    \qmlproperty qreal RotationSensor::hasZ
     This property holds a value indicating if the z angle is available.
 
     Please see QRotationSensor::hasZ for information about this property.
@@ -103,7 +103,7 @@ void QmlRotationSensor::_update()
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::SensorReading
+    \inherits SensorReading
     \brief The RotationReading element holds the most recent RotationSensor reading.
 
     The RotationReading element holds the most recent RotationSensor reading.
@@ -125,7 +125,7 @@ QmlRotationSensorReading::~QmlRotationSensorReading()
 }
 
 /*!
-    \qmlproperty qreal QtSensors::RotationReading::x
+    \qmlproperty qreal RotationReading::x
     This property holds the rotation around the x axis.
 
     Please see QRotationReading::x for information about this property.
@@ -137,7 +137,7 @@ qreal QmlRotationSensorReading::x() const
 }
 
 /*!
-    \qmlproperty qreal QtSensors::RotationReading::y
+    \qmlproperty qreal RotationReading::y
     This property holds the rotation around the y axis.
 
     Please see QRotationReading::y for information about this property.
@@ -149,7 +149,7 @@ qreal QmlRotationSensorReading::y() const
 }
 
 /*!
-    \qmlproperty qreal QtSensors::RotationReading::z
+    \qmlproperty qreal RotationReading::z
     This property holds the rotation around the z axis.
 
     Please see QRotationReading::z for information about this property.

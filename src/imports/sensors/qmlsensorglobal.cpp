@@ -78,7 +78,7 @@ QmlSensorGlobal::~QmlSensorGlobal()
 }
 
 /*!
-    \qmlmethod list<string> QtSensors::SensorGlobal::sensorTypes()
+    \qmlmethod list<string> SensorGlobal::sensorTypes()
     Returns a list of the sensor types that have been registered.
 
     Please see QSensor::sensorTypes() for information.
@@ -92,7 +92,7 @@ QStringList QmlSensorGlobal::sensorTypes() const
 }
 
 /*!
-    \qmlmethod list<string> QtSensors::SensorGlobal::sensorsForType(type)
+    \qmlmethod list<string> SensorGlobal::sensorsForType(type)
     Returns a list of the sensor identifiers that have been registered for \a type.
 
     Please see QSensor::sensorsForType() for information.
@@ -106,7 +106,7 @@ QStringList QmlSensorGlobal::sensorsForType(const QString &type) const
 }
 
 /*!
-    \qmlmethod string QtSensors::SensorGlobal::defaultSensorForType(type)
+    \qmlmethod string SensorGlobal::defaultSensorForType(type)
     Returns the default sensor identifier that has been registered for \a type.
 
     Please see QSensor::defaultSensorForType() for information.

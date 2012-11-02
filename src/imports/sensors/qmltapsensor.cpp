@@ -48,7 +48,7 @@
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::Sensor
+    \inherits Sensor
     \brief The TapSensor element reports tap and double tap events
            along the X, Y and Z axes.
 
@@ -82,7 +82,7 @@ QSensor *QmlTapSensor::sensor() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::TapSensor::returnDoubleTapEvents
+    \qmlproperty bool TapSensor::returnDoubleTapEvents
     This property holds a value indicating if double tap events should be reported.
 
     Please see QTapSensor::returnDoubleTapEvents for information about this property.
@@ -106,7 +106,7 @@ void QmlTapSensor::setReturnDoubleTapEvents(bool ret)
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors 5.0
     \since QtSensors 5.0
-    \inherits QtSensors::SensorReading
+    \inherits SensorReading
     \brief The TapReading element holds the most recent TapSensor reading.
 
     The TapReading element holds the most recent TapSensor reading.
@@ -128,7 +128,7 @@ QmlTapSensorReading::~QmlTapSensorReading()
 }
 
 /*!
-    \qmlproperty TapDirection QtSensors::TapReading::tapDirection
+    \qmlproperty TapDirection TapReading::tapDirection
     This property holds the direction of the tap.
 
     Please see QTapReading::tapDirection for information about this property.
@@ -150,7 +150,7 @@ QTapReading::TapDirection QmlTapSensorReading::tapDirection() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::TapReading::doubleTap
+    \qmlproperty bool TapReading::doubleTap
     This property holds a value indicating if there was a single or double tap.
 
     Please see QTapReading::doubleTap for information about this property.

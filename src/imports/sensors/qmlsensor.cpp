@@ -73,7 +73,7 @@ QmlSensor::~QmlSensor()
 }
 
 /*!
-    \qmlproperty string QtSensors::Sensor::identifier
+    \qmlproperty string Sensor::identifier
     This property holds the backend identifier for the sensor.
 
     Please see QSensor::identifier for information about this property.
@@ -92,7 +92,7 @@ void QmlSensor::setIdentifier(const QString &identifier)
 }
 
 /*!
-    \qmlproperty string QtSensors::Sensor::type
+    \qmlproperty string Sensor::type
     This property holds the type of the sensor.
 */
 
@@ -102,7 +102,7 @@ QString QmlSensor::type() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::Sensor::connectedToBackend
+    \qmlproperty bool Sensor::connectedToBackend
     This property holds a value indicating if the sensor has connected to a backend.
 
     Please see QSensor::connectedToBackend for information about this property.
@@ -114,7 +114,7 @@ bool QmlSensor::isConnectedToBackend() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::Sensor::busy
+    \qmlproperty bool Sensor::busy
     This property holds a value to indicate if the sensor is busy.
 
     Please see QSensor::busy for information about this property.
@@ -126,7 +126,7 @@ bool QmlSensor::isBusy() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::Sensor::active
+    \qmlproperty bool Sensor::active
     This property holds a value to indicate if the sensor is active.
 
     Please see QSensor::active for information about this property.
@@ -154,7 +154,7 @@ bool QmlSensor::isActive() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::Sensor::alwaysOn
+    \qmlproperty bool Sensor::alwaysOn
     This property holds a value to indicate if the sensor should remain running when the screen is off.
 
     Please see QSensor::alwaysOn for information about this property.
@@ -171,7 +171,7 @@ void QmlSensor::setAlwaysOn(bool alwaysOn)
 }
 
 /*!
-    \qmlproperty list<Range> QtSensors::Sensor::availableDataRates
+    \qmlproperty list<Range> Sensor::availableDataRates
     This property holds the data rates that the sensor supports.
 
     Please see QSensor::availableDataRates for information about this property.
@@ -192,7 +192,7 @@ QQmlListProperty<QmlSensorRange> QmlSensor::availableDataRates() const
 }
 
 /*!
-    \qmlproperty int QtSensors::Sensor::dataRate
+    \qmlproperty int Sensor::dataRate
     This property holds the data rate that the sensor should be run at.
 
     Please see QSensor::dataRate for information about this property.
@@ -212,7 +212,7 @@ void QmlSensor::setDataRate(int rate)
 }
 
 /*!
-    \qmlproperty list<OutputRange> QtSensors::Sensor::outputRanges
+    \qmlproperty list<OutputRange> Sensor::outputRanges
     This property holds a list of output ranges the sensor supports.
 
     Please see QSensor::outputRanges for information about this property.
@@ -234,7 +234,7 @@ QQmlListProperty<QmlSensorOutputRange> QmlSensor::outputRanges() const
 }
 
 /*!
-    \qmlproperty int QtSensors::Sensor::outputRange
+    \qmlproperty int Sensor::outputRange
     This property holds the output range in use by the sensor.
 
     Please see QSensor::outputRange for information about this property.
@@ -255,7 +255,7 @@ void QmlSensor::setOutputRange(int index)
 }
 
 /*!
-    \qmlproperty string QtSensors::Sensor::description
+    \qmlproperty string Sensor::description
     This property holds a descriptive string for the sensor.
 */
 
@@ -265,7 +265,7 @@ QString QmlSensor::description() const
 }
 
 /*!
-    \qmlproperty int QtSensors::Sensor::error
+    \qmlproperty int Sensor::error
     This property holds the last error code set on the sensor.
 */
 
@@ -275,7 +275,7 @@ int QmlSensor::error() const
 }
 
 /*!
-    \qmlproperty SensorReading QtSensors::Sensor::reading
+    \qmlproperty SensorReading Sensor::reading
     This property holds the reading class.
 
     Please see QSensor::reading for information about this property.
@@ -288,7 +288,7 @@ QmlSensorReading *QmlSensor::reading() const
 }
 
 /*!
-    \qmlmethod bool QtSensors::Sensor::start()
+    \qmlmethod bool Sensor::start()
     Start retrieving values from the sensor. Returns true if the sensor was started, false otherwise.
 
     Please see QSensor::start() for information.
@@ -301,7 +301,7 @@ bool QmlSensor::start()
 }
 
 /*!
-    \qmlmethod bool QtSensors::Sensor::stop()
+    \qmlmethod bool Sensor::stop()
     Stop retrieving values from the sensor.
 
     Please see QSensor::stop() for information.
@@ -402,7 +402,7 @@ QmlSensorReading::~QmlSensorReading()
 }
 
 /*!
-    \qmlproperty quint64 QtSensors::SensorReading::timestamp
+    \qmlproperty quint64 SensorReading::timestamp
     A timestamp for the reading.
 
     Please see QSensorReading::timestamp for information about this property.

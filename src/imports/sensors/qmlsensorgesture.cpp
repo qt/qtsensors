@@ -117,7 +117,7 @@ void QmlSensorGesture::componentComplete()
 */
 
 /*!
-    \qmlproperty stringlist QtSensors::SensorGesture::availableGestures
+    \qmlproperty stringlist SensorGesture::availableGestures
     This property can be used to determine all available gestures on the system.
 */
 QStringList QmlSensorGesture::availableGestures()
@@ -126,13 +126,13 @@ QStringList QmlSensorGesture::availableGestures()
 }
 
 /*!
-    \qmlproperty stringlist QtSensors::SensorGesture::gestures
+    \qmlproperty stringlist SensorGesture::gestures
     Set this property to a list of the gestures that the application is interested in detecting.
     This property cannot be changed while the type is enabled.
 
     The properties validGestures and invalidGestures will be set as appropriate immediately.
     To determine all available getures on the system please use the
-    \l {QtSensors::SensorGesture::availableGestures} {availableGestures} property.
+    \l {SensorGesture::availableGestures} {availableGestures} property.
 
     \sa {QtSensorGestures Plugins}
 */
@@ -157,7 +157,7 @@ void QmlSensorGesture::setGestures(const QStringList& value)
 
 
 /*!
-    \qmlproperty stringlist QtSensors::SensorGesture::validGestures
+    \qmlproperty stringlist SensorGesture::validGestures
     This property holds the requested gestures that were found on the system.
 */
 QStringList QmlSensorGesture::validGestures() const
@@ -168,7 +168,7 @@ QStringList QmlSensorGesture::validGestures() const
 }
 
 /*!
-    \qmlproperty stringlist QtSensors::SensorGesture::invalidGestures
+    \qmlproperty stringlist SensorGesture::invalidGestures
     This property holds the requested gestures that were not found on the system.
 */
 QStringList QmlSensorGesture::invalidGestures() const
@@ -179,10 +179,10 @@ QStringList QmlSensorGesture::invalidGestures() const
 }
 
 /*!
-    \qmlproperty bool QtSensors::SensorGesture::enabled
+    \qmlproperty bool SensorGesture::enabled
     This property can be used to activate or deactivate the sensor gesture.
     Default value is false;
-    \sa {QtSensors::SensorGesture::detected}, {detected}
+    \sa {SensorGesture::detected}, {detected}
 */
 bool QmlSensorGesture::enabled() const
 {
@@ -211,7 +211,7 @@ void QmlSensorGesture::setEnabled(bool value)
 }
 
 /*!
-    \qmlsignal QtSensors::SensorGesture::detected(string gesture)
+    \qmlsignal SensorGesture::detected(string gesture)
     This signal is emitted whenever a gesture is detected.
     The gesture parameter contains the gesture that was detected.
 */
