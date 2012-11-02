@@ -33,11 +33,11 @@ outputdir               = ../../../doc/qtsensors
 tagfile                 = ../../../doc/qtsensors/qtsensors.tags
 
 headerdirs  += .. \
-                ../../imports/sensors2 \
+                ../../imports/sensors \
                 ../../plugins/sensors
 
 sourcedirs  += .. \
-                ../../imports/sensors2 \
+                ../../imports/sensors \
                 ../../plugins/sensors
 
 exampledirs += ../../../examples/sensors \
