@@ -50,9 +50,6 @@
         \row
             \li \l {Qt Sensors QML Types}{QML API}
             \li Information about the Qt Sensors QML API
-        \row
-            \li \l {QtMobility.sensors 1.x}{Legacy QML API}
-            \li Information about the legacy QtMobility.sensors QML API
     \endtable
 
     \section1 C++
