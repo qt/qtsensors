@@ -107,7 +107,7 @@ QmlProximitySensorReading::~QmlProximitySensorReading()
 }
 
 /*!
-    \qmlproperty bool QtMobility.sensors1::ProximityReading::near
+    \qmlproperty bool QtSensors::ProximityReading::near
     This property holds a value indicating if something is near.
 
     Please see QProximityReading::near for information about this property.

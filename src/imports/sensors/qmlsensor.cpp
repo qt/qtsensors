@@ -73,7 +73,7 @@ QmlSensor::~QmlSensor()
 }
 
 /*!
-    \qmlproperty string QtMobility.sensors1::Sensor::identifier
+    \qmlproperty string QtSensors::Sensor::identifier
     This property holds the backend identifier for the sensor.
 
     Please see QSensor::identifier for information about this property.

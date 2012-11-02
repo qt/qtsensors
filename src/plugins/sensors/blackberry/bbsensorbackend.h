@@ -139,7 +139,7 @@ private:
             return;
 
         if (updateReadingFromEvent(sensorEvent, &m_reading)) {
-            // The OS timestamp is in nanoseconds, QtMobility expects microseconds
+            // The OS timestamp is in nanoseconds, QtSensors expects microseconds
             m_reading.setTimestamp(sensorEvent.timestamp / 1000);
             newReadingAvailable();
         }

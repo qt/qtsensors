@@ -125,7 +125,7 @@ QmlLightSensorReading::~QmlLightSensorReading()
 }
 
 /*!
-    \qmlproperty qreal QtMobility.sensors1::LightReading::illuminance
+    \qmlproperty qreal QtSensors::LightReading::illuminance
     This property holds the light level.
 
     Please see QLightReading::illuminance for information about this property.

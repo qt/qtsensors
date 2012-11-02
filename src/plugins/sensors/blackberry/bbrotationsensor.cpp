@@ -70,7 +70,7 @@ bool BbRotationSensor::addDefaultRange()
 
 bool BbRotationSensor::updateReadingFromEvent(const sensor_event_t &event, QRotationReading *reading)
 {
-    // sensor_event_t has euler angles for a Z-Y'-X'' system, but the QtMobility API
+    // sensor_event_t has euler angles for a Z-Y'-X'' system, but the QtSensors API
     // uses Z-X'-Y''.
     // So extract the euler angles using the Z-X'-Y'' system from the matrix.
     float xRad, yRad, zRad;
