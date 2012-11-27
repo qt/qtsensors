@@ -56,5 +56,13 @@ The primary classes that make up the QtSensorGestures API.
 
 \annotatedlist sensorgestures_main
 
+The primary classes that make up the QtSensorGesturesRecognizers API.
+
+\annotatedlist sensorgestures_recognizer
+
+Details of the QSensorGesturePlugins available
+
+\annotatedlist sensorgesture_plugins_topics
+
 */
 
