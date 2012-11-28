@@ -71,7 +71,7 @@ QSensorGestureManagerPrivate::QSensorGestureManagerPrivate(QObject *parent) :
             connection,SLOT(removeSensorGestures(QStringList)));
 #endif
 
-    loader = new QFactoryLoader("com.Nokia.QSensorGesturePluginInterface", QLatin1String("/sensorgestures"));
+    loader = new QFactoryLoader("com.qt-project.QSensorGesturePluginInterface", QLatin1String("/sensorgestures"));
     loadPlugins();
 }
 

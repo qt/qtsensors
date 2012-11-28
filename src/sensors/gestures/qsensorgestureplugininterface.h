@@ -65,7 +65,7 @@ public:
     virtual QString name() const = 0;
 };
 
-Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "com.Nokia.QSensorGesturePluginInterface");
+Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "com.qt-project.QSensorGesturePluginInterface");
 
 QT_END_NAMESPACE
 QT_END_HEADER

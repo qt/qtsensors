@@ -48,7 +48,7 @@
 class QTestSensorGestureDupPlugin :  public QObject, public QSensorGesturePluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "com.Nokia.QSensorGesturePluginInterface")
+    Q_PLUGIN_METADATA(IID "com.qt-project.QSensorGesturePluginInterface")
     Q_INTERFACES(QSensorGesturePluginInterface)
 
 public:

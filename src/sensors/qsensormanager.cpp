@@ -99,7 +99,7 @@ public:
         if (configs.count() == 0) return; // QStandardPaths is broken?
         QString config = configs.at(configs.count()-1);
         if (config.isEmpty()) return; // QStandardPaths is broken?
-        config += QLatin1String("/Nokia/Sensors.conf");
+        config += QLatin1String("/QtProject/Sensors.conf");
 #endif
         if (!QFile::exists(config)) return;
         QFile cfgfile(config);
