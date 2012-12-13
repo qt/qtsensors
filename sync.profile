@@ -4,7 +4,7 @@
 %moduleheaders = ( # restrict the module headers to those found in relative path
 );
 %dependencies = (
-    "qtbase" => "refs/heads/master",
-    "qtdeclarative" => "refs/heads/master",
-    "qtjsbackend" => "refs/heads/master",
+    "qtbase" => "refs/heads/stable",
+    "qtdeclarative" => "refs/heads/stable",
+    "qtjsbackend" => "refs/heads/stable",
 );
