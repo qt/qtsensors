@@ -6,7 +6,6 @@ SOURCES += tst_legacy_sensors.cpp
 
 VPATH += ../qsensor
 INCLUDEPATH += ../qsensor
-DEPENDPATH += ../qsensor
 
 HEADERS += \
     test_backends.h
