@@ -65,7 +65,7 @@ public:
         LeftUp,
         RightUp,
         FaceUp,
-        FaceDown,
+        FaceDown
     };
 
     Orientation orientation() const;

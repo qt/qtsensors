@@ -103,7 +103,7 @@ public:
     static char const * const type;
 
 private:
-    Q_DISABLE_COPY(QTapSensor);
+    Q_DISABLE_COPY(QTapSensor)
 };
 
 QT_END_NAMESPACE

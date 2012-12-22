@@ -69,12 +69,12 @@ public:
     void setDescription(const QString &description);
 
     template <typename T>
-    T *setReading(T *reading)
+    T *setReading(T *readingClass)
     {
-        if (!reading)
-            reading = new T(this);
-        setReadings(reading, new T(this), new T(this));
-        return reading;
+        if (!readingClass)
+            readingClass = new T(this);
+        setReadings(readingClass, new T(this), new T(this));
+        return readingClass;
     }
 
     QSensorReading *reading() const;
