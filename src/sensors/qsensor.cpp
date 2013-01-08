@@ -200,6 +200,11 @@ void QSensorPrivate::init(const QByteArray &sensorType)
     \value FieldOfView The backend specifies its field of view, which can be
                        read from the QLightSensor::fieldOfView property.
 
+    The features of QAccelerometer are:
+
+    \value AccelerationMode The backend supports switching the acceleration mode
+                            of the acceleromter with the QAccelerometer::accelerationMode property.
+
     \omitvalue Reserved
 
     \sa QSensor::isFeatureSupported()

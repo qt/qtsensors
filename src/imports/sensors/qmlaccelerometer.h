@@ -52,10 +52,25 @@ class QAccelerometer;
 class QmlAccelerometer : public QmlSensor
 {
     Q_OBJECT
+    Q_ENUMS(AccelerationMode)
+    Q_PROPERTY(AccelerationMode accelerationMode READ accelerationMode WRITE setAccelerationMode
+               NOTIFY accelerationModeChanged REVISION 1)
 public:
     explicit QmlAccelerometer(QObject *parent = 0);
     ~QmlAccelerometer();
 
+    // Keep this enum in sync with QAccelerometer::AccelerationMode
+    enum AccelerationMode {
+        Combined,
+        Gravity,
+        User
+    };
+
+    AccelerationMode accelerationMode() const;
+    void setAccelerationMode(AccelerationMode accelerationMode);
+
+signals:
+    void accelerationModeChanged(AccelerationMode accelerationMode);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;

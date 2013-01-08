@@ -959,6 +959,7 @@ private slots:
         QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
         QVERIFY(!sensor.isFeatureSupported(QSensor::GeoValues));
         QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::AccelerationMode));
 
         // Connect to backend - according to the testsensorimpl implementation, AlwaysOn and
         // GeoValues should be supported afterwards
@@ -968,6 +969,7 @@ private slots:
         QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
         QVERIFY(sensor.isFeatureSupported(QSensor::GeoValues));
         QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::AccelerationMode));
     }
 };
 

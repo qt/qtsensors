@@ -53,6 +53,8 @@
 // We mean it.
 //
 
+#include "qsensor_p.h"
+
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
@@ -69,6 +71,17 @@ public:
     qreal x;
     qreal y;
     qreal z;
+};
+
+class QAccelerometerPrivate : public QSensorPrivate
+{
+public:
+    QAccelerometerPrivate()
+        : accelerationMode(QAccelerometer::Combined)
+    {
+    }
+
+    QAccelerometer::AccelerationMode accelerationMode;
 };
 
 QT_END_NAMESPACE

@@ -107,6 +107,21 @@ sensor_type_e BbSensorBackendBase::sensorType() const
     return m_sensorType;
 }
 
+void BbSensorBackendBase::setDevice(const QString &deviceFile, sensor_type_e sensorType)
+{
+    if (deviceFile != m_deviceFile.fileName()) {
+        setPaused(true);
+        delete m_socketNotifier.take();
+        m_deviceFile.close();
+
+        m_sensorType = sensorType;
+        m_deviceFile.setFileName(deviceFile);
+        initSensorInfo();
+        if (m_started)
+            start();    // restart with new device file
+    }
+}
+
 void BbSensorBackendBase::initSensorInfo()
 {
     if (!m_deviceFile.open(QFile::ReadOnly | QFile::Unbuffered)) {
@@ -283,6 +298,7 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
     switch (feature) {
     case QSensor::AlwaysOn:
     case QSensor::Buffering:
+    case QSensor::AccelerationMode:
         return true;
     case QSensor::Reserved:
     case QSensor::GeoValues:

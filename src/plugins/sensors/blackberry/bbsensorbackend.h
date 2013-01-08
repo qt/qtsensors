@@ -75,7 +75,10 @@ public:
 protected:
     BbGuiHelper *guiHelper() const;
     QFile& deviceFile();
+
     sensor_type_e sensorType() const;
+
+    void setDevice(const QString &deviceFile, sensor_type_e sensorType);
 
     // This is called while the device file is open during initalization and gives a subclass
     // an opportunity to do additional initalization.
