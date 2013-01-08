@@ -52,6 +52,15 @@ $sensorbase =~ s/Sensor$//;
 my $reading = $sensorbase.'Reading';
 my $reading_private = $reading.'Private';
 my $filter = $sensorbase.'Filter';
+my $no_q_sensor = $sensor;
+$no_q_sensor =~ s/^.//;
+my $qmlsensor = "Qml".$no_q_sensor;
+my $qmlsensorbase = $qmlsensor;
+$qmlsensorbase =~ s/Sensor$//;
+my $qmlreading = $qmlsensorbase."Reading";
+my $no_q_reading = $no_q_sensor;
+$no_q_reading =~ s/Sensor$//;
+$no_q_reading = $no_q_reading."Reading";
 
 my $filebase;
 eval {
@@ -61,15 +70,180 @@ if ($@) {
     $filebase = lc($sensor);
 }
 
+my $qmlfilebase = $filebase;
+$qmlfilebase =~ s/^.//;
+$qmlfilebase = "qml".$qmlfilebase;
+
 my $pheader = $filebase."_p.h";
 my $header = $filebase.".h";
 my $source = $filebase.".cpp";
+my $qmlsource = "../imports/sensors/".$qmlfilebase.".cpp";
+my $qmlheader = "../imports/sensors/".$qmlfilebase.".h";
 
 my $pguard = uc($pheader);
 $pguard =~ s/\./_/g;
 
 my $guard = uc($header);
 $guard =~ s/\./_/g;
+
+my $qmlguard = "QML".uc($no_q_sensor)."_H";
+
+if (! -e $qmlheader) {
+    print "Creating $qmlheader\n";
+    open OUT, ">$qmlheader" or die $!;
+    print OUT '
+#ifndef '.$qmlguard.'
+#define '.$qmlguard.'
+
+#include "qmlsensor.h"
+
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
+
+class '.$sensor.';
+
+class '.$qmlsensor.' : public QmlSensor
+{
+    Q_OBJECT
+public:
+    explicit '.$qmlsensor.'(QObject *parent = 0);
+    ~'.$qmlsensor.'();
+
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+
+    '.$sensor.' *m_sensor;
+};
+
+class '.$qmlreading.' : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal prop1 READ prop1 NOTIFY prop1Changed)
+public:
+    explicit '.$qmlreading.'('.$sensor.' *sensor);
+    ~'.$qmlreading.'();
+
+    qreal prop1() const;
+
+Q_SIGNALS:
+    void prop1Changed();
+
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+
+    '.$sensor.' *m_sensor;
+    qreal m_prop1;
+};
+
+QT_END_NAMESPACE
+QT_END_HEADER
+#endif
+';
+    close OUT;
+}
+
+if (! -e $qmlsource) {
+    print "Creating $qmlsource\n";
+    open OUT, ">$qmlsource" or die $!;
+    print OUT '
+#include "qml'.lc($no_q_sensor).'.h"
+#include <'.$sensor.'>
+
+/*!
+    \qmltype '.$no_q_sensor.'
+    \instantiates '.$qmlsensor.'
+    \ingroup qml-sensors_type
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.[INSERT VERSION HERE]
+    \inherits Sensor
+    \brief The '.$no_q_sensor.' element reports on fubbleness.
+
+    The '.$no_q_sensor.' element reports on fubbleness.
+
+    This element wraps the '.$sensor.' class. Please see the documentation for
+    '.$sensor.' for details.
+
+    \sa '.$no_q_reading.'
+*/
+
+'.$qmlsensor.'::'.$qmlsensor.'(QObject *parent)
+    : QmlSensor(parent)
+    , m_sensor(new '.$sensor.'(this))
+{
+}
+
+'.$qmlsensor.'::~'.$qmlsensor.'()
+{
+}
+
+QmlSensorReading *'.$qmlsensor.'::createReading() const
+{
+    return new '.$qmlreading.'(m_sensor);
+}
+
+QSensor *'.$qmlsensor.'::sensor() const
+{
+    return m_sensor;
+}
+
+/*!
+    \qmltype '.$no_q_reading.'
+    \instantiates '.$qmlreading.'
+    \ingroup qml-sensors_reading
+    \inqmlmodule QtSensors 5.0
+    \since QtSensors 5.[INSERT VERSION HERE]
+    \inherits SensorReading
+    \brief The '.$no_q_reading.' element holds the most recent '.$no_q_sensor.' reading.
+
+    The '.$no_q_reading.' element holds the most recent '.$no_q_sensor.' reading.
+
+    This element wraps the '.$reading.' class. Please see the documentation for
+    '.$reading.' for details.
+
+    This element cannot be directly created.
+*/
+
+'.$qmlreading.'::'.$qmlreading.'('.$sensor.' *sensor)
+    : QmlSensorReading(sensor)
+    , m_sensor(sensor)
+    , m_prop1(0)
+{
+}
+
+'.$qmlreading.'::~'.$qmlreading.'()
+{
+}
+
+/*!
+    \qmlproperty qreal '.$no_q_reading.'::prop1
+    This property holds the fubble of the device.
+
+    Please see '.$reading.'::prop1 for information about this property.
+*/
+
+qreal '.$qmlreading.'::prop1() const
+{
+    return m_prop1;
+}
+
+QSensorReading *'.$qmlreading.'::reading() const
+{
+    return m_sensor->reading();
+}
+
+void '.$qmlreading.'::readingUpdate()
+{
+    qreal prop1 = m_sensor->reading()->prop1();
+    if (m_prop1 != prop1) {
+        m_prop1 = prop1;
+        Q_EMIT prop1Changed();
+    }
+}
+';
+    close OUT;
+}
 
 if (! -e $pheader) {
     print "Creating $pheader\n";
