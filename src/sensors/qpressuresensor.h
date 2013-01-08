@@ -38,23 +38,51 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BBPRESSURESENSOR_H
-#define BBPRESSURESENSOR_H
+#ifndef QPRESSURESENSOR_H
+#define QPRESSURESENSOR_H
 
-#include "bbsensorbackend.h"
-#include <qpressuresensor.h>
+#include <QtSensors/qsensor.h>
 
-class BbPressureSensor : public BbSensorBackend<QPressureReading>
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
+
+QT_MODULE(QtSensors)
+
+class QPressureReadingPrivate;
+
+class Q_SENSORS_EXPORT QPressureReading : public QSensorReading
 {
     Q_OBJECT
-
+    Q_PROPERTY(qreal pressure READ pressure)
+    DECLARE_READING(QPressureReading)
 public:
-    explicit BbPressureSensor(QSensor *sensor);
-
-    static QString devicePath();
-
-protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QPressureReading *reading) Q_DECL_OVERRIDE;
+    qreal pressure() const;
+    void setPressure(qreal pressure);
 };
+
+class Q_SENSORS_EXPORT QPressureFilter : public QSensorFilter
+{
+public:
+    virtual bool filter(QPressureReading *reading) = 0;
+private:
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
+        { return filter(static_cast<QPressureReading*>(reading)); }
+};
+
+class Q_SENSORS_EXPORT QPressureSensor : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QPressureSensor(QObject *parent = 0);
+    ~QPressureSensor();
+    QPressureReading *reading() const { return static_cast<QPressureReading*>(QSensor::reading()); }
+    static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QPressureSensor)
+};
+
+QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif

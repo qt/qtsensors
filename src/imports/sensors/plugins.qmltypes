@@ -118,6 +118,17 @@ Module {
         Property { name: "orientation"; type: "QOrientationReading::Orientation"; isReadonly: true }
     }
     Component {
+        name: "QmlPressureReading"
+        prototype: "QmlSensorReading"
+        exports: ["PressureReading 5.1"]
+        Property { name: "pressure"; type: "double"; isReadonly: true }
+    }
+    Component {
+        name: "QmlPressureSensor"
+        prototype: "QmlSensor"
+        exports: ["PressureSensor 5.1"]
+    }
+    Component {
         name: "QmlProximitySensor"
         prototype: "QmlSensor"
         exports: ["ProximitySensor 5.0", "ProximitySensor 5.1"]

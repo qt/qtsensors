@@ -98,7 +98,7 @@ public:
         if (sensorSupported(BbOrientationSensor::devicePath()))
             QSensorManager::registerBackend(QOrientationSensor::type, bbOrientationSensorId, this);
         if (sensorSupported(BbPressureSensor::devicePath()))
-            QSensorManager::registerBackend("BbPressureSensor", bbPressureSensorId, this);
+            QSensorManager::registerBackend(QPressureSensor::type, bbPressureSensorId, this);
         if (sensorSupported(BbProximitySensor::devicePath()))
             QSensorManager::registerBackend(QProximitySensor::type, bbProximitySensorId, this);
         if (sensorSupported(BbRotationSensor::devicePath()))

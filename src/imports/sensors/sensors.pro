@@ -16,6 +16,7 @@ HEADERS += \
     qmllightsensor.h \
     qmlmagnetometer.h \
     qmlorientationsensor.h \
+    qmlpressuresensor.h\
     qmlproximitysensor.h \
     qmltapsensor.h \
     qmlrotationsensor.h \
@@ -34,6 +35,7 @@ SOURCES += sensors.cpp \
     qmllightsensor.cpp \
     qmlmagnetometer.cpp \
     qmlorientationsensor.cpp \
+    qmlpressuresensor.cpp\
     qmlproximitysensor.cpp \
     qmltapsensor.cpp \
     qmlrotationsensor.cpp \

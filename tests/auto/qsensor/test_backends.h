@@ -54,6 +54,7 @@ void unregister_test_backends();
 #include <qlightsensor.h>
 #include <qmagnetometer.h>
 #include <qorientationsensor.h>
+#include <qpressuresensor.h>
 #include <qproximitysensor.h>
 #include <qrotationsensor.h>
 #include <qtapsensor.h>
@@ -119,6 +120,9 @@ PREPARE_SENSORINTERFACE(QMagnetometer, QMagnetometerReading, QMagnetometerFilter
 })
 PREPARE_SENSORINTERFACE(QOrientationSensor, QOrientationReading, QOrientationFilter, {
     reading->setOrientation(QOrientationReading::LeftUp);
+})
+PREPARE_SENSORINTERFACE(QPressureSensor, QPressureReading, QPressureFilter, {
+    reading->setPressure(1.0);
 })
 PREPARE_SENSORINTERFACE(QProximitySensor, QProximityReading, QProximityFilter, {
     reading->setClose(true);

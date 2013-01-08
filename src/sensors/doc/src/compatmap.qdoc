@@ -106,6 +106,12 @@
     <td bgcolor="green"></td>
     </tr>
     <tr>
+    <td nowrap="nowrap">Pressure Sensor</td>
+    <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    </tr>
+    <tr>
     <td nowrap="nowrap">Proximity Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>

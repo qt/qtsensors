@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Research In Motion
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -40,31 +40,8 @@
 ****************************************************************************/
 #include "bbpressuresensor.h"
 
-class BbPressureReadingPrivate
-{
-public:
-    BbPressureReadingPrivate()
-        : pressure(0)
-    {
-    }
-
-    qreal pressure;
-};
-
-IMPLEMENT_READING(BbPressureReading)
-
-qreal BbPressureReading::pressure() const
-{
-    return d->pressure;
-}
-
-void BbPressureReading::setPressure(qreal pressure)
-{
-    d->pressure = pressure;
-}
-
 BbPressureSensor::BbPressureSensor(QSensor *sensor)
-    : BbSensorBackend<BbPressureReading>(devicePath(), SENSOR_TYPE_PRESSURE, sensor)
+    : BbSensorBackend<QPressureReading>(devicePath(), SENSOR_TYPE_PRESSURE, sensor)
 {
     setDescription(QLatin1String("Pressure in Pascals"));
 }
@@ -74,7 +51,7 @@ QString BbPressureSensor::devicePath()
     return QLatin1String("/dev/sensor/pressure");
 }
 
-bool BbPressureSensor::updateReadingFromEvent(const sensor_event_t &event, BbPressureReading *reading)
+bool BbPressureSensor::updateReadingFromEvent(const sensor_event_t &event, QPressureReading *reading)
 {
     // TODO: I was unable to test this since the device I was testing this with did not have
     //       a pressure sensor. Verify that this works and check that the units are correct.

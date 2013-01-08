@@ -38,23 +38,51 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BBPRESSURESENSOR_H
-#define BBPRESSURESENSOR_H
+#ifndef QMLPRESSURESENSOR_H
+#define QMLPRESSURESENSOR_H
 
-#include "bbsensorbackend.h"
-#include <qpressuresensor.h>
+#include "qmlsensor.h"
 
-class BbPressureSensor : public BbSensorBackend<QPressureReading>
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
+
+class QPressureSensor;
+
+class QmlPressureSensor : public QmlSensor
 {
     Q_OBJECT
-
 public:
-    explicit BbPressureSensor(QSensor *sensor);
+    explicit QmlPressureSensor(QObject *parent = 0);
+    ~QmlPressureSensor();
 
-    static QString devicePath();
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
 
-protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QPressureReading *reading) Q_DECL_OVERRIDE;
+    QPressureSensor *m_sensor;
 };
 
+class QmlPressureReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal pressure READ pressure NOTIFY pressureChanged)
+public:
+    explicit QmlPressureReading(QPressureSensor *sensor);
+    ~QmlPressureReading();
+
+    qreal pressure() const;
+
+Q_SIGNALS:
+    void pressureChanged();
+
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+
+    QPressureSensor *m_sensor;
+    qreal m_pressure;
+};
+
+QT_END_NAMESPACE
+QT_END_HEADER
 #endif

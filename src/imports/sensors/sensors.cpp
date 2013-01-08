@@ -66,6 +66,7 @@
 #include "qmllightsensor.h"
 #include "qmlmagnetometer.h"
 #include "qmlorientationsensor.h"
+#include "qmlpressuresensor.h"
 #include "qmlproximitysensor.h"
 #include "qmlrotationsensor.h"
 #include "qmltapsensor.h"
@@ -150,6 +151,8 @@ public:
         qmlRegisterUncreatableType<QmlMagnetometerReading      >(package, major, minor, "MagnetometerReading",  QLatin1String("Cannot create MagnetometerReading"));
         qmlRegisterType           <QmlOrientationSensor        >(package, major, minor, "OrientationSensor");
         qmlRegisterUncreatableType<QmlOrientationSensorReading >(package, major, minor, "OrientationReading",   QLatin1String("Cannot create OrientationReading"));
+        qmlRegisterType           <QmlPressureSensor           >(package, major, minor, "PressureSensor");
+        qmlRegisterUncreatableType<QmlPressureReading          >(package, major, minor, "PressureReading",      QLatin1String("Cannot create PressureReading"));
         qmlRegisterType           <QmlProximitySensor          >(package, major, minor, "ProximitySensor");
         qmlRegisterUncreatableType<QmlProximitySensorReading   >(package, major, minor, "ProximityReading",     QLatin1String("Cannot create ProximityReading"));
         qmlRegisterType           <QmlRotationSensor           >(package, major, minor, "RotationSensor");

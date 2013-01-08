@@ -877,6 +877,10 @@ private slots:
             QCOMPARE(reading->orientation(), QOrientationReading::LeftUp);
         })
 
+        TEST_SENSORINTERFACE(QPressureSensor, QPressureReading, {
+            QCOMPARE(reading->pressure(), 1.0);
+        })
+
         TEST_SENSORINTERFACE(QProximitySensor, QProximityReading, {
             QCOMPARE(reading->close(), true);
         })

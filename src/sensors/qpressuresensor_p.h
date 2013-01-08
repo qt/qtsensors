@@ -38,23 +38,35 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BBPRESSURESENSOR_H
-#define BBPRESSURESENSOR_H
+#ifndef QPRESSURESENSOR_P_H
+#define QPRESSURESENSOR_P_H
 
-#include "bbsensorbackend.h"
-#include <qpressuresensor.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-class BbPressureSensor : public BbSensorBackend<QPressureReading>
+QT_BEGIN_HEADER
+QT_BEGIN_NAMESPACE
+
+class QPressureReadingPrivate
 {
-    Q_OBJECT
-
 public:
-    explicit BbPressureSensor(QSensor *sensor);
+    QPressureReadingPrivate()
+        : pressure(0)
+    {
+    }
 
-    static QString devicePath();
-
-protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QPressureReading *reading) Q_DECL_OVERRIDE;
+    qreal pressure;
 };
+
+QT_END_NAMESPACE
+QT_END_HEADER
 
 #endif
