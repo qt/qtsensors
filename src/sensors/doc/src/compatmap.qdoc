@@ -82,6 +82,12 @@
     <td bgcolor="gray"></td>
     </tr>
     <tr>
+    <td nowrap="nowrap">Holster Sensor</td>
+    <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    </tr>
+    <tr>
     <td nowrap="nowrap">IR Proximity Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>

@@ -70,6 +70,17 @@ Module {
         Property { name: "z"; type: "double"; isReadonly: true }
     }
     Component {
+        name: "QmlHolsterReading"
+        prototype: "QmlSensorReading"
+        exports: ["HolsterReading 5.1"]
+        Property { name: "holstered"; type: "bool"; isReadonly: true }
+    }
+    Component {
+        name: "QmlHolsterSensor"
+        prototype: "QmlSensor"
+        exports: ["HolsterSensor 5.1"]
+    }
+    Component {
         name: "QmlIRProximitySensor"
         prototype: "QmlSensor"
         exports: ["IRProximitySensor 5.0", "IRProximitySensor 5.1"]

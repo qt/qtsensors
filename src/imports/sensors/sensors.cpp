@@ -62,6 +62,7 @@
 #include "qmlambientlightsensor.h"
 #include "qmlcompass.h"
 #include "qmlgyroscope.h"
+#include "qmlholstersensor.h"
 #include "qmlirproximitysensor.h"
 #include "qmllightsensor.h"
 #include "qmlmagnetometer.h"
@@ -143,6 +144,8 @@ public:
         qmlRegisterUncreatableType<QmlCompassReading           >(package, major, minor, "CompassReading",       QLatin1String("Cannot create CompassReading"));
         qmlRegisterType           <QmlGyroscope                >(package, major, minor, "Gyroscope");
         qmlRegisterUncreatableType<QmlGyroscopeReading         >(package, major, minor, "GyroscopeReading",     QLatin1String("Cannot create GyroscopeReading"));
+        qmlRegisterType           <QmlHolsterSensor            >(package, major, minor, "HolsterSensor");
+        qmlRegisterUncreatableType<QmlHolsterReading           >(package, major, minor, "HolsterReading",       QLatin1String("Cannot create HolsterReading"));
         qmlRegisterType           <QmlIRProximitySensor        >(package, major, minor, "IRProximitySensor");
         qmlRegisterUncreatableType<QmlIRProximitySensorReading >(package, major, minor, "IRProximityReading",   QLatin1String("Cannot create IRProximityReading"));
         qmlRegisterType           <QmlLightSensor              >(package, major, minor, "LightSensor");

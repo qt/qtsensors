@@ -43,6 +43,9 @@
 #include "bbambientlightsensor.h"
 #include "bbcompass.h"
 #include "bbgyroscope.h"
+#ifdef HAVE_HOLSTER_SENSOR
+#include "bbholstersensor.h"
+#endif
 #include "bbirproximitysensor.h"
 #include "bblightsensor.h"
 #include "bbmagnetometer.h"
@@ -61,6 +64,9 @@ static const char *bbAltitmeterId = "bbAltimeter";
 static const char *bbAmbientLightSensorId = "bbAmbientLightSensor";
 static const char *bbCompassId = "bbCompass";
 static const char *bbGyroscopeId = "bbGyroscope";
+#ifdef HAVE_HOLSTER_SENSOR
+static const char *bbHolsterSensorId = "bbHolsterSensor";
+#endif
 static const char *bbIRProximitySensorId = "bbIRProximitySensor";
 static const char *bbLightSensorId = "bbLightSensor";
 static const char *bbMagnetometerId = "bbMagnetometer";
@@ -89,6 +95,10 @@ public:
             QSensorManager::registerBackend(QCompass::type, bbCompassId, this);
         if (sensorSupported(BbGyroscope::devicePath()))
             QSensorManager::registerBackend(QGyroscope::type, bbGyroscopeId, this);
+#ifdef HAVE_HOLSTER_SENSOR
+        if (sensorSupported(BbHolsterSensor::devicePath()))
+            QSensorManager::registerBackend(QHolsterSensor::type, bbHolsterSensorId, this);
+#endif
         if (sensorSupported(BbIRProximitySensor::devicePath()))
             QSensorManager::registerBackend(QIRProximitySensor::type, bbIRProximitySensorId, this);
         if (sensorSupported(BbLightSensor::devicePath()))
@@ -120,6 +130,10 @@ public:
             backend = new BbCompass(sensor);
         if (sensor->identifier() == bbGyroscopeId)
             backend = new BbGyroscope(sensor);
+#ifdef HAVE_HOLSTER_SENSOR
+        if (sensor->identifier() == bbHolsterSensorId)
+            backend = new BbHolsterSensor(sensor);
+#endif
         if (sensor->identifier() == bbIRProximitySensorId)
             backend = new BbIRProximitySensor(sensor);
         if (sensor->identifier() == bbLightSensorId)

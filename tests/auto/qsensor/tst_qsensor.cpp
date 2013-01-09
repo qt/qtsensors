@@ -862,6 +862,10 @@ private slots:
             QCOMPARE(reading->z(), 1.0);
         })
 
+        TEST_SENSORINTERFACE(QHolsterSensor, QHolsterReading, {
+            QCOMPARE(reading->holstered(), true);
+        })
+
         TEST_SENSORINTERFACE(QLightSensor, QLightReading, {
             QCOMPARE(reading->lux(), 1.0);
         })

@@ -51,6 +51,7 @@ void unregister_test_backends();
 #include <qambientlightsensor.h>
 #include <qcompass.h>
 #include <qgyroscope.h>
+#include <qholstersensor.h>
 #include <qlightsensor.h>
 #include <qmagnetometer.h>
 #include <qorientationsensor.h>
@@ -108,6 +109,9 @@ PREPARE_SENSORINTERFACE(QGyroscope, QGyroscopeReading, QGyroscopeFilter, {
     reading->setX(1.0);
     reading->setY(1.0);
     reading->setZ(1.0);
+})
+PREPARE_SENSORINTERFACE(QHolsterSensor, QHolsterReading, QHolsterFilter, {
+    reading->setHolstered(true);
 })
 PREPARE_SENSORINTERFACE(QLightSensor, QLightReading, QLightFilter, {
     reading->setLux(1.0);

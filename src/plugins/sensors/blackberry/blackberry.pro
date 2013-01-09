@@ -12,6 +12,10 @@ config_bbsensor_compass {
     DEFINES += HAVE_COMPASS_SENSOR
 }
 
+config_bbsensor_holster {
+    DEFINES += HAVE_HOLSTER_SENSOR
+}
+
 HEADERS += bbsensorbackend.h \
     bbaccelerometer.h \
     bbaltimeter.h \
@@ -46,5 +50,10 @@ SOURCES += bbsensorbackend.cpp \
     bbguihelper.cpp \
     bbutil.cpp \
     main.cpp
+
+config_bbsensor_holster {
+    HEADERS += bbholstersensor.h
+    SOURCES += bbholstersensor.cpp
+}
 
 OTHER_FILES = plugin.json
