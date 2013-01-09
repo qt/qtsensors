@@ -157,6 +157,7 @@ Module {
         name: "QmlSensor"
         prototype: "QObject"
         exports: ["Sensor 5.0", "Sensor 5.1"]
+        exportMetaObjectRevisions: [0, 1]
         Property { name: "identifier"; type: "string" }
         Property { name: "type"; type: "string"; isReadonly: true }
         Property { name: "connectedToBackend"; type: "bool"; isReadonly: true }
@@ -170,6 +171,11 @@ Module {
         Property { name: "description"; type: "string"; isReadonly: true }
         Property { name: "error"; type: "int"; isReadonly: true }
         Property { name: "alwaysOn"; type: "bool" }
+        Property { name: "skipDuplicates"; revision: 1; type: "bool" }
+        Signal {
+            name: "skipDuplicatesChanged"
+            Parameter { name: "skipDuplicates"; type: "bool" }
+        }
         Method { name: "start"; type: "bool" }
         Method { name: "stop" }
     }

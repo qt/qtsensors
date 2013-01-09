@@ -189,6 +189,9 @@ void QSensorPrivate::init(const QByteArray &sensorType)
                      QSensor::bufferSize property.
     \value AlwaysOn The backend supports changing the policy on whether to suspend when idle,
                     controlled by the QSensor::alwaysOn property.
+    \value SkipDuplicates The backend supports skipping of same or very similar successive
+                          readings. This can be enabled by setting the QSensor::skipDuplicates
+                          property to true.
 
     The features of QMagnetometer are:
 
@@ -432,6 +435,54 @@ bool QSensor::isAlwaysOn() const
     Q_D(const QSensor);
     return d->alwaysOn;
 }
+
+/*!
+    \property QSensor::skipDuplicates
+    \brief Indicates whether duplicate reading values should be omitted.
+    \since 5.1
+
+    When duplicate skipping is enabled, successive readings with the same or very
+    similar values are omitted. This helps reducing the amount of processing done, as less sensor
+    readings are made available. As a consequence, readings arrive at an irregular interval.
+
+    Duplicate skipping is not just enabled for readings that are exactly the same, but also for
+    readings that are quite similar, as each sensor has a bit of jitter even if the device is
+    not moved.
+
+    Support for this property depends on the backend. Use isFeatureSupported() to check if it is
+    supported on the current platform.
+
+    Duplicate skipping is disabled by default.
+
+    Duplicate skipping takes effect when the sensor is started, changing the property while the
+    sensor is active has no immediate effect.
+*/
+bool QSensor::skipDuplicates() const
+{
+    Q_D(const QSensor);
+    return d->skipDuplicates;
+}
+
+/*!
+    Sets the duplicate skipping to \a skipDuplicates.
+
+    \since 5.1
+*/
+void QSensor::setSkipDuplicates(bool skipDuplicates)
+{
+    Q_D(QSensor);
+    if (d->skipDuplicates != skipDuplicates) {
+        d->skipDuplicates = skipDuplicates;
+        emit skipDuplicatesChanged(skipDuplicates);
+    }
+}
+
+/*!
+    \fn QSensor::skipDuplicatesChanged(bool skipDuplicates)
+    \since 5.1
+
+    This signal is emitted when the skipDuplicates property changes.
+*/
 
 /*!
     \property QSensor::availableDataRates

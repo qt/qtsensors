@@ -171,6 +171,25 @@ void QmlSensor::setAlwaysOn(bool alwaysOn)
 }
 
 /*!
+    \qmlproperty bool Sensor::skipDuplicates
+    \since QtSensors 5.1
+
+    This property indicates whether duplicate reading values should be omitted.
+
+    Please see QSensor::skipDuplicates for information about this property.
+*/
+
+bool QmlSensor::skipDuplicates() const
+{
+    return sensor()->skipDuplicates();
+}
+
+void QmlSensor::setSkipDuplicates(bool skipDuplicates)
+{
+    sensor()->setSkipDuplicates(skipDuplicates);
+}
+
+/*!
     \qmlproperty list<Range> Sensor::availableDataRates
     This property holds the data rates that the sensor supports.
 
@@ -323,6 +342,7 @@ void QmlSensor::componentComplete()
     connect(sensor(), SIGNAL(sensorError(int)), this, SIGNAL(errorChanged()));
     connect(sensor(), SIGNAL(activeChanged()), this, SIGNAL(activeChanged()));
     connect(sensor(), SIGNAL(alwaysOnChanged()), this, SIGNAL(alwaysOnChanged()));
+    connect(sensor(), SIGNAL(skipDuplicatesChanged(bool)), this, SIGNAL(skipDuplicatesChanged(bool)));
 
     // We need to set this on the sensor object now
     sensor()->setIdentifier(m_identifier.toLocal8Bit());

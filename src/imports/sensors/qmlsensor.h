@@ -71,6 +71,7 @@ class QmlSensor : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(int error READ error NOTIFY errorChanged)
     Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged)
+    Q_PROPERTY(bool skipDuplicates READ skipDuplicates WRITE setSkipDuplicates NOTIFY skipDuplicatesChanged REVISION 1)
 public:
     explicit QmlSensor(QObject *parent = 0);
     ~QmlSensor();
@@ -89,6 +90,9 @@ public:
 
     bool isAlwaysOn() const;
     void setAlwaysOn(bool alwaysOn);
+
+    bool skipDuplicates() const;
+    void setSkipDuplicates(bool skipDuplicates);
 
     QQmlListProperty<QmlSensorRange> availableDataRates() const;
     int dataRate() const;
@@ -120,6 +124,7 @@ Q_SIGNALS:
     void descriptionChanged();
     void errorChanged();
     void alwaysOnChanged();
+    void skipDuplicatesChanged(bool skipDuplicates);
 
 protected:
     virtual QSensor *sensor() const = 0;

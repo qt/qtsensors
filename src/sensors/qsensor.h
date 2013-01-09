@@ -93,6 +93,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(QString description READ description)
     Q_PROPERTY(int error READ error NOTIFY sensorError)
     Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged REVISION 1)
+    Q_PROPERTY(bool skipDuplicates READ skipDuplicates WRITE setSkipDuplicates NOTIFY skipDuplicatesChanged)
 #ifdef Q_QDOC
     Q_PROPERTY(int maxBufferSize)
     Q_PROPERTY(int efficientBufferSize)
@@ -105,6 +106,7 @@ public:
         GeoValues,
         FieldOfView,
         AccelerationMode,
+        SkipDuplicates,
         Reserved = 257 // Make sure at least 2 bytes are used for the enum to avoid breaking BC later
     };
 
@@ -126,6 +128,9 @@ public:
 
     bool isAlwaysOn() const;
     void setAlwaysOn(bool alwaysOn);
+
+    bool skipDuplicates() const;
+    void setSkipDuplicates(bool skipDuplicates);
 
     qrangelist availableDataRates() const;
     int dataRate() const;
@@ -169,6 +174,7 @@ Q_SIGNALS:
     void availableSensorsChanged();
     void alwaysOnChanged();
     void dataRateChanged();
+    void skipDuplicatesChanged(bool skipDuplicates);
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);

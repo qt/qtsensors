@@ -44,24 +44,14 @@ BbOrientationSensor::BbOrientationSensor(QSensor *sensor)
     : BbSensorBackend<QOrientationReading>(devicePath(), SENSOR_TYPE_ORIENTATION, sensor)
 {
     setDescription(QLatin1String("Device orientation"));
+
+    // Orientation rarely changes, so enable skipping of duplicates by default
+    sensor->setSkipDuplicates(true);
 }
 
 QString BbOrientationSensor::devicePath()
 {
     return QLatin1String("/dev/sensor/orientation");
-}
-
-void BbOrientationSensor::start()
-{
-    BbSensorBackend<QOrientationReading>::start();
-
-    // Orientation rarely changes, so enable skiping of duplicates
-    sensor_devctl_skipdupevent_u deviceSkip;
-    deviceSkip.tx.enable = 1;
-    const int result = devctl(deviceFile().handle(), DCMD_SENSOR_SKIPDUPEVENT, &deviceSkip,
-                              sizeof(deviceSkip), NULL);
-    if (result != EOK)
-        perror("Enabling duplicate skipping for orientation sensor failed");
 }
 
 void BbOrientationSensor::additionalDeviceInit()

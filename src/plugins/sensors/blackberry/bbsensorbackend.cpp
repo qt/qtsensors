@@ -254,6 +254,16 @@ void BbSensorBackendBase::start()
         }
     }
 
+    // Enable/disable duplicate skipping
+    sensor_devctl_skipdupevent_u deviceSkip;
+    deviceSkip.tx.enable = sensor()->skipDuplicates();
+    const int result = devctl(deviceFile().handle(), DCMD_SENSOR_SKIPDUPEVENT, &deviceSkip,
+                              sizeof(deviceSkip), NULL);
+    if (result != EOK) {
+        perror(QString::fromLatin1("Setting duplicate skipping for %1 failed")
+               .arg(m_deviceFile.fileName()).toLocal8Bit());
+    }
+
     // Explicitly switch to non-blocking mode, otherwise read() will wait until new sensor
     // data is available, and we have no way to check if there is more data or not (bytesAvailable()
     // does not work for unbuffered mode)
@@ -299,6 +309,7 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
     case QSensor::AlwaysOn:
     case QSensor::Buffering:
     case QSensor::AccelerationMode:
+    case QSensor::SkipDuplicates:
         return true;
     case QSensor::Reserved:
     case QSensor::GeoValues:

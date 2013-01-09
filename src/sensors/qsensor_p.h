@@ -79,6 +79,7 @@ public:
         , cache_reading(0)
         , error(0)
         , alwaysOn(false)
+        , skipDuplicates(false)
     {
     }
 
@@ -108,6 +109,7 @@ public:
     int error;
 
     bool alwaysOn;
+    bool skipDuplicates;
 };
 
 class QSensorReadingPrivate
