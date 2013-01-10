@@ -106,6 +106,11 @@ void GenericTiltSensor::calibrate()
     calibratedRoll = roll;
 }
 
+static qreal rad2deg(qreal rad)
+{
+    return rad / (2 * M_PI) * 360;
+}
+
 bool GenericTiltSensor::filter(QAccelerometerReading *reading)
 {
     /*
@@ -168,6 +173,10 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
         yRotation = yrot;
         change = true;
     }
+
+    xRotation = rad2deg(xRotation);
+    yRotation = rad2deg(yRotation);
+
     if (xRotation != m_reading.xRotation()
             || yRotation != m_reading.yRotation()
             || m_reading.timestamp() == 0) {
