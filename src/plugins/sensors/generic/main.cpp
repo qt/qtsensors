@@ -39,9 +39,12 @@
 **
 ****************************************************************************/
 
+#ifndef Q_OS_BLACKBERRY
 #include "genericorientationsensor.h"
 #include "genericrotationsensor.h"
 #include "genericalssensor.h"
+#endif
+#include "generictiltsensor.h"
 #include <qsensorplugin.h>
 #include <qsensorbackend.h>
 #include <qsensormanager.h>
@@ -64,26 +67,33 @@ public:
     {
         if (!QSensor::defaultSensorForType(QAccelerometer::type).isEmpty()) {
             // There is an accelerometer available. Register the backends
+#ifndef Q_OS_BLACKBERRY
             if (!QSensorManager::isBackendRegistered(QOrientationSensor::type, genericorientationsensor::id))
                 QSensorManager::registerBackend(QOrientationSensor::type, genericorientationsensor::id, this);
             if (!QSensorManager::isBackendRegistered(QRotationSensor::type, genericrotationsensor::id))
                 QSensorManager::registerBackend(QRotationSensor::type, genericrotationsensor::id, this);
             if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
                 QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
-            if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
-                QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
+#endif
+            if (!QSensorManager::isBackendRegistered(QTiltSensor::type, GenericTiltSensor::id))
+                QSensorManager::registerBackend(QTiltSensor::type, GenericTiltSensor::id, this);
         } else {
+#ifndef Q_OS_BLACKBERRY
             if (QSensorManager::isBackendRegistered(QOrientationSensor::type, genericorientationsensor::id))
                 QSensorManager::unregisterBackend(QOrientationSensor::type, genericorientationsensor::id);
             if (QSensorManager::isBackendRegistered(QRotationSensor::type, genericrotationsensor::id))
                 QSensorManager::unregisterBackend(QRotationSensor::type, genericrotationsensor::id);
             if (QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
                 QSensorManager::unregisterBackend(QAmbientLightSensor::type, genericalssensor::id);
+#endif
+            if (QSensorManager::isBackendRegistered(QTiltSensor::type, GenericTiltSensor::id))
+                QSensorManager::unregisterBackend(QTiltSensor::type, GenericTiltSensor::id);
         }
     }
 
     QSensorBackend *createBackend(QSensor *sensor)
     {
+#ifndef Q_OS_BLACKBERRY
         if (sensor->identifier() == genericorientationsensor::id)
             return new genericorientationsensor(sensor);
 
@@ -92,6 +102,9 @@ public:
 
         if (sensor->identifier() == genericalssensor::id)
             return new genericalssensor(sensor);
+#endif
+        if (sensor->identifier() == GenericTiltSensor::id)
+            return new GenericTiltSensor(sensor);
 
         return 0;
     }
