@@ -59,7 +59,6 @@ class genericSensorPlugin : public QObject, public QSensorPluginInterface, publi
 public:
     void registerSensors()
     {
-        qDebug() << "loaded the Generic plugin";
         // Nothing to register here
     }
 
