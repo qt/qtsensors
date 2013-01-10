@@ -57,6 +57,7 @@ class QmlSensorReading;
 class QmlSensor : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
+    Q_ENUMS(AxesOrientationMode)
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QString identifier READ identifier WRITE setIdentifier NOTIFY identifierChanged)
     Q_PROPERTY(QString type READ type NOTIFY typeChanged)
@@ -72,7 +73,18 @@ class QmlSensor : public QObject, public QQmlParserStatus
     Q_PROPERTY(int error READ error NOTIFY errorChanged)
     Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged)
     Q_PROPERTY(bool skipDuplicates READ skipDuplicates WRITE setSkipDuplicates NOTIFY skipDuplicatesChanged REVISION 1)
+    Q_PROPERTY(AxesOrientationMode axesOrientationMode READ axesOrientationMode WRITE setAxesOrientationMode NOTIFY axesOrientationModeChanged REVISION 1)
+    Q_PROPERTY(int currentOrientation READ currentOrientation NOTIFY currentOrientationChanged REVISION 1)
+    Q_PROPERTY(int userOrientation READ userOrientation WRITE setUserOrientation NOTIFY userOrientationChanged REVISION 1)
+
 public:
+    // Keep in sync with QSensor::AxesOrientationMode
+    enum AxesOrientationMode {
+        FixedOrientation,
+        AutomaticOrientation,
+        UserOrientation
+    };
+
     explicit QmlSensor(QObject *parent = 0);
     ~QmlSensor();
 
@@ -107,6 +119,14 @@ public:
 
     QmlSensorReading *reading() const;
 
+    AxesOrientationMode axesOrientationMode() const;
+    void setAxesOrientationMode(AxesOrientationMode axesOrientationMode);
+
+    int currentOrientation() const;
+
+    int userOrientation() const;
+    void setUserOrientation(int userOrientation);
+
 public Q_SLOTS:
     bool start();
     void stop();
@@ -125,6 +145,9 @@ Q_SIGNALS:
     void errorChanged();
     void alwaysOnChanged();
     void skipDuplicatesChanged(bool skipDuplicates);
+    void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
+    void currentOrientationChanged(int currentOrientation);
+    void userOrientationChanged(int userOrientation);
 
 protected:
     virtual QSensor *sensor() const = 0;

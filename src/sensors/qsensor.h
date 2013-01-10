@@ -80,6 +80,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
 
     Q_OBJECT
     Q_ENUMS(Feature)
+    Q_ENUMS(AxesOrientationMode)
     Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier)
     Q_PROPERTY(QByteArray type READ type)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
@@ -94,6 +95,9 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(int error READ error NOTIFY sensorError)
     Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged REVISION 1)
     Q_PROPERTY(bool skipDuplicates READ skipDuplicates WRITE setSkipDuplicates NOTIFY skipDuplicatesChanged)
+    Q_PROPERTY(AxesOrientationMode axesOrientationMode READ axesOrientationMode WRITE setAxesOrientationMode NOTIFY axesOrientationModeChanged)
+    Q_PROPERTY(int currentOrientation READ currentOrientation NOTIFY currentOrientationChanged)
+    Q_PROPERTY(int userOrientation READ userOrientation WRITE setUserOrientation NOTIFY userOrientationChanged)
 #ifdef Q_QDOC
     Q_PROPERTY(int maxBufferSize)
     Q_PROPERTY(int efficientBufferSize)
@@ -107,7 +111,15 @@ public:
         FieldOfView,
         AccelerationMode,
         SkipDuplicates,
+        AxesOrientation,
         Reserved = 257 // Make sure at least 2 bytes are used for the enum to avoid breaking BC later
+    };
+
+    // Keep in sync with QmlSensor::AxesOrientationMode
+    enum AxesOrientationMode {
+        FixedOrientation,
+        AutomaticOrientation,
+        UserOrientation
     };
 
     explicit QSensor(const QByteArray &type, QObject *parent = 0);
@@ -159,6 +171,15 @@ public:
 
     Q_INVOKABLE bool isFeatureSupported(Feature feature) const;
 
+    AxesOrientationMode axesOrientationMode() const;
+    void setAxesOrientationMode(AxesOrientationMode axesOrientationMode);
+
+    int currentOrientation() const;
+    void setCurrentOrientation(int currentOrientation);
+
+    int userOrientation() const;
+    void setUserOrientation(int userOrientation);
+
 public Q_SLOTS:
     // Start receiving values from the sensor
     bool start();
@@ -175,6 +196,9 @@ Q_SIGNALS:
     void alwaysOnChanged();
     void dataRateChanged();
     void skipDuplicatesChanged(bool skipDuplicates);
+    void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
+    void currentOrientationChanged(int currentOrientation);
+    void userOrientationChanged(int userOrientation);
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);

@@ -176,6 +176,40 @@ void QSensorPrivate::init(const QByteArray &sensorType)
 
     The sensor data is delivered via QSensorReading and its sub-classes.
 
+    \section1 Orientation
+
+    Some sensors react to screen orientation changes, such as QAccelerometer, QMagnetometer and
+    QRotationSensor. These are so called \e orientable sensors. For orientable sensors,
+    QSensor supports changing the reporting of the reading values based on the orientation of the
+    screen.
+
+    For orientable sensors, the axesOrientationMode property controls how the orientation affects
+    the reading values.
+
+    In the default mode, QSensor::FixedOrientation, the reading values remain
+    unaffected by the orientation. In the QSensor::AutomaticOrientation mode, the reading
+    values are automatically rotated by taking the current screen orientation into account. And
+    finally, in the QSensor::UserOrientation mode, the reading values are rotated
+    according to a user-specified orientation.
+
+    The functionality of this is only available if it is supported by the backend and if the sensor
+    is orientable, which can be checked by calling QSensor::isFeatureSupported()
+    with the QSensor::AxesOrientation flag.
+
+    The orientation values here are always of the screen orientation, not the device orientation.
+    The screen orientation is the orientation of the GUI. For example when rotating a device by 90
+    degrees counter-clockwise, the screen orientation compensates for that by rotating 90 degrees
+    clockwise, to the effect that the GUI is still facing upright after the device has been rotated.
+    Note that applications can lock the screen orientation, for example to force portrait or landscape
+    mode. For locked orientations, orientable sensors will not react with reading changes if the device
+    orientation is changed, as orientable sensors react to screen orientation changes only. This makes
+    sense, as the purpose of orientable sensors is to keep the sensor orientation in sync with the screen
+    orientation.
+
+    The orientation values range from 0 to 270 degrees. The orientation is applied in clockwise direction,
+    e.g. an orientation value of 90 degrees means that the screen has been rotated 90 degress to the right
+    from its origin position, to compensate a device rotation of 90 degrees to the left.
+
     \sa QSensorReading
 */
 
@@ -207,6 +241,11 @@ void QSensorPrivate::init(const QByteArray &sensorType)
 
     \value AccelerationMode The backend supports switching the acceleration mode
                             of the acceleromter with the QAccelerometer::accelerationMode property.
+
+    The features of all orientable sensors are:
+
+    \value AxesOrientation The backend supports changing the axes orientation from the default of
+                           QSensor::FixedOrientation to something else.
 
     \omitvalue Reserved
 
@@ -813,6 +852,142 @@ int QSensor::error() const
 {
     Q_D(const QSensor);
     return d->error;
+}
+
+/*!
+    \enum QSensor::AxesOrientationMode
+    \since 5.1
+
+    Describes how reading values are affected by the screen orientation.
+
+    \value FixedOrientation No automatic rotation is applied to the reading values.
+
+    \value AutomaticOrientation The reading values are automatically rotated based on the screen
+                                orientation.
+
+    \value UserOrientation The reading values are rotated based on the angle of the userOrientation property.
+
+    \sa QSensor::axesOrientationMode
+*/
+
+/*!
+    \property QSensor::axesOrientationMode
+    \since 5.1
+    \brief The mode that affects how the screen orientation changes reading values.
+
+    When set to FixedOrientation, which is the default mode, no automatic rotation is applied to
+    the reading. This is the only mode available for backends that do not support the
+    QSensor::AxesOrientation feature.
+
+    When set to AutomaticOrientation, the reading values are automatically rotated when the
+    screen orientation changes. In effect, the screen orientation is canceled out.
+
+    As an example, assume the device is rotated by 180 degrees and therefore the screen orientation
+    also is rotated by 180 degrees from the native orientation. Without automatic axes orientation,
+    the reading values would now be changed: Both the X and the Y values would be negated, forcing
+    an application developer to manually cancel out the negation in application code. Automatic
+    axes orientation does this automatically, in this mode the X and Y values would be the same as
+    with the default screen orientation.
+
+    This automatic rotation of the axes is handy is some usecases, for example in a bubble level
+    application that measures how level a surface is by looking at the X axis value of an
+    accelerometer. When the device and screen orientation change by 90 degrees, an application
+    developer does not need to change anything, he can continue using the X axis value even though
+    the device is rotated. Without automatic axes orientation, the application developer would need
+    to look at the Y values instead, thereby adding code to the application that reads from a
+    different axis depending on the screen orientation.
+
+    The UserOrientation mode is quite similar to AutomaticOrientation, only that the screen orientation
+    is manually controlled instead of automatically determined. The angle of the userOrientation
+    property is then used for rotating the reading values.
+
+    Since the rotation of the reading values is based on the screen orientation, Z values will never
+    change, as the Z axis is perpendicular to the screen.
+    As screen orientation changes in 90 degree steps, rotating the reading values is also done in
+    steps of 90 degrees.
+
+    This property is only used for orientable sensors.
+*/
+
+QSensor::AxesOrientationMode QSensor::axesOrientationMode() const
+{
+    Q_D(const QSensor);
+    return d->axesOrientationMode;
+}
+
+void QSensor::setAxesOrientationMode(QSensor::AxesOrientationMode axesOrientationMode)
+{
+    Q_D(QSensor);
+    if (d->axesOrientationMode != axesOrientationMode) {
+        d->axesOrientationMode = axesOrientationMode;
+        emit axesOrientationModeChanged(axesOrientationMode);
+    }
+}
+
+/*!
+    \property QSensor::currentOrientation
+    \since 5.1
+    \brief The current orientation that is used for rotating the reading values.
+
+    This might not be the same as the screen orientation. For example, in the FixedOrientation mode,
+    the reading values are not rotated, and therefore the property is 0.
+
+    In the UserOrientation mode, the readings are rotated based on the userOrientation property,
+    and therefore this property is equal to the userOrientation property.
+
+    In the AutomaticOrientation mode, the readings are rotated based on the screen orientation,
+    and therefore this property will be equal to the current screen orientation.
+
+    This property is set by the backend and only valid for orientable sensors.
+*/
+
+int QSensor::currentOrientation() const
+{
+    Q_D(const QSensor);
+    return d->currentOrientation;
+}
+
+/*!
+    \since 5.1
+    Sets the current screen orientation to \a currentOrientation. This is to be called from the
+    backend whenever the screen orientation or the userOrientation property changes.
+*/
+void QSensor::setCurrentOrientation(int currentOrientation)
+{
+    Q_D(QSensor);
+    if (d->currentOrientation != currentOrientation) {
+        d->currentOrientation = currentOrientation;
+        emit currentOrientationChanged(currentOrientation);
+    }
+}
+
+/*!
+    \property QSensor::userOrientation
+    \since 5.1
+    \brief The angle used for rotating the reading values in the UserOrientation mode.
+
+    When the axesOrientationMode property is set to UserOrientation, the angle for rotating the
+    reading values is taken from this property. In other modes, the property has no effect.
+
+    The default is 0. The only valid values are 0, 90, 180 and 270, as those are the only possible
+    screen orientations.
+
+    This property is only valid for orientable sensors.
+*/
+
+int QSensor::userOrientation() const
+{
+    Q_D(const QSensor);
+    return d->userOrientation;
+}
+
+void QSensor::setUserOrientation(int userOrientation)
+{
+    Q_D(QSensor);
+    if (d->userOrientation != userOrientation) {
+        d->userOrientation = userOrientation;
+        emit userOrientationChanged(userOrientation);
+    }
 }
 
 /*!

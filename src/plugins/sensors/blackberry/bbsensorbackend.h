@@ -75,8 +75,8 @@ public:
 protected:
     BbGuiHelper *guiHelper() const;
     QFile& deviceFile();
-
     sensor_type_e sensorType() const;
+    int orientationForRemapping() const;
 
     void setDevice(const QString &deviceFile, sensor_type_e sensorType);
 

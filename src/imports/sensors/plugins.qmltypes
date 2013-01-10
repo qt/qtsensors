@@ -172,9 +172,24 @@ Module {
         Property { name: "error"; type: "int"; isReadonly: true }
         Property { name: "alwaysOn"; type: "bool" }
         Property { name: "skipDuplicates"; revision: 1; type: "bool" }
+        Property { name: "axesOrientationMode"; revision: 1; type: "AxesOrientationMode" }
+        Property { name: "currentOrientation"; revision: 1; type: "int"; isReadonly: true }
+        Property { name: "userOrientation"; revision: 1; type: "int" }
         Signal {
             name: "skipDuplicatesChanged"
             Parameter { name: "skipDuplicates"; type: "bool" }
+        }
+        Signal {
+            name: "axesOrientationModeChanged"
+            Parameter { name: "axesOrientationMode"; type: "AxesOrientationMode" }
+        }
+        Signal {
+            name: "currentOrientationChanged"
+            Parameter { name: "currentOrientation"; type: "int" }
+        }
+        Signal {
+            name: "userOrientationChanged"
+            Parameter { name: "userOrientation"; type: "int" }
         }
         Method { name: "start"; type: "bool" }
         Method { name: "stop" }

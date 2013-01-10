@@ -86,6 +86,7 @@ BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_
     m_mappingMatrix[0] = m_mappingMatrix[3] = 1;
     m_mappingMatrix[1] = m_mappingMatrix[2] = 0;
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
+    connect(sensor, SIGNAL(userOrientationChanged(int)), this, SLOT(updateOrientation()));
 
     // Set some sensible default values
     sensor->setProperty("efficientBufferSize", defaultBufferSize);
@@ -183,12 +184,13 @@ qreal BbSensorBackendBase::convertValue(float bbValue)
 
 bool BbSensorBackendBase::isAutoAxisRemappingEnabled() const
 {
-    return sensor()->property("automaticAxisRemapping").toBool();
+    return sensor()->isFeatureSupported(QSensor::AxesOrientation) &&
+           sensor()->axesOrientationMode() != QSensor::FixedOrientation;
 }
 
 void BbSensorBackendBase::remapMatrix(const float inputMatrix[], float outputMatrix[])
 {
-    if (!isAutoAxisRemappingEnabled() || m_guiHelper->currentOrientation() == 0) {
+    if (!isAutoAxisRemappingEnabled() || orientationForRemapping() == 0) {
         memcpy(outputMatrix, inputMatrix, sizeof(float) * 9);
         return;
     }
@@ -199,10 +201,10 @@ void BbSensorBackendBase::remapMatrix(const float inputMatrix[], float outputMat
 void BbSensorBackendBase::remapAxes(float *x, float *y, float *z)
 {
     Q_ASSERT(x && y && z);
-    if (!isAutoAxisRemappingEnabled() || m_guiHelper->currentOrientation() == 0)
+    if (!isAutoAxisRemappingEnabled() || orientationForRemapping() == 0)
         return;
 
-    const int angle = m_guiHelper->currentOrientation();
+    const int angle = orientationForRemapping();
 
     const float oldX = *x;
     const float oldY = *y;
@@ -306,6 +308,11 @@ void BbSensorBackendBase::stop()
 bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
 {
     switch (feature) {
+    case QSensor::AxesOrientation:
+        return (sensorType() == SENSOR_TYPE_ACCELEROMETER || sensorType() == SENSOR_TYPE_MAGNETOMETER ||
+                sensorType() == SENSOR_TYPE_GYROSCOPE || sensorType() == SENSOR_TYPE_GRAVITY ||
+                sensorType() == SENSOR_TYPE_LINEAR_ACCEL || sensorType() ==  SENSOR_TYPE_ROTATION_VECTOR ||
+                sensorType() == SENSOR_TYPE_ROTATION_MATRIX || sensorType() == SENSOR_TYPE_AZIMUTH_PITCH_ROLL);
     case QSensor::AlwaysOn:
     case QSensor::Buffering:
     case QSensor::AccelerationMode:
@@ -387,12 +394,26 @@ void BbSensorBackendBase::updatePauseState()
 
 void BbSensorBackendBase::updateOrientation()
 {
-    // ### I can't really test this, the rotation matrix has too many glitches and drifts over time,
-    // making any measurement quite hard
-    const int rotationAngle = guiHelper()->currentOrientation();
+    const int rotationAngle = orientationForRemapping();
 
     m_mappingMatrix[0] = cos(rotationAngle*M_PI/180);
     m_mappingMatrix[1] = sin(rotationAngle*M_PI/180);
     m_mappingMatrix[2] = -sin(rotationAngle*M_PI/180);
     m_mappingMatrix[3] = cos(rotationAngle*M_PI/180);
+
+    if (sensor()->isFeatureSupported(QSensor::AxesOrientation))
+        sensor()->setCurrentOrientation(rotationAngle);
+}
+
+int BbSensorBackendBase::orientationForRemapping() const
+{
+    if (!sensor()->isFeatureSupported(QSensor::AxesOrientation))
+        return 0;
+
+    switch (sensor()->axesOrientationMode()) {
+    default:
+    case QSensor::FixedOrientation: return 0;
+    case QSensor::AutomaticOrientation: return guiHelper()->currentOrientation();
+    case QSensor::UserOrientation: return sensor()->userOrientation();
+    }
 }

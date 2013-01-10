@@ -55,18 +55,27 @@ BbCompass::BbCompass(QSensor *sensor)
 
 bool BbCompass::updateReadingFromEvent(const sensor_event_t &event, QCompassReading *reading)
 {
+    float azimuth;
 #ifdef HAVE_COMPASS_SENSOR
-    reading->setAzimuth(event.compass_s.azimuth);
+    azimuth = event.compass_s.azimuth;
 #else
     float xRad, yRad, zRad;
     matrixToEulerZXY(event.rotation_matrix, xRad, yRad, zRad);
-    float azimuth = radiansToDegrees(zRad);
+    azimuth = radiansToDegrees(zRad);
     if (azimuth < 0)
         azimuth = -azimuth;
     else
         azimuth = 360.0f - azimuth;
-    reading->setAzimuth(azimuth);
 #endif
+
+    if (isAutoAxisRemappingEnabled()) {
+        azimuth += orientationForRemapping();
+        if (azimuth >= 360.0f)
+            azimuth -= 360.0f;
+    }
+
+    reading->setAzimuth(azimuth);
+
 
     switch (event.accuracy) {
     case SENSOR_ACCURACY_UNRELIABLE:

@@ -80,6 +80,9 @@ public:
         , error(0)
         , alwaysOn(false)
         , skipDuplicates(false)
+        , axesOrientationMode(QSensor::FixedOrientation)
+        , currentOrientation(0)
+        , userOrientation(0)
     {
     }
 
@@ -110,6 +113,10 @@ public:
 
     bool alwaysOn;
     bool skipDuplicates;
+
+    QSensor::AxesOrientationMode axesOrientationMode;
+    int currentOrientation;
+    int userOrientation;
 };
 
 class QSensorReadingPrivate

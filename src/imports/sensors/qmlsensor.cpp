@@ -307,6 +307,55 @@ QmlSensorReading *QmlSensor::reading() const
 }
 
 /*!
+    \qmlproperty Sensor::AxesOrientationMode Sensor::axesOrientationMode
+    \since QtSensors 5.1
+    This property holds the mode that affects how the screen orientation changes reading values.
+
+    Please see QSensor::axesOrientationMode for information about this property.
+*/
+
+QmlSensor::AxesOrientationMode QmlSensor::axesOrientationMode() const
+{
+    return static_cast<QmlSensor::AxesOrientationMode>(sensor()->axesOrientationMode());
+}
+
+void QmlSensor::setAxesOrientationMode(QmlSensor::AxesOrientationMode axesOrientationMode)
+{
+    sensor()->setAxesOrientationMode(static_cast<QSensor::AxesOrientationMode>(axesOrientationMode));
+}
+
+/*!
+    \qmlproperty int Sensor::currentOrientation
+    \since QtSensors 5.1
+    This property holds the current orientation that is used for rotating the reading values.
+
+    Please see QSensor::currentOrientation for information about this property.
+*/
+
+int QmlSensor::currentOrientation() const
+{
+    return sensor()->currentOrientation();
+}
+
+/*!
+    \qmlproperty int Sensor::userOrientation
+    \since QtSensors 5.1
+    This property holds the angle used for rotating the reading values in the UserOrientation mode.
+
+    Please see QSensor::userOrientation for information about this property.
+*/
+
+int QmlSensor::userOrientation() const
+{
+    return sensor()->userOrientation();
+}
+
+void QmlSensor::setUserOrientation(int userOrientation)
+{
+    sensor()->setUserOrientation(userOrientation);
+}
+
+/*!
     \qmlmethod bool Sensor::start()
     Start retrieving values from the sensor. Returns true if the sensor was started, false otherwise.
 
@@ -343,6 +392,10 @@ void QmlSensor::componentComplete()
     connect(sensor(), SIGNAL(activeChanged()), this, SIGNAL(activeChanged()));
     connect(sensor(), SIGNAL(alwaysOnChanged()), this, SIGNAL(alwaysOnChanged()));
     connect(sensor(), SIGNAL(skipDuplicatesChanged(bool)), this, SIGNAL(skipDuplicatesChanged(bool)));
+    connect(sensor(), SIGNAL(axesOrientationModeChanged(AxesOrientationMode)),
+            this, SIGNAL(axesOrientationModeChanged(AxesOrientationMode)));
+    connect(sensor(), SIGNAL(userOrientationChanged(int)), this, SIGNAL(userOrientationChanged(int)));
+    connect(sensor(), SIGNAL(currentOrientationChanged(int)), this, SIGNAL(currentOrientationChanged(int)));
 
     // We need to set this on the sensor object now
     sensor()->setIdentifier(m_identifier.toLocal8Bit());
