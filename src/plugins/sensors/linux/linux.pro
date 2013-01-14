@@ -6,7 +6,7 @@ load(qt_plugin)
 
 OTHER_FILES = plugin.json
 
-LIBS += -lrt
+!android:LIBS += -lrt
 HEADERS += linuxsysaccelerometer.h
 SOURCES += linuxsysaccelerometer.cpp \
 main.cpp
