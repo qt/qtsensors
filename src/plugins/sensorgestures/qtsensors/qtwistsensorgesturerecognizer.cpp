@@ -160,7 +160,7 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     qreal angle = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
 
     if (qAbs(angle) > 2) {
-        if (detecting){
+        if (detecting) {
             if ((angle > 0 && angle < lastAngle)
                     || (angle < 0 && angle > lastAngle)) {
                 decreaseCount++;

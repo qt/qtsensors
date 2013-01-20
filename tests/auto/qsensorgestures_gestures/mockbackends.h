@@ -63,7 +63,7 @@ class mockSensorPlugin : public QObject,
                          public QSensorBackendFactory
 {
     Q_OBJECT
-  //  Q_PLUGIN_METADATA(IID "com.nokia.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
+  //  Q_PLUGIN_METADATA(IID "com.qt-project.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
     Q_INTERFACES(QSensorPluginInterface)
 public:
     QString m_filename;

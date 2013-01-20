@@ -160,11 +160,11 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
     if (dyrot < 0) dyrot = -dyrot;
 
     bool change = false;
-    if (dxrot >= radAccuracy){
+    if (dxrot >= radAccuracy) {
         xRotation = xrot;
         change = true;
     }
-    if (dyrot >= radAccuracy){
+    if (dyrot >= radAccuracy) {
         yRotation = yrot;
         change = true;
     }
