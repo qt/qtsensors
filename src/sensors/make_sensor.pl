@@ -97,7 +97,6 @@ if (! -e $qmlheader) {
 
 #include "qmlsensor.h"
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class '.$sensor.';
@@ -138,7 +137,6 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 #endif
 ';
     close OUT;
@@ -263,7 +261,6 @@ if (! -e $pheader) {
 // We mean it.
 //
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class '.$reading_private.'
@@ -284,7 +281,6 @@ public:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 ';
@@ -300,7 +296,6 @@ if (! -e $header) {
 
 #include <QtSensors/qsensor.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 QT_MODULE(QtSensors)
@@ -340,7 +335,6 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 ';
