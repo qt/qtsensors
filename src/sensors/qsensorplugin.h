@@ -46,7 +46,6 @@
 
 #include <QtCore/qplugin.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 QT_MODULE(QtSensors)
@@ -71,7 +70,6 @@ Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.nokia.Qt.QSensorPluginInterface
 Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/5.0");
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

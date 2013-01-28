@@ -48,7 +48,6 @@
 #include <QtSensors/qsensorgesture.h>
 #include <QtSensors/qsensorgesturerecognizer.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 QT_MODULE(QtSensors)
@@ -68,6 +67,5 @@ public:
 Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "org.qt-project.QSensorGesturePluginInterface");
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QSENSORGESTUREPLUGININTERFACE_H

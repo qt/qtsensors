@@ -48,7 +48,6 @@
 #include <QtSensors/qsensorgesture.h>
 #include <QtSensors/qsensorgesturerecognizer.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 QT_MODULE(QtSensors)
@@ -78,6 +77,5 @@ Q_SIGNALS:
 
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QSENSORGESTUREMANAGER_P_H

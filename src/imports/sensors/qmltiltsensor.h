@@ -45,7 +45,6 @@
 #include "qmlsensor.h"
 #include <QtSensors/QTiltSensor>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QTiltSensor;
@@ -90,5 +89,4 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 #endif

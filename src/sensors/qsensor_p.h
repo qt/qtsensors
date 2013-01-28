@@ -57,7 +57,6 @@
 
 #include "private/qobject_p.h"
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 typedef QList<QSensorFilter*> QFilterList;
@@ -132,7 +131,6 @@ public:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 
