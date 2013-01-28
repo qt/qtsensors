@@ -46,8 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QMagnetometerReadingPrivate;
 
 class Q_SENSORS_EXPORT QMagnetometerReading : public QSensorReading

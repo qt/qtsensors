@@ -45,8 +45,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QPressureReadingPrivate;
 
 class Q_SENSORS_EXPORT QPressureReading : public QSensorReading

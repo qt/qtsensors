@@ -46,8 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QIRProximityReadingPrivate;
 
 class Q_SENSORS_EXPORT QIRProximityReading : public QSensorReading

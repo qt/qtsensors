@@ -298,8 +298,6 @@ if (! -e $header) {
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class '.$reading_private.';
 
 class Q_SENSORS_EXPORT '.$reading.' : public QSensorReading

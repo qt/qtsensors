@@ -46,8 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QSensorBackend;
 class QSensorBackendFactory;
 class QSensorPluginInterface;

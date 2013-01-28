@@ -50,8 +50,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QSensorGestureManagerPrivate;
 class Q_SENSORS_EXPORT QSensorGestureManager : public QObject
 {

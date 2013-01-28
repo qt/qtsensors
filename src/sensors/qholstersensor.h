@@ -45,8 +45,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QHolsterReadingPrivate;
 
 class Q_SENSORS_EXPORT QHolsterReading : public QSensorReading

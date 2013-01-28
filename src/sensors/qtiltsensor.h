@@ -46,8 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QTiltReadingPrivate;
 
 class Q_SENSORS_EXPORT QTiltReading : public QSensorReading

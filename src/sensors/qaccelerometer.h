@@ -46,8 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QT_MODULE(QtSensors)
-
 class QAccelerometerReadingPrivate;
 
 class Q_SENSORS_EXPORT QAccelerometerReading : public QSensorReading
