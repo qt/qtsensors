@@ -169,6 +169,14 @@ Module {
         prototype: "QObject"
         exports: ["Sensor 5.0", "Sensor 5.1"]
         exportMetaObjectRevisions: [0, 1]
+        Enum {
+            name: "AxesOrientationMode"
+            values: {
+                "FixedOrientation": 0,
+                "AutomaticOrientation": 1,
+                "UserOrientation": 2
+            }
+        }
         Property { name: "identifier"; type: "string" }
         Property { name: "type"; type: "string"; isReadonly: true }
         Property { name: "connectedToBackend"; type: "bool"; isReadonly: true }
