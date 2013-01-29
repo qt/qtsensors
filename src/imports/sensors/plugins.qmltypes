@@ -229,6 +229,9 @@ Module {
         Property { name: "axesOrientationMode"; revision: 1; type: "AxesOrientationMode" }
         Property { name: "currentOrientation"; revision: 1; type: "int"; isReadonly: true }
         Property { name: "userOrientation"; revision: 1; type: "int" }
+        Property { name: "maxBufferSize"; revision: 1; type: "int"; isReadonly: true }
+        Property { name: "efficientBufferSize"; revision: 1; type: "int"; isReadonly: true }
+        Property { name: "bufferSize"; revision: 1; type: "int" }
         Signal {
             name: "skipDuplicatesChanged"
             Parameter { name: "skipDuplicates"; type: "bool" }
@@ -244,6 +247,18 @@ Module {
         Signal {
             name: "userOrientationChanged"
             Parameter { name: "userOrientation"; type: "int" }
+        }
+        Signal {
+            name: "maxBufferSizeChanged"
+            Parameter { name: "maxBufferSize"; type: "int" }
+        }
+        Signal {
+            name: "efficientBufferSizeChanged"
+            Parameter { name: "efficientBufferSize"; type: "int" }
+        }
+        Signal {
+            name: "bufferSizeChanged"
+            Parameter { name: "bufferSize"; type: "int" }
         }
         Method { name: "start"; type: "bool" }
         Method { name: "stop" }

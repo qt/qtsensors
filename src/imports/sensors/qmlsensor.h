@@ -75,6 +75,9 @@ class QmlSensor : public QObject, public QQmlParserStatus
     Q_PROPERTY(AxesOrientationMode axesOrientationMode READ axesOrientationMode WRITE setAxesOrientationMode NOTIFY axesOrientationModeChanged REVISION 1)
     Q_PROPERTY(int currentOrientation READ currentOrientation NOTIFY currentOrientationChanged REVISION 1)
     Q_PROPERTY(int userOrientation READ userOrientation WRITE setUserOrientation NOTIFY userOrientationChanged REVISION 1)
+    Q_PROPERTY(int maxBufferSize READ maxBufferSize NOTIFY maxBufferSizeChanged REVISION 1)
+    Q_PROPERTY(int efficientBufferSize READ efficientBufferSize NOTIFY efficientBufferSizeChanged REVISION 1)
+    Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged REVISION 1)
 
 public:
     // Keep in sync with QSensor::AxesOrientationMode
@@ -126,6 +129,13 @@ public:
     int userOrientation() const;
     void setUserOrientation(int userOrientation);
 
+    int maxBufferSize() const;
+
+    int efficientBufferSize() const;
+
+    int bufferSize() const;
+    void setBufferSize(int bufferSize);
+
 public Q_SLOTS:
     bool start();
     void stop();
@@ -147,6 +157,9 @@ Q_SIGNALS:
     void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
     void currentOrientationChanged(int currentOrientation);
     void userOrientationChanged(int userOrientation);
+    void maxBufferSizeChanged(int maxBufferSize);
+    void efficientBufferSizeChanged(int efficientBufferSize);
+    void bufferSizeChanged(int bufferSize);
 
 protected:
     virtual QSensor *sensor() const = 0;

@@ -82,6 +82,9 @@ public:
         , axesOrientationMode(QSensor::FixedOrientation)
         , currentOrientation(0)
         , userOrientation(0)
+        , bufferSize(1)
+        , maxBufferSize(1)
+        , efficientBufferSize(1)
     {
     }
 
@@ -116,6 +119,10 @@ public:
     QSensor::AxesOrientationMode axesOrientationMode;
     int currentOrientation;
     int userOrientation;
+
+    int bufferSize;
+    int maxBufferSize;
+    int efficientBufferSize;
 };
 
 class QSensorReadingPrivate

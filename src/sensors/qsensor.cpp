@@ -1016,10 +1016,32 @@ void QSensor::setUserOrientation(int userOrientation)
 
     The property holds the maximum buffer size.
 
-    Note that this may be undefined, in which case the sensor does not support any form of buffering.
+    Note that this may be 1, in which case the sensor does not support any form of buffering.
+    In that case, isFeatureSupported(QSensor::Buffering) will also return false.
 
     \sa QSensor::bufferSize, QSensor::efficientBufferSize
 */
+
+int QSensor::maxBufferSize() const
+{
+    Q_D(const QSensor);
+    return d->maxBufferSize;
+}
+
+/*!
+    \since 5.1
+    Sets the maximum buffer size to \a maxBufferSize. This is to be called from the
+    backend.
+*/
+void QSensor::setMaxBufferSize(int maxBufferSize)
+{
+    // ### Qt 6: Remove the entire maxBufferSize property, no backend really uses it
+    Q_D(QSensor);
+    if (d->maxBufferSize != maxBufferSize) {
+        d->maxBufferSize = maxBufferSize;
+        emit maxBufferSizeChanged(maxBufferSize);
+    }
+}
 
 /*!
     \property QSensor::efficientBufferSize
@@ -1028,17 +1050,36 @@ void QSensor::setUserOrientation(int userOrientation)
     no particular size is most efficient). Some sensor drivers have a FIFO buffer which
     makes it more efficient to deliver the FIFO's size worth of readings at one time.
 
-    Note that this may be undefined, in which case the sensor does not support any form of buffering.
-
     \sa QSensor::bufferSize, QSensor::maxBufferSize
 */
+
+int QSensor::efficientBufferSize() const
+{
+    Q_D(const QSensor);
+    return d->efficientBufferSize;
+}
+
+/*!
+    \since 5.1
+    Sets the efficient buffer size to \a efficientBufferSize. This is to be called from the
+    backend.
+*/
+void QSensor::setEfficientBufferSize(int efficientBufferSize)
+{
+    // ### Qt 6: Remove the entire efficientBufferSize property, no backend really uses it
+    Q_D(QSensor);
+    if (d->efficientBufferSize != efficientBufferSize) {
+        d->efficientBufferSize = efficientBufferSize;
+        emit efficientBufferSizeChanged(efficientBufferSize);
+    }
+}
 
 /*!
     \property QSensor::bufferSize
 
-    This property holds the size of the buffer. By default (and if the property
-    is left undefined), the buffer size is 1, which means no buffering.
-    If the maximum buffer size is 1 (or undefined), then buffering is not supported
+    This property holds the size of the buffer. By default, the buffer size is 1,
+    which means no buffering.
+    If the maximum buffer size is 1, then buffering is not supported
     by the sensor.
 
     Setting bufferSize greater than maxBufferSize will cause maxBufferSize to be used.
@@ -1065,10 +1106,25 @@ void QSensor::setUserOrientation(int userOrientation)
     in time, for example when the event loop is blocked for too long. Without a buffer, these readings
     would simply be dropped.
 
-    The buffer size can only be changed while the sensor is not active.
-
     \sa QSensor::maxBufferSize, QSensor::efficientBufferSize
 */
+
+int QSensor::bufferSize() const
+{
+    Q_D(const QSensor);
+    return d->bufferSize;
+}
+
+void QSensor::setBufferSize(int bufferSize)
+{
+    // ### Qt 6: Currently only the Blackberry backend supports this, but only as an on/off switch.
+    //           We should consider changing this to a more appropriate API.
+    Q_D(QSensor);
+    if (d->bufferSize != bufferSize) {
+        d->bufferSize = bufferSize;
+        emit bufferSizeChanged(bufferSize);
+    }
+}
 
 // =====================================================================
 

@@ -356,6 +356,50 @@ void QmlSensor::setUserOrientation(int userOrientation)
 }
 
 /*!
+    \qmlproperty int Sensor::maxBufferSize
+    \since QtSensors 5.1
+    This property holds the maximum buffer size.
+
+    Please see QSensor::maxBufferSize for information about this property.
+*/
+
+int QmlSensor::maxBufferSize() const
+{
+    return sensor()->maxBufferSize();
+}
+
+/*!
+    \qmlproperty int Sensor::efficientBufferSize
+    \since QtSensors 5.1
+    The property holds the most efficient buffer size.
+
+    Please see QSensor::efficientBufferSize for information about this property.
+*/
+
+int QmlSensor::efficientBufferSize() const
+{
+    return sensor()->efficientBufferSize();
+}
+
+/*!
+    \qmlproperty int Sensor::bufferSize
+    \since QtSensors 5.1
+    This property holds the size of the buffer.
+
+    Please see QSensor::bufferSize for information about this property.
+*/
+
+int QmlSensor::bufferSize() const
+{
+    return sensor()->bufferSize();
+}
+
+void QmlSensor::setBufferSize(int bufferSize)
+{
+    sensor()->setBufferSize(bufferSize);
+}
+
+/*!
     \qmlmethod bool Sensor::start()
     Start retrieving values from the sensor. Returns true if the sensor was started, false otherwise.
 
@@ -396,6 +440,9 @@ void QmlSensor::componentComplete()
             this, SIGNAL(axesOrientationModeChanged(AxesOrientationMode)));
     connect(sensor(), SIGNAL(userOrientationChanged(int)), this, SIGNAL(userOrientationChanged(int)));
     connect(sensor(), SIGNAL(currentOrientationChanged(int)), this, SIGNAL(currentOrientationChanged(int)));
+    connect(sensor(), SIGNAL(bufferSizeChanged(int)), this, SIGNAL(bufferSizeChanged(int)));
+    connect(sensor(), SIGNAL(maxBufferSizeChanged(int)), this, SIGNAL(maxBufferSizeChanged(int)));
+    connect(sensor(), SIGNAL(efficientBufferSizeChanged(int)), this, SIGNAL(efficientBufferSizeChanged(int)));
 
     // We need to set this on the sensor object now
     sensor()->setIdentifier(m_identifier.toLocal8Bit());

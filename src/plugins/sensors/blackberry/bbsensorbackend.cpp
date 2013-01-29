@@ -81,16 +81,17 @@ static void remapMatrix(const float inputMatrix[3*3],
 BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType,
                                          QSensor *sensor)
     : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType), m_guiHelper(0),
-      m_started(false)
+      m_started(false), m_applyingBufferSize(false)
 {
     m_mappingMatrix[0] = m_mappingMatrix[3] = 1;
     m_mappingMatrix[1] = m_mappingMatrix[2] = 0;
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
+    connect(sensor, SIGNAL(bufferSizeChanged(int)), this, SLOT(applyBuffering()));
     connect(sensor, SIGNAL(userOrientationChanged(int)), this, SLOT(updateOrientation()));
 
     // Set some sensible default values
-    sensor->setProperty("efficientBufferSize", defaultBufferSize);
-    sensor->setProperty("maxBufferSize", defaultBufferSize);
+    sensor->setEfficientBufferSize(defaultBufferSize);
+    sensor->setMaxBufferSize(defaultBufferSize);
 }
 
 BbGuiHelper *BbSensorBackendBase::guiHelper() const
@@ -278,24 +279,7 @@ void BbSensorBackendBase::start()
         return;
     }
 
-    // Activate event queuing if needed
-    bool ok = false;
-    const int requestedBufferSize = sensor()->property("bufferSize").toInt(&ok);
-    if (ok && requestedBufferSize > 1) {
-        sensor_devctl_queue_u queueControl;
-        queueControl.tx.enable = 1;
-        const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_QUEUE, &queueControl, sizeof(queueControl), NULL);
-        if (result != EOK) {
-            perror(QString::fromLatin1("Enabling sensor queuing for %1 failed")
-                   .arg(m_deviceFile.fileName()).toLocal8Bit());
-        }
-
-        const int actualBufferSize = queueControl.rx.size;
-        sensor()->setProperty("bufferSize", actualBufferSize);
-        sensor()->setProperty("efficientBufferSize", actualBufferSize);
-        sensor()->setProperty("maxBufferSize", actualBufferSize);
-    }
-
+    applyBuffering();
     applyAlwaysOnProperty();
 }
 
@@ -363,6 +347,46 @@ void BbSensorBackendBase::applyAlwaysOnProperty()
 
     // We might need to pause now
     updatePauseState();
+}
+
+void BbSensorBackendBase::applyBuffering()
+{
+    if (!m_deviceFile.isOpen() || !m_started || m_applyingBufferSize)
+        return;
+
+    // Flag to prevent recursion. We call setBufferSize() below, and because of the changed signal,
+    // we might end up in this slot again.
+    // The call to setBufferSize() is needed since the requested buffer size is most likely different
+    // from the actual buffer size that will be used.
+    m_applyingBufferSize = true;
+
+    const bool enableBuffering = sensor()->bufferSize() > 1;
+    sensor_devctl_queue_u queueControl;
+    queueControl.tx.enable = enableBuffering ? 1 : 0;
+    const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_QUEUE, &queueControl, sizeof(queueControl), NULL);
+    if (result != EOK) {
+        perror(QString::fromLatin1("Enabling sensor queuing for %1 failed")
+               .arg(m_deviceFile.fileName()).toLocal8Bit());
+    } else {
+        if (enableBuffering) {
+            int actualBufferSize = queueControl.rx.size;
+
+            // Some firmware versions don't report the buffer size correctly. Simply pretend the
+            // buffer size is the same as the requested buffer size, as setting the buffer size to
+            // 1 here would seem as if buffering were disabled.
+            if (actualBufferSize == 1)
+                actualBufferSize = sensor()->bufferSize();
+
+            sensor()->setBufferSize(actualBufferSize);
+            sensor()->setEfficientBufferSize(actualBufferSize);
+            sensor()->setMaxBufferSize(actualBufferSize);
+        } else {
+            sensor()->setBufferSize(1);
+            sensor()->setEfficientBufferSize(defaultBufferSize);
+            sensor()->setMaxBufferSize(defaultBufferSize);
+        }
+    }
+    m_applyingBufferSize = false;
 }
 
 bool BbSensorBackendBase::setPaused(bool paused)

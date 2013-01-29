@@ -95,11 +95,9 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(AxesOrientationMode axesOrientationMode READ axesOrientationMode WRITE setAxesOrientationMode NOTIFY axesOrientationModeChanged)
     Q_PROPERTY(int currentOrientation READ currentOrientation NOTIFY currentOrientationChanged)
     Q_PROPERTY(int userOrientation READ userOrientation WRITE setUserOrientation NOTIFY userOrientationChanged)
-#ifdef Q_QDOC
-    Q_PROPERTY(int maxBufferSize)
-    Q_PROPERTY(int efficientBufferSize)
-    Q_PROPERTY(int bufferSize)
-#endif
+    Q_PROPERTY(int maxBufferSize READ maxBufferSize NOTIFY maxBufferSizeChanged)
+    Q_PROPERTY(int efficientBufferSize READ efficientBufferSize NOTIFY efficientBufferSizeChanged)
+    Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged)
 public:
     enum Feature {
         Buffering,
@@ -177,6 +175,15 @@ public:
     int userOrientation() const;
     void setUserOrientation(int userOrientation);
 
+    int maxBufferSize() const;
+    void setMaxBufferSize(int maxBufferSize);
+
+    int efficientBufferSize() const;
+    void setEfficientBufferSize(int efficientBufferSize);
+
+    int bufferSize() const;
+    void setBufferSize(int bufferSize);
+
 public Q_SLOTS:
     // Start receiving values from the sensor
     bool start();
@@ -196,6 +203,9 @@ Q_SIGNALS:
     void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
     void currentOrientationChanged(int currentOrientation);
     void userOrientationChanged(int userOrientation);
+    void maxBufferSizeChanged(int maxBufferSize);
+    void efficientBufferSizeChanged(int efficientBufferSize);
+    void bufferSizeChanged(int bufferSize);
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);
