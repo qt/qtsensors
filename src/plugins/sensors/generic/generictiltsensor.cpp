@@ -159,27 +159,22 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
     qDebug() << "new yrot: " << yrot;
     qDebug() << "----------------------------------";
 #endif
-    qreal dxrot = xrot - xRotation;
-    qreal dyrot = yrot - yRotation;
+    qreal dxrot = rad2deg(xrot) - xRotation;
+    qreal dyrot = rad2deg(yrot) - yRotation;
     if (dxrot < 0) dxrot = -dxrot;
     if (dyrot < 0) dyrot = -dyrot;
 
-    bool change = false;
-    if (dxrot >= radAccuracy){
-        xRotation = xrot;
-        change = true;
+    bool setNewReading = false;
+    if (dxrot >= rad2deg(radAccuracy) || !sensor()->skipDuplicates()) {
+        xRotation = rad2deg(xrot);
+        setNewReading = true;
     }
-    if (dyrot >= radAccuracy){
-        yRotation = yrot;
-        change = true;
+    if (dyrot >= rad2deg(radAccuracy) || !sensor()->skipDuplicates()) {
+        yRotation = rad2deg(yrot);
+        setNewReading = true;
     }
 
-    xRotation = rad2deg(xRotation);
-    yRotation = rad2deg(yRotation);
-
-    if (xRotation != m_reading.xRotation()
-            || yRotation != m_reading.yRotation()
-            || m_reading.timestamp() == 0) {
+    if (setNewReading || m_reading.timestamp() == 0) {
         m_reading.setTimestamp(reading->timestamp());
         m_reading.setXRotation(xRotation);
         m_reading.setYRotation(yRotation);
@@ -187,4 +182,9 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
     }
 
     return false;
+}
+
+bool GenericTiltSensor::isFeatureSupported(QSensor::Feature feature) const
+{
+    return (feature == QSensor::SkipDuplicates);
 }

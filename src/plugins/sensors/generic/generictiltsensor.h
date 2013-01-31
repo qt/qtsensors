@@ -63,6 +63,8 @@ public:
 
     bool filter(QAccelerometerReading *reading);
 
+    bool isFeatureSupported(QSensor::Feature feature) const Q_DECL_OVERRIDE;
+
 private:
     QTiltReading m_reading;
     QAccelerometer *accelerometer;
