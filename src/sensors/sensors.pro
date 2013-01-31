@@ -53,6 +53,7 @@ SENSORS=\
     qaccelerometer\
     qaltimeter\
     qambientlightsensor\
+    qambienttemperaturesensor\
     qcompass\
     qholstersensor\
     qlightsensor\

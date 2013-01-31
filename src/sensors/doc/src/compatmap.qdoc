@@ -73,7 +73,13 @@
     <td nowrap="nowrap">Ambient Light Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
+    </tr>
+    <tr>
+    <td nowrap="nowrap">Ambient Temperature Sensor</td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Compass</td>

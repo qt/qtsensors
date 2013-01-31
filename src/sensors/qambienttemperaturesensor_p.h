@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Research In Motion
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,23 +38,33 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BBTEMPERATURESENSOR_H
-#define BBTEMPERATURESENSOR_H
+#ifndef QAMBIENTTEMPERATURESENSOR_P_H
+#define QAMBIENTTEMPERATURESENSOR_P_H
 
-#include "bbsensorbackend.h"
-#include <qambienttemperaturesensor.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-class BbTemperatureSensor : public BbSensorBackend<QAmbientTemperatureReading>
+QT_BEGIN_NAMESPACE
+
+class QAmbientTemperatureReadingPrivate
 {
-    Q_OBJECT
-
 public:
-    explicit BbTemperatureSensor(QSensor *sensor);
+    QAmbientTemperatureReadingPrivate()
+        : temperature(0)
+    {
+    }
 
-    static QString devicePath();
-
-protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QAmbientTemperatureReading *reading);
+    qreal temperature;
 };
+
+QT_END_NAMESPACE
 
 #endif

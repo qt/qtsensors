@@ -855,6 +855,10 @@ private slots:
             QCOMPARE(reading->lightLevel(), QAmbientLightReading::Twilight);
         })
 
+        TEST_SENSORINTERFACE(QAmbientTemperatureSensor, QAmbientTemperatureReading, {
+            QCOMPARE(reading->temperature(), 30.0);
+        })
+
         TEST_SENSORINTERFACE(QCompass, QCompassReading, {
             QCOMPARE(reading->azimuth(), 1.0);
             QCOMPARE(reading->calibrationLevel(), 1.0);

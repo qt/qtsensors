@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Research In Motion
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,23 +38,49 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef BBTEMPERATURESENSOR_H
-#define BBTEMPERATURESENSOR_H
+#ifndef QMLAMBIENTTEMPERATURESENSOR_H
+#define QMLAMBIENTTEMPERATURESENSOR_H
 
-#include "bbsensorbackend.h"
-#include <qambienttemperaturesensor.h>
+#include "qmlsensor.h"
 
-class BbTemperatureSensor : public BbSensorBackend<QAmbientTemperatureReading>
+QT_BEGIN_NAMESPACE
+
+class QAmbientTemperatureSensor;
+
+class QmlAmbientTemperatureSensor : public QmlSensor
 {
     Q_OBJECT
-
 public:
-    explicit BbTemperatureSensor(QSensor *sensor);
+    explicit QmlAmbientTemperatureSensor(QObject *parent = 0);
+    ~QmlAmbientTemperatureSensor();
 
-    static QString devicePath();
+private:
+    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
 
-protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, QAmbientTemperatureReading *reading);
+    QAmbientTemperatureSensor *m_sensor;
 };
 
+class QmlAmbientTemperatureReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal temperature READ temperature NOTIFY temperatureChanged)
+public:
+    explicit QmlAmbientTemperatureReading(QAmbientTemperatureSensor *sensor);
+    ~QmlAmbientTemperatureReading();
+
+    qreal temperature() const;
+
+Q_SIGNALS:
+    void temperatureChanged();
+
+private:
+    QSensorReading *reading() const Q_DECL_OVERRIDE;
+    void readingUpdate() Q_DECL_OVERRIDE;
+
+    QAmbientTemperatureSensor *m_sensor;
+    qreal m_temperature;
+};
+
+QT_END_NAMESPACE
 #endif

@@ -56,6 +56,17 @@ Module {
         Property { name: "lightLevel"; type: "QAmbientLightReading::LightLevel"; isReadonly: true }
     }
     Component {
+        name: "QmlAmbientTemperatureReading"
+        prototype: "QmlSensorReading"
+        exports: ["AmbientTemperatureReading 5.1"]
+        Property { name: "temperature"; type: "double"; isReadonly: true }
+    }
+    Component {
+        name: "QmlAmbientTemperatureSensor"
+        prototype: "QmlSensor"
+        exports: ["AmbientTemperatureSensor 5.1"]
+    }
+    Component {
         name: "QmlCompass"
         prototype: "QmlSensor"
         exports: ["Compass 5.0", "Compass 5.1"]

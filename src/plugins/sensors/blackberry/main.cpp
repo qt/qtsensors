@@ -114,7 +114,7 @@ public:
         if (sensorSupported(BbRotationSensor::devicePath()))
             QSensorManager::registerBackend(QRotationSensor::type, bbRotationSensorId, this);
         if (sensorSupported(BbTemperatureSensor::devicePath()))
-            QSensorManager::registerBackend("BbTemperatureSensor", bbTemperatureSensorId, this);
+            QSensorManager::registerBackend(QAmbientTemperatureSensor::type, bbTemperatureSensorId, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) Q_DECL_OVERRIDE
