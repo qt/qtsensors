@@ -78,19 +78,26 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QMagnetometerReading*>(reading)); }
 };
 
+class QMagnetometerPrivate;
+
 class Q_SENSORS_EXPORT QMagnetometer : public QSensor
 {
     Q_OBJECT
-#ifdef Q_QDOC
-    Q_PROPERTY(bool returnGeoValues)
-#endif
+    Q_PROPERTY(bool returnGeoValues READ returnGeoValues WRITE setReturnGeoValues NOTIFY returnGeoValuesChanged)
 public:
     explicit QMagnetometer(QObject *parent = 0);
     virtual ~QMagnetometer();
     QMagnetometerReading *reading() const { return static_cast<QMagnetometerReading*>(QSensor::reading()); }
     static char const * const type;
 
+    bool returnGeoValues() const;
+    void setReturnGeoValues(bool returnGeoValues);
+
+Q_SIGNALS:
+    void returnGeoValuesChanged(bool returnGeoValues);
+
 private:
+    Q_DECLARE_PRIVATE(QMagnetometer)
     Q_DISABLE_COPY(QMagnetometer)
 };
 

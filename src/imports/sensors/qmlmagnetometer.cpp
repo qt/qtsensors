@@ -65,6 +65,8 @@ QmlMagnetometer::QmlMagnetometer(QObject *parent)
     : QmlSensor(parent)
     , m_sensor(new QMagnetometer(this))
 {
+    connect(m_sensor, SIGNAL(returnGeoValuesChanged(bool)),
+            this, SIGNAL(returnGeoValuesChanged(bool)));
 }
 
 QmlMagnetometer::~QmlMagnetometer()
@@ -90,13 +92,12 @@ QSensor *QmlMagnetometer::sensor() const
 
 bool QmlMagnetometer::returnGeoValues() const
 {
-    return m_sensor->property("returnGeoValues").toBool();
+    return m_sensor->returnGeoValues();
 }
 
 void QmlMagnetometer::setReturnGeoValues(bool geo)
 {
-    if (m_sensor->property("returnGeoValues").toBool() == geo) return;
-    m_sensor->setProperty("returnGeoValues", geo);
+    m_sensor->setReturnGeoValues(geo);
 }
 
 /*!

@@ -51,6 +51,7 @@ class QMagnetometer;
 class QmlMagnetometer : public QmlSensor
 {
     Q_OBJECT
+    Q_PROPERTY(bool returnGeoValues READ returnGeoValues WRITE setReturnGeoValues NOTIFY returnGeoValuesChanged)
 public:
     explicit QmlMagnetometer(QObject *parent = 0);
     ~QmlMagnetometer();
@@ -58,6 +59,8 @@ public:
     bool returnGeoValues() const;
     void setReturnGeoValues(bool geo);
 
+Q_SIGNALS:
+    void returnGeoValuesChanged(bool returnGeoValues);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;

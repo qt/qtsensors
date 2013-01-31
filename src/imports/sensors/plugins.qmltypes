@@ -122,6 +122,11 @@ Module {
         name: "QmlMagnetometer"
         prototype: "QmlSensor"
         exports: ["Magnetometer 5.0", "Magnetometer 5.1"]
+        Property { name: "returnGeoValues"; type: "bool" }
+        Signal {
+            name: "returnGeoValuesChanged"
+            Parameter { name: "returnGeoValues"; type: "bool" }
+        }
     }
     Component {
         name: "QmlMagnetometerReading"

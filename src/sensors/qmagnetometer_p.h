@@ -53,7 +53,20 @@
 // We mean it.
 //
 
+#include "qsensor_p.h"
+
 QT_BEGIN_NAMESPACE
+
+class QMagnetometerPrivate : public QSensorPrivate
+{
+public:
+    QMagnetometerPrivate()
+        : returnGeoValues(false)
+    {
+    }
+
+    bool returnGeoValues;
+};
 
 class QMagnetometerReadingPrivate
 {

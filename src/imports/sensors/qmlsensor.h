@@ -154,6 +154,8 @@ protected:
 
 private Q_SLOTS:
     void updateReading();
+
+protected Q_SLOTS:
     void componentComplete();
 
 private:
