@@ -285,6 +285,10 @@ Module {
         prototype: "QmlSensor"
         exports: ["TapSensor 5.0", "TapSensor 5.1"]
         Property { name: "returnDoubleTapEvents"; type: "bool" }
+        Signal {
+            name: "returnDoubleTapEventsChanged"
+            Parameter { name: "returnDoubleTapEvents"; type: "bool" }
+        }
     }
     Component {
         name: "QmlTapSensorReading"

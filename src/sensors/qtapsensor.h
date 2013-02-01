@@ -87,19 +87,27 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QTapReading*>(reading)); }
 };
 
+class QTapSensorPrivate;
+
 class Q_SENSORS_EXPORT QTapSensor : public QSensor
 {
     Q_OBJECT
-#ifdef Q_QDOC
-    Q_PROPERTY(bool returnDoubleTapEvents)
-#endif
+    Q_PROPERTY(bool returnDoubleTapEvents READ returnDoubleTapEvents WRITE setReturnDoubleTapEvents
+               NOTIFY returnDoubleTapEventsChanged)
 public:
     explicit QTapSensor(QObject *parent = 0);
     virtual ~QTapSensor();
     QTapReading *reading() const { return static_cast<QTapReading*>(QSensor::reading()); }
     static char const * const type;
 
+    bool returnDoubleTapEvents() const;
+    void setReturnDoubleTapEvents(bool returnDoubleTapEvents);
+
+Q_SIGNALS:
+    void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
+
 private:
+    Q_DECLARE_PRIVATE(QTapSensor);
     Q_DISABLE_COPY(QTapSensor);
 };
 

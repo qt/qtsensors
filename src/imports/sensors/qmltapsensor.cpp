@@ -65,6 +65,8 @@ QmlTapSensor::QmlTapSensor(QObject *parent)
     : QmlSensor(parent)
     , m_sensor(new QTapSensor(this))
 {
+    connect(m_sensor, SIGNAL(returnDoubleTapEventsChanged(bool)),
+            this, SIGNAL(returnDoubleTapEventsChanged(bool)));
 }
 
 QmlTapSensor::~QmlTapSensor()
@@ -90,14 +92,12 @@ QSensor *QmlTapSensor::sensor() const
 
 bool QmlTapSensor::returnDoubleTapEvents() const
 {
-    return m_sensor->property("returnDoubleTapEvents").toBool();
+    return m_sensor->returnDoubleTapEvents();
 }
 
 void QmlTapSensor::setReturnDoubleTapEvents(bool ret)
 {
-    if (m_sensor->property("returnDoubleTapEvents").toBool() == ret) return;
-    m_sensor->setProperty("returnDoubleTapEvents", ret);
-    Q_EMIT returnDoubleTapEventsChanged();
+    m_sensor->setReturnDoubleTapEvents(ret);
 }
 
 /*!

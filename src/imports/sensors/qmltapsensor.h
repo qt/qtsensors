@@ -60,9 +60,8 @@ public:
     bool returnDoubleTapEvents() const;
     void setReturnDoubleTapEvents(bool ret);
 
-
 Q_SIGNALS:
-    void returnDoubleTapEventsChanged();
+    void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;
