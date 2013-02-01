@@ -65,6 +65,7 @@ QmlRotationSensor::QmlRotationSensor(QObject *parent)
     : QmlSensor(parent)
     , m_sensor(new QRotationSensor(this))
 {
+    connect(m_sensor, SIGNAL(hasZChanged(bool)), this, SIGNAL(hasZChanged(bool)));
 }
 
 QmlRotationSensor::~QmlRotationSensor()
@@ -90,7 +91,7 @@ QSensor *QmlRotationSensor::sensor() const
 
 bool QmlRotationSensor::hasZ() const
 {
-    return m_sensor->property("hasZ").toBool();
+    return m_sensor->hasZ();
 }
 
 void QmlRotationSensor::_update()

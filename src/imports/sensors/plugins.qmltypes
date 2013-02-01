@@ -170,6 +170,10 @@ Module {
         prototype: "QmlSensor"
         exports: ["RotationSensor 5.0", "RotationSensor 5.1"]
         Property { name: "hasZ"; type: "bool"; isReadonly: true }
+        Signal {
+            name: "hasZChanged"
+            Parameter { name: "hasZ"; type: "bool" }
+        }
     }
     Component {
         name: "QmlRotationSensorReading"

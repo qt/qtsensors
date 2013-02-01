@@ -51,13 +51,15 @@ class QRotationSensor;
 class QmlRotationSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PROPERTY(bool hasZ READ hasZ)
+    Q_PROPERTY(bool hasZ READ hasZ NOTIFY hasZChanged)
 public:
     explicit QmlRotationSensor(QObject *parent = 0);
     ~QmlRotationSensor();
 
     bool hasZ() const;
 
+Q_SIGNALS:
+    void hasZChanged(bool hasZ);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;

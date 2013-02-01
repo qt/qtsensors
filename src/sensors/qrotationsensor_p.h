@@ -53,6 +53,8 @@
 // We mean it.
 //
 
+#include "qsensor_p.h"
+
 QT_BEGIN_NAMESPACE
 
 class QRotationReadingPrivate
@@ -68,6 +70,17 @@ public:
     qreal x;
     qreal y;
     qreal z;
+};
+
+class QRotationSensorPrivate : public QSensorPrivate
+{
+public:
+    QRotationSensorPrivate()
+        : hasZ(true)
+    {
+    }
+
+    bool hasZ;
 };
 
 QT_END_NAMESPACE
