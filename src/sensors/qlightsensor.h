@@ -66,19 +66,26 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QLightReading*>(reading)); }
 };
 
+class QLightSensorPrivate;
+
 class Q_SENSORS_EXPORT QLightSensor : public QSensor
 {
     Q_OBJECT
-#ifdef Q_QDOC
-    Q_PROPERTY(qreal fieldOfView)
-#endif
+    Q_PROPERTY(qreal fieldOfView READ fieldOfView NOTIFY fieldOfViewChanged)
 public:
     explicit QLightSensor(QObject *parent = 0);
     virtual ~QLightSensor();
     QLightReading *reading() const { return static_cast<QLightReading*>(QSensor::reading()); }
     static char const * const type;
 
+    qreal fieldOfView() const;
+    void setFieldOfView(qreal fieldOfView);
+
+Q_SIGNALS:
+    void fieldOfViewChanged(qreal fieldOfView);
+
 private:
+    Q_DECLARE_PRIVATE(QLightSensor)
     Q_DISABLE_COPY(QLightSensor)
 };
 

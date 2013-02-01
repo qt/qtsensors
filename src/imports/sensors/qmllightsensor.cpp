@@ -63,6 +63,8 @@ QmlLightSensor::QmlLightSensor(QObject *parent)
     : QmlSensor(parent)
     , m_sensor(new QLightSensor(this))
 {
+    connect(m_sensor, SIGNAL(fieldOfViewChanged(qreal)),
+            this, SIGNAL(fieldOfViewChanged(qreal)));
 }
 
 QmlLightSensor::~QmlLightSensor()
@@ -88,13 +90,7 @@ QSensor *QmlLightSensor::sensor() const
 
 qreal QmlLightSensor::fieldOfView() const
 {
-    return m_sensor->property("fieldOfView").value<qreal>();
-}
-
-void QmlLightSensor::_update()
-{
-    if (fieldOfView() != qreal())
-        Q_EMIT fieldOfViewChanged();
+    return m_sensor->fieldOfView();
 }
 
 /*!

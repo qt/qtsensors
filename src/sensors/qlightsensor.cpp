@@ -120,7 +120,7 @@ char const * const QLightSensor::type("QLightSensor");
     Construct the sensor as a child of \a parent.
 */
 QLightSensor::QLightSensor(QObject *parent)
-    : QSensor(QLightSensor::type, parent)
+    : QSensor(QLightSensor::type, *new QLightSensorPrivate, parent)
 {
 }
 
@@ -144,7 +144,33 @@ QLightSensor::~QLightSensor()
     \brief a value indicating the field of view.
 
     This is an angle that represents the field of view of the sensor.
+
+    Not all light sensor support retrieving their field of view. For sensors
+    that don't support this property, the value will be 0. Whether the field of
+    view is supported can be checked with QSensor::isFeatureSupported() and the
+    QSensor::FieldOfView flag.
 */
+
+qreal QLightSensor::fieldOfView() const
+{
+    Q_D(const QLightSensor);
+    return d->fieldOfView;
+}
+
+/*!
+    \since 5.1
+
+    Sets the field of view. This is to be called from the
+    backend.
+*/
+void QLightSensor::setFieldOfView(qreal fieldOfView)
+{
+    Q_D(QLightSensor);
+    if (d->fieldOfView != fieldOfView) {
+        d->fieldOfView = fieldOfView;
+        emit fieldOfViewChanged(fieldOfView);
+    }
+}
 
 #include "moc_qlightsensor.cpp"
 QT_END_NAMESPACE

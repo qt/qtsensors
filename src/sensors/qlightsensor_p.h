@@ -68,6 +68,17 @@ public:
     qreal lux;
 };
 
+class QLightSensorPrivate : public QSensorPrivate
+{
+public:
+    QLightSensorPrivate()
+        : fieldOfView(0)
+    {
+    }
+
+    qreal fieldOfView;
+};
+
 QT_END_NAMESPACE
 
 #endif

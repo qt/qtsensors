@@ -107,6 +107,10 @@ Module {
         prototype: "QmlSensor"
         exports: ["LightSensor 5.0", "LightSensor 5.1"]
         Property { name: "fieldOfView"; type: "double"; isReadonly: true }
+        Signal {
+            name: "fieldOfViewChanged"
+            Parameter { name: "fieldOfView"; type: "double" }
+        }
     }
     Component {
         name: "QmlLightSensorReading"

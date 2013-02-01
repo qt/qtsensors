@@ -58,13 +58,11 @@ public:
 
     qreal fieldOfView() const;
 
-
 Q_SIGNALS:
-    void fieldOfViewChanged();
+    void fieldOfViewChanged(qreal fieldOfView);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;
-    void _update();
     QLightSensor *m_sensor;
     QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
 };
