@@ -48,6 +48,7 @@ void register_test_backends();
 void unregister_test_backends();
 
 #include <qaccelerometer.h>
+#include <qaltimeter.h>
 #include <qambientlightsensor.h>
 #include <qcompass.h>
 #include <qgyroscope.h>
@@ -97,6 +98,9 @@ PREPARE_SENSORINTERFACE(QAccelerometer, QAccelerometerReading, QAccelerometerFil
     reading->setX(1.0);
     reading->setY(1.0);
     reading->setZ(1.0);
+})
+PREPARE_SENSORINTERFACE(QAltimeter, QAltimeterReading, QAltimeterFilter, {
+    reading->setAltitude(8848);
 })
 PREPARE_SENSORINTERFACE(QAmbientLightSensor, QAmbientLightReading, QAmbientLightFilter, {
     reading->setLightLevel(QAmbientLightReading::Twilight);

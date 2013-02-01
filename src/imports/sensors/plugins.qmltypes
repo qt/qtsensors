@@ -34,6 +34,17 @@ Module {
         Property { name: "z"; type: "double"; isReadonly: true }
     }
     Component {
+        name: "QmlAltimeter"
+        prototype: "QmlSensor"
+        exports: ["Altimeter 5.1"]
+    }
+    Component {
+        name: "QmlAltimeterReading"
+        prototype: "QmlSensorReading"
+        exports: ["AltimeterReading 5.1"]
+        Property { name: "altitude"; type: "double"; isReadonly: true }
+    }
+    Component {
         name: "QmlAmbientLightSensor"
         prototype: "QmlSensor"
         exports: ["AmbientLightSensor 5.0", "AmbientLightSensor 5.1"]

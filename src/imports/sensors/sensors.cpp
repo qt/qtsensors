@@ -44,6 +44,7 @@
 #include <QtSensors/QSensorManager>
 
 #include <QtSensors/qaccelerometer.h>
+#include <QtSensors/qaltimeter.h>
 #include <QtSensors/qambientlightsensor.h>
 #include <QtSensors/qcompass.h>
 #include <QtSensors/qmagnetometer.h>
@@ -59,6 +60,7 @@
 #include "qmlsensorglobal.h"
 #include "qmlsensor.h"
 #include "qmlaccelerometer.h"
+#include "qmlaltimeter.h"
 #include "qmlambientlightsensor.h"
 #include "qmlcompass.h"
 #include "qmlgyroscope.h"
@@ -138,6 +140,8 @@ public:
         qmlRegisterUncreatableType<QmlSensorReading            >(package, major, minor, "SensorReading",        QLatin1String("Cannot create SensorReading"));
         qmlRegisterType           <QmlAccelerometer,1          >(package, major, minor, "Accelerometer");
         qmlRegisterUncreatableType<QmlAccelerometerReading     >(package, major, minor, "AccelerometerReading", QLatin1String("Cannot create AccelerometerReading"));
+        qmlRegisterType           <QmlAltimeter                >(package, major, minor, "Altimeter");
+        qmlRegisterUncreatableType<QmlAltimeterReading         >(package, major, minor, "AltimeterReading", QLatin1String("Cannot create AltimeterReading"));
         qmlRegisterType           <QmlAmbientLightSensor       >(package, major, minor, "AmbientLightSensor");
         qmlRegisterUncreatableType<QmlAmbientLightSensorReading>(package, major, minor, "AmbientLightReading",  QLatin1String("Cannot create AmbientLightReading"));
         qmlRegisterType           <QmlCompass                  >(package, major, minor, "Compass");

@@ -847,6 +847,10 @@ private slots:
             QCOMPARE(reading->z(), 1.0);
         })
 
+        TEST_SENSORINTERFACE(QAltimeter, QAltimeterReading, {
+            QCOMPARE(reading->altitude(), 8848.0);
+        })
+
         TEST_SENSORINTERFACE(QAmbientLightSensor, QAmbientLightReading, {
             QCOMPARE(reading->lightLevel(), QAmbientLightReading::Twilight);
         })

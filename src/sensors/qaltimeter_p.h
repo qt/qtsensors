@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Research In Motion
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,21 +38,33 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include "bbaltimeter.h"
+#ifndef QALTIMETER_P_H
+#define QALTIMETER_P_H
 
-BbAltimeter::BbAltimeter(QSensor *sensor)
-    : BbSensorBackend<QAltimeterReading>(devicePath(), SENSOR_TYPE_ALTIMETER, sensor)
-{
-    setDescription(QLatin1String("Altitude in meters relative to mean sea level"));
-}
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-bool BbAltimeter::updateReadingFromEvent(const sensor_event_t &event, QAltimeterReading *reading)
-{
-    reading->setAltitude(event.altitude_s.altitude);
-    return true;
-}
+QT_BEGIN_NAMESPACE
 
-QString BbAltimeter::devicePath()
+class QAltimeterReadingPrivate
 {
-    return QLatin1String("/dev/sensor/alt");
-}
+public:
+    QAltimeterReadingPrivate()
+        : altitude(0)
+    {
+    }
+
+    qreal altitude;
+};
+
+QT_END_NAMESPACE
+
+#endif

@@ -42,20 +42,9 @@
 #define BBALTIMETER_H
 
 #include "bbsensorbackend.h"
+#include <qaltimeter.h>
 
-class BbAltimeterReadingPrivate;
-
-class BbAltimeterReading : public QSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal altitude READ altitude)
-    DECLARE_READING(BbAltimeterReading)
-public:
-    qreal altitude() const;
-    void setAltitude(qreal altitude);
-};
-
-class BbAltimeter : public BbSensorBackend<BbAltimeterReading>
+class BbAltimeter : public BbSensorBackend<QAltimeterReading>
 {
     Q_OBJECT
 
@@ -65,7 +54,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbAltimeterReading *reading) Q_DECL_OVERRIDE;
+    bool updateReadingFromEvent(const sensor_event_t &event, QAltimeterReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

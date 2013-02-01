@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Research In Motion
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,21 +38,47 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include "bbaltimeter.h"
+#ifndef QALTIMETER_H
+#define QALTIMETER_H
 
-BbAltimeter::BbAltimeter(QSensor *sensor)
-    : BbSensorBackend<QAltimeterReading>(devicePath(), SENSOR_TYPE_ALTIMETER, sensor)
-{
-    setDescription(QLatin1String("Altitude in meters relative to mean sea level"));
-}
+#include <QtSensors/qsensor.h>
 
-bool BbAltimeter::updateReadingFromEvent(const sensor_event_t &event, QAltimeterReading *reading)
-{
-    reading->setAltitude(event.altitude_s.altitude);
-    return true;
-}
+QT_BEGIN_NAMESPACE
 
-QString BbAltimeter::devicePath()
+class QAltimeterReadingPrivate;
+
+class Q_SENSORS_EXPORT QAltimeterReading : public QSensorReading
 {
-    return QLatin1String("/dev/sensor/alt");
-}
+    Q_OBJECT
+    Q_PROPERTY(qreal altitude READ altitude)
+    DECLARE_READING(QAltimeterReading)
+public:
+    qreal altitude() const;
+    void setAltitude(qreal altitude);
+};
+
+class Q_SENSORS_EXPORT QAltimeterFilter : public QSensorFilter
+{
+public:
+    virtual bool filter(QAltimeterReading *reading) = 0;
+private:
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
+        { return filter(static_cast<QAltimeterReading*>(reading)); }
+};
+
+class Q_SENSORS_EXPORT QAltimeter : public QSensor
+{
+    Q_OBJECT
+public:
+    explicit QAltimeter(QObject *parent = 0);
+    ~QAltimeter();
+    QAltimeterReading *reading() const { return static_cast<QAltimeterReading*>(QSensor::reading()); }
+    static char const * const type;
+
+private:
+    Q_DISABLE_COPY(QAltimeter)
+};
+
+QT_END_NAMESPACE
+
+#endif

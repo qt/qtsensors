@@ -9,6 +9,7 @@ HEADERS += \
     qmlsensor.h \
     qmlsensorrange.h \
     qmlaccelerometer.h \
+    qmlaltimeter.h \
     qmlambientlightsensor.h \
     qmlcompass.h \
     qmlgyroscope.h \
@@ -29,6 +30,7 @@ SOURCES += sensors.cpp \
     qmlsensor.cpp \
     qmlsensorrange.cpp \
     qmlaccelerometer.cpp \
+    qmlaltimeter.cpp \
     qmlambientlightsensor.cpp \
     qmlcompass.cpp \
     qmlgyroscope.cpp \

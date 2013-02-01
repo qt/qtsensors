@@ -88,7 +88,7 @@ public:
         if (sensorSupported(BbAccelerometer::devicePath()))
             QSensorManager::registerBackend(QAccelerometer::type, bbAccelerometerId, this);
         if (sensorSupported(BbAltimeter::devicePath()))
-            QSensorManager::registerBackend("BbAltimeter", bbAltitmeterId, this);
+            QSensorManager::registerBackend(QAltimeter::type, bbAltitmeterId, this);
         if (sensorSupported(BbAmbientLightSensor::devicePath()))
             QSensorManager::registerBackend(QAmbientLightSensor::type, bbAmbientLightSensorId, this);
         if (sensorSupported(BbCompass::devicePath()))
