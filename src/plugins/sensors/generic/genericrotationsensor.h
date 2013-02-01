@@ -62,7 +62,6 @@ public:
 private:
     QRotationReading m_reading;
     QAccelerometer *accelerometer;
-    QMagnetometer *magnetometer;
 };
 
 #endif
