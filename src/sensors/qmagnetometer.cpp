@@ -84,7 +84,7 @@ IMPLEMENT_READING(QMagnetometerReading)
     \property QMagnetometerReading::x
     \brief the raw magnetic flux density on the X axis.
 
-    Measured as telsas.
+    Measured as teslas.
     \sa {QMagnetometerReading Units}
 */
 
@@ -105,7 +105,7 @@ void QMagnetometerReading::setX(qreal x)
     \property QMagnetometerReading::y
     \brief the raw magnetic flux density on the Y axis.
 
-    Measured as telsas.
+    Measured as teslas.
     \sa {QMagnetometerReading Units}
 */
 
@@ -126,7 +126,7 @@ void QMagnetometerReading::setY(qreal y)
     \property QMagnetometerReading::z
     \brief the raw magnetic flux density on the Z axis.
 
-    Measured as telsas.
+    Measured as teslas.
     \sa {QMagnetometerReading Units}
 */
 
