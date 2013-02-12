@@ -53,6 +53,8 @@ GenericTiltSensor::GenericTiltSensor(QSensor *sensor)
     , roll(0)
     , calibratedPitch(0)
     , calibratedRoll(0)
+    , xRotation(0)
+    , yRotation(0)
 {
     accelerometer = new QAccelerometer(this);
     accelerometer->addFilter(this);
