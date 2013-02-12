@@ -126,16 +126,16 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
     qreal az = reading->z();
 #ifdef LOGCALIBRATION
     qDebug() << "------------ new value -----------";
-    qDebug() << "old _pitch: " << _pitch;
-    qDebug() << "old _roll: " << _roll;
-    qDebug() << "_calibratedPitch: " << _calibratedPitch;
-    qDebug() << "_calibratedRoll: " << _calibratedRoll;
+    qDebug() << "old _pitch: " << pitch;
+    qDebug() << "old _roll: " << roll;
+    qDebug() << "_calibratedPitch: " << calibratedPitch;
+    qDebug() << "_calibratedRoll: " << calibratedRoll;
 #endif
     pitch = calcPitch(ax, ay, az);
     roll  = calcRoll (ax, ay, az);
 #ifdef LOGCALIBRATION
-    qDebug() << "_pitch: " << _pitch;
-    qDebug() << "_roll: " << _roll;
+    qDebug() << "_pitch: " << pitch;
+    qDebug() << "_roll: " << roll;
 #endif
     qreal xrot = roll - calibratedRoll;
     qreal yrot = pitch - calibratedPitch;
