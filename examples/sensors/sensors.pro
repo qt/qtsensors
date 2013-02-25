@@ -2,7 +2,7 @@ TEMPLATE = subdirs
 
 SUBDIRS += grue
 
-!isEmpty(QT.quick.name) {
+qtHaveModule(quick) {
     SUBDIRS += \
         accelbubble \
         cubehouse \
@@ -13,7 +13,7 @@ SUBDIRS += grue
         shakeit
 }
 
-!isEmpty(QT.widgets.name):SUBDIRS += \
+qtHaveModule(widgets): SUBDIRS += \
     sensorgestures
 
 OTHER_FILES = stub.h

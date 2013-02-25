@@ -54,7 +54,7 @@ class TestSensorPlugin : public QObject,
                          public QSensorBackendFactory
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "com.nokia.Qt.QSensorPluginInterface/1.0")
+    Q_PLUGIN_METADATA(IID "com.qt-project.Qt.QSensorPluginInterface/1.0")
     Q_INTERFACES(QSensorPluginInterface QSensorChangesInterface)
 public:
     void registerSensors()

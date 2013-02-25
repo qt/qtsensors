@@ -9,7 +9,6 @@ SOURCES += tst_qsensorgesturepluginstest.cpp
 
 VPATH += ../qsensor
 INCLUDEPATH += ../qsensor
-DEPENDPATH += ../qsensor
 
 HEADERS += \
     test_backends.h

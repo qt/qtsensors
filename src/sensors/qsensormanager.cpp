@@ -68,7 +68,7 @@ public:
     QSensorManagerPrivate()
         : loadExternalPlugins(true)
         , pluginLoadingState(NotLoaded)
-        , loader(new QFactoryLoader("com.nokia.Qt.QSensorPluginInterface/1.0", QLatin1String("/sensors")))
+        , loader(new QFactoryLoader("com.qt-project.Qt.QSensorPluginInterface/1.0", QLatin1String("/sensors")))
         , defaultIdentifierForTypeLoaded(false)
         , sensorsChanged(false)
     {

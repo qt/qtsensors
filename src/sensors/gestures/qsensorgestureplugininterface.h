@@ -62,7 +62,7 @@ public:
     virtual QString name() const = 0;
 };
 
-Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "org.qt-project.QSensorGesturePluginInterface");
+Q_DECLARE_INTERFACE(QSensorGesturePluginInterface, "org.qt-project.QSensorGesturePluginInterface")
 
 QT_END_NAMESPACE
 

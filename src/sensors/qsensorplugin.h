@@ -64,8 +64,8 @@ protected:
     ~QSensorChangesInterface() {}
 };
 
-Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.nokia.Qt.QSensorPluginInterface/1.0");
-Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.nokia.Qt.QSensorChangesInterface/5.0");
+Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.qt-project.Qt.QSensorPluginInterface/1.0")
+Q_DECLARE_INTERFACE(QSensorChangesInterface, "com.qt-project.Qt.QSensorChangesInterface/5.0")
 
 QT_END_NAMESPACE
 

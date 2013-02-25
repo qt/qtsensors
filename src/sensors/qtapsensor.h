@@ -108,7 +108,7 @@ Q_SIGNALS:
 
 private:
     Q_DECLARE_PRIVATE(QTapSensor);
-    Q_DISABLE_COPY(QTapSensor);
+    Q_DISABLE_COPY(QTapSensor)
 };
 
 QT_END_NAMESPACE

@@ -44,7 +44,7 @@
 
 #include <QObject>
 #include <QStringList>
-#include <qsensorsglobal.h>
+#include <QtSensors/qsensorsglobal.h>
 
 #include <QList>
 #include <QMap>

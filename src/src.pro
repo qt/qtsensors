@@ -4,7 +4,7 @@ SUBDIRS += sensors
 sensors.subdir = sensors
 sensors.target = sub-sensors
 
-!isEmpty(QT.quick.name) {
+qtHaveModule(quick) {
     SUBDIRS += imports
     imports.subdir = imports
     imports.target = sub-imports
