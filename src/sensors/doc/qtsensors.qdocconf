@@ -3,33 +3,36 @@ include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
 
 project                 = QtSensors
 description             = Qt Sensors Reference Documentation
-url                     = http://qt-project.org/doc/qt-5.0/qtsensors-index.html
-version                 = 5.0.0
+url                     = http://qt-project.org/doc/qt-$QT_VER/qtsensors
+version                 = $QT_VERSION
 
 qhp.projects            = QtSensors
 
 qhp.QtSensors.file                = qtsensors.qhp
-qhp.QtSensors.namespace           = org.qt-project.qtsensors.500
-qhp.QtSensors.virtualFolder       = qdoc
-qhp.QtSensors.indexTitle          = Qt Sensors Reference Documentation
+qhp.QtSensors.namespace           = org.qt-project.qtsensors.$QT_VERSION_TAG
+qhp.QtSensors.virtualFolder       = qtsensors
+qhp.QtSensors.indexTitle          = Qt Sensors
 qhp.QtSensors.indexRoot           =
 
-qhp.QtSensors.filterAttributes    = qtsensors 5.0.0 qtrefdoc
-qhp.QtSensors.customFilters.Qt.name = QtSensors 5.0.0
-qhp.QtSensors.customFilters.Qt.filterAttributes = qtsensors 5.0.0
-qhp.QtSensors.subprojects         = classes overviews examples
-qhp.QtSensors.subprojects.classes.title = Classes
-qhp.QtSensors.subprojects.classes.indexTitle = Qt Sensors's Classes
+qhp.QtSensors.filterAttributes    = qtsensors $QT_VERSION qtrefdoc
+qhp.QtSensors.customFilters.Qt.name = QtSensors $QT_VERSION
+qhp.QtSensors.customFilters.Qt.filterAttributes = qtsensors $QT_VERSION
+qhp.QtSensors.subprojects         = overviews classes qmltypes examples
+qhp.QtSensors.subprojects.overviews.title = Overview
+qhp.QtSensors.subprojects.overviews.indexTitle = Qt Sensors
+qhp.QtSensors.subprojects.overviews.selectors = fake:page,group,module
+qhp.QtSensors.subprojects.classes.title = C++ Classes
+qhp.QtSensors.subprojects.classes.indexTitle = Qt Sensors C++ Classes
 qhp.QtSensors.subprojects.classes.selectors = class fake:headerfile
 qhp.QtSensors.subprojects.classes.sortPages = true
-qhp.QtSensors.subprojects.overviews.title = Overviews
-qhp.QtSensors.subprojects.overviews.indexTitle = All Overviews and HOWTOs
-qhp.QtSensors.subprojects.overviews.selectors = fake:page,group,module
-qhp.QtSensors.subprojects.examples.title = Qt Sensors Examples
+qhp.QtSensors.subprojects.qmltypes.title = QML Types
+qhp.QtSensors.subprojects.qmltypes.indexTitle = Qt Sensors QML Types
+qhp.QtSensors.subprojects.qmltypes.selectors = fake:qmlclass
+qhp.QtSensors.subprojects.qmltypes.sortPages = true
+qhp.QtSensors.subprojects.examples.title = Examples
 qhp.QtSensors.subprojects.examples.indexTitle = Qt Sensors Examples
 qhp.QtSensors.subprojects.examples.selectors = fake:example
 
-outputdir               = ../../../doc/qtsensors
 tagfile                 = ../../../doc/qtsensors/qtsensors.tags
 
 headerdirs  += .. \
@@ -45,3 +48,5 @@ exampledirs += ../../../examples/sensors \
 
 
 imagedirs   += images
+
+depends += qtcore qtdoc qtgui
