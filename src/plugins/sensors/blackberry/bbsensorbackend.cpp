@@ -304,8 +304,13 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
     case QSensor::AccelerationMode:
     case QSensor::SkipDuplicates:
         return true;
-    case QSensor::Reserved:
     case QSensor::GeoValues:
+#ifndef Q_OS_BLACKBERRY_TABLET
+        return (sensorType() == SENSOR_TYPE_MAGNETOMETER);
+#else
+        return false;
+#endif
+    case QSensor::Reserved:
     case QSensor::FieldOfView:
         break;
     }
