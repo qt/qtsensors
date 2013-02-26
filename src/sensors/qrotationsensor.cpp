@@ -237,7 +237,7 @@ bool QRotationSensor::hasZ() const
 /*!
     \since 5.1
 
-    Sets whether the z angle is available. This is to be called from the
+    Sets whether the z angle is available to \a hasZ. This is to be called from the
     backend. By default the hasZ property is true, so a backend only has to
     call this if its rotation sensor can not report z angles.
 */

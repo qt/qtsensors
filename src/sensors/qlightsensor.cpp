@@ -84,6 +84,7 @@ void QLightReading::setLux(qreal lux)
 /*!
     \class QLightFilter
     \ingroup sensors_filter
+    \inmodule QtSensors
 
     \brief The QLightFilter class is a convenience wrapper around QSensorFilter.
 
@@ -104,6 +105,7 @@ char const * const QLightSensor::type("QLightSensor");
 /*!
     \class QLightSensor
     \ingroup sensors_type
+    \inmodule QtSensors
 
     \brief The QLightSensor class is a convenience wrapper around QSensor.
 
@@ -160,7 +162,7 @@ qreal QLightSensor::fieldOfView() const
 /*!
     \since 5.1
 
-    Sets the field of view. This is to be called from the
+    Sets the field of view to \a fieldOfView. This is to be called from the
     backend.
 */
 void QLightSensor::setFieldOfView(qreal fieldOfView)
