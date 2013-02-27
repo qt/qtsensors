@@ -130,6 +130,19 @@ void BbSensorBackendBase::initSensorInfo()
         qDebug() << "Failed to open sensor" << m_deviceFile.fileName()
                  << ":" << m_deviceFile.errorString();
     } else {
+
+        // Explicitly switch to non-blocking mode, otherwise read() will wait until new sensor
+        // data is available, and we have no way to check if there is more data or not (bytesAvailable()
+        // does not work for unbuffered mode)
+        const int oldFlags = fcntl(m_deviceFile.handle(), F_GETFL);
+        if (fcntl(m_deviceFile.handle(), F_SETFL, oldFlags | O_NONBLOCK) == -1) {
+            perror(QString::fromLatin1("Starting sensor %1 failed, fcntl() returned -1")
+                        .arg(m_deviceFile.fileName()).toLocal8Bit());
+            sensorError(errno);
+            stop();
+            return;
+        }
+
         sensor_devctl_info_u deviceInfo;
         const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_INFO, &deviceInfo,
                                   sizeof(deviceInfo), NULL);
@@ -156,6 +169,7 @@ void BbSensorBackendBase::initSensorInfo()
         setPaused(true);
 
         m_socketNotifier.reset(new QSocketNotifier(m_deviceFile.handle(), QSocketNotifier::Read));
+        m_socketNotifier->setEnabled(false);
         connect(m_socketNotifier.data(), SIGNAL(activated(int)), this, SLOT(dataAvailable()));
     }
 }
@@ -267,18 +281,6 @@ void BbSensorBackendBase::start()
                .arg(m_deviceFile.fileName()).toLocal8Bit());
     }
 
-    // Explicitly switch to non-blocking mode, otherwise read() will wait until new sensor
-    // data is available, and we have no way to check if there is more data or not (bytesAvailable()
-    // does not work for unbuffered mode)
-    const int oldFlags = fcntl(m_deviceFile.handle(), F_GETFL);
-    if (fcntl(m_deviceFile.handle(), F_SETFL, oldFlags | O_NONBLOCK) == -1) {
-        perror(QString::fromLatin1("Starting sensor %1 failed, fcntl() returned -1")
-                    .arg(m_deviceFile.fileName()).toLocal8Bit());
-        sensorError(errno);
-        stop();
-        return;
-    }
-
     applyBuffering();
     applyAlwaysOnProperty();
 }
@@ -313,8 +315,12 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
 
 void BbSensorBackendBase::dataAvailable()
 {
-    if (!m_started)
+    if (!m_started) {
+        // Spurious dataAvailable() call, drain the device file of data. We also disable
+        // the socket notifier for this, so this is just added safety here.
+        m_deviceFile.readAll();
         return;
+    }
 
     Q_FOREVER {
         sensor_event_t event;
@@ -396,6 +402,9 @@ bool BbSensorBackendBase::setPaused(bool paused)
 
     sensor_devctl_enable_u enableState;
     enableState.tx.enable = paused ? 0 : 1;
+
+    if (m_socketNotifier)
+        m_socketNotifier->setEnabled(!paused);
 
     const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_ENABLE, &enableState, sizeof(enableState), NULL);
     if (result != EOK) {
