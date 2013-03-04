@@ -8,15 +8,23 @@ HEADERS += generictiltsensor.h
 
 SOURCES += main.cpp\
            generictiltsensor.cpp
+DEFINES += QTSENSORS_GENERICTILTSENSOR
 
 !blackberry {
     HEADERS += genericorientationsensor.h\
-               genericrotationsensor.h\
                genericalssensor.h
 
     SOURCES += genericorientationsensor.cpp\
-               genericrotationsensor.cpp\
                genericalssensor.cpp
+    DEFINES += QTSENSORS_GENERICORIENTATIONSENSOR QTSENSORS_GENERICALSSENSOR
+}
+
+!blackberry:!android {
+    HEADERS += genericrotationsensor.h
+
+    SOURCES += genericrotationsensor.cpp
+
+    DEFINES += QTSENSORS_GENERICROTATIONSENSOR
 }
 
 OTHER_FILES = plugin.json
