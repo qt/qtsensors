@@ -4,8 +4,14 @@ TEMPLATE = subdirs
 # of these. This reduces compile time and plugin loading time.
 blackberry {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = blackberry generic
-} else: android {
-    SENSORS_PLUGINS = android generic
+}
+
+android {
+    isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = android generic
+}
+
+sensorfw {
+    isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = sensorfw generic
 }
 
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, dummy):SUBDIRS += dummy
@@ -14,3 +20,5 @@ isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, simulator):simulator:SUBDIRS 
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, blackberry):blackberry:SUBDIRS += blackberry
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, linux):linux:SUBDIRS += linux
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, android):android:SUBDIRS += android
+isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, sensorfw):sensorfw:SUBDIRS += sensorfw
+

@@ -57,6 +57,7 @@
     <td><b>Android</b></td>
     <td><b>Linux</b></td>
     <td><b>Generic</b></td>
+    <td><b>Sensorfw</b></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Accelerometer</td>
@@ -64,6 +65,7 @@
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Altimeter</td>
@@ -78,6 +80,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Ambient Temperature Sensor</td>
@@ -92,6 +95,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Gyroscope</td>
@@ -99,6 +103,7 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Holster Sensor</td>
@@ -120,11 +125,13 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Magnetometer</td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     </tr>
@@ -133,6 +140,7 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     </tr>
     <tr>
@@ -148,12 +156,14 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Rotation Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     </tr>
     <tr>
@@ -169,13 +179,15 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Sensor Gestures</td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green">1)</td>
+    <td bgcolor="green"></td>
+    <td bgcolor="green"></td>
     </tr>
     </table>
 
