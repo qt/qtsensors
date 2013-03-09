@@ -73,6 +73,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Ambient Light Sensor</td>
@@ -84,6 +85,7 @@
     </tr>
     <tr>
     <td nowrap="nowrap">Ambient Temperature Sensor</td>
+    <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
@@ -111,6 +113,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">IR Proximity Sensor</td>
@@ -118,6 +121,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Light Sensor</td>
@@ -125,7 +129,7 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Magnetometer</td>
@@ -133,7 +137,7 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Orientation Sensor</td>
@@ -146,6 +150,7 @@
     <tr>
     <td nowrap="nowrap">Pressure Sensor</td>
     <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
@@ -172,6 +177,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Tilt Sensor</td>
@@ -186,7 +192,7 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
     </tr>
     </table>
@@ -198,5 +204,8 @@
     In addition to the table above, each sensor type might support specific features. For example
     a magnetometer might support returning geo values. See QSensor::isFeatureSupported() for
     additional details.
+
+    Sensor Gestures are mostly platform independent, and will run if the platform has the needed sensors.
+    Whether they are supported and work well or not depends on the platform.
 */
 
