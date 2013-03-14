@@ -8,10 +8,12 @@ load(qt_plugin)
 OTHER_FILES = plugin.json
 
 HEADERS += iosaccelerometer.h \
-        iosmotionmanager.h
+        iosmotionmanager.h \
+        iosgyroscope.h
 
 OBJECTIVE_SOURCES += main.mm \
     iosaccelerometer.mm \
-    iosmotionmanager.mm
+    iosmotionmanager.mm \
+    iosgyroscope.mm
 
 LIBS += -framework UIKit -framework CoreMotion
