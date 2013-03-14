@@ -39,37 +39,54 @@
 **
 ****************************************************************************/
 
-#include <qsensorplugin.h>
-#include <qsensorbackend.h>
-#include <qsensormanager.h>
+#include <CoreMotion/CMMotionManager.h>
 
 #include "iosmotionmanager.h"
-#include "iosaccelerometer.h"
 #include "iosgyroscope.h"
 
-class IOSSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
+char const * const IOSGyroscope::id("ios.gyroscope");
+
+QT_BEGIN_NAMESPACE
+
+IOSGyroscope::IOSGyroscope(QSensor *sensor)
+    : QSensorBackend(sensor)
+    , m_updateQueue([[NSOperationQueue alloc] init])
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "com.qt-project.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
-    Q_INTERFACES(QSensorPluginInterface)
-public:
-    void registerSensors()
-    {
-        QSensorManager::registerBackend(QAccelerometer::type, IOSAccelerometer::id, this);
-        if ([QIOSMotionManager sharedManager].gyroAvailable)
-            QSensorManager::registerBackend(QGyroscope::type, IOSGyroscope::id, this);
-    }
+    setReading<QGyroscopeReading>(&m_reading);
+    addDataRate(1, 100); // 100Hz is max it seems
+    addOutputRange(-360, 360, 0.01);
+}
 
-    QSensorBackend *createBackend(QSensor *sensor)
-    {
-        if (sensor->identifier() == IOSAccelerometer::id)
-            return new IOSAccelerometer(sensor);
-        if (sensor->identifier() == IOSGyroscope::id)
-            return new IOSGyroscope(sensor);
+IOSGyroscope::~IOSGyroscope()
+{
+    [static_cast<NSOperationQueue *>(m_updateQueue) release];
+}
 
-        return 0;
-    }
-};
+void IOSGyroscope::start()
+{
+    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
+    // Convert Hz to NSTimeInterval:
+    int hz = sensor()->dataRate();
+    motionManager.gyroUpdateInterval = (hz == 0) ? 0 : 1. / hz;
 
-#include "main.moc"
+    NSOperationQueue *queue = static_cast<NSOperationQueue *>(m_updateQueue);
+    [motionManager startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *data, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            Q_UNUSED(error);
+            // Convert NSTimeInterval to microseconds and radians to degrees:
+            CMRotationRate rate = data.rotationRate;
+            m_reading.setTimestamp(quint64(data.timestamp * 1000000));
+            m_reading.setX((qreal(rate.x) / M_PI) * 180);
+            m_reading.setY((qreal(rate.y) / M_PI) * 180);
+            m_reading.setZ((qreal(rate.z) / M_PI) * 180);
+            newReadingAvailable();
+        });
+    }];
+}
 
+void IOSGyroscope::stop()
+{
+    [[QIOSMotionManager sharedManager] stopGyroUpdates];
+}
+
+QT_END_NAMESPACE

@@ -39,37 +39,30 @@
 **
 ****************************************************************************/
 
-#include <qsensorplugin.h>
+#ifndef IOSGYROSCOPE_H
+#define IOSGYROSCOPE_H
+
 #include <qsensorbackend.h>
-#include <qsensormanager.h>
+#include <qgyroscope.h>
 
-#include "iosmotionmanager.h"
-#include "iosaccelerometer.h"
-#include "iosgyroscope.h"
+QT_BEGIN_NAMESPACE
 
-class IOSSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
+class IOSGyroscope : public QSensorBackend
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "com.qt-project.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
-    Q_INTERFACES(QSensorPluginInterface)
 public:
-    void registerSensors()
-    {
-        QSensorManager::registerBackend(QAccelerometer::type, IOSAccelerometer::id, this);
-        if ([QIOSMotionManager sharedManager].gyroAvailable)
-            QSensorManager::registerBackend(QGyroscope::type, IOSGyroscope::id, this);
-    }
+    static char const * const id;
 
-    QSensorBackend *createBackend(QSensor *sensor)
-    {
-        if (sensor->identifier() == IOSAccelerometer::id)
-            return new IOSAccelerometer(sensor);
-        if (sensor->identifier() == IOSGyroscope::id)
-            return new IOSGyroscope(sensor);
+    explicit IOSGyroscope(QSensor *sensor);
+    ~IOSGyroscope();
 
-        return 0;
-    }
+    void start();
+    void stop();
+
+private:
+    void *m_updateQueue;
+    QGyroscopeReading m_reading;
 };
+QT_END_NAMESPACE
 
-#include "main.moc"
+#endif // IOSGYROSCOPE_H
 
