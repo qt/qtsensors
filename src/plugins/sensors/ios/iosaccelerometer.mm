@@ -124,6 +124,10 @@ IOSAccelerometer::~IOSAccelerometer()
 
 void IOSAccelerometer::start()
 {
+    // Convert from Hz to NSTimeInterval:
+    int hz = sensor()->dataRate();
+    NSTimeInterval interval = (hz == 0) ? 0 : 1. / hz;
+    [m_listener setInterval:interval];
     [m_listener startAccelerometer];
 }
 
