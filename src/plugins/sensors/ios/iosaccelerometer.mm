@@ -86,7 +86,9 @@ char const * const IOSAccelerometer::id("ios.accelerometer");
                 qreal x = qreal(acc.x) * G * -1;
                 qreal y = qreal(acc.y) * G * -1;
                 qreal z = qreal(acc.z) * G * -1;
-                m_qiosAccelerometer->readingsChanged(quint64(data.timestamp), x, y, z);
+                // Convert from NSTimeInterval to microseconds:
+                quint64 timestamp = quint64(data.timestamp * 1000000);
+                m_qiosAccelerometer->readingsChanged(timestamp, x, y, z);
             });
         }];
     }
