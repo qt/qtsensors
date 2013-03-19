@@ -76,6 +76,9 @@ protected:
     BbGuiHelper *guiHelper() const;
     QFile& deviceFile();
     sensor_type_e sensorType() const;
+    int orientationForRemapping() const;
+
+    void setDevice(const QString &deviceFile, sensor_type_e sensorType);
 
     // This is called while the device file is open during initalization and gives a subclass
     // an opportunity to do additional initalization.
@@ -104,6 +107,7 @@ protected:
 private slots:
     void dataAvailable();
     void applyAlwaysOnProperty();
+    void applyBuffering();
     bool setPaused(bool paused);
     void updatePauseState();
     void updateOrientation();
@@ -115,6 +119,7 @@ private:
     BbGuiHelper *m_guiHelper;
     float m_mappingMatrix[4];
     bool m_started;
+    bool m_applyingBufferSize;
 };
 
 template<class SensorReading>

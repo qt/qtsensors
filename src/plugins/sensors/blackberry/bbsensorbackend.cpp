@@ -81,15 +81,17 @@ static void remapMatrix(const float inputMatrix[3*3],
 BbSensorBackendBase::BbSensorBackendBase(const QString &devicePath, sensor_type_e sensorType,
                                          QSensor *sensor)
     : QSensorBackend(sensor), m_deviceFile(devicePath), m_sensorType(sensorType), m_guiHelper(0),
-      m_started(false)
+      m_started(false), m_applyingBufferSize(false)
 {
     m_mappingMatrix[0] = m_mappingMatrix[3] = 1;
     m_mappingMatrix[1] = m_mappingMatrix[2] = 0;
     connect(sensor, SIGNAL(alwaysOnChanged()), this, SLOT(applyAlwaysOnProperty()));
+    connect(sensor, SIGNAL(bufferSizeChanged(int)), this, SLOT(applyBuffering()));
+    connect(sensor, SIGNAL(userOrientationChanged(int)), this, SLOT(updateOrientation()));
 
     // Set some sensible default values
-    sensor->setProperty("efficientBufferSize", defaultBufferSize);
-    sensor->setProperty("maxBufferSize", defaultBufferSize);
+    sensor->setEfficientBufferSize(defaultBufferSize);
+    sensor->setMaxBufferSize(defaultBufferSize);
 }
 
 BbGuiHelper *BbSensorBackendBase::guiHelper() const
@@ -107,12 +109,40 @@ sensor_type_e BbSensorBackendBase::sensorType() const
     return m_sensorType;
 }
 
+void BbSensorBackendBase::setDevice(const QString &deviceFile, sensor_type_e sensorType)
+{
+    if (deviceFile != m_deviceFile.fileName()) {
+        setPaused(true);
+        delete m_socketNotifier.take();
+        m_deviceFile.close();
+
+        m_sensorType = sensorType;
+        m_deviceFile.setFileName(deviceFile);
+        initSensorInfo();
+        if (m_started)
+            start();    // restart with new device file
+    }
+}
+
 void BbSensorBackendBase::initSensorInfo()
 {
     if (!m_deviceFile.open(QFile::ReadOnly | QFile::Unbuffered)) {
         qDebug() << "Failed to open sensor" << m_deviceFile.fileName()
                  << ":" << m_deviceFile.errorString();
     } else {
+
+        // Explicitly switch to non-blocking mode, otherwise read() will wait until new sensor
+        // data is available, and we have no way to check if there is more data or not (bytesAvailable()
+        // does not work for unbuffered mode)
+        const int oldFlags = fcntl(m_deviceFile.handle(), F_GETFL);
+        if (fcntl(m_deviceFile.handle(), F_SETFL, oldFlags | O_NONBLOCK) == -1) {
+            perror(QString::fromLatin1("Starting sensor %1 failed, fcntl() returned -1")
+                        .arg(m_deviceFile.fileName()).toLocal8Bit());
+            sensorError(errno);
+            stop();
+            return;
+        }
+
         sensor_devctl_info_u deviceInfo;
         const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_INFO, &deviceInfo,
                                   sizeof(deviceInfo), NULL);
@@ -139,6 +169,7 @@ void BbSensorBackendBase::initSensorInfo()
         setPaused(true);
 
         m_socketNotifier.reset(new QSocketNotifier(m_deviceFile.handle(), QSocketNotifier::Read));
+        m_socketNotifier->setEnabled(false);
         connect(m_socketNotifier.data(), SIGNAL(activated(int)), this, SLOT(dataAvailable()));
     }
 }
@@ -168,12 +199,13 @@ qreal BbSensorBackendBase::convertValue(float bbValue)
 
 bool BbSensorBackendBase::isAutoAxisRemappingEnabled() const
 {
-    return sensor()->property("automaticAxisRemapping").toBool();
+    return sensor()->isFeatureSupported(QSensor::AxesOrientation) &&
+           sensor()->axesOrientationMode() != QSensor::FixedOrientation;
 }
 
 void BbSensorBackendBase::remapMatrix(const float inputMatrix[], float outputMatrix[])
 {
-    if (!isAutoAxisRemappingEnabled() || m_guiHelper->currentOrientation() == 0) {
+    if (!isAutoAxisRemappingEnabled() || orientationForRemapping() == 0) {
         memcpy(outputMatrix, inputMatrix, sizeof(float) * 9);
         return;
     }
@@ -184,10 +216,10 @@ void BbSensorBackendBase::remapMatrix(const float inputMatrix[], float outputMat
 void BbSensorBackendBase::remapAxes(float *x, float *y, float *z)
 {
     Q_ASSERT(x && y && z);
-    if (!isAutoAxisRemappingEnabled() || m_guiHelper->currentOrientation() == 0)
+    if (!isAutoAxisRemappingEnabled() || orientationForRemapping() == 0)
         return;
 
-    const int angle = m_guiHelper->currentOrientation();
+    const int angle = orientationForRemapping();
 
     const float oldX = *x;
     const float oldY = *y;
@@ -239,36 +271,17 @@ void BbSensorBackendBase::start()
         }
     }
 
-    // Explicitly switch to non-blocking mode, otherwise read() will wait until new sensor
-    // data is available, and we have no way to check if there is more data or not (bytesAvailable()
-    // does not work for unbuffered mode)
-    const int oldFlags = fcntl(m_deviceFile.handle(), F_GETFL);
-    if (fcntl(m_deviceFile.handle(), F_SETFL, oldFlags | O_NONBLOCK) == -1) {
-        perror(QString::fromLatin1("Starting sensor %1 failed, fcntl() returned -1")
-                    .arg(m_deviceFile.fileName()).toLocal8Bit());
-        sensorError(errno);
-        stop();
-        return;
+    // Enable/disable duplicate skipping
+    sensor_devctl_skipdupevent_u deviceSkip;
+    deviceSkip.tx.enable = sensor()->skipDuplicates();
+    const int result = devctl(deviceFile().handle(), DCMD_SENSOR_SKIPDUPEVENT, &deviceSkip,
+                              sizeof(deviceSkip), NULL);
+    if (result != EOK) {
+        perror(QString::fromLatin1("Setting duplicate skipping for %1 failed")
+               .arg(m_deviceFile.fileName()).toLocal8Bit());
     }
 
-    // Activate event queuing if needed
-    bool ok = false;
-    const int requestedBufferSize = sensor()->property("bufferSize").toInt(&ok);
-    if (ok && requestedBufferSize > 1) {
-        sensor_devctl_queue_u queueControl;
-        queueControl.tx.enable = 1;
-        const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_QUEUE, &queueControl, sizeof(queueControl), NULL);
-        if (result != EOK) {
-            perror(QString::fromLatin1("Enabling sensor queuing for %1 failed")
-                   .arg(m_deviceFile.fileName()).toLocal8Bit());
-        }
-
-        const int actualBufferSize = queueControl.rx.size;
-        sensor()->setProperty("bufferSize", actualBufferSize);
-        sensor()->setProperty("efficientBufferSize", actualBufferSize);
-        sensor()->setProperty("maxBufferSize", actualBufferSize);
-    }
-
+    applyBuffering();
     applyAlwaysOnProperty();
 }
 
@@ -281,11 +294,23 @@ void BbSensorBackendBase::stop()
 bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
 {
     switch (feature) {
+    case QSensor::AxesOrientation:
+        return (sensorType() == SENSOR_TYPE_ACCELEROMETER || sensorType() == SENSOR_TYPE_MAGNETOMETER ||
+                sensorType() == SENSOR_TYPE_GYROSCOPE || sensorType() == SENSOR_TYPE_GRAVITY ||
+                sensorType() == SENSOR_TYPE_LINEAR_ACCEL || sensorType() ==  SENSOR_TYPE_ROTATION_VECTOR ||
+                sensorType() == SENSOR_TYPE_ROTATION_MATRIX || sensorType() == SENSOR_TYPE_AZIMUTH_PITCH_ROLL);
     case QSensor::AlwaysOn:
     case QSensor::Buffering:
+    case QSensor::AccelerationMode:
+    case QSensor::SkipDuplicates:
         return true;
-    case QSensor::Reserved:
     case QSensor::GeoValues:
+#ifndef Q_OS_BLACKBERRY_TABLET
+        return (sensorType() == SENSOR_TYPE_MAGNETOMETER);
+#else
+        return false;
+#endif
+    case QSensor::Reserved:
     case QSensor::FieldOfView:
         break;
     }
@@ -295,8 +320,12 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
 
 void BbSensorBackendBase::dataAvailable()
 {
-    if (!m_started)
+    if (!m_started) {
+        // Spurious dataAvailable() call, drain the device file of data. We also disable
+        // the socket notifier for this, so this is just added safety here.
+        m_deviceFile.readAll();
         return;
+    }
 
     Q_FOREVER {
         sensor_event_t event;
@@ -331,6 +360,46 @@ void BbSensorBackendBase::applyAlwaysOnProperty()
     updatePauseState();
 }
 
+void BbSensorBackendBase::applyBuffering()
+{
+    if (!m_deviceFile.isOpen() || !m_started || m_applyingBufferSize)
+        return;
+
+    // Flag to prevent recursion. We call setBufferSize() below, and because of the changed signal,
+    // we might end up in this slot again.
+    // The call to setBufferSize() is needed since the requested buffer size is most likely different
+    // from the actual buffer size that will be used.
+    m_applyingBufferSize = true;
+
+    const bool enableBuffering = sensor()->bufferSize() > 1;
+    sensor_devctl_queue_u queueControl;
+    queueControl.tx.enable = enableBuffering ? 1 : 0;
+    const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_QUEUE, &queueControl, sizeof(queueControl), NULL);
+    if (result != EOK) {
+        perror(QString::fromLatin1("Enabling sensor queuing for %1 failed")
+               .arg(m_deviceFile.fileName()).toLocal8Bit());
+    } else {
+        if (enableBuffering) {
+            int actualBufferSize = queueControl.rx.size;
+
+            // Some firmware versions don't report the buffer size correctly. Simply pretend the
+            // buffer size is the same as the requested buffer size, as setting the buffer size to
+            // 1 here would seem as if buffering were disabled.
+            if (actualBufferSize == 1)
+                actualBufferSize = sensor()->bufferSize();
+
+            sensor()->setBufferSize(actualBufferSize);
+            sensor()->setEfficientBufferSize(actualBufferSize);
+            sensor()->setMaxBufferSize(actualBufferSize);
+        } else {
+            sensor()->setBufferSize(1);
+            sensor()->setEfficientBufferSize(defaultBufferSize);
+            sensor()->setMaxBufferSize(defaultBufferSize);
+        }
+    }
+    m_applyingBufferSize = false;
+}
+
 bool BbSensorBackendBase::setPaused(bool paused)
 {
     if (!m_deviceFile.isOpen())
@@ -338,6 +407,9 @@ bool BbSensorBackendBase::setPaused(bool paused)
 
     sensor_devctl_enable_u enableState;
     enableState.tx.enable = paused ? 0 : 1;
+
+    if (m_socketNotifier)
+        m_socketNotifier->setEnabled(!paused);
 
     const int result = devctl(m_deviceFile.handle(), DCMD_SENSOR_ENABLE, &enableState, sizeof(enableState), NULL);
     if (result != EOK) {
@@ -360,12 +432,26 @@ void BbSensorBackendBase::updatePauseState()
 
 void BbSensorBackendBase::updateOrientation()
 {
-    // ### I can't really test this, the rotation matrix has too many glitches and drifts over time,
-    // making any measurement quite hard
-    const int rotationAngle = guiHelper()->currentOrientation();
+    const int rotationAngle = orientationForRemapping();
 
     m_mappingMatrix[0] = cos(rotationAngle*M_PI/180);
     m_mappingMatrix[1] = sin(rotationAngle*M_PI/180);
     m_mappingMatrix[2] = -sin(rotationAngle*M_PI/180);
     m_mappingMatrix[3] = cos(rotationAngle*M_PI/180);
+
+    if (sensor()->isFeatureSupported(QSensor::AxesOrientation))
+        sensor()->setCurrentOrientation(rotationAngle);
+}
+
+int BbSensorBackendBase::orientationForRemapping() const
+{
+    if (!sensor()->isFeatureSupported(QSensor::AxesOrientation))
+        return 0;
+
+    switch (sensor()->axesOrientationMode()) {
+    default:
+    case QSensor::FixedOrientation: return 0;
+    case QSensor::AutomaticOrientation: return guiHelper()->currentOrientation();
+    case QSensor::UserOrientation: return sensor()->userOrientation();
+    }
 }

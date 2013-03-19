@@ -49,6 +49,9 @@
     \row
         \li Rotation Sensor
         \li Accelerometer
+    \row
+        \li Tilt Sensor
+        \li Accelerometer
     \endtable
     If a platform doesn't support the source sensor, then the sensor can not be emulated.
 */

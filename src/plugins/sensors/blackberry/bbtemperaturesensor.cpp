@@ -40,31 +40,8 @@
 ****************************************************************************/
 #include "bbtemperaturesensor.h"
 
-class BbTemperatureReadingPrivate
-{
-public:
-    BbTemperatureReadingPrivate()
-        : temperature(0)
-    {
-    }
-
-    qreal temperature;
-};
-
-IMPLEMENT_READING(BbTemperatureReading)
-
-qreal BbTemperatureReading::temperature() const
-{
-    return d->temperature;
-}
-
-void BbTemperatureReading::setTemperature(qreal temperature)
-{
-    d->temperature = temperature;
-}
-
 BbTemperatureSensor::BbTemperatureSensor(QSensor *sensor)
-    : BbSensorBackend<BbTemperatureReading>(devicePath(), SENSOR_TYPE_TEMPERATURE, sensor)
+    : BbSensorBackend<QAmbientTemperatureReading>(devicePath(), SENSOR_TYPE_TEMPERATURE, sensor)
 {
     setDescription(QLatin1String("Temperature in degrees Celsius"));
 }
@@ -74,7 +51,7 @@ QString BbTemperatureSensor::devicePath()
     return QLatin1String("/dev/sensor/temp");
 }
 
-bool BbTemperatureSensor::updateReadingFromEvent(const sensor_event_t &event, BbTemperatureReading *reading)
+bool BbTemperatureSensor::updateReadingFromEvent(const sensor_event_t &event, QAmbientTemperatureReading *reading)
 {
     // TODO: I was unable to test this since the device I was testing this with did not have
     //       a temperature sensor. Verify that this works and check that the units are correct.

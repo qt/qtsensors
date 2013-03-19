@@ -44,10 +44,7 @@
 
 #include <QtSensors/qsensor.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
-
-QT_MODULE(QtSensors)
 
 class QAccelerometerReadingPrivate;
 
@@ -77,21 +74,40 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QAccelerometerReading*>(reading)); }
 };
 
+class QAccelerometerPrivate;
+
 class Q_SENSORS_EXPORT QAccelerometer : public QSensor
 {
     Q_OBJECT
+    Q_ENUMS(AccelerationMode)
+    Q_PROPERTY(AccelerationMode accelerationMode READ accelerationMode WRITE setAccelerationMode
+               NOTIFY accelerationModeChanged)
 public:
     explicit QAccelerometer(QObject *parent = 0);
     virtual ~QAccelerometer();
+
+    // Keep this enum in sync with QmlAccelerometer::AccelerationMode
+    enum AccelerationMode {
+        Combined,
+        Gravity,
+        User
+    };
+
+    AccelerationMode accelerationMode() const;
+    void setAccelerationMode(AccelerationMode accelerationMode);
+
     QAccelerometerReading *reading() const { return static_cast<QAccelerometerReading*>(QSensor::reading()); }
     static char const * const type;
 
+Q_SIGNALS:
+    void accelerationModeChanged(AccelerationMode accelerationMode);
+
 private:
+    Q_DECLARE_PRIVATE(QAccelerometer)
     Q_DISABLE_COPY(QAccelerometer)
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

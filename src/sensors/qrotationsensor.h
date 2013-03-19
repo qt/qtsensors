@@ -44,10 +44,7 @@
 
 #include <QtSensors/qsensor.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
-
-QT_MODULE(QtSensors)
 
 class QRotationReadingPrivate;
 
@@ -74,24 +71,30 @@ private:
     bool filter(QSensorReading *reading) { return filter(static_cast<QRotationReading*>(reading)); }
 };
 
+class QRotationSensorPrivate;
+
 class Q_SENSORS_EXPORT QRotationSensor : public QSensor
 {
     Q_OBJECT
-#ifdef Q_QDOC
-    Q_PROPERTY(bool hasZ)
-#endif
+    Q_PROPERTY(bool hasZ READ hasZ NOTIFY hasZChanged)
 public:
     explicit QRotationSensor(QObject *parent = 0);
     virtual ~QRotationSensor();
     QRotationReading *reading() const { return static_cast<QRotationReading*>(QSensor::reading()); }
     static char const * const type;
 
+    bool hasZ() const;
+    void setHasZ(bool hasZ);
+
+Q_SIGNALS:
+    void hasZChanged(bool hasZ);
+
 private:
+    Q_DECLARE_PRIVATE(QRotationSensor)
     Q_DISABLE_COPY(QRotationSensor)
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

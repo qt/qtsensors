@@ -40,36 +40,13 @@
 ****************************************************************************/
 #include "bbaltimeter.h"
 
-class BbAltimeterReadingPrivate
-{
-public:
-    BbAltimeterReadingPrivate()
-        : altitude(0)
-    {
-    }
-
-    qreal altitude;
-};
-
-IMPLEMENT_READING(BbAltimeterReading)
-
-qreal BbAltimeterReading::altitude() const
-{
-    return d->altitude;
-}
-
-void BbAltimeterReading::setAltitude(qreal altitude)
-{
-    d->altitude = altitude;
-}
-
 BbAltimeter::BbAltimeter(QSensor *sensor)
-    : BbSensorBackend<BbAltimeterReading>(devicePath(), SENSOR_TYPE_ALTIMETER, sensor)
+    : BbSensorBackend<QAltimeterReading>(devicePath(), SENSOR_TYPE_ALTIMETER, sensor)
 {
     setDescription(QLatin1String("Altitude in meters relative to mean sea level"));
 }
 
-bool BbAltimeter::updateReadingFromEvent(const sensor_event_t &event, BbAltimeterReading *reading)
+bool BbAltimeter::updateReadingFromEvent(const sensor_event_t &event, QAltimeterReading *reading)
 {
     reading->setAltitude(event.altitude_s.altitude);
     return true;

@@ -53,9 +53,6 @@ QString BbProximitySensor::devicePath()
 
 bool BbProximitySensor::updateReadingFromEvent(const sensor_event_t &event, QProximityReading *reading)
 {
-    // TODO: I was unable to test this since the device I was testing this with did not have
-    //       a proximity sensor. Verify that this works, check that the units are correct
-    //       and that the threshold makes sense.
     const qreal minProximity = sensor()->outputRanges().first().minimum;
     reading->setClose(event.proximity_s.distance <= minProximity);
     return true;

@@ -50,10 +50,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QPair>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
-
-QT_MODULE(QtSensors)
 
 class QSensorPrivate;
 class QSensorBackend;
@@ -80,6 +77,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
 
     Q_OBJECT
     Q_ENUMS(Feature)
+    Q_ENUMS(AxesOrientationMode)
     Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier)
     Q_PROPERTY(QByteArray type READ type)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
@@ -93,18 +91,30 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(QString description READ description)
     Q_PROPERTY(int error READ error NOTIFY sensorError)
     Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged REVISION 1)
-#ifdef Q_QDOC
-    Q_PROPERTY(int maxBufferSize)
-    Q_PROPERTY(int efficientBufferSize)
-    Q_PROPERTY(int bufferSize)
-#endif
+    Q_PROPERTY(bool skipDuplicates READ skipDuplicates WRITE setSkipDuplicates NOTIFY skipDuplicatesChanged)
+    Q_PROPERTY(AxesOrientationMode axesOrientationMode READ axesOrientationMode WRITE setAxesOrientationMode NOTIFY axesOrientationModeChanged)
+    Q_PROPERTY(int currentOrientation READ currentOrientation NOTIFY currentOrientationChanged)
+    Q_PROPERTY(int userOrientation READ userOrientation WRITE setUserOrientation NOTIFY userOrientationChanged)
+    Q_PROPERTY(int maxBufferSize READ maxBufferSize NOTIFY maxBufferSizeChanged)
+    Q_PROPERTY(int efficientBufferSize READ efficientBufferSize NOTIFY efficientBufferSizeChanged)
+    Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged)
 public:
     enum Feature {
         Buffering,
         AlwaysOn,
         GeoValues,
         FieldOfView,
+        AccelerationMode,
+        SkipDuplicates,
+        AxesOrientation,
         Reserved = 257 // Make sure at least 2 bytes are used for the enum to avoid breaking BC later
+    };
+
+    // Keep in sync with QmlSensor::AxesOrientationMode
+    enum AxesOrientationMode {
+        FixedOrientation,
+        AutomaticOrientation,
+        UserOrientation
     };
 
     explicit QSensor(const QByteArray &type, QObject *parent = 0);
@@ -125,6 +135,9 @@ public:
 
     bool isAlwaysOn() const;
     void setAlwaysOn(bool alwaysOn);
+
+    bool skipDuplicates() const;
+    void setSkipDuplicates(bool skipDuplicates);
 
     qrangelist availableDataRates() const;
     int dataRate() const;
@@ -153,6 +166,24 @@ public:
 
     Q_INVOKABLE bool isFeatureSupported(Feature feature) const;
 
+    AxesOrientationMode axesOrientationMode() const;
+    void setAxesOrientationMode(AxesOrientationMode axesOrientationMode);
+
+    int currentOrientation() const;
+    void setCurrentOrientation(int currentOrientation);
+
+    int userOrientation() const;
+    void setUserOrientation(int userOrientation);
+
+    int maxBufferSize() const;
+    void setMaxBufferSize(int maxBufferSize);
+
+    int efficientBufferSize() const;
+    void setEfficientBufferSize(int efficientBufferSize);
+
+    int bufferSize() const;
+    void setBufferSize(int bufferSize);
+
 public Q_SLOTS:
     // Start receiving values from the sensor
     bool start();
@@ -168,6 +199,13 @@ Q_SIGNALS:
     void availableSensorsChanged();
     void alwaysOnChanged();
     void dataRateChanged();
+    void skipDuplicatesChanged(bool skipDuplicates);
+    void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
+    void currentOrientationChanged(int currentOrientation);
+    void userOrientationChanged(int userOrientation);
+    void maxBufferSizeChanged(int maxBufferSize);
+    void efficientBufferSizeChanged(int efficientBufferSize);
+    void bufferSizeChanged(int bufferSize);
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);
@@ -253,7 +291,6 @@ private:
 
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 Q_DECLARE_METATYPE(qrange)
 Q_DECLARE_METATYPE(qrangelist)

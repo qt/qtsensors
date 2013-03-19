@@ -45,7 +45,6 @@
 #include <QObject>
 #include <QStringList>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensor;
@@ -69,6 +68,5 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif

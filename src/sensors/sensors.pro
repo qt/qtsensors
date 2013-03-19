@@ -12,6 +12,11 @@ simulator {
 
 QMAKE_DOCS = $$PWD/doc/qtsensors.qdocconf
 
+ANDROID_JAR_DEPENDENCIES = \
+    jar/QtSensors.jar:org.qtproject.qt5.android.sensors.QtSensors
+ANDROID_LIB_DEPENDENCIES = \
+    plugins/sensors/libqtsensors_android.so
+
 load(qt_module)
 
 PUBLIC_HEADERS += \
@@ -51,8 +56,11 @@ simulator {
 SENSORS=\
     qsensor\
     qaccelerometer\
+    qaltimeter\
     qambientlightsensor\
+    qambienttemperaturesensor\
     qcompass\
+    qholstersensor\
     qlightsensor\
     qmagnetometer\
     qorientationsensor\
@@ -62,6 +70,7 @@ SENSORS=\
     qtapsensor\
     qtiltsensor\
     qgyroscope\
+    qpressuresensor\
 
 for(s,SENSORS) {
     # Client API

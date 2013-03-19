@@ -39,20 +39,25 @@
 
     \section1 QML
 
-    Compatibility for QML applications is provided by shipping the legacy \c QtMobility.sensors
-    QML import. QML applications should not require any changes to continue operating.
+    In QtMobility, the C++ classes like QAccelerometer were directly used as QML types.
+    In Qt Sensors, there are now separate classes for the QML types, which have no public
+    C++ API.
 
-    Applications using the legacy QML import may not be able to trivially port over
-    to the new QML import because the new QML import does not provide types for
-    every sensor like the legacy QML import does.
+    The new QML types in Qt Sensors fix some issues the former QtMobility QML types had,
+    for example:
+    \list
+    \li The reading types now have proper change notifications
+    \li \c availableDataRates and \c outputRanges of the \c Sensor type are now proper list types
+    \li The \c identifier and \c type properties of \c Sensor can now be used
+    \li The \c lux property of \c LightSensorReading has been renamed to \c illuminance
+    \li The \c QmlSensors singleton now allows to query for sensor types
+    \endlist
 
-    \table
-        \row
-            \li \l {Qt Sensors QML Types}{QML API}
-            \li Information about the Qt Sensors QML API
-    \endtable
+    For more information, see the \l {Qt Sensors QML Types}{QML API} documentation.
 
     \section1 C++
+
+    The C++ API mainly remained the same as in QtMobility.
 
     \section2 Includes
 

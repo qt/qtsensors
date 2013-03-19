@@ -46,7 +46,6 @@
 #include <QQmlListProperty>
 #include "qmlsensorrange.h"
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QSensor;
@@ -57,6 +56,7 @@ class QmlSensorReading;
 class QmlSensor : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
+    Q_ENUMS(AxesOrientationMode)
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QString identifier READ identifier WRITE setIdentifier NOTIFY identifierChanged)
     Q_PROPERTY(QString type READ type NOTIFY typeChanged)
@@ -71,7 +71,22 @@ class QmlSensor : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString description READ description NOTIFY descriptionChanged)
     Q_PROPERTY(int error READ error NOTIFY errorChanged)
     Q_PROPERTY(bool alwaysOn READ isAlwaysOn WRITE setAlwaysOn NOTIFY alwaysOnChanged)
+    Q_PROPERTY(bool skipDuplicates READ skipDuplicates WRITE setSkipDuplicates NOTIFY skipDuplicatesChanged REVISION 1)
+    Q_PROPERTY(AxesOrientationMode axesOrientationMode READ axesOrientationMode WRITE setAxesOrientationMode NOTIFY axesOrientationModeChanged REVISION 1)
+    Q_PROPERTY(int currentOrientation READ currentOrientation NOTIFY currentOrientationChanged REVISION 1)
+    Q_PROPERTY(int userOrientation READ userOrientation WRITE setUserOrientation NOTIFY userOrientationChanged REVISION 1)
+    Q_PROPERTY(int maxBufferSize READ maxBufferSize NOTIFY maxBufferSizeChanged REVISION 1)
+    Q_PROPERTY(int efficientBufferSize READ efficientBufferSize NOTIFY efficientBufferSizeChanged REVISION 1)
+    Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged REVISION 1)
+
 public:
+    // Keep in sync with QSensor::AxesOrientationMode
+    enum AxesOrientationMode {
+        FixedOrientation,
+        AutomaticOrientation,
+        UserOrientation
+    };
+
     explicit QmlSensor(QObject *parent = 0);
     ~QmlSensor();
 
@@ -90,6 +105,9 @@ public:
     bool isAlwaysOn() const;
     void setAlwaysOn(bool alwaysOn);
 
+    bool skipDuplicates() const;
+    void setSkipDuplicates(bool skipDuplicates);
+
     QQmlListProperty<QmlSensorRange> availableDataRates() const;
     int dataRate() const;
     void setDataRate(int rate);
@@ -102,6 +120,21 @@ public:
     int error() const;
 
     QmlSensorReading *reading() const;
+
+    AxesOrientationMode axesOrientationMode() const;
+    void setAxesOrientationMode(AxesOrientationMode axesOrientationMode);
+
+    int currentOrientation() const;
+
+    int userOrientation() const;
+    void setUserOrientation(int userOrientation);
+
+    int maxBufferSize() const;
+
+    int efficientBufferSize() const;
+
+    int bufferSize() const;
+    void setBufferSize(int bufferSize);
 
 public Q_SLOTS:
     bool start();
@@ -120,6 +153,13 @@ Q_SIGNALS:
     void descriptionChanged();
     void errorChanged();
     void alwaysOnChanged();
+    void skipDuplicatesChanged(bool skipDuplicates);
+    void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
+    void currentOrientationChanged(int currentOrientation);
+    void userOrientationChanged(int userOrientation);
+    void maxBufferSizeChanged(int maxBufferSize);
+    void efficientBufferSizeChanged(int efficientBufferSize);
+    void bufferSizeChanged(int bufferSize);
 
 protected:
     virtual QSensor *sensor() const = 0;
@@ -127,6 +167,8 @@ protected:
 
 private Q_SLOTS:
     void updateReading();
+
+protected Q_SLOTS:
     void componentComplete();
 
 private:
@@ -159,6 +201,5 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif

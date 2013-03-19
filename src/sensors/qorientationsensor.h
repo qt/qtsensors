@@ -44,10 +44,7 @@
 
 #include <QtSensors/qsensor.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
-
-QT_MODULE(QtSensors)
 
 class QOrientationReadingPrivate;
 
@@ -94,7 +91,6 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

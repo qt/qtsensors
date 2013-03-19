@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Research In Motion
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -42,20 +42,9 @@
 #define BBPRESSURESENSOR_H
 
 #include "bbsensorbackend.h"
+#include <qpressuresensor.h>
 
-class BbPressureReadingPrivate;
-
-class BbPressureReading : public QSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(qreal pressure READ pressure)
-    DECLARE_READING(BbPressureReading)
-public:
-    qreal pressure() const;
-    void setPressure(qreal pressure);
-};
-
-class BbPressureSensor : public BbSensorBackend<BbPressureReading>
+class BbPressureSensor : public BbSensorBackend<QPressureReading>
 {
     Q_OBJECT
 
@@ -65,7 +54,7 @@ public:
     static QString devicePath();
 
 protected:
-    bool updateReadingFromEvent(const sensor_event_t &event, BbPressureReading *reading) Q_DECL_OVERRIDE;
+    bool updateReadingFromEvent(const sensor_event_t &event, QPressureReading *reading) Q_DECL_OVERRIDE;
 };
 
 #endif

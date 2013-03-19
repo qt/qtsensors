@@ -201,7 +201,7 @@ char const * const QRotationSensor::type("QRotationSensor");
     Construct the sensor as a child of \a parent.
 */
 QRotationSensor::QRotationSensor(QObject *parent)
-    : QSensor(QRotationSensor::type, parent)
+    : QSensor(QRotationSensor::type, *new QRotationSensorPrivate, parent)
 {
 }
 
@@ -227,6 +227,28 @@ QRotationSensor::~QRotationSensor()
     Returns true if z is available.
     Returns false if z is not available.
 */
+
+bool QRotationSensor::hasZ() const
+{
+    Q_D(const QRotationSensor);
+    return (d->hasZ);
+}
+
+/*!
+    \since 5.1
+
+    Sets whether the z angle is available to \a hasZ. This is to be called from the
+    backend. By default the hasZ property is true, so a backend only has to
+    call this if its rotation sensor can not report z angles.
+*/
+void QRotationSensor::setHasZ(bool hasZ)
+{
+    Q_D(QRotationSensor);
+    if (d->hasZ != hasZ) {
+        d->hasZ = hasZ;
+        emit hasZChanged(hasZ);
+    }
+}
 
 #include "moc_qrotationsensor.cpp"
 QT_END_NAMESPACE

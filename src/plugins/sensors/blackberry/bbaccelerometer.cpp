@@ -44,6 +44,12 @@ BbAccelerometer::BbAccelerometer(QSensor *sensor)
     : BbSensorBackend<QAccelerometerReading>(devicePath(), SENSOR_TYPE_ACCELEROMETER, sensor)
 {
     setDescription(QLatin1String("X, Y, and Z axes accelerations in m/s^2"));
+
+    QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor);
+    if (accelerometer) {
+        connect(accelerometer, SIGNAL(accelerationModeChanged(AccelerationMode)),
+                this, SLOT(applyAccelerationMode()));
+    }
 }
 
 bool BbAccelerometer::updateReadingFromEvent(const sensor_event_t &event, QAccelerometerReading *reading)
@@ -58,7 +64,39 @@ bool BbAccelerometer::updateReadingFromEvent(const sensor_event_t &event, QAccel
     return true;
 }
 
+void BbAccelerometer::start()
+{
+    applyAccelerationMode();
+    BbSensorBackend<QAccelerometerReading>::start();
+}
+
 QString BbAccelerometer::devicePath()
 {
     return QLatin1String("/dev/sensor/accel");
+}
+
+void BbAccelerometer::applyAccelerationMode()
+{
+    const QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor());
+    if (accelerometer) {
+        QString fileName;
+        sensor_type_e sensorType;
+        switch (accelerometer->accelerationMode()) {
+        case QAccelerometer::Gravity:
+            fileName = QLatin1String("/dev/sensor/gravity");
+            sensorType = SENSOR_TYPE_GRAVITY;
+            break;
+        case QAccelerometer::User:
+            fileName = QLatin1String("/dev/sensor/linAccel");
+            sensorType = SENSOR_TYPE_LINEAR_ACCEL;
+            break;
+        default:
+        case QAccelerometer::Combined:
+            fileName = devicePath();
+            sensorType = SENSOR_TYPE_ACCELEROMETER;
+            break;
+        }
+
+        setDevice(fileName, sensorType);
+    }
 }

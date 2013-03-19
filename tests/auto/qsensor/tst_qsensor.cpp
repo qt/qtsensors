@@ -847,8 +847,16 @@ private slots:
             QCOMPARE(reading->z(), 1.0);
         })
 
+        TEST_SENSORINTERFACE(QAltimeter, QAltimeterReading, {
+            QCOMPARE(reading->altitude(), 8848.0);
+        })
+
         TEST_SENSORINTERFACE(QAmbientLightSensor, QAmbientLightReading, {
             QCOMPARE(reading->lightLevel(), QAmbientLightReading::Twilight);
+        })
+
+        TEST_SENSORINTERFACE(QAmbientTemperatureSensor, QAmbientTemperatureReading, {
+            QCOMPARE(reading->temperature(), 30.0);
         })
 
         TEST_SENSORINTERFACE(QCompass, QCompassReading, {
@@ -860,6 +868,10 @@ private slots:
             QCOMPARE(reading->x(), 1.0);
             QCOMPARE(reading->y(), 1.0);
             QCOMPARE(reading->z(), 1.0);
+        })
+
+        TEST_SENSORINTERFACE(QHolsterSensor, QHolsterReading, {
+            QCOMPARE(reading->holstered(), true);
         })
 
         TEST_SENSORINTERFACE(QLightSensor, QLightReading, {
@@ -875,6 +887,10 @@ private slots:
 
         TEST_SENSORINTERFACE(QOrientationSensor, QOrientationReading, {
             QCOMPARE(reading->orientation(), QOrientationReading::LeftUp);
+        })
+
+        TEST_SENSORINTERFACE(QPressureSensor, QPressureReading, {
+            QCOMPARE(reading->pressure(), 1.0);
         })
 
         TEST_SENSORINTERFACE(QProximitySensor, QProximityReading, {
@@ -959,6 +975,7 @@ private slots:
         QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
         QVERIFY(!sensor.isFeatureSupported(QSensor::GeoValues));
         QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::AccelerationMode));
 
         // Connect to backend - according to the testsensorimpl implementation, AlwaysOn and
         // GeoValues should be supported afterwards
@@ -968,6 +985,7 @@ private slots:
         QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
         QVERIFY(sensor.isFeatureSupported(QSensor::GeoValues));
         QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::AccelerationMode));
     }
 };
 

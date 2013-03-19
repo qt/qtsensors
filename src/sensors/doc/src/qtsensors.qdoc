@@ -112,6 +112,9 @@
         \row
             \li \l {Generic Backend}{Generic Backend}
             \li Information about the generic sensor backend.
+        \row
+            \li \l {Sensorfw Backend}{Sensorfw Backend}
+            \li Information about the Sensorfw sensor backend.
     \endtable
 */
 

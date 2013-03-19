@@ -44,10 +44,7 @@
 
 #include <QtCore/qglobal.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
-
-QT_MODULE(QtSensors)
 
 #ifndef QT_STATIC
 #    if defined(QT_BUILD_SENSORS_LIB)
@@ -60,7 +57,6 @@ QT_MODULE(QtSensors)
 #endif
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif // QSENSORSGLOBAL_H
 

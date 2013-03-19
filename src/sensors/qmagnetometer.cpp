@@ -84,7 +84,7 @@ IMPLEMENT_READING(QMagnetometerReading)
     \property QMagnetometerReading::x
     \brief the raw magnetic flux density on the X axis.
 
-    Measured as telsas.
+    Measured as teslas.
     \sa {QMagnetometerReading Units}
 */
 
@@ -105,7 +105,7 @@ void QMagnetometerReading::setX(qreal x)
     \property QMagnetometerReading::y
     \brief the raw magnetic flux density on the Y axis.
 
-    Measured as telsas.
+    Measured as teslas.
     \sa {QMagnetometerReading Units}
 */
 
@@ -126,7 +126,7 @@ void QMagnetometerReading::setY(qreal y)
     \property QMagnetometerReading::z
     \brief the raw magnetic flux density on the Z axis.
 
-    Measured as telsas.
+    Measured as teslas.
     \sa {QMagnetometerReading Units}
 */
 
@@ -210,7 +210,7 @@ char const * const QMagnetometer::type("QMagnetometer");
     Construct the sensor as a child of \a parent.
 */
 QMagnetometer::QMagnetometer(QObject *parent)
-    : QSensor(QMagnetometer::type, parent)
+    : QSensor(QMagnetometer::type, *new QMagnetometerPrivate, parent)
 {
 }
 
@@ -236,9 +236,23 @@ QMagnetometer::~QMagnetometer()
     Set to true to return geomagnetic flux density.
     Set to false (the default) to return raw magnetic flux density.
 
-    Note that you must access this property via QObject::property() and QObject::setProperty().
     The property must be set before calling start().
 */
+
+bool QMagnetometer::returnGeoValues() const
+{
+    Q_D(const QMagnetometer);
+    return d->returnGeoValues;
+}
+
+void QMagnetometer::setReturnGeoValues(bool returnGeoValues)
+{
+    Q_D(QMagnetometer);
+    if (d->returnGeoValues != returnGeoValues) {
+        d->returnGeoValues = returnGeoValues;
+        emit returnGeoValuesChanged(returnGeoValues);
+    }
+}
 
 #include "moc_qmagnetometer.cpp"
 QT_END_NAMESPACE

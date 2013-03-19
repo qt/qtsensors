@@ -57,7 +57,9 @@ genericrotationsensor::genericrotationsensor(QSensor *sensor)
     setReading<QRotationReading>(&m_reading);
     setDataRates(accelerometer);
 
-    sensor->setProperty("hasZ", false);
+    QRotationSensor * const rotationSensor = qobject_cast<QRotationSensor *>(sensor);
+    if (rotationSensor)
+        rotationSensor->setHasZ(false);
 }
 
 void genericrotationsensor::start()

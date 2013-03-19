@@ -53,7 +53,8 @@
 // We mean it.
 //
 
-QT_BEGIN_HEADER
+#include "qsensor_p.h"
+
 QT_BEGIN_NAMESPACE
 
 class QTapReadingPrivate
@@ -69,8 +70,18 @@ public:
     bool doubleTap;
 };
 
+class QTapSensorPrivate : public QSensorPrivate
+{
+public:
+    QTapSensorPrivate()
+        : returnDoubleTapEvents(true)
+    {
+    }
+
+    bool returnDoubleTapEvents;
+};
+
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

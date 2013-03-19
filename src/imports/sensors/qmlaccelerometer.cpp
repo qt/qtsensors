@@ -65,10 +65,31 @@ QmlAccelerometer::QmlAccelerometer(QObject *parent)
     : QmlSensor(parent)
     , m_sensor(new QAccelerometer(this))
 {
+    connect(m_sensor, SIGNAL(accelerationModeChanged(AccelerationMode)),
+            this, SIGNAL(accelerationModeChanged(AccelerationMode)));
 }
 
 QmlAccelerometer::~QmlAccelerometer()
 {
+}
+
+/*!
+    \qmlproperty AccelerationMode Accelerometer::accelerationMode
+    \since QtSensors 5.1
+
+    This property holds the current acceleration mode.
+
+    Please see QAccelerometer::accelerationMode for information about this property.
+*/
+
+QmlAccelerometer::AccelerationMode QmlAccelerometer::accelerationMode() const
+{
+    return static_cast<QmlAccelerometer::AccelerationMode>(m_sensor->accelerationMode());
+}
+
+void QmlAccelerometer::setAccelerationMode(QmlAccelerometer::AccelerationMode accelerationMode)
+{
+    m_sensor->setAccelerationMode(static_cast<QAccelerometer::AccelerationMode>(accelerationMode));
 }
 
 QmlSensorReading *QmlAccelerometer::createReading() const

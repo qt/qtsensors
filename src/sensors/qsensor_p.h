@@ -57,7 +57,6 @@
 
 #include "private/qobject_p.h"
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 typedef QList<QSensorFilter*> QFilterList;
@@ -79,6 +78,13 @@ public:
         , cache_reading(0)
         , error(0)
         , alwaysOn(false)
+        , skipDuplicates(false)
+        , axesOrientationMode(QSensor::FixedOrientation)
+        , currentOrientation(0)
+        , userOrientation(0)
+        , bufferSize(1)
+        , maxBufferSize(1)
+        , efficientBufferSize(1)
     {
     }
 
@@ -108,6 +114,15 @@ public:
     int error;
 
     bool alwaysOn;
+    bool skipDuplicates;
+
+    QSensor::AxesOrientationMode axesOrientationMode;
+    int currentOrientation;
+    int userOrientation;
+
+    int bufferSize;
+    int maxBufferSize;
+    int efficientBufferSize;
 };
 
 class QSensorReadingPrivate
@@ -123,7 +138,6 @@ public:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

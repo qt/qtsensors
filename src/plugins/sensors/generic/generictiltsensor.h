@@ -46,7 +46,6 @@
 #include <qtiltsensor.h>
 #include <qaccelerometer.h>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class GenericTiltSensor : public QSensorBackend, public QAccelerometerFilter
@@ -64,6 +63,8 @@ public:
 
     bool filter(QAccelerometerReading *reading);
 
+    bool isFeatureSupported(QSensor::Feature feature) const Q_DECL_OVERRIDE;
+
 private:
     QTiltReading m_reading;
     QAccelerometer *accelerometer;
@@ -77,7 +78,6 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

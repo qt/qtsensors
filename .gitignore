@@ -95,6 +95,7 @@ examples/sensors/shakeit/shakeit
 # Generated config test binaries
 config.tests/bbsensor_compass/bbsensor_compass
 config.tests/bbsensor_header/bbsensor_header
+config.tests/bbsensor_holster/bbsensor_holster
 
 # Directories to ignore
 # ---------------------

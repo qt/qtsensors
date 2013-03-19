@@ -53,7 +53,6 @@ public:
 
     static QString devicePath();
 
-    void start() Q_DECL_OVERRIDE;
     void additionalDeviceInit() Q_DECL_OVERRIDE;
     bool addDefaultRange() Q_DECL_OVERRIDE;
 

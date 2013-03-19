@@ -55,7 +55,6 @@
 
 #include "qsensor_p.h"
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QLightReadingPrivate : public QSensorReadingPrivate
@@ -69,8 +68,18 @@ public:
     qreal lux;
 };
 
+class QLightSensorPrivate : public QSensorPrivate
+{
+public:
+    QLightSensorPrivate()
+        : fieldOfView(0)
+    {
+    }
+
+    qreal fieldOfView;
+};
+
 QT_END_NAMESPACE
-QT_END_HEADER
 
 #endif
 

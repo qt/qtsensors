@@ -176,6 +176,40 @@ void QSensorPrivate::init(const QByteArray &sensorType)
 
     The sensor data is delivered via QSensorReading and its sub-classes.
 
+    \section1 Orientation
+
+    Some sensors react to screen orientation changes, such as QAccelerometer, QMagnetometer and
+    QRotationSensor. These are so called \e orientable sensors. For orientable sensors,
+    QSensor supports changing the reporting of the reading values based on the orientation of the
+    screen.
+
+    For orientable sensors, the axesOrientationMode property controls how the orientation affects
+    the reading values.
+
+    In the default mode, QSensor::FixedOrientation, the reading values remain
+    unaffected by the orientation. In the QSensor::AutomaticOrientation mode, the reading
+    values are automatically rotated by taking the current screen orientation into account. And
+    finally, in the QSensor::UserOrientation mode, the reading values are rotated
+    according to a user-specified orientation.
+
+    The functionality of this is only available if it is supported by the backend and if the sensor
+    is orientable, which can be checked by calling QSensor::isFeatureSupported()
+    with the QSensor::AxesOrientation flag.
+
+    The orientation values here are always of the screen orientation, not the device orientation.
+    The screen orientation is the orientation of the GUI. For example when rotating a device by 90
+    degrees counter-clockwise, the screen orientation compensates for that by rotating 90 degrees
+    clockwise, to the effect that the GUI is still facing upright after the device has been rotated.
+    Note that applications can lock the screen orientation, for example to force portrait or landscape
+    mode. For locked orientations, orientable sensors will not react with reading changes if the device
+    orientation is changed, as orientable sensors react to screen orientation changes only. This makes
+    sense, as the purpose of orientable sensors is to keep the sensor orientation in sync with the screen
+    orientation.
+
+    The orientation values range from 0 to 270 degrees. The orientation is applied in clockwise direction,
+    e.g. an orientation value of 90 degrees means that the screen has been rotated 90 degress to the right
+    from its origin position, to compensate a device rotation of 90 degrees to the left.
+
     \sa QSensorReading
 */
 
@@ -189,6 +223,9 @@ void QSensorPrivate::init(const QByteArray &sensorType)
                      QSensor::bufferSize property.
     \value AlwaysOn The backend supports changing the policy on whether to suspend when idle,
                     controlled by the QSensor::alwaysOn property.
+    \value SkipDuplicates The backend supports skipping of same or very similar successive
+                          readings. This can be enabled by setting the QSensor::skipDuplicates
+                          property to true.
 
     The features of QMagnetometer are:
 
@@ -199,6 +236,16 @@ void QSensorPrivate::init(const QByteArray &sensorType)
 
     \value FieldOfView The backend specifies its field of view, which can be
                        read from the QLightSensor::fieldOfView property.
+
+    The features of QAccelerometer are:
+
+    \value AccelerationMode The backend supports switching the acceleration mode
+                            of the acceleromter with the QAccelerometer::accelerationMode property.
+
+    The features of all orientable sensors are:
+
+    \value AxesOrientation The backend supports changing the axes orientation from the default of
+                           QSensor::FixedOrientation to something else.
 
     \omitvalue Reserved
 
@@ -427,6 +474,54 @@ bool QSensor::isAlwaysOn() const
     Q_D(const QSensor);
     return d->alwaysOn;
 }
+
+/*!
+    \property QSensor::skipDuplicates
+    \brief Indicates whether duplicate reading values should be omitted.
+    \since 5.1
+
+    When duplicate skipping is enabled, successive readings with the same or very
+    similar values are omitted. This helps reducing the amount of processing done, as less sensor
+    readings are made available. As a consequence, readings arrive at an irregular interval.
+
+    Duplicate skipping is not just enabled for readings that are exactly the same, but also for
+    readings that are quite similar, as each sensor has a bit of jitter even if the device is
+    not moved.
+
+    Support for this property depends on the backend. Use isFeatureSupported() to check if it is
+    supported on the current platform.
+
+    Duplicate skipping is disabled by default.
+
+    Duplicate skipping takes effect when the sensor is started, changing the property while the
+    sensor is active has no immediate effect.
+*/
+bool QSensor::skipDuplicates() const
+{
+    Q_D(const QSensor);
+    return d->skipDuplicates;
+}
+
+/*!
+    Sets the duplicate skipping to \a skipDuplicates.
+
+    \since 5.1
+*/
+void QSensor::setSkipDuplicates(bool skipDuplicates)
+{
+    Q_D(QSensor);
+    if (d->skipDuplicates != skipDuplicates) {
+        d->skipDuplicates = skipDuplicates;
+        emit skipDuplicatesChanged(skipDuplicates);
+    }
+}
+
+/*!
+    \fn QSensor::skipDuplicatesChanged(bool skipDuplicates)
+    \since 5.1
+
+    This signal is emitted when the skipDuplicates property changes.
+*/
 
 /*!
     \property QSensor::availableDataRates
@@ -760,6 +855,142 @@ int QSensor::error() const
 }
 
 /*!
+    \enum QSensor::AxesOrientationMode
+    \since 5.1
+
+    Describes how reading values are affected by the screen orientation.
+
+    \value FixedOrientation No automatic rotation is applied to the reading values.
+
+    \value AutomaticOrientation The reading values are automatically rotated based on the screen
+                                orientation.
+
+    \value UserOrientation The reading values are rotated based on the angle of the userOrientation property.
+
+    \sa QSensor::axesOrientationMode
+*/
+
+/*!
+    \property QSensor::axesOrientationMode
+    \since 5.1
+    \brief The mode that affects how the screen orientation changes reading values.
+
+    When set to FixedOrientation, which is the default mode, no automatic rotation is applied to
+    the reading. This is the only mode available for backends that do not support the
+    QSensor::AxesOrientation feature.
+
+    When set to AutomaticOrientation, the reading values are automatically rotated when the
+    screen orientation changes. In effect, the screen orientation is canceled out.
+
+    As an example, assume the device is rotated by 180 degrees and therefore the screen orientation
+    also is rotated by 180 degrees from the native orientation. Without automatic axes orientation,
+    the reading values would now be changed: Both the X and the Y values would be negated, forcing
+    an application developer to manually cancel out the negation in application code. Automatic
+    axes orientation does this automatically, in this mode the X and Y values would be the same as
+    with the default screen orientation.
+
+    This automatic rotation of the axes is handy is some usecases, for example in a bubble level
+    application that measures how level a surface is by looking at the X axis value of an
+    accelerometer. When the device and screen orientation change by 90 degrees, an application
+    developer does not need to change anything, he can continue using the X axis value even though
+    the device is rotated. Without automatic axes orientation, the application developer would need
+    to look at the Y values instead, thereby adding code to the application that reads from a
+    different axis depending on the screen orientation.
+
+    The UserOrientation mode is quite similar to AutomaticOrientation, only that the screen orientation
+    is manually controlled instead of automatically determined. The angle of the userOrientation
+    property is then used for rotating the reading values.
+
+    Since the rotation of the reading values is based on the screen orientation, Z values will never
+    change, as the Z axis is perpendicular to the screen.
+    As screen orientation changes in 90 degree steps, rotating the reading values is also done in
+    steps of 90 degrees.
+
+    This property is only used for orientable sensors.
+*/
+
+QSensor::AxesOrientationMode QSensor::axesOrientationMode() const
+{
+    Q_D(const QSensor);
+    return d->axesOrientationMode;
+}
+
+void QSensor::setAxesOrientationMode(QSensor::AxesOrientationMode axesOrientationMode)
+{
+    Q_D(QSensor);
+    if (d->axesOrientationMode != axesOrientationMode) {
+        d->axesOrientationMode = axesOrientationMode;
+        emit axesOrientationModeChanged(axesOrientationMode);
+    }
+}
+
+/*!
+    \property QSensor::currentOrientation
+    \since 5.1
+    \brief The current orientation that is used for rotating the reading values.
+
+    This might not be the same as the screen orientation. For example, in the FixedOrientation mode,
+    the reading values are not rotated, and therefore the property is 0.
+
+    In the UserOrientation mode, the readings are rotated based on the userOrientation property,
+    and therefore this property is equal to the userOrientation property.
+
+    In the AutomaticOrientation mode, the readings are rotated based on the screen orientation,
+    and therefore this property will be equal to the current screen orientation.
+
+    This property is set by the backend and only valid for orientable sensors.
+*/
+
+int QSensor::currentOrientation() const
+{
+    Q_D(const QSensor);
+    return d->currentOrientation;
+}
+
+/*!
+    \since 5.1
+    Sets the current screen orientation to \a currentOrientation. This is to be called from the
+    backend whenever the screen orientation or the userOrientation property changes.
+*/
+void QSensor::setCurrentOrientation(int currentOrientation)
+{
+    Q_D(QSensor);
+    if (d->currentOrientation != currentOrientation) {
+        d->currentOrientation = currentOrientation;
+        emit currentOrientationChanged(currentOrientation);
+    }
+}
+
+/*!
+    \property QSensor::userOrientation
+    \since 5.1
+    \brief The angle used for rotating the reading values in the UserOrientation mode.
+
+    When the axesOrientationMode property is set to UserOrientation, the angle for rotating the
+    reading values is taken from this property. In other modes, the property has no effect.
+
+    The default is 0. The only valid values are 0, 90, 180 and 270, as those are the only possible
+    screen orientations.
+
+    This property is only valid for orientable sensors.
+*/
+
+int QSensor::userOrientation() const
+{
+    Q_D(const QSensor);
+    return d->userOrientation;
+}
+
+void QSensor::setUserOrientation(int userOrientation)
+{
+    Q_D(QSensor);
+    if (d->userOrientation != userOrientation) {
+        d->userOrientation = userOrientation;
+        emit userOrientationChanged(userOrientation);
+    }
+}
+
+/*!
     \fn QSensor::sensorError(int error)
 
     This signal is emitted when an \a error code is set on the sensor.
@@ -785,10 +1016,32 @@ int QSensor::error() const
 
     The property holds the maximum buffer size.
 
-    Note that this may be undefined, in which case the sensor does not support any form of buffering.
+    Note that this may be 1, in which case the sensor does not support any form of buffering.
+    In that case, isFeatureSupported(QSensor::Buffering) will also return false.
 
     \sa QSensor::bufferSize, QSensor::efficientBufferSize
 */
+
+int QSensor::maxBufferSize() const
+{
+    Q_D(const QSensor);
+    return d->maxBufferSize;
+}
+
+/*!
+    \since 5.1
+    Sets the maximum buffer size to \a maxBufferSize. This is to be called from the
+    backend.
+*/
+void QSensor::setMaxBufferSize(int maxBufferSize)
+{
+    // ### Qt 6: Remove the entire maxBufferSize property, no backend really uses it
+    Q_D(QSensor);
+    if (d->maxBufferSize != maxBufferSize) {
+        d->maxBufferSize = maxBufferSize;
+        emit maxBufferSizeChanged(maxBufferSize);
+    }
+}
 
 /*!
     \property QSensor::efficientBufferSize
@@ -797,17 +1050,36 @@ int QSensor::error() const
     no particular size is most efficient). Some sensor drivers have a FIFO buffer which
     makes it more efficient to deliver the FIFO's size worth of readings at one time.
 
-    Note that this may be undefined, in which case the sensor does not support any form of buffering.
-
     \sa QSensor::bufferSize, QSensor::maxBufferSize
 */
+
+int QSensor::efficientBufferSize() const
+{
+    Q_D(const QSensor);
+    return d->efficientBufferSize;
+}
+
+/*!
+    \since 5.1
+    Sets the efficient buffer size to \a efficientBufferSize. This is to be called from the
+    backend.
+*/
+void QSensor::setEfficientBufferSize(int efficientBufferSize)
+{
+    // ### Qt 6: Remove the entire efficientBufferSize property, no backend really uses it
+    Q_D(QSensor);
+    if (d->efficientBufferSize != efficientBufferSize) {
+        d->efficientBufferSize = efficientBufferSize;
+        emit efficientBufferSizeChanged(efficientBufferSize);
+    }
+}
 
 /*!
     \property QSensor::bufferSize
 
-    This property holds the size of the buffer. By default (and if the property
-    is left undefined), the buffer size is 1, which means no buffering.
-    If the maximum buffer size is 1 (or undefined), then buffering is not supported
+    This property holds the size of the buffer. By default, the buffer size is 1,
+    which means no buffering.
+    If the maximum buffer size is 1, then buffering is not supported
     by the sensor.
 
     Setting bufferSize greater than maxBufferSize will cause maxBufferSize to be used.
@@ -834,10 +1106,25 @@ int QSensor::error() const
     in time, for example when the event loop is blocked for too long. Without a buffer, these readings
     would simply be dropped.
 
-    The buffer size can only be changed while the sensor is not active.
-
     \sa QSensor::maxBufferSize, QSensor::efficientBufferSize
 */
+
+int QSensor::bufferSize() const
+{
+    Q_D(const QSensor);
+    return d->bufferSize;
+}
+
+void QSensor::setBufferSize(int bufferSize)
+{
+    // ### Qt 6: Currently only the Blackberry backend supports this, but only as an on/off switch.
+    //           We should consider changing this to a more appropriate API.
+    Q_D(QSensor);
+    if (d->bufferSize != bufferSize) {
+        d->bufferSize = bufferSize;
+        emit bufferSizeChanged(bufferSize);
+    }
+}
 
 // =====================================================================
 

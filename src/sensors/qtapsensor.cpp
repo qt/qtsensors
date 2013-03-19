@@ -211,7 +211,7 @@ char const * const QTapSensor::type("QTapSensor");
     Construct the sensor as a child of \a parent.
 */
 QTapSensor::QTapSensor(QObject *parent)
-    : QSensor(QTapSensor::type, parent)
+    : QSensor(QTapSensor::type, *new QTapSensorPrivate, parent)
 {
 }
 
@@ -240,9 +240,23 @@ QTapSensor::~QTapSensor()
     It is not possible to have the sensor report both single and double tap events.
     If both are needed the app should create 2 sensor objects.
 
-    Note that you must access this property via QObject::property() and QObject::setProperty().
     The property must be set before calling start().
 */
+
+bool QTapSensor::returnDoubleTapEvents() const
+{
+    Q_D(const QTapSensor);
+    return d->returnDoubleTapEvents;
+}
+
+void QTapSensor::setReturnDoubleTapEvents(bool returnDoubleTapEvents)
+{
+    Q_D(QTapSensor);
+    if (d->returnDoubleTapEvents != returnDoubleTapEvents) {
+        d->returnDoubleTapEvents = returnDoubleTapEvents;
+        emit returnDoubleTapEventsChanged(returnDoubleTapEvents);
+    }
+}
 
 #include "moc_qtapsensor.cpp"
 QT_END_NAMESPACE

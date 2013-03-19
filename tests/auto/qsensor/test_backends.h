@@ -48,12 +48,16 @@ void register_test_backends();
 void unregister_test_backends();
 
 #include <qaccelerometer.h>
+#include <qaltimeter.h>
 #include <qambientlightsensor.h>
+#include <qambienttemperaturesensor.h>
 #include <qcompass.h>
 #include <qgyroscope.h>
+#include <qholstersensor.h>
 #include <qlightsensor.h>
 #include <qmagnetometer.h>
 #include <qorientationsensor.h>
+#include <qpressuresensor.h>
 #include <qproximitysensor.h>
 #include <qrotationsensor.h>
 #include <qtapsensor.h>
@@ -96,8 +100,14 @@ PREPARE_SENSORINTERFACE(QAccelerometer, QAccelerometerReading, QAccelerometerFil
     reading->setY(1.0);
     reading->setZ(1.0);
 })
+PREPARE_SENSORINTERFACE(QAltimeter, QAltimeterReading, QAltimeterFilter, {
+    reading->setAltitude(8848);
+})
 PREPARE_SENSORINTERFACE(QAmbientLightSensor, QAmbientLightReading, QAmbientLightFilter, {
     reading->setLightLevel(QAmbientLightReading::Twilight);
+})
+PREPARE_SENSORINTERFACE(QAmbientTemperatureSensor, QAmbientTemperatureReading, QAmbientTemperatureFilter, {
+    reading->setTemperature(30);
 })
 PREPARE_SENSORINTERFACE(QCompass, QCompassReading, QCompassFilter, {
     reading->setAzimuth(1.0);
@@ -107,6 +117,9 @@ PREPARE_SENSORINTERFACE(QGyroscope, QGyroscopeReading, QGyroscopeFilter, {
     reading->setX(1.0);
     reading->setY(1.0);
     reading->setZ(1.0);
+})
+PREPARE_SENSORINTERFACE(QHolsterSensor, QHolsterReading, QHolsterFilter, {
+    reading->setHolstered(true);
 })
 PREPARE_SENSORINTERFACE(QLightSensor, QLightReading, QLightFilter, {
     reading->setLux(1.0);
@@ -119,6 +132,9 @@ PREPARE_SENSORINTERFACE(QMagnetometer, QMagnetometerReading, QMagnetometerFilter
 })
 PREPARE_SENSORINTERFACE(QOrientationSensor, QOrientationReading, QOrientationFilter, {
     reading->setOrientation(QOrientationReading::LeftUp);
+})
+PREPARE_SENSORINTERFACE(QPressureSensor, QPressureReading, QPressureFilter, {
+    reading->setPressure(1.0);
 })
 PREPARE_SENSORINTERFACE(QProximitySensor, QProximityReading, QProximityFilter, {
     reading->setClose(true);

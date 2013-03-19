@@ -45,7 +45,6 @@
 #include "qmlsensor.h"
 #include <QTapSensor>
 
-QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QTapSensor;
@@ -61,9 +60,8 @@ public:
     bool returnDoubleTapEvents() const;
     void setReturnDoubleTapEvents(bool ret);
 
-
 Q_SIGNALS:
-    void returnDoubleTapEventsChanged();
+    void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;
@@ -97,5 +95,4 @@ private:
 };
 
 QT_END_NAMESPACE
-QT_END_HEADER
 #endif

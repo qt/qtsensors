@@ -51,10 +51,14 @@ class BbAccelerometer : public BbSensorBackend<QAccelerometerReading>
 public:
     explicit BbAccelerometer(QSensor *sensor);
 
+    void start() Q_DECL_OVERRIDE;
     static QString devicePath();
 
 protected:
     bool updateReadingFromEvent(const sensor_event_t &event, QAccelerometerReading *reading) Q_DECL_OVERRIDE;
+
+private Q_SLOTS:
+    void applyAccelerationMode();
 };
 
 #endif

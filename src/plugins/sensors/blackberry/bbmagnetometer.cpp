@@ -53,17 +53,11 @@ QString BbMagnetometer::devicePath()
 
 bool BbMagnetometer::updateReadingFromEvent(const sensor_event_t &event, QMagnetometerReading *reading)
 {
-    // TODO: In the future, support returnGeoValues here. Right now, /dev/sensors/mag has no
-    //       geomagnatic mode, but will gain it in the future.
-    float x = convertValue(event.motion.dsp.x);
-    float y = convertValue(event.motion.dsp.y);
-    float z = convertValue(event.motion.dsp.z);
-    remapAxes(&x, &y, &z);
-    reading->setX(x);
-    reading->setY(y);
-    reading->setZ(z);
+    float x, y, z;
 
-    const bool returnGeoValues = sensor()->property("returnGeoValues").toBool();
+    QMagnetometer * const magnetometer = qobject_cast<QMagnetometer *>(sensor());
+    Q_ASSERT(magnetometer);
+    const bool returnGeoValues = magnetometer->returnGeoValues();
     if (returnGeoValues) {
         switch (event.accuracy) {
         case SENSOR_ACCURACY_UNRELIABLE: reading->setCalibrationLevel(0.0f); break;
@@ -76,10 +70,30 @@ bool BbMagnetometer::updateReadingFromEvent(const sensor_event_t &event, QMagnet
         case SENSOR_ACCURACY_MEDIUM:     reading->setCalibrationLevel(1.0f); break;
         case SENSOR_ACCURACY_HIGH:       reading->setCalibrationLevel(1.0f); break;
         }
+
+        x = convertValue(event.motion.dsp.x);
+        y = convertValue(event.motion.dsp.y);
+        z = convertValue(event.motion.dsp.z);
+
     } else {
         reading->setCalibrationLevel(1.0f);
+
+#ifndef Q_OS_BLACKBERRY_TABLET
+        x = convertValue(event.motion.raw.x);
+        y = convertValue(event.motion.raw.y);
+        z = convertValue(event.motion.raw.z);
+#else
+        // Blackberry Tablet OS does not support raw reading values
+        x = convertValue(event.motion.dsp.x);
+        y = convertValue(event.motion.dsp.y);
+        z = convertValue(event.motion.dsp.z);
+#endif
     }
 
+    remapAxes(&x, &y, &z);
+    reading->setX(x);
+    reading->setY(y);
+    reading->setZ(z);
     return true;
 }
 

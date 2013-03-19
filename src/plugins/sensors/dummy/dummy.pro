@@ -15,4 +15,4 @@ SOURCES += dummycommon.cpp\
 
 OTHER_FILES = plugin.json
 
-unix:!mac:!qnx:LIBS+=-lrt
+unix:!mac:!qnx:!android:LIBS+=-lrt
