@@ -50,6 +50,7 @@ static CMMotionManager *sharedManager = nil;
     static dispatch_once_t staticToken;
     dispatch_once(&staticToken, ^{
         sharedManager = [[CMMotionManager alloc] init];
+        sharedManager.showsDeviceMovementDisplay = YES;
     });
     return sharedManager;
 }
