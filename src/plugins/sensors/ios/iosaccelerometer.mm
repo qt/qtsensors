@@ -39,11 +39,12 @@
 **
 ****************************************************************************/
 
-#include "iosaccelerometer.h"
-#include "iosmotionmanager.h"
-
 #include <UIKit/UIAccelerometer.h>
 #include <CoreMotion/CMMotionManager.h>
+#include <QPointer>
+
+#include "iosaccelerometer.h"
+#include "iosmotionmanager.h"
 
 char const * const IOSAccelerometer::id("ios.accelerometer");
 
@@ -70,17 +71,23 @@ void IOSAccelerometer::start()
     int hz = sensor()->dataRate();
     motionManager.accelerometerUpdateInterval = (hz == 0) ? 0 : 1. / hz;
 
+    QPointer<QObject> self = this;
     [motionManager startAccelerometerUpdatesToQueue:m_updateQueue withHandler:^(CMAccelerometerData *data, NSError *error) {
+        // NSOperationQueue is multi-threaded, so we process the data by queuing a callback to
+        // the main application queue. By the time the callback executes, IOSAccelerometer might
+        // have been deleted, so we need an extra QPointer check for that:
         dispatch_async(dispatch_get_main_queue(), ^{
-            Q_UNUSED(error);
-            // Convert from NSTimeInterval to microseconds and G to m/s2, and flip axes:
-            CMAcceleration acc = data.acceleration;
-            const qreal G = 9.8066;
-            m_reading.setTimestamp(quint64(data.timestamp * 1000000));
-            m_reading.setX(qreal(acc.x) * G * -1);
-            m_reading.setY(qreal(acc.y) * G * -1);
-            m_reading.setZ(qreal(acc.z) * G * -1);
-            newReadingAvailable();
+            if (self) {
+                Q_UNUSED(error);
+                // Convert from NSTimeInterval to microseconds and G to m/s2, and flip axes:
+                CMAcceleration acc = data.acceleration;
+                const qreal G = 9.8066;
+                m_reading.setTimestamp(quint64(data.timestamp * 1000000));
+                m_reading.setX(qreal(acc.x) * G * -1);
+                m_reading.setY(qreal(acc.y) * G * -1);
+                m_reading.setZ(qreal(acc.z) * G * -1);
+                newReadingAvailable();
+            }
         });
     }];
 }
