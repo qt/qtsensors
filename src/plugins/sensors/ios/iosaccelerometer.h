@@ -42,6 +42,8 @@
 #ifndef IOSACCELEROMETER_H
 #define IOSACCELEROMETER_H
 
+#include <Foundation/Foundation.h>
+
 #include <qsensorbackend.h>
 #include <qaccelerometer.h>
 
@@ -59,10 +61,9 @@ public:
 
     void start();
     void stop();
-    void readingsChanged(quint64,qreal,qreal,qreal);
 
 private:
-    QtIoAccelListener *m_listener;
+    NSOperationQueue *m_updateQueue;
     QAccelerometerReading m_reading;
 };
 QT_END_NAMESPACE
