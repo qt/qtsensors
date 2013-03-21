@@ -47,67 +47,11 @@
 
 char const * const IOSAccelerometer::id("ios.accelerometer");
 
-@interface QtIoAccelListener : NSObject
-{
-    IOSAccelerometer *m_qiosAccelerometer;
-    NSOperationQueue *m_updateQueue;
-}
-@end
-
-@implementation QtIoAccelListener
-
--(id)initWithQIOSAccelerometer:(IOSAccelerometer *) qiosAccelerometer
-{
-    self = [super init];
-    if (self) {
-        m_qiosAccelerometer = qiosAccelerometer;
-        m_updateQueue = [[NSOperationQueue alloc] init];
-    }
-    return self;
-}
-
--(void)dealloc
-{
-    [m_updateQueue release];
-    [super dealloc];
-}
-
--(void)startAccelerometer
-{
-    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
-    [motionManager startAccelerometerUpdatesToQueue:m_updateQueue withHandler:^(CMAccelerometerData *data, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            Q_UNUSED(error);
-            CMAcceleration acc = data.acceleration;
-            // Convert from G to m/s2, and flip axes:
-            const qreal G = 9.8066;
-            qreal x = qreal(acc.x) * G * -1;
-            qreal y = qreal(acc.y) * G * -1;
-            qreal z = qreal(acc.z) * G * -1;
-            // Convert from NSTimeInterval to microseconds:
-            quint64 timestamp = quint64(data.timestamp * 1000000);
-            m_qiosAccelerometer->readingsChanged(timestamp, x, y, z);
-        });
-    }];
-}
-
--(void)stopAccelerometer
-{
-    [[QIOSMotionManager sharedManager] stopAccelerometerUpdates];
-}
-
--(void)setInterval:(NSTimeInterval) interval
-{
-    [QIOSMotionManager sharedManager].accelerometerUpdateInterval = interval;
-}
-
-@end
-
 QT_BEGIN_NAMESPACE
 
 IOSAccelerometer::IOSAccelerometer(QSensor *sensor)
     : QSensorBackend(sensor)
-    , m_listener([[QtIoAccelListener alloc] initWithQIOSAccelerometer:this])
+    , m_updateQueue([[NSOperationQueue alloc] init])
 {
     setReading<QAccelerometerReading>(&m_reading);
     addDataRate(1, 100); // 100Hz
@@ -116,31 +60,34 @@ IOSAccelerometer::IOSAccelerometer(QSensor *sensor)
 
 IOSAccelerometer::~IOSAccelerometer()
 {
-    [m_listener dealloc];
+    [m_updateQueue release];
 }
 
 void IOSAccelerometer::start()
 {
+    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
     // Convert from Hz to NSTimeInterval:
     int hz = sensor()->dataRate();
-    NSTimeInterval interval = (hz == 0) ? 0 : 1. / hz;
-    [m_listener setInterval:interval];
-    [m_listener startAccelerometer];
+    motionManager.accelerometerUpdateInterval = (hz == 0) ? 0 : 1. / hz;
+
+    [motionManager startAccelerometerUpdatesToQueue:m_updateQueue withHandler:^(CMAccelerometerData *data, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            Q_UNUSED(error);
+            // Convert from NSTimeInterval to microseconds and G to m/s2, and flip axes:
+            CMAcceleration acc = data.acceleration;
+            const qreal G = 9.8066;
+            m_reading.setTimestamp(quint64(data.timestamp * 1000000));
+            m_reading.setX(qreal(acc.x) * G * -1);
+            m_reading.setY(qreal(acc.y) * G * -1);
+            m_reading.setZ(qreal(acc.z) * G * -1);
+            newReadingAvailable();
+        });
+    }];
 }
 
 void IOSAccelerometer::stop()
 {
-    [m_listener stopAccelerometer];
-}
-
-void IOSAccelerometer::readingsChanged(quint64 ts, qreal x, qreal y, qreal z)
-{
-    m_reading.setTimestamp(ts);
-    m_reading.setX(x);
-    m_reading.setY(y);
-    m_reading.setZ(z);
-
-    newReadingAvailable();
+    [[QIOSMotionManager sharedManager] stopAccelerometerUpdates];
 }
 
 QT_END_NAMESPACE
