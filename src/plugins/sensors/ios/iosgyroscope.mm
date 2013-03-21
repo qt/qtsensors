@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include <CoreMotion/CMMotionManager.h>
+#include <QPointer>
 
 #include "iosmotionmanager.h"
 #include "iosgyroscope.h"
@@ -69,17 +70,23 @@ void IOSGyroscope::start()
     int hz = sensor()->dataRate();
     motionManager.gyroUpdateInterval = (hz == 0) ? 0 : 1. / hz;
 
+    QPointer<QObject> self = this;
     NSOperationQueue *queue = static_cast<NSOperationQueue *>(m_updateQueue);
     [motionManager startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *data, NSError *error) {
+        // NSOperationQueue is multi-threaded, so we process the data by queuing a callback to
+        // the main application queue. By the time the callback executes, IOSAccelerometer might
+        // have been deleted, so we need an extra QPointer check for that:
         dispatch_async(dispatch_get_main_queue(), ^{
-            Q_UNUSED(error);
-            // Convert NSTimeInterval to microseconds and radians to degrees:
-            CMRotationRate rate = data.rotationRate;
-            m_reading.setTimestamp(quint64(data.timestamp * 1000000));
-            m_reading.setX((qreal(rate.x) / M_PI) * 180);
-            m_reading.setY((qreal(rate.y) / M_PI) * 180);
-            m_reading.setZ((qreal(rate.z) / M_PI) * 180);
-            newReadingAvailable();
+            if (self) {
+                Q_UNUSED(error);
+                // Convert NSTimeInterval to microseconds and radians to degrees:
+                CMRotationRate rate = data.rotationRate;
+                m_reading.setTimestamp(quint64(data.timestamp * 1000000));
+                m_reading.setX((qreal(rate.x) / M_PI) * 180);
+                m_reading.setY((qreal(rate.y) / M_PI) * 180);
+                m_reading.setZ((qreal(rate.z) / M_PI) * 180);
+                newReadingAvailable();
+            }
         });
     }];
 }
