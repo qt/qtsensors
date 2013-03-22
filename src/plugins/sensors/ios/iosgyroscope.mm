@@ -60,7 +60,7 @@ IOSGyroscope::IOSGyroscope(QSensor *sensor)
 
 IOSGyroscope::~IOSGyroscope()
 {
-    [static_cast<NSOperationQueue *>(m_updateQueue) release];
+    [m_updateQueue release];
 }
 
 void IOSGyroscope::start()
@@ -71,8 +71,7 @@ void IOSGyroscope::start()
     motionManager.gyroUpdateInterval = (hz == 0) ? 0 : 1. / hz;
 
     QPointer<QObject> self = this;
-    NSOperationQueue *queue = static_cast<NSOperationQueue *>(m_updateQueue);
-    [motionManager startGyroUpdatesToQueue:queue withHandler:^(CMGyroData *data, NSError *error) {
+    [motionManager startGyroUpdatesToQueue:m_updateQueue withHandler:^(CMGyroData *data, NSError *error) {
         // NSOperationQueue is multi-threaded, so we process the data by queuing a callback to
         // the main application queue. By the time the callback executes, IOSAccelerometer might
         // have been deleted, so we need an extra QPointer check for that:
