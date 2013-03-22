@@ -42,6 +42,8 @@
 #ifndef IOSGYROSCOPE_H
 #define IOSGYROSCOPE_H
 
+#include <Foundation/Foundation.h>
+
 #include <qsensorbackend.h>
 #include <qgyroscope.h>
 
@@ -59,7 +61,7 @@ public:
     void stop();
 
 private:
-    void *m_updateQueue;
+    NSOperationQueue *m_updateQueue;
     QGyroscopeReading m_reading;
 };
 QT_END_NAMESPACE
