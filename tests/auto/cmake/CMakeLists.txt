@@ -9,8 +9,6 @@ find_package(Qt5Core REQUIRED)
 
 include("${_Qt5CTestMacros}")
 
-set(Qt5_MODULE_TEST_DEPENDS Core)
-
 test_module_includes(
   Sensors QLightSensor
 )
