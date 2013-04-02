@@ -51,10 +51,14 @@ class Q_SENSORS_EXPORT QPressureReading : public QSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal pressure READ pressure)
+    Q_PROPERTY(qreal temperature READ temperature)
     DECLARE_READING(QPressureReading)
 public:
     qreal pressure() const;
     void setPressure(qreal pressure);
+
+    qreal temperature() const;
+    void setTemperature(qreal temperature);
 };
 
 class Q_SENSORS_EXPORT QPressureFilter : public QSensorFilter

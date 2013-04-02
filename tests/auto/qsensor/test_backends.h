@@ -135,6 +135,7 @@ PREPARE_SENSORINTERFACE(QOrientationSensor, QOrientationReading, QOrientationFil
 })
 PREPARE_SENSORINTERFACE(QPressureSensor, QPressureReading, QPressureFilter, {
     reading->setPressure(1.0);
+    reading->setTemperature(1.0);
 })
 PREPARE_SENSORINTERFACE(QProximitySensor, QProximityReading, QProximityFilter, {
     reading->setClose(true);

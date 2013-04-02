@@ -58,11 +58,12 @@ class QPressureReadingPrivate
 {
 public:
     QPressureReadingPrivate()
-        : pressure(0)
+        : pressure(0), temperature(0)
     {
     }
 
     qreal pressure;
+    qreal temperature;
 };
 
 QT_END_NAMESPACE

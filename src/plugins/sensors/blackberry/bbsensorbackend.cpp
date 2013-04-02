@@ -303,6 +303,7 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
     case QSensor::Buffering:
     case QSensor::AccelerationMode:
     case QSensor::SkipDuplicates:
+    case QSensor::PressureSensorTemperature:
         return true;
     case QSensor::GeoValues:
 #ifndef Q_OS_BLACKBERRY_TABLET

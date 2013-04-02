@@ -65,14 +65,17 @@ class QmlPressureReading : public QmlSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal pressure READ pressure NOTIFY pressureChanged)
+    Q_PROPERTY(qreal temperature READ temperature NOTIFY temperatureChanged REVISION 1)
 public:
     explicit QmlPressureReading(QPressureSensor *sensor);
     ~QmlPressureReading();
 
     qreal pressure() const;
+    qreal temperature() const;
 
 Q_SIGNALS:
     void pressureChanged();
+    Q_REVISION(1) void temperatureChanged();
 
 private:
     QSensorReading *reading() const Q_DECL_OVERRIDE;
@@ -80,6 +83,7 @@ private:
 
     QPressureSensor *m_sensor;
     qreal m_pressure;
+    qreal m_temperature;
 };
 
 QT_END_NAMESPACE

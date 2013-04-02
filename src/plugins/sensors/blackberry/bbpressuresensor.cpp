@@ -54,5 +54,6 @@ QString BbPressureSensor::devicePath()
 bool BbPressureSensor::updateReadingFromEvent(const sensor_event_t &event, QPressureReading *reading)
 {
     reading->setPressure(event.pressure_s.pressure);
+    reading->setTemperature(event.pressure_s.temperature);
     return true;
 }

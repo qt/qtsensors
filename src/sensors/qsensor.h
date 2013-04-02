@@ -107,6 +107,7 @@ public:
         AccelerationMode,
         SkipDuplicates,
         AxesOrientation,
+        PressureSensorTemperature,
         Reserved = 257 // Make sure at least 2 bytes are used for the enum to avoid breaking BC later
     };
 

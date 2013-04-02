@@ -891,6 +891,7 @@ private slots:
 
         TEST_SENSORINTERFACE(QPressureSensor, QPressureReading, {
             QCOMPARE(reading->pressure(), 1.0);
+            QCOMPARE(reading->temperature(), 1.0);
         })
 
         TEST_SENSORINTERFACE(QProximitySensor, QProximityReading, {

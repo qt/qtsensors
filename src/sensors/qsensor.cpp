@@ -242,6 +242,10 @@ void QSensorPrivate::init(const QByteArray &sensorType)
     \value AccelerationMode The backend supports switching the acceleration mode
                             of the acceleromter with the QAccelerometer::accelerationMode property.
 
+    The features of QPressureSensor are:
+
+    \value PressureSensorTemperature The backend provides the pressure sensor's die temperature
+
     The features of all orientable sensors are:
 
     \value AxesOrientation The backend supports changing the axes orientation from the default of
