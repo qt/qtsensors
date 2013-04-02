@@ -143,10 +143,13 @@ QT_BEGIN_NAMESPACE
     \sa QList, qoutputrange, QSensor::outputRanges
 */
 
-// A bit of a hack to call qRegisterMetaType when the library is loaded.
-static int qrange_id = qRegisterMetaType<qrange>("qrange");
-static int qrangelist_id = qRegisterMetaType<qrangelist>("qrangelist");
-static int qoutputrangelist_id = qRegisterMetaType<qoutputrangelist>("qoutputrangelist");
+static void registerTypes()
+{
+    qRegisterMetaType<qrange>("qrange");
+    qRegisterMetaType<qrangelist>("qrangelist");
+    qRegisterMetaType<qoutputrangelist>("qoutputrangelist");
+}
+Q_CONSTRUCTOR_FUNCTION(registerTypes)
 
 // =====================================================================
 
