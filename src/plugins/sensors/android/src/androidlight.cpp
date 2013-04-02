@@ -55,7 +55,7 @@ void AndroidLight::onSensorChanged(jlong timestamp, const jfloat *values, uint s
 {
     if (size < 1)
         return;
-    m_reader.setTimestamp(timestamp);
+    m_reader.setTimestamp(timestamp/1000);
     // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
     m_reader.setLux(values[0]);
     newReadingAvailable();

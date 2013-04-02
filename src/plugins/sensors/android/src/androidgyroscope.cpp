@@ -50,7 +50,7 @@ void AndroidGyroscope::onSensorChanged(jlong timestamp, const jfloat *values, ui
 {
     if (size < 3)
         return;
-    m_reader.setTimestamp(timestamp);
+    m_reader.setTimestamp(timestamp/1000);
     // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
     m_reader.setX(values[0]*180/M_PI);
     m_reader.setY(values[1]*180/M_PI);
