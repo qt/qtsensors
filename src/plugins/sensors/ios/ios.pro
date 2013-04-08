@@ -10,12 +10,14 @@ OTHER_FILES = plugin.json
 HEADERS += iosaccelerometer.h \
         iosmotionmanager.h \
         iosgyroscope.h \
-        iosmagnetometer.h
+        iosmagnetometer.h \
+        ioscompass.h
 
 OBJECTIVE_SOURCES += main.mm \
     iosaccelerometer.mm \
     iosmotionmanager.mm \
     iosgyroscope.mm \
-    iosmagnetometer.mm
+    iosmagnetometer.mm \
+    ioscompass.mm
 
-LIBS += -framework UIKit -framework CoreMotion
+LIBS += -framework UIKit -framework CoreMotion -framework CoreLocation
