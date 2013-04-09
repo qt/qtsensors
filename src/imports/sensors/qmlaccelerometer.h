@@ -69,7 +69,7 @@ public:
     void setAccelerationMode(AccelerationMode accelerationMode);
 
 signals:
-    void accelerationModeChanged(AccelerationMode accelerationMode);
+    Q_REVISION(1) void accelerationModeChanged(AccelerationMode accelerationMode);
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;
