@@ -1,7 +1,7 @@
 TEMPLATE=app
 TARGET=sensor_explorer
 
-QT = core gui sensors
+QT = widgets sensors
 
 FORMS=\
     explorer.ui
