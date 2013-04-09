@@ -1038,7 +1038,6 @@ int QSensor::maxBufferSize() const
 */
 void QSensor::setMaxBufferSize(int maxBufferSize)
 {
-    // ### Qt 6: Remove the entire maxBufferSize property, no backend really uses it
     Q_D(QSensor);
     if (d->maxBufferSize != maxBufferSize) {
         d->maxBufferSize = maxBufferSize;
@@ -1069,7 +1068,6 @@ int QSensor::efficientBufferSize() const
 */
 void QSensor::setEfficientBufferSize(int efficientBufferSize)
 {
-    // ### Qt 6: Remove the entire efficientBufferSize property, no backend really uses it
     Q_D(QSensor);
     if (d->efficientBufferSize != efficientBufferSize) {
         d->efficientBufferSize = efficientBufferSize;
@@ -1120,8 +1118,6 @@ int QSensor::bufferSize() const
 
 void QSensor::setBufferSize(int bufferSize)
 {
-    // ### Qt 6: Currently only the Blackberry backend supports this, but only as an on/off switch.
-    //           We should consider changing this to a more appropriate API.
     Q_D(QSensor);
     if (d->bufferSize != bufferSize) {
         d->bufferSize = bufferSize;
