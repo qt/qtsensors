@@ -11,13 +11,15 @@ HEADERS += iosaccelerometer.h \
         iosmotionmanager.h \
         iosgyroscope.h \
         iosmagnetometer.h \
-        ioscompass.h
+        ioscompass.h \
+        iosproximitysensor.h
 
 OBJECTIVE_SOURCES += main.mm \
     iosaccelerometer.mm \
     iosmotionmanager.mm \
     iosgyroscope.mm \
     iosmagnetometer.mm \
-    ioscompass.mm
+    ioscompass.mm \
+    iosproximitysensor.mm
 
 LIBS += -framework UIKit -framework CoreMotion -framework CoreLocation
