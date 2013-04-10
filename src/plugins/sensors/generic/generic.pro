@@ -2,6 +2,7 @@ TARGET = qtsensors_generic
 QT = core sensors
 
 PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = genericSensorPlugin
 load(qt_plugin)
 
 HEADERS += generictiltsensor.h
