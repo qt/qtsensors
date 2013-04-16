@@ -55,7 +55,7 @@ void AndroidRotation::onSensorChanged(jlong timestamp, const jfloat *values, uin
 {
     if (size < 3)
         return;
-    m_reader.setTimestamp(timestamp);
+    m_reader.setTimestamp(timestamp/1000);
 
     float rz = -values[0]*180/M_PI;
     float rx = -values[1]*180/M_PI;

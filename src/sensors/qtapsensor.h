@@ -107,7 +107,7 @@ Q_SIGNALS:
     void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
 
 private:
-    Q_DECLARE_PRIVATE(QTapSensor);
+    Q_DECLARE_PRIVATE(QTapSensor)
     Q_DISABLE_COPY(QTapSensor)
 };
 

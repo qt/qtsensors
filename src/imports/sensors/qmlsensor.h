@@ -153,13 +153,13 @@ Q_SIGNALS:
     void descriptionChanged();
     void errorChanged();
     void alwaysOnChanged();
-    void skipDuplicatesChanged(bool skipDuplicates);
-    void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
-    void currentOrientationChanged(int currentOrientation);
-    void userOrientationChanged(int userOrientation);
-    void maxBufferSizeChanged(int maxBufferSize);
-    void efficientBufferSizeChanged(int efficientBufferSize);
-    void bufferSizeChanged(int bufferSize);
+    Q_REVISION(1) void skipDuplicatesChanged(bool skipDuplicates);
+    Q_REVISION(1) void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
+    Q_REVISION(1) void currentOrientationChanged(int currentOrientation);
+    Q_REVISION(1) void userOrientationChanged(int userOrientation);
+    Q_REVISION(1) void maxBufferSizeChanged(int maxBufferSize);
+    Q_REVISION(1) void efficientBufferSizeChanged(int efficientBufferSize);
+    Q_REVISION(1) void bufferSizeChanged(int bufferSize);
 
 protected:
     virtual QSensor *sensor() const = 0;
