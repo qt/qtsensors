@@ -315,8 +315,7 @@ class Q_SENSORS_EXPORT '.$filter.' : public QSensorFilter
 public:
     virtual bool filter('.$reading.' *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
-        { return filter(static_cast<'.$reading.'*>(reading)); }
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT '.$sensor.' : public QSensor
@@ -325,7 +324,7 @@ class Q_SENSORS_EXPORT '.$sensor.' : public QSensor
 public:
     explicit '.$sensor.'(QObject *parent = 0);
     ~'.$sensor.'();
-    '.$reading.' *reading() const { return static_cast<'.$reading.'*>(QSensor::reading()); }
+    '.$reading.' *reading() const;
     static char const * const type;
 
 private:
@@ -408,6 +407,11 @@ void '.$reading.'::setMyprop(qreal myprop)
     \sa QSensorFilter::filter()
 */
 
+bool '.$filter.'::filter(QSensorReading *reading)
+{
+    return filter(static_cast<'.$reading.'*>(reading));
+}
+
 char const * const '.$sensor.'::type("'.$sensor.'");
 
 /*!
@@ -449,6 +453,11 @@ char const * const '.$sensor.'::type("'.$sensor.'");
 
     \sa QSensor::reading()
 */
+
+'.$reading.' *'.$sensor.'::reading() const
+{
+    return static_cast<'.$reading.'*>(QSensor::reading());
+}
 
 #include "moc_'.$source.'"
 QT_END_NAMESPACE

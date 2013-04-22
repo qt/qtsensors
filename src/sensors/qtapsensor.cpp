@@ -189,6 +189,11 @@ void QTapReading::setDoubleTap(bool doubleTap)
     \sa QSensorFilter::filter()
 */
 
+bool QTapFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QTapReading*>(reading));
+}
+
 char const * const QTapSensor::type("QTapSensor");
 
 /*!
@@ -229,6 +234,11 @@ QTapSensor::~QTapSensor()
 
     \sa QSensor::reading()
 */
+
+QTapReading *QTapSensor::reading() const
+{
+    return static_cast<QTapReading*>(QSensor::reading());
+}
 
 /*!
     \property QTapSensor::returnDoubleTapEvents

@@ -136,6 +136,11 @@ void QCompassReading::setCalibrationLevel(qreal calibrationLevel)
     \sa QSensorFilter::filter()
 */
 
+bool QCompassFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QCompassReading*>(reading));
+}
+
 char const * const QCompass::type("QCompass");
 
 /*!
@@ -176,6 +181,11 @@ QCompass::~QCompass()
 
     \sa QSensor::reading()
 */
+
+QCompassReading *QCompass::reading() const
+{
+    return static_cast<QCompassReading*>(QSensor::reading());
+}
 
 #include "moc_qcompass.cpp"
 QT_END_NAMESPACE

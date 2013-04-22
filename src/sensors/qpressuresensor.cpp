@@ -101,6 +101,11 @@ void QPressureReading::setPressure(qreal pressure)
     \sa QSensorFilter::filter()
 */
 
+bool QPressureFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QPressureReading*>(reading));
+}
+
 char const * const QPressureSensor::type("QPressureSensor");
 
 /*!
@@ -142,6 +147,11 @@ QPressureSensor::~QPressureSensor()
 
     \sa QSensor::reading()
 */
+
+QPressureReading *QPressureSensor::reading() const
+{
+    return static_cast<QPressureReading*>(QSensor::reading());
+}
 
 #include "moc_qpressuresensor.cpp"
 QT_END_NAMESPACE

@@ -136,10 +136,12 @@ QSensorReading *QSensorBackend::reading() const
 }
 
 /*!
-    \fn QSensorBackend::sensor() const
-
     Returns the sensor front end associated with this backend.
 */
+QSensor *QSensorBackend::sensor() const
+{
+    return m_sensor;
+}
 
 /*!
     \fn QSensorBackend::setReading(T *reading)

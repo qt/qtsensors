@@ -105,6 +105,11 @@ void QProximityReading::setClose(bool close)
     \sa QSensorFilter::filter()
 */
 
+bool QProximityFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QProximityReading*>(reading));
+}
+
 char const * const QProximitySensor::type("QProximitySensor");
 
 /*!
@@ -145,6 +150,11 @@ QProximitySensor::~QProximitySensor()
 
     \sa QSensor::reading()
 */
+
+QProximityReading *QProximitySensor::reading() const
+{
+    return static_cast<QProximityReading*>(QSensor::reading());
+}
 
 #include "moc_qproximitysensor.cpp"
 QT_END_NAMESPACE

@@ -84,7 +84,7 @@ class Q_SENSORS_EXPORT QTapFilter : public QSensorFilter
 public:
     virtual bool filter(QTapReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QTapReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class QTapSensorPrivate;
@@ -97,7 +97,7 @@ class Q_SENSORS_EXPORT QTapSensor : public QSensor
 public:
     explicit QTapSensor(QObject *parent = 0);
     virtual ~QTapSensor();
-    QTapReading *reading() const { return static_cast<QTapReading*>(QSensor::reading()); }
+    QTapReading *reading() const;
     static char const * const type;
 
     bool returnDoubleTapEvents() const;

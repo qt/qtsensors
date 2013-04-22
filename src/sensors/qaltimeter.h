@@ -62,8 +62,7 @@ class Q_SENSORS_EXPORT QAltimeterFilter : public QSensorFilter
 public:
     virtual bool filter(QAltimeterReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
-        { return filter(static_cast<QAltimeterReading*>(reading)); }
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT QAltimeter : public QSensor
@@ -72,7 +71,7 @@ class Q_SENSORS_EXPORT QAltimeter : public QSensor
 public:
     explicit QAltimeter(QObject *parent = 0);
     ~QAltimeter();
-    QAltimeterReading *reading() const { return static_cast<QAltimeterReading*>(QSensor::reading()); }
+    QAltimeterReading *reading() const;
     static char const * const type;
 
 private:

@@ -149,6 +149,11 @@ void QOrientationReading::setOrientation(QOrientationReading::Orientation orient
     \sa QSensorFilter::filter()
 */
 
+bool QOrientationFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QOrientationReading*>(reading));
+}
+
 char const * const QOrientationSensor::type("QOrientationSensor");
 
 /*!
@@ -189,6 +194,11 @@ QOrientationSensor::~QOrientationSensor()
 
     \sa QSensor::reading()
 */
+
+QOrientationReading *QOrientationSensor::reading() const
+{
+    return static_cast<QOrientationReading*>(QSensor::reading());
+}
 
 #include "moc_qorientationsensor.cpp"
 QT_END_NAMESPACE

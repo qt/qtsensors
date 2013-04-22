@@ -62,8 +62,7 @@ class Q_SENSORS_EXPORT QHolsterFilter : public QSensorFilter
 public:
     virtual bool filter(QHolsterReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
-        { return filter(static_cast<QHolsterReading*>(reading)); }
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT QHolsterSensor : public QSensor
@@ -72,7 +71,7 @@ class Q_SENSORS_EXPORT QHolsterSensor : public QSensor
 public:
     explicit QHolsterSensor(QObject *parent = 0);
     ~QHolsterSensor();
-    QHolsterReading *reading() const { return static_cast<QHolsterReading*>(QSensor::reading()); }
+    QHolsterReading *reading() const;
     static char const * const type;
 
 private:

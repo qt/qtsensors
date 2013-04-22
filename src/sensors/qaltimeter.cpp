@@ -102,6 +102,11 @@ void QAltimeterReading::setAltitude(qreal altitude)
     \sa QSensorFilter::filter()
 */
 
+bool QAltimeterFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QAltimeterReading*>(reading));
+}
+
 char const * const QAltimeter::type("QAltimeter");
 
 /*!
@@ -143,6 +148,11 @@ QAltimeter::~QAltimeter()
 
     \sa QSensor::reading()
 */
+
+QAltimeterReading *QAltimeter::reading() const
+{
+    return static_cast<QAltimeterReading*>(QSensor::reading());
+}
 
 #include "moc_qaltimeter.cpp"
 QT_END_NAMESPACE

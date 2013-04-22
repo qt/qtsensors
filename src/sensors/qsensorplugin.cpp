@@ -54,9 +54,11 @@
 */
 
 /*!
-    \fn QSensorPluginInterface::~QSensorPluginInterface()
     \internal
 */
+QSensorPluginInterface::~QSensorPluginInterface()
+{
+}
 
 /*!
     \fn QSensorPluginInterface::registerSensors()
@@ -82,9 +84,12 @@
 */
 
 /*!
-    \fn QSensorChangesInterface::~QSensorChangesInterface()
     \internal
 */
+QSensorChangesInterface::~QSensorChangesInterface()
+{
+}
+
 /*!
     \fn QSensorChangesInterface::sensorsChanged()
 

@@ -496,9 +496,11 @@ void QSensor::registerInstance()
 */
 
 /*!
-    \fn QSensorBackendFactory::~QSensorBackendFactory()
     \internal
 */
+QSensorBackendFactory::~QSensorBackendFactory()
+{
+}
 
 /*!
     \fn QSensorBackendFactory::createBackend(QSensor *sensor)

@@ -62,8 +62,7 @@ class Q_SENSORS_EXPORT QAmbientTemperatureFilter : public QSensorFilter
 public:
     virtual bool filter(QAmbientTemperatureReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
-        { return filter(static_cast<QAmbientTemperatureReading*>(reading)); }
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT QAmbientTemperatureSensor : public QSensor
@@ -72,7 +71,7 @@ class Q_SENSORS_EXPORT QAmbientTemperatureSensor : public QSensor
 public:
     explicit QAmbientTemperatureSensor(QObject *parent = 0);
     ~QAmbientTemperatureSensor();
-    QAmbientTemperatureReading *reading() const { return static_cast<QAmbientTemperatureReading*>(QSensor::reading()); }
+    QAmbientTemperatureReading *reading() const;
     static char const * const type;
 
 private:

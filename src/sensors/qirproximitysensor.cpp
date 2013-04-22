@@ -114,6 +114,11 @@ void QIRProximityReading::setReflectance(qreal reflectance)
     \sa QSensorFilter::filter()
 */
 
+bool QIRProximityFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QIRProximityReading*>(reading));
+}
+
 char const * const QIRProximitySensor::type("QIRProximitySensor");
 
 /*!
@@ -155,5 +160,9 @@ QIRProximitySensor::~QIRProximitySensor()
     \sa QSensor::reading()
 */
 
+QIRProximityReading *QIRProximitySensor::reading() const
+{
+    return static_cast<QIRProximityReading*>(QSensor::reading());
+}
 
 #include "moc_qirproximitysensor.cpp"

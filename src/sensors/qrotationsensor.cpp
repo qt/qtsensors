@@ -179,6 +179,11 @@ void QRotationReading::setFromEuler(qreal x, qreal y, qreal z)
     \sa QSensorFilter::filter()
 */
 
+bool QRotationFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QRotationReading*>(reading));
+}
+
 char const * const QRotationSensor::type("QRotationSensor");
 
 /*!
@@ -219,6 +224,11 @@ QRotationSensor::~QRotationSensor()
 
     \sa QSensor::reading()
 */
+
+QRotationReading *QRotationSensor::reading() const
+{
+    return static_cast<QRotationReading*>(QSensor::reading());
+}
 
 /*!
     \property QRotationSensor::hasZ

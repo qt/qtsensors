@@ -148,6 +148,11 @@ void QGyroscopeReading::setZ(qreal z)
     \sa QSensorFilter::filter()
 */
 
+bool QGyroscopeFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QGyroscopeReading*>(reading));
+}
+
 char const * const QGyroscope::type("QGyroscope");
 
 /*!
@@ -188,6 +193,11 @@ QGyroscope::~QGyroscope()
 
     \sa QSensor::reading()
 */
+
+QGyroscopeReading *QGyroscope::reading() const
+{
+    return static_cast<QGyroscopeReading*>(QSensor::reading());
+}
 
 #include "moc_qgyroscope.cpp"
 QT_END_NAMESPACE

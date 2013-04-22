@@ -74,7 +74,7 @@ class Q_SENSORS_EXPORT QOrientationFilter : public QSensorFilter
 public:
     virtual bool filter(QOrientationReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QOrientationReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class Q_SENSORS_EXPORT QOrientationSensor : public QSensor
@@ -83,7 +83,7 @@ class Q_SENSORS_EXPORT QOrientationSensor : public QSensor
 public:
     explicit QOrientationSensor(QObject *parent = 0);
     virtual ~QOrientationSensor();
-    QOrientationReading *reading() const { return static_cast<QOrientationReading*>(QSensor::reading()); }
+    QOrientationReading *reading() const;
     static char const * const type;
 
 private:

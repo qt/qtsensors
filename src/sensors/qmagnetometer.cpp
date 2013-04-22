@@ -188,6 +188,11 @@ void QMagnetometerReading::setCalibrationLevel(qreal calibrationLevel)
     \sa QSensorFilter::filter()
 */
 
+bool QMagnetometerFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QMagnetometerReading*>(reading));
+}
+
 char const * const QMagnetometer::type("QMagnetometer");
 
 /*!
@@ -228,6 +233,11 @@ QMagnetometer::~QMagnetometer()
 
     \sa QSensor::reading()
 */
+
+QMagnetometerReading *QMagnetometer::reading() const
+{
+    return static_cast<QMagnetometerReading*>(QSensor::reading());
+}
 
 /*!
     \property QMagnetometer::returnGeoValues

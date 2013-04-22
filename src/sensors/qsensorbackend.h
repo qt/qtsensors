@@ -75,7 +75,7 @@ public:
     }
 
     QSensorReading *reading() const;
-    QSensor *sensor() const { return m_sensor; }
+    QSensor *sensor() const;
 
     // used by the backend to inform us of events
     void newReadingAvailable();
