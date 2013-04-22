@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "qsensorbackend.h"
+#include "qsensorbackend_p.h"
 #include "qsensor_p.h"
 #include <QDebug>
 
@@ -59,8 +60,8 @@ QT_BEGIN_NAMESPACE
 /*!
     \internal
 */
-QSensorBackend::QSensorBackend(QSensor *sensor)
-    : m_sensor(sensor)
+QSensorBackend::QSensorBackend(QSensor *sensor, QObject *parent)
+    : QObject(*new QSensorBackendPrivate(sensor), parent)
 {
 }
 
@@ -91,21 +92,22 @@ bool QSensorBackend::isFeatureSupported(QSensor::Feature feature) const
 */
 void QSensorBackend::newReadingAvailable()
 {
-    QSensorPrivate *d = m_sensor->d_func();
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
 
     // Copy the values from the device reading to the filter reading
-    d->filter_reading->copyValuesFrom(d->device_reading);
+    sensorPrivate->filter_reading->copyValuesFrom(sensorPrivate->device_reading);
 
-    for (QFilterList::const_iterator it = d->filters.constBegin(); it != d->filters.constEnd(); ++it) {
+    for (QFilterList::const_iterator it = sensorPrivate->filters.constBegin(); it != sensorPrivate->filters.constEnd(); ++it) {
         QSensorFilter *filter = (*it);
-        if (!filter->filter(d->filter_reading))
+        if (!filter->filter(sensorPrivate->filter_reading))
             return;
     }
 
     // Copy the values from the filter reading to the cached reading
-    d->cache_reading->copyValuesFrom(d->filter_reading);
+    sensorPrivate->cache_reading->copyValuesFrom(sensorPrivate->filter_reading);
 
-    Q_EMIT m_sensor->readingChanged();
+    Q_EMIT d->m_sensor->readingChanged();
 }
 
 /*!
@@ -131,8 +133,9 @@ void QSensorBackend::newReadingAvailable()
 */
 QSensorReading *QSensorBackend::reading() const
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    return d->device_reading;
+    Q_D(const QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    return sensorPrivate->device_reading;
 }
 
 /*!
@@ -140,7 +143,8 @@ QSensorReading *QSensorBackend::reading() const
 */
 QSensor *QSensorBackend::sensor() const
 {
-    return m_sensor;
+    Q_D(const QSensorBackend);
+    return d->m_sensor;
 }
 
 /*!
@@ -212,10 +216,11 @@ QSensor *QSensorBackend::sensor() const
 */
 void QSensorBackend::setReadings(QSensorReading *device, QSensorReading *filter, QSensorReading *cache)
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    d->device_reading = device;
-    d->filter_reading = filter;
-    d->cache_reading = cache;
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->device_reading = device;
+    sensorPrivate->filter_reading = filter;
+    sensorPrivate->cache_reading = cache;
 }
 
 /*!
@@ -228,8 +233,9 @@ void QSensorBackend::setReadings(QSensorReading *device, QSensorReading *filter,
 */
 void QSensorBackend::addDataRate(qreal min, qreal max)
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    d->availableDataRates << qrange(min, max);
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->availableDataRates << qrange(min, max);
 }
 
 /*!
@@ -247,6 +253,7 @@ void QSensorBackend::addDataRate(qreal min, qreal max)
 */
 void QSensorBackend::setDataRates(const QSensor *otherSensor)
 {
+    Q_D(QSensorBackend);
     if (!otherSensor) {
         qWarning() << "ERROR: Cannot call QSensorBackend::setDataRates with 0";
         return;
@@ -255,12 +262,12 @@ void QSensorBackend::setDataRates(const QSensor *otherSensor)
         qWarning() << "ERROR: Cannot call QSensorBackend::setDataRates with an invalid sensor";
         return;
     }
-    if (m_sensor->isConnectedToBackend()) {
+    if (d->m_sensor->isConnectedToBackend()) {
         qWarning() << "ERROR: Cannot call QSensorBackend::setDataRates outside of the constructor";
         return;
     }
-    QSensorPrivate *d = m_sensor->d_func();
-    d->availableDataRates = otherSensor->availableDataRates();
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->availableDataRates = otherSensor->availableDataRates();
 }
 
 /*!
@@ -273,11 +280,12 @@ void QSensorBackend::setDataRates(const QSensor *otherSensor)
 */
 void QSensorBackend::addOutputRange(qreal min, qreal max, qreal accuracy)
 {
-    QSensorPrivate *d = m_sensor->d_func();
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
 
     qoutputrange details = {min, max, accuracy};
 
-    d->outputRanges << details;
+    sensorPrivate->outputRanges << details;
 }
 
 /*!
@@ -288,8 +296,9 @@ void QSensorBackend::addOutputRange(qreal min, qreal max, qreal accuracy)
 */
 void QSensorBackend::setDescription(const QString &description)
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    d->description = description;
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->description = description;
 }
 
 /*!
@@ -304,8 +313,9 @@ void QSensorBackend::setDescription(const QString &description)
 */
 void QSensorBackend::sensorStopped()
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    d->active = false;
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->active = false;
 }
 
 /*!
@@ -320,9 +330,10 @@ void QSensorBackend::sensorStopped()
 */
 void QSensorBackend::sensorBusy()
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    d->active = false;
-    d->busy = true;
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->active = false;
+    sensorPrivate->busy = true;
 }
 
 /*!
@@ -334,9 +345,10 @@ void QSensorBackend::sensorBusy()
 */
 void QSensorBackend::sensorError(int error)
 {
-    QSensorPrivate *d = m_sensor->d_func();
-    d->error = error;
-    Q_EMIT m_sensor->sensorError(error);
+    Q_D(QSensorBackend);
+    QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
+    sensorPrivate->error = error;
+    Q_EMIT d->m_sensor->sensorError(error);
 }
 
 #include "moc_qsensorbackend.cpp"
