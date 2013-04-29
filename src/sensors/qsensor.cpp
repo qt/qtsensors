@@ -1010,7 +1010,7 @@ void QSensor::setUserOrientation(int userOrientation)
 
     This signal is emitted when the list of available sensors has changed.
     The sensors available to a program will not generally change over time
-    however some of the avilable sensors may represent hardware that is not
+    however some of the available sensors may represent hardware that is not
     permanently connected. For example, a game controller that is connected
     via bluetooth would become available when it was on and would become
     unavailable when it was off.
