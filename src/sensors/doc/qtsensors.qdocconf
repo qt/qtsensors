@@ -46,6 +46,8 @@ sourcedirs  += .. \
 exampledirs += ../../../examples/sensors \
                snippets/
 
+# Specify the install path under QT_INSTALL_EXAMPLES
+examplesinstallpath = sensors
 
 imagedirs   += images
 
