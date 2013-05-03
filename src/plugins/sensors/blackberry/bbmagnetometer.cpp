@@ -56,9 +56,7 @@ bool BbMagnetometer::updateReadingFromEvent(const sensor_event_t &event, QMagnet
     float x, y, z;
 
     QMagnetometer * const magnetometer = qobject_cast<QMagnetometer *>(sensor());
-    Q_ASSERT(magnetometer);
-    const bool returnGeoValues = magnetometer->returnGeoValues();
-    if (returnGeoValues) {
+    if (magnetometer && magnetometer->returnGeoValues()) {
         switch (event.accuracy) {
         case SENSOR_ACCURACY_UNRELIABLE: reading->setCalibrationLevel(0.0f); break;
         case SENSOR_ACCURACY_LOW:        reading->setCalibrationLevel(0.1f); break;
