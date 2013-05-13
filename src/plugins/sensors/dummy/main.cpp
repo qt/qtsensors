@@ -55,7 +55,6 @@ class dummySensorPlugin : public QObject, public QSensorPluginInterface, public 
 public:
     void registerSensors()
     {
-        qDebug() << "loaded the dummy plugin";
         QSensorManager::registerBackend(QAccelerometer::type, dummyaccelerometer::id, this);
         QSensorManager::registerBackend(QAmbientLightSensor::type, dummylightsensor::id, this);
     }

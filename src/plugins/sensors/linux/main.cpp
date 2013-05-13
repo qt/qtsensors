@@ -56,7 +56,6 @@ class LinuxSensorPlugin : public QObject, public QSensorPluginInterface, public 
 public:
     void registerSensors()
     {
-        qDebug() << "loaded the Linux plugin";
         QString path = QString::fromLatin1(qgetenv("QT_ACCEL_FILEPATH"));
         if (!path.isEmpty() && !QSensorManager::isBackendRegistered(QAccelerometer::type, LinuxSysAccelerometer::id))
             QSensorManager::registerBackend(QAccelerometer::type, LinuxSysAccelerometer::id, this);
