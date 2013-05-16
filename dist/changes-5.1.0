@@ -30,6 +30,9 @@ information about a particular change.
  - Add support for the compass sensor
  - Add support for the pressure sensor
  - Add support for the IR proximity sensor
+ - Add support for tilt sensor
+ - Add sensor backend for sensorfw
+ - Add freefall sensor gesture
 
 Qt for Android
 --------------
@@ -46,3 +49,4 @@ Qt for iOS
 ----------
 
  - Implement accelerometer for iOS
+
