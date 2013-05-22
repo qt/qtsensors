@@ -3,6 +3,9 @@ TARGET = accelbubble
 QT += quick
 SOURCES = main.cpp
 
+RESOURCES += \
+    accelbubble.qrc
+
 app.files = \
     $$files(*.qml) \
     icon.png \

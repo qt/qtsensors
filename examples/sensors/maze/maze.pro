@@ -13,3 +13,6 @@ app.files = \
 target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/maze
 app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/maze
 INSTALLS += target app
+
+RESOURCES += \
+    maze.qrc

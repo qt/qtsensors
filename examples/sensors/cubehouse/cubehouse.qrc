@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Cube.qml</file>
+        <file>cubehouse.qml</file>
+        <file>Room.qml</file>
+        <file>Table.qml</file>
+        <file>content/ground.jpg</file>
+        <file>content/wall.jpg</file>
+        <file>content/roof.jpg</file>
+        <file>content/qtlogo.png</file>
+        <file>mesh/table.3ds</file>
+    </qresource>
+</RCC>

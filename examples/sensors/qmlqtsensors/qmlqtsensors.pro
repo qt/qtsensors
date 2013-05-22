@@ -3,6 +3,9 @@ TARGET = qmlqtsensors
 QT += quick
 SOURCES = main.cpp
 
+RESOURCES += \
+    qmlqtsensors.qrc
+
 app.files = \
     $$files(*.qml) \
     icon.png \
