@@ -8,7 +8,7 @@ include(sensorfw.pri)
 
 
 CONFIG += link_pkgconfig
-PKGCONFIG += sensord
+PKGCONFIG += sensord-qt5
 
 CONFIGFILES.files = Sensors.conf
 CONFIGFILES.path = /etc/xdg/QtProject/
