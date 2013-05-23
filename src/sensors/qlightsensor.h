@@ -63,7 +63,7 @@ class Q_SENSORS_EXPORT QLightFilter : public QSensorFilter
 public:
     virtual bool filter(QLightReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QLightReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class QLightSensorPrivate;
@@ -75,7 +75,7 @@ class Q_SENSORS_EXPORT QLightSensor : public QSensor
 public:
     explicit QLightSensor(QObject *parent = 0);
     virtual ~QLightSensor();
-    QLightReading *reading() const { return static_cast<QLightReading*>(QSensor::reading()); }
+    QLightReading *reading() const;
     static char const * const type;
 
     qreal fieldOfView() const;

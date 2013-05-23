@@ -12,3 +12,6 @@ app.files = \
 target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer
 app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer
 INSTALLS += target app
+
+RESOURCES += \
+    qml.qrc

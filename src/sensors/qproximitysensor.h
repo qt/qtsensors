@@ -63,7 +63,7 @@ class Q_SENSORS_EXPORT QProximityFilter : public QSensorFilter
 public:
     virtual bool filter(QProximityReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QProximityReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class Q_SENSORS_EXPORT QProximitySensor : public QSensor
@@ -72,7 +72,7 @@ class Q_SENSORS_EXPORT QProximitySensor : public QSensor
 public:
     explicit QProximitySensor(QObject *parent = 0);
     virtual ~QProximitySensor();
-    QProximityReading *reading() const { return static_cast<QProximityReading*>(QSensor::reading()); }
+    QProximityReading *reading() const;
     static char const * const type;
 
 private:

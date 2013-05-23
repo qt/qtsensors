@@ -3,6 +3,9 @@ TARGET = shakeit
 QT += quick
 SOURCES = main.cpp
 
+RESOURCES += \
+    shakeit.qrc
+
 app.files = \
     $$files(*.qml) \
     icon.png \

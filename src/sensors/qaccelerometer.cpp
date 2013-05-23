@@ -150,6 +150,11 @@ void QAccelerometerReading::setZ(qreal z)
     \sa QSensorFilter::filter()
 */
 
+bool QAccelerometerFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QAccelerometerReading*>(reading));
+}
+
 char const * const QAccelerometer::type("QAccelerometer");
 
 /*!
@@ -256,6 +261,11 @@ void QAccelerometer::setAccelerationMode(QAccelerometer::AccelerationMode accele
 
     \sa QSensor::reading()
 */
+
+QAccelerometerReading *QAccelerometer::reading() const
+{
+    return static_cast<QAccelerometerReading*>(QSensor::reading());
+}
 
 /*!
     \fn QAccelerometer::accelerationModeChanged(AccelerationMode accelerationMode)

@@ -70,7 +70,7 @@ class Q_SENSORS_EXPORT QSensorBackendFactory
 public:
     virtual QSensorBackend *createBackend(QSensor *sensor) = 0;
 protected:
-    ~QSensorBackendFactory() {}
+    virtual ~QSensorBackendFactory();
 };
 
 QT_END_NAMESPACE

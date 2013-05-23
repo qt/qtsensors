@@ -45,7 +45,7 @@
 {\
     QGuiApplication app(argc,argv);\
     QQuickView view;\
-    view.setSource(QUrl::fromLocalFile(#NAME ".qml"));\
+    view.setSource(QUrl("qrc:///" #NAME ".qml"));\
     view.show();\
     return app.exec();\
 }

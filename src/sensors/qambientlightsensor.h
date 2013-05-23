@@ -73,7 +73,7 @@ class Q_SENSORS_EXPORT QAmbientLightFilter : public QSensorFilter
 public:
     virtual bool filter(QAmbientLightReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QAmbientLightReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class Q_SENSORS_EXPORT QAmbientLightSensor : public QSensor
@@ -82,7 +82,7 @@ class Q_SENSORS_EXPORT QAmbientLightSensor : public QSensor
 public:
     explicit QAmbientLightSensor(QObject *parent = 0);
     virtual ~QAmbientLightSensor();
-    QAmbientLightReading *reading() const { return static_cast<QAmbientLightReading*>(QSensor::reading()); }
+    QAmbientLightReading *reading() const;
     static char const * const type;
 
 private:

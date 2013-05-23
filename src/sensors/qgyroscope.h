@@ -71,7 +71,7 @@ class Q_SENSORS_EXPORT QGyroscopeFilter : public QSensorFilter
 public:
     virtual bool filter(QGyroscopeReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QGyroscopeReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class Q_SENSORS_EXPORT QGyroscope : public QSensor
@@ -80,7 +80,7 @@ class Q_SENSORS_EXPORT QGyroscope : public QSensor
 public:
     explicit QGyroscope(QObject *parent = 0);
     virtual ~QGyroscope();
-    QGyroscopeReading *reading() const { return static_cast<QGyroscopeReading*>(QSensor::reading()); }
+    QGyroscopeReading *reading() const;
     static char const * const type;
 
 private:

@@ -12,3 +12,6 @@ app.files = \
 target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/cubehouse
 app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/cubehouse
 INSTALLS += target app
+
+RESOURCES += \
+    cubehouse.qrc

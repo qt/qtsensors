@@ -75,7 +75,7 @@ class Q_SENSORS_EXPORT QMagnetometerFilter : public QSensorFilter
 public:
     virtual bool filter(QMagnetometerReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QMagnetometerReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class QMagnetometerPrivate;
@@ -87,7 +87,7 @@ class Q_SENSORS_EXPORT QMagnetometer : public QSensor
 public:
     explicit QMagnetometer(QObject *parent = 0);
     virtual ~QMagnetometer();
-    QMagnetometerReading *reading() const { return static_cast<QMagnetometerReading*>(QSensor::reading()); }
+    QMagnetometerReading *reading() const;
     static char const * const type;
 
     bool returnGeoValues() const;

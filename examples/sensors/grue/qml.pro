@@ -3,6 +3,9 @@ TARGET = grue
 QT += quick
 SOURCES = main.cpp
 
+RESOURCES += \
+    qml.qrc
+
 app.files = \
     icon.png \
     $$files(*.qml) \

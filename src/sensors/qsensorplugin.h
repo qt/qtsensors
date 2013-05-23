@@ -53,7 +53,7 @@ class Q_SENSORS_EXPORT QSensorPluginInterface
 public:
     virtual void registerSensors() = 0;
 protected:
-    ~QSensorPluginInterface() {}
+    virtual ~QSensorPluginInterface();
 };
 
 class Q_SENSORS_EXPORT QSensorChangesInterface
@@ -61,7 +61,7 @@ class Q_SENSORS_EXPORT QSensorChangesInterface
 public:
     virtual void sensorsChanged() = 0;
 protected:
-    ~QSensorChangesInterface() {}
+    virtual ~QSensorChangesInterface();
 };
 
 Q_DECLARE_INTERFACE(QSensorPluginInterface, "com.qt-project.Qt.QSensorPluginInterface/1.0")

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Research In Motion
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,58 +38,36 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef QSENSORBACKEND_P_H
+#define QSENSORBACKEND_P_H
 
-#ifndef QSENSORBACKEND_H
-#define QSENSORBACKEND_H
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API. It exists purely as an
+// implementation detail. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-#include <QtSensors/qsensor.h>
-#include <QtSensors/qsensormanager.h>
+#include "qsensorbackend.h"
+
+#include "private/qobject_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensorBackendPrivate;
-
-class Q_SENSORS_EXPORT QSensorBackend : public QObject
+class QSensorBackendPrivate : public QObjectPrivate
 {
-    Q_OBJECT
+    Q_DECLARE_PUBLIC(QSensorBackend)
 public:
-    explicit QSensorBackend(QSensor *sensor, QObject *parent = 0);
-    virtual ~QSensorBackend();
-
-    virtual void start() = 0;
-    virtual void stop() = 0;
-
-    virtual bool isFeatureSupported(QSensor::Feature feature) const;
-
-    // used by the backend to set metadata properties
-    void addDataRate(qreal min, qreal max);
-    void setDataRates(const QSensor *otherSensor);
-    void addOutputRange(qreal min, qreal max, qreal accuracy);
-    void setDescription(const QString &description);
-
-    template <typename T>
-    T *setReading(T *readingClass)
+    explicit QSensorBackendPrivate(QSensor *sensor)
+        : m_sensor(sensor)
     {
-        if (!readingClass)
-            readingClass = new T(this);
-        setReadings(readingClass, new T(this), new T(this));
-        return readingClass;
     }
 
-    QSensorReading *reading() const;
-    QSensor *sensor() const;
-
-    // used by the backend to inform us of events
-    void newReadingAvailable();
-    void sensorStopped();
-    void sensorBusy();
-    void sensorError(int error);
-
-private:
-    void setReadings(QSensorReading *device, QSensorReading *filter, QSensorReading *cache);
-
-    Q_DECLARE_PRIVATE(QSensorBackend)
-    Q_DISABLE_COPY(QSensorBackend)
+    QSensor *m_sensor;
 };
 
 QT_END_NAMESPACE

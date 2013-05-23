@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>PropertyList.qml</file>
+        <file>SensorList.qml</file>
+        <file>sensor_explorer.qml</file>
+        <file>components/ApplicationWindow.qml</file>
+        <file>components/TextField.qml</file>
+        <file>components/Button.qml</file>
+        <file>components/images/button_background_disabled.png</file>
+        <file>components/images/textfield_background_normal.png</file>
+        <file>components/images/textfield_background_disabled.png</file>
+        <file>components/images/button_background_pressed.png</file>
+        <file>components/images/button_background_normal.png</file>
+        <file>content/listitem_select.png</file>
+    </qresource>
+</RCC>

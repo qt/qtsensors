@@ -69,7 +69,7 @@ class Q_SENSORS_EXPORT QTiltFilter : public QSensorFilter
 public:
     virtual bool filter(QTiltReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QTiltReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class Q_SENSORS_EXPORT QTiltSensor : public QSensor
@@ -78,7 +78,7 @@ class Q_SENSORS_EXPORT QTiltSensor : public QSensor
 public:
     explicit QTiltSensor(QObject *parent = 0);
     ~QTiltSensor();
-    QTiltReading *reading() const { return static_cast<QTiltReading*>(QSensor::reading()); }
+    QTiltReading *reading() const;
     static char const * const type;
 
     Q_INVOKABLE void calibrate();

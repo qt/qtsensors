@@ -40,6 +40,7 @@
 
 #include <QObject>
 #include <qaccelerometer.h>
+#include <qmagnetometer.h>
 #include <qorientationsensor.h>
 
 class MyObject : public QObject
@@ -59,5 +60,20 @@ QOrientationSensor orient_sensor;
 
     Q_UNUSED(sensor)
     Q_UNUSED(orient_sensor);
+
+{
+//! [2]
+QMagnetometer *magnetometer = new QMagnetometer(this);
+//! [2]
+Q_UNUSED(magnetometer);
+}
+
+{
+//! [3]
+QSensor *magnetometer = new QSensor(QMagnetometer::type, this);
+//! [3]
+Q_UNUSED(magnetometer);
+}
+
 }
 

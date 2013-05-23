@@ -126,6 +126,11 @@ void QAmbientLightReading::setLightLevel(QAmbientLightReading::LightLevel lightL
     \sa QSensorFilter::filter()
 */
 
+bool QAmbientLightFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QAmbientLightReading*>(reading));
+}
+
 char const * const QAmbientLightSensor::type("QAmbientLightSensor");
 
 /*!
@@ -166,6 +171,11 @@ QAmbientLightSensor::~QAmbientLightSensor()
 
     \sa QSensor::reading()
 */
+
+QAmbientLightReading *QAmbientLightSensor::reading() const
+{
+    return static_cast<QAmbientLightReading*>(QSensor::reading());
+}
 
 #include "moc_qambientlightsensor.cpp"
 QT_END_NAMESPACE

@@ -100,6 +100,11 @@ void QLightReading::setLux(qreal lux)
     \sa QSensorFilter::filter()
 */
 
+bool QLightFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QLightReading*>(reading));
+}
+
 char const * const QLightSensor::type("QLightSensor");
 
 /*!
@@ -140,6 +145,11 @@ QLightSensor::~QLightSensor()
 
     \sa QSensor::reading()
 */
+
+QLightReading *QLightSensor::reading() const
+{
+    return static_cast<QLightReading*>(QSensor::reading());
+}
 
 /*!
     \property QLightSensor::fieldOfView

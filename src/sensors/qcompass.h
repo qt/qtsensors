@@ -67,7 +67,7 @@ class Q_SENSORS_EXPORT QCompassFilter : public QSensorFilter
 public:
     virtual bool filter(QCompassReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QCompassReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class Q_SENSORS_EXPORT QCompass : public QSensor
@@ -76,7 +76,7 @@ class Q_SENSORS_EXPORT QCompass : public QSensor
 public:
     explicit QCompass(QObject *parent = 0);
     virtual ~QCompass();
-    QCompassReading *reading() const { return static_cast<QCompassReading*>(QSensor::reading()); }
+    QCompassReading *reading() const;
     static char const * const type;
 
 private:

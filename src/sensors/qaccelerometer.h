@@ -71,7 +71,7 @@ class Q_SENSORS_EXPORT QAccelerometerFilter : public QSensorFilter
 public:
     virtual bool filter(QAccelerometerReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) { return filter(static_cast<QAccelerometerReading*>(reading)); }
+    bool filter(QSensorReading *reading);
 };
 
 class QAccelerometerPrivate;
@@ -96,7 +96,7 @@ public:
     AccelerationMode accelerationMode() const;
     void setAccelerationMode(AccelerationMode accelerationMode);
 
-    QAccelerometerReading *reading() const { return static_cast<QAccelerometerReading*>(QSensor::reading()); }
+    QAccelerometerReading *reading() const;
     static char const * const type;
 
 Q_SIGNALS:

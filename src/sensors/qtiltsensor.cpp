@@ -118,6 +118,11 @@ void QTiltReading::setXRotation(qreal x)
     \sa QSensorFilter::filter()
 */
 
+bool QTiltFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QTiltReading*>(reading));
+}
+
 char const * const QTiltSensor::type("QTiltSensor");
 
 /*!
@@ -162,6 +167,10 @@ QTiltSensor::~QTiltSensor()
     \sa QSensor::reading()
 */
 
+QTiltReading *QTiltSensor::reading() const
+{
+    return static_cast<QTiltReading*>(QSensor::reading());
+}
 
 /*!
    Calibrates the tilt sensor. Uses the current tilt angles as 0.

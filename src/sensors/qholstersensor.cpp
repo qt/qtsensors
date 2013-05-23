@@ -102,6 +102,11 @@ void QHolsterReading::setHolstered(bool holstered)
     \sa QSensorFilter::filter()
 */
 
+bool QHolsterFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QHolsterReading*>(reading));
+}
+
 char const * const QHolsterSensor::type("QHolsterSensor");
 
 /*!
@@ -143,6 +148,11 @@ QHolsterSensor::~QHolsterSensor()
 
     \sa QSensor::reading()
 */
+
+QHolsterReading *QHolsterSensor::reading() const
+{
+    return static_cast<QHolsterReading*>(QSensor::reading());
+}
 
 #include "moc_qholstersensor.cpp"
 QT_END_NAMESPACE

@@ -66,8 +66,7 @@ class Q_SENSORS_EXPORT QPressureFilter : public QSensorFilter
 public:
     virtual bool filter(QPressureReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE
-        { return filter(static_cast<QPressureReading*>(reading)); }
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT QPressureSensor : public QSensor
@@ -76,7 +75,7 @@ class Q_SENSORS_EXPORT QPressureSensor : public QSensor
 public:
     explicit QPressureSensor(QObject *parent = 0);
     ~QPressureSensor();
-    QPressureReading *reading() const { return static_cast<QPressureReading*>(QSensor::reading()); }
+    QPressureReading *reading() const;
     static char const * const type;
 
 private:

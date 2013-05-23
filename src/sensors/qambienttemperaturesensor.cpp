@@ -98,6 +98,11 @@ void QAmbientTemperatureReading::setTemperature(qreal temperature)
     \sa QSensorFilter::filter()
 */
 
+bool QAmbientTemperatureFilter::filter(QSensorReading *reading)
+{
+    return filter(static_cast<QAmbientTemperatureReading*>(reading));
+}
+
 char const * const QAmbientTemperatureSensor::type("QAmbientTemperatureSensor");
 
 /*!
@@ -139,6 +144,11 @@ QAmbientTemperatureSensor::~QAmbientTemperatureSensor()
 
     \sa QSensor::reading()
 */
+
+QAmbientTemperatureReading *QAmbientTemperatureSensor::reading() const
+{
+    return static_cast<QAmbientTemperatureReading*>(QSensor::reading());
+}
 
 #include "moc_qambienttemperaturesensor.cpp"
 QT_END_NAMESPACE
