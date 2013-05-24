@@ -29,7 +29,6 @@
     \page qtsensors-index.html
     \title Qt Sensors
     \brief The Qt Sensors API provides access to sensors via QML and C++ interfaces.
-    \ingroup technology-apis
 
     The Qt Sensors API provides access to sensor hardware via QML and C++ interfaces.
     The Qt Sensors API also provides motion gesture recognition API for devices.
@@ -117,4 +116,3 @@
             \li Information about the Sensorfw sensor backend.
     \endtable
 */
-
