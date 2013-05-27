@@ -6,5 +6,6 @@
         <file>components/images/button_background_disabled.png</file>
         <file>components/images/button_background_normal.png</file>
         <file>components/images/button_background_pressed.png</file>
+        <file>components/Divider.qml</file>
     </qresource>
 </RCC>

@@ -92,234 +92,138 @@ import QtSensors 5.0
 //! [0]
 
 ApplicationWindow {
-    id: appWnd
 
-    Rectangle {
-        id: mainWnd
-        x: 0
-        y: 0
-        width: 320
-        height: 480
-        color: "transparent"
+    // Sensor types used
+    //! [1]
+    TiltSensor {
+        id: tilt
+        active: false
+    }
+    //! [1]
 
-        property string speed: "Slow"
+    AmbientLightSensor {
+        id: ambientlight
+        active: false
+        //! [5]
+        onReadingChanged: {
+            if (reading.lightLevel == AmbientLightSensor.Unknown)
+                ambientlighttext.text = "Ambient light: Unknown";
+            else if (reading.lightLevel == AmbientLightSensor.Dark)
+                ambientlighttext.text = "Ambient light: Dark";
+            else if (reading.lightLevel == AmbientLightSensor.Twilight)
+                ambientlighttext.text = "Ambient light: Twilight";
+            else if (reading.lightLevel == AmbientLightSensor.Light)
+                ambientlighttext.text = "Ambient light: Light";
+            else if (reading.lightLevel == AmbientLightSensor.Bright)
+                ambientlighttext.text = "Ambient light: Bright";
+            else if (reading.lightLevel == AmbientLightSensor.Sunny)
+                ambientlighttext.text = "Ambient light: Sunny";
+        }
+        //! [5]
+    }
+
+    ProximitySensor {
+        id: proxi
+        active: false
+    }
+
+    Column {
+        spacing: 10
+        anchors.fill: parent
+        anchors.margins: 5
 
         Text {
             id: labelTitle
-            anchors.top: mainWnd.top
-            anchors.topMargin: 5
-            anchors.left: mainWnd.left
-            anchors.right: mainWnd.right
-
+            width: parent.width
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 30
             font.bold: true
             text: "QML QtSensors"
         }
 
-        //Tile region
+        // Tilt region
+        Divider { label: "TiltSensor" }
 
-        Rectangle {
-            id: tiltLine
-            anchors.top: labelTitle.bottom
-            anchors.topMargin: 5
-            anchors.left: mainWnd.left
-            anchors.leftMargin: 5
-            anchors.right: mainWnd.right
-            anchors.rightMargin: 5
-            border.width: 1
-            height: 1
-            border.color: "#888888"
-        }
-
-        Text {
-            id: labelTilt
-            anchors.top: tiltLine.bottom
-            anchors.topMargin: 5
-            anchors.left: mainWnd.left
-            anchors.right: mainWnd.right
-
-            horizontalAlignment: Text.AlignHCenter
-            font.bold: true
-            text: "TiltSensor"
-        }
-
-//! [1]
-        TiltSensor {
-            id: tilt
-            active: false
-        }
-//! [1]
-
-        Rectangle {
+        Row {
+            spacing: 20
+            width: parent.width
+            anchors.margins: 5
             Button {
                 id: calibrate
-                anchors.left: mainWnd.left
-                anchors.leftMargin: 5
-                anchors.top: speedRect.bottom
                 height: 30
                 width: 80
                 text: "Calibrate"
-
-                onClicked:{
-                    tilt.calibrate();
-                }
+                onClicked: tilt.calibrate();
             }
-
+            Text {
+                id: xrottext
+                height: 30
+                verticalAlignment: Text.AlignVCenter
+                //! [3]
+                text: "X Rotation: " + tilt.xRotation + "°"
+                //! [3]
+            }
+        }
+        Row {
+            spacing: 20
+            width: parent.width
+            anchors.margins: 5
             Button {
                 id: tiltStart
-                anchors.top: calibrate.bottom
-                anchors.left: mainWnd.left
-                anchors.leftMargin: 5
                 height: 30
                 width: 80
                 text: tilt.active ? "Stop" : "Start"
-
-                onClicked:{
-//! [2]
+                onClicked: {
+                    //! [2]
                     tilt.active = (tiltStart.text === "Start");
-//! [2]
+                    //! [2]
                 }
             }
-
-            Text {
-                id: xrottext
-                anchors.right: mainWnd.right
-                anchors.rightMargin: 5
-                anchors.left: useRadian.right
-                anchors.leftMargin: 15
-                anchors.top: useRadian.top
-                anchors.bottom: useRadian.bottom
-                verticalAlignment: Text.AlignVCenter
-//! [3]
-                text: "X Rotation: " + tilt.xRotation + "°"
-//! [3]
-            }
-
             Text {
                 id: yrottext
-                anchors.right: mainWnd.right
-                anchors.rightMargin: 5
-                anchors.left: tiltStart.right
-                anchors.leftMargin: 15
-                anchors.top: tiltStart.top
-                anchors.bottom: tiltStart.bottom
+                height: 30
                 verticalAlignment: Text.AlignVCenter
-//! [4]
+                //! [4]
                 text: "Y Rotation: " + tilt.yRotation +  "°"
-//! [4]
+                //! [4]
             }
+        }
 
-            //Ambient Light region
+        Divider { label: "AmbientLightSensor" }
 
-            Rectangle {
-                id: ambientlightLine
-                anchors.top: tiltStart.bottom
-                anchors.topMargin: 5
-                anchors.left: mainWnd.left
-                anchors.leftMargin: 5
-                anchors.right: mainWnd.right
-                anchors.rightMargin: 5
-                border.width: 1
-                height: 1
-                border.color: "#888888"
-            }
-
-            Text {
-                id: labelAmbientLight
-                anchors.top: ambientlightLine.bottom
-                anchors.topMargin: 5
-                anchors.left: mainWnd.left
-                anchors.right: mainWnd.right
-
-                horizontalAlignment: Text.AlignHCenter
-                font.bold: true
-                text: "AmbientLightSensor"
-            }
-
-            AmbientLightSensor {
-                id: ambientlight
-                active: false
-//! [5]
-                onReadingChanged: {
-                    if (reading.lightLevel == AmbientLightSensor.Unknown)
-                        ambientlighttext.text = "Ambient light: Unknown";
-                    else if (reading.lightLevel == AmbientLightSensor.Dark)
-                        ambientlighttext.text = "Ambient light: Dark";
-                    else if (reading.lightLevel == AmbientLightSensor.Twilight)
-                        ambientlighttext.text = "Ambient light: Twilight";
-                    else if (reading.lightLevel == AmbientLightSensor.Light)
-                        ambientlighttext.text = "Ambient light: Light";
-                    else if (reading.lightLevel == AmbientLightSensor.Bright)
-                        ambientlighttext.text = "Ambient light: Bright";
-                    else if (reading.lightLevel == AmbientLightSensor.Sunny)
-                        ambientlighttext.text = "Ambient light: Sunny";
-                }
-//! [5]
-            }
+        Row {
+            spacing: 20
+            width: parent.width
+            anchors.margins: 5
 
             Button{
                 id: ambientlightStart
-                anchors.top: labelAmbientLight.bottom
-                anchors.topMargin: 5
-                anchors.left: mainWnd.left
-                anchors.leftMargin: 5
                 height: 30
                 width: 80
                 text: ambientlight.active ? "Stop" : "Start"
-
                 onClicked: {
-                    ambientlight.active = (ambientlightStart.text === "Start"  ? true: false);
+                    ambientlight.active = (ambientlightStart.text === "Start" ? true : false);
                 }
             }
 
             Text {
                 id: ambientlighttext
-                anchors.left: ambientlightStart.right
-                anchors.leftMargin: 15
-                anchors.top: ambientlightStart.top
-                anchors.bottom: ambientlightStart.bottom
+                height: 30
                 verticalAlignment: Text.AlignVCenter
-                text: "Ambient light: -"
+                text: "Ambient light: Unknown"
             }
+        }
 
-            //Proximity region
+        // Proximity region
+        Divider { label: "ProximitySensor" }
 
-            Rectangle {
-                id: proximityLine
-                anchors.top: ambientlightStart.bottom
-                anchors.topMargin: 5
-                anchors.left: mainWnd.left
-                anchors.leftMargin: 5
-                anchors.right: mainWnd.right
-                anchors.rightMargin: 5
-                border.width: 1
-                height: 1
-                border.color: "#888888"
-            }
+        Row {
+            spacing: 20
+            width: parent.width
+            anchors.margins: 5
 
-            Text {
-                id: labelProximityLight
-                anchors.top: proximityLine.bottom
-                anchors.topMargin: 5
-                anchors.left: mainWnd.left
-                anchors.right: mainWnd.right
-                horizontalAlignment: Text.AlignHCenter
-                font.bold: true
-                text: "ProximitySensor"
-            }
-
-            ProximitySensor {
-                id: proxi
-                active: false
-            }
-
-            Button{
+            Button {
                 id: proxiStart
-                anchors.top: labelProximityLight.bottom
-                anchors.topMargin: 5
-                anchors.left: mainWnd.left
-                anchors.leftMargin: 5
                 height: 30
                 width: 80
                 text: proxi.active ? "Stop" : "Start"
@@ -331,14 +235,12 @@ ApplicationWindow {
 
             Text {
                 id: proxitext
-                anchors.left: proxiStart.right
-                anchors.leftMargin: 15
-                anchors.top: proxiStart.top
-                anchors.bottom: proxiStart.bottom
+                height: 30
                 verticalAlignment: Text.AlignVCenter
-//! [6]
-                text: "Proximity: " + (proxi.reading.near ? "near" : "far")
-//! [6]
+                //! [6]
+                text: "Proximity: " +
+                      (proxi.active ? (proxi.reading.near ? "Near" : "Far") : "Unknown")
+                //! [6]
             }
         }
     }
