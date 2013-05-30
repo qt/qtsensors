@@ -42,14 +42,12 @@
 #ifndef IOSACCELEROMETER_H
 #define IOSACCELEROMETER_H
 
-#include <Foundation/Foundation.h>
+#include <CoreMotion/CMMotionManager.h>
 
 #include <qsensorbackend.h>
 #include <qaccelerometer.h>
 
 QT_BEGIN_NAMESPACE
-
-@class QtIoAccelListener;
 
 class IOSAccelerometer : public QSensorBackend
 {
@@ -57,14 +55,15 @@ public:
     static char const * const id;
 
     explicit IOSAccelerometer(QSensor *sensor);
-    ~IOSAccelerometer();
+    void timerEvent(QTimerEvent *);
 
     void start();
     void stop();
 
 private:
-    NSOperationQueue *m_updateQueue;
+    CMMotionManager *m_motionManager;
     QAccelerometerReading m_reading;
+    int m_timer;
 };
 QT_END_NAMESPACE
 

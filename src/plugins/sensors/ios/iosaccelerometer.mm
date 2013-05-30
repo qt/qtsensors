@@ -40,8 +40,6 @@
 ****************************************************************************/
 
 #include <UIKit/UIAccelerometer.h>
-#include <CoreMotion/CMMotionManager.h>
-#include <QPointer>
 
 #include "iosaccelerometer.h"
 #include "iosmotionmanager.h"
@@ -52,49 +50,39 @@ QT_BEGIN_NAMESPACE
 
 IOSAccelerometer::IOSAccelerometer(QSensor *sensor)
     : QSensorBackend(sensor)
-    , m_updateQueue([[NSOperationQueue alloc] init])
+    , m_motionManager([QIOSMotionManager sharedManager])
+    , m_timer(0)
 {
     setReading<QAccelerometerReading>(&m_reading);
     addDataRate(1, 100); // 100Hz
     addOutputRange(-22.418, 22.418, 0.17651); // 2G
 }
 
-IOSAccelerometer::~IOSAccelerometer()
-{
-    [m_updateQueue release];
-}
-
 void IOSAccelerometer::start()
 {
-    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
-    // Convert from Hz to NSTimeInterval:
     int hz = sensor()->dataRate();
-    motionManager.accelerometerUpdateInterval = (hz == 0) ? 0 : 1. / hz;
-
-    QPointer<QObject> self = this;
-    [motionManager startAccelerometerUpdatesToQueue:m_updateQueue withHandler:^(CMAccelerometerData *data, NSError *error) {
-        // NSOperationQueue is multi-threaded, so we process the data by queuing a callback to
-        // the main application queue. By the time the callback executes, IOSAccelerometer might
-        // have been deleted, so we need an extra QPointer check for that:
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self) {
-                Q_UNUSED(error);
-                // Convert from NSTimeInterval to microseconds and G to m/s2, and flip axes:
-                CMAcceleration acc = data.acceleration;
-                const qreal G = 9.8066;
-                m_reading.setTimestamp(quint64(data.timestamp * 1000000));
-                m_reading.setX(qreal(acc.x) * G * -1);
-                m_reading.setY(qreal(acc.y) * G * -1);
-                m_reading.setZ(qreal(acc.z) * G * -1);
-                newReadingAvailable();
-            }
-        });
-    }];
+    m_timer = startTimer(1000 / (hz == 0 ? 60 : hz));
+    [m_motionManager startAccelerometerUpdates];
 }
 
 void IOSAccelerometer::stop()
 {
-    [[QIOSMotionManager sharedManager] stopAccelerometerUpdates];
+    [m_motionManager stopAccelerometerUpdates];
+    killTimer(m_timer);
+    m_timer = 0;
+}
+
+void IOSAccelerometer::timerEvent(QTimerEvent *)
+{
+    // Convert from NSTimeInterval to microseconds and G to m/s2, and flip axes:
+    CMAccelerometerData *data = m_motionManager.accelerometerData;
+    CMAcceleration acc = data.acceleration;
+    static const qreal G = 9.8066;
+    m_reading.setTimestamp(quint64(data.timestamp * 1e6));
+    m_reading.setX(qreal(acc.x) * G * -1);
+    m_reading.setY(qreal(acc.y) * G * -1);
+    m_reading.setZ(qreal(acc.z) * G * -1);
+    newReadingAvailable();
 }
 
 QT_END_NAMESPACE
