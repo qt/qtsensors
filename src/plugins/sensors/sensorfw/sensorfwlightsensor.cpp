@@ -49,6 +49,7 @@ SensorfwLightSensor::SensorfwLightSensor(QSensor *sensor)
 {
     initSensor<ALSSensorChannelInterface>(m_initDone);
     setReading<QLightReading>(&m_reading);
+    sensor->setDataRate(10);//set a default rate
 }
 
 void SensorfwLightSensor::slotDataAvailable(const Unsigned& data)

@@ -54,6 +54,7 @@ Sensorfwals::Sensorfwals(QSensor *sensor)
     setDescription(QLatin1String("ambient light intensity given as 5 pre-defined levels"));
     addOutputRange(0, 5, 1);
     addDataRate(10,10);
+    sensor->setDataRate(10);//set a default rate
 }
 
 void Sensorfwals::start()

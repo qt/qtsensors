@@ -45,7 +45,7 @@
 #include <qcompass.h>
 
 #include <compasssensor_i.h>
-#include <compass.h>
+#include <datatypes/compass.h>
 
 
 

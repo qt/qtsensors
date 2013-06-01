@@ -1,5 +1,5 @@
 TARGET = qtsensors_sensorfw
-QT = core sensors network
+QT = core sensors network dbus
 
 PLUGIN_TYPE = sensors
 load(qt_plugin)

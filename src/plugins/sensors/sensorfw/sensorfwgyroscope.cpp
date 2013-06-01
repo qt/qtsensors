@@ -54,6 +54,7 @@ SensorfwGyroscope::SensorfwGyroscope(QSensor *sensor)
     setReading<QGyroscopeReading>(&m_reading);
     addDataRate(10, 10);
     addDataRate(50, 50);
+    sensor->setDataRate(50);//set a default rate
 }
 
 void SensorfwGyroscope::slotDataAvailable(const XYZ& data)

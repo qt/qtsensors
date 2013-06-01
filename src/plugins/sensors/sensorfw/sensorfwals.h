@@ -46,7 +46,6 @@
 #include <qambientlightsensor.h>
 
 #include <alssensor_i.h>
-#include <unsigned.h>
 
 
 
