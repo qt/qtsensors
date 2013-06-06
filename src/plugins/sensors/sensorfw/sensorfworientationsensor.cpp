@@ -41,7 +41,7 @@
 
 #include "sensorfworientationsensor.h"
 
-#include <posedata.h>
+#include <datatypes/posedata.h>
 
 char const * const SensorfwOrientationSensor::id("sensorfw.orientationsensor");
 bool SensorfwOrientationSensor::m_initDone = false;
@@ -51,6 +51,7 @@ SensorfwOrientationSensor::SensorfwOrientationSensor(QSensor *sensor)
 {
     initSensor<OrientationSensorChannelInterface>(m_initDone);
     setReading<QOrientationReading>(&m_reading);
+    sensor->setDataRate(10);//set a default rate
 }
 
 

@@ -51,6 +51,7 @@ sensorfwaccelerometer::sensorfwaccelerometer(QSensor *sensor)
     setDescription(QLatin1String("x, y, and z axes accelerations in m/s^2"));
     setRanges(GRAVITY_EARTH_THOUSANDTH);
     setReading<QAccelerometerReading>(&m_reading);
+    sensor->setDataRate(50);//set a default rate
 }
 
 void sensorfwaccelerometer::slotDataAvailable(const XYZ& data)

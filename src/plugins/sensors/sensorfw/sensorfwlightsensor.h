@@ -47,8 +47,6 @@
 #include <qlightsensor.h>
 
 #include <alssensor_i.h>
-#include <unsigned.h>
-
 
 
 class SensorfwLightSensor : public SensorfwSensorBase

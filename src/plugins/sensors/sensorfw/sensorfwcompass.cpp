@@ -50,6 +50,7 @@ SensorfwCompass::SensorfwCompass(QSensor *sensor)
 {
     initSensor<CompassSensorChannelInterface>(m_initDone);
     setReading<QCompassReading>(&m_reading);
+    sensor->setDataRate(50);//set a default rate
 }
 
 void SensorfwCompass::slotDataAvailable(const Compass& data)

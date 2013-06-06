@@ -47,6 +47,11 @@
 #include <sensormanagerinterface.h>
 #include <abstractsensor_i.h>
 
+#include <QAmbientLightSensor>
+#include <QIRProximitySensor>
+#include <QTapSensor>
+#include <QProximitySensor>
+
 class SensorfwSensorBase : public QSensorBackend
 {
 public:
@@ -137,11 +142,11 @@ protected:
             m_maxBufferSize = 1;
 
         sensor()->setMaxBufferSize(m_maxBufferSize);
-        sensor()->efficientBufferSize(m_efficientBufferSize);
+        sensor()->setEfficientBufferSize(m_efficientBufferSize);
 
         QByteArray type = sensor()->type();
-        if (type == QAmbientLightSensor::type()) return;   // SensorFW returns lux values, plugin enumerated values
-        if (type == QIRProximitySensor::type()) return;    // SensorFW returns raw reflectance values, plugin % of max reflectance
+        if (type == QAmbientLightSensor::type) return;   // SensorFW returns lux values, plugin enumerated values
+        if (type == QIRProximitySensor::type) return;    // SensorFW returns raw reflectance values, plugin % of max reflectance
         if (name == "accelerometersensor") return;      // SensorFW returns milliGs, plugin m/s^2
         if (name == "magnetometersensor") return;       // SensorFW returns nanoTeslas, plugin Teslas
         if (name == "gyroscopesensor") return;          // SensorFW returns DSPs, plugin milliDSPs
