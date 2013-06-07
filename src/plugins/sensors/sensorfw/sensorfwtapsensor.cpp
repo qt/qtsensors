@@ -51,15 +51,18 @@ SensorfwTapSensor::SensorfwTapSensor(QSensor *sensor)
     setReading<QTapReading>(&m_reading);
     addOutputRange(QTapReading::Undefined, QTapReading::Z_Both, 1);
     addDataRate(10,10); //TODO: fix this when we know better
+    sensor->setDataRate(10);//set a default rate
 }
 
 
 void SensorfwTapSensor::start()
 {
-    bool b = sensor()->returnDoubleTapEvents();
+    QTapSensor * const tapSensor = qobject_cast<QTapSensor *>(sensor());
+
+    bool b = tapSensor->returnDoubleTapEvents();
     bool isDoubleTapSensor = m_isDoubleTapSensor;
     if (!b) {
-        sensor()->setReturnDoubleTapEvents(true); //by default doubles
+        tapSensor->setReturnDoubleTapEvents(true); //by default doubles
         m_isDoubleTapSensor = true;
     }
     else m_isDoubleTapSensor = b;

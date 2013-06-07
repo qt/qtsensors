@@ -49,7 +49,10 @@ SensorfwRotationSensor::SensorfwRotationSensor(QSensor *sensor)
 {
     initSensor<RotationSensorChannelInterface>(m_initDone);
     setReading<QRotationReading>(&m_reading);
-    sensor()->setHasZ(true);
+    QRotationSensor *const rotationSensor = qobject_cast<QRotationSensor *>(sensor);
+    if (rotationSensor)
+        rotationSensor->setHasZ(true);
+    sensor->setDataRate(20);//set a default rate
 }
 
 void SensorfwRotationSensor::slotDataAvailable(const XYZ& data)

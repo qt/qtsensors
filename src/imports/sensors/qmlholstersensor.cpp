@@ -125,7 +125,7 @@ QSensorReading *QmlHolsterReading::reading() const
 
 void QmlHolsterReading::readingUpdate()
 {
-    qreal holstered = m_sensor->reading()->holstered();
+    const bool holstered = m_sensor->reading()->holstered();
     if (m_holstered != holstered) {
         m_holstered = holstered;
         Q_EMIT holsteredChanged();

@@ -46,7 +46,6 @@
 #include <qproximitysensor.h>
 
 #include <proximitysensor_i.h>
-#include <unsigned.h>
 
 
 

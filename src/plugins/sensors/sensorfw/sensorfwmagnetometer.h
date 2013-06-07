@@ -46,7 +46,7 @@
 #include <qmagnetometer.h>
 
 #include <magnetometersensor_i.h>
-#include <magneticfield.h>
+#include <datatypes/magneticfield.h>
 
 
 

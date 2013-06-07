@@ -50,6 +50,7 @@ SensorfwProximitySensor::SensorfwProximitySensor(QSensor *sensor)
     initSensor<ProximitySensorChannelInterface>(m_initDone);
     setReading<QProximityReading>(&m_reading);
     addDataRate(10,10); //TODO: fix this when we know better
+    sensor->setDataRate(10);//set a default rate
 }
 
 void SensorfwProximitySensor::start()

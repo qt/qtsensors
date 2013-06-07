@@ -45,7 +45,7 @@
 #include <qtapsensor.h>
 
 #include <tapsensor_i.h>
-#include <tap.h>
+#include <datatypes/tap.h>
 
 
 

@@ -158,6 +158,5 @@ bool QShakeSensorGestureRecognizer::checkForShake(AccelData prevSensorData, Acce
     return (deltaX > threshold
             || deltaY > threshold
             || deltaZ > threshold);
-       (deltaY > threshold && deltaZ > threshold);
 }
 

@@ -47,7 +47,7 @@
 #include <qrotationsensor.h>
 
 #include <rotationsensor_i.h>
-#include <xyz.h>
+#include <datatypes/xyz.h>
 
 
 

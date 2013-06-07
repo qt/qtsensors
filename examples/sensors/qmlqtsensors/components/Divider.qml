@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,12 +38,24 @@
 **
 ****************************************************************************/
 
-//Import the declarative plugins
 import QtQuick 2.0
 
-Rectangle {
-    id: appWnd
-    width: 320
-    height: 480
-    color: "#868482"
+Column {
+    spacing: 5
+    width: parent.width
+    property alias label: textLabel.text
+
+    Rectangle {
+        border.width: 1
+        height: 2
+        width: parent.width
+        anchors.margins: 20
+        border.color: "#2d2b19"
+    }
+    Text {
+        id: textLabel
+        width: parent.width
+        horizontalAlignment: Text.AlignHCenter
+        font.bold: true
+    }
 }

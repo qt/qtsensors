@@ -56,6 +56,7 @@ SensorfwIrProximitySensor::SensorfwIrProximitySensor(QSensor *sensor)
     addOutputRange(0, 100, 1);
     addDataRate(10,10);
     rangeMax = QFile::exists(RM680_PS)?255:1023;
+    sensor->setDataRate(10);//set a default rate
 }
 
 void SensorfwIrProximitySensor::slotDataAvailable(const Proximity& proximity)
