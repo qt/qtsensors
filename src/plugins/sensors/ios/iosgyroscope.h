@@ -42,7 +42,7 @@
 #ifndef IOSGYROSCOPE_H
 #define IOSGYROSCOPE_H
 
-#include <Foundation/Foundation.h>
+#include <CoreMotion/CMMotionManager.h>
 
 #include <qsensorbackend.h>
 #include <qgyroscope.h>
@@ -55,14 +55,15 @@ public:
     static char const * const id;
 
     explicit IOSGyroscope(QSensor *sensor);
-    ~IOSGyroscope();
+    void timerEvent(QTimerEvent *);
 
     void start();
     void stop();
 
 private:
-    NSOperationQueue *m_updateQueue;
+    CMMotionManager *m_motionManager;
     QGyroscopeReading m_reading;
+    int m_timer;
 };
 QT_END_NAMESPACE
 

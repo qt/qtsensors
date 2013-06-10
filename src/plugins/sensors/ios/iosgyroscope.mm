@@ -39,9 +39,6 @@
 **
 ****************************************************************************/
 
-#include <CoreMotion/CMMotionManager.h>
-#include <QPointer>
-
 #include "iosmotionmanager.h"
 #include "iosgyroscope.h"
 
@@ -51,48 +48,38 @@ QT_BEGIN_NAMESPACE
 
 IOSGyroscope::IOSGyroscope(QSensor *sensor)
     : QSensorBackend(sensor)
-    , m_updateQueue([[NSOperationQueue alloc] init])
+    , m_motionManager([QIOSMotionManager sharedManager])
+    , m_timer(0)
 {
     setReading<QGyroscopeReading>(&m_reading);
     addDataRate(1, 100); // 100Hz is max it seems
     addOutputRange(-360, 360, 0.01);
 }
 
-IOSGyroscope::~IOSGyroscope()
-{
-    [m_updateQueue release];
-}
-
 void IOSGyroscope::start()
 {
-    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
-    // Convert Hz to NSTimeInterval:
     int hz = sensor()->dataRate();
-    motionManager.gyroUpdateInterval = (hz == 0) ? 0 : 1. / hz;
-
-    QPointer<QObject> self = this;
-    [motionManager startGyroUpdatesToQueue:m_updateQueue withHandler:^(CMGyroData *data, NSError *error) {
-        // NSOperationQueue is multi-threaded, so we process the data by queuing a callback to
-        // the main application queue. By the time the callback executes, IOSAccelerometer might
-        // have been deleted, so we need an extra QPointer check for that:
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self) {
-                Q_UNUSED(error);
-                // Convert NSTimeInterval to microseconds and radians to degrees:
-                CMRotationRate rate = data.rotationRate;
-                m_reading.setTimestamp(quint64(data.timestamp * 1000000));
-                m_reading.setX((qreal(rate.x) / M_PI) * 180);
-                m_reading.setY((qreal(rate.y) / M_PI) * 180);
-                m_reading.setZ((qreal(rate.z) / M_PI) * 180);
-                newReadingAvailable();
-            }
-        });
-    }];
+    m_timer = startTimer(1000 / (hz == 0 ? 60 : hz));
+    [m_motionManager startGyroUpdates];
 }
 
 void IOSGyroscope::stop()
 {
-    [[QIOSMotionManager sharedManager] stopGyroUpdates];
+    [m_motionManager stopGyroUpdates];
+    killTimer(m_timer);
+    m_timer = 0;
+}
+
+void IOSGyroscope::timerEvent(QTimerEvent *)
+{
+    // Convert NSTimeInterval to microseconds and radians to degrees:
+    CMGyroData *data = m_motionManager.gyroData;
+    CMRotationRate rate = data.rotationRate;
+    m_reading.setTimestamp(quint64(data.timestamp * 1e6));
+    m_reading.setX((qreal(rate.x) / M_PI) * 180);
+    m_reading.setY((qreal(rate.y) / M_PI) * 180);
+    m_reading.setZ((qreal(rate.z) / M_PI) * 180);
+    newReadingAvailable();
 }
 
 QT_END_NAMESPACE
