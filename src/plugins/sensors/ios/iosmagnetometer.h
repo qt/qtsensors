@@ -42,7 +42,7 @@
 #ifndef IOSMAGNETOMETER_H
 #define IOSMAGNETOMETER_H
 
-#include <Foundation/Foundation.h>
+#include <CoreMotion/CMMotionManager.h>
 
 #include <qsensorbackend.h>
 #include <qmagnetometer.h>
@@ -55,7 +55,7 @@ public:
     static char const * const id;
 
     explicit IOSMagnetometer(QSensor *sensor);
-    ~IOSMagnetometer();
+    void timerEvent(QTimerEvent *);
 
     void start();
     void stop();
@@ -64,8 +64,10 @@ public:
     void startDeviceMotion();
 
 private:
-    NSOperationQueue *m_updateQueue;
+    CMMotionManager *m_motionManager;
     QMagnetometerReading m_reading;
+    int m_timer;
+    bool m_returnGeoValues;
 };
 QT_END_NAMESPACE
 

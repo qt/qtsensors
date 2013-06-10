@@ -39,9 +39,6 @@
 **
 ****************************************************************************/
 
-#include <CoreMotion/CMMotionManager.h>
-#include <QPointer>
-
 #include "iosmotionmanager.h"
 #include "iosmagnetometer.h"
 
@@ -51,7 +48,9 @@ char const * const IOSMagnetometer::id("ios.magnetometer");
 
 IOSMagnetometer::IOSMagnetometer(QSensor *sensor)
     : QSensorBackend(sensor)
-    , m_updateQueue([[NSOperationQueue alloc] init])
+    , m_motionManager([QIOSMotionManager sharedManager])
+    , m_timer(0)
+    , m_returnGeoValues(false)
 {
     setReading<QMagnetometerReading>(&m_reading);
     // Technical information about data rate is not found, but
@@ -62,94 +61,64 @@ IOSMagnetometer::IOSMagnetometer(QSensor *sensor)
     addOutputRange(-0.0002, 0.0002, 1e-08);
 }
 
-IOSMagnetometer::~IOSMagnetometer()
-{
-    [m_updateQueue release];
-}
-
 void IOSMagnetometer::start()
 {
-    if (static_cast<QMagnetometer *>(sensor())->returnGeoValues())
-        startDeviceMotion();
+    int hz = sensor()->dataRate();
+    m_timer = startTimer(1000 / (hz == 0 ? 60 : hz));
+    m_returnGeoValues = static_cast<QMagnetometer *>(sensor())->returnGeoValues();
+
+    if (m_returnGeoValues)
+        [m_motionManager startDeviceMotionUpdates];
     else
-        startMagnetometer();
-}
-
-void IOSMagnetometer::startMagnetometer()
-{
-    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
-    // Convert Hz to NSTimeInterval:
-    int hz = sensor()->dataRate();
-    motionManager.magnetometerUpdateInterval = (hz == 0) ? 0 : 1. / hz;
-
-    QPointer<QObject> self = this;
-    [motionManager startMagnetometerUpdatesToQueue:m_updateQueue withHandler:^(CMMagnetometerData *data, NSError *error) {
-        // NSOperationQueue is multi-threaded, so we process the data by queuing a callback to
-        // the main application queue. By the time the callback executes, IOSMagnetometer might
-        // have been deleted, so we need an extra QPointer check for that:
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self) {
-                Q_UNUSED(error);
-                CMMagneticField field = data.magneticField;
-                // Convert NSTimeInterval to microseconds and microtesla to tesla:
-                m_reading.setTimestamp(quint64(data.timestamp * 1e6));
-                m_reading.setX(qreal(field.x) / 1e6);
-                m_reading.setY(qreal(field.y) / 1e6);
-                m_reading.setZ(qreal(field.z) / 1e6);
-                m_reading.setCalibrationLevel(1.0);
-                newReadingAvailable();
-            }
-        });
-    }];
-}
-
-void IOSMagnetometer::startDeviceMotion()
-{
-    CMMotionManager *motionManager = [QIOSMotionManager sharedManager];
-    // Convert Hz to NSTimeInterval:
-    int hz = sensor()->dataRate();
-    motionManager.deviceMotionUpdateInterval = (hz == 0) ? 0 : 1. / hz;
-    QPointer<QObject> self = this;
-
-    [motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXArbitraryCorrectedZVertical
-        toQueue:m_updateQueue withHandler:^(CMDeviceMotion *data, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self) {
-                Q_UNUSED(error);
-                CMCalibratedMagneticField calibratedField = data.magneticField;
-                CMMagneticField field = calibratedField.field;
-                field = motionManager.deviceMotion.magneticField.field;
-                // Convert NSTimeInterval to microseconds and microtesla to tesla:
-                m_reading.setTimestamp(quint64(data.timestamp * 1e6));
-                m_reading.setX(qreal(field.x) / 1e6);
-                m_reading.setY(qreal(field.y) / 1e6);
-                m_reading.setZ(qreal(field.z) / 1e6);
-
-                switch (calibratedField.accuracy) {
-                case CMMagneticFieldCalibrationAccuracyUncalibrated:
-                    m_reading.setCalibrationLevel(0.0);
-                    break;
-                case CMMagneticFieldCalibrationAccuracyLow:
-                    m_reading.setCalibrationLevel(0.3);
-                    break;
-                case CMMagneticFieldCalibrationAccuracyMedium:
-                    m_reading.setCalibrationLevel(0.6);
-                    break;
-                case CMMagneticFieldCalibrationAccuracyHigh:
-                    m_reading.setCalibrationLevel(1.0);
-                    break;
-                }
-
-                newReadingAvailable();
-            }
-        });
-    }];
+        [m_motionManager startMagnetometerUpdates];
 }
 
 void IOSMagnetometer::stop()
 {
-    [[QIOSMotionManager sharedManager] stopMagnetometerUpdates];
-    [[QIOSMotionManager sharedManager] stopDeviceMotionUpdates];
+    if (m_returnGeoValues)
+        [m_motionManager stopDeviceMotionUpdates];
+    else
+        [m_motionManager stopMagnetometerUpdates];
+    killTimer(m_timer);
+    m_timer = 0;
+}
+
+void IOSMagnetometer::timerEvent(QTimerEvent *)
+{
+    CMMagneticField field;
+
+    if (m_returnGeoValues) {
+        CMDeviceMotion *deviceMotion = m_motionManager.deviceMotion;
+        CMCalibratedMagneticField calibratedField = deviceMotion.magneticField;
+        field = calibratedField.field;
+        m_reading.setTimestamp(quint64(deviceMotion.timestamp * 1e6));
+
+        switch (calibratedField.accuracy) {
+        case CMMagneticFieldCalibrationAccuracyUncalibrated:
+            m_reading.setCalibrationLevel(0.0);
+            break;
+        case CMMagneticFieldCalibrationAccuracyLow:
+            m_reading.setCalibrationLevel(0.3);
+            break;
+        case CMMagneticFieldCalibrationAccuracyMedium:
+            m_reading.setCalibrationLevel(0.6);
+            break;
+        case CMMagneticFieldCalibrationAccuracyHigh:
+            m_reading.setCalibrationLevel(1.0);
+            break;
+        }
+    } else {
+        CMMagnetometerData *data = m_motionManager.magnetometerData;
+        field = data.magneticField;
+        m_reading.setTimestamp(quint64(data.timestamp * 1e6));
+        m_reading.setCalibrationLevel(1.0);
+    }
+
+    // Convert NSTimeInterval to microseconds and microtesla to tesla:
+    m_reading.setX(qreal(field.x) / 1e6);
+    m_reading.setY(qreal(field.y) / 1e6);
+    m_reading.setZ(qreal(field.z) / 1e6);
+    newReadingAvailable();
 }
 
 QT_END_NAMESPACE
