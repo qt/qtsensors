@@ -52,3 +52,7 @@ examplesinstallpath = sensors
 imagedirs   += images
 
 depends += qtcore qtdoc qtgui
+
+navigation.landingpage = "Qt Sensors"
+navigation.cppclassespage = "Qt Sensors C++ Classes"
+navigation.qmltypespage = "Qt Sensors QML Types"
