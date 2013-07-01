@@ -28,13 +28,15 @@
 /*!
     \example accelbubble
     \title Qt Sensors - Accel Bubble
-    \brief The AccelBubble example demonstrates the Legacy Accelerometer QML type.
+    \brief The AccelBubble example demonstrates the Accelerometer QML type.
     \ingroup qtsensors-examples
 
-\section1 Overview
-    Writing a QML application that uses the Legacy Accelerometer QML sensors type requires the following steps:
+    \image accelbubble.png
 
-    Import the Legacy Sensors Declarative module.
+\section1 Overview
+    Writing a QML application that uses the Accelerometer QML sensors type requires the following steps:
+
+    Import the Sensors Declarative module.
 
 \snippet accelbubble/accelbubble.qml 0
 
