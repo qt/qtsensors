@@ -56,6 +56,7 @@
 #include "qslamgesturerecognizer.h"
 #include "qturnoversensorgesturerecognizer.h"
 #include "qwhipsensorgesturerecognizer.h"
+#include "qfreefallsensorgesturerecognizer.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -75,6 +76,7 @@ QStringList QtSensorGesturePlugin::supportedIds() const
     list << "QtSensors.cover";
     list << "QtSensors.doubletap";
     list << "QtSensors.hover";
+    list << "QtSensors.freefall";
     list << "QtSensors.pickup";
     list << "QtSensors.shake2";
     list << "QtSensors.slam";
@@ -106,6 +108,7 @@ QList <QSensorGestureRecognizer *> QtSensorGesturePlugin::createRecognizers()
 
     recognizers.append(new QTwistSensorGestureRecognizer(this));
 
+    recognizers.append(new QFreefallSensorGestureRecognizer(this));
     return recognizers;
 }
 

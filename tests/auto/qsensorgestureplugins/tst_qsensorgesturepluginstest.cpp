@@ -116,7 +116,7 @@ void Tst_qsensorgesturePluginsTest::tst_sensor_plugins_qtsensors_data()
 
     QTest::newRow("QtSensors.doubletap") << "QtSensors.doubletap";
 
-    QTest::newRow("QtSensors.hover") << "QtSensors.hover";
+    QTest::newRow("QtSensors.freefall") << "QtSensors.freefall";
     QTest::newRow("QtSensors.hover") << "QtSensors.hover";
     QTest::newRow("QtSensors.shake2") << "QtSensors.shake2";
     QTest::newRow("QtSensors.slam") << "QtSensors.slam";

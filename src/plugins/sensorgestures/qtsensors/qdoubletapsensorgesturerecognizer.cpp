@@ -45,6 +45,7 @@ QT_BEGIN_NAMESPACE
 
 QDoubleTapSensorGestureRecognizer::QDoubleTapSensorGestureRecognizer(QObject *parent) :
     QSensorGestureRecognizer(parent)
+  , active(0)
 {
 }
 
