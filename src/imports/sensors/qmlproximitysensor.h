@@ -43,7 +43,9 @@
 #define QMLPROXIMITYSENSOR_H
 
 #include "qmlsensor.h"
-
+#ifdef near
+#undef near
+#endif
 QT_BEGIN_NAMESPACE
 
 class QProximitySensor;
