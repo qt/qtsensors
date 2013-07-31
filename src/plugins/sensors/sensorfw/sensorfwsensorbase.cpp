@@ -45,8 +45,7 @@
 SensorManagerInterface* SensorfwSensorBase::m_remoteSensorManager = 0;
 
 //According to wikipedia link http://en.wikipedia.org/wiki/Standard_gravity
-//const float sensorfwsensorbase::GRAVITY_EARTH = 9.812865328;
-const float SensorfwSensorBase::GRAVITY_EARTH_THOUSANDTH = 0.009812865328;
+const float SensorfwSensorBase::GRAVITY_EARTH_THOUSANDTH = 0.00980665;
 const int SensorfwSensorBase::KErrNotFound=-1;
 const int SensorfwSensorBase::KErrInUse=-14;
 QStringList SensorfwSensorBase::m_bufferingSensors = QStringList()
