@@ -30,6 +30,7 @@
     \module QtSensors
     \title Qt Sensors C++ Classes
     \ingroup modules
+    \qtvariable sensors
 
     \brief The QtSensors module provides classes for reading sensor data.
 
@@ -75,4 +76,3 @@
 
     \annotatedlist qml-sensors_reading
 */
-
