@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = accelbubble
-QT += quick
+QT += quick sensors svg xml
 SOURCES = main.cpp
 
 RESOURCES += \

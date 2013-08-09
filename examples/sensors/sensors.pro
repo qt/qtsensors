@@ -4,11 +4,13 @@ SUBDIRS += grue
 
 qtHaveModule(quick) {
     SUBDIRS += \
-        accelbubble \
         qmlsensorgestures \
         qmlqtsensors \
         sensor_explorer \
         shakeit
+
+     qtHaveModule(svg): SUBDIRS += \
+        accelbubble
 }
 
 qtHaveModule(widgets): SUBDIRS += \
