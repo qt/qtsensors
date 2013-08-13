@@ -66,6 +66,7 @@ public:
         // Register the 1.0 interfaces
         major = 1;
         minor = 0;
+        // @uri Grue
         qmlRegisterType           <GrueSensor       >(package, major, minor, "GrueSensor");
         qmlRegisterUncreatableType<GrueSensorReading>(package, major, minor, "GrueSensorReading", QLatin1String("Cannot create GrueSensorReading"));
     }
@@ -109,6 +110,7 @@ QT_END_NAMESPACE
 #include "main.moc"
 
 /*
+    \omit
     \qmltype GrueSensor
     \instantiates GrueSensor
     \inherits Sensor
@@ -119,9 +121,11 @@ QT_END_NAMESPACE
 
     This type wraps the GrueSensor class. Please see the documentation for
     GrueSensor for details.
+    \endomit
 */
 
 /*
+    \omit
     \qmltype GrueSensorReading
     \instantiates GrueSensorReading
     \inherits SensorReading
@@ -134,9 +138,12 @@ QT_END_NAMESPACE
     GrueSensorReading for details.
 
     This type cannot be directly created.
+    \endomit
 */
 
 /*
+    \omit
     \qmlproperty qreal Grue1::GrueSensorReading::chanceOfBeingEaten
     Please see GrueSensorReading::chanceOfBeingEaten for information about this property.
+    \endomit
 */

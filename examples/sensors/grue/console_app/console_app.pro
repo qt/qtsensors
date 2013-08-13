@@ -1,8 +1,11 @@
-TEMPLATE=app
-TARGET=detect_grue
+TEMPLATE = app
+TARGET = detect_grue
 CONFIG += console
-QT=core sensors
-SOURCES=main.cpp
+QT = core sensors
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/grue
+DESTDIR = $$OUT_PWD/..
+
+SOURCES = main.cpp
+
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
 INSTALLS += target

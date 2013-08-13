@@ -44,6 +44,7 @@
 IMPLEMENT_READING(GrueSensorReading)
 
 /*
+    \omit
     \class GrueSensorReading
 
     \brief The GrueSensorReading class holds readings from the Grue sensor.
@@ -64,6 +65,7 @@ IMPLEMENT_READING(GrueSensorReading)
     it is, the more likely you are to be eaten by a Grue. The longer you
     stay in a dark area, the more likely you are to be eaten by a Grue.
     If you are in a lit room, the probability will be 0 as Grues fear light.
+    \endomit
 */
 
 int GrueSensorReading::chanceOfBeingEaten() const
@@ -81,25 +83,30 @@ void GrueSensorReading::setChanceOfBeingEaten(int chanceOfBeingEaten)
 // begin generated code
 
 /*
+    \omit
     \class GrueFilter
 
     \brief The GrueFilter class is a convenience wrapper around QSensorFilter.
 
     The only difference is that the filter() method features a pointer to GrueSensorReading
     instead of QSensorReading.
+    \endomit
 */
 
 /*
+    \omit
     \fn GrueFilter::filter(GrueSensorReading *reading)
 
     Called when \a reading changes. Returns false to prevent the reading from propagating.
 
     \sa QSensorFilter::filter()
+    \endomit
 */
 
 char const * const GrueSensor::type("GrueSensor");
 
 /*
+    \omit
     \class GrueSensor
 
     \brief The GrueSensor class is a convenience wrapper around QSensor.
@@ -111,12 +118,15 @@ char const * const GrueSensor::type("GrueSensor");
     For details about how the sensor works, see \l GrueSensorReading.
 
     \sa GrueSensorReading
+    \endomit
 */
 
 /*
+    \omit
     \fn GrueSensor::GrueSensor(QObject *parent)
 
     Construct the sensor as a child of \a parent.
+    \endomit
 */
 
 /*
@@ -126,11 +136,13 @@ char const * const GrueSensor::type("GrueSensor");
 */
 
 /*
+    \omit
     \fn GrueSensor::reading() const
 
     Returns the reading class for this sensor.
 
     \sa QSensor::reading()
+    \endomit
 */
 // end generated code
 

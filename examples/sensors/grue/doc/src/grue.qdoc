@@ -26,10 +26,12 @@
 ****************************************************************************/
 
 /*!
-    \page gruesensorexample.html
+    \example grue
     \title Qt Sensors - Grue Sensor Example
     \brief The Qt Sensors - Grue sensor example demonstrates all the steps from creating a new sensor to using it.
     \ingroup qtsensors-examples
+
+    \image qtsensors-examples-grue.png
 
     The Qt Sensors - Grue sensor example demonstrates all the steps from creating a new sensor to using it.
 
@@ -54,12 +56,11 @@
     \li \l{Grue Sensor QML Import}
     \li \l{Grue Sensor QML Application}
     \endlist
-*/
 
-/*!
-    \example grue/lib
-    \title Grue Sensor Definition
-    \brief The Grue sensor is defined in a library so that applications can use it.
+    \section1 Grue Sensor Definition
+
+    The Grue sensor is defined in a library so that applications can use it.
+    The source code is available in the \c{grue/lib} subdirectory.
 
     First up is the sensor type. This is the interface for sensors that report
     on your likelihood of being eaten by a Grue. Such sensors are very important
@@ -74,13 +75,10 @@
     src/sensors. As such, it contains some generated code that defines the convenience
     classes GrueFilter and GrueSensor.
 
-    \sa {Qt Sensors - Grue Sensor Example}
-*/
+    \section1 Grue Sensor Implementation
 
-/*!
-    \example grue/plugin
-    \title Grue Sensor Implementation
-    \brief The Grue sensor implementation lives in a plugin that is loaded by the Qt Sensors library.
+    The Grue sensor implementation lives in a plugin that is loaded by the Qt Sensors
+    library. The source code is available in the \c{grue/plugin} subdirectory.
 
     The Grue sensor needs a backend before it can be used. The backend provided
     is rather basic and it relies on some kind of light sensor to work but it
@@ -119,44 +117,37 @@
     The Grue sensor backend is delivered as a plugin. The plugin has a factory object
     that registers the types available and does the actual instantiation of the backend.
 
-    \sa {Qt Sensors - Grue Sensor Example}
-*/
+    \section1 Grue Sensor Console Application
 
-/*!
-    \example grue/console_app
-    \title Grue Sensor Console Application
-    \brief The Grue sensor console application demonstrates use of the Grue sensor.
+    The Grue sensor console application demonstrates use of the Grue sensor.
+    The source code is available in the \c{grue/console_app} subdirectory.
 
     This is a simple commandline application. It demonstrates how to use the generic
     access feature of Qt Sensors to avoid a link-time dependency on the Grue Sensor
     library.
 
-    \sa {Qt Sensors - Grue Sensor Example}
-*/
+    \section1 Grue Sensor QML Import
 
-/*!
-    \example grue/import
-    \title Grue Sensor QML Import
-    \brief The Grue sensor QML import exports the GrueSensor class as a QML type.
+    The Grue sensor QML import exports the GrueSensor class as a QML type.
+    The source code is available in the \c{grue/import} subdirectory.
 
-    This example creates the \e {Grue 1.0} import.
+    This creates the \e {Grue 1.0} import.
 
-    \sa {Qt Sensors - Grue Sensor Example}
-*/
+    \section1 Grue Sensor QML Application
 
-/*!
-    \example grue
-    \title Grue Sensor QML Application
-    \brief The Grue sensor QML application demonstrates use of the GrueSensor QML type.
+    The Grue sensor QML application demonstrates the use of GrueSensor QML type.
 
-    This is a pure QML application that can be run from Qt Creator or directly using the
-    \c qmlscene binary. You should install the other projects before trying to run
+    The application consists of a single QML file and an image. It is built as an
+    exucutable with C++ code that runs the QML, but it can also be launched directly
+    using the \c qmlscene tool.
+
+    You should build the top-level 'grue' project before trying to run
     this example or it will not be able to find its dependencies.
 
     \code
-    qmlscene grue.qml
+    qmlscene -I . grue.qml
     \endcode
 
-    \sa {Qt Sensors - Grue Sensor Example}
+    Above, the \c{-I .} parameter adds the current directory as a module import
+    path to locate the Grue QML module.
 */
-

@@ -74,6 +74,7 @@ private:
 class Q_GRUE_EXPORT GrueSensor : public QSensor
 {
     Q_OBJECT
+    Q_PROPERTY(GrueSensorReading* reading READ reading)
 public:
     explicit GrueSensor(QObject *parent = 0) : QSensor(GrueSensor::type, parent) {}
     virtual ~GrueSensor() {}
