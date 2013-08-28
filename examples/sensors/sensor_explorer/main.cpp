@@ -38,5 +38,27 @@
 **
 ****************************************************************************/
 
-#include "../stub.h"
-SENSORS_EXAMPLE_MAIN(sensor_explorer)
+#include <QtQml>
+#include <QtQuick/QQuickWindow>
+
+#ifndef QT_NO_WIDGETS
+#include <QtWidgets/QApplication>
+#define Application QApplication
+#else
+#include <QtGui/QGuiApplication>
+#define Application QGuiApplication
+#endif
+
+int main(int argc, char *argv[])
+{
+    Application app(argc, argv);
+    QQmlApplicationEngine engine(QUrl("qrc:///sensor_explorer.qml"));
+    QObject *topLevel = engine.rootObjects().value(0);
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
+    if (!window) {
+        qWarning("Error: Your root item has to be a Window.");
+        return -1;
+    }
+    window->show();
+    return app.exec();
+}

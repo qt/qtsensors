@@ -1,16 +1,18 @@
 TEMPLATE = app
 TARGET = sensor_explorer
-QT += quick
+QT += qml quick
+
+qtHaveModule(widgets) {
+    QT += widgets
+}
 SOURCES = main.cpp
 
 app.files = \
-    $$files(*.qml) \
-    icon.png \
-    components \
-    content
+    sensor_explorer.qml \
+    icon.png
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer
-app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/sensor_explorer
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/sensor_explorer
+app.path = $$[QT_INSTALL_EXAMPLES]/sensors/sensor_explorer
 INSTALLS += target app
 
 RESOURCES += \
