@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = gesture
-QT       += core gui sensors widgets
+QT       += sensors widgets
 
 SOURCES += main.cpp\
         mainwindow.cpp
