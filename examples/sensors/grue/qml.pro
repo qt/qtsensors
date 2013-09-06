@@ -1,6 +1,7 @@
 TEMPLATE = app
 TARGET = grue
 QT += quick
+
 SOURCES = main.cpp
 
 RESOURCES += \
@@ -11,6 +12,6 @@ app.files = \
     $$files(*.qml) \
     grue.png
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/grue
-app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/grue
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
+app.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
 INSTALLS += target app
