@@ -45,8 +45,8 @@
 #include <QtCore/QFile>
 #include <QtCore/QSocketNotifier>
 
-// Earlier NDK versions did not ship sensor.h, that is why we have our own copy in
-// here.
+// Earlier NDK versions did not ship sensor.h and the Playbook NDK still
+// doesn't include it, that is why we have our own copy in here.
 // We prefer the NDK version if that exists, as that is more up-to-date.
 #ifdef HAVE_NDK_SENSOR_H
 #include <sensor/sensor.h>

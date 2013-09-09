@@ -40,8 +40,12 @@
 ****************************************************************************/
 
 //
-// This file is a temporary copy until it becomes available in the Blackberry NDK.
+// This file is a copy of the "sensor.h" header for the BlackBerry Playbook OS.
+// It is only inclulded here, because it is not available in the the Playbook NDK.
 //
+#if !defined(Q_OS_BLACKBERRY_TABLET)
+#error "This file is supposed to be used only for BlackBerry Playbook OS."
+#endif
 
 #ifndef SENSOR_H_
 #define SENSOR_H_
