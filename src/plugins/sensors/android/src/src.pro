@@ -14,7 +14,10 @@ HEADERS = \
     androidcommonsensor.h \
     androidgyroscope.h \
     androidmagnetometer.h \
+    androidpressure.h \
+    androidproximity.h \
     androidrotation.h \
+    androidtemperature.h \
     androidlight.h
 
 SOURCES = \
@@ -23,7 +26,10 @@ SOURCES = \
     androidaccelerometer.cpp \
     androidgyroscope.cpp \
     androidmagnetometer.cpp \
+    androidpressure.cpp \
+    androidproximity.cpp \
     androidrotation.cpp \
+    androidtemperature.cpp \
     androidlight.cpp
 
 OTHER_FILES = plugin.json

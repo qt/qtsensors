@@ -1,6 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -39,50 +40,24 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDJNISENSORS_H
-#define ANDROIDJNISENSORS_H
+#include "androidpressure.h"
 
-#include <jni.h>
+AndroidPressure::AndroidPressure(AndroidSensors::AndroidSensorType type, QSensor *sensor)
+    : AndroidCommonSensor<QPressureReading>(type, sensor)
+{}
 
-#include <QtCore/QVector>
-#include <QtCore/QString>
 
-namespace AndroidSensors
+void AndroidPressure::onAccuracyChanged(jint accuracy)
 {
-    // must be in sync with https://developer.android.com/reference/android/hardware/Sensor.html#TYPE_ACCELEROMETER
-    enum AndroidSensorType
-    {
-        TYPE_ACCELEROMETER = 1,
-        TYPE_AMBIENT_TEMPERATURE = 13, //Added in API level 14
-        TYPE_GAME_ROTATION_VECTOR = 15, //Added in API level 18
-        TYPE_GRAVITY = 9,
-        TYPE_GYROSCOPE = 4,
-        TYPE_GYROSCOPE_UNCALIBRATED = 16, //Added in API level 18
-        TYPE_LIGHT = 5,
-        TYPE_LINEAR_ACCELERATION = 10,
-        TYPE_MAGNETIC_FIELD = 2,
-        TYPE_MAGNETIC_FIELD_UNCALIBRATED = 14, //Added in API level 18
-        TYPE_ORIENTATION = 3, //This constant was deprecated in API level 8. use SensorManager.getOrientation() instead.
-        TYPE_PRESSURE = 6,
-        TYPE_PROXIMITY = 8,
-        TYPE_RELATIVE_HUMIDITY = 12, //Added in API level 14
-        TYPE_ROTATION_VECTOR = 11,
-        TYPE_SIGNIFICANT_MOTION = 17, //Added in API level 18
-        TYPE_TEMPERATURE = 7 //This constant was deprecated in API level 14. use Sensor.TYPE_AMBIENT_TEMPERATURE instead.
-    };
-
-    struct AndroidSensorsListenerInterface
-    {
-        virtual ~AndroidSensorsListenerInterface() {}
-        virtual void onAccuracyChanged(jint accuracy) = 0;
-        virtual void onSensorChanged(jlong timestamp, const jfloat *values, uint size) = 0;
-    };
-
-    QVector<AndroidSensorType> availableSensors();
-    QString sensorDescription(AndroidSensorType sensor);
-    qreal sensorMaximumRange(AndroidSensorType sensor);
-    bool registerListener(AndroidSensorType sensor, AndroidSensorsListenerInterface *listener, int dataRate = 0);
-    bool unregisterListener(AndroidSensorType sensor, AndroidSensorsListenerInterface *listener);
+    Q_UNUSED(accuracy)
 }
 
-#endif // ANDROIDJNISENSORS_H
+void AndroidPressure::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
+{
+    if (size < 1)
+        return;
+    m_reader.setTimestamp(timestamp/1000);
+    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
+    m_reader.setPressure(values[0]*100); //Android uses hPa, we use Pa
+    newReadingAvailable();
+}

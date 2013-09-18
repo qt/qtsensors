@@ -90,7 +90,7 @@
     <tr>
     <td nowrap="nowrap">Ambient Temperature Sensor</td>
     <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
@@ -162,7 +162,7 @@
     <tr>
     <td nowrap="nowrap">Pressure Sensor</td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
@@ -171,7 +171,7 @@
     <tr>
     <td nowrap="nowrap">Proximity Sensor</td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>

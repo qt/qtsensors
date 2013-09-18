@@ -47,7 +47,10 @@
 #include "androidgyroscope.h"
 #include "androidlight.h"
 #include "androidmagnetometer.h"
+#include "androidpressure.h"
+#include "androidproximity.h"
 #include "androidrotation.h"
+#include "androidtemperature.h"
 
 using namespace AndroidSensors;
 
@@ -66,7 +69,8 @@ public:
                 break;
             case TYPE_AMBIENT_TEMPERATURE:
             case TYPE_TEMPERATURE:
-                break; // add the temperature sensor backend
+                QSensorManager::registerBackend(QAmbientTemperatureSensor::type, QByteArray::number(sensor), this);
+                break;
             case TYPE_GRAVITY:
                 break; // add the gravity sensor backend
             case TYPE_GYROSCOPE:
@@ -83,14 +87,22 @@ public:
             case TYPE_ORIENTATION:
                 break; // add the orientation sensor backend
             case TYPE_PRESSURE:
-                break; // add the pressure sensor backend
+                QSensorManager::registerBackend(QPressureSensor::type, QByteArray::number(sensor), this);
+                break;
             case TYPE_PROXIMITY:
-                break; // add the proximity sensor backend
+                QSensorManager::registerBackend(QProximitySensor::type, QByteArray::number(sensor), this);
+                break;
             case TYPE_RELATIVE_HUMIDITY:
                 break; // add the relative humidity sensor backend
             case TYPE_ROTATION_VECTOR:
                 QSensorManager::registerBackend(QRotationSensor::type, QByteArray::number(sensor), this);
                 break;
+
+            case TYPE_GAME_ROTATION_VECTOR:
+            case TYPE_GYROSCOPE_UNCALIBRATED:
+            case TYPE_MAGNETIC_FIELD_UNCALIBRATED:
+            case TYPE_SIGNIFICANT_MOTION:
+                break; // add backends for API level 18 sensors
             }
         }
     }
@@ -103,7 +115,7 @@ public:
             return new AndroidAccelerometer(type, sensor);
         case TYPE_AMBIENT_TEMPERATURE:
         case TYPE_TEMPERATURE:
-            break; // add the temperature sensor backend
+            return new AndroidTemperature(type, sensor);
         case TYPE_GRAVITY:
             break; // add the gravity sensor backend
         case TYPE_GYROSCOPE:
@@ -117,13 +129,19 @@ public:
         case TYPE_ORIENTATION:
             break; // add the orientation sensor backend
         case TYPE_PRESSURE:
-            break; // add the pressure sensor backend
+            return new AndroidPressure(type, sensor);
         case TYPE_PROXIMITY:
-            break; // add the proximity sensor backend
+            return new AndroidProximity(type, sensor);
         case TYPE_RELATIVE_HUMIDITY:
             break; // add the relative humidity sensor backend
         case TYPE_ROTATION_VECTOR:
             return new AndroidRotation(type, sensor);
+
+        case TYPE_GAME_ROTATION_VECTOR:
+        case TYPE_GYROSCOPE_UNCALIBRATED:
+        case TYPE_MAGNETIC_FIELD_UNCALIBRATED:
+        case TYPE_SIGNIFICANT_MOTION:
+            break; // add backends for API level 18 sensors
         }
         return 0;
     }

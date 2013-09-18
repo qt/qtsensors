@@ -53,6 +53,7 @@ static jmethodID getSensorListMethodId;
 static jmethodID registerSensorMethodId;
 static jmethodID unregisterSensorMethodId;
 static jmethodID getSensorDescriptionMethodId;
+static jmethodID getSensorMaximumRangeMethodId;
 
 static QHash<int, QList<AndroidSensors::AndroidSensorsListenerInterface *> > listenersHash;
 QReadWriteLock listenersLocker;
@@ -117,6 +118,15 @@ namespace AndroidSensors
         aenv.jniEnv->ReleaseStringChars(jstr, pstr);
         aenv.jniEnv->DeleteLocalRef(jstr);
         return ret;
+    }
+
+    qreal sensorMaximumRange(AndroidSensorType sensor)
+    {
+        AttachedJNIEnv aenv;
+        if (!aenv.jniEnv)
+            return 0;
+        jfloat range = aenv.jniEnv->CallStaticFloatMethod(sensorsClass, getSensorMaximumRangeMethodId, jint(sensor));
+        return range;
     }
 
     bool registerListener(AndroidSensorType sensor, AndroidSensorsListenerInterface *listener, int dataRate)
@@ -214,6 +224,7 @@ static bool registerNatives(JNIEnv *env)
     GET_AND_CHECK_STATIC_METHOD(registerSensorMethodId, sensorsClass, "registerSensor", "(II)Z");
     GET_AND_CHECK_STATIC_METHOD(unregisterSensorMethodId, sensorsClass, "unregisterSensor", "(I)Z");
     GET_AND_CHECK_STATIC_METHOD(getSensorDescriptionMethodId, sensorsClass, "getSensorDescription", "(I)Ljava/lang/String;");
+    GET_AND_CHECK_STATIC_METHOD(getSensorMaximumRangeMethodId, sensorsClass, "getSensorMaximumRange", "(I)F");
 
     return true;
 }

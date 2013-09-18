@@ -98,6 +98,17 @@ public class QtSensors implements SensorEventListener
         return null;
     }
 
+    private static float getSensorMaximumRange(int sensorType)
+    {
+        try {
+            Sensor s = m_sensorManager.getDefaultSensor(sensorType);
+            return s.getMaximumRange();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private static boolean registerSensor(int sensorType, int rate)
     {
         synchronized (m_syncObject) {
