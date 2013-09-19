@@ -60,7 +60,7 @@ QT_BEGIN_NAMESPACE
     import QtSensors 5.0 as Sensors
     ...
         Component.onCompleted: {
-            var types = Sensors.sensorTypes();
+            var types = Sensors.QmlSensors.sensorTypes();
             console.log(types.join(", "));
         }
     \endcode
