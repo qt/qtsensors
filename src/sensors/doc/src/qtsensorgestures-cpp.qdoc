@@ -28,22 +28,24 @@
 /*!
 \page qtsensorgestures-cpp.html
 \title Sensor Gestures C++ Overview
-\brief Information about the QtSensorGestures C++ API
+\brief Explains how to use the QtSensorGestures C++ API
 
 \tableofcontents
 
 \section1 Using QtSensorGestures
 
 With the Sensor Gestures classes, you are able to easily utilize device gesturing using
-sensors such as the accelerometer and proximity.
+sensors, such as the accelerometer and proximity.
 
 A list of currently supported sensor gestures and their descriptions can be found here:
 \l  {Qt Sensor Gestures}
 
-Using QtSensorGestures is easy. There are two main classes you will need to use.
+Using \c QtSensorGestures is easy. There are two main classes you will need to use:
 
-QSensorGestureManager can be used for determining what sensor gestures are available, and
-QSensorGesture for connecting the sensor gesture signals.
+\list
+   \li QSensorGestureManager: can be used for determining which sensor gestures are available.
+   \li QSensorGesture : for connecting the sensor gesture signals.
+\endlist
 
 \snippet sensorgestures/creating.cpp Receiving sensor gesture signals
 
@@ -52,15 +54,15 @@ More information about the sensor gesture recognizers can be found in
 
 \section1 Main Classes
 
-The primary classes that make up the QtSensorGestures API.
+The primary classes that make up the QtSensorGestures API:
 
 \annotatedlist sensorgestures_main
 
-The primary classes that make up the QtSensorGesturesRecognizers API.
+The primary classes that make up the \c QtSensorGesturesRecognizers API:
 
 \annotatedlist sensorgestures_recognizer
 
-Details of the QSensorGesturePlugins available
+Details of the \c QSensorGesturePlugins available
 
 \annotatedlist sensorgesture_plugins_topics
 

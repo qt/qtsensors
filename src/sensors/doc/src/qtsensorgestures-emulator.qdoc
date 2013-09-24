@@ -27,25 +27,23 @@
 /*!
 \group sensorgesture_emulator_topics
 \title QtSensorGestures Emulator
-\brief Information about the development of clients and recognizer plugins
-  using QtSensorGestures
+\brief Explains how to develop clients and recognizer plugins using QtSensorGestures
 
 \section1 Overview
 
-Whether creating client apps using Qt's built-in sensor gestures, or
-creating customized recognizers, the Emulator can be used to help develop client
-apps and recognizers.
+The Emulator can be used for both creating client apps using Qt's built-in sensor gestures,
+and for creating customized recognizers.
 
 \section1 Developing sensor gesture clients.
 
 For instance, the Emulator can be used for writing a client app that needs
-to use the 'slam' gesture.
+to use the "slam" gesture.
 
-Under the 'Sensors' heading in the Emulator control, you will see an edit
-box for 'Sensor gestures' that will contain a list of signals available
+Under the "Sensors" heading in the Emulator control, you will see an edit
+box for "Sensor gestures" that will contain a list of signals available
 when your client instantiates a QSensorGesture.
 
-Select 'slam', and then click the 'Send' button
+Select "slam", and then click the "Send" button
 to send a detected("slam") signal to the client.
 
 */

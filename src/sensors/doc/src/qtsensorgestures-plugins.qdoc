@@ -28,7 +28,7 @@
 /*!
 \group sensorgesture_plugins_topics
 \title QtSensorGestures Plugins
-\brief Information about the QtSensorGestures recognizer plugins.
+\brief Explains how to develop recognizer plugins with QtSensorGestures
 
 The QtSensorGestures recognizer plugins are the way to create your own
 sensor gestures.
@@ -36,7 +36,7 @@ sensor gestures.
 Creating software to recognize motion gestures using sensors is a huge subject not covered here.
 
 The QSensorGesture API does not limit usage to any of the common classification methods of gesture
-recognition such as Hidden Markov Models, Neural Networks, Dynamic Time Warping, or even the
+recognition, such as Hidden Markov Models, Neural Networks, Dynamic Time Warping, or even the
 ad-hoc heuristic recognizers of Qt's built-in sensor gesture recognizers. It's basically a
 signaling system for lower level gesture recogition methods and algorithms to communicate to the
 higher level applications.
@@ -45,7 +45,7 @@ higher level applications.
 
 \section1 Overview
 
-    The steps to creating a sensor gesture plugin are as follows:
+    The steps for creating a sensor gesture plugin are as follows:
 \list
 \li Sub-class from QSensorGesturePluginInterface
 \li Sub-class from QSensorGestureRecognizer and implement gesture recognizer logic using QtSensors.
@@ -70,34 +70,34 @@ classes to subclass.
 \target Qt Sensor Gestures
 \section3 Recognizer Plugins
 
-The Sensor Gesture Recognizers that come with Qt are made using an ad-hock heurustic approach.
+The Sensor Gesture Recognizers that come with Qt are made using an ad-hoc heuristic approach.
 The user cannot define their own gestures, and must learn how to perform and accomodate the
 pre-defined gestures herein.
 
-A developer may use any method including computationally and training intensive well
- known classifiers, to produce gesture recognizers. There are currently no classes in Qt for
-gesture training, nor ability for the user to define their own sensor based motion gestures.
+A developer may use any method, including computationally- and training-intensive well-
+known classifiers, to produce gesture recognizers. There are currently no classes in Qt for
+gesture training, nor is it possible for the user to define his own sensor-based motion gestures.
 
-A procedure for writing ad-hock recognizers might include:
+A procedure for writing ad-hoc recognizers might include:
 \list
-    \li Obtain and gather output from the accelerometer through QAccelerometerReading of a gesture being performed.
+    \li Obtain and gather output from the accelerometer through \c QAccelerometerReading of a gesture being performed.
     \li Use various methods and constraints on the accelerometer data to recognize the various states:
     \list i
-        \li Initial 'listening' state for a gesture
-        \li Start of a possible gesture, moving into a 'detecting' state
-        \li End of a possible gesture, moving into a 'recognizing' state
-        \li and finally, if it is recognized, the 'recognized' state, or if not recognized, move back to
-           the 'listening' state.
+        \li Initial "listening" state for a gesture
+        \li Start of a possible gesture, moving into a "detecting" state
+        \li End of a possible gesture, moving into a "recognizing" state
+        \li and finally, if it is recognized, the "recognized" state, or if not recognized, move back to
+           the "listening" state.
     \endlist
     \li Test procedure to make sure it is easy to perform, and will not
- produce too many false positive recognitions. And if used with other gestures, collisions. Meaning
+ produce too many false positive recognitions, or collisions if used with other gestures. Meaning
 that gestures performed get recognized as another gesture instead.
 
 \endlist
 
-Here is a list of included plugins and their signals
+Below you will find a list of included plugins and their signals.
 
-For ShakeGestures plugin:
+For the ShakeGestures plugin:
     \table
         \row
             \li Recognizer Id
@@ -107,7 +107,7 @@ For ShakeGestures plugin:
             \li shake
 \endtable
 
-For QtSensorGestures plugin:
+For the QtSensorGestures plugin:
     \table
         \row
             \li Recognizer Id
@@ -133,7 +133,7 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.pickup
             \li pickup
-            \li Phone is resting face up on a flat curface, and is then picked up and brought up into viewing position, using the Accelerometer sensor.
+            \li Phone is resting face up on a flat curface, and is then picked up and brought up into viewing position. Uses the Accelerometer sensor.
             \li \image sensorgesture-faceup.png
         \row
             \li QtSensors.shake2
@@ -144,7 +144,7 @@ For QtSensorGestures plugin:
             \li QtSensors.slam
             \li slam
             \li Phone is held in a top up position with a side facing forward for a moment. Swing it quickly with a downward motion
-             like it is being used to point at something with the top corner. using the Accelerometer and Orientation sensors.
+             like it is being used to point at something with the top corner. Uses the Accelerometer and Orientation sensors.
             \li \image sensorgesture-slam_1.png
             \image sensorgesture-slam_2.png
         \row
@@ -160,7 +160,7 @@ For QtSensorGestures plugin:
         \row
             \li QtSensors.whip
             \li whip
-            \li Move phone quickly down and then back up. using the Accelerometer and Orientation sensors.
+            \li Move phone quickly down and then back up. Uses the Accelerometer and Orientation sensors.
             \li \image sensorgesture-whip.png
    \endtable
 
