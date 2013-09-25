@@ -46,7 +46,7 @@
     \qmltype IRProximitySensor
     \instantiates QmlIRProximitySensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The IRProximitySensor element reports on infra-red reflectance values.
@@ -81,7 +81,7 @@ QSensor *QmlIRProximitySensor::sensor() const
     \qmltype IRProximityReading
     \instantiates QmlIRProximitySensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The IRProximityReading element holds the most recent IR proximity reading.

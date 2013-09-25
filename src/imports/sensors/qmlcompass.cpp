@@ -46,7 +46,7 @@
     \qmltype Compass
     \instantiates QmlCompass
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The Compass element reports on heading using magnetic north as a reference.
@@ -83,7 +83,7 @@ QSensor *QmlCompass::sensor() const
     \qmltype CompassReading
     \instantiates QmlCompassReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The CompassReading element holds the most recent Compass reading.

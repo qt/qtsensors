@@ -45,7 +45,7 @@
     \qmltype AmbientTemperatureSensor
     \instantiates QmlAmbientTemperatureSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits Sensor
     \brief The AmbientTemperatureSensor element reports on the ambient temperature.
@@ -82,7 +82,7 @@ QSensor *QmlAmbientTemperatureSensor::sensor() const
     \qmltype AmbientTemperatureReading
     \instantiates QmlAmbientTemperatureReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits SensorReading
     \brief The AmbientTemperatureReading element holds the most recent temperature reading.

@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \qmltype Sensor
     \instantiates QmlSensor
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \brief The Sensor element serves as a base type for sensors.
 
@@ -500,7 +500,7 @@ void QmlSensor::updateReading()
 /*!
     \qmltype SensorReading
     \instantiates QmlSensorReading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \brief The SensorReading element serves as a base type for sensor readings.
 

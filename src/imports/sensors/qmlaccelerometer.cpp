@@ -46,7 +46,7 @@
     \qmltype Accelerometer
     \instantiates QmlAccelerometer
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The Accelerometer element reports on linear acceleration
@@ -106,7 +106,7 @@ QSensor *QmlAccelerometer::sensor() const
     \qmltype AccelerometerReading
     \instantiates QmlAccelerometerReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The AccelerometerReading element holds the most recent Accelerometer reading.

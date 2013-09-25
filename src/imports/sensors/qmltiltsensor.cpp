@@ -49,7 +49,7 @@ QT_END_NAMESPACE
     \qmltype TiltSensor
     \instantiates QmlTiltSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The TiltSensor element reports tilt events
@@ -98,7 +98,7 @@ void QmlTiltSensor::calibrate()
     \qmltype TiltReading
     \instantiates QmlTiltSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The TiltReading element holds the most recent TiltSensor reading.

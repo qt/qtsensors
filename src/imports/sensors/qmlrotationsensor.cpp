@@ -46,7 +46,7 @@
     \qmltype RotationSensor
     \instantiates QmlRotationSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The RotationSensor element reports on device rotation
@@ -102,7 +102,7 @@ void QmlRotationSensor::_update()
     \qmltype RotationReading
     \instantiates QmlRotationSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The RotationReading element holds the most recent RotationSensor reading.

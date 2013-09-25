@@ -153,7 +153,7 @@ if (! -e $qmlsource) {
     \qmltype '.$no_q_sensor.'
     \instantiates '.$qmlsensor.'
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.[INSERT VERSION HERE]
     \inherits Sensor
     \brief The '.$no_q_sensor.' element reports on fubbleness.
@@ -190,7 +190,7 @@ QSensor *'.$qmlsensor.'::sensor() const
     \qmltype '.$no_q_reading.'
     \instantiates '.$qmlreading.'
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.[INSERT VERSION HERE]
     \inherits SensorReading
     \brief The '.$no_q_reading.' element holds the most recent '.$no_q_sensor.' reading.
