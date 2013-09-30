@@ -46,7 +46,7 @@
     \qmltype TapSensor
     \instantiates QmlTapSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The TapSensor element reports tap and double tap events
@@ -104,7 +104,7 @@ void QmlTapSensor::setReturnDoubleTapEvents(bool ret)
     \qmltype TapReading
     \instantiates QmlTapSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The TapReading element holds the most recent TapSensor reading.

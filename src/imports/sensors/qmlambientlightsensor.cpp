@@ -46,7 +46,7 @@
     \qmltype AmbientLightSensor
     \instantiates QmlAmbientLightSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The AmbientLightSensor element repors on ambient lighting conditions.
@@ -83,7 +83,7 @@ QSensor *QmlAmbientLightSensor::sensor() const
     \qmltype AmbientLightReading
     \instantiates QmlAmbientLightSensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The AmbientLightReading element holds the most AmbientLightSensor reading.

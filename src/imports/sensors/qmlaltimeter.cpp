@@ -45,7 +45,7 @@
     \qmltype Altimeter
     \instantiates QmlAltimeter
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits Sensor
     \brief The Altimeter element reports on altitude.
@@ -82,7 +82,7 @@ QSensor *QmlAltimeter::sensor() const
     \qmltype AltimeterReading
     \instantiates QmlAltimeterReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits SensorReading
     \brief The AltimeterReading element holds the most recent Altimeter reading.

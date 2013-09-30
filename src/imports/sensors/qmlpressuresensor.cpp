@@ -45,7 +45,7 @@
     \qmltype PressureSensor
     \instantiates QmlPressureSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits Sensor
     \brief The PressureSensor element reports on atmospheric pressure values.
@@ -82,7 +82,7 @@ QSensor *QmlPressureSensor::sensor() const
     \qmltype PressureReading
     \instantiates QmlPressureReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits SensorReading
     \brief The PressureReading element holds the most recent PressureSensor reading.

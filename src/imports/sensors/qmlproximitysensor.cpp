@@ -46,7 +46,7 @@
     \qmltype ProximitySensor
     \instantiates QmlProximitySensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The ProximitySensor element reports on object proximity.
@@ -83,7 +83,7 @@ QSensor *QmlProximitySensor::sensor() const
     \qmltype ProximityReading
     \instantiates QmlProximitySensorReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The ProximityReading element holds the most recent ProximitySensor reading.

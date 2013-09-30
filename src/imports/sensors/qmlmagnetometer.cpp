@@ -46,7 +46,7 @@
     \qmltype Magnetometer
     \instantiates QmlMagnetometer
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits Sensor
     \brief The Magnetometer element reports on magnetic field strength
@@ -104,7 +104,7 @@ void QmlMagnetometer::setReturnGeoValues(bool geo)
     \qmltype MagnetometerReading
     \instantiates QmlMagnetometerReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The MagnetometerReading element holds the most recent Magnetometer reading.

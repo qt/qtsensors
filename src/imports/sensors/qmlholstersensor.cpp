@@ -45,7 +45,7 @@
     \qmltype HolsterSensor
     \instantiates QmlHolsterSensor
     \ingroup qml-sensors_type
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits Sensor
     \brief The HolsterSensor element reports on whether a device is holstered.
@@ -82,7 +82,7 @@ QSensor *QmlHolsterSensor::sensor() const
     \qmltype HolsterReading
     \instantiates QmlHolsterReading
     \ingroup qml-sensors_reading
-    \inqmlmodule QtSensors 5.0
+    \inqmlmodule QtSensors
     \since QtSensors 5.1
     \inherits SensorReading
     \brief The HolsterReading element holds the most recent HolsterSensor reading.

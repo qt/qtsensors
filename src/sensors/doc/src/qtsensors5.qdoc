@@ -41,7 +41,7 @@
 */
 
 /*!
-    \qmlmodule QtSensors 5
+    \qmlmodule QtSensors 5.0
     \title Qt Sensors QML Types
     \ingroup qmlmodules
 
