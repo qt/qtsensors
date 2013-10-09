@@ -89,10 +89,12 @@ Rectangle {
 //! [3]
         onSelectedGestureChanged: {
             gesture.enabled = false;
-            gesture.gestureid = gestureList.selectedGesture;
+            gesture.gestureId = gestureList.selectedGesture;
 //! [3]
-            gesture.gesturetitle = gestureList.selectedGesture;
+            gesture.gestureTitle = gestureList.selectedGesture;
+//! [4]
         }
+//! [4]
     }
 
     GestureView {

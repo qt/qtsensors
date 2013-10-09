@@ -73,26 +73,26 @@ import QtSensors 5.0
 */
 
 Rectangle {
-    id: gesturerect
+    id: gestureRect
     border.width: 1
     anchors.margins: 5
 //! [2]
-    property alias gestureid: sensorGesture.gestures
+    property alias gestureId: sensorGesture.gestures
 //! [2]
-    property alias gesturetitle: titleText.text
+    property alias gestureTitle: titleText.text
     property alias enabled: sensorGesture.enabled
-    property string oldgesture: ""
+    property string oldGesture: ""
     property int count: 0
 
 //! [1]
     SensorGesture {
         id: sensorGesture
         enabled: false
-        onDetected:{
-            if (gesture !== oldgesture)
+        onDetected: {
+            if (gesture !== oldGesture)
                 count = 0;
             valueText.text = gesture + " " + count;
-            oldgesture = gesture;
+            oldGesture = gesture;
             count++;
         }
         onEnabledChanged: {
@@ -103,9 +103,9 @@ Rectangle {
 
     Text {
         id: titleText
-        anchors.top: gesturerect.top
-        anchors.left: gesturerect.left
-        anchors.right: gesturerect.right
+        anchors.top: gestureRect.top
+        anchors.left: gestureRect.left
+        anchors.right: gestureRect.right
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 20
         font.bold: true
@@ -115,28 +115,27 @@ Rectangle {
     Text {
         id: detectionText
         anchors.top: titleText.bottom
-        anchors.left: gesturerect.left
-        anchors.right: gesturerect.right
+        anchors.left: gestureRect.left
+        anchors.right: gestureRect.right
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 15
-        text: "detection:"
+        text: "Detection:"
     }
 
     Text {
         id: valueText
         anchors.top: detectionText.bottom
-        anchors.left: gesturerect.left
-        anchors.right: gesturerect.right
+        anchors.left: gestureRect.left
+        anchors.right: gestureRect.right
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 15
-        text: ("")
         visible: sensorGesture.enabled
     }
 
     Button{
         id: gestureStartStopButton
-        anchors.left: gesturerect.left
-        anchors.bottom: gesturerect.bottom
+        anchors.left: gestureRect.left
+        anchors.bottom: gestureRect.bottom
         height: 30
         width: 100
         buttonText: (sensorGesture.enabled ? "Stop" : "Start")

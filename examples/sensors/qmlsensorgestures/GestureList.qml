@@ -68,8 +68,7 @@ Rectangle {
     border.width: 1
     anchors.margins: 5
 
-    property string selectedGesture: "";
-    signal selectedGestureChanged();
+    property string selectedGesture: ""
 
     SensorGesture {
         id: gesture
@@ -98,15 +97,20 @@ Rectangle {
 //! [4]
         ListView {
             id: gestureList
+//! [4]
             anchors.fill: gestureListRect
             anchors.margins: 5
+//! [5]
             model: gesture.availableGestures
+//! [5]
             focus: true
             currentIndex: -1
             delegate: gestureListDelegate
             clip: true
+//! [6]
         }
-//! [4]
+//! [6]
+
         Component {
             id: gestureListDelegate
 
@@ -122,9 +126,8 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        gestureList.currentIndex = index;
-                        selectedGesture = model.modelData;
-                        selectedGestureChanged();
+                        gestureList.currentIndex = index
+                        selectedGesture = model.modelData
                     }
                 }
             }

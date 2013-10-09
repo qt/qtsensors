@@ -70,86 +70,86 @@ import QtSensors 5.0
 */
 
 Rectangle {
-    id: gesturerect
+    id: gestureRect
     border.width: 1
     anchors.margins: 5
-    property alias enabled: sensorGuesture.enabled
+    property alias enabled: sensorGesture.enabled
     property int count: 0
     property int count1: 0
 
     SensorGesture {
-        id: sensorGuesture
+        id: sensorGesture
         enabled: true
         gestures: availableGestures
         onDetected:{
             if (gesture === "QtSensors.shake")
-                gesturerect.count++;
+                gestureRect.count++;
             else
-                gesturerect.count1++;
+                gestureRect.count1++;
         }
         onEnabledChanged: {
-            gesturerect.count = 0;
-            gesturerect.count1 = 0;
+            gestureRect.count = 0;
+            gestureRect.count1 = 0;
         }
     }
 
     Text {
         id: titleText
-        anchors.top: gesturerect.top
-        anchors.left: gesturerect.left
-        anchors.right: gesturerect.right
+        anchors.top: gestureRect.top
+        anchors.left: gestureRect.left
+        anchors.right: gestureRect.right
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 20
         font.bold: true
-        text: "templates gestures"
+        text: "Gesture Counter"
     }
 
     Text {
         id: detectionText
         anchors.top: titleText.bottom
-        anchors.left: gesturerect.left
-        anchors.right: gesturerect.right
+        anchors.left: gestureRect.left
+        anchors.right: gestureRect.right
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 15
-        text: "shake : SecondCounter"
+        text: "Shake : SecondCounter"
     }
 
     Text {
         id: valueText
         anchors.top: detectionText.bottom
-        anchors.left: gesturerect.left
-        width: gesturerect.width / 2
+        anchors.left: gestureRect.left
+        width: gestureRect.width / 2
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 15
-        text: gesturerect.count
-        visible: sensorGuesture.enabled
+        text: gestureRect.count
+        visible: sensorGesture.enabled
     }
 
     Text {
         id: valueText1
         anchors.top: detectionText.bottom
-        anchors.right: gesturerect.right
-        width: gesturerect.width / 2
+        anchors.right: gestureRect.right
+        width: gestureRect.width / 2
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 15
-        text: gesturerect.count1
-        visible: sensorGuesture.enabled
+        text: gestureRect.count1
+        visible: sensorGesture.enabled
     }
 
     Button{
         id: gestureStartStopButton
-        anchors.left: gesturerect.left
-        anchors.bottom: gesturerect.bottom
+        anchors.left: gestureRect.left
+        anchors.bottom: gestureRect.bottom
         height: 30
         width: 100
-        buttonText: (sensorGuesture.enabled ? "Stop" : "Start")
+        buttonText: (sensorGesture.enabled ? "Stop" : "Start")
         enabled: true;
         onClicked: {
             if (gestureStartStopButton.buttonText === "Start") {
-                sensorGuesture.enabled = true;
+                sensorGesture.enabled = true;
             }
             else {
-                sensorGuesture.enabled = false;
+                sensorGesture.enabled = false;
             }
         }
     }
