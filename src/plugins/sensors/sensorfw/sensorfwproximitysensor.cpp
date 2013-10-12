@@ -42,12 +42,14 @@
 #include "sensorfwproximitysensor.h"
 
 char const * const SensorfwProximitySensor::id("sensorfw.proximitysensor");
-bool SensorfwProximitySensor::m_initDone = false;
+//bool SensorfwProximitySensor::m_initDone = false;
 
 SensorfwProximitySensor::SensorfwProximitySensor(QSensor *sensor)
-    : SensorfwSensorBase(sensor), m_exClose(false)
+    : SensorfwSensorBase(sensor),
+      m_exClose(false)
+    , m_initDone(false)
 {
-    initSensor<ProximitySensorChannelInterface>(m_initDone);
+    init();
     setReading<QProximityReading>(&m_reading);
     addDataRate(10,10); //TODO: fix this when we know better
     sensor->setDataRate(10);//set a default rate
@@ -85,4 +87,10 @@ bool SensorfwProximitySensor::doConnect()
 QString SensorfwProximitySensor::sensorName() const
 {
     return "proximitysensor";
+}
+
+void SensorfwProximitySensor::init()
+{
+    m_initDone = false;
+    initSensor<ProximitySensorChannelInterface>(m_initDone);
 }

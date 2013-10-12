@@ -42,12 +42,12 @@
 #include "sensorfwaccelerometer.h"
 
 char const * const sensorfwaccelerometer::id("sensorfw.accelerometer");
-bool sensorfwaccelerometer::m_initDone = false;
 
 sensorfwaccelerometer::sensorfwaccelerometer(QSensor *sensor)
-    : SensorfwSensorBase(sensor)
+    : SensorfwSensorBase(sensor),
+      m_initDone(false)
 {
-    initSensor<AccelerometerSensorChannelInterface>(m_initDone);
+    init();
     setDescription(QLatin1String("x, y, and z axes accelerations in m/s^2"));
     setRanges(GRAVITY_EARTH_THOUSANDTH);
     setReading<QAccelerometerReading>(&m_reading);
@@ -89,4 +89,10 @@ QString sensorfwaccelerometer::sensorName() const
 qreal sensorfwaccelerometer::correctionFactor() const
 {
     return GRAVITY_EARTH_THOUSANDTH;
+}
+
+void sensorfwaccelerometer::init()
+{
+    m_initDone = false;
+    initSensor<AccelerometerSensorChannelInterface>(m_initDone);
 }

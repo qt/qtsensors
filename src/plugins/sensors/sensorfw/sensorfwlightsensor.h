@@ -44,7 +44,7 @@
 #define SENSORFWLIGHTSENSOR_H
 
 #include "sensorfwsensorbase.h"
-#include <qlightsensor.h>
+#include <QtSensors/qlightsensor.h>
 
 #include <alssensor_i.h>
 
@@ -59,10 +59,10 @@ public:
 protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 private:
     QLightReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
 private slots:
     void slotDataAvailable(const Unsigned& data);
 };

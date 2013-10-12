@@ -42,12 +42,13 @@
 #include "sensorfwtapsensor.h"
 
 char const * const SensorfwTapSensor::id("sensorfw.tapsensor");
-bool SensorfwTapSensor::m_initDone = false;
 
 SensorfwTapSensor::SensorfwTapSensor(QSensor *sensor)
-    : SensorfwSensorBase(sensor), m_isOnceStarted(false)
+    : SensorfwSensorBase(sensor),
+      m_isOnceStarted(false)
+    , m_initDone(false)
 {
-    initSensor<TapSensorChannelInterface>(m_initDone);
+    init();
     setReading<QTapReading>(&m_reading);
     addOutputRange(QTapReading::Undefined, QTapReading::Z_Both, 1);
     addDataRate(10,10); //TODO: fix this when we know better
@@ -110,4 +111,10 @@ bool SensorfwTapSensor::doConnect()
 QString SensorfwTapSensor::sensorName() const
 {
     return "tapsensor";
+}
+
+void SensorfwTapSensor::init()
+{
+    m_initDone = false;
+    initSensor<TapSensorChannelInterface>(m_initDone);
 }

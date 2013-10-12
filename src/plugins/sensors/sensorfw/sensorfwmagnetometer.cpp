@@ -40,18 +40,17 @@
 ****************************************************************************/
 
 #include "sensorfwmagnetometer.h"
-#include <QSensor>
 
 
 char const * const SensorfwMagnetometer::id("sensorfw.magnetometer");
-bool SensorfwMagnetometer::m_initDone = false;
 const float SensorfwMagnetometer::NANO = 0.000000001;
 
 
 SensorfwMagnetometer::SensorfwMagnetometer(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<MagnetometerSensorChannelInterface>(m_initDone);
+    init();
     setDescription(QLatin1String("magnetic flux density in teslas (T)"));
     setRanges(NANO);
     setReading<QMagnetometerReading>(&m_reading);
@@ -102,4 +101,10 @@ QString SensorfwMagnetometer::sensorName() const
 qreal SensorfwMagnetometer::correctionFactor() const
 {
     return SensorfwMagnetometer::NANO;
+}
+
+void SensorfwMagnetometer::init()
+{
+    m_initDone = false;
+    initSensor<MagnetometerSensorChannelInterface>(m_initDone);
 }

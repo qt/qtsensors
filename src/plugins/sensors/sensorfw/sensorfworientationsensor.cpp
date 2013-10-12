@@ -44,12 +44,12 @@
 #include <datatypes/posedata.h>
 
 char const * const SensorfwOrientationSensor::id("sensorfw.orientationsensor");
-bool SensorfwOrientationSensor::m_initDone = false;
 
 SensorfwOrientationSensor::SensorfwOrientationSensor(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<OrientationSensorChannelInterface>(m_initDone);
+    init();
     setReading<QOrientationReading>(&m_reading);
     sensor->setDataRate(10);//set a default rate
 }
@@ -96,4 +96,10 @@ QOrientationReading::Orientation SensorfwOrientationSensor::getOrientation(int o
     case PoseData::FaceDown:   return QOrientationReading::FaceDown;
     }
     return QOrientationReading::Undefined;
+}
+
+void SensorfwOrientationSensor::init()
+{
+    m_initDone = false;
+    initSensor<OrientationSensorChannelInterface>(m_initDone);
 }

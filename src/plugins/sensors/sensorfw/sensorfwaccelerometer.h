@@ -42,7 +42,7 @@
 #define SENSORFWACCELEROMETER_H
 
 #include "sensorfwsensorbase.h"
-#include <qaccelerometer.h>
+#include <QtSensors/qaccelerometer.h>
 
 #include <accelerometersensor_i.h>
 #include <datatypes/xyz.h>
@@ -60,11 +60,11 @@ protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
     virtual qreal correctionFactor() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 
 private:
     QAccelerometerReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
 
 private slots:
     void slotDataAvailable(const XYZ& data);

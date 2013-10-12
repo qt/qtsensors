@@ -43,12 +43,12 @@
 #include "sensorfwcompass.h"
 
 char const * const SensorfwCompass::id("sensorfw.compass");
-bool SensorfwCompass::m_initDone = false;
 
 SensorfwCompass::SensorfwCompass(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<CompassSensorChannelInterface>(m_initDone);
+    init();
     setReading<QCompassReading>(&m_reading);
     sensor->setDataRate(50);//set a default rate
 }
@@ -79,3 +79,8 @@ QString SensorfwCompass::sensorName() const
     return "compasssensor";
 }
 
+void SensorfwCompass::init()
+{
+    m_initDone = false;
+    initSensor<CompassSensorChannelInterface>(m_initDone);
+}

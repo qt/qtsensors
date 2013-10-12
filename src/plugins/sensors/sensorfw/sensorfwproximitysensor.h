@@ -43,7 +43,7 @@
 #define SENSORFWPROXIMITYSENSOR_H
 
 #include "sensorfwsensorbase.h"
-#include <qproximitysensor.h>
+#include <QtSensors/qproximitysensor.h>
 
 #include <proximitysensor_i.h>
 
@@ -60,11 +60,11 @@ protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
     virtual void start();
-
+    virtual void init() Q_DECL_OVERRIDE;
 
 private:
     QProximityReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
     bool m_exClose;
 
 private slots:
