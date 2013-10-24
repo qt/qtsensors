@@ -44,7 +44,7 @@
 #define SENSORFWGYROSCOPE_H
 
 #include "sensorfwsensorbase.h"
-#include <qgyroscope.h>
+#include <QtSensors/qgyroscope.h>
 #include <datatypes/xyz.h>
 #include <gyroscopesensor_i.h>
 
@@ -62,11 +62,11 @@ protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
     virtual qreal correctionFactor() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 
 private:
     QGyroscopeReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
     static const float MILLI;
 private slots:
     void slotDataAvailable(const XYZ& data);

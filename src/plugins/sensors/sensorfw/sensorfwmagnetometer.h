@@ -43,7 +43,7 @@
 #define SENSORFWMAGNETOMETER_H
 
 #include "sensorfwsensorbase.h"
-#include <qmagnetometer.h>
+#include <QtSensors/qmagnetometer.h>
 
 #include <magnetometersensor_i.h>
 #include <datatypes/magneticfield.h>
@@ -62,12 +62,12 @@ protected:
     virtual void start();
     virtual QString sensorName() const;
     virtual qreal correctionFactor() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 
 private:
     static const float NANO;
     QMagnetometerReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
     bool m_isGeoMagnetometer;
 
 private slots:

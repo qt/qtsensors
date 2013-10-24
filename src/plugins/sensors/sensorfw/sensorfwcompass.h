@@ -42,7 +42,7 @@
 #define SENSORFWCOMPASS_H
 
 #include "sensorfwsensorbase.h"
-#include <qcompass.h>
+#include <QtSensors/qcompass.h>
 
 #include <compasssensor_i.h>
 #include <datatypes/compass.h>
@@ -59,10 +59,10 @@ public:
 protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 private:
     QCompassReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
 private slots:
     void slotDataAvailable(const Compass& data);
 };

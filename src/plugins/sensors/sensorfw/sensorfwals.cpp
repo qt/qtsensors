@@ -43,12 +43,12 @@
 #include "sensorfwals.h"
 
 char const * const Sensorfwals::id("sensorfw.als");
-bool Sensorfwals::m_initDone = false;
 
 Sensorfwals::Sensorfwals(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<ALSSensorChannelInterface>(m_initDone);
+    init();
     setReading<QAmbientLightReading>(&m_reading);
     // metadata
     setDescription(QLatin1String("ambient light intensity given as 5 pre-defined levels"));
@@ -109,4 +109,9 @@ QAmbientLightReading::LightLevel Sensorfwals::getLightLevel(int lux)
         return QAmbientLightReading::Sunny;
     }
 
+}
+void Sensorfwals::init()
+{
+    m_initDone = false;
+    initSensor<ALSSensorChannelInterface>(m_initDone);
 }

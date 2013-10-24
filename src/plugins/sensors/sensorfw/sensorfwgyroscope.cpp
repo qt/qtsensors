@@ -43,12 +43,12 @@
 
 char const * const SensorfwGyroscope::id("sensorfw.gyroscope");
 const float SensorfwGyroscope::MILLI = 0.001;
-bool SensorfwGyroscope::m_initDone = false;
 
 SensorfwGyroscope::SensorfwGyroscope(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<GyroscopeSensorChannelInterface>(m_initDone);
+    init();
     setDescription(QLatin1String("angular velocities around x, y, and z axis in degrees per second"));
     setRanges(MILLI);
     setReading<QGyroscopeReading>(&m_reading);
@@ -88,4 +88,10 @@ QString SensorfwGyroscope::sensorName() const
 qreal SensorfwGyroscope::correctionFactor() const
 {
     return MILLI;
+}
+
+void SensorfwGyroscope::init()
+{
+    m_initDone = false;
+    initSensor<GyroscopeSensorChannelInterface>(m_initDone);
 }

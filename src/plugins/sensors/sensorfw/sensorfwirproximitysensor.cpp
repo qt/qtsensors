@@ -43,14 +43,12 @@
 #define RM680_PS "/dev/bh1770glc_ps"
 
 char const * const SensorfwIrProximitySensor::id("sensorfw.irproximitysensor");
-bool SensorfwIrProximitySensor::m_initDone = false;
-
-
 
 SensorfwIrProximitySensor::SensorfwIrProximitySensor(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<ProximitySensorChannelInterface>(m_initDone);
+    init();
     setReading<QIRProximityReading>(&m_reading);
     setDescription(QLatin1String("reflectance as percentage (%) of maximum"));
     addOutputRange(0, 100, 1);
@@ -80,3 +78,8 @@ QString SensorfwIrProximitySensor::sensorName() const
 }
 
 
+void SensorfwIrProximitySensor::init()
+{
+    m_initDone = false;
+    initSensor<ProximitySensorChannelInterface>(m_initDone);
+}

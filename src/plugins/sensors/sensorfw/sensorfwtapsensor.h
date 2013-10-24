@@ -42,7 +42,7 @@
 #define SENSORFWTAPSENSOR_H
 
 #include "sensorfwsensorbase.h"
-#include <qtapsensor.h>
+#include <QtSensors/qtapsensor.h>
 
 #include <tapsensor_i.h>
 #include <datatypes/tap.h>
@@ -60,10 +60,10 @@ protected:
     virtual bool doConnect();
     virtual void start();
     virtual QString sensorName() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 private:
     QTapReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
     bool m_isDoubleTapSensor;
     bool m_isOnceStarted;
 private slots:

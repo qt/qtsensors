@@ -42,12 +42,12 @@
 #include "sensorfwlightsensor.h"
 
 char const * const SensorfwLightSensor::id("sensorfw.lightsensor");
-bool SensorfwLightSensor::m_initDone = false;
 
 SensorfwLightSensor::SensorfwLightSensor(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<ALSSensorChannelInterface>(m_initDone);
+    init();
     setReading<QLightReading>(&m_reading);
     sensor->setDataRate(10);//set a default rate
 }
@@ -69,4 +69,9 @@ bool SensorfwLightSensor::doConnect()
 QString SensorfwLightSensor::sensorName() const
 {
     return "alssensor";
+}
+void SensorfwLightSensor::init()
+{
+    m_initDone = false;
+    initSensor<ALSSensorChannelInterface>(m_initDone);
 }

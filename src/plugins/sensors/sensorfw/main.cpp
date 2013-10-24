@@ -51,9 +51,9 @@
 #include "sensorfwgyroscope.h"
 #include "sensorfwlightsensor.h"
 
-#include <qsensorplugin.h>
-#include <qsensorbackend.h>
-#include <qsensormanager.h>
+#include <QtSensors/qsensorplugin.h>
+#include <QtSensors/qsensorbackend.h>
+#include <QtSensors/qsensormanager.h>
 #include <QDebug>
 #include <QSettings>
 

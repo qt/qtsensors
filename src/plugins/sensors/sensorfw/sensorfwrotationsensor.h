@@ -44,7 +44,7 @@
 #define SENSORFWROTATION_H
 
 #include "sensorfwsensorbase.h"
-#include <qrotationsensor.h>
+#include <QtSensors/qrotationsensor.h>
 
 #include <rotationsensor_i.h>
 #include <datatypes/xyz.h>
@@ -61,10 +61,10 @@ public:
 protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
-
+    virtual void init() Q_DECL_OVERRIDE;
 private:
     QRotationReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
 
 private slots:
     void slotDataAvailable(const XYZ& data);

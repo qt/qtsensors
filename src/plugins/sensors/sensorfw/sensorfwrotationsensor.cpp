@@ -42,12 +42,12 @@
 #include "sensorfwrotationsensor.h"
 
 char const * const SensorfwRotationSensor::id("sensorfw.rotationsensor");
-bool SensorfwRotationSensor::m_initDone = false;
 
 SensorfwRotationSensor::SensorfwRotationSensor(QSensor *sensor)
     : SensorfwSensorBase(sensor)
+    , m_initDone(false)
 {
-    initSensor<RotationSensorChannelInterface>(m_initDone);
+    init();
     setReading<QRotationReading>(&m_reading);
     QRotationSensor *const rotationSensor = qobject_cast<QRotationSensor *>(sensor);
     if (rotationSensor)
@@ -79,4 +79,10 @@ bool SensorfwRotationSensor::doConnect()
 QString SensorfwRotationSensor::sensorName() const
 {
     return "rotationsensor";
+}
+
+void SensorfwRotationSensor::init()
+{
+    m_initDone = false;
+    initSensor<RotationSensorChannelInterface>(m_initDone);
 }

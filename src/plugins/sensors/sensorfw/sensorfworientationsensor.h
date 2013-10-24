@@ -43,7 +43,7 @@
 #define SENSORFWORIENTATIONSENSOR_H
 
 #include "sensorfwsensorbase.h"
-#include <qorientationsensor.h>
+#include <QtSensors/qorientationsensor.h>
 
 #include <orientationsensor_i.h>
 
@@ -60,11 +60,11 @@ protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
     virtual void start();
-
+    virtual void init() Q_DECL_OVERRIDE;
 private:
     QOrientationReading m_reading;
     static QOrientationReading::Orientation getOrientation(int orientation);
-    static bool m_initDone;
+    bool m_initDone;
 
 private slots:
     void slotDataAvailable(const Unsigned& orientation);

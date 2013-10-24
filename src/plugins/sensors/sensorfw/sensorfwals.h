@@ -43,7 +43,7 @@
 #define SENSORFWALS_H
 
 #include "sensorfwsensorbase.h"
-#include <qambientlightsensor.h>
+#include <QtSensors/qambientlightsensor.h>
 
 #include <alssensor_i.h>
 
@@ -60,11 +60,11 @@ protected:
     virtual bool doConnect();
     virtual QString sensorName() const;
     virtual void start();
-
+    virtual void init() Q_DECL_OVERRIDE;
 
 private:
     QAmbientLightReading m_reading;
-    static bool m_initDone;
+    bool m_initDone;
 private slots:
     void slotDataAvailable(const Unsigned& data);
     static QAmbientLightReading::LightLevel getLightLevel(int lux);
