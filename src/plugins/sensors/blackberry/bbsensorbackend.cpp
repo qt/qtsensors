@@ -215,7 +215,8 @@ void BbSensorBackendBase::remapMatrix(const float inputMatrix[], float outputMat
 
 void BbSensorBackendBase::remapAxes(float *x, float *y, float *z)
 {
-    Q_ASSERT(x && y && z);
+    Q_UNUSED(z);
+    Q_ASSERT(x && y);
     if (!isAutoAxisRemappingEnabled() || orientationForRemapping() == 0)
         return;
 
@@ -306,11 +307,6 @@ bool BbSensorBackendBase::isFeatureSupported(QSensor::Feature feature) const
     case QSensor::PressureSensorTemperature:
         return true;
     case QSensor::GeoValues:
-#ifndef Q_OS_BLACKBERRY_TABLET
-        return (sensorType() == SENSOR_TYPE_MAGNETOMETER);
-#else
-        return false;
-#endif
     case QSensor::Reserved:
     case QSensor::FieldOfView:
         break;
