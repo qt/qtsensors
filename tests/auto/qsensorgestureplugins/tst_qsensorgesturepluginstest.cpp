@@ -85,11 +85,11 @@ void Tst_qsensorgesturePluginsTest::tst_sensor_plugins_shake()
 
     QCOMPARE(recognizer->isActive(), false);
 
-    QTest::ignoreMessage(QtWarningMsg, "Not starting. Gesture Recognizer not initialized ");
+    QTest::ignoreMessage(QtWarningMsg, "Not starting. Gesture Recognizer not initialized");
     recognizer->startBackend();
     QCOMPARE(recognizer->isActive(), false);
 
-    QTest::ignoreMessage(QtWarningMsg, "Not stopping. Gesture Recognizer not initialized ");
+    QTest::ignoreMessage(QtWarningMsg, "Not stopping. Gesture Recognizer not initialized");
     recognizer->stopBackend();
     QCOMPARE(recognizer->isActive(), false);
 

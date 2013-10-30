@@ -221,7 +221,7 @@ private slots:
         QByteArray actual = sensor.identifier();
         QCOMPARE(actual, expected);
 
-        QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensor::setIdentifier while connected to a backend! ");
+        QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensor::setIdentifier while connected to a backend!");
         sensor.setIdentifier("dummy.accelerometer");
         expected = testsensorimpl::id;
         actual = sensor.identifier();
@@ -232,7 +232,7 @@ private slots:
     {
         QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray("test sensor 2"));
         TestSensor sensor;
-        QTest::ignoreMessage(QtWarningMsg, "Can't create backend \"test sensor 2\" ");
+        QTest::ignoreMessage(QtWarningMsg, "Can't create backend \"test sensor 2\"");
         sensor.connectToBackend();
         QByteArray expected = testsensorimpl::id;
         QByteArray actual = sensor.identifier();
@@ -378,14 +378,14 @@ private slots:
         {
             TestSensor sensor;
             sensor.setProperty("doThis", "rates(0)");
-            QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensorBackend::setDataRates with 0 ");
+            QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensorBackend::setDataRates with 0");
             sensor.connectToBackend();
         }
 
         {
             TestSensor sensor;
             sensor.setProperty("doThis", "rates(nodef)");
-            QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensorBackend::setDataRates with an invalid sensor ");
+            QTest::ignoreMessage(QtWarningMsg, "ERROR: Cannot call QSensorBackend::setDataRates with an invalid sensor");
             sensor.connectToBackend();
         }
 
@@ -417,10 +417,10 @@ private slots:
         QList<QSensorFilter*> expected = QList<QSensorFilter*>();
         QCOMPARE(actual, expected);
 
-        QTest::ignoreMessage(QtWarningMsg, "addFilter: passed a null filter! ");
+        QTest::ignoreMessage(QtWarningMsg, "addFilter: passed a null filter!");
         sensor.addFilter(0);
 
-        QTest::ignoreMessage(QtWarningMsg, "removeFilter: passed a null filter! ");
+        QTest::ignoreMessage(QtWarningMsg, "removeFilter: passed a null filter!");
         sensor.removeFilter(0);
 
         MyFilter *filter = new MyFilter;
@@ -559,7 +559,7 @@ private slots:
 
         sensor.setOutputRange(-1);
         QCOMPARE(sensor.outputRange(), -1);
-        QTest::ignoreMessage(QtWarningMsg, "setOutputRange: 300 is not supported by the sensor. ");
+        QTest::ignoreMessage(QtWarningMsg, "setOutputRange: 300 is not supported by the sensor.");
         sensor.setOutputRange(300);
         QCOMPARE(sensor.outputRange(), -1);
     }
@@ -570,10 +570,10 @@ private slots:
         sensor.setOutputRange(300);
         QCOMPARE(sensor.outputRange(), 300);
         sensor.setOutputRange(350);
-        QTest::ignoreMessage(QtWarningMsg, "setOutputRange: 350 is not supported by the sensor. ");
+        QTest::ignoreMessage(QtWarningMsg, "setOutputRange: 350 is not supported by the sensor.");
         sensor.connectToBackend();
         QCOMPARE(sensor.outputRange(), -1);
-        QTest::ignoreMessage(QtWarningMsg, "setOutputRange: -2 is not supported by the sensor. ");
+        QTest::ignoreMessage(QtWarningMsg, "setOutputRange: -2 is not supported by the sensor.");
         sensor.setOutputRange(-2);
         QCOMPARE(sensor.outputRange(), -1);
     }
@@ -737,12 +737,12 @@ private slots:
         QSensorManager::registerBackend("random", "random.2", &factory);
         QSensor random("random");
         // This is a sensorlog, not a warning
-        //QTest::ignoreMessage(QtWarningMsg, "no suitable backend found for requested identifier \"\" and type \"random\" ");
+        //QTest::ignoreMessage(QtWarningMsg, "no suitable backend found for requested identifier \"\" and type \"random\"");
         random.connectToBackend();
         QVERIFY(!random.isConnectedToBackend());
         random.setIdentifier("random.3");
         // This is a sensorlog, not a warning
-        //QTest::ignoreMessage(QtWarningMsg, "no backend with identifier \"random.3\" for type \"random\" ");
+        //QTest::ignoreMessage(QtWarningMsg, "no backend with identifier \"random.3\" for type \"random\"");
         random.connectToBackend();
         QVERIFY(!random.isConnectedToBackend());
         random.setIdentifier("random.1");
@@ -764,7 +764,7 @@ private slots:
 
         // Register it again (creates a warning)
         sensor.sensorsChangedEmitted = 0;
-        QTest::ignoreMessage(QtWarningMsg, "A backend with type \"a random type\" and identifier \"a random id\" has already been registered! ");
+        QTest::ignoreMessage(QtWarningMsg, "A backend with type \"a random type\" and identifier \"a random id\" has already been registered!");
         QSensorManager::registerBackend("a random type", "a random id", &factory);
         QCOMPARE(sensor.sensorsChangedEmitted, 0);
 
@@ -775,13 +775,13 @@ private slots:
 
         // Unregister an unknown identifier
         sensor.sensorsChangedEmitted = 0;
-        QTest::ignoreMessage(QtWarningMsg, "Identifier \"a random id\" is not registered ");
+        QTest::ignoreMessage(QtWarningMsg, "Identifier \"a random id\" is not registered");
         QSensorManager::unregisterBackend(TestSensor::type, "a random id");
         QCOMPARE(sensor.sensorsChangedEmitted, 0);
 
         // Unregister for an unknown type
         sensor.sensorsChangedEmitted = 0;
-        QTest::ignoreMessage(QtWarningMsg, "No backends of type \"foo\" are registered ");
+        QTest::ignoreMessage(QtWarningMsg, "No backends of type \"foo\" are registered");
         QSensorManager::unregisterBackend("foo", "bar");
         QCOMPARE(sensor.sensorsChangedEmitted, 0);
 
