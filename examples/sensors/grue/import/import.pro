@@ -21,7 +21,7 @@ target.path=$$DESTPATH
 INSTALLS += target
 
 qmldir.files=$$PWD/qmldir
-qmldir.path=$$DESTDIR
+qmldir.path=$$DESTPATH
 INSTALLS += qmldir
 
 OTHER_FILES += \

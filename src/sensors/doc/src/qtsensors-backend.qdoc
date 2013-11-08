@@ -28,9 +28,10 @@
 /*!
 \group sensors_backend_topics
 \title Qt Sensors Backend
-\brief Information about the Qt Sensors back end
+\brief Describes how to use the Qt Sensors backend.
 
-The Qt Sensors backend connects the Qt Sensors API to the platform services or hardware sensors.
+The Qt Sensors backend connects the Qt Sensors API to the platform services or
+hardware sensors.
 
 \tableofcontents
 
@@ -39,12 +40,11 @@ The Qt Sensors backend connects the Qt Sensors API to the platform services or h
 \section1 Backend API
 
 QSensor instances talk to a backend object. Backends are usually supplied
-with the Qt Sensors library for a specific device although third party
-backends may be used as well. A backend may talk
-directly to hardware or it may talk to a system service. In some instances
-it may even talk to another sensor.
-An example of this is the orientation sensor backend that talks to an
-accelerometer to determine the device orientation.
+with the Qt Sensors library for a specific device, although third-party
+backends may be used as well. A backend can talk directly to hardware, or
+it can talk to a system service. In some instances it can even talk to
+another sensor. An example of this is the orientation sensor backend that talks
+to an accelerometer to determine the device orientation.
 
 \section1 Backend Classes
 If you are making sensors available through the Sensors API, these are the
@@ -96,42 +96,45 @@ a game these two devices are conceptually the same type.
 
 \section1 Default sensor for a type
 
-To avoid the need to know (or check) what the default sensor for a type is, the system will
-use the default sensor for a type. Most of the time this is what the app developer wants to
-do. In cases where the app developer wants to select a specific sensor they must call the
-QSensor::setIdentifier() method before they start the sensor so that the appropriate backend
-is used.
+To avoid the need to know (or check) what the default sensor for a type is, the
+system will use the default sensor for a type. Most of the time this is what the
+app developer wants to do. If the app developer wants to select a specific sensor,
+he needs to call the QSensor::setIdentifier() method before starting the sensor
+so that the appropriate backend is used.
 
-From a system perspective though, selecting which sensor should be the default gets tricky.
-The sensors library uses the first registered identifier as the default. This means that the
-order in which sensor backends are registered is important so the system will allow a config
-file to determine the default instead.
+From a system perspective though, selecting which sensor should be the default
+gets tricky.  The sensors library uses the first registered identifier as the
+default. This means that the order in which the sensor backends are registered,
+is important so the system will allow a config file to determine the default
+instead.
 
 \section1 Sensors.conf
 
-The config file that determines the default sensor for a type is called Sensors.conf. If present,
-it is located in /etc/xdg/QtProject. It has the standard formatting of an ini file.
+The config file that determines the default sensor for a type is called Sensors.conf.
+If present, it is located in /etc/xdg/QtProject. It has the standard formatting
+of an ini file.
 
 The settings live in the Default group and the general format is:
 \code
 type = identifier
 \endcode
 
-An example Sensors.conf that ensures the N900 accelerometer is used as the default no matter the
-order in which backends were registered is presented here.
+An example: Sensors.conf ensures that the N900 accelerometer is used by default,
+not considering the order in which backends were registered.
 
 \code
 [Default]
 QAccelerometer = n900.accelerometer
 \endcode
 
-If Sensors.conf specifies an identifier that is not registered then the system will fall back to
-the first registered identifier as the default.
+If Sensors.conf specifies an identifier that is not registered, the system will
+fall back to the first registered identifier as the default.
 
-Note that there is special case logic to prevent the generic plugin's backends from becoming the
-default when another backend is registered for the same type. This logic means that a backend
-identifier starting with \c{generic.} will only be the default if no other backends have been
-registered for that type or if it is specified in \c{Sensors.conf}.
+Note that there is a special case logic to prevent the generic plugin's backends
+from becoming the default when another backend is registered for the same type.
+This logic means that a backend identifier starting with \c{generic.} will only
+be the default if no other backends have been registered for that type, or if
+it is specified in \c{Sensors.conf}.
 
 */
 
@@ -142,43 +145,46 @@ registered for that type or if it is specified in \c{Sensors.conf}.
 
 \section1 Static Backend Registration
 
-Sensor backends are generally registered statically. The registration happens when the sensors
-library is first used and the registration remains in effect while the program runs.
+Sensor backends are generally registered statically. The registration happens
+when the sensors library is first used and the registration remains in effect
+while the program runs.
 
 \image sensors-static.png
 
 Statically registered backends may still exhibit some dynamic behaviour as the
-QSensorBackendFactory is free to return 0 to indicate that a backend cannot be created.
+QSensorBackendFactory is free to return 0 to indicate that a backend cannot be
+created.
 
 \section1 Dynamic Backend Registration
 
-While static registration is fine for most backends there are some situations where this is
-problematic.
+Although static registration is fine for most backends, there are some situations
+where this is problematic.
 
-The clearest example is backends that represent non-fixed hardware. As an example, lets consider
-a game controller that is connected via Bluetooth. As there may be more than one game controller
-in range of the phone, the program wants to record that a specific game controller should be used.
-If the backend had been registered statically there would have been no unique information about
-the controller. Instead, the registration is delayed until the controller is seen.
+The clearest example is backends that represent non-fixed hardware. For example,
+a game controller that is connected via Bluetooth. As there may be more than one
+game controller in range of the phone, the program wants to record that a specific
+game controller should be used. If the backend had been registered statically
+there would have been no unique information about the controller. Instead, the
+registration is delayed until the controller is seen.
 
 \image sensors-dynamic.png
 
 \section1 Suggested Registration Policy
 
-A backend for fixed hardware should be registered immediately. Applications can see that the
-sensor can be used.
+A backend for fixed hardware should be registered immediately. Applications can
+see that the sensor can be used.
 
-A backend for remote hardware should not be registered immediately. Applications can see that
-the sensor cannot be used. When the remote hardware becomes available the backend should be
-registered. Applications can see that the sensor is now available.
+A backend for remote hardware should not be registered immediately. Applications
+can see that the sensor cannot be used. When the remote hardware becomes available,
+the backend should be registered. Applications can see that the sensor is available now.
 
-If it is necessary to return 0 from a factory for a backend that was registered, the backend
-should be unregistered. Applications can see that the sensor is no longer available. If the
-factory can create the backend again it should be registered. Applications can see that the
-sensor is available again.
+If it is necessary to return 0 from a factory for a backend that was registered,
+the backend should be unregistered. Applications can see that the sensor is no
+longer available. If the factory can create the backend again, it should be re-
+gistered. Applications can see that the sensor is available again.
 
-When the underlying hardware is no longer available, the backend should be deregistered.
-Existing instances of the backend should report error states to the application but should
-handle the situation gracefully.
+When the underlying hardware is no longer available, the backend should be
+unregistered. Existing instances of the backend should report error states to
+the application but should handle the situation gracefully.
 
 */

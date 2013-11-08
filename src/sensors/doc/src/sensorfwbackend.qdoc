@@ -30,10 +30,12 @@
     \title Sensorfw Backend
     \brief Information about the Sensorfw sensor backend
 
-    The Sensorfw sensor backend requires the Sensorfw and sensor daemon. Sensorfw was originally used in MeeGo, and is available
-    from http://meego.gitorious.org/meego-middleware/sensorfw
+    The Sensorfw sensor backend requires the Sensorfw and sensor daemon. Sensorfw
+    was originally used in MeeGo, and is available on :
+    http://meego.gitorious.org/meego-middleware/sensorfw
 
-    To compile the sensorfw backend, you need sensorfw installed and run qmake with CONFIG+=sensorfw
+    To compile the sensorfw backend, you need sensorfw installed and run qmake
+    with CONFIG+=sensorfw
 
 */
 

@@ -219,11 +219,11 @@
 
     1) Support depends on the underlying platform
 
-    In addition to the table above, each sensor type might support specific features. For example
+    In addition to the table above, each sensor type might support specific features. For example,
     a magnetometer might support returning geo values. See QSensor::isFeatureSupported() for
     additional details.
 
-    Sensor Gestures are mostly platform independent, and will run if the platform has the needed sensors.
+    Sensor Gestures are mostly platform independent, and will run if the platform has the sensors required.
     Whether they are supported and work well or not depends on the platform.
 */
 

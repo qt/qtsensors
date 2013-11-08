@@ -28,22 +28,22 @@
 /*!
 \page qtsensors-cpp.html
 \title Qt Sensors C++ Overview
-\brief Information about the Qt Sensors C++ API
+\brief Explains how to use the Qt Sensors C++ API.
 
 \tableofcontents
 
 \section1 Sensor Types
 
-On a device there can be many types of sensors. Not all of the types that the Qt Sensors API
-supports may be available. There may also be types available that are not defined in the
-Qt Sensors API. The types of sensors available on a device is found using the
-\l QSensor::sensorTypes() function.
+On a device there can be many types of sensors. Not all of the types that the Qt
+Sensors API supports may be available. There may also be types available that
+are not defined in the Qt Sensors API. The types of sensors available on a device
+is found using the \l QSensor::sensorTypes() function.
 
 For a list of built-in sensor types, see the \l{Sensor Classes} section below.
 
 \section1 Common Conventions
 
-Unless otherwise specified, Qt Sensors uses the
+Unless specified otherwise, Qt Sensors uses the
 \l{http://en.wikipedia.org/wiki/Cartesian_coordinate_system}{Right Hand Cartesian coordinate system}.
 
 \image sensors-coordinates.jpg
@@ -56,12 +56,12 @@ Where rotation around an axis is used, the rotation shall be expressed as a Righ
 
 \image sensors-coordinates3.jpg
 
-In general, sensor data is oriented relative to \l QPlatformScreen::nativeOrientation, i.e
-to the top of the device when the device is held in its natural orientation (normally
-when the device logo appears the right side up). If values are to be displayed on
-the screen the values may need to be transformed so that they match the user interface orientation. A sensor
-may define its data as being oriented to the UI. This will be noted in the documentation for the
-sensor.
+In general, sensor data is oriented relative to \l QPlatformScreen::nativeOrientation,
+that is to the top of the device when the device is held in its natural orientation
+(normally when the device logo appears the right side up). If values are to be
+displayed on the screen, the values may need to be transformed so that they match
+the user interface orientation. A sensor may define its data as being oriented
+to the UI. This will be noted in the documentation for the sensor.
 
 \image sensors-sides2.jpg
 

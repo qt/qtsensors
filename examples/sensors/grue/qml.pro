@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = grue
+TARGET = grue_app
 QT += quick
 
 SOURCES = main.cpp

@@ -32,9 +32,9 @@
     \ingroup modules
     \qtvariable sensors
 
-    \brief The QtSensors module provides classes for reading sensor data.
+    \brief Provides classes for reading sensor data.
 
-    Mobile devices contains sensor hardware that allow detecting changes in various physical
+    Mobile devices contain sensor hardware that allow detecting changes in various physical
     properties of the device itself or its immediate environment. Examples of device properties
     include the angle at which the device is held, whereas environmental properties include for
     example the current level of ambient light.
@@ -45,7 +45,7 @@
     \title Qt Sensors QML Types
     \ingroup qmlmodules
 
-    \brief The QtSensors QML module provides types for reading sensor data.
+    \brief Provides types for reading sensor data.
 
     \section1 QML Module API
 
@@ -72,7 +72,7 @@
 
     \section1 QML Reading types
 
-    The data from a sensor comes through a reading class.
+    The data from a sensor comes via a reading class.
 
     \annotatedlist qml-sensors_reading
 */

@@ -53,6 +53,6 @@
         \li Tilt Sensor
         \li Accelerometer
     \endtable
-    If a platform doesn't support the source sensor, then the sensor can not be emulated.
+    If a platform doesn't support the source sensor, then the sensor cannot be emulated.
 */
 

@@ -28,6 +28,8 @@
 /*!
     \page qtsensors-porting.html
     \title Porting Applications from QtMobility Sensors to Qt Sensors
+    \brief Explain how to port from QtMobility Sensors to Qt Sensors
+    \since Qt 5.1
 
     \tableofcontents
 
@@ -35,22 +37,22 @@
 
     The initial release of Qt Sensors (5.0) is generally expected to be source
     compatible with QtMobility Sensors 1.2. This document attempts to explain
-    where things must be changed in order to port applications to Qt Sensors.
+    where things need to be changed in order to port applications to Qt Sensors.
 
     \section1 QML
 
-    In QtMobility, the C++ classes like QAccelerometer were directly used as QML types.
+    In \c QtMobility, the C++ classes like \c QAccelerometer were directly used as QML types.
     In Qt Sensors, there are now separate classes for the QML types, which have no public
     C++ API.
 
     The new QML types in Qt Sensors fix some issues the former QtMobility QML types had,
     for example:
     \list
-    \li The reading types now have proper change notifications
-    \li \c availableDataRates and \c outputRanges of the \c Sensor type are now proper list types
-    \li The \c identifier and \c type properties of \c Sensor can now be used
-    \li The \c lux property of \c LightSensorReading has been renamed to \c illuminance
-    \li The \c QmlSensors singleton now allows to query for sensor types
+    \li The reading types now have proper change notifications.
+    \li \c availableDataRates and \c outputRanges of the \c Sensor type are now proper list types.
+    \li The \c identifier and \c type properties of \c Sensor can now be used.
+    \li The \c lux property of \c LightSensorReading has been renamed to \c illuminance.
+    \li The \c QmlSensors singleton now allows to query for sensor types.
     \endlist
 
     For more information, see the \l {Qt Sensors QML Types}{QML API} documentation.
@@ -114,7 +116,8 @@
     MOBILITY += sensors
     \endcode
 
-    Applications should remove these lines and instead use this to enable the Qt Sensors API.
+    Applications should remove these lines and instead use the following statement to enable
+    the Qt Sensors API:
 
     \code
     QT += sensors

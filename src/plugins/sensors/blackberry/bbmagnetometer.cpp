@@ -55,38 +55,21 @@ bool BbMagnetometer::updateReadingFromEvent(const sensor_event_t &event, QMagnet
 {
     float x, y, z;
 
-    QMagnetometer * const magnetometer = qobject_cast<QMagnetometer *>(sensor());
-    if (magnetometer && magnetometer->returnGeoValues()) {
-        switch (event.accuracy) {
-        case SENSOR_ACCURACY_UNRELIABLE: reading->setCalibrationLevel(0.0f); break;
-        case SENSOR_ACCURACY_LOW:        reading->setCalibrationLevel(0.1f); break;
+    switch (event.accuracy) {
+    case SENSOR_ACCURACY_UNRELIABLE: reading->setCalibrationLevel(0.0f); break;
+    case SENSOR_ACCURACY_LOW:        reading->setCalibrationLevel(0.1f); break;
 
-        // We determined that MEDIUM should map to 1.0, because existing code samples
-        // show users should pop a calibration screen when seeing < 1.0. The MEDIUM accuracy
-        // is actually good enough not to require calibration, so we don't want to make it seem
-        // like it is required artificially.
-        case SENSOR_ACCURACY_MEDIUM:     reading->setCalibrationLevel(1.0f); break;
-        case SENSOR_ACCURACY_HIGH:       reading->setCalibrationLevel(1.0f); break;
-        }
-
-        x = convertValue(event.motion.dsp.x);
-        y = convertValue(event.motion.dsp.y);
-        z = convertValue(event.motion.dsp.z);
-
-    } else {
-        reading->setCalibrationLevel(1.0f);
-
-#ifndef Q_OS_BLACKBERRY_TABLET
-        x = convertValue(event.motion.raw.x);
-        y = convertValue(event.motion.raw.y);
-        z = convertValue(event.motion.raw.z);
-#else
-        // Blackberry Tablet OS does not support raw reading values
-        x = convertValue(event.motion.dsp.x);
-        y = convertValue(event.motion.dsp.y);
-        z = convertValue(event.motion.dsp.z);
-#endif
+    // We determined that MEDIUM should map to 1.0, because existing code samples
+    // show users should pop a calibration screen when seeing < 1.0. The MEDIUM accuracy
+    // is actually good enough not to require calibration, so we don't want to make it seem
+    // like it is required artificially.
+    case SENSOR_ACCURACY_MEDIUM:     reading->setCalibrationLevel(1.0f); break;
+    case SENSOR_ACCURACY_HIGH:       reading->setCalibrationLevel(1.0f); break;
     }
+
+    x = convertValue(event.motion.dsp.x);
+    y = convertValue(event.motion.dsp.y);
+    z = convertValue(event.motion.dsp.z);
 
     remapAxes(&x, &y, &z);
     reading->setX(x);

@@ -30,34 +30,39 @@
     \title Qt Sensors - SensorGesture QML Type example
     \ingroup qtsensors-examples
 
-    \brief This example demonstrates use of the SensorGesture QML type.
+    \brief Demonstrates the use of SensorGesture QML type.
 
-\section1 Overview
-    To write a QML application that will use the gesture plugin you need to to the following steps:
+    \section1 Overview
+    To write a QML application that will use the gesture plugin, following
+    steps are needed:
 
-    Import the QtSensors 5.x declarative plugin:
+    Import the QtSensors 5.x module:
 
-\snippet qmlsensorgestures/GestureView.qml 0
+    \snippet qmlsensorgestures/GestureView.qml 0
 
-   Add the SensorGesture QML type into your qml file.
+    Add the SensorGesture QML type into your qml file.
 
-\snippet qmlsensorgestures/GestureView.qml 1
+    \snippet qmlsensorgestures/GestureView.qml 1
 
-   Each SensorGesture QML type contains a property called gestures.
+    Each SensorGesture QML type contains a property called gestures. This example
+    uses an alias \c gestureId for this property.
 
-   In this example an alias 'gestureid' for this property is used.
+    \snippet qmlsensorgestures/GestureView.qml 2
 
-\snippet qmlsensorgestures/GestureView.qml 2
+    Then, the gesture or gestures to use can be specified using the alias:
 
-   By using this alias property you define which gestures should be used:
+    \snippet qmlsensorgestures/qmlsensorgestures.qml 3
+    \dots 12
+    \snippet qmlsensorgestures/qmlsensorgestures.qml 4
 
-\snippet qmlsensorgestures/qmlsensorgestures.qml 3
+    A list of all available gestures is accessible through the
+    \c availableGestures property:
 
-   A list of all available gestures can be created by calling the 'availableGestures' property:
+    \snippet qmlsensorgestures/GestureList.qml 4
+    \codeline
+    \snippet qmlsensorgestures/GestureList.qml 5
+    \dots 12
+    \snippet qmlsensorgestures/GestureList.qml 6
 
-\snippet qmlsensorgestures/GestureList.qml 4
-
-\sa {Qt Sensors - ShakeIt QML Example}
-\sa {Qt Sensor Gestures}
+    \sa {Qt Sensors - ShakeIt QML Example}, {Qt Sensor Gestures}
 */
-
