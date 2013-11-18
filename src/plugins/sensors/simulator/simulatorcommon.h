@@ -94,10 +94,10 @@ class SimulatorCommon : public QSensorBackend
 public:
     SimulatorCommon(QSensor *sensor);
 
-    void start();
-    void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
     virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/);
+    void timerEvent(QTimerEvent * /*event*/) Q_DECL_OVERRIDE;
 
 private:
     int m_timerid;

@@ -52,7 +52,7 @@ public:
 
     SimulatorLightSensor(QSensor *sensor);
 
-    void poll();
+    void poll() Q_DECL_OVERRIDE;
 private:
     QLightReading m_reading;
 };

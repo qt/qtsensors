@@ -53,10 +53,10 @@ public:
 
     genericorientationsensor(QSensor *sensor);
 
-    void start();
-    void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
 
-    bool filter(QAccelerometerReading *reading);
+    bool filter(QAccelerometerReading *reading) Q_DECL_OVERRIDE;
 
 private:
     QOrientationReading m_reading;

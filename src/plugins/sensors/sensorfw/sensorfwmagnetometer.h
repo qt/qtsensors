@@ -58,11 +58,11 @@ public:
     static char const * const id;
     SensorfwMagnetometer(QSensor *sensor);
 protected:
-    virtual bool doConnect();
-    virtual void start();
-    virtual QString sensorName() const;
-    virtual qreal correctionFactor() const;
-    virtual void init() Q_DECL_OVERRIDE;
+    bool doConnect() Q_DECL_OVERRIDE;
+    void start() Q_DECL_OVERRIDE;
+    QString sensorName() const Q_DECL_OVERRIDE;
+    qreal correctionFactor() const Q_DECL_OVERRIDE;
+    virtual void init();
 
 private:
     static const float NANO;

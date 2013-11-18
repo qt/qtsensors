@@ -55,10 +55,10 @@ public:
     LinuxSysAccelerometer(QSensor *sensor);
     ~LinuxSysAccelerometer();
 
-    void start();
-    void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
     void poll();
-    void timerEvent(QTimerEvent * /*event*/);
+    void timerEvent(QTimerEvent * /*event*/) Q_DECL_OVERRIDE;
 
 private:
     QAccelerometerReading m_reading;

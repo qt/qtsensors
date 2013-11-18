@@ -56,12 +56,12 @@ public:
 
     GenericTiltSensor(QSensor *sensor);
 
-    void start();
-    void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
 
     void calibrate();
 
-    bool filter(QAccelerometerReading *reading);
+    bool filter(QAccelerometerReading *reading) Q_DECL_OVERRIDE;
 
     bool isFeatureSupported(QSensor::Feature feature) const Q_DECL_OVERRIDE;
 

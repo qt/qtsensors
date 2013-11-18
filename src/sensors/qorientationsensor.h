@@ -74,7 +74,7 @@ class Q_SENSORS_EXPORT QOrientationFilter : public QSensorFilter
 public:
     virtual bool filter(QOrientationReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading);
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT QOrientationSensor : public QSensor

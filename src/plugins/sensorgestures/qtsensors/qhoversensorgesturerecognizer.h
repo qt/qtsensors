@@ -57,11 +57,12 @@ public:
     explicit QHoverSensorGestureRecognizer(QObject *parent = 0);
     ~QHoverSensorGestureRecognizer();
 
-    void create();
-    QString id() const;
-    bool start();
-    bool stop();
-    bool isActive();
+    void create() Q_DECL_OVERRIDE;
+
+    QString id() const Q_DECL_OVERRIDE;
+    bool start() Q_DECL_OVERRIDE;
+    bool stop() Q_DECL_OVERRIDE;
+    bool isActive() Q_DECL_OVERRIDE;
 
 Q_SIGNALS:
     void hover();

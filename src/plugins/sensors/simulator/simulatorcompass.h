@@ -52,7 +52,7 @@ public:
 
     SimulatorCompass(QSensor *sensor);
 
-    void poll();
+    void poll() Q_DECL_OVERRIDE;
 private:
     QCompassReading m_reading;
 };

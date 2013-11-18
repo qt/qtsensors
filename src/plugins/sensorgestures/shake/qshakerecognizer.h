@@ -66,12 +66,12 @@ public:
     QShakeSensorGestureRecognizer(QObject *parent = 0);
     ~QShakeSensorGestureRecognizer();
 
-    void create();
+    void create() Q_DECL_OVERRIDE;
 
-    QString id() const;
-    bool start();
-    bool stop();
-    bool isActive();
+    QString id() const Q_DECL_OVERRIDE;
+    bool start() Q_DECL_OVERRIDE;
+    bool stop() Q_DECL_OVERRIDE;
+    bool isActive() Q_DECL_OVERRIDE;
 
     QTimer *timer;
     int timerTimeout;

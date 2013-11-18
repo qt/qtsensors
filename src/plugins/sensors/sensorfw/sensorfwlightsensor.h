@@ -57,9 +57,9 @@ public:
     static char const * const id;
     SensorfwLightSensor(QSensor *sensor);
 protected:
-    virtual bool doConnect();
-    virtual QString sensorName() const;
-    virtual void init() Q_DECL_OVERRIDE;
+    bool doConnect() Q_DECL_OVERRIDE;
+    QString sensorName() const Q_DECL_OVERRIDE;
+    virtual void init();
 private:
     QLightReading m_reading;
     bool m_initDone;

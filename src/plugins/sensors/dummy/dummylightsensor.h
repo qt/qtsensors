@@ -52,7 +52,7 @@ public:
 
     dummylightsensor(QSensor *sensor);
 
-    void poll();
+    void poll() Q_DECL_OVERRIDE;
 private:
     QAmbientLightReading m_reading;
 };

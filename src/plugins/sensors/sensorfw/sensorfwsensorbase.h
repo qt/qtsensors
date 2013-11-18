@@ -62,8 +62,8 @@ public:
 
 protected:
     virtual bool doConnect()=0;
-    virtual void start();
-    virtual void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
 
     static const float GRAVITY_EARTH;
     static const float GRAVITY_EARTH_THOUSANDTH;    //for speed

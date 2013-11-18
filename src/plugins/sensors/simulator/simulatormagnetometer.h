@@ -52,7 +52,7 @@ public:
 
     SimulatorMagnetometer(QSensor *sensor);
 
-    void poll();
+    void poll() Q_DECL_OVERRIDE;
 private:
     QMagnetometerReading m_reading;
 };

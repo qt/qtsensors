@@ -68,7 +68,7 @@ class Q_SENSORS_EXPORT QRotationFilter : public QSensorFilter
 public:
     virtual bool filter(QRotationReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading);
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class QRotationSensorPrivate;
