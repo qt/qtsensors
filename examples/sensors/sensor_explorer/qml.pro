@@ -5,6 +5,10 @@ QT += qml quick
 qtHaveModule(widgets) {
     QT += widgets
 }
+
+# Avoid going to release/debug subdirectory
+win32: DESTDIR = ./
+
 SOURCES = main.cpp
 
 app.files = \
