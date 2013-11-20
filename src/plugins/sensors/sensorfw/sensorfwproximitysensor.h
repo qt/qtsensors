@@ -57,10 +57,10 @@ public:
     static char const * const id;
     SensorfwProximitySensor(QSensor *sensor);
 protected:
-    virtual bool doConnect();
-    virtual QString sensorName() const;
-    virtual void start();
-    virtual void init() Q_DECL_OVERRIDE;
+    bool doConnect() Q_DECL_OVERRIDE;
+    QString sensorName() const Q_DECL_OVERRIDE;
+    void start() Q_DECL_OVERRIDE;
+    virtual void init();
 
 private:
     QProximityReading m_reading;

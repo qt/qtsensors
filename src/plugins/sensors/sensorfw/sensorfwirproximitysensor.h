@@ -56,9 +56,9 @@ public:
 
     SensorfwIrProximitySensor(QSensor *sensor);
 protected:
-    virtual bool doConnect();
-    virtual QString sensorName() const;
-    virtual void init() Q_DECL_OVERRIDE;
+    bool doConnect() Q_DECL_OVERRIDE;
+    QString sensorName() const Q_DECL_OVERRIDE;
+    virtual void init();
 private:
     QIRProximityReading m_reading;
     bool m_initDone;

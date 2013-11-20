@@ -57,12 +57,12 @@ public:
     explicit QFreefallSensorGestureRecognizer(QObject *parent = 0);
     ~QFreefallSensorGestureRecognizer();
 
-    void create();
+    void create() Q_DECL_OVERRIDE;
 
-    QString id() const;
-    bool start();
-    bool stop();
-    bool isActive();
+    QString id() const Q_DECL_OVERRIDE;
+    bool start() Q_DECL_OVERRIDE;
+    bool stop() Q_DECL_OVERRIDE;
+    bool isActive() Q_DECL_OVERRIDE;
 
 Q_SIGNALS:
     void freefall();

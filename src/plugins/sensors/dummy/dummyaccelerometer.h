@@ -52,7 +52,7 @@ public:
 
     dummyaccelerometer(QSensor *sensor);
 
-    void poll();
+    void poll() Q_DECL_OVERRIDE;
 private:
     QAccelerometerReading m_reading;
 };

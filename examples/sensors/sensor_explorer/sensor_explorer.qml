@@ -38,159 +38,177 @@
 **
 ****************************************************************************/
 
-//Import the declarative plugins
-import QtQuick 2.0
-import "components"
+import QtQuick 2.1
+import QtQuick.Window 2.1
+import QtQuick.Controls 1.0
 
 //! [0]
 import Explorer 1.0
 //! [0]
 
-ApplicationWindow {
-    id: mainWnd
+Window {
+    id: window
+    width: 320
+    height: 480
+    minimumWidth: 320
+    minimumHeight: 480
 
-//! [1]
+    //! [1]
     SensorExplorer {
         id: explorer
     }
-//! [1]
+    //! [1]
 
-    SensorList {
-        id: sensorList
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 170
-        title: "sensor explorer"
+    Column {
+        anchors.fill: parent
+        anchors.margins: 8
+        spacing: 8
 
-//! [2]
-        listmodel: explorer.availableSensors
-//! [2]
+        GroupBox {
+            title: qsTr("Available Sensors")
+            width: parent.width
+            height: window.height * 0.4
 
-        onSelectedItemChanged: {
-            explorer.selectedSensorItem = sensorList.selectedItem;
-            startstopButton.text=(explorer.selectedSensorItem !== null ?
-                   (explorer.selectedSensorItem.start === true ? "Stop" : "Start") : "Start")
-            if (sensorList.selectedItem !== null)
+            TableView {
+                id: sensorList
+                anchors.fill: parent
+                //! [2]
+                model: explorer.availableSensors
+                //! [2]
 
-//! [3]
-                propertyList.listmodel = sensorList.selectedItem.properties;
-//! [3]
-        }
-    }
+                TableViewColumn { role: "id"; title: qsTr("ID"); width: sensorList.width * 0.7 }
+                TableViewColumn { role: "start"; title: qsTr("Running"); width: sensorList.width * 0.3 - 5 }
 
-    Rectangle {
-        id: listSplitLine
-        anchors.top: sensorList.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
-        height: 1
-        border.width: 1
-        border.color: "#999999"
-    }
-
-    PropertyList {
-        id: propertyList
-        anchors.top: listSplitLine.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: listPropertyEndLine.top
-        anchors.bottomMargin: 5
-
-        onSelectedItemChanged: {
-            textfield.enabled = (propertyList.selectedItem === null ?
-                                            false : propertyList.selectedItem.isWriteable);
-        }
-    }
-
-    Rectangle {
-        id: listPropertyEndLine
-        anchors.bottom: startstopButton.top
-        anchors.bottomMargin: 5
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
-        height: 1
-        border.width: 1
-        border.color: "#999999"
-    }
-
-
-    Button {
-        id: startstopButton
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.margins: 5
-        text: (explorer.selectedSensorItem !== null ?
-                   (explorer.selectedSensorItem.start === true ? "Stop" : "Start") : "Start")
-        enabled: true
-        height: 30
-        width: 80
-
-        onClicked: {
-            if (explorer.selectedSensorItem !== null) {
-//! [5]
-                if (text === "Start") {
-                    explorer.selectedSensorItem.start = true;
-                    text = "Stop";
+                onClicked: {
+                    explorer.selectedSensorItem = explorer.availableSensors[row]
+                    //! [3]
+                    propertyList.model = explorer.selectedSensorItem.properties
+                    //! [3]
+                    button.update()
                 }
-                else {
-                    explorer.selectedSensorItem.start = false;
-                    text = "Start";
+            }
+
+            Button {
+                id: button
+                anchors.margins: 4
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: sensorList.bottom
+                text: qsTr("Start")
+                enabled: explorer.selectedSensorItem !== null
+
+                function update() {
+                    text = (explorer.selectedSensorItem !== null ?
+                                (explorer.selectedSensorItem.start === true ?
+                                     qsTr("Stop") : qsTr("Start")) : qsTr("Start"))
                 }
-//! [5]
+
+                onClicked: {
+                    if (explorer.selectedSensorItem !== null) {
+                        //! [5]
+                        if (text === "Start") {
+                            explorer.selectedSensorItem.start = true;
+                            text = "Stop";
+                        }
+                        else {
+                            explorer.selectedSensorItem.start = false;
+                            text = "Start";
+                        }
+                        //! [5]
+                    }
+                }
             }
 
-            textfield.text = "";
-        }
-    }
-
-    TextField {
-        id: textfield
-        anchors.top: parent.bottom
-        anchors.topMargin: -35
-        anchors.left: startstopButton.right
-        anchors.right: parent.right
-        anchors.margins: 5
-        height: 30
-        enabled: false
-
-        onEnabledChanged: {
-            if (!textfield.enabled) {
-                textfield.closeSoftwareInputPanel();
-                textfield.anchors.top= parent.bottom;
-                textfield.anchors.topMargin= -35;
-                textfield.text = "";
-            }
         }
 
-        onFocusChanged: {
-            if (textfield.focus) {
-                textfield.anchors.top= sensorList.bottom
-                textfield.anchors.topMargin= -15
-            }
-            else {
-                textfield.closeSoftwareInputPanel();
-                textfield.anchors.top= parent.bottom;
-                textfield.anchors.topMargin= -35;
-            }
-        }
+        GroupBox {
+            title: qsTr("Properties")
+            width: parent.width
+            height: window.height * 0.55
 
-        onAccepted: {
+            enabled: explorer.selectedSensorItem != null
 
-            if (explorer.selectedSensorItem !== null
-                && propertyList.selectedItem !== null) {
-//! [4]
-                explorer.selectedSensorItem.changePropertyValue(propertyList.selectedItem, textfield.text);
-//! [4]
-                propertyList.focus=true;
+            TableView {
+                id: propertyList
+                property PropertyInfo selectedItem: null
+
+                anchors.fill: parent
+                TableViewColumn { role: "name"; title: qsTr("Name"); width: propertyList.width * 0.5 }
+                TableViewColumn { role: "value"; title: qsTr("Value"); width: propertyList.width * 0.5 - 5 }
+
+                onClicked: {
+                    selectedItem = model[row]
+                }
+
+                itemDelegate: {
+                    if (selectedItem && selectedItem.isWriteable)
+                        return editableDelegate;
+                    return readOnlyDelegate;
+                }
+
+                Component {
+                    id: readOnlyDelegate
+                    Item {
+                        Text {
+                            width: parent.width
+                            anchors.margins: 4
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            elide: styleData.elideMode
+                            text: styleData.value
+                            color: propertyList.model[styleData.row].isWriteable ?
+                                       styleData.textColor : Qt.lighter(styleData.textColor)
+                        }
+                    }
+                }
+
+                Component {
+                    id: editableDelegate
+                    Item {
+                        Text {
+                            width: parent.width
+                            anchors.margins: 4
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            elide: styleData.elideMode
+                            text: styleData.value
+                            color: styleData.textColor
+                            visible: !styleData.selected || styleData.column === 0
+                        }
+                        Loader { // Initialize text editor lazily to improve performance
+                            id: loaderEditor
+                            anchors.margins: 4
+                            anchors.left: parent.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            Connections {
+                                target: loaderEditor.item
+                                onAccepted: {
+                                    //! [4]
+                                    explorer.selectedSensorItem.changePropertyValue(propertyList.selectedItem, loaderEditor.item.text);
+                                    //! [4]
+                                }
+                            }
+
+                            // Load the editor for selected 'Value' cell
+                            sourceComponent: (styleData.selected && styleData.column === 1) ? editor : null
+
+                            Component {
+                                id: editor
+                                TextInput {
+                                    id: textinput
+                                    color: styleData.textColor
+                                    text: styleData.value
+                                    MouseArea {
+                                        id: mouseArea
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onClicked: textinput.forceActiveFocus()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            textfield.text = "";
         }
     }
 }
-

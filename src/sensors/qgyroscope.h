@@ -71,7 +71,7 @@ class Q_SENSORS_EXPORT QGyroscopeFilter : public QSensorFilter
 public:
     virtual bool filter(QGyroscopeReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading);
+    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
 };
 
 class Q_SENSORS_EXPORT QGyroscope : public QSensor

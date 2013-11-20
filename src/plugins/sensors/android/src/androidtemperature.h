@@ -51,8 +51,8 @@ class AndroidTemperature : public AndroidCommonSensor<QAmbientTemperatureReading
 public:
     AndroidTemperature(AndroidSensors::AndroidSensorType type, QSensor *sensor);
 private:
-    virtual void onAccuracyChanged(jint accuracy);
-    virtual void onSensorChanged(jlong timestamp, const jfloat *values, uint size);
+    void onAccuracyChanged(jint accuracy) Q_DECL_OVERRIDE;
+    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) Q_DECL_OVERRIDE;
 };
 
 #endif // ANDROIDTEMPERATURE_H

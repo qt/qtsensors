@@ -63,13 +63,13 @@ public:
         if (m_isStarted)
             stop();
     }
-    virtual void start()
+    void start() Q_DECL_OVERRIDE
     {
         if (AndroidSensors::registerListener(m_type, this, sensor()->dataRate()))
             m_isStarted = true;
     }
 
-    virtual void stop()
+    void stop() Q_DECL_OVERRIDE
     {
         if (m_isStarted) {
             m_isStarted = false;

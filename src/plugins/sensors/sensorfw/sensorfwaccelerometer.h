@@ -57,10 +57,10 @@ public:
     static char const * const id;
     sensorfwaccelerometer(QSensor *sensor);
 protected:
-    virtual bool doConnect();
-    virtual QString sensorName() const;
-    virtual qreal correctionFactor() const;
-    virtual void init() Q_DECL_OVERRIDE;
+    bool doConnect() Q_DECL_OVERRIDE;
+    QString sensorName() const Q_DECL_OVERRIDE;
+    qreal correctionFactor() const Q_DECL_OVERRIDE;
+    virtual void init();
 
 private:
     QAccelerometerReading m_reading;

@@ -55,10 +55,10 @@ public:
     static char const * const id;
 
     explicit IOSMagnetometer(QSensor *sensor);
-    void timerEvent(QTimerEvent *);
+    void timerEvent(QTimerEvent *) Q_DECL_OVERRIDE;
 
-    void start();
-    void stop();
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
 
     void startMagnetometer();
     void startDeviceMotion();

@@ -52,9 +52,8 @@ class SensorExplorerDeclarativeModule : public QQmlExtensionPlugin
 public:
     virtual void registerTypes(const char *uri)
     {
-        qDebug() << "SensorExplorerDeclarativeModule::registerTypes(const char *uri)";
-
         Q_ASSERT(QLatin1String(uri) == QLatin1String("Explorer"));
+        // @uri Explorer
         qmlRegisterType<QSensorExplorer>(uri, 1, 0, "SensorExplorer");
         qmlRegisterType<QSensorItem>(uri, 1, 0, "SensorItem");
         qmlRegisterType<QPropertyInfo>(uri, 1, 0, "PropertyInfo");
