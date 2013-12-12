@@ -52,10 +52,10 @@
     If the module is imported into a namespace, some additional methods become available.
 
     \code
-    import QtSensors 5.0 as Sensors
+    import QtSensors 5.0
     ...
         Component.onCompleted: {
-            var types = Sensors.sensorTypes();
+            var types = QmlSensors.sensorTypes();
             console.log(types.join(", "));
         }
     \endcode
