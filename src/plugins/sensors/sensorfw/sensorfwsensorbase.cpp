@@ -68,9 +68,9 @@ SensorfwSensorBase::SensorfwSensorBase(QSensor *sensor)
             QDBusServiceWatcher::WatchForUnregistration, this);
 
     connect(watcher, SIGNAL(serviceRegistered(QString)),
-            this, SLOT(connectToSensord(QString)));
+            this, SLOT(connectToSensord()));
     connect(watcher, SIGNAL(serviceUnregistered(QString)),
-            this, SLOT(sensordUnregistered(QString)));
+            this, SLOT(sensordUnregistered()));
 
 
     m_available = QDBusConnection::systemBus().interface()->isServiceRegistered("com.nokia.SensorService");
