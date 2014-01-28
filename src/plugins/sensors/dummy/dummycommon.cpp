@@ -120,7 +120,11 @@ static quint64 windowsTimeStamp()
         if (QueryPerformanceCounter(&counterLI))
             return 1000000 * counterLI.QuadPart / frequency;
     }
+#ifndef Q_OS_WINRT
     return GetTickCount();
+#else
+    return GetTickCount64();
+#endif
 }
 #endif
 
