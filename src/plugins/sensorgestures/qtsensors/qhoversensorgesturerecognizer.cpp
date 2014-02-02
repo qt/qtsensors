@@ -74,10 +74,10 @@ bool QHoverSensorGestureRecognizer::start()
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::IrProximity)) {
         if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
             active = true;
-            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
-                    this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
-            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
-                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading*)),
+                    this,SLOT(irProximityReadingChanged(QIRProximityReading*)));
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading*)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading*)));
         } else {
             QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
             active = false;
@@ -99,10 +99,10 @@ bool QHoverSensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::IrProximity);
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
-    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading *)),
-            this,SLOT(irProximityReadingChanged(QIRProximityReading *)));
-    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
-            this,SLOT(orientationReadingChanged(QOrientationReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(irProximityReadingChanged(QIRProximityReading*)),
+            this,SLOT(irProximityReadingChanged(QIRProximityReading*)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading*)),
+            this,SLOT(orientationReadingChanged(QOrientationReading*)));
     active = false;
     timer2Active = false;
     initialReflectance = 0;

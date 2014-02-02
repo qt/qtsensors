@@ -72,8 +72,8 @@ bool QShake2SensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
         active = true;
-        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-                this,SLOT(accelChanged(QAccelerometerReading *)));
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
+                this,SLOT(accelChanged(QAccelerometerReading*)));
     } else {
         active = false;
     }
@@ -90,8 +90,8 @@ bool QShake2SensorGestureRecognizer::start()
 bool QShake2SensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
-    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-            this,SLOT(accelChanged(QAccelerometerReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
+            this,SLOT(accelChanged(QAccelerometerReading*)));
     active = false;
     return active;
 }

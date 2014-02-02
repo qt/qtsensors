@@ -67,8 +67,8 @@ bool QDoubleTapSensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Tap)) {
         active = true;
-        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(dTabReadingChanged(QTapReading *)),
-                this,SLOT(tapChanged(QTapReading *)));
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(dTabReadingChanged(QTapReading*)),
+                this,SLOT(tapChanged(QTapReading*)));
     } else {
         active = false;
     }
@@ -78,8 +78,8 @@ bool QDoubleTapSensorGestureRecognizer::start()
 bool QDoubleTapSensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Tap);
-    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(dTabReadingChanged(QTapReading *)),
-            this,SLOT(tapChanged(QTapReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(dTabReadingChanged(QTapReading*)),
+            this,SLOT(tapChanged(QTapReading*)));
     active = false;
     return active;
 }

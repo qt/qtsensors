@@ -68,8 +68,8 @@ bool QFreefallSensorGestureRecognizer::start()
 {
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
         active = true;
-        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-                this,SLOT(accelChanged(QAccelerometerReading *)));
+        connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
+                this,SLOT(accelChanged(QAccelerometerReading*)));
     } else {
         active = false;
     }
@@ -81,7 +81,7 @@ bool QFreefallSensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
     disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
-            this,SLOT(accelChanged(QAccelerometerReading *)));
+            this,SLOT(accelChanged(QAccelerometerReading*)));
     active = false;
 
     return active;

@@ -81,8 +81,8 @@ void Sensorfwals::slotDataAvailable(const Unsigned& data)
 
 bool Sensorfwals::doConnect()
 {
-    return QObject::connect(m_sensorInterface, SIGNAL(ALSChanged(const Unsigned&)),
-                            this, SLOT(slotDataAvailable(const Unsigned&)));
+    return QObject::connect(m_sensorInterface, SIGNAL(ALSChanged(Unsigned)),
+                            this, SLOT(slotDataAvailable(Unsigned)));
 }
 
 

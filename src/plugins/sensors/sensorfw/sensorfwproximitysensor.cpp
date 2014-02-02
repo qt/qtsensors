@@ -79,8 +79,8 @@ void SensorfwProximitySensor::slotDataAvailable(const Unsigned& data)
 
 bool SensorfwProximitySensor::doConnect()
 {
-    return (QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(const Unsigned&)),
-                             this, SLOT(slotDataAvailable(const Unsigned&))));
+    return (QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(Unsigned)),
+                             this, SLOT(slotDataAvailable(Unsigned))));
 }
 
 

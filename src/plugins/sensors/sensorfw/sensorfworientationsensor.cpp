@@ -76,8 +76,8 @@ void SensorfwOrientationSensor::slotDataAvailable(const Unsigned& data)
 
 bool SensorfwOrientationSensor::doConnect()
 {
-    return QObject::connect(m_sensorInterface, SIGNAL(orientationChanged(const Unsigned&)),
-                            this, SLOT(slotDataAvailable(const Unsigned&)));
+    return QObject::connect(m_sensorInterface, SIGNAL(orientationChanged(Unsigned)),
+                            this, SLOT(slotDataAvailable(Unsigned)));
 }
 
 QString SensorfwOrientationSensor::sensorName() const

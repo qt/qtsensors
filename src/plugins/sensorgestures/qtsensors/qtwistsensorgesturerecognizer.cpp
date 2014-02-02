@@ -79,11 +79,11 @@ bool QTwistSensorGestureRecognizer::start()
     if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Accel)) {
         if (QtSensorGestureSensorHandler::instance()->startSensor(QtSensorGestureSensorHandler::Orientation)) {
             active = true;
-            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
-                    this,SLOT(orientationReadingChanged(QOrientationReading *)));
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading*)),
+                    this,SLOT(orientationReadingChanged(QOrientationReading*)));
 
-            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-                    this,SLOT(accelChanged(QAccelerometerReading *)));
+            connect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
+                    this,SLOT(accelChanged(QAccelerometerReading*)));
         } else {
             QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
             active = false;
@@ -100,11 +100,11 @@ bool QTwistSensorGestureRecognizer::stop()
 {
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Accel);
     QtSensorGestureSensorHandler::instance()->stopSensor(QtSensorGestureSensorHandler::Orientation);
-    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading *)),
-            this,SLOT(orientationReadingChanged(QOrientationReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(orientationReadingChanged(QOrientationReading*)),
+            this,SLOT(orientationReadingChanged(QOrientationReading*)));
 
-    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading *)),
-            this,SLOT(accelChanged(QAccelerometerReading *)));
+    disconnect(QtSensorGestureSensorHandler::instance(),SIGNAL(accelReadingChanged(QAccelerometerReading*)),
+            this,SLOT(accelChanged(QAccelerometerReading*)));
 
     reset();
     orientationList.clear();
