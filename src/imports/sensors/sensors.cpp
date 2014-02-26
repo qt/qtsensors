@@ -133,7 +133,6 @@ public:
         qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
 
         // Register the 5.1 interfaces
-        major = 5;
         minor = 1;
         qmlRegisterSingletonType  <QmlSensorGlobal             >(package, major, minor, "QmlSensors", global_object_50);
         qmlRegisterUncreatableType<QmlSensorRange              >(package, major, minor, "Range",                QLatin1String("Cannot create Range"));
@@ -176,7 +175,6 @@ public:
         qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
 
         // Register the 5.2 interfaces
-        major = 5;
         minor = 2;
         qmlRegisterSingletonType  <QmlSensorGlobal             >(package, major, minor, "QmlSensors", global_object_50);
         qmlRegisterUncreatableType<QmlSensorRange              >(package, major, minor, "Range",                QLatin1String("Cannot create Range"));
@@ -217,6 +215,11 @@ public:
         qmlRegisterUncreatableType<QmlTiltSensorReading        >(package, major, minor, "TiltReading",          QLatin1String("Cannot create TiltReading"));
 
         qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
+
+        // Register the 5.3 interfaces
+        // No API changes, just reintroduce existing interfaces for 5.3
+        minor = 3;
+        qmlRegisterType           <QmlAltimeter                >(package, major, minor, "Altimeter");
     }
 };
 
