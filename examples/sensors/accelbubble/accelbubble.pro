@@ -6,12 +6,10 @@ SOURCES = main.cpp
 RESOURCES += \
     accelbubble.qrc
 
-app.files = \
+OTHER_FILES = \
     $$files(*.qml) \
-    icon.png \
     content \
     images
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/accelbubble
-app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/accelbubble
-INSTALLS += target app
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/accelbubble
+INSTALLS += target

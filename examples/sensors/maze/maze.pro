@@ -3,16 +3,14 @@ TARGET = maze
 QT += quick
 SOURCES = main.cpp
 
-app.files = \
+OTHER_FILES = \
     components \
     $$files(*.qml) \
     $$files(*.js) \
-    icon.png \
     content
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/maze
-app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/maze
-INSTALLS += target app
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/maze
+INSTALLS += target
 
 RESOURCES += \
     maze.qrc
