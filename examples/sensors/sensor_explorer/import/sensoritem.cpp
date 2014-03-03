@@ -47,7 +47,7 @@ QT_BEGIN_NAMESPACE
 
 /*
     \class QSensorItem
-    \brief The QSensorItem type provides information about the meta-datas from a sensors installed on the system.
+    \brief The QSensorItem type provides information about the metadata from a sensors installed on the system.
 */
 
 /*
@@ -118,7 +118,7 @@ void QSensorItem::changePropertyValue(QPropertyInfo* property, const QString& va
 }
 
 /*
-    Reading the meta-datas and activates the sensor.
+    Reading the metadata and activates the sensor.
 */
 void QSensorItem::select()
 {
@@ -255,7 +255,7 @@ bool QSensorItem::isWriteable(const QString& propertyname)
 }
 
 /*
-    Convert the variant \a val dependend on the type \a type and returns the converted value as a QString
+    Convert the variant \a val dependent on the type \a type and returns the converted value as a QString
 */
 QString QSensorItem::convertValue(const QString& type, const QVariant& val)
 {

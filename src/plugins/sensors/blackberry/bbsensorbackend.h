@@ -80,8 +80,8 @@ protected:
 
     void setDevice(const QString &deviceFile, sensor_type_e sensorType);
 
-    // This is called while the device file is open during initalization and gives a subclass
-    // an opportunity to do additional initalization.
+    // This is called while the device file is open during initialization and gives a subclass
+    // an opportunity to do additional initialization.
     virtual void additionalDeviceInit();
 
     // If true is returned here, initSensorInfo() will read the output range from the OS sensor

@@ -139,7 +139,7 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
 #endif
     qreal xrot = roll - calibratedRoll;
     qreal yrot = pitch - calibratedPitch;
-    //get angle beteen 0 and 180 or 0 -180
+    //get angle between 0 and 180 or 0 -180
     qreal aG = 1 * sin(xrot);
     qreal aK = 1 * cos(xrot);
     xrot = qAtan2(aG, aK);

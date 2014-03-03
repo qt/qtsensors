@@ -71,7 +71,7 @@ classes to subclass.
 \section3 Recognizer Plugins
 
 The Sensor Gesture Recognizers that come with Qt are made using an ad-hoc heuristic approach.
-The user cannot define their own gestures, and must learn how to perform and accomodate the
+The user cannot define their own gestures, and must learn how to perform and accommodate the
 pre-defined gestures herein.
 
 A developer may use any method, including computationally- and training-intensive well-
