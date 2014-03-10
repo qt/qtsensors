@@ -54,6 +54,10 @@ QString BbProximitySensor::devicePath()
 bool BbProximitySensor::updateReadingFromEvent(const sensor_event_t &event, QProximityReading *reading)
 {
     const qreal minProximity = sensor()->outputRanges().first().minimum;
-    reading->setClose(event.proximity_s.distance <= minProximity);
+    const qreal maxProximity = sensor()->outputRanges().first().maximum;
+    // An object within 8.0 cm of the sensor is regarded as close. This is the same threshold used
+    // for face-detect during phone calls on BB10.
+    const qreal threshold = (maxProximity > 1.0) ? 8.0 : minProximity;
+    reading->setClose(event.proximity_s.distance <= threshold);
     return true;
 }
