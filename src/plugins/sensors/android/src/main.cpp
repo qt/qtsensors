@@ -43,6 +43,7 @@
 #include <qsensorplugin.h>
 #include <qsensorbackend.h>
 #include <qsensormanager.h>
+#include <qaccelerometer.h>
 #include "androidaccelerometer.h"
 #include "androidgyroscope.h"
 #include "androidlight.h"
@@ -112,7 +113,11 @@ public:
         AndroidSensorType type = static_cast<AndroidSensorType>(sensor->identifier().toInt());
         switch (type) {
         case TYPE_ACCELEROMETER:
+        {
+            QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor);
+            AndroidSensors::AndroidSensorType type = AndroidAccelerometer::modeToSensor(accelerometer->accelerationMode());
             return new AndroidAccelerometer(type, sensor);
+        }
         case TYPE_AMBIENT_TEMPERATURE:
         case TYPE_TEMPERATURE:
             return new AndroidTemperature(type, sensor);
