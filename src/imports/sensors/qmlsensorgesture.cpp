@@ -217,7 +217,7 @@ void QmlSensorGesture::setEnabled(bool value)
 */
 
 /*
-  private funtion implementation
+  private function implementation
 */
 void QmlSensorGesture::deleteGesture()
 {
@@ -256,7 +256,7 @@ void QmlSensorGesture::createGesture()
 }
 
 /*
-  End of private funtion implementation
+  End of private function implementation
 */
 
 QT_END_NAMESPACE

@@ -132,7 +132,7 @@ void BbGuiHelper::readApplicationActiveState()
 void BbGuiHelper::readOrientation()
 {
     // There is no API to get the current orientation at the moment.
-    // Therefore, we assume that the inital orientation that is set in the environment variable
+    // Therefore, we assume that the initial orientation that is set in the environment variable
     // hasn't changed yet.
     // This assumptions don't always hold, but it is the best we got so far.
     // The navigator will at least inform us about updates.

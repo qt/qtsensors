@@ -6,11 +6,9 @@ SOURCES = main.cpp
 RESOURCES += \
     qmlqtsensors.qrc
 
-app.files = \
+OTHER_FILES = \
     $$files(*.qml) \
-    icon.png \
     components
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/qmlqtsensors
-app.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/qmlqtsensors
-INSTALLS += target app
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/qmlqtsensors
+INSTALLS += target

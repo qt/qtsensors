@@ -55,7 +55,7 @@ Rectangle {
     property int val: 0
     property AnimatedImage picture: img
 
-    //Dependend of its position and the labyrinth value a square can be the start, cheese, empty or a wall
+    //Dependent of its position and the labyrinth value a square can be the start, cheese, empty or a wall
     AnimatedImage {
         id: img
         anchors.fill: parent
