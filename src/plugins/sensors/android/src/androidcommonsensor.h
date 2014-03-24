@@ -79,9 +79,9 @@ public:
 
 protected:
     ReaderType m_reader;
+    AndroidSensors::AndroidSensorType m_type;
 
 private:
-    AndroidSensors::AndroidSensorType m_type;
     bool m_isStarted;
 };
 

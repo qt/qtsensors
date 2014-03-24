@@ -1,6 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2013 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2014 BlackBerry Limited. All rights reserved.
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -43,7 +44,13 @@
 
 AndroidAccelerometer::AndroidAccelerometer(AndroidSensors::AndroidSensorType type, QSensor *sensor)
     : AndroidCommonSensor<QAccelerometerReading>(type, sensor)
-{}
+{
+    QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor);
+    if (accelerometer) {
+        connect(accelerometer, SIGNAL(accelerationModeChanged(AccelerationMode)),
+                this, SLOT(applyAccelerationMode()));
+    }
+}
 
 void AndroidAccelerometer::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
 {
@@ -60,4 +67,33 @@ void AndroidAccelerometer::onSensorChanged(jlong timestamp, const jfloat *values
 void AndroidAccelerometer::onAccuracyChanged(jint accuracy)
 {
     Q_UNUSED(accuracy)
+}
+
+void AndroidAccelerometer::applyAccelerationMode()
+{
+    const QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor());
+    if (accelerometer) {
+        stop(); //Stop previous sensor and start new one
+        m_type = modeToSensor(accelerometer->accelerationMode());
+        start();
+    }
+}
+AndroidSensors::AndroidSensorType AndroidAccelerometer::modeToSensor(QAccelerometer::AccelerationMode mode)
+{
+    AndroidSensors::AndroidSensorType type;
+
+    switch (mode) {
+    case QAccelerometer::Gravity:
+        type = AndroidSensors::TYPE_GRAVITY;
+        break;
+    case QAccelerometer::User:
+        type = AndroidSensors::TYPE_LINEAR_ACCELERATION;
+        break;
+    default:
+    case QAccelerometer::Combined:
+        type = AndroidSensors::TYPE_ACCELEROMETER;
+        break;
+    }
+
+    return type;
 }

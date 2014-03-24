@@ -214,6 +214,8 @@ void QmlSensorGesture::setEnabled(bool value)
     \qmlsignal SensorGesture::detected(string gesture)
     This signal is emitted whenever a gesture is detected.
     The gesture parameter contains the gesture that was detected.
+
+    The corresponding handler is \c onDetected.
 */
 
 /*
