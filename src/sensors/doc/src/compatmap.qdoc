@@ -118,6 +118,17 @@
     <td bgcolor="green"></td>
     </tr>
     <tr>
+    <td nowrap="nowrap">Distance</td>
+    <td bgcolor="green"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    </tr>
+    <tr>
     <td nowrap="nowrap">Gyroscope</td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>

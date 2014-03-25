@@ -35,7 +35,7 @@ PRIVATE_HEADERS += \
 
 SOURCES += qsensorbackend.cpp\
            qsensormanager.cpp\
-           qsensorplugin.cpp\
+           qsensorplugin.cpp
 
 SOURCES += \
     gestures/qsensorgesture.cpp \
@@ -65,6 +65,7 @@ SENSORS=\
     qambientlightsensor\
     qambienttemperaturesensor\
     qcompass\
+    qdistancesensor\
     qholstersensor\
     qlightsensor\
     qmagnetometer\
@@ -75,7 +76,7 @@ SENSORS=\
     qtapsensor\
     qtiltsensor\
     qgyroscope\
-    qpressuresensor\
+    qpressuresensor
 
 for(s,SENSORS) {
     # Client API

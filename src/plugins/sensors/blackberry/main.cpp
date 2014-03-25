@@ -54,6 +54,7 @@
 #include "bbproximitysensor.h"
 #include "bbrotationsensor.h"
 #include "bbtemperaturesensor.h"
+#include "bbdistancesensor.h"
 #include "bbguihelper.h"
 
 #include <qsensormanager.h>
@@ -75,6 +76,7 @@ static const char *bbPressureSensorId = "bbPressureSensor";
 static const char *bbProximitySensorId = "bbProximitySensor";
 static const char *bbRotationSensorId = "bbRotationSensor";
 static const char *bbTemperatureSensorId = "bbTemperatureSensor";
+static const char *bbDistanceSensorId = "bbDistanceSensor";
 
 class BbSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
@@ -115,6 +117,8 @@ public:
             QSensorManager::registerBackend(QRotationSensor::type, bbRotationSensorId, this);
         if (sensorSupported(BbTemperatureSensor::devicePath()))
             QSensorManager::registerBackend(QAmbientTemperatureSensor::type, bbTemperatureSensorId, this);
+        if (sensorSupported(BbDistanceSensor::devicePath()))
+            QSensorManager::registerBackend(QDistanceSensor::type, bbDistanceSensorId, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) Q_DECL_OVERRIDE
@@ -150,6 +154,8 @@ public:
             backend = new BbRotationSensor(sensor);
         if (sensor->identifier() == bbTemperatureSensorId)
             backend = new BbTemperatureSensor(sensor);
+        if (sensor->identifier() == bbDistanceSensorId)
+            backend = new BbDistanceSensor(sensor);
         backend->initSensorInfo();
         backend->setGuiHelper(&m_guiHelper);
         return backend;
