@@ -89,8 +89,8 @@ AndroidSensors::AndroidSensorType AndroidAccelerometer::modeToSensor(QAccelerome
     case QAccelerometer::User:
         type = AndroidSensors::TYPE_LINEAR_ACCELERATION;
         break;
-    default:
     case QAccelerometer::Combined:
+    default:
         type = AndroidSensors::TYPE_ACCELEROMETER;
         break;
     }
