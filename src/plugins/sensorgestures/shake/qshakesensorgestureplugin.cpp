@@ -45,7 +45,7 @@
 
 #include "qshakesensorgestureplugin.h"
 
-#include <qsensorgestureplugininterface.h>
+#include <QtSensors/qsensorgestureplugininterface.h>
 
 #include "qshakerecognizer.h"
 

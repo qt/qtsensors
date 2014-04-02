@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlmagnetometer.h"
-#include <QMagnetometer>
+#include <QtSensors/QMagnetometer>
 
 /*!
     \qmltype Magnetometer

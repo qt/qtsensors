@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlaccelerometer.h"
-#include <QAccelerometer>
+#include <QtSensors/QAccelerometer>
 
 /*!
     \qmltype Accelerometer

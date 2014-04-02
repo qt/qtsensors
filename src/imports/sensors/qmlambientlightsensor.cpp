@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlambientlightsensor.h"
-#include <QAmbientLightSensor>
+#include <QtSensors/QAmbientLightSensor>
 
 /*!
     \qmltype AmbientLightSensor

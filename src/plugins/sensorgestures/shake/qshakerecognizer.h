@@ -49,7 +49,7 @@
 #include <QDebug>
 #include <QTimer>
 
-#include <qsensorgesturerecognizer.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 
  struct AccelData {
     qreal x;

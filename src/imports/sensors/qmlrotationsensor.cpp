@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlrotationsensor.h"
-#include <QRotationSensor>
+#include <QtSensors/QRotationSensor>
 
 /*!
     \qmltype RotationSensor

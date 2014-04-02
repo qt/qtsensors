@@ -42,9 +42,9 @@
 #ifndef GENERICORIENTATIONSENSOR_H
 #define GENERICORIENTATIONSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qorientationsensor.h>
-#include <qaccelerometer.h>
+#include <QtSensors/qsensorbackend.h>
+#include <QtSensors/qorientationsensor.h>
+#include <QtSensors/qaccelerometer.h>
 
 class genericorientationsensor : public QSensorBackend, public QAccelerometerFilter
 {

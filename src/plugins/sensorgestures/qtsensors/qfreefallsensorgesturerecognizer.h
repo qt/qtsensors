@@ -44,7 +44,7 @@
 #ifndef QFREEFALLSENSORGESTURERECOGNIZER_H
 #define QFREEFALLSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgesturerecognizer.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 
 #include "qtsensorgesturesensorhandler.h"
 

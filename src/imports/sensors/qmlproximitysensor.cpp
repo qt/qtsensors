@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlproximitysensor.h"
-#include <QProximitySensor>
+#include <QtSensors/QProximitySensor>
 
 /*!
     \qmltype ProximitySensor

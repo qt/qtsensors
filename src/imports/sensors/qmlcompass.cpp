@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlcompass.h"
-#include <QCompass>
+#include <QtSensors/QCompass>
 
 /*!
     \qmltype Compass

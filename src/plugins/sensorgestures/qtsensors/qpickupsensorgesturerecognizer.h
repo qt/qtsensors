@@ -43,7 +43,7 @@
 #ifndef QPICKUPSENSORGESTURERECOGNIZER_H
 #define QPICKUPSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgesturerecognizer.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 #include "qtsensorgesturesensorhandler.h"
 
 QT_BEGIN_NAMESPACE

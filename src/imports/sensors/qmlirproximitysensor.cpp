@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlirproximitysensor.h"
-#include <QIRProximitySensor>
+#include <QtSensors/QIRProximitySensor>
 
 /*!
     \qmltype IRProximitySensor

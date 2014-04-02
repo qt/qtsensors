@@ -44,8 +44,8 @@
 
 #include <QtSensors/QSensor>
 
-#include <qsensorgesturerecognizer.h>
-#include <QTapSensor>
+#include <QtSensors/qsensorgesturerecognizer.h>
+#include <QtSensors/QTapSensor>
 
 #include "qtsensorgesturesensorhandler.h"
 

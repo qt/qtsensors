@@ -43,7 +43,7 @@
 #ifndef QWHIPSENSORGESTURERECOGNIZER_H
 #define QWHIPSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgesturerecognizer.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 
 #include "qtsensorgesturesensorhandler.h"
 

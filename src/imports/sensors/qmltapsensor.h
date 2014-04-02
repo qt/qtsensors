@@ -43,7 +43,7 @@
 #define QMLTAPSENSOR_H
 
 #include "qmlsensor.h"
-#include <QTapSensor>
+#include <QtSensors/QTapSensor>
 
 QT_BEGIN_NAMESPACE
 

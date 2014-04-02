@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlorientationsensor.h"
-#include <QOrientationSensor>
+#include <QtSensors/QOrientationSensor>
 
 /*!
     \qmltype OrientationSensor

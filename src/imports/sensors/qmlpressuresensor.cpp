@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 #include "qmlpressuresensor.h"
-#include <QPressureSensor>
+#include <QtSensors/QPressureSensor>
 
 /*!
     \qmltype PressureSensor

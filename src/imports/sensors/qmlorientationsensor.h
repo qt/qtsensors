@@ -43,7 +43,7 @@
 #define QMLORIENTATIONSENSOR_H
 
 #include "qmlsensor.h"
-#include <QOrientationSensor>
+#include <QtSensors/QOrientationSensor>
 
 QT_BEGIN_NAMESPACE
 

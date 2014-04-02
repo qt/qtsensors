@@ -1,4 +1,4 @@
-/****************************************************************************
+    /****************************************************************************
 **
 ** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
@@ -40,8 +40,8 @@
 ****************************************************************************/
 
 #include "qmlsensorgesture.h"
-#include <qsensorgesture.h>
-#include <qsensorgesturemanager.h>
+#include <QtSensors/qsensorgesture.h>
+#include <QtSensors/qsensorgesturemanager.h>
 
 QT_BEGIN_NAMESPACE
 

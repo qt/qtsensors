@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QTapSensor>
+#include <QtSensors/QTapSensor>
 #include "qdoubletapsensorgesturerecognizer.h"
 QT_BEGIN_NAMESPACE
 

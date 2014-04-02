@@ -42,7 +42,7 @@
 #ifndef QTURNOVERSENSORGESTURERECOGNIZER_H
 #define QTURNOVERSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgesturerecognizer.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 #include "qtsensorgesturesensorhandler.h"
 
 QT_BEGIN_NAMESPACE

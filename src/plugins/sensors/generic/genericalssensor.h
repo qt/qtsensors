@@ -42,9 +42,9 @@
 #ifndef GENERICALSSENSOR_H
 #define GENERICALSSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qlightsensor.h>
-#include <qambientlightsensor.h>
+#include <QtSensors/qsensorbackend.h>
+#include <QtSensors/qlightsensor.h>
+#include <QtSensors/qambientlightsensor.h>
 
 class genericalssensor : public QSensorBackend, public QLightFilter
 {

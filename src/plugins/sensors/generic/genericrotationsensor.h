@@ -42,10 +42,10 @@
 #ifndef GENERICROTATIONSENSOR_H
 #define GENERICROTATIONSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qrotationsensor.h>
-#include <qaccelerometer.h>
-#include <qmagnetometer.h>
+#include <QtSensors/qsensorbackend.h>
+#include <QtSensors/qrotationsensor.h>
+#include <QtSensors/qaccelerometer.h>
+#include <QtSensors/qmagnetometer.h>
 
 class genericrotationsensor : public QSensorBackend, public QSensorFilter
 {

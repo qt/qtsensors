@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmllightsensor.h"
-#include <QLightSensor>
+#include <QtSensors/QLightSensor>
 
 /*!
     \qmltype LightSensor

@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmltapsensor.h"
-#include <QTapSensor>
+#include <QtSensors/QTapSensor>
 
 /*!
     \qmltype TapSensor

@@ -43,7 +43,7 @@
 #ifndef QWFLICKSENSORGESTURERECOGNIZER_H
 #define QWFLICKSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgesturerecognizer.h>
+#include <QtSensors/qsensorgesturerecognizer.h>
 #include <QtSensors/QAccelerometer>
 #include <QtSensors/QOrientationSensor>
 #include "qtsensorgesturesensorhandler.h"

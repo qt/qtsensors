@@ -42,6 +42,7 @@
 #include "qslamgesturerecognizer.h"
 #include "qtsensorgesturesensorhandler.h"
 
+
 #include <QtCore/qmath.h>
 
 QT_BEGIN_NAMESPACE

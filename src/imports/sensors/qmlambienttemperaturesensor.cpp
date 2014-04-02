@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 #include "qmlambienttemperaturesensor.h"
-#include <QAmbientTemperatureSensor>
+#include <QtSensors/QAmbientTemperatureSensor>
 
 /*!
     \qmltype AmbientTemperatureSensor

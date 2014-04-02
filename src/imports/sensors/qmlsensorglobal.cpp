@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlsensorglobal.h"
-#include <QSensor>
+#include <QtSensors/QSensor>
 
 QT_BEGIN_NAMESPACE
 

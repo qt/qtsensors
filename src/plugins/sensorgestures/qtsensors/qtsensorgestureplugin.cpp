@@ -45,7 +45,7 @@
 
 #include "qtsensorgestureplugin.h"
 
-#include <qsensorgestureplugininterface.h>
+#include <QtSensors/qsensorgestureplugininterface.h>
 
 #include "qcoversensorgesturerecognizer.h"
 #include "qtwistsensorgesturerecognizer.h"

@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include "qmlgyroscope.h"
-#include <QGyroscope>
+#include <QtSensors/QGyroscope>
 
 /*!
     \qmltype Gyroscope

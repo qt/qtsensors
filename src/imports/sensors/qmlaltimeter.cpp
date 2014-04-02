@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 #include "qmlaltimeter.h"
-#include <QAltimeter>
+#include <QtSensors/QAltimeter>
 
 /*!
     \qmltype Altimeter

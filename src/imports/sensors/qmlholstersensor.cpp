@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 #include "qmlholstersensor.h"
-#include <QHolsterSensor>
+#include <QtSensors/QHolsterSensor>
 
 /*!
     \qmltype HolsterSensor

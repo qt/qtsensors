@@ -51,9 +51,9 @@
 #ifdef QTSENSORS_GENERICTILTSENSOR
 #include "generictiltsensor.h"
 #endif
-#include <qsensorplugin.h>
-#include <qsensorbackend.h>
-#include <qsensormanager.h>
+#include <QtSensors/qsensorplugin.h>
+#include <QtSensors/qsensorbackend.h>
+#include <QtSensors/qsensormanager.h>
 #include <QFile>
 #include <QDebug>
 

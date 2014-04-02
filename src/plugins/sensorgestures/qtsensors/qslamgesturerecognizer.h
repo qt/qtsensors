@@ -43,10 +43,11 @@
 #ifndef QSLAMSENSORGESTURERECOGNIZER_H
 #define QSLAMSENSORGESTURERECOGNIZER_H
 
-#include <qsensorgesturerecognizer.h>
-#include <QtSensors>
+#include <QtSensors/qsensorgesturerecognizer.h>
 #include <QtSensors/QOrientationSensor>
-
+#include <QtSensors/QAccelerometer>
+#include <QtSensors/QAccelerometerReading>
+#include <QtSensors/QOrientationReading>
 QT_BEGIN_NAMESPACE
 
 class QSlamSensorGestureRecognizer : public QSensorGestureRecognizer

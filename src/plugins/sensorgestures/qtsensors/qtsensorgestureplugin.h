@@ -45,7 +45,7 @@
 #include <QObject>
 #include <QStringList>
 
-#include <qsensorgestureplugininterface.h>
+#include <QtSensors/qsensorgestureplugininterface.h>
 
 QT_BEGIN_NAMESPACE
 

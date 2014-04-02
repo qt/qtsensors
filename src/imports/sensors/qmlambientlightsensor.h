@@ -43,7 +43,7 @@
 #define QMLAMBIENTLIGHTSENSOR_H
 
 #include "qmlsensor.h"
-#include <QAmbientLightSensor>
+#include <QtSensors/QAmbientLightSensor>
 
 QT_BEGIN_NAMESPACE
 

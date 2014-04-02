@@ -42,9 +42,9 @@
 #ifndef GENERICTILTSENSOR_H
 #define GENERICTILTSENSOR_H
 
-#include <qsensorbackend.h>
-#include <qtiltsensor.h>
-#include <qaccelerometer.h>
+#include <QtSensors/qsensorbackend.h>
+#include <QtSensors/qtiltsensor.h>
+#include <QtSensors/qaccelerometer.h>
 
 QT_BEGIN_NAMESPACE
 
