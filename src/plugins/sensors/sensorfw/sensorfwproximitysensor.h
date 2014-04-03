@@ -66,6 +66,7 @@ private:
     QProximityReading m_reading;
     bool m_initDone;
     bool m_exClose;
+    bool firstRun;
 
 private slots:
     void slotDataAvailable(const Unsigned& data);
