@@ -5,7 +5,7 @@ QT = core-private
 CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
 !isEmpty(SENSORS_CONFIG_PATH):DEFINES += "QTSENSORS_CONFIG_PATH=\\\"$$SENSORS_CONFIG_PATH\\\""
 
-simulator {
+qtHaveModule(simulator) {
     DEFINES += SIMULATOR_BUILD
     QT += simulator
 }
@@ -52,7 +52,7 @@ GESTURE_HEADERS += \
     gestures/qsensorgesturemanagerprivate_p.h \
     gestures/qsensorgestureplugininterface.h
 
-simulator {
+qtHaveModule(simulator) {
     SOURCES += gestures/simulatorgesturescommon.cpp
     GESTURE_HEADERS += gestures/simulatorgesturescommon_p.h
 }
