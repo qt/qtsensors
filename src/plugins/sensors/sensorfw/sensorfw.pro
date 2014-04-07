@@ -2,6 +2,7 @@ TARGET = qtsensors_sensorfw
 QT = core sensors network dbus
 
 PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = sensorfwSensorPlugin
 load(qt_plugin)
 
 include(sensorfw.pri)

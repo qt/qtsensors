@@ -3,6 +3,8 @@ TARGET  = qtsensorgestures_testplugin1
 QT += sensors   sensorgestures
 
 PLUGIN_TYPE = sensorgestures
+PLUGIN_CLASS_NAME = QTestSensorGestureDupPlugin
+PLUGIN_EXTENDS = -
 load(qt_plugin)
 
 # Input

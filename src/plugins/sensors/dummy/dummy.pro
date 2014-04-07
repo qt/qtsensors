@@ -2,6 +2,7 @@ TARGET = qtsensors_dummy
 QT = sensors core
 
 PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = dummySensorPlugin
 load(qt_plugin)
 
 HEADERS += dummycommon.h\

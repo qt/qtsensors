@@ -2,6 +2,8 @@ TARGET = qtsensorgestures_shakeplugin
 QT = core sensors
 
 PLUGIN_TYPE = sensorgestures
+PLUGIN_CLASS_NAME = QShakeSensorGesturePlugin
+PLUGIN_EXTENDS = -
 load(qt_plugin)
 
 # Input

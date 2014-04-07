@@ -2,6 +2,7 @@ TARGET = qtsensors_winrt
 QT = sensors core
 
 PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = WinRtSensorPlugin
 load(qt_plugin)
 
 HEADERS += \

@@ -2,6 +2,8 @@ TARGET = qtsensorgestures_plugin
 QT = core sensors
 
 PLUGIN_TYPE = sensorgestures
+PLUGIN_CLASS_NAME = QtSensorGesturePlugin
+PLUGIN_EXTENDS = -
 load(qt_plugin)
 
 # Input
