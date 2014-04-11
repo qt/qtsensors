@@ -75,6 +75,9 @@ void IOSGyroscope::timerEvent(QTimerEvent *)
     // Convert NSTimeInterval to microseconds and radians to degrees:
     CMGyroData *data = m_motionManager.gyroData;
     CMRotationRate rate = data.rotationRate;
+    // skip update if NaN
+    if (rate.x != rate.x || rate.y != rate.y || rate.z != rate.z)
+        return;
     m_reading.setTimestamp(quint64(data.timestamp * 1e6));
     m_reading.setX((qreal(rate.x) / M_PI) * 180);
     m_reading.setY((qreal(rate.y) / M_PI) * 180);

@@ -91,6 +91,9 @@ void IOSMagnetometer::timerEvent(QTimerEvent *)
         CMDeviceMotion *deviceMotion = m_motionManager.deviceMotion;
         CMCalibratedMagneticField calibratedField = deviceMotion.magneticField;
         field = calibratedField.field;
+        // skip update if NaN
+        if (field.x != field.x || field.y != field.y || field.z != field.z)
+            return;
         m_reading.setTimestamp(quint64(deviceMotion.timestamp * 1e6));
 
         switch (calibratedField.accuracy) {
@@ -110,6 +113,9 @@ void IOSMagnetometer::timerEvent(QTimerEvent *)
     } else {
         CMMagnetometerData *data = m_motionManager.magnetometerData;
         field = data.magneticField;
+        // skip update if NaN
+        if (field.x != field.x || field.y != field.y || field.z != field.z)
+            return;
         m_reading.setTimestamp(quint64(data.timestamp * 1e6));
         m_reading.setCalibrationLevel(1.0);
     }

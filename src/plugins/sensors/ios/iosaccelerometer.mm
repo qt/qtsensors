@@ -77,6 +77,9 @@ void IOSAccelerometer::timerEvent(QTimerEvent *)
     // Convert from NSTimeInterval to microseconds and G to m/s2, and flip axes:
     CMAccelerometerData *data = m_motionManager.accelerometerData;
     CMAcceleration acc = data.acceleration;
+    // skip update if NaN
+    if (acc.x != acc.x || acc.y != acc.y || acc.z != acc.z)
+        return;
     static const qreal G = 9.8066;
     m_reading.setTimestamp(quint64(data.timestamp * 1e6));
     m_reading.setX(qreal(acc.x) * G * -1);
