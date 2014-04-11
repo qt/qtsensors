@@ -112,10 +112,11 @@ public:
     {
         AndroidSensorType type = static_cast<AndroidSensorType>(sensor->identifier().toInt());
         switch (type) {
-        case TYPE_ACCELEROMETER:
-        {
+        case TYPE_ACCELEROMETER: {
             QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor);
-            AndroidSensors::AndroidSensorType type = AndroidAccelerometer::modeToSensor(accelerometer->accelerationMode());
+            AndroidSensors::AndroidSensorType type
+             = accelerometer ? AndroidAccelerometer::modeToSensor(accelerometer->accelerationMode())
+             : AndroidSensors::TYPE_ACCELEROMETER;
             return new AndroidAccelerometer(type, sensor);
         }
         case TYPE_AMBIENT_TEMPERATURE:

@@ -2,6 +2,7 @@ TARGET = qtsensors_android
 QT = sensors core
 
 PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = QCounterGesturePlugin
 load(qt_plugin)
 
 # STATICPLUGIN needed because there's a Q_IMPORT_PLUGIN in main.cpp

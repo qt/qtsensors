@@ -3,6 +3,7 @@ QT = sensors core
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = BbSensorPlugin
 load(qt_plugin)
 
 config_bbsensor_header {
