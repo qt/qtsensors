@@ -95,5 +95,8 @@ AndroidSensors::AndroidSensorType AndroidAccelerometer::modeToSensor(QAccelerome
         break;
     }
 
+    if (type != AndroidSensors::TYPE_ACCELEROMETER && !AndroidSensors::availableSensors().contains(type))
+        type = AndroidSensors::TYPE_ACCELEROMETER;
+
     return type;
 }

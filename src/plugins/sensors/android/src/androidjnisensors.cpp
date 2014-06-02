@@ -113,6 +113,8 @@ namespace AndroidSensors
         jstring jstr = static_cast<jstring>(aenv.jniEnv->CallStaticObjectMethod(sensorsClass,
                                                                                 getSensorDescriptionMethodId,
                                                                                 jint(sensor)));
+        if (!jstr)
+            return QString();
         const jchar *pstr = aenv.jniEnv->GetStringChars(jstr, 0);
         QString ret(reinterpret_cast<const QChar *>(pstr), aenv.jniEnv->GetStringLength(jstr));
         aenv.jniEnv->ReleaseStringChars(jstr, pstr);
