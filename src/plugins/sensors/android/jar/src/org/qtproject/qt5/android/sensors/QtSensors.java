@@ -73,6 +73,9 @@ public class QtSensors implements SensorEventListener
     {
         try {
             Sensor s  = m_sensorManager.getDefaultSensor(sensorType);
+            if (s == null) {
+                return null;
+            }
             return s.getName() + " " + s.getVendor() + " v" + s.getVersion();
         } catch(Exception e) {
             e.printStackTrace();
