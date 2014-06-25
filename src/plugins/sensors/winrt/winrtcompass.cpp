@@ -150,8 +150,8 @@ WinRtCompass::WinRtCompass(QSensor *sensor)
     }
 
     hr = factory->GetDefault(&d->sensor);
-    if (FAILED(hr)) {
-        qCWarning(lcWinRtSensors) << "Unable to get default light sensor."
+    if (FAILED(hr) || !d->sensor) {
+        qCWarning(lcWinRtSensors) << "Unable to get default compass."
                                   << qt_error_string(hr);
         sensorError(hr);
         return;
