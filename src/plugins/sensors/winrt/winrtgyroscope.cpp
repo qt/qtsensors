@@ -127,7 +127,7 @@ WinRtGyroscope::WinRtGyroscope(QSensor *sensor)
     }
 
     hr = factory->GetDefault(&d->sensor);
-    if (FAILED(hr)) {
+    if (FAILED(hr) || !d->sensor) {
         qCWarning(lcWinRtSensors) << "Unable to get default gyroscope sensor."
                                   << qt_error_string(hr);
         sensorError(hr);
