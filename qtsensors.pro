@@ -4,5 +4,8 @@ blackberry {
     qtCompileTest(bbsensor_compass)
     qtCompileTest(bbsensor_holster)
 }
+tizen {
+    qtCompileTest(tizensensor_header)
+}
 
 load(qt_parts)
