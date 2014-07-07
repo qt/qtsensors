@@ -96,3 +96,10 @@ void sensorfwaccelerometer::init()
     m_initDone = false;
     initSensor<AccelerometerSensorChannelInterface>(m_initDone);
 }
+
+void sensorfwaccelerometer::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
+}

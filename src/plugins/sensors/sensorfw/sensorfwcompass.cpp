@@ -84,3 +84,10 @@ void SensorfwCompass::init()
     m_initDone = false;
     initSensor<CompassSensorChannelInterface>(m_initDone);
 }
+
+void SensorfwCompass::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
+}

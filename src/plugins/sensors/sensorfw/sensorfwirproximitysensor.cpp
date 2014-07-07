@@ -83,3 +83,10 @@ void SensorfwIrProximitySensor::init()
     m_initDone = false;
     initSensor<ProximitySensorChannelInterface>(m_initDone);
 }
+
+void SensorfwIrProximitySensor::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
+}

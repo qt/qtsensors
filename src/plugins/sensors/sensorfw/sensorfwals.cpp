@@ -59,6 +59,8 @@ Sensorfwals::Sensorfwals(QSensor *sensor)
 
 void Sensorfwals::start()
 {
+    if (reinitIsNeeded)
+        init();
     if (m_sensorInterface) {
         Unsigned data(((ALSSensorChannelInterface*)m_sensorInterface)->lux());
         m_reading.setLightLevel(getLightLevel(data.x()));

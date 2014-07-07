@@ -57,6 +57,8 @@ SensorfwProximitySensor::SensorfwProximitySensor(QSensor *sensor)
 
 void SensorfwProximitySensor::start()
 {
+    if (reinitIsNeeded)
+        init();
     if (m_sensorInterface) {
         Unsigned data(((ProximitySensorChannelInterface*)m_sensorInterface)->proximity());
         m_reading.setClose(data.x()? true: false);

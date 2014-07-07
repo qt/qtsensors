@@ -57,6 +57,8 @@ SensorfwOrientationSensor::SensorfwOrientationSensor(QSensor *sensor)
 
 void SensorfwOrientationSensor::start()
 {
+    if (reinitIsNeeded)
+        init();
     if (m_sensorInterface) {
         Unsigned data(((OrientationSensorChannelInterface*)m_sensorInterface)->orientation());
         m_reading.setOrientation(SensorfwOrientationSensor::getOrientation(data.x()));

@@ -75,3 +75,10 @@ void SensorfwLightSensor::init()
     m_initDone = false;
     initSensor<ALSSensorChannelInterface>(m_initDone);
 }
+
+void SensorfwLightSensor::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
+}

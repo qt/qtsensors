@@ -95,3 +95,10 @@ void SensorfwGyroscope::init()
     m_initDone = false;
     initSensor<GyroscopeSensorChannelInterface>(m_initDone);
 }
+
+void SensorfwGyroscope::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
+}

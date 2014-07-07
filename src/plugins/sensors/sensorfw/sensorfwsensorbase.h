@@ -163,6 +163,7 @@ protected:
     int m_bufferSize;
     int bufferSize() const;
     virtual qreal correctionFactor() const;
+    bool reinitIsNeeded;
 
 private:
 

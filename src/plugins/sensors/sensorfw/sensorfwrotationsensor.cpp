@@ -86,3 +86,10 @@ void SensorfwRotationSensor::init()
     m_initDone = false;
     initSensor<RotationSensorChannelInterface>(m_initDone);
 }
+
+void SensorfwRotationSensor::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
+}

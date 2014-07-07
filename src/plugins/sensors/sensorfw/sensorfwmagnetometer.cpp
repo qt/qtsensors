@@ -59,6 +59,8 @@ SensorfwMagnetometer::SensorfwMagnetometer(QSensor *sensor)
 
 void SensorfwMagnetometer::start()
 {
+    if (reinitIsNeeded)
+        init();
     QMagnetometer *const magnetometer = qobject_cast<QMagnetometer *>(sensor());
     if (magnetometer)
         m_isGeoMagnetometer = magnetometer->returnGeoValues();

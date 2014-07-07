@@ -58,6 +58,9 @@ SensorfwTapSensor::SensorfwTapSensor(QSensor *sensor)
 
 void SensorfwTapSensor::start()
 {
+    if (reinitIsNeeded)
+        init();
+
     QTapSensor * const tapSensor = qobject_cast<QTapSensor *>(sensor());
 
     bool b = tapSensor->returnDoubleTapEvents();

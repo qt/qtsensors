@@ -56,6 +56,7 @@ SensorfwSensorBase::SensorfwSensorBase(QSensor *sensor)
     : QSensorBackend(sensor),
       m_sensorInterface(0),
       m_bufferSize(-1),
+      reinitIsNeeded(false),
       m_prevOutputRange(0),
       m_efficientBufferSize(1),
       m_maxBufferSize(1),
@@ -216,7 +217,9 @@ void SensorfwSensorBase::connectToSensord()
     m_remoteSensorManager = &SensorManagerInterface::instance();
     if (running) {
         stop();
+        reinitIsNeeded = true;
         start();
+        reinitIsNeeded = false;
     }
 }
 
