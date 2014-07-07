@@ -88,6 +88,7 @@ void SensorfwMagnetometer::slotFrameAvailable(const QVector<MagneticField>& fram
 
 bool SensorfwMagnetometer::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     if (m_bufferSize==1)
         return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(MagneticField)),
                                 this, SLOT(slotDataAvailable(MagneticField)));

@@ -48,11 +48,14 @@
 #include "sensorlog_p.h"
 #include <QTimer>
 #include <QFile>
+#include <QLoggingCategory>
 
 QT_BEGIN_NAMESPACE
 
 typedef QHash<QByteArray,QSensorBackendFactory*> FactoryForIdentifierMap;
 typedef QHash<QByteArray,FactoryForIdentifierMap> BackendIdentifiersForTypeMap;
+
+static QLoggingCategory sensorsCategory("qt.sensors");
 
 class QSensorManagerPrivate : public QObject
 {
@@ -77,7 +80,6 @@ public:
             loadExternalPlugins = false;
         }
     }
-
     bool loadExternalPlugins;
     PluginLoadingState pluginLoadingState;
     QFactoryLoader *loader;
@@ -101,9 +103,16 @@ public:
         if (config.isEmpty()) return; // QStandardPaths is broken?
         config += QLatin1String("/QtProject/Sensors.conf");
 #endif
-        if (!QFile::exists(config)) return;
+        qCDebug(sensorsCategory) << "Loading config from" << config;
+        if (!QFile::exists(config)) {
+            qCWarning(sensorsCategory) << "There is no config file" << config;
+            return;
+        }
         QFile cfgfile(config);
-        if (!cfgfile.open(QFile::ReadOnly)) return;
+        if (!cfgfile.open(QFile::ReadOnly)) {
+            qCWarning(sensorsCategory) << "Can't open config file" << config;
+            return;
+        }
 
         QTextStream stream(&cfgfile);
         QString line;
@@ -169,13 +178,19 @@ Q_GLOBAL_STATIC(QSensorManagerPrivate, sensorManagerPrivate)
 
 static void initPlugin(QObject *o)
 {
-    if (!o) return;
+    qCDebug(sensorsCategory) << "Init plugin" << o;
+    if (!o) {
+        qCWarning(sensorsCategory) << "Null plugin" << o;
+        return;
+    }
 
     QSensorManagerPrivate *d = sensorManagerPrivate();
     if (!d) return; // hardly likely but just in case...
 
-    if (d->seenPlugins.contains(o))
+    if (d->seenPlugins.contains(o)) {
+        qCDebug(sensorsCategory) << "Plugin is seen" << o;
         return;
+    }
 
     QSensorChangesInterface *changes = qobject_cast<QSensorChangesInterface*>(o);
     if (changes)
@@ -184,8 +199,11 @@ static void initPlugin(QObject *o)
     QSensorPluginInterface *plugin = qobject_cast<QSensorPluginInterface*>(o);
 
     if (plugin) {
+        qCDebug(sensorsCategory) << "Register sensors for " << plugin;
         d->seenPlugins.insert(o);
         plugin->registerSensors();
+    } else {
+        qCWarning(sensorsCategory) << "Can't cast to plugin" << o;
     }
 }
 

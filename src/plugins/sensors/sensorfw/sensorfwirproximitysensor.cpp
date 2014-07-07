@@ -67,6 +67,7 @@ void SensorfwIrProximitySensor::slotDataAvailable(const Proximity& proximity)
 
 bool SensorfwIrProximitySensor::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     return QObject::connect(m_sensorInterface, SIGNAL(reflectanceDataAvailable(Proximity)),
                             this, SLOT(slotDataAvailable(Proximity)));
 }
