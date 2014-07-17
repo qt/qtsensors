@@ -90,6 +90,10 @@ protected:
             }
             m_remoteSensorManager->registerSensorInterface<T>(name);
         }
+        m_sensorInterface = T::controlInterface(name);
+        if (!m_sensorInterface) {
+            m_sensorInterface = const_cast<T*>(T::listenInterface(name));
+        }
         initDone = initSensorInterface(name);
     };
 
