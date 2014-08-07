@@ -7,26 +7,21 @@ load(qt_plugin)
 
 HEADERS += \
     winrtaccelerometer.h \
+    winrtambientlightsensor.h \
     winrtcommon.h \
     winrtcompass.h \
+    winrtorientationsensor.h \
     winrtrotationsensor.h \
     winrtgyroscope.h
 
 SOURCES += \
     main.cpp \
     winrtaccelerometer.cpp \
+    winrtambientlightsensor.cpp \
     winrtcommon.cpp \
     winrtcompass.cpp \
+    winrtorientationsensor.cpp \
     winrtrotationsensor.cpp \
     winrtgyroscope.cpp
-
-!winphone {
-    HEADERS += \
-        winrtambientlightsensor.h \
-        winrtorientationsensor.h
-    SOURCES += \
-        winrtambientlightsensor.cpp \
-        winrtorientationsensor.cpp
-}
 
 OTHER_FILES = plugin.json

@@ -43,10 +43,8 @@
 #include "winrtcompass.h"
 #include "winrtgyroscope.h"
 #include "winrtrotationsensor.h"
-#ifndef Q_OS_WINPHONE
-#  include "winrtambientlightsensor.h"
-#  include "winrtorientationsensor.h"
-#endif
+#include "winrtambientlightsensor.h"
+#include "winrtorientationsensor.h"
 #include <QtSensors/QAccelerometer>
 #include <QtSensors/QAmbientLightSensor>
 #include <QtSensors/QCompass>
@@ -69,10 +67,8 @@ public:
         QSensorManager::registerBackend(QCompass::type, QByteArrayLiteral("WinRtCompass"), this);
         QSensorManager::registerBackend(QGyroscope::type, QByteArrayLiteral("WinRtGyroscope"), this);
         QSensorManager::registerBackend(QRotationSensor::type, QByteArrayLiteral("WinRtRotationSensor"), this);
-#ifndef Q_OS_WINPHONE
         QSensorManager::registerBackend(QAmbientLightSensor::type, QByteArrayLiteral("WinRtAmbientLightSensor"), this);
         QSensorManager::registerBackend(QOrientationSensor::type, QByteArrayLiteral("WinRtOrientationSensor"), this);
-#endif
     }
 
     QSensorBackend *createBackend(QSensor *sensor)
@@ -89,13 +85,11 @@ public:
         if (sensor->identifier() == QByteArrayLiteral("WinRtRotationSensor"))
             return new WinRtRotationSensor(sensor);
 
-#ifndef Q_OS_WINPHONE
         if (sensor->identifier() == QByteArrayLiteral("WinRtAmbientLightSensor"))
             return new WinRtAmbientLightSensor(sensor);
 
         if (sensor->identifier() == QByteArrayLiteral("WinRtOrientationSensor"))
             return new WinRtOrientationSensor(sensor);
-#endif // !Q_OS_WINPHONE
 
         return 0;
     }

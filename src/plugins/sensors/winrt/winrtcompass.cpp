@@ -94,7 +94,6 @@ public:
             qCWarning(lcWinRtSensors) << "Failed to get compass reading timestamp." << qt_error_string(hr);
             return hr;
         }
-#ifndef Q_OS_WINPHONE // Windows Phone doesn't implement the accuracy interface
         ComPtr<ICompassReadingHeadingAccuracy> accuracyReading;
         hr = value.As(&accuracyReading);
         if (FAILED(hr)) {
@@ -124,7 +123,7 @@ public:
             reading.setCalibrationLevel(1.00);
             break;
         }
-#endif
+
         reading.setAzimuth(heading);
         reading.setTimestamp(dateTimeToMsSinceEpoch(dateTime));
         q->newReadingAvailable();
