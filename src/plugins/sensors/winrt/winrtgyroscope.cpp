@@ -169,7 +169,12 @@ void WinRtGyroscope::start()
         sensorError(hr);
         return;
     }
-    quint32 reportInterval = qMax(d->minimumReportInterval, quint32(1000/sensor()->dataRate()));
+
+    int dataRate = sensor()->dataRate();
+    if (!dataRate)
+        return;
+
+    quint32 reportInterval = qMax(d->minimumReportInterval, quint32(1000/dataRate));
     hr = d->sensor->put_ReportInterval(reportInterval);
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to set report interval."
