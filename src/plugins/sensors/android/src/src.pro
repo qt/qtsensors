@@ -12,6 +12,7 @@ DEFINES += QT_STATICPLUGIN
 HEADERS = \
     androidjnisensors.h \
     androidaccelerometer.h \
+    androidcompass.h \
     androidcommonsensor.h \
     androidgyroscope.h \
     androidmagnetometer.h \
@@ -25,6 +26,7 @@ SOURCES = \
     main.cpp \
     androidjnisensors.cpp \
     androidaccelerometer.cpp \
+    androidcompass.cpp \
     androidgyroscope.cpp \
     androidmagnetometer.cpp \
     androidpressure.cpp \

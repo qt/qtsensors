@@ -83,6 +83,7 @@ namespace AndroidSensors
     qreal sensorMaximumRange(AndroidSensorType sensor);
     bool registerListener(AndroidSensorType sensor, AndroidSensorsListenerInterface *listener, int dataRate = 0);
     bool unregisterListener(AndroidSensorType sensor, AndroidSensorsListenerInterface *listener);
+    qreal getCompassAzimuth(jfloat *accelerometerReading, jfloat *magnetometerReading);
 }
 
 #endif // ANDROIDJNISENSORS_H

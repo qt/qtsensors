@@ -54,6 +54,7 @@ static jmethodID registerSensorMethodId;
 static jmethodID unregisterSensorMethodId;
 static jmethodID getSensorDescriptionMethodId;
 static jmethodID getSensorMaximumRangeMethodId;
+static jmethodID getCompassAzimuthId;
 
 static QHash<int, QList<AndroidSensors::AndroidSensorsListenerInterface *> > listenersHash;
 QReadWriteLock listenersLocker;
@@ -166,6 +167,20 @@ namespace AndroidSensors
         }
         return true;
     }
+
+    qreal getCompassAzimuth(jfloat *accelerometerReading, jfloat *magnetometerReading)
+    {
+            AttachedJNIEnv aenv;
+            if (!aenv.jniEnv)
+                return 0.0;
+            return aenv.jniEnv->CallStaticFloatMethod(sensorsClass, getCompassAzimuthId,
+                                                        accelerometerReading[0],
+                                                        accelerometerReading[1],
+                                                        accelerometerReading[2],
+                                                        magnetometerReading[0],
+                                                        magnetometerReading[1],
+                                                        magnetometerReading[2]);
+    }
 }
 
 static const char logTag[] = "Qt";
@@ -227,6 +242,7 @@ static bool registerNatives(JNIEnv *env)
     GET_AND_CHECK_STATIC_METHOD(unregisterSensorMethodId, sensorsClass, "unregisterSensor", "(I)Z");
     GET_AND_CHECK_STATIC_METHOD(getSensorDescriptionMethodId, sensorsClass, "getSensorDescription", "(I)Ljava/lang/String;");
     GET_AND_CHECK_STATIC_METHOD(getSensorMaximumRangeMethodId, sensorsClass, "getSensorMaximumRange", "(I)F");
+    GET_AND_CHECK_STATIC_METHOD(getCompassAzimuthId, sensorsClass, "getCompassAzimuth", "(FFFFFF)F");
 
     return true;
 }

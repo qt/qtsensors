@@ -153,6 +153,25 @@ public class QtSensors implements SensorEventListener
         return angles;
     }
 
+    private static float[] mRotation = new float[9];
+    private static float[] mOrientation = new float[3];
+    private static float[] mAcc = new float[3];
+    private static float[] mMag = new float[3];
+
+    private static float getCompassAzimuth(float a0, float a1, float a2, float m0, float m1, float m2)
+    {
+        mAcc[0] = a0;
+        mAcc[1] = a1;
+        mAcc[2] = a2;
+        mMag[0] = m0;
+        mMag[1] = m1;
+        mMag[2] = m2;
+
+        SensorManager.getRotationMatrix(mRotation, null, mAcc, mMag);
+        SensorManager.getOrientation(mRotation, mOrientation);
+        return mOrientation[0];
+    }
+
     public static native void accuracyChanged(int sensorType, int accuracy);
     public static native void sensorChanged(int sensorType, long timestamp, float[] values);
 
