@@ -140,6 +140,9 @@ WinRtRotationSensor::WinRtRotationSensor(QSensor *sensor)
         return;
     }
 
+    addDataRate(1, 1000 / d->minimumReportInterval); // dataRate in Hz
+    sensor->setDataRate(1);
+
     setReading<QRotationReading>(&d->reading);
 }
 
