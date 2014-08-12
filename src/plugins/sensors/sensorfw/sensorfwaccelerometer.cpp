@@ -74,6 +74,7 @@ void sensorfwaccelerometer::slotFrameAvailable(const QVector<XYZ>&  frame)
 
 bool sensorfwaccelerometer::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     if (m_bufferSize==1)
         return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(XYZ)), this, SLOT(slotDataAvailable(XYZ)));
     return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QVector<XYZ>)),this, SLOT(slotFrameAvailable(QVector<XYZ>)));
@@ -95,4 +96,11 @@ void sensorfwaccelerometer::init()
 {
     m_initDone = false;
     initSensor<AccelerometerSensorChannelInterface>(m_initDone);
+}
+
+void sensorfwaccelerometer::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
 }

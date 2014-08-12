@@ -59,6 +59,7 @@ public:
 protected:
     bool doConnect() Q_DECL_OVERRIDE;
     QString sensorName() const Q_DECL_OVERRIDE;
+    void start() Q_DECL_OVERRIDE;
     virtual void init();
 private:
     QCompassReading m_reading;

@@ -57,6 +57,8 @@ SensorfwOrientationSensor::SensorfwOrientationSensor(QSensor *sensor)
 
 void SensorfwOrientationSensor::start()
 {
+    if (reinitIsNeeded)
+        init();
     if (m_sensorInterface) {
         Unsigned data(((OrientationSensorChannelInterface*)m_sensorInterface)->orientation());
         m_reading.setOrientation(SensorfwOrientationSensor::getOrientation(data.x()));
@@ -76,6 +78,7 @@ void SensorfwOrientationSensor::slotDataAvailable(const Unsigned& data)
 
 bool SensorfwOrientationSensor::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     return QObject::connect(m_sensorInterface, SIGNAL(orientationChanged(Unsigned)),
                             this, SLOT(slotDataAvailable(Unsigned)));
 }

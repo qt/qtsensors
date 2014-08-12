@@ -59,6 +59,8 @@ SensorfwMagnetometer::SensorfwMagnetometer(QSensor *sensor)
 
 void SensorfwMagnetometer::start()
 {
+    if (reinitIsNeeded)
+        init();
     QMagnetometer *const magnetometer = qobject_cast<QMagnetometer *>(sensor());
     if (magnetometer)
         m_isGeoMagnetometer = magnetometer->returnGeoValues();
@@ -86,6 +88,7 @@ void SensorfwMagnetometer::slotFrameAvailable(const QVector<MagneticField>& fram
 
 bool SensorfwMagnetometer::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     if (m_bufferSize==1)
         return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(MagneticField)),
                                 this, SLOT(slotDataAvailable(MagneticField)));
