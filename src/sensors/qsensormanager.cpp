@@ -105,7 +105,7 @@ public:
 #endif
         qCDebug(sensorsCategory) << "Loading config from" << config;
         if (!QFile::exists(config)) {
-            qCWarning(sensorsCategory) << "There is no config file" << config;
+            qCDebug(sensorsCategory) << "There is no config file" << config;
             return;
         }
         QFile cfgfile(config);
