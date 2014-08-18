@@ -56,7 +56,8 @@ IMPLEMENT_READING(QCompassReading)
 
     \section2 QCompassReading Units
     The compass returns the azimuth of the device as degrees from
-    magnetic north in a clockwise direction based on the top of the UI.
+    magnetic north in a clockwise direction based on the top of the device,
+    as defined by QPlatformScreen::nativeOrientation.
     There is also a value to indicate the calibration status of the device.
     If the device is not calibrated the azimuth may not be accurate.
 
@@ -74,8 +75,8 @@ IMPLEMENT_READING(QCompassReading)
     \property QCompassReading::azimuth
     \brief the azimuth of the device.
 
-    Measured in degrees from magnetic north in a clockwise direction based
-    the top of the UI.
+    Measured in degrees from magnetic north in a clockwise direction based on
+    the top of the device, as defined by QPlatformScreen::nativeOrientation.
     \sa {QCompassReading Units}
 */
 

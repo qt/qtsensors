@@ -71,6 +71,7 @@ void SensorfwRotationSensor::slotFrameAvailable(const QVector<XYZ>&  frame)
 
 bool SensorfwRotationSensor::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     if (m_bufferSize==1)
        return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(XYZ)), this, SLOT(slotDataAvailable(XYZ)));
     return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QVector<XYZ>)),this, SLOT(slotFrameAvailable(QVector<XYZ>)));
@@ -85,4 +86,11 @@ void SensorfwRotationSensor::init()
 {
     m_initDone = false;
     initSensor<RotationSensorChannelInterface>(m_initDone);
+}
+
+void SensorfwRotationSensor::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
 }

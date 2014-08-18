@@ -45,8 +45,8 @@ char const * const SensorfwTapSensor::id("sensorfw.tapsensor");
 
 SensorfwTapSensor::SensorfwTapSensor(QSensor *sensor)
     : SensorfwSensorBase(sensor),
+      m_initDone(false),
       m_isOnceStarted(false)
-    , m_initDone(false)
 {
     init();
     setReading<QTapReading>(&m_reading);
@@ -58,6 +58,9 @@ SensorfwTapSensor::SensorfwTapSensor(QSensor *sensor)
 
 void SensorfwTapSensor::start()
 {
+    if (reinitIsNeeded)
+        init();
+
     QTapSensor * const tapSensor = qobject_cast<QTapSensor *>(sensor());
 
     bool b = tapSensor->returnDoubleTapEvents();
@@ -68,9 +71,14 @@ void SensorfwTapSensor::start()
     }
     else m_isDoubleTapSensor = b;
 
-    if (!m_isOnceStarted || (m_isOnceStarted && isDoubleTapSensor != m_isDoubleTapSensor))
-        ((TapSensorChannelInterface*)m_sensorInterface)->
-                setTapType(m_isDoubleTapSensor?TapSensorChannelInterface::Double:TapSensorChannelInterface::Single);
+    if (!m_isOnceStarted || (m_isOnceStarted && isDoubleTapSensor != m_isDoubleTapSensor)) {
+        TapSensorChannelInterface *iface = static_cast<TapSensorChannelInterface *>(m_sensorInterface);
+        if (!iface) {
+            qWarning() << "Sensor interface is not initialized";
+            return;
+        }
+        iface->setTapType(m_isDoubleTapSensor?TapSensorChannelInterface::Double:TapSensorChannelInterface::Single);
+    }
 
     SensorfwSensorBase::start();
     // Set tap type (single/double)
@@ -103,6 +111,7 @@ void SensorfwTapSensor::slotDataAvailable(const Tap& data)
 
 bool SensorfwTapSensor::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(Tap)),
                             this, SLOT(slotDataAvailable(Tap)));
 }

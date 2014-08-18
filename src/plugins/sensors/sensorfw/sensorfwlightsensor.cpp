@@ -61,6 +61,7 @@ void SensorfwLightSensor::slotDataAvailable(const Unsigned& data)
 
 bool SensorfwLightSensor::doConnect()
 {
+    Q_ASSERT(m_sensorInterface);
     return QObject::connect(m_sensorInterface, SIGNAL(ALSChanged(Unsigned)),
                             this, SLOT(slotDataAvailable(Unsigned)));
 }
@@ -74,4 +75,11 @@ void SensorfwLightSensor::init()
 {
     m_initDone = false;
     initSensor<ALSSensorChannelInterface>(m_initDone);
+}
+
+void SensorfwLightSensor::start()
+{
+    if (reinitIsNeeded)
+        init();
+    SensorfwSensorBase::start();
 }

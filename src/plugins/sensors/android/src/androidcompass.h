@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2012 Digia Plc and/or its subsidiary(-ies).
+** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -39,68 +39,38 @@
 **
 ****************************************************************************/
 
-#include "sensorfwaccelerometer.h"
+#ifndef ANDROIDCOMPASS_H
+#define ANDROIDCOMPASS_H
+#include <qcompass.h>
 
-char const * const sensorfwaccelerometer::id("sensorfw.accelerometer");
+#include "androidcommonsensor.h"
 
-sensorfwaccelerometer::sensorfwaccelerometer(QSensor *sensor)
-    : SensorfwSensorBase(sensor),
-      m_initDone(false)
+class AndroidAccelerometerListener;
+class AndroidMagnetometerListener;
+
+class AndroidCompass : public QSensorBackend
 {
-    init();
-    setDescription(QLatin1String("x, y, and z axes accelerations in m/s^2"));
-    setRanges(GRAVITY_EARTH_THOUSANDTH);
-    setReading<QAccelerometerReading>(&m_reading);
-    sensor->setDataRate(50);//set a default rate
-}
+    Q_OBJECT
 
-void sensorfwaccelerometer::slotDataAvailable(const XYZ& data)
-{
-    // Convert from milli-Gs to meters per second per second
-    // Using 1 G = 9.80665 m/s^2
-    m_reading.setX(-data.x() * GRAVITY_EARTH_THOUSANDTH);
-    m_reading.setY(-data.y() * GRAVITY_EARTH_THOUSANDTH);
-    m_reading.setZ(-data.z() * GRAVITY_EARTH_THOUSANDTH);
-    m_reading.setTimestamp(data.XYZData().timestamp_);
-    newReadingAvailable();
-}
+public:
+    static char const * const id;
 
-void sensorfwaccelerometer::slotFrameAvailable(const QVector<XYZ>&  frame)
-{
-    for (int i=0, l=frame.size(); i<l; i++) {
-        slotDataAvailable(frame.at(i));
-    }
-}
+    AndroidCompass(QSensor *sensor);
+    ~AndroidCompass();
 
-bool sensorfwaccelerometer::doConnect()
-{
-    Q_ASSERT(m_sensorInterface);
-    if (m_bufferSize==1)
-        return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(XYZ)), this, SLOT(slotDataAvailable(XYZ)));
-    return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QVector<XYZ>)),this, SLOT(slotFrameAvailable(QVector<XYZ>)));
-}
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
 
+private:
+    AndroidAccelerometerListener *m_accelerometerListener;
+    AndroidMagnetometerListener *m_magnetometerListener;
 
-QString sensorfwaccelerometer::sensorName() const
-{
-    return "accelerometersensor";
-}
+    QCompassReading m_reading;
+    bool m_isStarted;
 
+public Q_SLOTS:
+    void testStuff();
 
-qreal sensorfwaccelerometer::correctionFactor() const
-{
-    return GRAVITY_EARTH_THOUSANDTH;
-}
+};
 
-void sensorfwaccelerometer::init()
-{
-    m_initDone = false;
-    initSensor<AccelerometerSensorChannelInterface>(m_initDone);
-}
-
-void sensorfwaccelerometer::start()
-{
-    if (reinitIsNeeded)
-        init();
-    SensorfwSensorBase::start();
-}
+#endif // ANDROIDCOMPASS_H

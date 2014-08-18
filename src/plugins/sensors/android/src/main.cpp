@@ -44,7 +44,9 @@
 #include <qsensorbackend.h>
 #include <qsensormanager.h>
 #include <qaccelerometer.h>
+#include <qcompass.h>
 #include "androidaccelerometer.h"
+#include "androidcompass.h"
 #include "androidgyroscope.h"
 #include "androidlight.h"
 #include "androidmagnetometer.h"
@@ -63,10 +65,13 @@ class AndroidSensorPlugin : public QObject, public QSensorPluginInterface, publi
 public:
     void registerSensors()
     {
+        bool accelerometer = false;
+        bool magnetometer = false;
         foreach (AndroidSensorType sensor, availableSensors()) {
             switch (sensor) {
             case TYPE_ACCELEROMETER:
                 QSensorManager::registerBackend(QAccelerometer::type, QByteArray::number(sensor), this);
+                accelerometer = true;
                 break;
             case TYPE_AMBIENT_TEMPERATURE:
             case TYPE_TEMPERATURE:
@@ -84,6 +89,7 @@ public:
                 break; // add the linear acceleration sensor backend
             case TYPE_MAGNETIC_FIELD:
                 QSensorManager::registerBackend(QMagnetometer::type, QByteArray::number(sensor), this);
+                magnetometer = true;
                 break;
             case TYPE_ORIENTATION:
                 break; // add the orientation sensor backend
@@ -106,10 +112,15 @@ public:
                 break; // add backends for API level 18 sensors
             }
         }
+        if (accelerometer && magnetometer)
+            QSensorManager::registerBackend(QCompass::type, AndroidCompass::id, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor)
     {
+        if (sensor->identifier() == AndroidCompass::id)
+            return new AndroidCompass(sensor);
+
         AndroidSensorType type = static_cast<AndroidSensorType>(sensor->identifier().toInt());
         switch (type) {
         case TYPE_ACCELEROMETER: {

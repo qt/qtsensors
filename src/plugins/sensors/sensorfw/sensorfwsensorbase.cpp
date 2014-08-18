@@ -56,6 +56,7 @@ SensorfwSensorBase::SensorfwSensorBase(QSensor *sensor)
     : QSensorBackend(sensor),
       m_sensorInterface(0),
       m_bufferSize(-1),
+      reinitIsNeeded(false),
       m_prevOutputRange(0),
       m_efficientBufferSize(1),
       m_maxBufferSize(1),
@@ -214,9 +215,16 @@ qreal SensorfwSensorBase::correctionFactor() const
 void SensorfwSensorBase::connectToSensord()
 {
     m_remoteSensorManager = &SensorManagerInterface::instance();
+    if (!m_remoteSensorManager->isValid()) {
+        qWarning() << "SensorManagerInterface is invalid";
+        m_remoteSensorManager = 0;
+        return;
+    }
     if (running) {
         stop();
+        reinitIsNeeded = true;
         start();
+        reinitIsNeeded = false;
     }
 }
 
@@ -225,3 +233,68 @@ void SensorfwSensorBase::sensordUnregistered()
     m_bufferSize = -1;
 }
 
+bool SensorfwSensorBase::initSensorInterface(QString const &name)
+{
+    if (!m_sensorInterface) {
+        sensorError(KErrNotFound);
+        return false;
+    }
+
+    //metadata
+    const QList<DataRange> intervals = m_sensorInterface->getAvailableIntervals();
+
+    for (int i = 0, l = intervals.size(); i < l; i++) {
+        qreal intervalMax = intervals.at(i).max;
+        qreal intervalMin = intervals.at(i).min;
+
+        if (intervalMin == 0 && intervalMax == 0) {
+            // 0 interval has different meanings in e.g. magge/acce
+            // magge -> best-effort
+            // acce -> lowest possible
+            // in Qt API setting 0 means default
+            continue;
+        }
+
+        qreal rateMin = intervalMax < 1 ? 1 : 1 / intervalMax * 1000;
+        rateMin = rateMin < 1 ? 1 : rateMin;
+
+        intervalMin = intervalMin < 1 ? 10: intervalMin;     // do not divide with 0
+        qreal rateMax = 1 / intervalMin * 1000;
+        addDataRate(rateMin, rateMax);
+    }
+
+    //bufferSizes
+    if (m_bufferingSensors.contains(sensor()->identifier())) {
+
+        IntegerRangeList sizes = m_sensorInterface->getAvailableBufferSizes();
+        for (int i = 0; i < sizes.size(); i++) {
+            int second = sizes.at(i).second;
+            m_maxBufferSize = second > m_bufferSize ? second : m_maxBufferSize;
+        }
+        m_maxBufferSize = m_maxBufferSize < 0 ? 1 : m_maxBufferSize;
+        //SensorFW guarantees to provide the most efficient size first
+        //TODO: remove from comments
+        //m_efficientBufferSize  = m_sensorInterface->hwBuffering()? (l>0?sizes.at(0).first:1) : 1;
+    } else {
+        m_maxBufferSize = 1;
+    }
+
+    sensor()->setMaxBufferSize(m_maxBufferSize);
+    sensor()->setEfficientBufferSize(m_efficientBufferSize);
+
+    // TODO deztructor: Leaking abstraction detected. Just copied code
+    // from initSensor<>() here, need to
+    QByteArray type = sensor()->type();
+    if ((type == QAmbientLightSensor::type) // SensorFW returns lux values, plugin enumerated values
+        || (type == QIRProximitySensor::type) // SensorFW returns raw reflectance values, plugin % of max reflectance
+        || (name == "accelerometersensor") // SensorFW returns milliGs, plugin m/s^2
+        || (name == "magnetometersensor") // SensorFW returns nanoTeslas, plugin Teslas
+        || (name == "gyroscopesensor")) // SensorFW returns DSPs, plugin milliDSPs
+        return true;
+
+    setDescription(m_sensorInterface->description());
+
+    if (name == "tapsensor") return true;
+    setRanges();
+    return true;
+}
