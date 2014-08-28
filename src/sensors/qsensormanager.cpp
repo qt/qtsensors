@@ -97,7 +97,7 @@ public:
 #endif
         qCDebug(sensorsCategory) << "Loading config from" << config;
         if (!QFile::exists(config)) {
-            qCWarning(sensorsCategory) << "There is no config file" << config;
+            qCDebug(sensorsCategory) << "There is no config file" << config;
             return;
         }
         QFile cfgfile(config);
@@ -168,7 +168,7 @@ public Q_SLOTS:
 
 Q_GLOBAL_STATIC(QSensorManagerPrivate, sensorManagerPrivate)
 
-static void initPlugin(QObject *o)
+static void initPlugin(QObject *o, bool warnOnFail = true)
 {
     qCDebug(sensorsCategory) << "Init plugin" << o;
     if (!o) {
@@ -194,7 +194,7 @@ static void initPlugin(QObject *o)
         qCDebug(sensorsCategory) << "Register sensors for " << plugin;
         d->seenPlugins.insert(o);
         plugin->registerSensors();
-    } else {
+    } else if (warnOnFail) {
         qCWarning(sensorsCategory) << "Can't cast to plugin" << o;
     }
 }
@@ -208,7 +208,7 @@ void QSensorManagerPrivate::loadPlugins()
     SENSORLOG() << "initializing static plugins";
     // Qt-style static plugins
     Q_FOREACH (QObject *plugin, QPluginLoader::staticInstances()) {
-        initPlugin(plugin);
+        initPlugin(plugin, false/*do not warn on fail*/);
     }
 
     if (d->loadExternalPlugins) {
