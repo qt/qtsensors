@@ -81,7 +81,6 @@ doc/src/snippets/sensors/sensorsdocsnippet
 # Generated example binaries
 examples/sensors/accel/accel
 examples/sensors/accelbubble/accelbubble
-examples/sensors/cubehouse/cubehouse
 examples/sensors/grue/console_app/detect_grue
 examples/sensors/grue/grue
 examples/sensors/grue/lib/*gruesensor*

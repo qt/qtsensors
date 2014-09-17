@@ -17,7 +17,4 @@ qtHaveModule(quick) {
 qtHaveModule(widgets): SUBDIRS += \
     sensorgestures
 
-qtHaveModule(3d): SUBDIRS += \
-    cubehouse
-
 OTHER_FILES = stub.h
