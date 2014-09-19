@@ -75,7 +75,6 @@ import "components"
 //! [0]
 import QtSensors 5.0
 //! [0]
-import QtSystemInfo 5.0
 
 //Import the javascript functions for this game
 import "lib.js" as Lib
@@ -86,7 +85,6 @@ ApplicationWindow {
     property Mouse mouseCtrl;
     property LabyrinthSquare cheeseSquare;
     property Congratulation congratulation;
-    ScreenSaver { screenSaverEnabled: !tiltTimer.running }
 
     Rectangle {
         id: gameRect
@@ -171,9 +169,9 @@ ApplicationWindow {
     }
 
 //! [1]
-    TiltSensor{
+    TiltSensor {
         id: tiltSensor
-        enabled: true
+        active: true
     }
 //! [1]
 
@@ -185,7 +183,7 @@ ApplicationWindow {
 //! [2]
         onTriggered: {
             if (!tiltSensor.enabled)
-                tiltSensor.enabled = true;
+                tiltSensor.active = true;
 //! [2]
 
             if (mouseCtrl === null)
