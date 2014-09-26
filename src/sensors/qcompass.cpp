@@ -42,6 +42,7 @@ IMPLEMENT_READING(QCompassReading)
     \class QCompassReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QCompassReading class represents one reading from a
            compass.
@@ -114,6 +115,7 @@ void QCompassReading::setCalibrationLevel(qreal calibrationLevel)
     \class QCompassFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QCompassFilter class is a convenience wrapper around QSensorFilter.
 
@@ -140,6 +142,7 @@ char const * const QCompass::type("QCompass");
     \class QCompass
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QCompass class is a convenience wrapper around QSensor.
 

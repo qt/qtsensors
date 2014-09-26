@@ -42,11 +42,12 @@
 #include <private/qmetaobjectbuilder_p.h>
 
 /*!
-  \class QSensorGesture
-  \ingroup sensorgestures_main
-  \inmodule QtSensors
+    \class QSensorGesture
+    \ingroup sensorgestures_main
+    \inmodule QtSensors
+    \since 5.1
 
-  \brief The QSensorGesture class represents one or more sensor gesture recognizers.
+    \brief The QSensorGesture class represents one or more sensor gesture recognizers.
 
     In addition to the QSensorGesture::detected() signal, Sensor Gesture Recognizers can
     have their own specific signals, and may be discovered through
@@ -59,7 +60,7 @@
 
     \sa QSensorGestureRecognizer
 
-   You may use QSensorGestureManager to obtain the systems known sensor gesture ids.
+    You may use QSensorGestureManager to obtain the systems known sensor gesture ids.
 
     \sa QSensorGestureManager
   */

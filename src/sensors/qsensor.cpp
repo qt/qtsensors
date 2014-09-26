@@ -44,6 +44,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \typedef qrange
     \relates QSensor
+    \since 5.1
 
     This type is defined as a QPair.
 
@@ -57,6 +58,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \typedef qrangelist
     \relates QSensor
+    \since 5.1
 
     This type is defined as a list of qrange values.
 
@@ -72,6 +74,7 @@ QT_BEGIN_NAMESPACE
     \relates QSensor
     \inmodule QtSensors
     \brief The qoutputrange class holds the specifics of an output range.
+    \since 5.1
 
     The class is defined as a simple struct.
 
@@ -125,6 +128,7 @@ QT_BEGIN_NAMESPACE
 /*!
     \typedef qoutputrangelist
     \relates QSensor
+    \since 5.1
 
     This type is defined as a list of qoutputrange values.
 
@@ -156,6 +160,7 @@ void QSensorPrivate::init(const QByteArray &sensorType)
     \class QSensor
     \ingroup sensors_main
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QSensor class represents a single hardware sensor.
 

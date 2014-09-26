@@ -42,6 +42,7 @@ IMPLEMENT_READING(QAmbientLightReading)
     \class QAmbientLightReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QAmbientLightReading class represents one reading from the
            ambient light sensor.
@@ -103,6 +104,7 @@ void QAmbientLightReading::setLightLevel(QAmbientLightReading::LightLevel lightL
     \class QAmbientLightFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QAmbientLightFilter class is a convenience wrapper around QSensorFilter.
 
@@ -129,6 +131,7 @@ char const * const QAmbientLightSensor::type("QAmbientLightSensor");
     \class QAmbientLightSensor
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QAmbientLightSensor class is a convenience wrapper around QSensor.
 

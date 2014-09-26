@@ -37,17 +37,17 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-  \class QSensorGestureManager
-  \ingroup sensorgestures_main
-  \inmodule QtSensors
+    \class QSensorGestureManager
+    \ingroup sensorgestures_main
+    \inmodule QtSensors
+    \since 5.1
 
-  \brief The QSensorGestureManager class manages sensor gestures, registers and creates sensor gesture plugins.
+    \brief The QSensorGestureManager class manages sensor gestures, registers and creates sensor gesture plugins.
 
-   Sensor Gesture plugins register their recognizers using the registerSensorGestureRecognizer() function.
+    Sensor Gesture plugins register their recognizers using the registerSensorGestureRecognizer() function.
 
     \snippet sensorgestures/creating.cpp Receiving sensor gesture signals
-
-  */
+*/
 
 /*!
   \fn QSensorGestureManager::newSensorGestureAvailable()
