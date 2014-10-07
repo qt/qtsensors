@@ -62,7 +62,7 @@
 
     The documentation for the module API can be found in SensorGlobal.
 
-    \section1 QML Sensor types
+    \section1 QML Sensor Types
 
     These types represent specific types of sensors.
 
@@ -70,7 +70,7 @@
 
     \annotatedlist qml-sensors_type
 
-    \section1 QML Reading types
+    \section1 QML Reading Types
 
     The data from a sensor comes via a reading class.
 

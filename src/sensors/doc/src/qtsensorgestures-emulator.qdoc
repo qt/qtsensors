@@ -34,7 +34,7 @@
 The Emulator can be used for both creating client apps using Qt's built-in sensor gestures,
 and for creating customized recognizers.
 
-\section1 Developing sensor gesture clients.
+\section1 Developing Sensor Gesture Clients
 
 For instance, the Emulator can be used for writing a client app that needs
 to use the "slam" gesture.
