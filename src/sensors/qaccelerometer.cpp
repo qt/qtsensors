@@ -42,6 +42,7 @@ IMPLEMENT_READING(QAccelerometerReading)
     \class QAccelerometerReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QAccelerometerReading class reports on linear acceleration
            along the X, Y and Z axes.
@@ -127,6 +128,7 @@ void QAccelerometerReading::setZ(qreal z)
     \class QAccelerometerFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QAccelerometerFilter class is a convenience wrapper around QSensorFilter.
 
@@ -176,6 +178,7 @@ char const * const QAccelerometer::type("QAccelerometer");
     \class QAccelerometer
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QAccelerometer class is a convenience wrapper around QSensor.
 

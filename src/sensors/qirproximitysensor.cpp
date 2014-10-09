@@ -40,6 +40,7 @@ IMPLEMENT_READING(QIRProximityReading)
     \class QIRProximityReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QIRProximityReading class holds readings from the IR proximity sensor.
 
@@ -91,6 +92,7 @@ void QIRProximityReading::setReflectance(qreal reflectance)
     \class QIRProximityFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QIRProximityFilter class is a convenience wrapper around QSensorFilter.
 
@@ -117,6 +119,7 @@ char const * const QIRProximitySensor::type("QIRProximitySensor");
     \class QIRProximitySensor
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QIRProximitySensor class is a convenience wrapper around QSensor.
 

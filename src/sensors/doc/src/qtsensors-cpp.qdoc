@@ -81,7 +81,7 @@ Here is an example of creating a sensor on the heap and on the stack.
 
 \snippet sensors/creating.cpp Creating a sensor
 
-\section1 Accessing sensor data in a generic fashion
+\section1 Accessing Sensor Data in a Generic Fashion
 
 The preferred way to deal with sensor data is via the \l{Reading Classes}.
 However, sometimes this may not be possible. For example, you may be deploying
@@ -106,7 +106,7 @@ This code does not require any compile-time links to \l QAccelerometer or
 You can discover all of this information at runtime too. The sensor_explorer example
 shows you information about available sensors.
 
-\section1 Front end, back end
+\section1 Front End, Back End
 
 The Qt Sensors API has a front end, for application developers to use and a back end,
 where device implementors write code to access their hardware. As an application

@@ -46,6 +46,7 @@ IMPLEMENT_READING(QTiltReading)
     \class QTiltReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QTiltReading class holds readings from the tilt sensor.
 
@@ -95,6 +96,7 @@ void QTiltReading::setXRotation(qreal x)
     \class QTiltFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QTiltFilter class is a convenience wrapper around QSensorFilter.
 
@@ -121,6 +123,7 @@ char const * const QTiltSensor::type("QTiltSensor");
     \class QTiltSensor
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QTiltSensor class is a convenience wrapper around QSensor.
 

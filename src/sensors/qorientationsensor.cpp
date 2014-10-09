@@ -42,6 +42,7 @@ IMPLEMENT_READING(QOrientationReading)
     \class QOrientationReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QOrientationReading class represents one reading from the
            orientation sensor.
@@ -126,6 +127,7 @@ void QOrientationReading::setOrientation(QOrientationReading::Orientation orient
     \class QOrientationFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QOrientationFilter class is a convenience wrapper around QSensorFilter.
 
@@ -152,6 +154,7 @@ char const * const QOrientationSensor::type("QOrientationSensor");
     \class QOrientationSensor
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QOrientationSensor class is a convenience wrapper around QSensor.
 

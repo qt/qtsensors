@@ -95,7 +95,7 @@
             \li Information about the Qt SensorGestures C++ API
     \endtable
 
-    \section1 Information for Qt SensorGestures Recognizer Plugin Implementors.
+    \section1 Information for Qt SensorGestures Recognizer Plugin Implementors
 
     \table
         \row

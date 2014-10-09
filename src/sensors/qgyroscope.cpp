@@ -42,6 +42,7 @@ IMPLEMENT_READING(QGyroscopeReading)
     \class QGyroscopeReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QGyroscopeReading class represents one reading from the
            gyroscope sensor.
@@ -125,6 +126,7 @@ void QGyroscopeReading::setZ(qreal z)
     \class QGyroscopeFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QGyroscopeFilter class is a convenience wrapper around QSensorFilter.
 
@@ -151,6 +153,7 @@ char const * const QGyroscope::type("QGyroscope");
     \class QGyroscope
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QGyroscope class is a convenience wrapper around QSensor.
 

@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
     \brief The QSensorGesturePluginInterface class is the pure virtual interface to sensor gesture
     plugins.
 
-    \since 5.0
+    \since 5.1
 
     The QSensorGesturePluginInterface class is implemented in sensor gesture plugins to register
     sensor gesture recognizers with QSensorGestureManager.

@@ -42,6 +42,7 @@ QT_BEGIN_NAMESPACE
     \class QSensorBackend
     \ingroup sensors_backend
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QSensorBackend class is a sensor implementation.
 

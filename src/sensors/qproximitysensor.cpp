@@ -42,6 +42,7 @@ IMPLEMENT_READING(QProximityReading)
     \class QProximityReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QProximityReading class represents one reading from the
            proximity sensor.
@@ -82,6 +83,7 @@ void QProximityReading::setClose(bool close)
     \class QProximityFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QProximityFilter class is a convenience wrapper around QSensorFilter.
 
@@ -108,6 +110,7 @@ char const * const QProximitySensor::type("QProximitySensor");
     \class QProximitySensor
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QProximitySensor class is a convenience wrapper around QSensor.
 

@@ -62,7 +62,7 @@ classes to use.
 \title Creating a sensor plugin
 \ingroup sensors_backend_topics
 
-\section1 How a sensor plugin is loaded
+\section1 How a Sensor Plugin is Loaded
 
 Since sensor backends are created on demand, the sensor plugin is loaded and asked
 to register the sensor backends it handles. The plugin should implement
@@ -85,7 +85,7 @@ An example follows.
 \title Determining the default sensor for a type
 \ingroup sensors_backend_topics
 
-\section1 Multiple sensors can exist for a type
+\section1 Multiple Sensors Can Exist for a Type
 
 Sensors was designed so that multiple sensors could exist for a given type. Why?
 Consider this example.
@@ -94,7 +94,7 @@ The N900 has an accelerometer built-in. It also features bluetooth and can pair
 with a gaming controller that features an accelerometer. To a developer writing
 a game these two devices are conceptually the same type.
 
-\section1 Default sensor for a type
+\section1 Default Sensor for a Type
 
 To avoid the need to know (or check) what the default sensor for a type is, the
 system will use the default sensor for a type. Most of the time this is what the

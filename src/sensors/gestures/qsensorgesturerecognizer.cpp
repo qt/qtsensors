@@ -41,12 +41,13 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-  \class QSensorGestureRecognizer
-  \ingroup sensorgestures_recognizer
-  \inmodule QtSensors
+    \class QSensorGestureRecognizer
+    \ingroup sensorgestures_recognizer
+    \inmodule QtSensors
+    \since 5.1
 
-  \brief The QSensorGestureRecognizer class is the base class for a sensor gesture
- recognizer.
+    \brief The QSensorGestureRecognizer class is the base class for a sensor gesture
+    recognizer.
 
     QSensorGesture recognizer developers should sub-class this to implement their own recognizer.
 

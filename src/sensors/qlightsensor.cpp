@@ -42,6 +42,7 @@ IMPLEMENT_READING(QLightReading)
     \class QLightReading
     \ingroup sensors_reading
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QLightReading class represents one reading from the
            light sensor.
@@ -77,6 +78,7 @@ void QLightReading::setLux(qreal lux)
     \class QLightFilter
     \ingroup sensors_filter
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QLightFilter class is a convenience wrapper around QSensorFilter.
 
@@ -103,6 +105,7 @@ char const * const QLightSensor::type("QLightSensor");
     \class QLightSensor
     \ingroup sensors_type
     \inmodule QtSensors
+    \since 5.1
 
     \brief The QLightSensor class is a convenience wrapper around QSensor.
 
