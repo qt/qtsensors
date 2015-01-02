@@ -114,7 +114,7 @@ QT_END_NAMESPACE
     \qmltype GrueSensor
     \instantiates GrueSensor
     \inherits Sensor
-    \inqmlmodule Grue 1.0
+    \inqmlmodule Grue
     \brief The GrueSensor type reports on your chance of being eaten by a Grue.
 
     The GrueSensor type reports on your chance of being eaten by a Grue.
@@ -129,7 +129,7 @@ QT_END_NAMESPACE
     \qmltype GrueSensorReading
     \instantiates GrueSensorReading
     \inherits SensorReading
-    \inqmlmodule Grue 1.0
+    \inqmlmodule Grue
     \brief The GrueSensorReading type holds the most recent GrueSensor reading.
 
     The GrueSensorReading type holds the most recent GrueSensor reading.
