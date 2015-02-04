@@ -1,8 +1,3 @@
-CXX_MODULE = sensors
-TARGET  = declarative_sensors
-TARGETPATH = QtSensors
-IMPORT_VERSION = 5.1 # Doesn't matter, as long as it's a valid version?!
-
 QT += qml sensors sensors-private
 
 HEADERS += \
