@@ -208,10 +208,10 @@ public:
 
         qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
 
-        // Register the 5.4 interfaces
+        // Register the 5.5 interfaces
         // No API changes, just reintroduce existing interfaces for 5.2
-        // Implicitly registers 5.3 too
-        minor = 4;
+        // Implicitly registers 5.3 & 5.4 too
+        minor = 5;
         qmlRegisterType           <QmlAltimeter                >(package, major, minor, "Altimeter");
     }
 };
