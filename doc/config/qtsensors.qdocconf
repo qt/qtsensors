@@ -87,4 +87,4 @@ HTML.stylesheets = style/common.css
 HTML.headerstyles = "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/common.css\" />\n"
 HTML.endheader = "</head>\n<body>\n"
 
-HTML.footer = "<div class=\"footer\">Copyright (c) 2012 Digia Plc and/or its subsidiaries. All rights reserved.</div>\n"
+HTML.footer = "<div class=\"footer\">Copyright (c) 2015 The Qt Company Ltd. All rights reserved.</div>\n"
