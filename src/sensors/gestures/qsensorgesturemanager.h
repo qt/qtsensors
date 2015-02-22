@@ -34,8 +34,8 @@
 #ifndef QSENSORGESTUREMANAGER_P_H
 #define QSENSORGESTUREMANAGER_P_H
 
-#include <QObject>
-#include <QStringList>
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
 
 #include <QtSensors/qsensorgesture.h>
 #include <QtSensors/qsensorgesturerecognizer.h>

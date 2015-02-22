@@ -34,9 +34,9 @@
 #ifndef QSENSORGESTURERECOGNIZER_H
 #define QSENSORGESTURERECOGNIZER_H
 
-#include <QDebug>
-#include <QTimer>
-#include <QStringList>
+#include <QtCore/QDebug>
+#include <QtCore/QTimer>
+#include <QtCore/QStringList>
 
 #include <QtSensors/qsensorgesture.h>
 

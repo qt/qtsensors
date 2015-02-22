@@ -34,13 +34,13 @@
 #ifndef QSENSORGESTURE_H
 #define QSENSORGESTURE_H
 
-#include <QObject>
-#include <QStringList>
+#include <QtCore/QObject>
+#include <QtCore/QStringList>
 #include <QtSensors/qsensorsglobal.h>
 
-#include <QList>
-#include <QMap>
-#include <QVector>
+#include <QtCore/QList>
+#include <QtCore/QMap>
+#include <QtCore/QVector>
 
 #include <QtCore/qmetatype.h>
 

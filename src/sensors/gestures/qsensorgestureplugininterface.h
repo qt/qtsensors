@@ -34,8 +34,8 @@
 #ifndef QSENSORGESTUREPLUGININTERFACE_H
 #define QSENSORGESTUREPLUGININTERFACE_H
 
-#include <QObject>
-#include <QtGlobal>
+#include <QtCore/QObject>
+#include <QtCore/QtGlobal>
 #include <QtCore/qplugin.h>
 #include <QtSensors/qsensorgesture.h>
 #include <QtSensors/qsensorgesturerecognizer.h>
