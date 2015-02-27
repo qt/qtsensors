@@ -20,16 +20,13 @@ winrt {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = winrt generic
 }
 
-tizen {
-    isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = tizen generic
-}
-
 qtHaveModule(simulator) {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = simulator generic
 }
 
 linux {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = linux generic
+    tizen: SENSORS_PLUGINS += tizen
 }
 
 contains(SENSORS_PLUGINS, dummy):SUBDIRS += dummy
