@@ -94,11 +94,11 @@ QAmbientLightReading::LightLevel Sensorfwals::getLightLevel(int lux)
         return QAmbientLightReading::Undefined;
     } else if (lux < 10) {
         return QAmbientLightReading::Dark;
-    } else if (lux < 50) {
+    } else if (lux < 80) {
         return QAmbientLightReading::Twilight;
-    } else if (lux < 100) {
+    } else if (lux < 400) {
         return QAmbientLightReading::Light;
-    } else if (lux < 150) {
+    } else if (lux < 2500) {
         return QAmbientLightReading::Bright;
     } else {
         return QAmbientLightReading::Sunny;
