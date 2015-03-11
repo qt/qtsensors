@@ -65,6 +65,7 @@ SensorfwSensorBase::SensorfwSensorBase(QSensor *sensor)
     connect(watcher, SIGNAL(serviceUnregistered(QString)),
             this, SLOT(sensordUnregistered()));
 
+    connect(sensor, SIGNAL(alwaysOnChanged()),this,SLOT(standyOverrideChanged()));
 
     m_available = QDBusConnection::systemBus().interface()->isServiceRegistered("com.nokia.SensorService");
     if (m_available)
@@ -290,3 +291,29 @@ bool SensorfwSensorBase::initSensorInterface(QString const &name)
     setRanges();
     return true;
 }
+
+void SensorfwSensorBase::standyOverrideChanged()
+{
+    m_sensorInterface->setStandbyOverride(sensor()->isAlwaysOn());
+}
+
+bool SensorfwSensorBase::isFeatureSupported(QSensor::Feature feature) const
+{
+    switch (feature) {
+    case QSensor::AlwaysOn:
+        return true;
+    case QSensor::AxesOrientation:
+    case QSensor::Buffering:
+    case QSensor::AccelerationMode:
+    case QSensor::SkipDuplicates:
+    case QSensor::PressureSensorTemperature:
+    case QSensor::GeoValues:
+    case QSensor::Reserved:
+    case QSensor::FieldOfView:
+        return false;
+        break;
+    };
+
+    return false;
+}
+

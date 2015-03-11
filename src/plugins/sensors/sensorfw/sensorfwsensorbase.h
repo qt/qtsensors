@@ -95,6 +95,7 @@ protected:
     int bufferSize() const;
     virtual qreal correctionFactor() const;
     bool reinitIsNeeded;
+    bool isFeatureSupported(QSensor::Feature feature) const;
 
 private:
     bool initSensorInterface(QString const &);
@@ -109,6 +110,7 @@ private:
 private slots:
     void connectToSensord();
     void sensordUnregistered();
+    void standyOverrideChanged();
 };
 
 #endif
