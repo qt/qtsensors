@@ -1,9 +1,11 @@
 TEMPLATE = subdirs
 
 SUBDIRS += qsensor
-SUBDIRS += sensors2qmlapi
+qtHaveModule(qml) {
+    SUBDIRS += sensors2qmlapi
+    SUBDIRS += qtsensors5
+}
 #SUBDIRS += legacy_sensors
-SUBDIRS += qtsensors5
 SUBDIRS += qsensorgestures
 SUBDIRS += qsensorgestureplugins
 SUBDIRS += cmake
