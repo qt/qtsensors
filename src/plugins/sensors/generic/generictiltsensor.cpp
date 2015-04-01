@@ -80,7 +80,7 @@ void GenericTiltSensor::stop()
 */
 static inline qreal calcPitch(double Ax, double Ay, double Az)
 {
-    return -qAtan2(Ax, sqrt(Ay * Ay + Az * Az));
+    return -qAtan2(Ax, qSqrt(Ay * Ay + Az * Az));
 }
 
 /*
@@ -91,7 +91,7 @@ static inline qreal calcPitch(double Ax, double Ay, double Az)
 */
 static inline qreal calcRoll(double Ax, double Ay, double Az)
 {
-    return qAtan2(Ay, (sqrt(Ax * Ax + Az * Az)));
+    return qAtan2(Ay, (qSqrt(Ax * Ax + Az * Az)));
 }
 
 void GenericTiltSensor::calibrate()
@@ -132,15 +132,15 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
     qreal xrot = roll - calibratedRoll;
     qreal yrot = pitch - calibratedPitch;
     //get angle between 0 and 180 or 0 -180
-    qreal aG = 1 * sin(xrot);
-    qreal aK = 1 * cos(xrot);
+    qreal aG = 1 * qSin(xrot);
+    qreal aK = 1 * qCos(xrot);
     xrot = qAtan2(aG, aK);
     if (xrot > M_PI_2)
         xrot = M_PI - xrot;
     else if (xrot < -M_PI_2)
         xrot = -(M_PI + xrot);
-    aG = 1 * sin(yrot);
-    aK = 1 * cos(yrot);
+    aG = 1 * qSin(yrot);
+    aK = 1 * qCos(yrot);
     yrot = qAtan2(aG, aK);
     if (yrot > M_PI_2)
         yrot = M_PI - yrot;
