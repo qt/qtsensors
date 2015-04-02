@@ -294,7 +294,8 @@ bool SensorfwSensorBase::initSensorInterface(QString const &name)
 
 void SensorfwSensorBase::standyOverrideChanged()
 {
-    m_sensorInterface->setStandbyOverride(sensor()->isAlwaysOn());
+    if (m_sensorInterface)
+        m_sensorInterface->setStandbyOverride(sensor()->isAlwaysOn());
 }
 
 bool SensorfwSensorBase::isFeatureSupported(QSensor::Feature feature) const
