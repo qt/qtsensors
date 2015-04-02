@@ -45,6 +45,7 @@ public:
     AndroidAccelerometerListener(AndroidCompass *parent)
         : m_compass(parent)
     {
+        memset(reading, 0, sizeof(reading));
     }
 
     void start(int dataRate)
@@ -84,7 +85,7 @@ public:
     AndroidMagnetometerListener(AndroidCompass *parent)
         :m_compass(parent)
     {
-
+        memset(reading, 0, sizeof(reading));
     }
 
     void start(int dataRate)
@@ -138,9 +139,9 @@ void AndroidCompass::start()
 {
     if (!m_accelerometerListener)
         m_accelerometerListener = new AndroidAccelerometerListener(this);
-    m_accelerometerListener->start(sensor()->dataRate());
     if (!m_magnetometerListener)
         m_magnetometerListener = new AndroidMagnetometerListener(this);
+    m_accelerometerListener->start(sensor()->dataRate());
     m_magnetometerListener->start(sensor()->dataRate());
 
     m_isStarted = true;
@@ -157,6 +158,8 @@ void AndroidCompass::stop()
 
 void AndroidCompass::testStuff()
 {
+    if (!m_accelerometerListener || !m_magnetometerListener)
+        return;
     qreal azimuth = AndroidSensors::getCompassAzimuth(m_accelerometerListener->reading, m_magnetometerListener->reading);
 
     azimuth = azimuth * 180.0 / M_PI;
