@@ -50,9 +50,9 @@ void sensorfwaccelerometer::slotDataAvailable(const XYZ& data)
 {
     // Convert from milli-Gs to meters per second per second
     // Using 1 G = 9.80665 m/s^2
-    m_reading.setX(-data.x() * GRAVITY_EARTH_THOUSANDTH);
-    m_reading.setY(-data.y() * GRAVITY_EARTH_THOUSANDTH);
-    m_reading.setZ(-data.z() * GRAVITY_EARTH_THOUSANDTH);
+    m_reading.setX(data.x() * GRAVITY_EARTH_THOUSANDTH);
+    m_reading.setY(data.y() * GRAVITY_EARTH_THOUSANDTH);
+    m_reading.setZ(data.z() * GRAVITY_EARTH_THOUSANDTH);
     m_reading.setTimestamp(data.XYZData().timestamp_);
     newReadingAvailable();
 }
