@@ -224,6 +224,7 @@ void SensorfwSensorBase::connectToSensord()
 void SensorfwSensorBase::sensordUnregistered()
 {
     m_bufferSize = -1;
+    reinitIsNeeded = true;
 }
 
 bool SensorfwSensorBase::initSensorInterface(QString const &name)
