@@ -78,7 +78,9 @@ QmlSensorGlobal::~QmlSensorGlobal()
 QStringList QmlSensorGlobal::sensorTypes() const
 {
     QStringList ret;
-    foreach (const QByteArray &type, QSensor::sensorTypes())
+    const QList<QByteArray> sensorTypes = QSensor::sensorTypes();
+    ret.reserve(sensorTypes.count());
+    foreach (const QByteArray &type, sensorTypes)
         ret << QString::fromLocal8Bit(type);
     return ret;
 }
@@ -92,7 +94,9 @@ QStringList QmlSensorGlobal::sensorTypes() const
 QStringList QmlSensorGlobal::sensorsForType(const QString &type) const
 {
     QStringList ret;
-    foreach (const QByteArray &identifier, QSensor::sensorsForType(type.toLocal8Bit()))
+    const QList<QByteArray> sensors = QSensor::sensorsForType(type.toLocal8Bit());
+    ret.reserve(sensors.count());
+    foreach (const QByteArray &identifier, sensors)
         ret << QString::fromLocal8Bit(identifier);
     return ret;
 }
