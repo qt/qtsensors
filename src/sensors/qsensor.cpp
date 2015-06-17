@@ -1114,16 +1114,11 @@ void QSensor::setEfficientBufferSize(int efficientBufferSize)
     When the sensor is started with buffering option, values are collected from that
     moment onwards. There is no pre-existing buffer that can be utilized.
 
-    Some backends like Blackberry only support enabling or disabling the buffer and do not give
+    Some backends only support enabling or disabling the buffer and do not give
     control over the size. In this case, the maxBufferSize and efficientBufferSize properties
     might not be set at all, even though buffering is supported. Setting the bufferSize property
     to any value greater than 1 will enable buffering. After the sensor has been started,
     the bufferSize property will be set to the actual value by the backend.
-
-    On Blackberry, buffering will not wait until the buffer is full to deliver new
-    readings. Instead, the buffer will be used if the backend does not manage to retrieve the readings
-    in time, for example when the event loop is blocked for too long. Without a buffer, these readings
-    would simply be dropped.
 
     \sa QSensor::maxBufferSize, QSensor::efficientBufferSize
 */

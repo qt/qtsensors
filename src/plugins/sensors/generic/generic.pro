@@ -11,16 +11,14 @@ SOURCES += main.cpp\
            generictiltsensor.cpp
 DEFINES += QTSENSORS_GENERICTILTSENSOR
 
-!blackberry {
-    HEADERS += genericorientationsensor.h\
-               genericalssensor.h
+HEADERS += genericorientationsensor.h\
+           genericalssensor.h
 
-    SOURCES += genericorientationsensor.cpp\
-               genericalssensor.cpp
-    DEFINES += QTSENSORS_GENERICORIENTATIONSENSOR QTSENSORS_GENERICALSSENSOR
-}
+SOURCES += genericorientationsensor.cpp\
+           genericalssensor.cpp
+DEFINES += QTSENSORS_GENERICORIENTATIONSENSOR QTSENSORS_GENERICALSSENSOR
 
-!blackberry:!android {
+!android {
     HEADERS += genericrotationsensor.h
 
     SOURCES += genericrotationsensor.cpp

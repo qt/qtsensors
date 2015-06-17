@@ -52,11 +52,7 @@ int main( int argc, char** argv )
     qmlRegisterType<Collector>("Collector", 1, 0, "Collector");
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
-#if defined(Q_OS_QNX)
-    view.setSource( QUrl( "app/native/qml/main.qml" ) );
-#else
     view.setSource( QUrl( "qml/main.qml" ) );
-#endif
     view.show();
     return app.exec();
 }

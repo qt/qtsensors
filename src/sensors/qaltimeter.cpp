@@ -46,12 +46,6 @@ IMPLEMENT_READING(QAltimeterReading)
     \brief The QAltimeterReading class holds readings from the altimeter sensor.
 
     The altitude is reported in meters relative to mean sea level.
-
-    On BlackBerry, the altimeter uses a combination of pressure and location to determine
-    the altitude, as using pressure alone would yield to inaccurate results due to changes
-    in air pressure caused by the weather. The location information is used to compensate for
-    the weather. This requires that the user has enabled location services in the global
-    settings.
 */
 
 /*!
