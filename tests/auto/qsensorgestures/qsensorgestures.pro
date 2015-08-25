@@ -32,4 +32,3 @@ SOURCES += \
                plugins/test/qtestrecognizer.cpp \
                plugins/test/qtest2recognizer.cpp
 
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0

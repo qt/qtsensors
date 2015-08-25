@@ -19,4 +19,3 @@ HEADERS += \
     mockbackends.h
 
 TESTDATA += mock_data dataset2_mock_data
-DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
