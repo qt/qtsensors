@@ -72,10 +72,6 @@ public:
             if (!QSensorManager::isBackendRegistered(QRotationSensor::type, genericrotationsensor::id))
                 QSensorManager::registerBackend(QRotationSensor::type, genericrotationsensor::id, this);
 #endif
-#ifdef QTSENSORS_GENERICALSSENSOR
-            if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
-                QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
-#endif
 #ifdef QTSENSORS_GENERICTILTSENSOR
             if (!QSensorManager::isBackendRegistered(QTiltSensor::type, GenericTiltSensor::id))
                 QSensorManager::registerBackend(QTiltSensor::type, GenericTiltSensor::id, this);
@@ -89,13 +85,21 @@ public:
             if (QSensorManager::isBackendRegistered(QRotationSensor::type, genericrotationsensor::id))
                 QSensorManager::unregisterBackend(QRotationSensor::type, genericrotationsensor::id);
 #endif
-#ifdef QTSENSORS_GENERICALSSENSOR
-            if (QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
-                QSensorManager::unregisterBackend(QAmbientLightSensor::type, genericalssensor::id);
-#endif
 #ifdef QTSENSORS_GENERICTILTSENSOR
             if (QSensorManager::isBackendRegistered(QTiltSensor::type, GenericTiltSensor::id))
                 QSensorManager::unregisterBackend(QTiltSensor::type, GenericTiltSensor::id);
+#endif
+        }
+
+        if (!QSensor::defaultSensorForType(QLightSensor::type).isEmpty()) {
+#ifdef QTSENSORS_GENERICALSSENSOR
+            if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
+                QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
+#endif
+        } else {
+#ifdef QTSENSORS_GENERICALSSENSOR
+            if (QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
+                QSensorManager::unregisterBackend(QAmbientLightSensor::type, genericalssensor::id);
 #endif
         }
     }
