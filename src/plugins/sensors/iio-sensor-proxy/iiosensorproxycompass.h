@@ -32,44 +32,35 @@
 **
 ****************************************************************************/
 
-#include "iiosensorproxyorientationsensor.h"
-#include "iiosensorproxylightsensor.h"
-#include "iiosensorproxycompass.h"
+#ifndef IIOSENSORPROXY_COMPASS_H
+#define IIOSENSORPROXY_COMPASS_H
 
-#include <qsensorplugin.h>
-#include <qsensorbackend.h>
-#include <qsensormanager.h>
+#include "iiosensorproxysensorbase.h"
 
-#include <QtCore/QFile>
-#include <QtCore/QDebug>
+#include <qcompass.h>
 
-class IIOSensorProxySensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
+class NetHadessSensorProxyCompassInterface;
+
+class IIOSensorProxyCompass : public IIOSensorProxySensorBase
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "com.qt-project.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
-    Q_INTERFACES(QSensorPluginInterface)
 public:
-    void registerSensors()
-    {
-        if (!QSensorManager::isBackendRegistered(QOrientationSensor::type, IIOSensorProxyOrientationSensor::id))
-            QSensorManager::registerBackend(QOrientationSensor::type, IIOSensorProxyOrientationSensor::id, this);
-        if (!QSensorManager::isBackendRegistered(QLightSensor::type, IIOSensorProxyLightSensor::id))
-            QSensorManager::registerBackend(QLightSensor::type, IIOSensorProxyLightSensor::id, this);
-        if (!QSensorManager::isBackendRegistered(QCompass::type, IIOSensorProxyCompass::id))
-            QSensorManager::registerBackend(QCompass::type, IIOSensorProxyCompass::id, this);
-    }
+    static char const * const id;
 
-    QSensorBackend *createBackend(QSensor *sensor)
-    {
-        if (sensor->identifier() == IIOSensorProxyOrientationSensor::id)
-            return new IIOSensorProxyOrientationSensor(sensor);
-        else if (sensor->identifier() == IIOSensorProxyLightSensor::id)
-            return new IIOSensorProxyLightSensor(sensor);
-        else if (sensor->identifier() == IIOSensorProxyCompass::id)
-            return new IIOSensorProxyCompass(sensor);
+    IIOSensorProxyCompass(QSensor *sensor);
+    ~IIOSensorProxyCompass();
 
-        return 0;
-    }
+    void start() Q_DECL_OVERRIDE;
+    void stop() Q_DECL_OVERRIDE;
+
+protected:
+    void updateProperties(const QVariantMap &changedProperties) Q_DECL_OVERRIDE;
+
+private:
+    void updateAzimuth(double azimuth);
+
+    QCompassReading m_reading;
+    NetHadessSensorProxyCompassInterface *m_sensorProxyInterface;
 };
 
-#include "main.moc"
+#endif // IIOSENSORPROXY_COMPASS_H

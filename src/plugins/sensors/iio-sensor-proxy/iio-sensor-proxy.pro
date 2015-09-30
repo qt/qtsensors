@@ -8,17 +8,22 @@ load(qt_plugin)
 !android:LIBS += -lrt
 HEADERS += iiosensorproxysensorbase.h \
     iiosensorproxylightsensor.h \
-    iiosensorproxyorientationsensor.h
+    iiosensorproxyorientationsensor.h \
+    iiosensorproxycompass.h
 
 SOURCES += iiosensorproxysensorbase.cpp \
     iiosensorproxylightsensor.cpp \
     iiosensorproxyorientationsensor.cpp \
+    iiosensorproxycompass.cpp \
     main.cpp
 
-DBUS_INTERFACES += sensor_proxy dbus_properties
+DBUS_INTERFACES += sensor_proxy sensor_proxy_compass dbus_properties
 
 sensor_proxy.files = net.hadess.SensorProxy.xml
 sensor_proxy.header_flags = -N
+
+sensor_proxy_compass.files = net.hadess.SensorProxy.Compass.xml
+sensor_proxy_compass.header_flags = -N
 
 dbus_properties.files = org.freedesktop.DBus.Properties.xml
 dbus_properties.header_flags = -N
