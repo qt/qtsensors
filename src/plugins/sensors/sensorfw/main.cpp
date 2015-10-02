@@ -65,7 +65,8 @@ public:
         QStringList keys = settings.allKeys();
         for (int i=0,l=keys.size(); i<l; i++) {
             QString type = keys.at(i);
-            QSensorManager::registerBackend(type.toLocal8Bit(), settings.value(type).toByteArray(), this);
+            if (settings.value(type).toString().contains(QStringLiteral("sensorfw")))//register only ones we know
+                QSensorManager::registerBackend(type.toLocal8Bit(), settings.value(type).toByteArray(), this);
         }
     }
 
