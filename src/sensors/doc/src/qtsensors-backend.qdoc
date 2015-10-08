@@ -26,7 +26,7 @@
 ****************************************************************************/
 
 /*!
-\group sensors_backend_topics
+\page sensors-backend-topics.html
 \title Qt Sensors Backend
 \brief Describes how to use the Qt Sensors backend.
 
@@ -36,8 +36,6 @@ hardware sensors.
 \tableofcontents
 
 \section1 Overview
-
-\section1 Backend API
 
 QSensor instances talk to a backend object. Backends are usually supplied
 with the Qt Sensors library for a specific device, although third-party
@@ -53,14 +51,16 @@ classes to use.
 
 \section1 Backend Topics
 
-\generatelist related
-
+\list
+\li \l{Creating a sensor plugin}
+\li \l{Determining the default sensor for a type}
+\li \l{Dynamic Sensor Backend Registration}
+\endlist
 */
 
 /*!
 \page creating-a-sensor-plugin.html
 \title Creating a sensor plugin
-\ingroup sensors_backend_topics
 
 \section1 How a Sensor Plugin is Loaded
 
@@ -83,7 +83,6 @@ An example follows.
 /*!
 \page determining-the-default-sensor-for-a-type.html
 \title Determining the default sensor for a type
-\ingroup sensors_backend_topics
 
 \section1 Multiple Sensors Can Exist for a Type
 
@@ -141,7 +140,6 @@ it is specified in \c{Sensors.conf}.
 /*!
 \page dynamic-sensor-backend-registration.html
 \title Dynamic Sensor Backend Registration
-\ingroup sensors_backend_topics
 
 \section1 Static Backend Registration
 
