@@ -51,14 +51,14 @@
 
     If the module is imported into a namespace, some additional methods become available.
 
-    \code
+    \qml
     import QtSensors 5.0
-    ...
+    //  ...
         Component.onCompleted: {
             var types = QmlSensors.sensorTypes();
             console.log(types.join(", "));
         }
-    \endcode
+    \endqml
 
     The documentation for the module API can be found in SensorGlobal.
 
@@ -75,4 +75,6 @@
     The data from a sensor comes via a reading class.
 
     \annotatedlist qml-sensors_reading
+
+    \section1 All QML Types
 */

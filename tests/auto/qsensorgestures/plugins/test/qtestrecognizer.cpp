@@ -53,7 +53,7 @@ void QTestRecognizer::timeout()
 {
     Q_EMIT detected("tested");
     Q_EMIT tested();
-    QTimer::singleShot(10,this, SLOT(timeout()));
+    QTimer::singleShot(100, this, SLOT(timeout()));
 }
 
 
