@@ -38,7 +38,9 @@
 #include "winrtcommon.h"
 
 #include <QtSensors/QAccelerometerReading>
+#include <private/qeventdispatcher_winrt_p.h>
 
+#include <functional>
 #include <wrl.h>
 #include <windows.devices.sensors.h>
 using namespace Microsoft::WRL;
@@ -114,20 +116,24 @@ WinRtAccelerometer::WinRtAccelerometer(QSensor *sensor)
     : QSensorBackend(sensor), d_ptr(new WinRtAccelerometerPrivate(this))
 {
     Q_D(WinRtAccelerometer);
-    HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Accelerometer);
-    ComPtr<IAccelerometerStatics> factory;
-    HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
-    if (FAILED(hr)) {
-        qCWarning(lcWinRtSensors) << "Unable to initialize accelerometer factory."
-                                  << qt_error_string(hr);
-        sensorError(hr);
-        return;
-    }
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Accelerometer);
+        ComPtr<IAccelerometerStatics> factory;
+        HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
+        if (FAILED(hr)) {
+            qCWarning(lcWinRtSensors) << "Unable to initialize accelerometer factory."
+                                      << qt_error_string(hr);
+            return hr;
+        }
 
-    hr = factory->GetDefault(&d->sensor);
+        hr = factory->GetDefault(&d->sensor);
+        if (FAILED(hr)) {
+            qCWarning(lcWinRtSensors) << "Unable to get default accelerometer."
+                                      << qt_error_string(hr);
+        }
+        return hr;
+    });
     if (FAILED(hr) || !d->sensor) {
-        qCWarning(lcWinRtSensors) << "Unable to get default accelerometer."
-                                  << qt_error_string(hr);
         sensorError(hr);
         return;
     }
@@ -158,9 +164,11 @@ void WinRtAccelerometer::start()
     if (d->token.value)
         return;
 
-    ComPtr<AccelerometerReadingHandler> callback =
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        ComPtr<AccelerometerReadingHandler> callback =
             Callback<AccelerometerReadingHandler>(d, &WinRtAccelerometerPrivate::readingChanged);
-    HRESULT hr = d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+        return d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+    });
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to reading changed event."
                                   << qt_error_string(hr);
@@ -189,14 +197,16 @@ void WinRtAccelerometer::stop()
     if (!d->token.value)
         return;
 
-    HRESULT hr = d->sensor->remove_ReadingChanged(d->token);
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        return d->sensor->remove_ReadingChanged(d->token);
+    });
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to detach from reading changed event."
                                   << qt_error_string(hr);
         sensorError(hr);
         return;
     }
-    d->sensor->put_ReportInterval(0);
+    hr = d->sensor->put_ReportInterval(0);
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to reset report interval."
                                   << qt_error_string(hr);

@@ -38,7 +38,9 @@
 #include "winrtcommon.h"
 
 #include <QtSensors/QAmbientLightSensor>
+#include <private/qeventdispatcher_winrt_p.h>
 
+#include <functional>
 #include <wrl.h>
 #include <windows.devices.sensors.h>
 using namespace Microsoft::WRL;
@@ -113,20 +115,24 @@ WinRtAmbientLightSensor::WinRtAmbientLightSensor(QSensor *sensor)
     : QSensorBackend(sensor), d_ptr(new WinRtAmbientLightSensorPrivate(this))
 {
     Q_D(WinRtAmbientLightSensor);
-    HStringReference classId(RuntimeClass_Windows_Devices_Sensors_LightSensor);
-    ComPtr<ILightSensorStatics> factory;
-    HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
-    if (FAILED(hr)) {
-        qCWarning(lcWinRtSensors) << "Unable to initialize light sensor factory."
-                                  << qt_error_string(hr);
-        sensorError(hr);
-        return;
-    }
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        HStringReference classId(RuntimeClass_Windows_Devices_Sensors_LightSensor);
+        ComPtr<ILightSensorStatics> factory;
+        HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
+        if (FAILED(hr)) {
+            qCWarning(lcWinRtSensors) << "Unable to initialize light sensor factory."
+                                      << qt_error_string(hr);
+            return hr;
+        }
 
-    hr = factory->GetDefault(&d->sensor);
+        hr = factory->GetDefault(&d->sensor);
+        if (FAILED(hr)) {
+            qCWarning(lcWinRtSensors) << "Unable to get default light sensor."
+                                      << qt_error_string(hr);
+        }
+        return hr;
+    });
     if (FAILED(hr) || !d->sensor) {
-        qCWarning(lcWinRtSensors) << "Unable to get default light sensor."
-                                  << qt_error_string(hr);
         sensorError(hr);
         return;
     }
@@ -157,9 +163,11 @@ void WinRtAmbientLightSensor::start()
     if (d->token.value)
         return;
 
-    ComPtr<LightSensorReadingHandler> callback =
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        ComPtr<LightSensorReadingHandler> callback =
             Callback<LightSensorReadingHandler>(d, &WinRtAmbientLightSensorPrivate::readingChanged);
-    HRESULT hr = d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+        return d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+    });
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to reading changed event."
                                   << qt_error_string(hr);
@@ -188,14 +196,16 @@ void WinRtAmbientLightSensor::stop()
     if (!d->token.value)
         return;
 
-    HRESULT hr = d->sensor->remove_ReadingChanged(d->token);
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        return d->sensor->remove_ReadingChanged(d->token);
+    });
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to detach from reading changed event."
                                   << qt_error_string(hr);
         sensorError(hr);
         return;
     }
-    d->sensor->put_ReportInterval(0);
+    hr = d->sensor->put_ReportInterval(0);
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to reset report interval."
                                   << qt_error_string(hr);

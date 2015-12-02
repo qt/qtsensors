@@ -38,9 +38,9 @@
 #include "winrtcommon.h"
 
 #include <QtSensors/QOrientationSensor>
+#include <private/qeventdispatcher_winrt_p.h>
 
-QT_USE_NAMESPACE
-
+#include <functional>
 #include <wrl.h>
 #include <windows.devices.sensors.h>
 using namespace Microsoft::WRL;
@@ -119,20 +119,24 @@ WinRtOrientationSensor::WinRtOrientationSensor(QSensor *sensor)
     : QSensorBackend(sensor), d_ptr(new WinRtOrientationSensorPrivate(this))
 {
     Q_D(WinRtOrientationSensor);
-    HStringReference classId(RuntimeClass_Windows_Devices_Sensors_SimpleOrientationSensor);
-    ComPtr<ISimpleOrientationSensorStatics> factory;
-    HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
-    if (FAILED(hr)) {
-        qCWarning(lcWinRtSensors) << "Unable to initialize orientation sensor factory."
-                                  << qt_error_string(hr);
-        sensorError(hr);
-        return;
-    }
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        HStringReference classId(RuntimeClass_Windows_Devices_Sensors_SimpleOrientationSensor);
+        ComPtr<ISimpleOrientationSensorStatics> factory;
+        HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
+        if (FAILED(hr)) {
+            qCWarning(lcWinRtSensors) << "Unable to initialize orientation sensor factory."
+                                      << qt_error_string(hr);
+            return hr;
+        }
 
-    hr = factory->GetDefault(&d->sensor);
+        hr = factory->GetDefault(&d->sensor);
+        if (FAILED(hr)) {
+            qCWarning(lcWinRtSensors) << "Unable to get default orientation sensor."
+                                      << qt_error_string(hr);
+        }
+        return hr;
+    });
     if (FAILED(hr) || !d->sensor) {
-        qCWarning(lcWinRtSensors) << "Unable to get default orientation sensor."
-                                  << qt_error_string(hr);
         sensorError(hr);
         return;
     }
@@ -152,9 +156,11 @@ void WinRtOrientationSensor::start()
     if (d->token.value)
         return;
 
-    ComPtr<SimpleOrientationReadingHandler> callback =
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        ComPtr<SimpleOrientationReadingHandler> callback =
             Callback<SimpleOrientationReadingHandler>(d, &WinRtOrientationSensorPrivate::readingChanged);
-    HRESULT hr = d->sensor->add_OrientationChanged(callback.Get(), &d->token);
+        return d->sensor->add_OrientationChanged(callback.Get(), &d->token);
+    });
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to reading changed event."
                                   << qt_error_string(hr);
@@ -171,7 +177,9 @@ void WinRtOrientationSensor::stop()
     if (!d->token.value)
         return;
 
-    HRESULT hr = d->sensor->remove_OrientationChanged(d->token);
+    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
+        return d->sensor->remove_OrientationChanged(d->token);
+    });
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to detach from reading changed event."
                                   << qt_error_string(hr);
