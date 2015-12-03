@@ -42,6 +42,7 @@ QT_BEGIN_NAMESPACE
 
 class GenericTiltSensor : public QSensorBackend, public QAccelerometerFilter
 {
+    Q_OBJECT
 public:
 
     static char const * const id;
@@ -51,7 +52,7 @@ public:
     void start() Q_DECL_OVERRIDE;
     void stop() Q_DECL_OVERRIDE;
 
-    void calibrate();
+    Q_INVOKABLE void calibrate();
 
     bool filter(QAccelerometerReading *reading) Q_DECL_OVERRIDE;
 
