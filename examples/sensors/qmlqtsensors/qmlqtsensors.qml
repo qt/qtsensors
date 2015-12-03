@@ -106,18 +106,18 @@ ApplicationWindow {
         active: false
         //! [5]
         onReadingChanged: {
-            if (reading.lightLevel == AmbientLightSensor.Unknown)
-                ambientlighttext.text = "Ambient light: Unknown";
-            else if (reading.lightLevel == AmbientLightSensor.Dark)
+            if (reading.lightLevel == AmbientLightReading.Dark)
                 ambientlighttext.text = "Ambient light: Dark";
-            else if (reading.lightLevel == AmbientLightSensor.Twilight)
+            else if (reading.lightLevel == AmbientLightReading.Twilight)
                 ambientlighttext.text = "Ambient light: Twilight";
-            else if (reading.lightLevel == AmbientLightSensor.Light)
+            else if (reading.lightLevel == AmbientLightReading.Light)
                 ambientlighttext.text = "Ambient light: Light";
-            else if (reading.lightLevel == AmbientLightSensor.Bright)
+            else if (reading.lightLevel == AmbientLightReading.Bright)
                 ambientlighttext.text = "Ambient light: Bright";
-            else if (reading.lightLevel == AmbientLightSensor.Sunny)
+            else if (reading.lightLevel == AmbientLightReading.Sunny)
                 ambientlighttext.text = "Ambient light: Sunny";
+            else
+                ambientlighttext.text = "Ambient light: Unknown";
         }
         //! [5]
     }
@@ -160,7 +160,7 @@ ApplicationWindow {
                 height: 30
                 verticalAlignment: Text.AlignVCenter
                 //! [3]
-                text: "X Rotation: " + tilt.xRotation + "°"
+                text: "X Rotation: " + (tilt.reading ? tilt.reading.xRotation.toFixed(2) + "°" : "Unknown")
                 //! [3]
             }
         }
@@ -184,7 +184,7 @@ ApplicationWindow {
                 height: 30
                 verticalAlignment: Text.AlignVCenter
                 //! [4]
-                text: "Y Rotation: " + tilt.yRotation +  "°"
+                text: "Y Rotation: " + (tilt.reading ? tilt.reading.yRotation.toFixed(2) + "°" : "Unknown")
                 //! [4]
             }
         }
