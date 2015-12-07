@@ -302,7 +302,7 @@ void QSensorManager::unregisterBackend(const QByteArray &type, const QByteArray 
             d->firstIdentifierForType[type] = factoryByIdentifier.begin().key();
             if (d->firstIdentifierForType[type].startsWith("generic.")) {
                 // Don't let a generic backend be the default when some other backend exists!
-                for (FactoryForIdentifierMap::const_iterator it = factoryByIdentifier.begin()++; it != factoryByIdentifier.end(); it++) {
+                for (FactoryForIdentifierMap::const_iterator it = factoryByIdentifier.begin()++; it != factoryByIdentifier.end(); ++it) {
                     const QByteArray &identifier(it.key());
                     if (!identifier.startsWith("generic.")) {
                         d->firstIdentifierForType[type] = identifier;
