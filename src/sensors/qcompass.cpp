@@ -61,7 +61,6 @@ IMPLEMENT_READING(QCompassReading)
     The calibration status of the device is measured as a number from 0 to 1.
     A value of 1 is the highest level that the device can support and 0 is
     the worst.
-    \sa {http://wiki.forum.nokia.com/index.php/CS001671_-_Calibrating_the_magnetometer_sensor}{CS001671 - Calibrating the magnetometer sensor}
 */
 
 /*!
