@@ -7,7 +7,7 @@ CONFIG(debug,debug|release):DEFINES += ENABLE_RUNTIME_SENSORLOG
 
 qtHaveModule(simulator) {
     DEFINES += SIMULATOR_BUILD
-    QT += simulator
+    QT_FOR_PRIVATE += simulator
 }
 
 QMAKE_DOCS = $$PWD/doc/qtsensors.qdocconf
