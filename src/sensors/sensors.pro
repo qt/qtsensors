@@ -18,11 +18,6 @@ ANDROID_JAR_DEPENDENCIES = \
     jar/QtSensors.jar:org.qtproject.qt5.android.sensors.QtSensors
 ANDROID_LIB_DEPENDENCIES = \
     plugins/sensors/libqtsensors_android.so
-MODULE_PLUGIN_TYPES = \
-    sensors \
-    sensorgestures
-
-load(qt_module)
 
 PUBLIC_HEADERS += \
            qsensorbackend.h\
@@ -87,3 +82,8 @@ for(s,SENSORS) {
 }
 
 HEADERS += $$PUBLIC_HEADERS $$PRIVATE_HEADERS $$GESTURE_HEADERS
+
+MODULE_PLUGIN_TYPES = \
+    sensors \
+    sensorgestures
+load(qt_module)

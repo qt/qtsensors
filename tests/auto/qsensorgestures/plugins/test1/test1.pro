@@ -2,11 +2,6 @@ TARGET  = qtsensorgestures_testplugin1
 
 QT += sensors   sensorgestures
 
-PLUGIN_TYPE = sensorgestures
-PLUGIN_CLASS_NAME = QTestSensorGestureDupPlugin
-PLUGIN_EXTENDS = -
-load(qt_plugin)
-
 # Input
 HEADERS +=  qtestsensorgestureplugindup_p.h \
                   qtestrecognizerdup.h \
@@ -16,3 +11,8 @@ SOURCES += qtestsensorgestureplugindup.cpp \
                   qtest2recognizerduo.cpp
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
+
+PLUGIN_TYPE = sensorgestures
+PLUGIN_CLASS_NAME = QTestSensorGestureDupPlugin
+PLUGIN_EXTENDS = -
+load(qt_plugin)

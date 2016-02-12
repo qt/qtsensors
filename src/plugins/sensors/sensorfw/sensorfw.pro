@@ -1,10 +1,6 @@
 TARGET = qtsensors_sensorfw
 QT = core sensors network dbus
 
-PLUGIN_TYPE = sensors
-PLUGIN_CLASS_NAME = sensorfwSensorPlugin
-load(qt_plugin)
-
 include(sensorfw.pri)
 
 
@@ -16,3 +12,7 @@ CONFIGFILES.path = /etc/xdg/QtProject/
 INSTALLS += CONFIGFILES
 
 OTHER_FILES = plugin.json
+
+PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = sensorfwSensorPlugin
+load(qt_plugin)
