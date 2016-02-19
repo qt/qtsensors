@@ -1,5 +1,5 @@
 TARGET = qtsensors_winrt
-QT = sensors core
+QT = sensors core core_private
 
 PLUGIN_TYPE = sensors
 PLUGIN_CLASS_NAME = WinRtSensorPlugin

@@ -61,7 +61,7 @@ Q_SIGNALS:
 
 private:
     QSensor *sensor() const Q_DECL_OVERRIDE;
-    void _update();
+    void _update() Q_DECL_OVERRIDE;
     QRotationSensor *m_sensor;
     QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
 };
