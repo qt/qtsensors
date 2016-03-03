@@ -87,7 +87,7 @@ class Q_SENSORS_EXPORT QTapSensor : public QSensor
     Q_PROPERTY(bool returnDoubleTapEvents READ returnDoubleTapEvents WRITE setReturnDoubleTapEvents
                NOTIFY returnDoubleTapEventsChanged)
 public:
-    explicit QTapSensor(QObject *parent = 0);
+    explicit QTapSensor(QObject *parent = Q_NULLPTR);
     virtual ~QTapSensor();
     QTapReading *reading() const;
     static char const * const type;

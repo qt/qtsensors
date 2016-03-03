@@ -61,7 +61,7 @@ class Q_SENSORS_EXPORT QAmbientTemperatureSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QAmbientTemperatureSensor(QObject *parent = 0);
+    explicit QAmbientTemperatureSensor(QObject *parent = Q_NULLPTR);
     ~QAmbientTemperatureSensor();
     QAmbientTemperatureReading *reading() const;
     static char const * const type;

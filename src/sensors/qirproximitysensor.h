@@ -62,7 +62,7 @@ class Q_SENSORS_EXPORT QIRProximitySensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QIRProximitySensor(QObject *parent = 0);
+    explicit QIRProximitySensor(QObject *parent = Q_NULLPTR);
     virtual ~QIRProximitySensor();
     QIRProximityReading *reading() const;
     static char const * const type;

@@ -66,7 +66,7 @@ class Q_SENSORS_EXPORT QCompass : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QCompass(QObject *parent = 0);
+    explicit QCompass(QObject *parent = Q_NULLPTR);
     virtual ~QCompass();
     QCompassReading *reading() const;
     static char const * const type;

@@ -77,7 +77,7 @@ class Q_SENSORS_EXPORT QMagnetometer : public QSensor
     Q_OBJECT
     Q_PROPERTY(bool returnGeoValues READ returnGeoValues WRITE setReturnGeoValues NOTIFY returnGeoValuesChanged)
 public:
-    explicit QMagnetometer(QObject *parent = 0);
+    explicit QMagnetometer(QObject *parent = Q_NULLPTR);
     virtual ~QMagnetometer();
     QMagnetometerReading *reading() const;
     static char const * const type;

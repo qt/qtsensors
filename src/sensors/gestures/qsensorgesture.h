@@ -52,7 +52,7 @@ class Q_SENSORS_EXPORT QSensorGesture : public QObject
 {
     //Do not use Q_OBJECT here
 public:
-    QSensorGesture(const QStringList &ids, QObject *parent = 0);
+    QSensorGesture(const QStringList &ids, QObject *parent = Q_NULLPTR);
     ~QSensorGesture();
 
     bool isActive();

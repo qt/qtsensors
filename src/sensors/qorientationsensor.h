@@ -73,7 +73,7 @@ class Q_SENSORS_EXPORT QOrientationSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QOrientationSensor(QObject *parent = 0);
+    explicit QOrientationSensor(QObject *parent = Q_NULLPTR);
     virtual ~QOrientationSensor();
     QOrientationReading *reading() const;
     static char const * const type;
