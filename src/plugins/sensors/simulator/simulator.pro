@@ -1,9 +1,5 @@
 TARGET = qtsensors_simulator
 
-PLUGIN_TYPE = sensors
-PLUGIN_CLASS_NAME = SimulatorSensorPlugin
-load(qt_plugin)
-
 QT=core gui network sensors simulator
 
 HEADERS += \
@@ -30,3 +26,7 @@ SOURCES += \
     main.cpp
 
 OTHER_FILES = plugin.json
+
+PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = SimulatorSensorPlugin
+load(qt_plugin)

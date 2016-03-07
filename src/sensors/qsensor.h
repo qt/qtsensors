@@ -116,7 +116,7 @@ public:
         UserOrientation
     };
 
-    explicit QSensor(const QByteArray &type, QObject *parent = 0);
+    explicit QSensor(const QByteArray &type, QObject *parent = Q_NULLPTR);
     virtual ~QSensor();
 
     QByteArray identifier() const;
@@ -207,7 +207,7 @@ Q_SIGNALS:
     void bufferSizeChanged(int bufferSize);
 
 protected:
-    explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = 0);
+    explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = Q_NULLPTR);
     QSensorBackend *backend() const;
 
 private:
@@ -261,7 +261,7 @@ private:
 
 #define DECLARE_READING_D(classname, pclassname)\
     public:\
-        classname(QObject *parent = 0);\
+        classname(QObject *parent = Q_NULLPTR);\
         virtual ~classname();\
         void copyValuesFrom(QSensorReading *other);\
     private:\
@@ -272,7 +272,7 @@ private:
 
 #define IMPLEMENT_READING_D(classname, pclassname)\
     classname::classname(QObject *parent)\
-        : QSensorReading(parent, 0)\
+        : QSensorReading(parent, Q_NULLPTR)\
         , d(new pclassname)\
         {}\
     classname::~classname() {}\

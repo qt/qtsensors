@@ -1,9 +1,6 @@
 TARGET = qtsensors_android
-QT = sensors core
 
-PLUGIN_TYPE = sensors
-PLUGIN_CLASS_NAME = QCounterGesturePlugin
-load(qt_plugin)
+QT = sensors core
 
 # STATICPLUGIN needed because there's a Q_IMPORT_PLUGIN in main.cpp
 # Yes, the plugin imports itself statically
@@ -36,3 +33,7 @@ SOURCES = \
     androidlight.cpp
 
 OTHER_FILES = plugin.json
+
+PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = QCounterGesturePlugin
+load(qt_plugin)
