@@ -68,7 +68,7 @@ class Q_SENSORS_EXPORT QDistanceSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QDistanceSensor(QObject *parent = 0);
+    explicit QDistanceSensor(QObject *parent = Q_NULLPTR);
     ~QDistanceSensor();
     QDistanceReading *reading() const;
     static char const * const type;

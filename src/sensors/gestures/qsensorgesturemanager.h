@@ -55,7 +55,7 @@ class Q_SENSORS_EXPORT QSensorGestureManager : public QObject
     Q_DECLARE_PRIVATE(QSensorGestureManager)
 
 public:
-    explicit QSensorGestureManager(QObject *parent = 0);
+    explicit QSensorGestureManager(QObject *parent = Q_NULLPTR);
 
     ~QSensorGestureManager();
 

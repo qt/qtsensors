@@ -1,10 +1,6 @@
 TARGET = qtsensors_generic
 QT = core sensors
 
-PLUGIN_TYPE = sensors
-PLUGIN_CLASS_NAME = genericSensorPlugin
-load(qt_plugin)
-
 HEADERS += generictiltsensor.h
 
 SOURCES += main.cpp\
@@ -27,3 +23,7 @@ DEFINES += QTSENSORS_GENERICORIENTATIONSENSOR QTSENSORS_GENERICALSSENSOR
 }
 
 OTHER_FILES = plugin.json
+
+PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = genericSensorPlugin
+load(qt_plugin)

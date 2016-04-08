@@ -85,7 +85,7 @@
     <td nowrap="nowrap">Ambient Light Sensor</td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
@@ -103,7 +103,7 @@
     </tr>
     <tr>
     <td nowrap="nowrap">Compass</td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
@@ -175,7 +175,7 @@
     <td nowrap="nowrap">Orientation Sensor</td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
@@ -205,7 +205,7 @@
     <td nowrap="nowrap">Rotation Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
@@ -225,7 +225,7 @@
     <td nowrap="nowrap">Tilt Sensor</td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>

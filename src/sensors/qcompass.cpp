@@ -56,7 +56,7 @@ IMPLEMENT_READING(QCompassReading)
     \section2 QCompassReading Units
     The compass returns the azimuth of the device as degrees from
     magnetic north in a clockwise direction based on the top of the device,
-    as defined by QPlatformScreen::nativeOrientation.
+    as defined by QScreen::nativeOrientation.
     There is also a value to indicate the calibration status of the device.
     If the device is not calibrated the azimuth may not be accurate.
 
@@ -67,7 +67,6 @@ IMPLEMENT_READING(QCompassReading)
     The calibration status of the device is measured as a number from 0 to 1.
     A value of 1 is the highest level that the device can support and 0 is
     the worst.
-    \sa {http://wiki.forum.nokia.com/index.php/CS001671_-_Calibrating_the_magnetometer_sensor}{CS001671 - Calibrating the magnetometer sensor}
 */
 
 /*!
@@ -99,7 +98,7 @@ void QCompassReading::setAzimuth(qreal azimuth)
     \brief the calibration level of the reading.
 
     Measured as a value from 0 to 1 with higher values being better.
-    \sa {QCompassReading Units}, {http://wiki.forum.nokia.com/index.php/CS001671_-_Calibrating_the_magnetometer_sensor}{CS001671 - Calibrating the magnetometer sensor}
+    \sa {QCompassReading Units}
 */
 
 qreal QCompassReading::calibrationLevel() const

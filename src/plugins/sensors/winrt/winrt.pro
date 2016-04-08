@@ -1,9 +1,5 @@
 TARGET = qtsensors_winrt
-QT = sensors core
-
-PLUGIN_TYPE = sensors
-PLUGIN_CLASS_NAME = WinRtSensorPlugin
-load(qt_plugin)
+QT = sensors core core_private
 
 HEADERS += \
     winrtaccelerometer.h \
@@ -25,3 +21,7 @@ SOURCES += \
     winrtgyroscope.cpp
 
 OTHER_FILES = plugin.json
+
+PLUGIN_TYPE = sensors
+PLUGIN_CLASS_NAME = WinRtSensorPlugin
+load(qt_plugin)
