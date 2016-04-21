@@ -25,7 +25,7 @@ qmldir.path=$$DESTPATH
 INSTALLS += target qmldir
 
 OTHER_FILES += \
-    plugin.json qmldir
+    import.json qmldir
 
 # Copy the qmldir file to the same folder as the plugin binary
 cpqmldir.files = $$PWD/qmldir
