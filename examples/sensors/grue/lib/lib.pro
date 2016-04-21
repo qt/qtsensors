@@ -13,3 +13,5 @@ SOURCES += gruesensor.cpp
 
 target.path=$$[QT_INSTALL_EXAMPLES]/sensors/grue
 INSTALLS += target
+
+CONFIG += install_ok  # Do not cargo-cult this!

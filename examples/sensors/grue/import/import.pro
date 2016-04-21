@@ -20,6 +20,8 @@ DESTPATH=$$[QT_INSTALL_EXAMPLES]/sensors/grue/Grue
 target.path=$$DESTPATH
 INSTALLS += target
 
+CONFIG += install_ok  # Do not cargo-cult this!
+
 qmldir.files=$$PWD/qmldir
 qmldir.path=$$DESTPATH
 INSTALLS += qmldir

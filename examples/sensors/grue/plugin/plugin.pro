@@ -24,5 +24,7 @@ SOURCES += gruesensorimpl.cpp \
 target.path=$$[QT_INSTALL_EXAMPLES]/sensors/grue/$$PLUGIN_TYPE
 INSTALLS += target
 
+CONFIG += install_ok  # Do not cargo-cult this!
+
 OTHER_FILES += \
     plugin.json
