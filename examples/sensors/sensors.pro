@@ -17,4 +17,5 @@ qtHaveModule(quick) {
 qtHaveModule(widgets): SUBDIRS += \
     sensorgestures
 
-OTHER_FILES = stub.h
+EXAMPLE_FILES += \
+    stub.h

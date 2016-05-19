@@ -11,5 +11,5 @@ OTHER_FILES = \
     audio \
     content
 
-target.path = $$[QT_INSTALL_EXAMPLES]/qtsensors/shakeit
+target.path = $$[QT_INSTALL_EXAMPLES]/sensors/shakeit
 INSTALLS += target

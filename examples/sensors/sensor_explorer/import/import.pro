@@ -24,17 +24,12 @@ qmldir.files=$$PWD/qmldir
 qmldir.path=$$DESTPATH
 INSTALLS += target qmldir
 
+CONFIG += install_ok  # Do not cargo-cult this!
+
 OTHER_FILES += \
-    plugin.json qmldir
-
-copyfile = $$PWD/qmldir
-copydest = $$DESTDIR
-
-# On Windows, use backslashes as directory separators
-equals(QMAKE_HOST.os, Windows) {
-    copyfile ~= s,/,\\,g
-    copydest ~= s,/,\\,g
-}
+    import.json qmldir
 
 # Copy the qmldir file to the same folder as the plugin binary
-QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$copyfile) $$quote($$copydest) $$escape_expand(\\n\\t)
+cpqmldir.files = $$PWD/qmldir
+cpqmldir.path = $$DESTDIR
+COPIES += cpqmldir
