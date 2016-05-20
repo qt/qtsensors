@@ -7,6 +7,7 @@ PLUGIN_TYPE = sensorgestures
 PLUGIN_CLASS_NAME = QCounterGesturePlugin
 PLUGIN_EXTENDS = -
 load(qt_plugin)
+CONFIG += install_ok
 } else {
 
 TEMPLATE = lib
