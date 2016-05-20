@@ -70,10 +70,8 @@ private:
     bool proximityReading;
 
     QTimer *timer;
-    QtSensorGestureSensorHandler *handler;
     bool active;
     bool detecting;
-    qreal lastTs;
 };
 
 QT_END_NAMESPACE

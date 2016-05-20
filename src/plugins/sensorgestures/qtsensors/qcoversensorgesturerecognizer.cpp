@@ -36,9 +36,13 @@
 
 QT_BEGIN_NAMESPACE
 
-QCoverSensorGestureRecognizer::QCoverSensorGestureRecognizer(QObject *parent) :
-    QSensorGestureRecognizer(parent),
-  orientationReading(0), proximityReading(0),active(0), detecting(0)
+QCoverSensorGestureRecognizer::QCoverSensorGestureRecognizer(QObject *parent)
+    : QSensorGestureRecognizer(parent),
+      orientationReading(0),
+      proximityReading(0),
+      timer(0),
+      active(0),
+      detecting(0)
 {
 }
 
@@ -114,7 +118,6 @@ void QCoverSensorGestureRecognizer::proximityChanged(QProximityReading *reading)
             detecting = true;
         }
     }
-    lastTs = reading->timestamp();
 }
 
 void QCoverSensorGestureRecognizer::orientationReadingChanged(QOrientationReading *reading)
