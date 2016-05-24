@@ -48,7 +48,7 @@ QT_BEGIN_NAMESPACE
 class SensorExplorerDeclarativeModule : public QQmlExtensionPlugin
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "plugin.json")
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface" FILE "import.json")
 public:
     virtual void registerTypes(const char *uri)
     {

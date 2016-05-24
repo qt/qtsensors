@@ -16,3 +16,7 @@ OTHER_FILES = \
 
 target.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
 INSTALLS += target
+
+EXAMPLE_FILES += \
+    grue.xcf \
+    icon.xcf
