@@ -54,7 +54,7 @@ void SimulatorIRProximitySensor::poll()
     QtMobility::QIRProximityReadingData data = SensorsConnection::instance()->qtIRProximityData;
     quint64 newTimestamp;
     if (!data.timestamp.isValid())
-        newTimestamp = QDateTime::currentDateTime().toTime_t();
+        newTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000;
     else
         newTimestamp = data.timestamp.toTime_t();
     if (m_reading.reflectance() != data.irProximity) {
