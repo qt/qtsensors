@@ -42,7 +42,7 @@ package org.qtproject.qt5.android.sensors;
 import java.util.HashSet;
 import java.util.List;
 
-import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -58,10 +58,10 @@ public class QtSensors implements SensorEventListener
     static SensorManager m_sensorManager = null;
     static SparseArray<Sensor> m_registeredSensors = new SparseArray<Sensor>();
     static Object m_syncObject = new Object();
-    static public void setActivity(Activity activity, Object acitvityDelegate)
+    static public void setContext(Context context)
     {
         try {
-            m_sensorManager = (SensorManager)activity.getSystemService(Activity.SENSOR_SERVICE);
+            m_sensorManager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
         } catch(Exception e) {
             e.printStackTrace();
         }
