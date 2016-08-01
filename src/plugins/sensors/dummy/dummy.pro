@@ -12,7 +12,7 @@ SOURCES += dummycommon.cpp\
 
 OTHER_FILES = plugin.json
 
-unix:!mac:!qnx:!android:LIBS+=-lrt
+unix:!darwin:!qnx:!android:!openbsd: LIBS += -lrt
 
 PLUGIN_TYPE = sensors
 PLUGIN_CLASS_NAME = dummySensorPlugin
