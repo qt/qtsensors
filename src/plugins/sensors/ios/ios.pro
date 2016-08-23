@@ -18,7 +18,7 @@ OBJECTIVE_SOURCES += main.mm \
     ioscompass.mm \
     iosproximitysensor.mm
 
-LIBS += -framework UIKit -framework CoreMotion -framework CoreLocation
+LIBS += -framework Foundation -framework UIKit -framework CoreMotion -framework CoreLocation
 
 PLUGIN_TYPE = sensors
 PLUGIN_CLASS_NAME = IOSSensorPlugin
