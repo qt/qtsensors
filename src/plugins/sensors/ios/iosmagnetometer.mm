@@ -38,6 +38,9 @@ QT_BEGIN_NAMESPACE
 
 char const * const IOSMagnetometer::id("ios.magnetometer");
 
+int IOSMagnetometer::s_magnetometerStartCount = 0;
+int IOSMagnetometer::s_deviceMotionStartCount = 0;
+
 IOSMagnetometer::IOSMagnetometer(QSensor *sensor)
     : QSensorBackend(sensor)
     , m_motionManager([QIOSMotionManager sharedManager])
@@ -55,24 +58,37 @@ IOSMagnetometer::IOSMagnetometer(QSensor *sensor)
 
 void IOSMagnetometer::start()
 {
+    if (m_timer != 0)
+        return;
+
     int hz = sensor()->dataRate();
     m_timer = startTimer(1000 / (hz == 0 ? 60 : hz));
     m_returnGeoValues = static_cast<QMagnetometer *>(sensor())->returnGeoValues();
 
-    if (m_returnGeoValues)
-        [m_motionManager startDeviceMotionUpdates];
-    else
-        [m_motionManager startMagnetometerUpdates];
+    if (m_returnGeoValues) {
+        if (++s_deviceMotionStartCount == 1)
+            [m_motionManager startDeviceMotionUpdates];
+    } else {
+        if (++s_magnetometerStartCount == 1)
+            [m_motionManager startMagnetometerUpdates];
+    }
 }
 
 void IOSMagnetometer::stop()
 {
-    if (m_returnGeoValues)
-        [m_motionManager stopDeviceMotionUpdates];
-    else
-        [m_motionManager stopMagnetometerUpdates];
+    if (m_timer == 0)
+        return;
+
     killTimer(m_timer);
     m_timer = 0;
+
+    if (m_returnGeoValues) {
+        if (--s_deviceMotionStartCount == 0)
+            [m_motionManager stopDeviceMotionUpdates];
+    } else {
+        if (--s_magnetometerStartCount == 0)
+            [m_motionManager stopMagnetometerUpdates];
+    }
 }
 
 void IOSMagnetometer::timerEvent(QTimerEvent *)
