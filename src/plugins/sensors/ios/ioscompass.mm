@@ -65,8 +65,8 @@ QT_BEGIN_NAMESPACE
     quint64 timestamp = quint64(newHeading.timestamp.timeIntervalSinceReferenceDate * 1e6);
     double accuracy = newHeading.headingAccuracy;
     // Accuracy is the maximum number of degrees the reading can be off. The QtSensors scale
-    // goes from 1 to 0, with 1 being the best (0 degrees off), and 0 worst (365 degrees off):
-    qreal calibrationLevel = (accuracy < 0) ? 0 : qMax(0., 1 - (accuracy / 365));
+    // goes from 1 to 0, with 1 being the best (0 degrees off), and 0 worst (360 degrees off):
+    qreal calibrationLevel = (accuracy < 0) ? 0 : qMax(0., 1 - (accuracy / 360));
     qreal heading = qreal(newHeading.magneticHeading);
     m_iosCompass->headingChanged(heading, timestamp, calibrationLevel);
 }
