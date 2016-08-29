@@ -48,7 +48,7 @@ IMPLEMENT_READING(QHumidityReading)
     \class QHumidityReading
     \ingroup sensors_reading
     \inmodule QtSensors
-    \since 5.8
+    \since 5.9
 
     \brief The QHumidityReading class holds readings from the humidity sensor.
 
@@ -108,7 +108,7 @@ void QHumidityReading::setAbsoluteHumidity(qreal value)
     \class QHumidityFilter
     \ingroup sensors_filter
     \inmodule QtSensors
-    \since 5.8
+    \since 5.9
 
     \brief The QHumidityFilter class is a convenience wrapper around QSensorFilter.
 
@@ -136,7 +136,7 @@ char const * const QHumiditySensor::type("QHumiditySensor");
     \class QHumiditySensor
     \ingroup sensors_type
     \inmodule QtSensors
-    \since 5.8
+    \since 5.9
 
     \brief The QHumiditySensor class is a convenience wrapper around QSensor.
 

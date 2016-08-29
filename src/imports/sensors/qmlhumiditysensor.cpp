@@ -45,7 +45,7 @@
     \instantiates QmlHumiditySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
-    \since QtSensors 5.8
+    \since QtSensors 5.9
     \inherits Sensor
     \brief The HumiditySensor element reports on humidity.
 
@@ -82,7 +82,7 @@ QSensor *QmlHumiditySensor::sensor() const
     \instantiates QmlHumidityReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
-    \since QtSensors 5.8
+    \since QtSensors 5.9
     \inherits SensorReading
     \brief The HumidityReading element holds the most recent HumiditySensor reading.
 
