@@ -44,6 +44,8 @@ char const * const IOSGyroscope::id("ios.gyroscope");
 
 QT_BEGIN_NAMESPACE
 
+int IOSGyroscope::s_startCount = 0;
+
 IOSGyroscope::IOSGyroscope(QSensor *sensor)
     : QSensorBackend(sensor)
     , m_motionManager([QIOSMotionManager sharedManager])
@@ -56,16 +58,24 @@ IOSGyroscope::IOSGyroscope(QSensor *sensor)
 
 void IOSGyroscope::start()
 {
+    if (m_timer != 0)
+        return;
+
     int hz = sensor()->dataRate();
     m_timer = startTimer(1000 / (hz == 0 ? 60 : hz));
-    [m_motionManager startGyroUpdates];
+    if (++s_startCount == 1)
+        [m_motionManager startGyroUpdates];
 }
 
 void IOSGyroscope::stop()
 {
-    [m_motionManager stopGyroUpdates];
+    if (m_timer == 0)
+        return;
+
     killTimer(m_timer);
     m_timer = 0;
+    if (--s_startCount == 0)
+        [m_motionManager stopGyroUpdates];
 }
 
 void IOSGyroscope::timerEvent(QTimerEvent *)
