@@ -62,6 +62,8 @@ private:
     CMMotionManager *m_motionManager;
     QGyroscopeReading m_reading;
     int m_timer;
+
+    static int s_startCount;
 };
 QT_END_NAMESPACE
 

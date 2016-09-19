@@ -66,6 +66,9 @@ private:
     QMagnetometerReading m_reading;
     int m_timer;
     bool m_returnGeoValues;
+
+    static int s_magnetometerStartCount;
+    static int s_deviceMotionStartCount;
 };
 QT_END_NAMESPACE
 

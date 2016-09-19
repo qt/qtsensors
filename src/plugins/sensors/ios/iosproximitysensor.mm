@@ -45,6 +45,8 @@ char const * const IOSProximitySensor::id("ios.proximitysensor");
 
 QT_BEGIN_NAMESPACE
 
+int IOSProximitySensor::s_startCount = 0;
+
 @interface ProximitySensorCallback : NSObject
 {
     IOSProximitySensor *m_iosProximitySensor;
@@ -110,8 +112,12 @@ IOSProximitySensor::~IOSProximitySensor()
 
 void IOSProximitySensor::start()
 {
+    if (m_proximitySensorCallback)
+        return;
+
     m_proximitySensorCallback = [[ProximitySensorCallback alloc] initWithQIOSProximitySensor:this];
-    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+    if (++s_startCount == 1)
+        [UIDevice currentDevice].proximityMonitoringEnabled = YES;
 }
 
 void IOSProximitySensor::proximityChanged(bool close)
@@ -123,9 +129,13 @@ void IOSProximitySensor::proximityChanged(bool close)
 
 void IOSProximitySensor::stop()
 {
-    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+    if (!m_proximitySensorCallback)
+        return;
+
     [m_proximitySensorCallback release];
     m_proximitySensorCallback = 0;
+    if (--s_startCount == 0)
+        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
 }
 
 QT_END_NAMESPACE
