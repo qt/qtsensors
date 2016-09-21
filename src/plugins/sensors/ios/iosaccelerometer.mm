@@ -46,6 +46,8 @@ char const * const IOSAccelerometer::id("ios.accelerometer");
 
 QT_BEGIN_NAMESPACE
 
+int IOSAccelerometer::s_startCount = 0;
+
 IOSAccelerometer::IOSAccelerometer(QSensor *sensor)
     : QSensorBackend(sensor)
     , m_motionManager([QIOSMotionManager sharedManager])
@@ -58,16 +60,24 @@ IOSAccelerometer::IOSAccelerometer(QSensor *sensor)
 
 void IOSAccelerometer::start()
 {
+    if (m_timer != 0)
+        return;
+
     int hz = sensor()->dataRate();
     m_timer = startTimer(1000 / (hz == 0 ? 60 : hz));
-    [m_motionManager startAccelerometerUpdates];
+    if (++s_startCount == 1)
+        [m_motionManager startAccelerometerUpdates];
 }
 
 void IOSAccelerometer::stop()
 {
-    [m_motionManager stopAccelerometerUpdates];
+    if (m_timer == 0)
+        return;
+
     killTimer(m_timer);
     m_timer = 0;
+    if (--s_startCount == 0)
+        [m_motionManager stopAccelerometerUpdates];
 }
 
 void IOSAccelerometer::timerEvent(QTimerEvent *)

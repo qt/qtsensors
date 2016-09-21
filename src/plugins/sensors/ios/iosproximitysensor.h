@@ -64,6 +64,8 @@ public:
 private:
     ProximitySensorCallback *m_proximitySensorCallback;
     QProximityReading m_reading;
+
+    static int s_startCount;
 };
 QT_END_NAMESPACE
 
