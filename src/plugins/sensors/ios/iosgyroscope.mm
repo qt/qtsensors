@@ -40,6 +40,8 @@
 #include "iosmotionmanager.h"
 #include "iosgyroscope.h"
 
+#import <CoreMotion/CoreMotion.h>
+
 char const * const IOSGyroscope::id("ios.gyroscope");
 
 QT_BEGIN_NAMESPACE

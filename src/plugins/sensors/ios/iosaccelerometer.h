@@ -40,10 +40,10 @@
 #ifndef IOSACCELEROMETER_H
 #define IOSACCELEROMETER_H
 
-#include <CoreMotion/CMMotionManager.h>
-
 #include <qsensorbackend.h>
 #include <qaccelerometer.h>
+
+@class CMMotionManager;
 
 QT_BEGIN_NAMESPACE
 

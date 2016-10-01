@@ -37,10 +37,10 @@
 **
 ****************************************************************************/
 
-#include <UIKit/UIAccelerometer.h>
-
 #include "iosaccelerometer.h"
 #include "iosmotionmanager.h"
+
+#import <CoreMotion/CoreMotion.h>
 
 char const * const IOSAccelerometer::id("ios.accelerometer");
 

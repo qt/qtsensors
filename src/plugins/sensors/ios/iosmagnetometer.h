@@ -40,10 +40,10 @@
 #ifndef IOSMAGNETOMETER_H
 #define IOSMAGNETOMETER_H
 
-#include <CoreMotion/CMMotionManager.h>
-
 #include <qsensorbackend.h>
 #include <qmagnetometer.h>
+
+@class CMMotionManager;
 
 QT_BEGIN_NAMESPACE
 

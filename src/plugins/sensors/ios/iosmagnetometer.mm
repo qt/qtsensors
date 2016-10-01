@@ -40,6 +40,8 @@
 #include "iosmotionmanager.h"
 #include "iosmagnetometer.h"
 
+#import <CoreMotion/CoreMotion.h>
+
 QT_BEGIN_NAMESPACE
 
 char const * const IOSMagnetometer::id("ios.magnetometer");

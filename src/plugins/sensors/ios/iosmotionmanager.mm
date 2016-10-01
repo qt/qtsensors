@@ -39,6 +39,8 @@
 
 #include "iosmotionmanager.h"
 
+#import <CoreMotion/CoreMotion.h>
+
 static CMMotionManager *sharedManager = nil;
 
 @implementation QIOSMotionManager

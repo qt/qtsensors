@@ -40,10 +40,10 @@
 #ifndef IOSGYROSCOPE_H
 #define IOSGYROSCOPE_H
 
-#include <CoreMotion/CMMotionManager.h>
-
 #include <qsensorbackend.h>
 #include <qgyroscope.h>
+
+@class CMMotionManager;
 
 QT_BEGIN_NAMESPACE
 

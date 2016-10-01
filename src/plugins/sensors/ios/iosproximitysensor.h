@@ -43,9 +43,9 @@
 #include <qsensorbackend.h>
 #include <qproximitysensor.h>
 
-QT_BEGIN_NAMESPACE
-
 @class ProximitySensorCallback;
+
+QT_BEGIN_NAMESPACE
 
 class IOSProximitySensor : public QSensorBackend
 {
