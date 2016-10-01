@@ -1,10 +1,11 @@
 TEMPLATE = subdirs
+QT_FOR_CONFIG += sensors-private
 
 android {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = android generic
 }
 
-sensorfw {
+qtConfig(sensorfw) {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = sensorfw generic
 }
 
