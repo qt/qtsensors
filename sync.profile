@@ -3,8 +3,3 @@
 );
 %moduleheaders = ( # restrict the module headers to those found in relative path
 );
-%dependencies = (
-    "qtbase" => "",
-    "qtxmlpatterns" => "",
-    "qtdeclarative" => "",
-);
