@@ -48,6 +48,7 @@
 #include "sensorfwtapsensor.h"
 #include "sensorfwgyroscope.h"
 #include "sensorfwlightsensor.h"
+#include "sensorfwlidsensor.h"
 
 #include <QtSensors/qsensorplugin.h>
 #include <QtSensors/qsensorbackend.h>
@@ -97,6 +98,8 @@ public:
             return new SensorfwTapSensor(sensor);
         if (sensor->identifier() == SensorfwGyroscope::id)
             return new SensorfwGyroscope(sensor);
+        if (sensor->identifier() == SensorfwLidSensor::id)
+            return new SensorfwLidSensor(sensor);
         if (sensor->identifier() == SensorfwLightSensor::id)
             return new SensorfwLightSensor(sensor);
         if (sensor->identifier() == SensorfwIrProximitySensor::id)

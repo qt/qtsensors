@@ -162,6 +162,16 @@
     <td bgcolor="green"></td>
     </tr>
     <tr>
+    <td nowrap="nowrap">Lid Sensor</td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="gray"></td>
+    <td bgcolor="green"></td>
+    </tr>
+    <tr>
     <td nowrap="nowrap">Light Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>

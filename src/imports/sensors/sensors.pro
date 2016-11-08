@@ -22,7 +22,8 @@ HEADERS += \
     qmlsensorglobal.h \
     qmltiltsensor.h \
     qmlsensorgesture.h \
-    qmlhumiditysensor.h
+    qmlhumiditysensor.h \
+    qmllidsensor.h
 
 SOURCES += sensors.cpp \
     qmlsensor.cpp \
@@ -46,7 +47,8 @@ SOURCES += sensors.cpp \
     qmlsensorglobal.cpp \
     qmltiltsensor.cpp \
     qmlsensorgesture.cpp \
-    qmlhumiditysensor.cpp
+    qmlhumiditysensor.cpp \
+    qmllidsensor.cpp
 
 load(qml_plugin)
 

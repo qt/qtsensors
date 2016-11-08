@@ -55,6 +55,7 @@
 #include <QtSensors/qgyroscope.h>
 #include <QtSensors/qirproximitysensor.h>
 #include <QtSensors/qtiltsensor.h>
+#include <QtSensors/qlidsensor.h>
 
 #include "qmlsensorglobal.h"
 #include "qmlsensor.h"
@@ -75,6 +76,7 @@
 #include "qmltapsensor.h"
 #include "qmltiltsensor.h"
 #include "qmlsensorgesture.h"
+#include "qmllidsensor.h"
 
 static void initResources()
 {
@@ -222,11 +224,14 @@ public:
 
         qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
 
-        // Register the 5.7 interfaces
-        // No API changes, just reintroduce existing interfaces from 5.2
-        // Implicitly registers 5.3 - 5.6 too
         minor = 7;
         qmlRegisterType           <QmlAltimeter                >(package, major, minor, "Altimeter");
+        // Register the 5.9 interfaces
+        // No API changes, just reintroduce existing interfaces from 5.2
+        // Implicitly registers 5.3 - 5.7 too
+        minor = 9;
+        qmlRegisterType           <QmlLidSensor                >(package, major, minor, "LidSensor");
+        qmlRegisterUncreatableType<QmlLidReading               >(package, major, minor, "LidReading",          QLatin1String("Cannot create LidReading"));
     }
 };
 
