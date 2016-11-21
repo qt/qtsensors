@@ -33,13 +33,27 @@
 
 #include "androidmagnetometer.h"
 
+enum AndroidSensorStatus
+{
+    SENSOR_STATUS_UNRELIABLE = 0,
+    SENSOR_STATUS_ACCURACY_LOW = 1,
+    SENSOR_STATUS_ACCURACY_MEDIUM = 2,
+    SENSOR_STATUS_ACCURACY_HIGH = 3,
+};
+
 AndroidMagnetometer::AndroidMagnetometer(AndroidSensors::AndroidSensorType type, QSensor *sensor)
     :AndroidCommonSensor<QMagnetometerReading>(type, sensor)
 {}
 
 void AndroidMagnetometer::onAccuracyChanged(jint accuracy)
 {
-    m_reader.setCalibrationLevel(accuracy);
+    // Expected range is [0, 3]
+    if (accuracy < SENSOR_STATUS_UNRELIABLE || accuracy > SENSOR_STATUS_ACCURACY_HIGH) {
+        qWarning("Unable to get sensor accuracy. Unexpected value: %d", accuracy);
+        return;
+    }
+
+    m_reader.setCalibrationLevel(accuracy / qreal(3.0));
 }
 
 void AndroidMagnetometer::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
