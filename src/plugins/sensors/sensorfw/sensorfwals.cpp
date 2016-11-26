@@ -71,7 +71,7 @@ void Sensorfwals::start()
 
 void Sensorfwals::slotDataAvailable(const Unsigned& data)
 {
-    QAmbientLightReading::LightLevel level = getLightLevel(data.x());
+    QAmbientLightReading::LightLevel level = getLightLevel(data.UnsignedData().value_);
     if (level != m_reading.lightLevel()) {
         m_reading.setLightLevel(level);
         m_reading.setTimestamp(data.UnsignedData().timestamp_);
