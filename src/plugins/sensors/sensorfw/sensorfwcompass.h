@@ -55,9 +55,9 @@ public:
     static char const * const id;
     SensorfwCompass(QSensor *sensor);
 protected:
-    bool doConnect() Q_DECL_OVERRIDE;
-    QString sensorName() const Q_DECL_OVERRIDE;
-    void start() Q_DECL_OVERRIDE;
+    bool doConnect() override;
+    QString sensorName() const override;
+    void start() override;
     virtual void init();
 private:
     QCompassReading m_reading;

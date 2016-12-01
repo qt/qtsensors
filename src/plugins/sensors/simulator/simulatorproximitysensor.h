@@ -50,7 +50,7 @@ public:
 
     SimulatorProximitySensor(QSensor *sensor);
 
-    void poll() Q_DECL_OVERRIDE;
+    void poll() override;
 private:
     QProximityReading m_reading;
 };

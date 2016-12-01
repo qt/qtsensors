@@ -51,10 +51,10 @@ public:
 
     genericalssensor(QSensor *sensor);
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
-    bool filter(QLightReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QLightReading *reading) override;
 
 private:
     QAmbientLightReading m_reading;

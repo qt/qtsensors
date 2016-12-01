@@ -55,9 +55,9 @@ public:
     ~QmlAmbientLightSensor();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QAmbientLightSensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 
 };
 
@@ -76,8 +76,8 @@ Q_SIGNALS:
     void lightLevelChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QAmbientLightSensor *m_sensor;
     QAmbientLightReading::LightLevel m_lightLevel;
 };

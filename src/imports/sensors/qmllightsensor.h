@@ -60,9 +60,9 @@ Q_SIGNALS:
     void fieldOfViewChanged(qreal fieldOfView);
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QLightSensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlLightSensorReading : public QmlSensorReading
@@ -79,8 +79,8 @@ Q_SIGNALS:
     void illuminanceChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QLightSensor *m_sensor;
     qreal m_illuminance;
 };

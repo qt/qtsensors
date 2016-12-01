@@ -56,11 +56,11 @@ public:
     IIOSensorProxyLightSensor(QSensor *sensor);
     ~IIOSensorProxyLightSensor();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 protected:
-    void updateProperties(const QVariantMap &changedProperties) Q_DECL_OVERRIDE;
+    void updateProperties(const QVariantMap &changedProperties) override;
 
 private:
     void updateLightLevel(double lux);

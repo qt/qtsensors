@@ -57,9 +57,9 @@ public:
     Q_INVOKABLE void calibrate();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QTiltSensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlTiltSensorReading : public QmlSensorReading
@@ -79,8 +79,8 @@ Q_SIGNALS:
     void xRotationChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QTiltSensor *m_sensor;
     qreal m_yRotation;
     qreal m_xRotation;

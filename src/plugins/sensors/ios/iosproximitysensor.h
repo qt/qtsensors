@@ -55,8 +55,8 @@ public:
     explicit IOSProximitySensor(QSensor *sensor);
     ~IOSProximitySensor();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
     void proximityChanged(bool close);
     static bool available();

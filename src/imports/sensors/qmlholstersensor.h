@@ -53,8 +53,8 @@ public:
     ~QmlHolsterSensor();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
 
     QHolsterSensor *m_sensor;
 };
@@ -73,8 +73,8 @@ Q_SIGNALS:
     void holsteredChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
 
     QHolsterSensor *m_sensor;
     bool m_holstered;

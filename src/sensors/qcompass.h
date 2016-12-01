@@ -65,7 +65,7 @@ class Q_SENSORS_EXPORT QCompassFilter : public QSensorFilter
 public:
     virtual bool filter(QCompassReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT QCompass : public QSensor

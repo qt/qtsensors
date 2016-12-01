@@ -53,8 +53,8 @@ public:
     ~QmlAltimeter();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
 
     QAltimeter *m_sensor;
 };
@@ -73,8 +73,8 @@ Q_SIGNALS:
     void altitudeChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
 
     QAltimeter *m_sensor;
     qreal m_altitude;

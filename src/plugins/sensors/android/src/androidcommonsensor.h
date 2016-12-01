@@ -61,13 +61,13 @@ public:
         if (m_isStarted)
             stop();
     }
-    void start() Q_DECL_OVERRIDE
+    void start() override
     {
         if (AndroidSensors::registerListener(m_type, this, sensor()->dataRate()))
             m_isStarted = true;
     }
 
-    void stop() Q_DECL_OVERRIDE
+    void stop() override
     {
         if (m_isStarted) {
             m_isStarted = false;

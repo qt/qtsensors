@@ -57,9 +57,9 @@ public:
 
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QProximitySensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlProximitySensorReading : public QmlSensorReading
@@ -76,8 +76,8 @@ Q_SIGNALS:
     void nearChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QProximitySensor *m_sensor;
     bool m_near;
 };

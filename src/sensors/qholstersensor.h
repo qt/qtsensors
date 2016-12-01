@@ -60,7 +60,7 @@ class Q_SENSORS_EXPORT QHolsterFilter : public QSensorFilter
 public:
     virtual bool filter(QHolsterReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT QHolsterSensor : public QSensor

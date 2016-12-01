@@ -47,8 +47,8 @@ class AndroidRotation : public AndroidCommonSensor<QRotationReading>
 public:
     AndroidRotation(AndroidSensors::AndroidSensorType type, QSensor *sensor);
 private:
-    void onAccuracyChanged(jint accuracy) Q_DECL_OVERRIDE;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) Q_DECL_OVERRIDE;
+    void onAccuracyChanged(jint accuracy) override;
+    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
 };
 
 #endif // ANDROIDROTATION_H

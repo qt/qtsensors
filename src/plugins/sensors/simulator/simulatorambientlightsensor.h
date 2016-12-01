@@ -50,7 +50,7 @@ public:
 
     SimulatorAmbientLightSensor(QSensor *sensor);
 
-    void poll() Q_DECL_OVERRIDE;
+    void poll() override;
 private:
     QAmbientLightReading m_reading;
 };

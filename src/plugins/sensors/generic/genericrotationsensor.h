@@ -52,10 +52,10 @@ public:
 
     genericrotationsensor(QSensor *sensor);
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 
 private:
     QRotationReading m_reading;

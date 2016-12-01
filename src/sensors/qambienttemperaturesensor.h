@@ -60,7 +60,7 @@ class Q_SENSORS_EXPORT QAmbientTemperatureFilter : public QSensorFilter
 public:
     virtual bool filter(QAmbientTemperatureReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT QAmbientTemperatureSensor : public QSensor

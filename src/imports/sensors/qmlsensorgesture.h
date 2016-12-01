@@ -61,8 +61,8 @@ class QmlSensorGesture : public QObject, public QQmlParserStatus
 public:
     explicit QmlSensorGesture(QObject* parent = 0);
     ~QmlSensorGesture();
-    void classBegin() Q_DECL_OVERRIDE;
-    void componentComplete() Q_DECL_OVERRIDE;
+    void classBegin() override;
+    void componentComplete() override;
 
 Q_SIGNALS:
     void detected(const QString &gesture);

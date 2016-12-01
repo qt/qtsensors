@@ -43,7 +43,7 @@ public:
 
     void start();
     void stop();
-    bool isFeatureSupported(QSensor::Feature feature) const Q_DECL_OVERRIDE;
+    bool isFeatureSupported(QSensor::Feature feature) const override;
 
 signals:
     void emitBusyChanged();

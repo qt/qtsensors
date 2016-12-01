@@ -50,15 +50,15 @@ public:
     WinRtRotationSensor(QSensor *sensor);
     ~WinRtRotationSensor();
 
-    bool isFeatureSupported(QSensor::Feature feature) const Q_DECL_OVERRIDE
+    bool isFeatureSupported(QSensor::Feature feature) const override
     {
         if (feature == QSensor::AxesOrientation || feature == QSensor::AccelerationMode)
             return true;
         return false;
     }
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     QScopedPointer<WinRtRotationSensorPrivate> d_ptr;

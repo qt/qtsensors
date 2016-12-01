@@ -55,9 +55,9 @@ public:
     static char const * const id;
     SensorfwTapSensor(QSensor *sensor);
 protected:
-    bool doConnect() Q_DECL_OVERRIDE;
-    void start() Q_DECL_OVERRIDE;
-    QString sensorName() const Q_DECL_OVERRIDE;
+    bool doConnect() override;
+    void start() override;
+    QString sensorName() const override;
     virtual void init();
 private:
     QTapReading m_reading;

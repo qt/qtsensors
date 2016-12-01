@@ -62,9 +62,9 @@ Q_SIGNALS:
     void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QTapSensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlTapSensorReading : public QmlSensorReading
@@ -85,8 +85,8 @@ Q_SIGNALS:
     void isDoubleTapChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QTapSensor *m_sensor;
     QTapReading::TapDirection m_tapDirection;
     bool m_isDoubleTap;

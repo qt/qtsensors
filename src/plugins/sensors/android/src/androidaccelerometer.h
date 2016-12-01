@@ -51,8 +51,8 @@ public:
     AndroidAccelerometer(AndroidSensors::AndroidSensorType type, QSensor *sensor);
     static AndroidSensors::AndroidSensorType modeToSensor(QAccelerometer::AccelerationMode mode);
 private:
-    void onAccuracyChanged(jint accuracy) Q_DECL_OVERRIDE;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) Q_DECL_OVERRIDE;
+    void onAccuracyChanged(jint accuracy) override;
+    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
 
 private Q_SLOTS:
     void applyAccelerationMode();

@@ -50,8 +50,8 @@ public:
     WinRtAmbientLightSensor(QSensor *sensor);
     ~WinRtAmbientLightSensor();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     QScopedPointer<WinRtAmbientLightSensorPrivate> d_ptr;

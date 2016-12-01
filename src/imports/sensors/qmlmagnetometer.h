@@ -61,9 +61,9 @@ Q_SIGNALS:
     void returnGeoValuesChanged(bool returnGeoValues);
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QMagnetometer *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlMagnetometerReading : public QmlSensorReading
@@ -89,8 +89,8 @@ Q_SIGNALS:
     void calibrationLevelChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QMagnetometer *m_sensor;
     qreal m_x;
     qreal m_y;

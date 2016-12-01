@@ -60,10 +60,10 @@ Q_SIGNALS:
     void hasZChanged(bool hasZ);
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    void _update() Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
+    void _update() override;
     QRotationSensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlRotationSensorReading : public QmlSensorReading
@@ -86,8 +86,8 @@ Q_SIGNALS:
     void zChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QRotationSensor *m_sensor;
     qreal m_x;
     qreal m_y;

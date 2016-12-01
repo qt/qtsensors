@@ -82,7 +82,7 @@ class Q_SENSORS_EXPORT QTapFilter : public QSensorFilter
 public:
     virtual bool filter(QTapReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class QTapSensorPrivate;

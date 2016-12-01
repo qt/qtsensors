@@ -57,10 +57,10 @@ public:
     static char const * const id;
     SensorfwGyroscope(QSensor *sensor);
 protected:
-    bool doConnect() Q_DECL_OVERRIDE;
-    QString sensorName() const Q_DECL_OVERRIDE;
-    qreal correctionFactor() const Q_DECL_OVERRIDE;
-    void start() Q_DECL_OVERRIDE;
+    bool doConnect() override;
+    QString sensorName() const override;
+    qreal correctionFactor() const override;
+    void start() override;
     virtual void init();
 
 private:

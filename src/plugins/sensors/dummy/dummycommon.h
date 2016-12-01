@@ -48,10 +48,10 @@ class dummycommon : public QSensorBackend
 public:
     dummycommon(QSensor *sensor);
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
     virtual void poll() = 0;
-    void timerEvent(QTimerEvent * /*event*/) Q_DECL_OVERRIDE;
+    void timerEvent(QTimerEvent * /*event*/) override;
 
 protected:
     quint64 getTimestamp();
