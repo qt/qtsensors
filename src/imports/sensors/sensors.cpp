@@ -98,7 +98,7 @@ class QtSensorsDeclarativeModule : public QQmlExtensionPlugin
     Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid FILE "plugin.json")
 public:
     QtSensorsDeclarativeModule(QObject *parent = 0) : QQmlExtensionPlugin(parent) { initResources(); }
-    virtual void registerTypes(const char *uri)
+    void registerTypes(const char *uri) override
     {
         char const * const package = "QtSensors";
         if (QLatin1String(uri) != QLatin1String(package)) return;
