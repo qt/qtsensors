@@ -61,7 +61,7 @@ class Q_SENSORS_EXPORT QProximityFilter : public QSensorFilter
 public:
     virtual bool filter(QProximityReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT QProximitySensor : public QSensor

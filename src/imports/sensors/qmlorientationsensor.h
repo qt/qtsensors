@@ -56,9 +56,9 @@ public:
 
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QOrientationSensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlOrientationSensorReading : public QmlSensorReading
@@ -76,8 +76,8 @@ Q_SIGNALS:
     void orientationChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QOrientationSensor *m_sensor;
     QOrientationReading::Orientation m_orientation;
 };

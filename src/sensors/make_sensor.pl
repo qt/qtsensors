@@ -107,8 +107,8 @@ public:
     ~'.$qmlsensor.'();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
 
     '.$sensor.' *m_sensor;
 };
@@ -127,8 +127,8 @@ Q_SIGNALS:
     void prop1Changed();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
 
     '.$sensor.' *m_sensor;
     qreal m_prop1;
@@ -313,7 +313,7 @@ class Q_SENSORS_EXPORT '.$filter.' : public QSensorFilter
 public:
     virtual bool filter('.$reading.' *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT '.$sensor.' : public QSensor

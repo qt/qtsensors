@@ -50,8 +50,8 @@ public:
     WinRtCompass(QSensor *sensor);
     ~WinRtCompass();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     QScopedPointer<WinRtCompassPrivate> d_ptr;

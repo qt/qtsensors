@@ -53,8 +53,8 @@ public:
     ~QmlAmbientTemperatureSensor();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
 
     QAmbientTemperatureSensor *m_sensor;
 };
@@ -73,8 +73,8 @@ Q_SIGNALS:
     void temperatureChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
 
     QAmbientTemperatureSensor *m_sensor;
     qreal m_temperature;

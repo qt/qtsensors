@@ -40,10 +40,10 @@
 #ifndef IOSMAGNETOMETER_H
 #define IOSMAGNETOMETER_H
 
-#include <CoreMotion/CMMotionManager.h>
-
 #include <qsensorbackend.h>
 #include <qmagnetometer.h>
+
+@class CMMotionManager;
 
 QT_BEGIN_NAMESPACE
 
@@ -53,10 +53,10 @@ public:
     static char const * const id;
 
     explicit IOSMagnetometer(QSensor *sensor);
-    void timerEvent(QTimerEvent *) Q_DECL_OVERRIDE;
+    void timerEvent(QTimerEvent *) override;
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
     void startMagnetometer();
     void startDeviceMotion();

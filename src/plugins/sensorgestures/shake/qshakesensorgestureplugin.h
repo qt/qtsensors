@@ -55,11 +55,11 @@ public:
     explicit QShakeSensorGesturePlugin();
     ~QShakeSensorGesturePlugin();
 
-    QList <QSensorGestureRecognizer *> createRecognizers() Q_DECL_OVERRIDE;
+    QList <QSensorGestureRecognizer *> createRecognizers() override;
 
     QStringList gestureSignals() const;
-    QStringList supportedIds() const Q_DECL_OVERRIDE;
-    QString name() const Q_DECL_OVERRIDE { return "ShakeGestures"; }
+    QStringList supportedIds() const override;
+    QString name() const override { return "ShakeGestures"; }
 };
 
 #endif // QSHAKESENSORGESTUREPLUGIN_H

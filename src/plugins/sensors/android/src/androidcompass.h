@@ -56,8 +56,8 @@ public:
     AndroidCompass(QSensor *sensor);
     ~AndroidCompass();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     AndroidAccelerometerListener *m_accelerometerListener;

@@ -50,8 +50,8 @@ public:
     WinRtAccelerometer(QSensor *sensor);
     ~WinRtAccelerometer();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     QScopedPointer<WinRtAccelerometerPrivate> d_ptr;

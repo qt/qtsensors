@@ -50,7 +50,7 @@ public:
 
     SimulatorAccelerometer(QSensor *sensor);
 
-    void poll() Q_DECL_OVERRIDE;
+    void poll() override;
 private:
     QAccelerometerReading m_reading;
 };

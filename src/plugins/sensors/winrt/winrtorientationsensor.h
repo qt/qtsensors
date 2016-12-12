@@ -50,8 +50,8 @@ public:
     WinRtOrientationSensor(QSensor *sensor);
     ~WinRtOrientationSensor();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     QScopedPointer<WinRtOrientationSensorPrivate> d_ptr;

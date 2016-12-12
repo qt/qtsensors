@@ -64,12 +64,12 @@ public:
         AndroidSensors::unregisterListener(AndroidSensors::TYPE_ACCELEROMETER, this);
     }
 
-    void onAccuracyChanged(jint accuracy) Q_DECL_OVERRIDE
+    void onAccuracyChanged(jint accuracy) override
     {
         Q_UNUSED(accuracy);
     }
 
-    void onSensorChanged(jlong /*timestamp*/, const jfloat *values, uint size) Q_DECL_OVERRIDE
+    void onSensorChanged(jlong /*timestamp*/, const jfloat *values, uint size) override
     {
         if (size < 3)
             return;
@@ -104,12 +104,12 @@ public:
         AndroidSensors::unregisterListener(AndroidSensors::TYPE_MAGNETIC_FIELD, this);
     }
 
-    void onAccuracyChanged(jint accuracy) Q_DECL_OVERRIDE
+    void onAccuracyChanged(jint accuracy) override
     {
         Q_UNUSED(accuracy);
     }
 
-    void onSensorChanged(jlong /*timestamp*/, const jfloat *values, uint size) Q_DECL_OVERRIDE
+    void onSensorChanged(jlong /*timestamp*/, const jfloat *values, uint size) override
     {
         if (size < 3)
             return;

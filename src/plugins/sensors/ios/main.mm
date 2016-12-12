@@ -48,6 +48,11 @@
 #include "ioscompass.h"
 #include "iosproximitysensor.h"
 
+#import <CoreLocation/CoreLocation.h>
+#ifdef HAVE_COREMOTION
+#import <CoreMotion/CoreMotion.h>
+#endif
+
 class IOSSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
     Q_OBJECT
@@ -56,30 +61,41 @@ class IOSSensorPlugin : public QObject, public QSensorPluginInterface, public QS
 public:
     void registerSensors()
     {
+#ifdef HAVE_COREMOTION
         QSensorManager::registerBackend(QAccelerometer::type, IOSAccelerometer::id, this);
         if ([QIOSMotionManager sharedManager].gyroAvailable)
             QSensorManager::registerBackend(QGyroscope::type, IOSGyroscope::id, this);
         if ([QIOSMotionManager sharedManager].magnetometerAvailable)
             QSensorManager::registerBackend(QMagnetometer::type, IOSMagnetometer::id, this);
+#endif
+#ifdef HAVE_COMPASS
         if ([CLLocationManager headingAvailable])
             QSensorManager::registerBackend(QCompass::type, IOSCompass::id, this);
+#endif
+#ifdef HAVE_UIDEVICE
         if (IOSProximitySensor::available())
             QSensorManager::registerBackend(QProximitySensor::type, IOSProximitySensor::id, this);
+#endif
     }
 
     QSensorBackend *createBackend(QSensor *sensor)
     {
+#ifdef HAVE_COREMOTION
         if (sensor->identifier() == IOSAccelerometer::id)
             return new IOSAccelerometer(sensor);
         if (sensor->identifier() == IOSGyroscope::id)
             return new IOSGyroscope(sensor);
         if (sensor->identifier() == IOSMagnetometer::id)
             return new IOSMagnetometer(sensor);
+#endif
+#ifdef HAVE_COMPASS
         if (sensor->identifier() == IOSCompass::id)
             return new IOSCompass(sensor);
+#endif
+#ifdef HAVE_UIDEVICE
         if (sensor->identifier() == IOSProximitySensor::id)
             return new IOSProximitySensor(sensor);
-
+#endif
         return 0;
     }
 };

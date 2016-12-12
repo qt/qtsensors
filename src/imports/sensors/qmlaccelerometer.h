@@ -70,9 +70,9 @@ signals:
     Q_REVISION(1) void accelerationModeChanged(AccelerationMode accelerationMode);
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QAccelerometer *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlAccelerometerReading : public QmlSensorReading
@@ -95,8 +95,8 @@ Q_SIGNALS:
     void zChanged();
 
 private:
-    QSensorReading *reading() const  Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const  override;
+    void readingUpdate() override;
     QAccelerometer *m_sensor;
     qreal m_x;
     qreal m_y;

@@ -60,7 +60,7 @@ class Q_SENSORS_EXPORT QAltimeterFilter : public QSensorFilter
 public:
     virtual bool filter(QAltimeterReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT QAltimeter : public QSensor

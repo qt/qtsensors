@@ -43,9 +43,9 @@
 #include <qsensorbackend.h>
 #include <qproximitysensor.h>
 
-QT_BEGIN_NAMESPACE
-
 @class ProximitySensorCallback;
+
+QT_BEGIN_NAMESPACE
 
 class IOSProximitySensor : public QSensorBackend
 {
@@ -55,8 +55,8 @@ public:
     explicit IOSProximitySensor(QSensor *sensor);
     ~IOSProximitySensor();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
     void proximityChanged(bool close);
     static bool available();

@@ -54,12 +54,12 @@ public:
     explicit QWhipSensorGestureRecognizer(QObject *parent = 0);
     ~QWhipSensorGestureRecognizer();
 
-    void create() Q_DECL_OVERRIDE;
+    void create() override;
 
-    QString id() const Q_DECL_OVERRIDE;
-    bool start() Q_DECL_OVERRIDE;
-    bool stop() Q_DECL_OVERRIDE;
-    bool isActive() Q_DECL_OVERRIDE;
+    QString id() const override;
+    bool start() override;
+    bool stop() override;
+    bool isActive() override;
 
 Q_SIGNALS:
     void whip();

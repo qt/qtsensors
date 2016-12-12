@@ -56,11 +56,11 @@ class QtSensorGesturePlugin : public QObject, public QSensorGesturePluginInterfa
 public:
     explicit QtSensorGesturePlugin();
     ~QtSensorGesturePlugin();
-    QList <QSensorGestureRecognizer *> createRecognizers() Q_DECL_OVERRIDE;
+    QList <QSensorGestureRecognizer *> createRecognizers() override;
 
     QStringList gestureSignals() const;
-    QStringList supportedIds() const Q_DECL_OVERRIDE;
-    QString name() const Q_DECL_OVERRIDE { return "QtSensorGestures"; }
+    QStringList supportedIds() const override;
+    QString name() const override { return "QtSensorGestures"; }
 
 };
 

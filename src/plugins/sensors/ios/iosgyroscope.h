@@ -40,10 +40,10 @@
 #ifndef IOSGYROSCOPE_H
 #define IOSGYROSCOPE_H
 
-#include <CoreMotion/CMMotionManager.h>
-
 #include <qsensorbackend.h>
 #include <qgyroscope.h>
+
+@class CMMotionManager;
 
 QT_BEGIN_NAMESPACE
 
@@ -53,10 +53,10 @@ public:
     static char const * const id;
 
     explicit IOSGyroscope(QSensor *sensor);
-    void timerEvent(QTimerEvent *) Q_DECL_OVERRIDE;
+    void timerEvent(QTimerEvent *) override;
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
 private:
     CMMotionManager *m_motionManager;

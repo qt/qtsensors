@@ -40,8 +40,9 @@
 #ifndef IOSMOTIONMANAGER_H
 #define IOSMOTIONMANAGER_H
 
-#import <UIKit/UIKit.h>
-#import <CoreMotion/CoreMotion.h>
+#import <Foundation/Foundation.h>
+
+@class CMMotionManager;
 
 @interface QIOSMotionManager : NSObject {
 }

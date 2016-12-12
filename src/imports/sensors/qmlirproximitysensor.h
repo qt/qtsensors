@@ -54,9 +54,9 @@ public:
     ~QmlIRProximitySensor();
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QIRProximitySensor *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlIRProximitySensorReading : public QmlSensorReading
@@ -73,8 +73,8 @@ Q_SIGNALS:
     void reflectanceChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QIRProximitySensor *m_sensor;
     qreal m_reflectance;
 };

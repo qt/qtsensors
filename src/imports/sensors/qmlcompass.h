@@ -55,9 +55,9 @@ public:
 
 
 private:
-    QSensor *sensor() const Q_DECL_OVERRIDE;
+    QSensor *sensor() const override;
     QCompass *m_sensor;
-    QmlSensorReading *createReading() const Q_DECL_OVERRIDE;
+    QmlSensorReading *createReading() const override;
 };
 
 class QmlCompassReading : public QmlSensorReading
@@ -77,8 +77,8 @@ Q_SIGNALS:
     void calibrationLevelChanged();
 
 private:
-    QSensorReading *reading() const Q_DECL_OVERRIDE;
-    void readingUpdate() Q_DECL_OVERRIDE;
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
     QCompass *m_sensor;
     qreal m_azimuth;
     qreal m_calibrationLevel;

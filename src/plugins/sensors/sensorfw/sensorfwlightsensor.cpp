@@ -52,7 +52,7 @@ SensorfwLightSensor::SensorfwLightSensor(QSensor *sensor)
 
 void SensorfwLightSensor::slotDataAvailable(const Unsigned& data)
 {
-    m_reading.setLux(data.x());
+    m_reading.setLux(data.UnsignedData().value_);
     m_reading.setTimestamp(data.UnsignedData().timestamp_);
     newReadingAvailable();
 }

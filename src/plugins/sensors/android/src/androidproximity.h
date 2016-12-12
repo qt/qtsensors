@@ -49,8 +49,8 @@ class AndroidProximity : public AndroidCommonSensor<QProximityReading>
 public:
     AndroidProximity(AndroidSensors::AndroidSensorType type, QSensor *sensor);
 private:
-    void onAccuracyChanged(jint accuracy) Q_DECL_OVERRIDE;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) Q_DECL_OVERRIDE;
+    void onAccuracyChanged(jint accuracy) override;
+    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
     qreal m_maximumRange;
 };
 

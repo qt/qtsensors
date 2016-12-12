@@ -50,7 +50,7 @@ public:
 
     SimulatorIRProximitySensor(QSensor *sensor);
 
-    void poll() Q_DECL_OVERRIDE;
+    void poll() override;
 private:
     QIRProximityReading m_reading;
 };

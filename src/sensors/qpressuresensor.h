@@ -64,7 +64,7 @@ class Q_SENSORS_EXPORT QPressureFilter : public QSensorFilter
 public:
     virtual bool filter(QPressureReading *reading) = 0;
 private:
-    bool filter(QSensorReading *reading) Q_DECL_OVERRIDE;
+    bool filter(QSensorReading *reading) override;
 };
 
 class Q_SENSORS_EXPORT QPressureSensor : public QSensor

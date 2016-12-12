@@ -55,8 +55,8 @@ public:
     explicit IOSCompass(QSensor *sensor);
     ~IOSCompass();
 
-    void start() Q_DECL_OVERRIDE;
-    void stop() Q_DECL_OVERRIDE;
+    void start() override;
+    void stop() override;
 
     void headingChanged(qreal heading, quint64 timestamp, qreal calibrationLevel);
 
