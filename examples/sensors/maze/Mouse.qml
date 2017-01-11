@@ -60,10 +60,6 @@ Item {
         visible:  true
     }
 
-    function distance(origX, origY, newX, newY) {
-      return Math.sqrt((Math.pow((newX - origX),2)) + (Math.pow((newY - origY),2)))
-    }
-
     //Function for moving the mouse
     function move(newx, newy)
     {
@@ -73,18 +69,8 @@ Item {
 //! [0]
         var a = newy - mouse.y
         var b = newx - mouse.x
-        var c = distance(mouse.x, mouse.y, newx, newy)
         var radians_to_degrees = 57.2957795
-
-        if (a > 0)
-            angle = -Math.acos(a / b) * radians_to_degrees
-        else
-            angle = -Math.asin(b / c) * radians_to_degrees
-        if (b > 0)
-             angle = -Math.acos(a / c) * radians_to_degrees
-        else
-            angle = Math.acos(a / c) * radians_to_degrees
-
+        angle = Math.atan2(-b, a) * radians_to_degrees
         if (angle < 0)
             angle = 360 + angle
 
