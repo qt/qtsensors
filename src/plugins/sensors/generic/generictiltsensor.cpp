@@ -39,14 +39,13 @@
 
 #include "generictiltsensor.h"
 #include <QDebug>
-#define _USE_MATH_DEFINES
 #include <qmath.h>
 
 char const * const GenericTiltSensor::id("generic.tilt");
 
 GenericTiltSensor::GenericTiltSensor(QSensor *sensor)
     : QSensorBackend(sensor)
-    , radAccuracy(M_PI / 180)
+    , radAccuracy(qDegreesToRadians(qreal(1)))
     , pitch(0)
     , roll(0)
     , calibratedPitch(0)
@@ -106,11 +105,6 @@ void GenericTiltSensor::calibrate()
     calibratedRoll = roll;
 }
 
-static qreal rad2deg(qreal rad)
-{
-    return rad / (2 * M_PI) * 360;
-}
-
 bool GenericTiltSensor::filter(QAccelerometerReading *reading)
 {
     /*
@@ -159,18 +153,18 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
     qDebug() << "new yrot: " << yrot;
     qDebug() << "----------------------------------";
 #endif
-    qreal dxrot = rad2deg(xrot) - xRotation;
-    qreal dyrot = rad2deg(yrot) - yRotation;
+    qreal dxrot = qRadiansToDegrees(xrot) - xRotation;
+    qreal dyrot = qRadiansToDegrees(yrot) - yRotation;
     if (dxrot < 0) dxrot = -dxrot;
     if (dyrot < 0) dyrot = -dyrot;
 
     bool setNewReading = false;
-    if (dxrot >= rad2deg(radAccuracy) || !sensor()->skipDuplicates()) {
-        xRotation = rad2deg(xrot);
+    if (dxrot >= qRadiansToDegrees(radAccuracy) || !sensor()->skipDuplicates()) {
+        xRotation = qRadiansToDegrees(xrot);
         setNewReading = true;
     }
-    if (dyrot >= rad2deg(radAccuracy) || !sensor()->skipDuplicates()) {
-        yRotation = rad2deg(yrot);
+    if (dyrot >= qRadiansToDegrees(radAccuracy) || !sensor()->skipDuplicates()) {
+        yRotation = qRadiansToDegrees(yrot);
         setNewReading = true;
     }
 

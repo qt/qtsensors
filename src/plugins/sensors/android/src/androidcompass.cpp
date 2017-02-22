@@ -168,7 +168,6 @@ void AndroidCompass::testStuff()
         return;
     qreal azimuth = AndroidSensors::getCompassAzimuth(m_accelerometerListener->reading, m_magnetometerListener->reading);
 
-    azimuth = azimuth * 180.0 / M_PI;
-    m_reading.setAzimuth(azimuth);
+    m_reading.setAzimuth(qRadiansToDegrees(azimuth));
     newReadingAvailable();
 }

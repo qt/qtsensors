@@ -44,7 +44,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#define RADIANS_TO_DEGREES 57.2957795
 #define TIMER_TIMEOUT 750
 QTwistSensorGestureRecognizer::QTwistSensorGestureRecognizer(QObject *parent)
     : QSensorGestureRecognizer(parent)
@@ -155,7 +154,7 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
     if (!detecting && !checking&& dataList.count() > 21)
         dataList.removeFirst();
 
-    qreal angle = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    qreal angle = qRadiansToDegrees(qAtan(x / qSqrt(y * y + z * z)));
 
     if (qAbs(angle) > 2) {
         if (detecting) {
@@ -177,7 +176,7 @@ void QTwistSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         if (!detecting && increaseCount > 3 && qAbs(angle) > 30) {
             decreaseCount = 0;
             detecting = true;
-            detectedAngle = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
+            detectedAngle = qRadiansToDegrees(qAtan(y / qSqrt(x * x + z * z)));
         }
     } else {
         increaseCount = 0;

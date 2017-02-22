@@ -38,7 +38,7 @@
 ****************************************************************************/
 
 #include "androidgyroscope.h"
-#include <math.h>
+#include <QtCore/qmath.h>
 
 AndroidGyroscope::AndroidGyroscope(AndroidSensors::AndroidSensorType type, QSensor *sensor)
     : AndroidCommonSensor<QGyroscopeReading>(type, sensor)
@@ -50,9 +50,9 @@ void AndroidGyroscope::onSensorChanged(jlong timestamp, const jfloat *values, ui
         return;
     m_reader.setTimestamp(timestamp/1000);
     // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
-    m_reader.setX(values[0]*180/M_PI);
-    m_reader.setY(values[1]*180/M_PI);
-    m_reader.setZ(values[2]*180/M_PI);
+    m_reader.setX(qRadiansToDegrees(values[0]));
+    m_reader.setY(qRadiansToDegrees(values[1]));
+    m_reader.setZ(qRadiansToDegrees(values[2]));
     newReadingAvailable();
 }
 

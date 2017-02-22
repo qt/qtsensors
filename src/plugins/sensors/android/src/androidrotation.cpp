@@ -38,7 +38,7 @@
 ****************************************************************************/
 
 #include "androidrotation.h"
-#include <math.h>
+#include <QtCore/qmath.h>
 
 AndroidRotation::AndroidRotation(AndroidSensors::AndroidSensorType type, QSensor *sensor)
     : AndroidCommonSensor<QRotationReading>(type, sensor)
@@ -55,9 +55,9 @@ void AndroidRotation::onSensorChanged(jlong timestamp, const jfloat *values, uin
         return;
     m_reader.setTimestamp(timestamp/1000);
 
-    float rz = -values[0]*180/M_PI;
-    float rx = -values[1]*180/M_PI;
-    float ry = values[2]*180/M_PI;
+    float rz = -qRadiansToDegrees(values[0]);
+    float rx = -qRadiansToDegrees(values[1]);
+    float ry =  qRadiansToDegrees(values[2]);
     m_reader.setFromEuler(rx, ry, rz);
     newReadingAvailable();
 }

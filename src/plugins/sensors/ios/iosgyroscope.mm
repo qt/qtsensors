@@ -41,6 +41,7 @@
 #include "iosgyroscope.h"
 
 #import <CoreMotion/CoreMotion.h>
+#import <QtCore/qmath.h>
 
 char const * const IOSGyroscope::id("ios.gyroscope");
 
@@ -89,9 +90,9 @@ void IOSGyroscope::timerEvent(QTimerEvent *)
     if (rate.x != rate.x || rate.y != rate.y || rate.z != rate.z)
         return;
     m_reading.setTimestamp(quint64(data.timestamp * 1e6));
-    m_reading.setX((qreal(rate.x) / M_PI) * 180);
-    m_reading.setY((qreal(rate.y) / M_PI) * 180);
-    m_reading.setZ((qreal(rate.z) / M_PI) * 180);
+    m_reading.setX(qRadiansToDegrees(qreal(rate.x)));
+    m_reading.setY(qRadiansToDegrees(qreal(rate.y)));
+    m_reading.setZ(qRadiansToDegrees(qreal(rate.z)));
     newReadingAvailable();
 }
 

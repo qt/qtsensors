@@ -41,8 +41,6 @@
 #include <QDebug>
 #include <qmath.h>
 
-#define RADIANS_TO_DEGREES 57.2957795
-
 char const * const genericrotationsensor::id("generic.rotation");
 
 genericrotationsensor::genericrotationsensor(QSensor *sensor)
@@ -88,8 +86,8 @@ bool genericrotationsensor::filter(QSensorReading *reading)
 
     // Note that the formula used come from this document:
     // http://www.freescale.com/files/sensors/doc/app_note/AN3461.pdf
-    pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
-    roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    pitch = qRadiansToDegrees(qAtan(y / qSqrt(x * x + z * z)));
+    roll  = qRadiansToDegrees(qAtan(x / qSqrt(y * y + z * z)));
     // Roll is a left-handed rotation but we need right-handed rotation
     roll = -roll;
 
@@ -98,7 +96,7 @@ bool genericrotationsensor::filter(QSensorReading *reading)
     // Note that theta is defined as the angle of the Z axis relative
     // to gravity (see referenced document). It's negative when the
     // face of the device points downward.
-    qreal theta = qAtan(qSqrt(x*x + y*y) / z) * RADIANS_TO_DEGREES;
+    qreal theta = qRadiansToDegrees(qAtan(qSqrt(x * x + y * y) / z));
     if (theta < 0) {
         if (roll > 0)
             roll = 180 - roll;

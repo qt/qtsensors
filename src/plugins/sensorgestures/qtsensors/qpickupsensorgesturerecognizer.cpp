@@ -41,7 +41,6 @@
 
 #include <QtCore/qmath.h>
 
-#define RADIANS_TO_DEGREES 57.2957795
 #define TIMER_TIMEOUT 250
 
 QT_BEGIN_NAMESPACE
@@ -117,8 +116,8 @@ void QPickupSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading
     const qreal ydiff = pYaxis - y;
     const qreal zdiff =  pZaxis - z;
 
-    qreal pitch = qAtan(y / qSqrt(x*x + z*z)) * RADIANS_TO_DEGREES;
-    qreal roll = qAtan(x / qSqrt(y*y + z*z)) * RADIANS_TO_DEGREES;
+    qreal pitch = qRadiansToDegrees(qAtan(y / qSqrt(x * x + z * z)));
+    qreal roll  = qRadiansToDegrees(qAtan(x / qSqrt(y * y + z * z)));
 
     if ((qAbs(xdiff) < 0.7 && qAbs(ydiff) < .7 && qAbs(zdiff) < .7)
             || z < 0) {
