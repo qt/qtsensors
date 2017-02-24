@@ -62,6 +62,7 @@ Item {
     width: Lib.cellDimension
     height: Lib.cellDimension
     property int angle
+    readonly property double radians_to_degrees: 180 / Math.PI
 
     AnimatedImage {
         id: img
@@ -79,8 +80,7 @@ Item {
 //! [0]
         var a = newy - mouse.y
         var b = newx - mouse.x
-        var radians_to_degrees = 57.2957795
-        angle = Math.atan2(-b, a) * radians_to_degrees
+        angle = Math.atan2(-b, a) * mouse.radians_to_degrees
         if (angle < 0)
             angle = 360 + angle
 

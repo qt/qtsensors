@@ -63,7 +63,7 @@ ApplicationWindow {
     width: 320
     height: 480
     visible: true
-
+    readonly property double radians_to_degrees: 180 / Math.PI
 
 //! [1]
     Accelerometer {
@@ -101,10 +101,10 @@ ApplicationWindow {
     }
 
     function calcPitch(x,y,z) {
-        return -(Math.atan(y / Math.sqrt(x * x + z * z)) * 57.2957795);
+        return -Math.atan2(y, Math.hypot(x, z)) * mainWindow.radians_to_degrees;
     }
     function calcRoll(x,y,z) {
-         return -(Math.atan(x / Math.sqrt(y * y + z * z)) * 57.2957795);
+        return -Math.atan2(x, Math.hypot(y, z)) * mainWindow.radians_to_degrees;
     }
 
     Image {
