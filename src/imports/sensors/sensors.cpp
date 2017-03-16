@@ -224,11 +224,8 @@ public:
 
         qmlRegisterType           <QmlSensorGesture            >(package, major, minor, "SensorGesture");
 
-        minor = 7;
-        qmlRegisterType           <QmlAltimeter                >(package, major, minor, "Altimeter");
-        // Register the 5.9 interfaces
-        // No API changes, just reintroduce existing interfaces from 5.2
-        // Implicitly registers 5.3 - 5.7 too
+        // Register the new 5.9 interfaces
+        // Implicitly registers 5.3 - 5.8 too
         minor = 9;
         qmlRegisterType           <QmlLidSensor                >(package, major, minor, "LidSensor");
         qmlRegisterUncreatableType<QmlLidReading               >(package, major, minor, "LidReading",          QLatin1String("Cannot create LidReading"));

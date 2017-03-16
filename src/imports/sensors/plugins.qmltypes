@@ -49,12 +49,8 @@ Module {
     Component {
         name: "QmlAltimeter"
         prototype: "QmlSensor"
-        exports: [
-            "QtSensors/Altimeter 5.1",
-            "QtSensors/Altimeter 5.2",
-            "QtSensors/Altimeter 5.7"
-        ]
-        exportMetaObjectRevisions: [0, 0, 0]
+        exports: ["QtSensors/Altimeter 5.1", "QtSensors/Altimeter 5.2"]
+        exportMetaObjectRevisions: [0, 0]
     }
     Component {
         name: "QmlAltimeterReading"
