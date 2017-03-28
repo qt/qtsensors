@@ -271,7 +271,7 @@ QAccelerometerReading *QAccelerometer::reading() const
 /*!
     \fn QAccelerometer::accelerationModeChanged(AccelerationMode accelerationMode)
 
-    Emitted when the acceleration mode was changed.
+    Emitted when the \a accelerationMode was changed.
 
     \since 5.1
 */
