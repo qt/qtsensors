@@ -24,3 +24,9 @@ QtSensors
 
  - Added QLidSensor
  - Added sensorfw backend for QLidSensor
+
+General
+-------
+
+ - QHumiditySensor:
+   * Added QHumiditySensor sensor API.
