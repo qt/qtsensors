@@ -547,7 +547,7 @@ void QSensor::setSkipDuplicates(bool skipDuplicates)
     \fn QSensor::skipDuplicatesChanged(bool skipDuplicates)
     \since 5.1
 
-    This signal is emitted when the skipDuplicates property changes.
+    This signal is emitted when the \a skipDuplicates property changes.
 */
 
 /*!

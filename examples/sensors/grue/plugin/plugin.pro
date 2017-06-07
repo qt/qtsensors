@@ -5,10 +5,10 @@ PLUGIN_TYPE = sensors
 
 QT = core sensors
 
-DESTDIR = ../$$PLUGIN_TYPE
+macos: DESTDIR = ../grue_app.app/Contents/MacOS/$$PLUGIN_TYPE
+else: DESTDIR = ../$$PLUGIN_TYPE
 
-INCLUDEPATH += $$PWD/../lib
-LIBS += -L$$OUT_PWD/.. -lgruesensor
+include(../lib/lib.pri)
 
 # Shared gruesensor library will be installed in parent directory.
 # Define rpath so that this plugin will know where to look for it.

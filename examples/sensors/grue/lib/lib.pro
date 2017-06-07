@@ -1,7 +1,10 @@
 TEMPLATE = lib
 TARGET = gruesensor
 
-DESTDIR = $$OUT_PWD/..
+macos: DESTDIR = ../grue_app.app/Contents/Frameworks
+else: DESTDIR = $$OUT_PWD/..
+
+macos: QMAKE_SONAME_PREFIX = @rpath
 
 DEFINES *= QT_BUILD_GRUE_LIB
 QT = core sensors

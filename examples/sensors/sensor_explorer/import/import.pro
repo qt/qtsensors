@@ -2,7 +2,9 @@ TEMPLATE = lib
 CONFIG += plugin
 
 TARGET = $$qtLibraryTarget(declarative_explorer)
-DESTDIR = ../Explorer
+
+macos: DESTDIR = ../sensor_explorer.app/Contents/MacOS/Explorer
+else: DESTDIR = ../Explorer
 
 QT += qml sensors
 
