@@ -64,7 +64,7 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlHumiditySensor : public QmlSensor
     QML_NAMED_ELEMENT(HumiditySensor)
     QML_ADDED_IN_VERSION(5,9)
 public:
-    explicit QmlHumiditySensor(QObject *parent = Q_NULLPTR);
+    explicit QmlHumiditySensor(QObject *parent = nullptr);
     ~QmlHumiditySensor();
 
 private:

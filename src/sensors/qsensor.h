@@ -114,7 +114,7 @@ public:
     };
     Q_ENUM(AxesOrientationMode)
 
-    explicit QSensor(const QByteArray &type, QObject *parent = Q_NULLPTR);
+    explicit QSensor(const QByteArray &type, QObject *parent = nullptr);
     virtual ~QSensor();
 
     QByteArray identifier() const;
@@ -206,7 +206,7 @@ Q_SIGNALS:
     void identifierChanged();
 
 protected:
-    explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = Q_NULLPTR);
+    explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = nullptr);
     QSensorBackend *backend() const;
 
 private:
@@ -260,7 +260,7 @@ private:
 
 #define DECLARE_READING_D(classname, pclassname)\
     public:\
-        classname(QObject *parent = Q_NULLPTR);\
+        classname(QObject *parent = nullptr);\
         virtual ~classname();\
         void copyValuesFrom(QSensorReading *other) override;\
     private:\
@@ -271,7 +271,7 @@ private:
 
 #define IMPLEMENT_READING_D(classname, pclassname)\
     classname::classname(QObject *parent)\
-        : QSensorReading(parent, Q_NULLPTR)\
+        : QSensorReading(parent, nullptr)\
         , d(new pclassname)\
         {}\
     classname::~classname() {}\

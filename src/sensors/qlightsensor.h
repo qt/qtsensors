@@ -71,7 +71,7 @@ class Q_SENSORS_EXPORT QLightSensor : public QSensor
     Q_OBJECT
     Q_PROPERTY(qreal fieldOfView READ fieldOfView NOTIFY fieldOfViewChanged)
 public:
-    explicit QLightSensor(QObject *parent = Q_NULLPTR);
+    explicit QLightSensor(QObject *parent = nullptr);
     virtual ~QLightSensor();
     QLightReading *reading() const;
     static char const * const sensorType;

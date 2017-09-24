@@ -51,7 +51,7 @@ class Q_SENSORS_EXPORT QSensorBackend : public QObject
 {
     Q_OBJECT
 public:
-    explicit QSensorBackend(QSensor *sensor, QObject *parent = Q_NULLPTR);
+    explicit QSensorBackend(QSensor *sensor, QObject *parent = nullptr);
     virtual ~QSensorBackend();
 
     virtual void start() = 0;

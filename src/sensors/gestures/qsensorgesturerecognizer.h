@@ -53,7 +53,7 @@ class Q_SENSORS_EXPORT QSensorGestureRecognizer : public QObject
 {
     Q_OBJECT
 public:
-    explicit QSensorGestureRecognizer(QObject *parent = Q_NULLPTR);
+    explicit QSensorGestureRecognizer(QObject *parent = nullptr);
     virtual ~QSensorGestureRecognizer();
 
     virtual QString id() const = 0;

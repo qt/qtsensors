@@ -67,7 +67,7 @@ class Q_SENSORS_EXPORT QAltimeter : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QAltimeter(QObject *parent = Q_NULLPTR);
+    explicit QAltimeter(QObject *parent = nullptr);
     ~QAltimeter();
     QAltimeterReading *reading() const;
     static char const * const sensorType;

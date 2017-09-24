@@ -67,7 +67,7 @@ class Q_SENSORS_EXPORT QHolsterSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QHolsterSensor(QObject *parent = Q_NULLPTR);
+    explicit QHolsterSensor(QObject *parent = nullptr);
     ~QHolsterSensor();
     QHolsterReading *reading() const;
     static char const * const sensorType;

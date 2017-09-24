@@ -80,7 +80,7 @@ class Q_SENSORS_EXPORT QAccelerometer : public QSensor
     Q_PROPERTY(AccelerationMode accelerationMode READ accelerationMode WRITE setAccelerationMode
                NOTIFY accelerationModeChanged)
 public:
-    explicit QAccelerometer(QObject *parent = Q_NULLPTR);
+    explicit QAccelerometer(QObject *parent = nullptr);
     virtual ~QAccelerometer();
 
     // Keep this enum in sync with QmlAccelerometer::AccelerationMode

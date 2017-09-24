@@ -78,7 +78,7 @@ class Q_SENSORS_EXPORT QAmbientLightSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QAmbientLightSensor(QObject *parent = Q_NULLPTR);
+    explicit QAmbientLightSensor(QObject *parent = nullptr);
     virtual ~QAmbientLightSensor();
     QAmbientLightReading *reading() const;
     static char const * const sensorType;

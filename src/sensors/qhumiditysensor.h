@@ -75,7 +75,7 @@ class Q_SENSORS_EXPORT QHumiditySensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QHumiditySensor(QObject *parent = Q_NULLPTR);
+    explicit QHumiditySensor(QObject *parent = nullptr);
     ~QHumiditySensor();
 
     QHumidityReading *reading() const;

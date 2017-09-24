@@ -71,7 +71,7 @@ class Q_SENSORS_EXPORT QPressureSensor : public QSensor
 {
     Q_OBJECT
 public:
-    explicit QPressureSensor(QObject *parent = Q_NULLPTR);
+    explicit QPressureSensor(QObject *parent = nullptr);
     ~QPressureSensor();
     QPressureReading *reading() const;
     static char const * const sensorType;
