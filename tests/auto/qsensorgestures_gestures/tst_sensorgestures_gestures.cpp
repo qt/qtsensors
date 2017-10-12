@@ -87,6 +87,7 @@ void tst_sensorgestures_gestures::initTestCase()
 void tst_sensorgestures_gestures::testSingleGestures()
 {
     QFETCH(QString, gestureId);
+    QFETCH(QStringList, gestureSignals);
 
     QString name = "mock_data/sensordata_" + gestureId + ".dat";
 
@@ -105,21 +106,31 @@ void tst_sensorgestures_gestures::testSingleGestures()
     gesture.data()->startDetection();
     QCOMPARE(gesture->isActive(),true);
 
-    QTRY_COMPARE_WITH_TIMEOUT(spy_gesture.count(),1, 7000);
+    auto toStringList = [](const QList<QList<QVariant>> list) {
+        QStringList result;
+        for (const QList<QVariant> &item: list) {
+            if (!item.isEmpty())
+                result << item.first().toString();
+        }
+        return result;
+    };
+
+    QTRY_COMPARE_WITH_TIMEOUT(toStringList(spy_gesture), gestureSignals, 7000);
 }
 
 void tst_sensorgestures_gestures::testSingleGestures_data()
 {
     QTest::addColumn<QString>("gestureId");
-    QTest::newRow("cover") << "cover";
-    QTest::newRow("doubletap") << "doubletap";
-    QTest::newRow("hover") << "hover";
-    QTest::newRow("pickup") << "pickup";
-    QTest::newRow("shake2") << "shake2"; //multi?
-    QTest::newRow("slam") << "slam";
-    QTest::newRow("turnover") << "turnover";
-    QTest::newRow("twist") << "twist"; //multi?
-    QTest::newRow("whip") << "whip";
+    QTest::addColumn<QStringList>("gestureSignals");
+    QTest::newRow("cover") << "cover" << QStringList({ "cover"});
+    QTest::newRow("doubletap") << "doubletap" << QStringList({ "doubletap" });
+    QTest::newRow("hover") << "hover" << QStringList({ "hover" });
+    QTest::newRow("pickup") << "pickup" << QStringList({ "pickup" });
+    QTest::newRow("shake2") << "shake2" << QStringList({ "shakeRight" });
+    QTest::newRow("slam") << "slam" << QStringList({ "slam" });
+    QTest::newRow("turnover") << "turnover" << QStringList({ "turnover" });
+    QTest::newRow("twist") << "twist" << QStringList({ "twistLeft", "twistLeft", "twistRight" });
+    QTest::newRow("whip") << "whip" << QStringList({ "whip" });
 }
 
 void tst_sensorgestures_gestures::testSingleDataset2Gestures()
