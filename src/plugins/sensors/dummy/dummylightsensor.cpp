@@ -53,7 +53,7 @@ dummylightsensor::dummylightsensor(QSensor *sensor)
 void dummylightsensor::poll()
 {
     m_reading.setTimestamp(getTimestamp());
-    if (QRandomGenerator::bounded(100) == 0)
+    if (QRandomGenerator::global()->bounded(100) == 0)
         m_reading.setLightLevel(QAmbientLightReading::Dark);
     else
         m_reading.setLightLevel(QAmbientLightReading::Light);
