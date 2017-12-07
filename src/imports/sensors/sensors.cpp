@@ -229,6 +229,9 @@ public:
         minor = 9;
         qmlRegisterType           <QmlLidSensor                >(package, major, minor, "LidSensor");
         qmlRegisterUncreatableType<QmlLidReading               >(package, major, minor, "LidReading",          QLatin1String("Cannot create LidReading"));
+
+        // Register the latest Qt version as QML type version
+        qmlRegisterModule(package, QT_VERSION_MAJOR, QT_VERSION_MINOR);
     }
 };
 
