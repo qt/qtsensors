@@ -1,6 +1,7 @@
 TEMPLATE = app
 TARGET = gesture
 QT       += sensors widgets
+requires(qtConfig(treewidget))
 
 SOURCES += main.cpp\
         mainwindow.cpp
