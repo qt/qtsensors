@@ -54,8 +54,8 @@ QT_BEGIN_NAMESPACE
     This element cannot be directly created. It can only be accessed via a namespace import.
 
     \code
-    import QtSensors 5.0
-    import QtSensors 5.0 as Sensors
+    import QtSensors 5.11
+    import QtSensors 5.11 as Sensors
     ...
         Component.onCompleted: {
             var types = Sensors.QmlSensors.sensorTypes();
