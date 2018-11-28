@@ -188,6 +188,6 @@ QCompassReading *QCompass::reading() const
     return static_cast<QCompassReading*>(QSensor::reading());
 }
 
-#include "moc_qcompass.cpp"
 QT_END_NAMESPACE
 
+#include "moc_qcompass.cpp"
