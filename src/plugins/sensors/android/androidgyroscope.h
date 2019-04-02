@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,20 +37,21 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDPROXIMITY_H
-#define ANDROIDPROXIMITY_H
-#include <qproximitysensor.h>
+#ifndef ANDROIDGYROSCOPE_H
+#define ANDROIDGYROSCOPE_H
 
-#include "androidcommonsensor.h"
+#include <qgyroscope.h>
 
-class AndroidProximity : public AndroidCommonSensor<QProximityReading>
+#include "sensoreventqueue.h"
+
+class AndroidGyroscope : public SensorEventQueue<QGyroscopeReading>
 {
 public:
-    AndroidProximity(AndroidSensors::AndroidSensorType type, QSensor *sensor);
-private:
-    void onAccuracyChanged(jint accuracy) override;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
-    qreal m_maximumRange;
+    AndroidGyroscope(int type, QSensor *sensor, QObject *parent = nullptr);
+
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
 };
 
-#endif // ANDROIDPROXIMITY_H
+#endif // ANDROIDGYROSCOPE_H

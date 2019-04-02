@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,24 +37,36 @@
 **
 ****************************************************************************/
 
-#include "androidlight.h"
+#ifndef ANDROIDCOMPASS_H
+#define ANDROIDCOMPASS_H
 
-AndroidLight::AndroidLight(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    : AndroidCommonSensor<QLightReading>(type, sensor)
-{}
+#include <QMutex>
+#include <qcompass.h>
 
+#include "sensoreventqueue.h"
 
-void AndroidLight::onAccuracyChanged(jint accuracy)
+class AndroidCompass : public ThreadSafeSensorBackend
 {
-    Q_UNUSED(accuracy)
-}
+    Q_OBJECT
 
-void AndroidLight::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
-{
-    if (size < 1)
-        return;
-    m_reader.setTimestamp(timestamp/1000);
-    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
-    m_reader.setLux(values[0]);
-    newReadingAvailable();
-}
+public:
+    AndroidCompass(QSensor *sensor, QObject *parent = nullptr);
+    ~AndroidCompass() override;
+
+    void start() override;
+    void stop() override;
+private:
+    void readAllEvents();
+    static int looperCallback(int /*fd*/, int /*events*/, void* data);
+
+private:
+    QCompassReading m_reading;
+    const ASensor *m_accelerometer = nullptr;
+    const ASensor *m_magnetometer = nullptr;
+    ASensorEventQueue* m_sensorEventQueue = nullptr;
+    ASensorVector m_accelerometerEvent;
+    ASensorVector m_magneticEvent;
+    QMutex m_sensorsMutex;
+};
+
+#endif // ANDROIDCOMPASS_H

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -39,17 +39,19 @@
 
 #ifndef ANDROIDLIGHT_H
 #define ANDROIDLIGHT_H
+
 #include <qlightsensor.h>
 
-#include "androidcommonsensor.h"
+#include "sensoreventqueue.h"
 
-class AndroidLight : public AndroidCommonSensor<QLightReading>
+class AndroidLight : public SensorEventQueue<QLightReading>
 {
 public:
-    AndroidLight(AndroidSensors::AndroidSensorType type, QSensor *sensor);
-private:
-    void onAccuracyChanged(jint accuracy) override;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
+    AndroidLight(int type, QSensor *sensor, QObject *parent = nullptr);
+
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
 };
 
 #endif // ANDROIDLIGHT_H

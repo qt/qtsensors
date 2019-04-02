@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,38 +37,28 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDCOMPASS_H
-#define ANDROIDCOMPASS_H
-#include <qcompass.h>
+#include "androidgyroscope.h"
+#include <QtCore/qmath.h>
 
-#include "androidcommonsensor.h"
+AndroidGyroscope::AndroidGyroscope(int type, QSensor *sensor, QObject *parent)
+    : SensorEventQueue<QGyroscopeReading>(type, sensor, parent)
+{}
 
-class AndroidAccelerometerListener;
-class AndroidMagnetometerListener;
-
-class AndroidCompass : public QSensorBackend
+void AndroidGyroscope::dataReceived(const ASensorEvent &event)
 {
-    Q_OBJECT
-
-public:
-    static char const * const id;
-
-    AndroidCompass(QSensor *sensor);
-    ~AndroidCompass();
-
-    void start() override;
-    void stop() override;
-
-private:
-    AndroidAccelerometerListener *m_accelerometerListener;
-    AndroidMagnetometerListener *m_magnetometerListener;
-
-    QCompassReading m_reading;
-    bool m_isStarted;
-
-public Q_SLOTS:
-    void testStuff();
-
-};
-
-#endif // ANDROIDCOMPASS_H
+    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#sensor.type_gyroscope:
+    const auto &vec = event.vector;
+    qreal x = qRadiansToDegrees(qreal(vec.x));
+    qreal y = qRadiansToDegrees(qreal(vec.y));
+    qreal z = qRadiansToDegrees(qreal(vec.z));
+    if (sensor()->skipDuplicates() && qFuzzyCompare(m_reader.x(), x) &&
+            qFuzzyCompare(m_reader.y(), y) &&
+            qFuzzyCompare(m_reader.z(), z)) {
+        return;
+    }
+    m_reader.setTimestamp(uint64_t(event.timestamp / 1000));
+    m_reader.setX(x);
+    m_reader.setY(y);
+    m_reader.setZ(z);
+    newReadingAvailable();
+}

@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,27 +37,19 @@
 **
 ****************************************************************************/
 
-#include "androidtemperature.h"
+#include "androidlight.h"
 
-AndroidTemperature::AndroidTemperature(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    : AndroidCommonSensor<QAmbientTemperatureReading>(type, sensor)
+AndroidLight::AndroidLight(int type, QSensor *sensor, QObject *parent)
+    : SensorEventQueue<QLightReading>(type, sensor, parent)
 {}
 
-
-void AndroidTemperature::onAccuracyChanged(jint accuracy)
+void AndroidLight::dataReceived(const ASensorEvent &event)
 {
-    Q_UNUSED(accuracy)
-}
-
-void AndroidTemperature::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
-{
-    if (size < 1)
+    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#sensor.type_light:
+    if (sensor()->skipDuplicates() && qFuzzyCompare(m_reader.lux(), qreal(event.light)))
         return;
-    m_reader.setTimestamp(timestamp/1000);
 
-    // TODO: I was unable to test this since the devices I was testing this with did not have
-    //       a temperature sensor. Verify that this works and check that the units are correct.
-
-    m_reader.setTemperature(values[0]);
+    m_reader.setTimestamp(uint64_t(event.timestamp / 1000));
+    m_reader.setLux(qreal(event.light));
     newReadingAvailable();
 }

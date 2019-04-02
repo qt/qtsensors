@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,21 @@
 **
 ****************************************************************************/
 
-#include "androidrotation.h"
-#include <QtCore/qmath.h>
+#ifndef ANDROIDPRESSURE_H
+#define ANDROIDPRESSURE_H
 
-AndroidRotation::AndroidRotation(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    : AndroidCommonSensor<QRotationReading>(type, sensor)
-{}
+#include <qpressuresensor.h>
 
-void AndroidRotation::onAccuracyChanged(jint accuracy)
+#include "sensoreventqueue.h"
+
+class AndroidPressure : public SensorEventQueue<QPressureReading>
 {
-    Q_UNUSED(accuracy)
-}
+public:
+    AndroidPressure(int type, QSensor *sensor, QObject *parent = nullptr);
 
-void AndroidRotation::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
-{
-    if (size < 3)
-        return;
-    m_reader.setTimestamp(timestamp/1000);
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
+};
 
-    float rz = -qRadiansToDegrees(values[0]);
-    float rx = -qRadiansToDegrees(values[1]);
-    float ry =  qRadiansToDegrees(values[2]);
-    m_reader.setFromEuler(rx, ry, rz);
-    newReadingAvailable();
-}
+#endif // ANDROIDPRESSURE_H
