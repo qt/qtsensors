@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,50 +37,29 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDCOMMONSENSOR_H
-#define ANDROIDCOMMONSENSOR_H
+#include "androidrotation.h"
 
-#include <qsensorbackend.h>
-#include <qsensor.h>
-#include "androidjnisensors.h"
+#include <QtCore/qmath.h>
 
-template <typename ReaderType>
-class AndroidCommonSensor : public QSensorBackend, protected AndroidSensors::AndroidSensorsListenerInterface
+AndroidRotation::AndroidRotation(int type, QSensor *sensor, QObject *parent)
+    : SensorEventQueue<QRotationReading>(type, sensor, parent)
+{}
+
+
+void AndroidRotation::dataReceived(const ASensorEvent &event)
 {
-public:
-    AndroidCommonSensor(AndroidSensors::AndroidSensorType type, QSensor *sensor) : QSensorBackend(sensor)
-    {
-        setDescription(AndroidSensors::sensorDescription(type));
-        setReading<ReaderType>(&m_reader);
-        m_type = type;
-        m_isStarted = false;
+    // ### Check me, at first look it seems wrong,
+    // here https://developer.android.com/reference/android/hardware/SensorEvent.html#sensor.type_rotation_vector:
+    // are the Android values
+    qreal rz = -qRadiansToDegrees(qreal(event.data[0])); // event.data[0] corresponds to x
+    qreal rx = -qRadiansToDegrees(qreal(event.data[1])); // event.data[1] corresponds to y
+    qreal ry =  qRadiansToDegrees(qreal(event.data[2])); // event.data[2] corresponds to z
+    if (sensor()->skipDuplicates() && qFuzzyCompare(m_reader.x(), rx) &&
+            qFuzzyCompare(m_reader.y(), ry) &&
+            qFuzzyCompare(m_reader.z(), rz)) {
+        return;
     }
-
-    virtual ~AndroidCommonSensor()
-    {
-        if (m_isStarted)
-            stop();
-    }
-    void start() override
-    {
-        if (AndroidSensors::registerListener(m_type, this, sensor()->dataRate()))
-            m_isStarted = true;
-    }
-
-    void stop() override
-    {
-        if (m_isStarted) {
-            m_isStarted = false;
-            AndroidSensors::unregisterListener(m_type, this);
-        }
-    }
-
-protected:
-    ReaderType m_reader;
-    AndroidSensors::AndroidSensorType m_type;
-
-private:
-    bool m_isStarted;
-};
-
-#endif // ANDROIDCOMMONSENSOR_H
+    m_reader.setTimestamp(uint64_t(event.timestamp / 1000));
+    m_reader.setFromEuler(rx, ry, rz);
+    newReadingAvailable();
+}

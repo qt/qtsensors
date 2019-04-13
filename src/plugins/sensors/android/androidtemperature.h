@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -36,20 +36,21 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef ANDROIDTEMPERATURE_H
+#define ANDROIDTEMPERATURE_H
 
-#ifndef ANDROIDGYROSCOPE_H
-#define ANDROIDGYROSCOPE_H
-#include <qgyroscope.h>
+#include <qambienttemperaturesensor.h>
 
-#include "androidcommonsensor.h"
+#include "sensoreventqueue.h"
 
-class AndroidGyroscope : public AndroidCommonSensor<QGyroscopeReading>
+class AndroidTemperature : public SensorEventQueue<QAmbientTemperatureReading>
 {
 public:
-    AndroidGyroscope(AndroidSensors::AndroidSensorType type, QSensor *sensor);
-private:
-    void onAccuracyChanged(jint accuracy) override;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
+    AndroidTemperature(int type, QSensor *sensor, QObject *parent = nullptr);
+
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
 };
 
-#endif // ANDROIDGYROSCOPE_H
+#endif // ANDROIDTEMPERATURE_H

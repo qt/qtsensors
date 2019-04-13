@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,26 +37,41 @@
 **
 ****************************************************************************/
 
-#include "androidgyroscope.h"
-#include <QtCore/qmath.h>
+#ifndef SENSORMANAGER_H
+#define SENSORMANAGER_H
 
-AndroidGyroscope::AndroidGyroscope(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    : AndroidCommonSensor<QGyroscopeReading>(type, sensor)
-{}
+#include <QThread>
+#include <QSemaphore>
+#include <QMutex>
+#include <QWaitCondition>
 
-void AndroidGyroscope::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
+#include <private/qjni_p.h>
+#include <private/qjnihelpers_p.h>
+
+#include <android/sensor.h>
+
+class SensorManager : public QThread
 {
-    if (size < 3)
-        return;
-    m_reader.setTimestamp(timestamp/1000);
-    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
-    m_reader.setX(qRadiansToDegrees(values[0]));
-    m_reader.setY(qRadiansToDegrees(values[1]));
-    m_reader.setZ(qRadiansToDegrees(values[2]));
-    newReadingAvailable();
-}
+public:
+    ~SensorManager() override;
+    static QSharedPointer<SensorManager> &instance();
+    ALooper *looper() const;
+    ASensorManager *manager() const;
 
-void AndroidGyroscope::onAccuracyChanged(jint accuracy)
-{
-    Q_UNUSED(accuracy)
-}
+    QJNIObjectPrivate javaSensor(const ASensor *sensor) const;
+    QString description(const ASensor *sensor) const;
+    double getMaximumRange(const ASensor *sensor) const;
+
+private:
+    SensorManager();
+    // QThread interface
+    void run() override;
+
+private:
+    QAtomicInt m_quit{0};
+    ALooper *m_looper = nullptr;
+    QSemaphore m_waitForStart;
+    QJNIObjectPrivate m_sensorManager;
+};
+
+#endif // SENSORMANAGER_H

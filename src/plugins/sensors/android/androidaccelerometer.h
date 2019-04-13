@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,18 +37,38 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDROTATION_H
-#define ANDROIDROTATION_H
-#include <qrotationsensor.h>
+#ifndef ANDROIDACCELEROMETER_H
+#define ANDROIDACCELEROMETER_H
 
-#include "androidcommonsensor.h"
-class AndroidRotation : public AndroidCommonSensor<QRotationReading>
+#include <qaccelerometer.h>
+
+#include "sensoreventqueue.h"
+
+class AndroidAccelerometer : public SensorEventQueue<QAccelerometerReading>
 {
+    Q_OBJECT
 public:
-    AndroidRotation(AndroidSensors::AndroidSensorType type, QSensor *sensor);
+    enum AccelerationModes {
+        Accelerometer = 1,
+        Gravity = 2,
+        LinearAcceleration = 4,
+        AllModes = (Accelerometer | Gravity | LinearAcceleration)
+    };
+public:
+    AndroidAccelerometer(int accelerationModes, QSensor *sensor, QObject *parent = nullptr);
+    // QSensorBackend interface
+    bool isFeatureSupported(QSensor::Feature feature) const override;
+
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
+
 private:
-    void onAccuracyChanged(jint accuracy) override;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
+    void applyAccelerationMode(QAccelerometer::AccelerationMode accelerationMode);
+
+private:
+    int m_accelerationModes;
+
 };
 
-#endif // ANDROIDROTATION_H
+#endif // ANDROIDACCELEROMETER_H

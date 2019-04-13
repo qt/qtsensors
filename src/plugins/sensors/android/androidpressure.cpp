@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,19 +37,20 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDMAGNETOMETER_H
-#define ANDROIDMAGNETOMETER_H
-#include <qmagnetometer.h>
+#include "androidpressure.h"
 
-#include "androidcommonsensor.h"
+AndroidPressure::AndroidPressure(int type, QSensor *sensor, QObject *parent)
+    : SensorEventQueue<QPressureReading>(type, sensor, parent)
+{}
 
-class AndroidMagnetometer : public AndroidCommonSensor<QMagnetometerReading>
+
+void AndroidPressure::dataReceived(const ASensorEvent &event)
 {
-public:
-    AndroidMagnetometer(AndroidSensors::AndroidSensorType type, QSensor *sensor);
-private:
-    void onAccuracyChanged(jint accuracy) override;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
-};
-
-#endif // ANDROIDMAGNETOMETER_H
+    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#sensor.type_pressure:
+    auto pressurePa = qreal(event.pressure) * 100;
+    if (sensor()->skipDuplicates() && qFuzzyCompare(pressurePa, m_reader.pressure()))
+        return;
+    m_reader.setTimestamp(uint64_t(event.timestamp / 1000));
+    m_reader.setPressure(pressurePa); //Android uses hPa, we use Pa
+    newReadingAvailable();
+}
