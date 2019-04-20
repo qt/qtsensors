@@ -38,24 +38,26 @@
 **
 ****************************************************************************/
 
-#include "androidpressure.h"
+#include "androidproximity.h"
 
-AndroidPressure::AndroidPressure(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    : AndroidCommonSensor<QPressureReading>(type, sensor)
-{}
-
-
-void AndroidPressure::onAccuracyChanged(jint accuracy)
+AndroidProximity::AndroidProximity(int type, QSensor *sensor, QObject *parent)
+    : SensorEventQueue<QProximityReading>(type, sensor, parent)
 {
-    Q_UNUSED(accuracy)
+    m_maximumRange = m_sensorManager->getMaximumRange(m_sensor);
+
+    // if we can't get the range, we arbitrarily define anything closer than 10 cm as "close"
+    if (m_maximumRange <= 0)
+        m_maximumRange = 10.0;
 }
 
-void AndroidPressure::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
+
+void AndroidProximity::dataReceived(const ASensorEvent &event)
 {
-    if (size < 1)
+    // https://developer.android.com/reference/android/hardware/SensorEvent.html#sensor.type_proximity:
+    bool close = qreal(event.distance) < m_maximumRange;
+    if (sensor()->skipDuplicates() && close == m_reader.close())
         return;
-    m_reader.setTimestamp(timestamp/1000);
-    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
-    m_reader.setPressure(values[0]*100); //Android uses hPa, we use Pa
+    m_reader.setTimestamp(uint64_t(event.timestamp / 1000));
+    m_reader.setClose(close);
     newReadingAvailable();
 }

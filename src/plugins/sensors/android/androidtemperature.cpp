@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -38,33 +37,18 @@
 **
 ****************************************************************************/
 
-#include "androidproximity.h"
-#include "androidjnisensors.h"
+#include "androidtemperature.h"
 
-AndroidProximity::AndroidProximity(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    : AndroidCommonSensor<QProximityReading>(type, sensor)
+AndroidTemperature::AndroidTemperature(int type, QSensor *sensor, QObject *parent)
+    : SensorEventQueue<QAmbientTemperatureReading>(type, sensor, parent)
+{}
+
+void AndroidTemperature::dataReceived(const ASensorEvent &event)
 {
-    m_maximumRange = AndroidSensors::sensorMaximumRange(type);
-
-    // if we can't get the range, we arbitrarily define anything closer than 10 cm as "close"
-    if (m_maximumRange <= 0)
-        m_maximumRange = 10.0;
-}
-
-
-void AndroidProximity::onAccuracyChanged(jint accuracy)
-{
-    Q_UNUSED(accuracy)
-}
-
-void AndroidProximity::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
-{
-    if (size < 1)
+    if (sensor()->skipDuplicates() && qFuzzyCompare(m_reader.temperature(), qreal(event.temperature)))
         return;
-    m_reader.setTimestamp(timestamp/1000);
-
-    qreal reading = values[0];
-    bool close = (reading < m_maximumRange);
-    m_reader.setClose(close);
+    m_reader.setTimestamp(uint64_t(event.timestamp / 1000));
+    // https://developer.android.com/reference/android/hardware/SensorEvent.html#sensor.type_ambient_temperature:
+    m_reader.setTemperature(qreal(event.temperature)); // in  degree Celsius
     newReadingAvailable();
 }

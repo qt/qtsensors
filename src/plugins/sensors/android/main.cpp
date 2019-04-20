@@ -53,7 +53,12 @@
 #include "androidrotation.h"
 #include "androidtemperature.h"
 
-using namespace AndroidSensors;
+#include "sensormanager.h"
+#include <android/sensor.h>
+
+namespace {
+    const char AndroidCompassId[] = "android.synthetic.compass";
+}
 
 class AndroidSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
@@ -65,101 +70,95 @@ public:
     {
         bool accelerometer = false;
         bool magnetometer = false;
-        foreach (AndroidSensorType sensor, availableSensors()) {
+        ASensorList availableSensors;
+        int count = ASensorManager_getSensorList(SensorManager::instance()->manager(), &availableSensors);
+        for (int i = 0; i < count; i++) {
+            int sensor = ASensor_getType(availableSensors[i]);
             switch (sensor) {
-            case TYPE_ACCELEROMETER:
+            case ASENSOR_TYPE_ACCELEROMETER:
+                m_accelerationModes |= AndroidAccelerometer::Accelerometer;
                 QSensorManager::registerBackend(QAccelerometer::type, QByteArray::number(sensor), this);
                 accelerometer = true;
                 break;
-            case TYPE_AMBIENT_TEMPERATURE:
-            case TYPE_TEMPERATURE:
+            case ASENSOR_TYPE_GRAVITY:
+                m_accelerationModes |= AndroidAccelerometer::Gravity;
+                break;
+            case ASENSOR_TYPE_LINEAR_ACCELERATION:
+                m_accelerationModes |= AndroidAccelerometer::LinearAcceleration;
+                break;
+            case ASENSOR_TYPE_AMBIENT_TEMPERATURE:
                 QSensorManager::registerBackend(QAmbientTemperatureSensor::type, QByteArray::number(sensor), this);
                 break;
-            case TYPE_GRAVITY:
-                break; // add the gravity sensor backend
-            case TYPE_GYROSCOPE:
+            case ASENSOR_TYPE_GYROSCOPE:
                 QSensorManager::registerBackend(QGyroscope::type, QByteArray::number(sensor), this);
                 break;
-            case TYPE_LIGHT:
+            case ASENSOR_TYPE_LIGHT:
                 QSensorManager::registerBackend(QLightSensor::type, QByteArray::number(sensor), this);
-                break; // add the light sensor backend
-            case TYPE_LINEAR_ACCELERATION:
-                break; // add the linear acceleration sensor backend
-            case TYPE_MAGNETIC_FIELD:
+                break;
+            case ASENSOR_TYPE_MAGNETIC_FIELD:
                 QSensorManager::registerBackend(QMagnetometer::type, QByteArray::number(sensor), this);
                 magnetometer = true;
                 break;
-            case TYPE_ORIENTATION:
-                break; // add the orientation sensor backend
-            case TYPE_PRESSURE:
+            case ASENSOR_TYPE_PRESSURE:
                 QSensorManager::registerBackend(QPressureSensor::type, QByteArray::number(sensor), this);
                 break;
-            case TYPE_PROXIMITY:
+            case ASENSOR_TYPE_PROXIMITY:
                 QSensorManager::registerBackend(QProximitySensor::type, QByteArray::number(sensor), this);
                 break;
-            case TYPE_RELATIVE_HUMIDITY:
-                break; // add the relative humidity sensor backend
-            case TYPE_ROTATION_VECTOR:
+            case ASENSOR_TYPE_ROTATION_VECTOR:
                 QSensorManager::registerBackend(QRotationSensor::type, QByteArray::number(sensor), this);
                 break;
 
-            case TYPE_GAME_ROTATION_VECTOR:
-            case TYPE_GYROSCOPE_UNCALIBRATED:
-            case TYPE_MAGNETIC_FIELD_UNCALIBRATED:
-            case TYPE_SIGNIFICANT_MOTION:
-                break; // add backends for API level 18 sensors
+            case ASENSOR_TYPE_RELATIVE_HUMIDITY:
+            case ASENSOR_TYPE_MAGNETIC_FIELD_UNCALIBRATED:
+            case ASENSOR_TYPE_GAME_ROTATION_VECTOR:
+            case ASENSOR_TYPE_GYROSCOPE_UNCALIBRATED:
+            case ASENSOR_TYPE_SIGNIFICANT_MOTION:
+            case ASENSOR_TYPE_STEP_DETECTOR:
+            case ASENSOR_TYPE_STEP_COUNTER:
+            case ASENSOR_TYPE_GEOMAGNETIC_ROTATION_VECTOR:
+            case ASENSOR_TYPE_HEART_RATE:
+            case ASENSOR_TYPE_POSE_6DOF:
+            case ASENSOR_TYPE_STATIONARY_DETECT:
+            case ASENSOR_TYPE_MOTION_DETECT:
+            case ASENSOR_TYPE_HEART_BEAT:
+            case ASENSOR_TYPE_LOW_LATENCY_OFFBODY_DETECT:
+            case ASENSOR_TYPE_ACCELEROMETER_UNCALIBRATED:
+                break; // ### TODO add backends for missing Android sensors
             }
         }
         if (accelerometer && magnetometer)
-            QSensorManager::registerBackend(QCompass::type, AndroidCompass::id, this);
+            QSensorManager::registerBackend(QCompass::type, AndroidCompassId, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) override
     {
-        if (sensor->identifier() == AndroidCompass::id)
+        if (sensor->identifier() == AndroidCompassId)
             return new AndroidCompass(sensor);
 
-        AndroidSensorType type = static_cast<AndroidSensorType>(sensor->identifier().toInt());
+        int type = sensor->identifier().toInt();
         switch (type) {
-        case TYPE_ACCELEROMETER: {
-            QAccelerometer * const accelerometer = qobject_cast<QAccelerometer *>(sensor);
-            AndroidSensors::AndroidSensorType type
-             = accelerometer ? AndroidAccelerometer::modeToSensor(accelerometer->accelerationMode())
-             : AndroidSensors::TYPE_ACCELEROMETER;
-            return new AndroidAccelerometer(type, sensor);
-        }
-        case TYPE_AMBIENT_TEMPERATURE:
-        case TYPE_TEMPERATURE:
+        case ASENSOR_TYPE_ACCELEROMETER:
+            return new AndroidAccelerometer(m_accelerationModes, sensor);
+        case ASENSOR_TYPE_AMBIENT_TEMPERATURE:
             return new AndroidTemperature(type, sensor);
-        case TYPE_GRAVITY:
-            break; // add the gravity sensor backend
-        case TYPE_GYROSCOPE:
+        case ASENSOR_TYPE_GYROSCOPE:
             return new AndroidGyroscope(type, sensor);
-        case TYPE_LIGHT:
+        case ASENSOR_TYPE_LIGHT:
             return new AndroidLight(type, sensor);
-        case TYPE_LINEAR_ACCELERATION:
-            break; // add the linear acceleration sensor backend
-        case TYPE_MAGNETIC_FIELD:
+        case ASENSOR_TYPE_MAGNETIC_FIELD:
             return new AndroidMagnetometer(type, sensor);
-        case TYPE_ORIENTATION:
-            break; // add the orientation sensor backend
-        case TYPE_PRESSURE:
+        case ASENSOR_TYPE_PRESSURE:
             return new AndroidPressure(type, sensor);
-        case TYPE_PROXIMITY:
+        case ASENSOR_TYPE_PROXIMITY:
             return new AndroidProximity(type, sensor);
-        case TYPE_RELATIVE_HUMIDITY:
-            break; // add the relative humidity sensor backend
-        case TYPE_ROTATION_VECTOR:
+        case ASENSOR_TYPE_ROTATION_VECTOR:
             return new AndroidRotation(type, sensor);
-
-        case TYPE_GAME_ROTATION_VECTOR:
-        case TYPE_GYROSCOPE_UNCALIBRATED:
-        case TYPE_MAGNETIC_FIELD_UNCALIBRATED:
-        case TYPE_SIGNIFICANT_MOTION:
-            break; // add backends for API level 18 sensors
         }
-        return 0;
+        return nullptr;
     }
+private:
+    int m_accelerationModes = 0;
 };
 
 Q_IMPORT_PLUGIN (AndroidSensorPlugin) // automatically register the plugin

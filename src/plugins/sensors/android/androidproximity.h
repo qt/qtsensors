@@ -38,19 +38,23 @@
 **
 ****************************************************************************/
 
-#ifndef ANDROIDTEMPERATURE_H
-#define ANDROIDTEMPERATURE_H
-#include <qambienttemperaturesensor.h>
+#ifndef ANDROIDPROXIMITY_H
+#define ANDROIDPROXIMITY_H
+#include <qproximitysensor.h>
 
-#include "androidcommonsensor.h"
+#include "sensoreventqueue.h"
 
-class AndroidTemperature : public AndroidCommonSensor<QAmbientTemperatureReading>
+class AndroidProximity : public SensorEventQueue<QProximityReading>
 {
 public:
-    AndroidTemperature(AndroidSensors::AndroidSensorType type, QSensor *sensor);
+    AndroidProximity(int type, QSensor *sensor, QObject *parent = nullptr);
+
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
+
 private:
-    void onAccuracyChanged(jint accuracy) override;
-    void onSensorChanged(jlong timestamp, const jfloat *values, uint size) override;
+    qreal m_maximumRange;
 };
 
-#endif // ANDROIDTEMPERATURE_H
+#endif // ANDROIDPROXIMITY_H

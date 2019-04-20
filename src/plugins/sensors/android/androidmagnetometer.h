@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 BogDan Vatra <bogdan@kde.org>
+** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,39 +37,21 @@
 **
 ****************************************************************************/
 
-#include "androidmagnetometer.h"
+#ifndef ANDROIDMAGNETOMETER_H
+#define ANDROIDMAGNETOMETER_H
 
-enum AndroidSensorStatus
+#include <qmagnetometer.h>
+
+#include "sensoreventqueue.h"
+
+class AndroidMagnetometer : public SensorEventQueue<QMagnetometerReading>
 {
-    SENSOR_STATUS_UNRELIABLE = 0,
-    SENSOR_STATUS_ACCURACY_LOW = 1,
-    SENSOR_STATUS_ACCURACY_MEDIUM = 2,
-    SENSOR_STATUS_ACCURACY_HIGH = 3,
+public:
+    AndroidMagnetometer(int type, QSensor *sensor, QObject *parent = nullptr);
+
+protected:
+    // SensorEventQueue interface
+    void dataReceived(const ASensorEvent &event) override;
 };
 
-AndroidMagnetometer::AndroidMagnetometer(AndroidSensors::AndroidSensorType type, QSensor *sensor)
-    :AndroidCommonSensor<QMagnetometerReading>(type, sensor)
-{}
-
-void AndroidMagnetometer::onAccuracyChanged(jint accuracy)
-{
-    // Expected range is [0, 3]
-    if (accuracy < SENSOR_STATUS_UNRELIABLE || accuracy > SENSOR_STATUS_ACCURACY_HIGH) {
-        qWarning("Unable to get sensor accuracy. Unexpected value: %d", accuracy);
-        return;
-    }
-
-    m_reader.setCalibrationLevel(accuracy / qreal(3.0));
-}
-
-void AndroidMagnetometer::onSensorChanged(jlong timestamp, const jfloat *values, uint size)
-{
-    if (size<3)
-        return;
-    m_reader.setTimestamp(timestamp/1000);
-    // check https://developer.android.com/reference/android/hardware/SensorEvent.html#values
-    m_reader.setX(values[0]/1e6);
-    m_reader.setY(values[1]/1e6);
-    m_reader.setZ(values[2]/1e6);
-    newReadingAvailable();
-}
+#endif // ANDROIDMAGNETOMETER_H
