@@ -105,7 +105,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
   \fn QSensorGestureRecognizer::detected(const QString &gestureId)
-  Signals when the \a gestureId gesture has been recognized.
+  Signals when the gesture with id \a &gestureId been recognized.
   */
 
 class QSensorGestureRecognizerPrivate
