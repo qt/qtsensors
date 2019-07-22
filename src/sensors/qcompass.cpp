@@ -74,7 +74,7 @@ IMPLEMENT_READING(QCompassReading)
     \brief the azimuth of the device.
 
     Measured in degrees from magnetic north in a clockwise direction based on
-    the top of the device, as defined by QPlatformScreen::nativeOrientation.
+    the top of the device, as defined by QScreen::nativeOrientation.
     \sa {QCompassReading Units}
 */
 
