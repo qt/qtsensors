@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2019 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -80,12 +80,10 @@ private:
     const QMetaObject *metaObject() const override;
     int qt_metacall(QMetaObject::Call, int, void **) override;
 
-#ifdef Q_QDOC
 Q_SIGNALS:
     // these signals are created at runtime, along with
     // gesture recognizer specific signals.
      void detected(QString);
-#endif
 };
 
 QT_END_NAMESPACE
