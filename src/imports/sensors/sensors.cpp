@@ -234,8 +234,9 @@ public:
         qmlRegisterType           <QmlHumiditySensor           >(package, major, minor, "HumiditySensor");
         qmlRegisterUncreatableType<QmlHumidityReading          >(package, major, minor, "HumidityReading",     QLatin1String("Cannot create HumidityReading"));
 
-        // Register the latest Qt version as QML type version
-        qmlRegisterModule(package, QT_VERSION_MAJOR, QT_VERSION_MINOR);
+        // The minor version used to be the current Qt 5 minor. For compatibility it is the last
+        // Qt 5 release.
+        qmlRegisterModule(package, 5, 15);
     }
 };
 
