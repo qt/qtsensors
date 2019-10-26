@@ -48,18 +48,17 @@
 **
 ****************************************************************************/
 
-#include "main.h"
-#include "explorer.h"
+#include <QtQml/QQmlExtensionPlugin>
+#include <QtQml/QtQml>
 
 QT_BEGIN_NAMESPACE
 
-void SensorExplorerDeclarativeModule::registerTypes(const char *uri)
+class SensorExplorerDeclarativeModule : public QQmlExtensionPlugin
 {
-    Q_ASSERT(QLatin1String(uri) == QLatin1String("Explorer"));
-    // @uri Explorer
-    qmlRegisterType<QSensorExplorer>(uri, 1, 0, "SensorExplorer");
-    qmlRegisterType<QSensorItem>(uri, 1, 0, "SensorItem");
-    qmlRegisterType<QPropertyInfo>(uri, 1, 0, "PropertyInfo");
-}
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid FILE "import.json")
+public:
+    void registerTypes(const char *uri) override;
+};
 
 QT_END_NAMESPACE
