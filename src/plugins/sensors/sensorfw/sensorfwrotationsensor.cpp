@@ -60,7 +60,7 @@ void SensorfwRotationSensor::slotDataAvailable(const XYZ& data)
     newReadingAvailable();
 }
 
-void SensorfwRotationSensor::slotFrameAvailable(const QVector<XYZ>&  frame)
+void SensorfwRotationSensor::slotFrameAvailable(const QList<XYZ> &frame)
 {
     for (int i=0, l=frame.size(); i<l; i++) {
         slotDataAvailable(frame.at(i));
@@ -72,7 +72,8 @@ bool SensorfwRotationSensor::doConnect()
     Q_ASSERT(m_sensorInterface);
     if (m_bufferSize==1)
        return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(XYZ)), this, SLOT(slotDataAvailable(XYZ)));
-    return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QVector<XYZ>)),this, SLOT(slotFrameAvailable(QVector<XYZ>)));
+    return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QList<XYZ>)), this,
+                            SLOT(slotFrameAvailable(QList<XYZ>)));
 }
 
 QString SensorfwRotationSensor::sensorName() const

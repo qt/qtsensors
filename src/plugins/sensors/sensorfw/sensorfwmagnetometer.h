@@ -69,9 +69,8 @@ private:
     bool m_isGeoMagnetometer;
 
 private slots:
-    void slotDataAvailable(const MagneticField& data);
-    void slotFrameAvailable(const QVector<MagneticField>&);
-
+    void slotDataAvailable(const MagneticField &data);
+    void slotFrameAvailable(const QList<MagneticField> &);
 };
 
 #endif

@@ -63,7 +63,7 @@ void sensorfwaccelerometer::slotDataAvailable(const XYZ& data)
     newReadingAvailable();
 }
 
-void sensorfwaccelerometer::slotFrameAvailable(const QVector<XYZ>&  frame)
+void sensorfwaccelerometer::slotFrameAvailable(const QList<XYZ> &frame)
 {
     for (int i=0, l=frame.size(); i<l; i++) {
         slotDataAvailable(frame.at(i));
@@ -75,7 +75,8 @@ bool sensorfwaccelerometer::doConnect()
     Q_ASSERT(m_sensorInterface);
     if (m_bufferSize==1)
         return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(XYZ)), this, SLOT(slotDataAvailable(XYZ)));
-    return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QVector<XYZ>)),this, SLOT(slotFrameAvailable(QVector<XYZ>)));
+    return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QList<XYZ>)), this,
+                            SLOT(slotFrameAvailable(QList<XYZ>)));
 }
 
 

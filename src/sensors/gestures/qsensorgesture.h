@@ -46,7 +46,6 @@
 
 #include <QtCore/QList>
 #include <QtCore/QMap>
-#include <QtCore/QVector>
 
 #include <QtCore/qmetatype.h>
 

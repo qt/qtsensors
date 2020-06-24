@@ -76,8 +76,7 @@ void SensorfwMagnetometer::slotDataAvailable(const MagneticField& data)
     newReadingAvailable();
 }
 
-
-void SensorfwMagnetometer::slotFrameAvailable(const QVector<MagneticField>& frame)
+void SensorfwMagnetometer::slotFrameAvailable(const QList<MagneticField> &frame)
 {
     for (int i=0, l=frame.size(); i<l; i++) {
         slotDataAvailable(frame.at(i));
@@ -90,8 +89,8 @@ bool SensorfwMagnetometer::doConnect()
     if (m_bufferSize==1)
         return QObject::connect(m_sensorInterface, SIGNAL(dataAvailable(MagneticField)),
                                 this, SLOT(slotDataAvailable(MagneticField)));
-     return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QVector<MagneticField>)),
-                             this, SLOT(slotFrameAvailable(QVector<MagneticField>)));
+    return QObject::connect(m_sensorInterface, SIGNAL(frameAvailable(QList<MagneticField>)), this,
+                            SLOT(slotFrameAvailable(QList<MagneticField>)));
 }
 
 QString SensorfwMagnetometer::sensorName() const

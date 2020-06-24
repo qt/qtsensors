@@ -68,9 +68,8 @@ private:
     bool m_initDone;
     static const float MILLI;
 private slots:
-    void slotDataAvailable(const XYZ& data);
-    void slotFrameAvailable(const QVector<XYZ>&);
-
+    void slotDataAvailable(const XYZ &data);
+    void slotFrameAvailable(const QList<XYZ> &);
 };
 
 

@@ -67,8 +67,7 @@ private:
 
 private slots:
     void slotDataAvailable(const XYZ& data);
-    void slotFrameAvailable(const QVector<XYZ>&);
-
+    void slotFrameAvailable(const QList<XYZ> &);
 };
 
 #endif
