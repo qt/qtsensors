@@ -57,7 +57,7 @@ QAccelerometer *sensor = new QAccelerometer(this);
 QOrientationSensor orient_sensor;
 //! [Creating a sensor]
 
-    Q_UNUSED(sensor)
+    Q_UNUSED(sensor);
     Q_UNUSED(orient_sensor);
 
 {
