@@ -50,7 +50,7 @@ SensorManager::SensorManager()
 
 SensorManager::~SensorManager()
 {
-    m_quit.store(1);
+    m_quit.storeRelaxed(1);
     wait();
 }
 
@@ -116,5 +116,5 @@ void SensorManager::run()
     do {
         if (ALooper_pollAll(5 /*ms*/, nullptr, nullptr, nullptr) == ALOOPER_POLL_TIMEOUT)
             QThread::yieldCurrentThread();
-    } while (!m_quit.load());
+    } while (!m_quit.loadRelaxed());
 }
