@@ -121,8 +121,8 @@ public:
                 isconfig = true;
             else if (isconfig) {
                 //read out setting line
-                line.remove(' ');
-                QStringList pair = line.split('=');
+                line.remove(QLatin1String(" "));
+                QStringList pair = line.split(QStringLiteral("="));
                 if (pair.count() == 2)
                     defaultIdentifierForType.insert(pair[0].toLatin1(), pair[1].toLatin1());
             }
