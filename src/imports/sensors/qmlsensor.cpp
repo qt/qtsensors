@@ -54,13 +54,13 @@ public:
 };
 
 template<typename Item>
-int readonlyListCount(QQmlListProperty<Item> *p)
+qsizetype readonlyListCount(QQmlListProperty<Item> *p)
 {
     return static_cast<const QList<Item *> *>(p->data)->count();
 }
 
 template<typename Item>
-Item *readonlyListAt(QQmlListProperty<Item> *p, int idx)
+Item *readonlyListAt(QQmlListProperty<Item> *p, qsizetype idx)
 {
     return static_cast<const QList<Item *> *>(p->data)->at(idx);
 };
