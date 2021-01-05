@@ -1,5 +1,6 @@
 TEMPLATE = lib
 CONFIG += plugin
+QML_IMPORT_VERSION = $$QT_VERSION
 
 TARGET = $$qtLibraryTarget(declarative_explorer)
 

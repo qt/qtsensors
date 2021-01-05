@@ -86,24 +86,10 @@ public:
     QStringList gestureIds();
     QStringList knownIds;
     void initPlugin(QObject *o);
-#ifdef SIMULATOR_BUILD
-    void recognizerStarted(const QSensorGestureRecognizer *);
-    void recognizerStopped(const QSensorGestureRecognizer *);
-#endif
 
     static QSensorGestureManagerPrivate * instance();
 Q_SIGNALS:
         void newSensorGestureAvailable();
-
-#ifdef SIMULATOR_BUILD
-Q_SIGNALS:
-    void newSensorGestures(QStringList);
-    void removeSensorGestures(QStringList);
-
-private slots:
-    void sensorGestureDetected();
-
-#endif
 };
 
 QT_END_NAMESPACE

@@ -1,0 +1,39 @@
+# all get generic sensor
+add_subdirectory(generic)
+
+if(ANDROID AND NOT SENSORS_PLUGINS OR "sensorfw" IN_LIST SENSORS_PLUGINS)
+    add_subdirectory(android)
+endif()
+
+# Currently disabled, see src/sensors/configure.cmake
+#if (QT_FEATURE_sensorfw AND NOT SENSORS_PLUGINS OR "sensorfw" IN_LIST SENSORS_PLUGINS)
+#     add_subdirectory(sensorfw)
+#endif()
+
+if (WIN32 AND NOT SENSORS_PLUGINS OR "winrt" IN_LIST SENSORS_PLUGINS)
+    add_subdirectory(winrt)
+endif()
+
+if (LINUX AND NOT SENSORS_PLUGINS OR "linux" IN_LIST SENSORS_PLUGINS)
+    add_subdirectory(linux)
+endif()
+
+if (IOS AND NOT SENSORS_PLUGINS OR "ios" IN_LIST SENSORS_PLUGINS)
+    add_subdirectory(ios)
+endif()
+
+if(LINUX AND TARGET Qt::DBus AND NOT SENSORS_PLUGINS OR "iio-sensor-proxy" IN_LIST SENSORS_PLUGINS)
+   add_subdirectory(iio-sensor-proxy)
+endif()
+
+if(LINUX AND TARGET Qt::Bluetooth AND NOT SENSORS_PLUGINS OR "sensortag" IN_LIST SENSORS_PLUGINS)
+    if (TARGET Qt::Bluetooth)
+        add_subdirectory(sensortag)
+    else()
+        message(WARNING "You have configured for sensortag, but Qt Bluetooth module was not found.")
+    endif()
+endif()
+
+if(NOT SENSORS_PLUGINS OR "dummy" IN_LIST SENSORS_PLUGINS)
+   add_subdirectory(dummy)
+endif()

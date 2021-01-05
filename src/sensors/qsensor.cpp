@@ -1362,7 +1362,7 @@ void QSensorReading::copyValuesFrom(QSensorReading *other)
     \code
     class MyReading : public QSensorReading
     {
-        Q_OBJECT
+        \Q_OBJECT
         Q_PROPERTY(qreal myprop READ myprop)
         DECLARE_READING(MyReading)
     public:
@@ -1390,6 +1390,3 @@ void QSensorReading::copyValuesFrom(QSensorReading *other)
 */
 
 QT_END_NAMESPACE
-
-#include "moc_qsensor.cpp"
-

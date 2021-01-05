@@ -101,7 +101,7 @@ protected:
     int bufferSize() const;
     virtual qreal correctionFactor() const;
     bool reinitIsNeeded;
-    bool isFeatureSupported(QSensor::Feature feature) const;
+    bool isFeatureSupported(QSensor::Feature feature) const override;
 
 private:
     bool initSensorInterface(QString const &);
