@@ -13,7 +13,7 @@ darwin {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = ios generic
 }
 
-winrt {
+win32 {
     isEmpty(SENSORS_PLUGINS): SENSORS_PLUGINS = winrt generic
 }
 
@@ -42,4 +42,4 @@ isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, android):android:SUBDIRS += a
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, sensorfw):sensorfw:SUBDIRS += sensorfw
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, sensortag):linux:SUBDIRS += sensortag
 isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, ios):darwin:SUBDIRS += ios
-isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, winrt):winrt:SUBDIRS += winrt
+isEmpty(SENSORS_PLUGINS)|contains(SENSORS_PLUGINS, winrt):SUBDIRS += winrt

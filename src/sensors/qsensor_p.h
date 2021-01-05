@@ -77,7 +77,7 @@ public:
         , error(0)
         , alwaysOn(false)
         , skipDuplicates(false)
-        , axesOrientationMode(QSensor::FixedOrientation)
+        , axesOrientationMode(QSensor::AxesOrientationMode::FixedOrientation)
         , currentOrientation(0)
         , userOrientation(0)
         , bufferSize(1)

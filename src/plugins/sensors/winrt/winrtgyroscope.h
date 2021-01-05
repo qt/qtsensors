@@ -55,7 +55,7 @@ public:
 
     bool isFeatureSupported(QSensor::Feature feature) const override
     {
-        if (feature == QSensor::AxesOrientation || feature == QSensor::AccelerationMode)
+        if (feature == QSensor::Feature::AxesOrientation || feature == QSensor::Feature::AccelerationMode)
             return true;
         return false;
     }

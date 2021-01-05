@@ -22,6 +22,8 @@ SOURCES += \
 
 OTHER_FILES = plugin.json
 
+LIBS += runtimeobject.lib
+
 PLUGIN_TYPE = sensors
 PLUGIN_CLASS_NAME = WinRtSensorPlugin
 load(qt_plugin)

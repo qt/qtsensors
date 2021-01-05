@@ -41,7 +41,6 @@
 #include "winrtcommon.h"
 
 #include <QtSensors/QRotationSensor>
-#include <private/qeventdispatcher_winrt_p.h>
 
 #include <functional>
 #include <wrl.h>
@@ -114,25 +113,26 @@ WinRtRotationSensor::WinRtRotationSensor(QSensor *sensor)
     : QSensorBackend(sensor), d_ptr(new WinRtRotationSensorPrivate(this))
 {
     Q_D(WinRtRotationSensor);
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Inclinometer);
-        ComPtr<IInclinometerStatics> factory;
-        HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
-        if (FAILED(hr)) {
-            qCWarning(lcWinRtSensors) << "Unable to initialize rotation sensor factory."
-                                      << qt_error_string(hr);
-            return hr;
-        }
 
-        hr = factory->GetDefault(&d->sensor);
-        if (FAILED(hr)) {
-            qCWarning(lcWinRtSensors) << "Unable to get default rotation sensor."
+    HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Inclinometer);
+    ComPtr<IInclinometerStatics> factory;
+    HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
+    if (FAILED(hr)) {
+        qCWarning(lcWinRtSensors) << "Unable to initialize rotation sensor factory."
                                       << qt_error_string(hr);
-        }
-        return hr;
-    });
-    if (FAILED(hr) || !d->sensor) {
         sensorError(hr);
+        return;
+    }
+    hr = factory->GetDefault(&d->sensor);
+    if (FAILED(hr)) {
+        qCWarning(lcWinRtSensors) << "Unable to get default rotation sensor."
+                                      << qt_error_string(hr);
+        sensorError(hr);
+        return;
+    }
+
+    if (!d->sensor) {
+        qCWarning(lcWinRtSensors) << "Default rotationsensor was not found on the system.";
         return;
     }
 
@@ -162,11 +162,10 @@ void WinRtRotationSensor::start()
     if (d->token.value)
         return;
 
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        ComPtr<InclinometerReadingHandler> callback =
+    ComPtr<InclinometerReadingHandler> callback =
             Callback<InclinometerReadingHandler>(d, &WinRtRotationSensorPrivate::readingChanged);
-        return d->sensor->add_ReadingChanged(callback.Get(), &d->token);
-    });
+    HRESULT hr = d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to reading changed event."
                                   << qt_error_string(hr);
@@ -195,9 +194,7 @@ void WinRtRotationSensor::stop()
     if (!d->token.value)
         return;
 
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        return d->sensor->remove_ReadingChanged(d->token);
-    });
+    HRESULT hr = d->sensor->remove_ReadingChanged(d->token);
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to detach from reading changed event."
                                   << qt_error_string(hr);

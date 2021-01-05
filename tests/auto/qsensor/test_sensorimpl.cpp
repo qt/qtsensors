@@ -106,6 +106,6 @@ void testsensorimpl::stop()
 
 bool testsensorimpl::isFeatureSupported(QSensor::Feature feature) const
 {
-    return (feature == QSensor::AlwaysOn || feature == QSensor::GeoValues);
+    return (feature == QSensor::Feature::AlwaysOn || feature == QSensor::Feature::GeoValues);
 }
 

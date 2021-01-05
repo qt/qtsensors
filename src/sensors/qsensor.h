@@ -56,26 +56,22 @@ class QSensorReading;
 class QSensorReadingPrivate;
 class QSensorFilter;
 
-// This type is no longer used in the API but third party apps may be using it
-typedef quint64 qtimestamp;
+using qrange = QPair<int,int>;
+using qrangelist = QList<qrange>;
 
-typedef QPair<int,int> qrange;
-typedef QList<qrange> qrangelist;
 struct qoutputrange
 {
     qreal minimum;
     qreal maximum;
     qreal accuracy;
 };
-typedef QList<qoutputrange> qoutputrangelist;
+
+using qoutputrangelist = QList<qoutputrange>;
 
 class Q_SENSORS_EXPORT QSensor : public QObject
 {
     friend class QSensorBackend;
-
     Q_OBJECT
-    Q_ENUMS(Feature)
-    Q_ENUMS(AxesOrientationMode)
     Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier)
     Q_PROPERTY(QByteArray type READ type)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
@@ -108,6 +104,7 @@ public:
         PressureSensorTemperature,
         Reserved = 257 // Make sure at least 2 bytes are used for the enum to avoid breaking BC later
     };
+    Q_ENUM(Feature)
 
     // Keep in sync with QmlSensor::AxesOrientationMode
     enum AxesOrientationMode {
@@ -115,6 +112,7 @@ public:
         AutomaticOrientation,
         UserOrientation
     };
+    Q_ENUM(AxesOrientationMode)
 
     explicit QSensor(const QByteArray &type, QObject *parent = Q_NULLPTR);
     virtual ~QSensor();

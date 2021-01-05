@@ -41,7 +41,6 @@
 #include "winrtcommon.h"
 
 #include <QtSensors/QGyroscope>
-#include <private/qeventdispatcher_winrt_p.h>
 
 #include <functional>
 #include <wrl.h>
@@ -116,25 +115,27 @@ WinRtGyroscope::WinRtGyroscope(QSensor *sensor)
     : QSensorBackend(sensor), d_ptr(new WinRtGyroscopePrivate(this))
 {
     Q_D(WinRtGyroscope);
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Gyrometer);
-        ComPtr<IGyrometerStatics> factory;
-        HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
-        if (FAILED(hr)) {
-            qCWarning(lcWinRtSensors) << "Unable to initialize gyroscope sensor factory."
-                                      << qt_error_string(hr);
-            return hr;
-        }
 
-        hr = factory->GetDefault(&d->sensor);
-        if (FAILED(hr)) {
-            qCWarning(lcWinRtSensors) << "Unable to get default gyroscope sensor."
+    HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Gyrometer);
+    ComPtr<IGyrometerStatics> factory;
+    HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
+    if (FAILED(hr)) {
+        qCWarning(lcWinRtSensors) << "Unable to initialize gyroscope sensor factory."
                                       << qt_error_string(hr);
-        }
-        return hr;
-    });
-    if (FAILED(hr) || !d->sensor) {
         sensorError(hr);
+        return;
+    }
+
+    hr = factory->GetDefault(&d->sensor);
+    if (FAILED(hr)) {
+        qCWarning(lcWinRtSensors) << "Unable to get default gyroscope sensor."
+                                      << qt_error_string(hr);
+        sensorError(hr);
+        return;
+    }
+
+    if (!d->sensor) {
+        qCWarning(lcWinRtSensors) << "Default gyroscope was not found on the system.";
         return;
     }
 
@@ -164,11 +165,10 @@ void WinRtGyroscope::start()
     if (d->token.value)
         return;
 
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        ComPtr<InclinometerReadingHandler> callback =
+    ComPtr<InclinometerReadingHandler> callback =
             Callback<InclinometerReadingHandler>(d, &WinRtGyroscopePrivate::readingChanged);
-        return d->sensor->add_ReadingChanged(callback.Get(), &d->token);
-    });
+    HRESULT hr = d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to reading changed event."
                                   << qt_error_string(hr);
@@ -197,9 +197,7 @@ void WinRtGyroscope::stop()
     if (!d->token.value)
         return;
 
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        return d->sensor->remove_ReadingChanged(d->token);
-    });
+    HRESULT hr = d->sensor->remove_ReadingChanged(d->token);
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to detach from reading changed event."
                                   << qt_error_string(hr);

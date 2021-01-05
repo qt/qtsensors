@@ -161,5 +161,5 @@ bool GenericTiltSensor::filter(QAccelerometerReading *reading)
 
 bool GenericTiltSensor::isFeatureSupported(QSensor::Feature feature) const
 {
-    return (feature == QSensor::SkipDuplicates);
+    return (feature == QSensor::Feature::SkipDuplicates);
 }

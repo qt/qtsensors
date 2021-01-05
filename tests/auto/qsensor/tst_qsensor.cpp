@@ -43,9 +43,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// The unit test needs to change the behaviour of the library. It does this
-// through an exported but undocumented function.
-Q_SENSORS_EXPORT void sensors_unit_test_hook(int index);
 bool operator==(const qoutputrange &orl1, const qoutputrange &orl2)
 {
     return (orl1.minimum == orl2.minimum &&
@@ -54,26 +51,15 @@ bool operator==(const qoutputrange &orl1, const qoutputrange &orl2)
 }
 
 namespace QTest {
-    template<> char *toString(const qoutputrangelist &orl)
+    // QCOMPARE calls this upon failure (and if a list of these elements is compared,
+    // it will call this individually for each element)
+    template<> char* toString(const qoutputrange& range)
     {
-        QStringList list;
-        foreach (const qoutputrange &item, orl) {
-            list << QString("%1-%2%3%4").arg(item.minimum).arg(item.maximum).arg(QString::fromWCharArray(L"\u00B1")).arg(item.accuracy);
-        }
-        QString ret = QString("qoutputrangelist: (%1)").arg(list.join("), ("));
-        return qstrdup(ret.toLatin1().data());
-    }
-    template<> char *toString(const QList<QByteArray> &data)
-    {
-        QStringList list;
-        foreach (const QByteArray &str, data) {
-            list << QString::fromLatin1(str);
-        }
-        QString ret = QString("QList<QByteArray>: (%1)").arg(list.join("), ("));
+        QString ret =  QString("%1-%2%3%4").arg(range.minimum).arg(range.maximum)
+                .arg(QString::fromWCharArray(L"\u00B1")).arg(range.accuracy);
         return qstrdup(ret.toLatin1().data());
     }
 }
-
 
 class MyFilter : public TestSensorFilter { bool filter(TestSensorReading *) override { return false; } };
 
@@ -241,9 +227,9 @@ private slots:
         sensor.connectToBackend();
         QVERIFY(sensor.reading() != 0);
         quint64 timestamp = sensor.reading()->timestamp();
-        qtimestamp timestamp2 = sensor.reading()->timestamp();
+        quint64 timestamp2 = sensor.reading()->timestamp();
         QVERIFY(timestamp == quint64());
-        QVERIFY(timestamp2 == qtimestamp());
+        QVERIFY(timestamp2 == quint64());
         sensor.setProperty("doThis", "setOne");
         sensor.start();
         timestamp = sensor.reading()->timestamp();
@@ -959,21 +945,21 @@ private slots:
 
         // Not connected to backend - should report false for any feature
         QVERIFY(!sensor.isConnectedToBackend());
-        QVERIFY(!sensor.isFeatureSupported(QSensor::AlwaysOn));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::GeoValues));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::AccelerationMode));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::AlwaysOn));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::Buffering));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::GeoValues));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::FieldOfView));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::AccelerationMode));
 
         // Connect to backend - according to the testsensorimpl implementation, AlwaysOn and
         // GeoValues should be supported afterwards
         QVERIFY(sensor.connectToBackend());
 
-        QVERIFY(sensor.isFeatureSupported(QSensor::AlwaysOn));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::Buffering));
-        QVERIFY(sensor.isFeatureSupported(QSensor::GeoValues));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::FieldOfView));
-        QVERIFY(!sensor.isFeatureSupported(QSensor::AccelerationMode));
+        QVERIFY(sensor.isFeatureSupported(QSensor::Feature::AlwaysOn));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::Buffering));
+        QVERIFY(sensor.isFeatureSupported(QSensor::Feature::GeoValues));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::FieldOfView));
+        QVERIFY(!sensor.isFeatureSupported(QSensor::Feature::AccelerationMode));
     }
 };
 

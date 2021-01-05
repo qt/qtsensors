@@ -41,7 +41,6 @@
 #include "winrtcommon.h"
 
 #include <QtSensors/QCompass>
-#include <private/qeventdispatcher_winrt_p.h>
 
 #include <functional>
 #include <wrl.h>
@@ -136,25 +135,27 @@ WinRtCompass::WinRtCompass(QSensor *sensor)
     : QSensorBackend(sensor), d_ptr(new WinRtCompassPrivate(this))
 {
     Q_D(WinRtCompass);
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Compass);
-        ComPtr<ICompassStatics> factory;
-        HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
-        if (FAILED(hr)) {
-            qCWarning(lcWinRtSensors) << "Unable to initialize light sensor factory."
-                                      << qt_error_string(hr);
-            return hr;
-        }
 
-        hr = factory->GetDefault(&d->sensor);
-        if (FAILED(hr)) {
-            qCWarning(lcWinRtSensors) << "Unable to get default compass."
+    HStringReference classId(RuntimeClass_Windows_Devices_Sensors_Compass);
+    ComPtr<ICompassStatics> factory;
+    HRESULT hr = RoGetActivationFactory(classId.Get(), IID_PPV_ARGS(&factory));
+    if (FAILED(hr)) {
+        qCWarning(lcWinRtSensors) << "Unable to initialize light sensor factory."
                                       << qt_error_string(hr);
-        }
-        return hr;
-    });
-    if (FAILED(hr) || !d->sensor) {
         sensorError(hr);
+        return;
+    }
+
+    hr = factory->GetDefault(&d->sensor);
+    if (FAILED(hr)) {
+        qCWarning(lcWinRtSensors) << "Unable to get default compass."
+                                      << qt_error_string(hr);
+        sensorError(hr);
+        return;
+    }
+
+    if (!d->sensor) {
+        qCWarning(lcWinRtSensors) << "Default compass was not found on the system.";
         return;
     }
 
@@ -183,12 +184,10 @@ void WinRtCompass::start()
         return;
     if (d->token.value)
         return;
-
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        ComPtr<CompassReadingHandler> callback =
+    ComPtr<CompassReadingHandler> callback =
             Callback<CompassReadingHandler>(d, &WinRtCompassPrivate::readingChanged);
-        return d->sensor->add_ReadingChanged(callback.Get(), &d->token);
-    });
+    HRESULT hr = d->sensor->add_ReadingChanged(callback.Get(), &d->token);
+
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to attach to reading changed event."
                                   << qt_error_string(hr);
@@ -216,9 +215,8 @@ void WinRtCompass::stop()
         return;
     if (!d->token.value)
         return;
-    HRESULT hr = QEventDispatcherWinRT::runOnXamlThread([d]() {
-        return d->sensor->remove_ReadingChanged(d->token);
-    });
+    HRESULT hr = d->sensor->remove_ReadingChanged(d->token);
+
     if (FAILED(hr)) {
         qCWarning(lcWinRtSensors) << "Unable to detach from reading changed event."
                                   << qt_error_string(hr);

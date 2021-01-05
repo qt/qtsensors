@@ -110,7 +110,7 @@ void QSensorItem::setStart(bool run)
 */
 QString QSensorItem::id()
 {
-    return (_qsensor ? _qsensor->identifier() : "");
+    return (_qsensor ? _qsensor->identifier() : QStringLiteral(""));
 }
 
 /*

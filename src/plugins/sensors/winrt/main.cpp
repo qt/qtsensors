@@ -59,6 +59,7 @@ class WinRtSensorPlugin : public QObject, public QSensorPluginInterface, public 
     Q_PLUGIN_METADATA(IID "com.qt-project.Qt.QSensorPluginInterface/1.0" FILE "plugin.json")
     Q_INTERFACES(QSensorPluginInterface)
 public:
+
     void registerSensors() override
     {
         QSensorManager::registerBackend(QAccelerometer::type, QByteArrayLiteral("WinRtAccelerometer"), this);
