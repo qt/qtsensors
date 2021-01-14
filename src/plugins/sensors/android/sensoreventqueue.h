@@ -125,8 +125,9 @@ public:
     void start() override
     {
         ASensorEventQueue_enableSensor(m_sensorEventQueue, m_sensor);
+        // The QSensor datarate is in Hz (frequency), whereas the setEventRate expects microseconds
         if (sensor()->dataRate() > 0)
-            ASensorEventQueue_setEventRate(m_sensorEventQueue, m_sensor, std::max(ASensor_getMinDelay(m_sensor), sensor()->dataRate()));
+            ASensorEventQueue_setEventRate(m_sensorEventQueue, m_sensor, std::max(ASensor_getMinDelay(m_sensor), 1000000/sensor()->dataRate()));
         m_started = true;
     }
     void stop() override
