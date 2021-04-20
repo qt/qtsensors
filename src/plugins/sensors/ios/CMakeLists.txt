@@ -19,6 +19,11 @@ qt_internal_add_plugin(IOSSensorPlugin
 ## Scopes:
 #####################################################################
 
+set_target_properties(IOSSensorPlugin
+    PROPERTIES
+        DISABLE_PRECOMPILE_HEADERS ON
+)
+
 qt_internal_extend_target(IOSSensorPlugin CONDITION IOS AND UIKIT
     SOURCES
         ioscompass.h ioscompass.mm
