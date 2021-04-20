@@ -13,7 +13,11 @@ endif()
 
 #### Tests
 
-
+if (WIN32 AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../config.tests/winrt/CMakeLists.txt")
+    qt_config_compile_test("winrt_sensors"
+                           LABEL "WinRT sensors"
+                           PROJECT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../config.tests/winrt")
+endif()
 
 #### Features
 
@@ -23,6 +27,11 @@ qt_feature("sensorfw" PRIVATE
     CONDITION Sensorfw_FOUND
 )
 # special case end
+
+qt_feature("winrt_sensors" PRIVATE
+    LABEL "WinRT sensors backend"
+    CONDITION WIN32 AND TEST_winrt_sensors
+)
 
 qt_configure_add_summary_section(NAME "Qt Sensors")
 if (LINUX)
@@ -35,4 +44,9 @@ if (LINUX)
     qt_configure_add_summary_entry(ARGS "sensorfw_enabled_with_cmake")
     qt_configure_add_report(MESSAGE "SensorFW support currently not enabled with cmake")
 endif()
+
+if (WIN32)
+    qt_configure_add_summary_entry(ARGS "winrt_sensors")
+endif()
+
 qt_configure_end_summary_section() # end of "Qt Sensors" section

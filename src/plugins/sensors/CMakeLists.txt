@@ -10,7 +10,7 @@ endif()
 #     add_subdirectory(sensorfw)
 #endif()
 
-if (WIN32 AND NOT SENSORS_PLUGINS OR "winrt" IN_LIST SENSORS_PLUGINS)
+if (QT_FEATURE_winrt_sensors AND NOT SENSORS_PLUGINS OR "winrt" IN_LIST SENSORS_PLUGINS)
     add_subdirectory(winrt)
 endif()
 

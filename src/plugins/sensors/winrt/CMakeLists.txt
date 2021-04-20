@@ -19,7 +19,11 @@ qt_internal_add_plugin(WinRtSensorPlugin
         Qt::Sensors
     LIBRARIES
         Qt::CorePrivate
-        runtimeobject
+)
+
+qt_internal_extend_target(WinRtSensorPlugin CONDITION MSVC
+    PUBLIC_LIBRARIES
+        runtimeobject.lib
 )
 
 #### Keys ignored in scope 1:.:.:winrt.pro:<TRUE>:
