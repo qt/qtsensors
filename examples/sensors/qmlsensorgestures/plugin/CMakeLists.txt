@@ -13,18 +13,20 @@ endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}")
 
-find_package(Qt6 COMPONENTS Core)
-find_package(Qt6 COMPONENTS Gui)
-find_package(Qt6 COMPONENTS Sensors)
+find_package(Qt6 COMPONENTS Core Gui Sensors)
 
-qt_add_executable(qtsensorgestures_counterplugin
+qt_add_plugin(qtsensorgestures_counterplugin)
+
+target_sources(qtsensorgestures_counterplugin PRIVATE
     qcountergestureplugin.cpp qcountergestureplugin.h
     qcounterrecognizer.cpp qcounterrecognizer.h
 )
+
 set_target_properties(qtsensorgestures_counterplugin PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+
 target_link_libraries(qtsensorgestures_counterplugin PUBLIC
     Qt::Core
     Qt::Gui

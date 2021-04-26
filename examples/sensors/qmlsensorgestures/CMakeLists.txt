@@ -18,14 +18,15 @@ find_package(Qt6 COMPONENTS Quick)
 qt_add_executable(qmlsensorgestures
     main.cpp
 )
+
 set_target_properties(qmlsensorgestures PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+
 target_link_libraries(qmlsensorgestures PUBLIC
     Qt::Quick
 )
-
 
 # Resources:
 set(qml_resource_files

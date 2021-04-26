@@ -1,13 +1,10 @@
-# TODO Qt 6.2 enable grue example, requires work
+# TODO Qt 6.2 enable
 # add_subdirectory(grue)
-
 if(TARGET Qt::Quick)
     add_subdirectory(maze)
-    # TODO Qt 6.2 enable qmlsensorgestures, requires work
-    # add_subdirectory(qmlsensorgestures)
+    add_subdirectory(qmlsensorgestures)
     add_subdirectory(qmlqtsensors)
-    # TODO Qt 6.2 enable sensor_explorer, requires work
-    # add_subdirectory(sensor_explorer)
+    add_subdirectory(sensor_explorer)
     if (TARGET Qt::Multimedia)
         add_subdirectory(shakeit)
     endif()
