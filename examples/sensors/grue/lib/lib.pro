@@ -1,5 +1,6 @@
 TEMPLATE = lib
 TARGET = gruesensor
+android: TARGET = gruesensor_$${QT_ARCH}
 
 macos: DESTDIR = ../grue_app.app/Contents/Frameworks
 else: DESTDIR = $$OUT_PWD/..
