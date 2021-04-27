@@ -74,10 +74,13 @@ Window {
         anchors.margins: 8
         spacing: 8
 
+        /* TODO Qt 6.2 FIX TableView and TableViewColumn
+
         GroupBox {
             title: qsTr("Available Sensors")
             width: parent.width
             height: window.height * 0.4
+
 
             TableView {
                 id: sensorList
@@ -220,5 +223,6 @@ Window {
                 }
             }
         }
+    */
     }
 }

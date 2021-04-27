@@ -15,7 +15,11 @@ set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/sensors/sensor_explorer/Explorer"
 
 find_package(Qt6 COMPONENTS Core Gui Qml Sensors)
 
-if (MACOS)
+# Hack to convince qt6_add_qml_module to respect the shared-ness of a Qt build
+# TODO Qt 6.2 FIXME when a proper fix is available
+set(BUILD_SHARED_LIBS "${QT6_IS_SHARED_LIBS_BUILD}")
+
+if (APPLE AND NOT IOS)
     set(PLUGIN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../sensor_explorer.app/Contents/MacOS/Explorer")
 else()
     set(PLUGIN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/../Explorer")
