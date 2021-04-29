@@ -25,10 +25,10 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
-import QtQuick 2.0
-import Collector 1.0
-import QtSensors 5.0
+import QtQuick
+import QtQuick.Controls
+import Collector
+import QtSensors
 
 Rectangle {
     Collector {
@@ -47,7 +47,7 @@ Rectangle {
         property bool depressed: false
         anchors.top: label.bottom
         enabled: true;
-        anchors.horizontalCenter: parent
+        anchors.horizontalCenter: parent.horizontalCenter
         onClicked: {
             if (!depressed) {
                 writer.startCollecting()

@@ -1,0 +1,6 @@
+if(TARGET Qt::Widgets)
+    add_subdirectory(sensor_explorer)
+endif()
+if (TARGET Qt::Quick)
+    add_subdirectory(sensorclerk)
+endif()

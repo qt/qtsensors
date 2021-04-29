@@ -2,7 +2,7 @@
 ## sensor_explorer Binary:
 #####################################################################
 
-qt_internal_add_manual_test(sensor_explorer
+qt_internal_add_manual_test(tst_manual_sensor_explorer
     GUI
     SOURCES
         explorer.cpp explorer.h explorer.ui
