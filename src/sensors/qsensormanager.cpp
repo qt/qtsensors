@@ -253,6 +253,9 @@ void QSensorManagerPrivate::loadPlugins()
     Register a sensor for \a type. The \a identifier must be unique.
 
     The \a factory will be asked to create instances of the backend.
+
+    Sensor identifiers starting with \c generic or \c dummy are given lower
+    priority when choosing the default sensor if other sensors are found.
 */
 void QSensorManager::registerBackend(const QByteArray &type, const QByteArray &identifier, QSensorBackendFactory *factory)
 {
@@ -264,8 +267,9 @@ void QSensorManager::registerBackend(const QByteArray &type, const QByteArray &i
     if (!d->backendsByType.contains(type)) {
         (void)d->backendsByType[type];
         d->firstIdentifierForType[type] = identifier;
-    } else if (d->firstIdentifierForType[type].startsWith("generic.")) {
-        // Don't let a generic backend be the default when some other backend exists!
+    } else if (d->firstIdentifierForType[type].startsWith("generic.") ||
+        d->firstIdentifierForType[type].startsWith("dummy.")) {
+        // Don't let a generic or dummy backend be the default when some other backend exists!
         d->firstIdentifierForType[type] = identifier;
     }
     FactoryForIdentifierMap &factoryByIdentifier = d->backendsByType[type];
