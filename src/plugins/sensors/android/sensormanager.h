@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
@@ -40,13 +41,11 @@
 #ifndef SENSORMANAGER_H
 #define SENSORMANAGER_H
 
-#include <QThread>
-#include <QSemaphore>
-#include <QMutex>
-#include <QWaitCondition>
-
-#include <private/qjni_p.h>
-#include <private/qjnihelpers_p.h>
+#include <QtCore/qthread.h>
+#include <QtCore/qsemaphore.h>
+#include <QtCore/qmutex.h>
+#include <QtCore/qwaitcondition.h>
+#include <QtCore/qjniobject.h>
 
 #include <android/sensor.h>
 
@@ -58,7 +57,7 @@ public:
     ALooper *looper() const;
     ASensorManager *manager() const;
 
-    QJNIObjectPrivate javaSensor(const ASensor *sensor) const;
+    QJniObject javaSensor(const ASensor *sensor) const;
     QString description(const ASensor *sensor) const;
     double getMaximumRange(const ASensor *sensor) const;
 
@@ -71,7 +70,7 @@ private:
     QAtomicInt m_quit{0};
     ALooper *m_looper = nullptr;
     QSemaphore m_waitForStart;
-    QJNIObjectPrivate m_sensorManager;
+    QJniObject m_sensorManager;
 };
 
 #endif // SENSORMANAGER_H

@@ -1,5 +1,6 @@
 /****************************************************************************
 **
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 ** Contact: https://www.qt.io/licensing/
 **
@@ -37,12 +38,18 @@
 **
 ****************************************************************************/
 #include "sensormanager.h"
+#include <QtCore/qcoreapplication.h>
+
 #include <dlfcn.h>
 
 SensorManager::SensorManager()
 {
-    auto sensorService =  QJNIObjectPrivate::getStaticObjectField("android.content.Context", "SENSOR_SERVICE", "Ljava/lang/String;");
-    m_sensorManager = QJNIObjectPrivate{QtAndroidPrivate::context()}.callObjectMethod("getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", sensorService.object());
+    auto sensorService =  QJniObject::getStaticObjectField("android.content.Context",
+                                                           "SENSOR_SERVICE", "Ljava/lang/String;");
+    QJniObject context = QNativeInterface::QAndroidApplication::context();
+    m_sensorManager = context.callObjectMethod("getSystemService",
+                                               "(Ljava/lang/String;)Ljava/lang/Object;",
+                                               sensorService.object());
     setObjectName("QtSensorsLooperThread");
     start();
     m_waitForStart.acquire();
@@ -54,9 +61,10 @@ SensorManager::~SensorManager()
     wait();
 }
 
-QJNIObjectPrivate SensorManager::javaSensor(const ASensor *sensor) const
+QJniObject SensorManager::javaSensor(const ASensor *sensor) const
 {
-    return m_sensorManager.callObjectMethod("getDefaultSensor", "(I)Landroid/hardware/Sensor;", ASensor_getType(sensor));
+    return m_sensorManager.callObjectMethod("getDefaultSensor", "(I)Landroid/hardware/Sensor;",
+                                            ASensor_getType(sensor));
 }
 
 QSharedPointer<SensorManager> &SensorManager::instance()
@@ -72,19 +80,18 @@ ALooper *SensorManager::looper() const
 
 static inline ASensorManager* androidManager()
 {
+    QJniObject context = QNativeInterface::QAndroidApplication::context();
+    auto packageName = context.callObjectMethod("getPackageName", "()Ljava/lang/String;")
+                              .toString().toUtf8();
 #if __ANDROID_API__ >= 26
-    return ASensorManager_getInstanceForPackage(QJNIObjectPrivate{QtAndroidPrivate::context()}
-                                                .callObjectMethod("getPackageName", "()Ljava/lang/String;")
-                                                .toString().toUtf8().constData());
+    return ASensorManager_getInstanceForPackage(packageName.constData());
 #else
-    if (QtAndroidPrivate::androidSdkVersion() >= 26) {
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 26) {
         using GetInstanceForPackage = ASensorManager *(*)(const char *);
         auto handler = dlopen("libandroid.so", RTLD_NOW);
         auto function = GetInstanceForPackage(dlsym(handler, "ASensorManager_getInstanceForPackage"));
         if (function) {
-            auto res = function(QJNIObjectPrivate{QtAndroidPrivate::context()}
-                                .callObjectMethod("getPackageName", "()Ljava/lang/String;")
-                                .toString().toUtf8().constData());
+            auto res = function(packageName.constData());
             dlclose(handler);
             return res;
         }
@@ -101,7 +108,8 @@ ASensorManager *SensorManager::manager() const
 
 QString SensorManager::description(const ASensor *sensor) const
 {
-    return QString::fromUtf8(ASensor_getName(sensor)) + " " + ASensor_getVendor(sensor) + " v" + QString::number(javaSensor(sensor).callMethod<jint>("getVersion"));
+    return QString::fromUtf8(ASensor_getName(sensor)) + " " + ASensor_getVendor(sensor)
+            + " v" + QString::number(javaSensor(sensor).callMethod<jint>("getVersion"));
 }
 
 double SensorManager::getMaximumRange(const ASensor *sensor) const
