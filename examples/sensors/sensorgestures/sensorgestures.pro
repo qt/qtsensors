@@ -1,6 +1,8 @@
 TEMPLATE = app
 TARGET = gesture
 QT       += sensors widgets
+qtConfig(static):QTPLUGIN += qtsensorgestures_plugin qtsensorgestures_shakeplugin
+
 requires(qtConfig(treewidget))
 
 SOURCES += main.cpp\
