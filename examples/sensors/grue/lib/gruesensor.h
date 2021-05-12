@@ -86,10 +86,10 @@ class Q_GRUE_EXPORT GrueSensor : public QSensor
     Q_OBJECT
     Q_PROPERTY(GrueSensorReading* reading READ reading)
 public:
-    explicit GrueSensor(QObject *parent = 0) : QSensor(GrueSensor::type, parent) {}
+    explicit GrueSensor(QObject *parent = 0) : QSensor(GrueSensor::sensorType, parent) {}
     virtual ~GrueSensor() {}
     GrueSensorReading *reading() const { return static_cast<GrueSensorReading*>(QSensor::reading()); }
-    static char const * const type;
+    static char const * const sensorType;
 };
 // end generated code
 

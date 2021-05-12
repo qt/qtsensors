@@ -70,7 +70,7 @@ public:
     explicit QAltimeter(QObject *parent = Q_NULLPTR);
     ~QAltimeter();
     QAltimeterReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DISABLE_COPY(QAltimeter)

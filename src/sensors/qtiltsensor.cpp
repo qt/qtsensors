@@ -123,7 +123,7 @@ bool QTiltFilter::filter(QSensorReading *reading)
     return filter(static_cast<QTiltReading*>(reading));
 }
 
-char const * const QTiltSensor::type("QTiltSensor");
+char const * const QTiltSensor::sensorType("QTiltSensor");
 
 /*!
     \class QTiltSensor
@@ -148,7 +148,7 @@ char const * const QTiltSensor::type("QTiltSensor");
     Construct the sensor as a child of \a parent.
 */
 QTiltSensor::QTiltSensor(QObject *parent)
-    : QSensor(QTiltSensor::type, parent)
+    : QSensor(QTiltSensor::sensorType, parent)
 {
 }
 

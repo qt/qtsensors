@@ -68,44 +68,44 @@ public:
 
     void sensorsChanged() override
     {
-        if (!QSensor::defaultSensorForType(QAccelerometer::type).isEmpty()) {
+        if (!QSensor::defaultSensorForType(QAccelerometer::sensorType).isEmpty()) {
             // There is an accelerometer available. Register the backends
 #ifdef QTSENSORS_GENERICORIENTATIONSENSOR
-            if (!QSensorManager::isBackendRegistered(QOrientationSensor::type, genericorientationsensor::id))
-                QSensorManager::registerBackend(QOrientationSensor::type, genericorientationsensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QOrientationSensor::sensorType, genericorientationsensor::id))
+                QSensorManager::registerBackend(QOrientationSensor::sensorType, genericorientationsensor::id, this);
 #endif
 #ifdef QTSENSORS_GENERICROTATIONSENSOR
-            if (!QSensorManager::isBackendRegistered(QRotationSensor::type, genericrotationsensor::id))
-                QSensorManager::registerBackend(QRotationSensor::type, genericrotationsensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QRotationSensor::sensorType, genericrotationsensor::id))
+                QSensorManager::registerBackend(QRotationSensor::sensorType, genericrotationsensor::id, this);
 #endif
 #ifdef QTSENSORS_GENERICTILTSENSOR
-            if (!QSensorManager::isBackendRegistered(QTiltSensor::type, GenericTiltSensor::id))
-                QSensorManager::registerBackend(QTiltSensor::type, GenericTiltSensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QTiltSensor::sensorType, GenericTiltSensor::id))
+                QSensorManager::registerBackend(QTiltSensor::sensorType, GenericTiltSensor::id, this);
 #endif
         } else {
 #ifdef QTSENSORS_GENERICORIENTATIONSENSOR
-            if (QSensorManager::isBackendRegistered(QOrientationSensor::type, genericorientationsensor::id))
-                QSensorManager::unregisterBackend(QOrientationSensor::type, genericorientationsensor::id);
+            if (QSensorManager::isBackendRegistered(QOrientationSensor::sensorType, genericorientationsensor::id))
+                QSensorManager::unregisterBackend(QOrientationSensor::sensorType, genericorientationsensor::id);
 #endif
 #ifdef QTSENSORS_GENERICROTATIONSENSOR
-            if (QSensorManager::isBackendRegistered(QRotationSensor::type, genericrotationsensor::id))
-                QSensorManager::unregisterBackend(QRotationSensor::type, genericrotationsensor::id);
+            if (QSensorManager::isBackendRegistered(QRotationSensor::sensorType, genericrotationsensor::id))
+                QSensorManager::unregisterBackend(QRotationSensor::sensorType, genericrotationsensor::id);
 #endif
 #ifdef QTSENSORS_GENERICTILTSENSOR
-            if (QSensorManager::isBackendRegistered(QTiltSensor::type, GenericTiltSensor::id))
-                QSensorManager::unregisterBackend(QTiltSensor::type, GenericTiltSensor::id);
+            if (QSensorManager::isBackendRegistered(QTiltSensor::sensorType, GenericTiltSensor::id))
+                QSensorManager::unregisterBackend(QTiltSensor::sensorType, GenericTiltSensor::id);
 #endif
         }
 
-        if (!QSensor::defaultSensorForType(QLightSensor::type).isEmpty()) {
+        if (!QSensor::defaultSensorForType(QLightSensor::sensorType).isEmpty()) {
 #ifdef QTSENSORS_GENERICALSSENSOR
-            if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
-                QSensorManager::registerBackend(QAmbientLightSensor::type, genericalssensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::sensorType, genericalssensor::id))
+                QSensorManager::registerBackend(QAmbientLightSensor::sensorType, genericalssensor::id, this);
 #endif
         } else {
 #ifdef QTSENSORS_GENERICALSSENSOR
-            if (QSensorManager::isBackendRegistered(QAmbientLightSensor::type, genericalssensor::id))
-                QSensorManager::unregisterBackend(QAmbientLightSensor::type, genericalssensor::id);
+            if (QSensorManager::isBackendRegistered(QAmbientLightSensor::sensorType, genericalssensor::id))
+                QSensorManager::unregisterBackend(QAmbientLightSensor::sensorType, genericalssensor::id);
 #endif
         }
     }
@@ -134,4 +134,3 @@ public:
 };
 
 #include "main.moc"
-

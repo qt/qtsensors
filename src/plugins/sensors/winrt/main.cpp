@@ -62,12 +62,12 @@ public:
 
     void registerSensors() override
     {
-        QSensorManager::registerBackend(QAccelerometer::type, QByteArrayLiteral("WinRtAccelerometer"), this);
-        QSensorManager::registerBackend(QCompass::type, QByteArrayLiteral("WinRtCompass"), this);
-        QSensorManager::registerBackend(QGyroscope::type, QByteArrayLiteral("WinRtGyroscope"), this);
-        QSensorManager::registerBackend(QRotationSensor::type, QByteArrayLiteral("WinRtRotationSensor"), this);
-        QSensorManager::registerBackend(QAmbientLightSensor::type, QByteArrayLiteral("WinRtAmbientLightSensor"), this);
-        QSensorManager::registerBackend(QOrientationSensor::type, QByteArrayLiteral("WinRtOrientationSensor"), this);
+        QSensorManager::registerBackend(QAccelerometer::sensorType, QByteArrayLiteral("WinRtAccelerometer"), this);
+        QSensorManager::registerBackend(QCompass::sensorType, QByteArrayLiteral("WinRtCompass"), this);
+        QSensorManager::registerBackend(QGyroscope::sensorType, QByteArrayLiteral("WinRtGyroscope"), this);
+        QSensorManager::registerBackend(QRotationSensor::sensorType, QByteArrayLiteral("WinRtRotationSensor"), this);
+        QSensorManager::registerBackend(QAmbientLightSensor::sensorType, QByteArrayLiteral("WinRtAmbientLightSensor"), this);
+        QSensorManager::registerBackend(QOrientationSensor::sensorType, QByteArrayLiteral("WinRtOrientationSensor"), this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) override

@@ -154,7 +154,7 @@ bool QOrientationFilter::filter(QSensorReading *reading)
     return filter(static_cast<QOrientationReading*>(reading));
 }
 
-char const * const QOrientationSensor::type("QOrientationSensor");
+char const * const QOrientationSensor::sensorType("QOrientationSensor");
 
 /*!
     \class QOrientationSensor
@@ -177,7 +177,7 @@ char const * const QOrientationSensor::type("QOrientationSensor");
     Construct the sensor as a child of \a parent.
 */
 QOrientationSensor::QOrientationSensor(QObject *parent)
-    : QSensor(QOrientationSensor::type, parent)
+    : QSensor(QOrientationSensor::sensorType, parent)
 {
 }
 

@@ -130,7 +130,7 @@ bool QLidFilter::filter(QSensorReading *reading)
     return filter(static_cast<QLidReading*>(reading));
 }
 
-char const * const QLidSensor::type("QLidSensor");
+char const * const QLidSensor::sensorType("QLidSensor");
 
 /*!
     \class QLidSensor
@@ -154,7 +154,7 @@ char const * const QLidSensor::type("QLidSensor");
     Construct the sensor as a child of \a parent.
 */
 QLidSensor::QLidSensor(QObject *parent)
-    : QSensor(QLidSensor::type, parent)
+    : QSensor(QLidSensor::sensorType, parent)
 {
 }
 

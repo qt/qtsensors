@@ -63,29 +63,29 @@ public:
 
     void registerSensors()
     {
-        if (!QSensorManager::isBackendRegistered(QAccelerometer::type, SensorTagAccelerometer::id))
-            QSensorManager::registerBackend(QAccelerometer::type, SensorTagAccelerometer::id, this);
+        if (!QSensorManager::isBackendRegistered(QAccelerometer::sensorType, SensorTagAccelerometer::id))
+            QSensorManager::registerBackend(QAccelerometer::sensorType, SensorTagAccelerometer::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::type, SensorTagAls::id))
-            QSensorManager::registerBackend(QAmbientLightSensor::type, SensorTagAls::id, this);
+        if (!QSensorManager::isBackendRegistered(QAmbientLightSensor::sensorType, SensorTagAls::id))
+            QSensorManager::registerBackend(QAmbientLightSensor::sensorType, SensorTagAls::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QLightSensor::type, SensorTagLightSensor::id))
-            QSensorManager::registerBackend(QLightSensor::type, SensorTagLightSensor::id, this);
+        if (!QSensorManager::isBackendRegistered(QLightSensor::sensorType, SensorTagLightSensor::id))
+            QSensorManager::registerBackend(QLightSensor::sensorType, SensorTagLightSensor::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QAmbientTemperatureSensor::type, SensorTagTemperatureSensor::id))
-            QSensorManager::registerBackend(QAmbientTemperatureSensor::type, SensorTagTemperatureSensor::id, this);
+        if (!QSensorManager::isBackendRegistered(QAmbientTemperatureSensor::sensorType, SensorTagTemperatureSensor::id))
+            QSensorManager::registerBackend(QAmbientTemperatureSensor::sensorType, SensorTagTemperatureSensor::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QHumiditySensor::type, SensorTagHumiditySensor::id))
-            QSensorManager::registerBackend(QHumiditySensor::type, SensorTagHumiditySensor::id, this);
+        if (!QSensorManager::isBackendRegistered(QHumiditySensor::sensorType, SensorTagHumiditySensor::id))
+            QSensorManager::registerBackend(QHumiditySensor::sensorType, SensorTagHumiditySensor::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QPressureSensor::type, SensorTagPressureSensor::id))
-            QSensorManager::registerBackend(QPressureSensor::type, SensorTagPressureSensor::id, this);
+        if (!QSensorManager::isBackendRegistered(QPressureSensor::sensorType, SensorTagPressureSensor::id))
+            QSensorManager::registerBackend(QPressureSensor::sensorType, SensorTagPressureSensor::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QGyroscope::type, SensorTagGyroscope::id))
-            QSensorManager::registerBackend(QGyroscope::type, SensorTagGyroscope::id, this);
+        if (!QSensorManager::isBackendRegistered(QGyroscope::sensorType, SensorTagGyroscope::id))
+            QSensorManager::registerBackend(QGyroscope::sensorType, SensorTagGyroscope::id, this);
 
-        if (!QSensorManager::isBackendRegistered(QMagnetometer::type, SensorTagMagnetometer::id))
-            QSensorManager::registerBackend(QMagnetometer::type, SensorTagMagnetometer::id, this);
+        if (!QSensorManager::isBackendRegistered(QMagnetometer::sensorType, SensorTagMagnetometer::id))
+            QSensorManager::registerBackend(QMagnetometer::sensorType, SensorTagMagnetometer::id, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor)

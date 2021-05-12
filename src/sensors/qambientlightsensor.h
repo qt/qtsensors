@@ -81,7 +81,7 @@ public:
     explicit QAmbientLightSensor(QObject *parent = Q_NULLPTR);
     virtual ~QAmbientLightSensor();
     QAmbientLightReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DISABLE_COPY(QAmbientLightSensor)

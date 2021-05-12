@@ -131,7 +131,7 @@ bool QAmbientLightFilter::filter(QSensorReading *reading)
     return filter(static_cast<QAmbientLightReading*>(reading));
 }
 
-char const * const QAmbientLightSensor::type("QAmbientLightSensor");
+char const * const QAmbientLightSensor::sensorType("QAmbientLightSensor");
 
 /*!
     \class QAmbientLightSensor
@@ -154,7 +154,7 @@ char const * const QAmbientLightSensor::type("QAmbientLightSensor");
     Construct the sensor as a child of \a parent.
 */
 QAmbientLightSensor::QAmbientLightSensor(QObject *parent)
-    : QSensor(QAmbientLightSensor::type, parent)
+    : QSensor(QAmbientLightSensor::sensorType, parent)
 {
 }
 

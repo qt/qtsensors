@@ -68,13 +68,13 @@ public:
 
     void sensorsChanged() override
     {
-        if (!QSensor::defaultSensorForType(QAmbientLightSensor::type).isEmpty()) {
+        if (!QSensor::defaultSensorForType(QAmbientLightSensor::sensorType).isEmpty()) {
             // There is a light sensor available. Register the backend
-            if (!QSensorManager::isBackendRegistered(GrueSensor::type, gruesensorimpl::id))
-                QSensorManager::registerBackend(GrueSensor::type, gruesensorimpl::id, this);
+            if (!QSensorManager::isBackendRegistered(GrueSensor::sensorType, gruesensorimpl::id))
+                QSensorManager::registerBackend(GrueSensor::sensorType, gruesensorimpl::id, this);
         } else {
-            if (QSensorManager::isBackendRegistered(GrueSensor::type, gruesensorimpl::id))
-                QSensorManager::unregisterBackend(GrueSensor::type, gruesensorimpl::id);
+            if (QSensorManager::isBackendRegistered(GrueSensor::sensorType, gruesensorimpl::id))
+                QSensorManager::unregisterBackend(GrueSensor::sensorType, gruesensorimpl::id);
         }
     }
 
@@ -88,4 +88,3 @@ public:
 };
 
 #include "main.moc"
-

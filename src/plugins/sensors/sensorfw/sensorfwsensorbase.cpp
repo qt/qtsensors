@@ -92,7 +92,7 @@ void SensorfwSensorBase::start()
     if (m_sensorInterface) {
         // dataRate
         QByteArray type = sensor()->type();
-        if (type != QTapSensor::type && type != QProximitySensor::type) {
+        if (type != QTapSensor::sensorType && type != QProximitySensor::sensorType) {
             int dataRate = sensor()->dataRate();
             int interval = dataRate > 0 ? 1000 / dataRate : 0;
             // for testing maximum speed
@@ -291,8 +291,8 @@ bool SensorfwSensorBase::initSensorInterface(QString const &name)
     // TODO deztructor: Leaking abstraction detected. Just copied code
     // from initSensor<>() here, need to
     QByteArray type = sensor()->type();
-    if ((type == QAmbientLightSensor::type) // SensorFW returns lux values, plugin enumerated values
-        || (type == QIRProximitySensor::type) // SensorFW returns raw reflectance values, plugin % of max reflectance
+    if ((type == QAmbientLightSensor::sensorType) // SensorFW returns lux values, plugin enumerated values
+        || (type == QIRProximitySensor::sensorType) // SensorFW returns raw reflectance values, plugin % of max reflectance
         || (name == "accelerometersensor") // SensorFW returns milliGs, plugin m/s^2
         || (name == "magnetometersensor") // SensorFW returns nanoTeslas, plugin Teslas
         || (name == "gyroscopesensor")) // SensorFW returns DSPs, plugin milliDSPs
@@ -330,4 +330,3 @@ bool SensorfwSensorBase::isFeatureSupported(QSensor::Feature feature) const
 
     return false;
 }
-

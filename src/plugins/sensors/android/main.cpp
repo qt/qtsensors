@@ -77,7 +77,7 @@ public:
             switch (sensor) {
             case ASENSOR_TYPE_ACCELEROMETER:
                 m_accelerationModes |= AndroidAccelerometer::Accelerometer;
-                QSensorManager::registerBackend(QAccelerometer::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QAccelerometer::sensorType, QByteArray::number(sensor), this);
                 accelerometer = true;
                 break;
             case ASENSOR_TYPE_GRAVITY:
@@ -87,26 +87,26 @@ public:
                 m_accelerationModes |= AndroidAccelerometer::LinearAcceleration;
                 break;
             case ASENSOR_TYPE_AMBIENT_TEMPERATURE:
-                QSensorManager::registerBackend(QAmbientTemperatureSensor::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QAmbientTemperatureSensor::sensorType, QByteArray::number(sensor), this);
                 break;
             case ASENSOR_TYPE_GYROSCOPE:
-                QSensorManager::registerBackend(QGyroscope::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QGyroscope::sensorType, QByteArray::number(sensor), this);
                 break;
             case ASENSOR_TYPE_LIGHT:
-                QSensorManager::registerBackend(QLightSensor::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QLightSensor::sensorType, QByteArray::number(sensor), this);
                 break;
             case ASENSOR_TYPE_MAGNETIC_FIELD:
-                QSensorManager::registerBackend(QMagnetometer::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QMagnetometer::sensorType, QByteArray::number(sensor), this);
                 magnetometer = true;
                 break;
             case ASENSOR_TYPE_PRESSURE:
-                QSensorManager::registerBackend(QPressureSensor::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QPressureSensor::sensorType, QByteArray::number(sensor), this);
                 break;
             case ASENSOR_TYPE_PROXIMITY:
-                QSensorManager::registerBackend(QProximitySensor::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QProximitySensor::sensorType, QByteArray::number(sensor), this);
                 break;
             case ASENSOR_TYPE_ROTATION_VECTOR:
-                QSensorManager::registerBackend(QRotationSensor::type, QByteArray::number(sensor), this);
+                QSensorManager::registerBackend(QRotationSensor::sensorType, QByteArray::number(sensor), this);
                 break;
 
             case ASENSOR_TYPE_RELATIVE_HUMIDITY:
@@ -128,7 +128,7 @@ public:
             }
         }
         if (accelerometer && magnetometer)
-            QSensorManager::registerBackend(QCompass::type, AndroidCompassId, this);
+            QSensorManager::registerBackend(QCompass::sensorType, AndroidCompassId, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) override

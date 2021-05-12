@@ -99,7 +99,7 @@ bool QAltimeterFilter::filter(QSensorReading *reading)
     return filter(static_cast<QAltimeterReading*>(reading));
 }
 
-char const * const QAltimeter::type("QAltimeter");
+char const * const QAltimeter::sensorType("QAltimeter");
 
 /*!
     \class QAltimeter
@@ -122,7 +122,7 @@ char const * const QAltimeter::type("QAltimeter");
     Construct the sensor as a child of \a parent.
 */
 QAltimeter::QAltimeter(QObject *parent)
-    : QSensor(QAltimeter::type, parent)
+    : QSensor(QAltimeter::sensorType, parent)
 {
 }
 

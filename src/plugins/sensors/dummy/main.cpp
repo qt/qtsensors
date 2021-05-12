@@ -53,8 +53,8 @@ class dummySensorPlugin : public QObject, public QSensorPluginInterface, public 
 public:
     void registerSensors() override
     {
-        QSensorManager::registerBackend(QAccelerometer::type, dummyaccelerometer::id, this);
-        QSensorManager::registerBackend(QAmbientLightSensor::type, dummylightsensor::id, this);
+        QSensorManager::registerBackend(QAccelerometer::sensorType, dummyaccelerometer::id, this);
+        QSensorManager::registerBackend(QAmbientLightSensor::sensorType, dummylightsensor::id, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) override

@@ -86,7 +86,7 @@ public:
     explicit QMagnetometer(QObject *parent = Q_NULLPTR);
     virtual ~QMagnetometer();
     QMagnetometerReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
     bool returnGeoValues() const;
     void setReturnGeoValues(bool returnGeoValues);

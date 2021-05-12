@@ -43,6 +43,6 @@ void TestSensorReading::setTest(int test)
 
 // =====================================================================
 
-const char *TestSensor::type("test sensor");
+const char *TestSensor::sensorType("test sensor");
 
 #include "moc_test_sensor.cpp"

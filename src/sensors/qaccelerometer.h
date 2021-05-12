@@ -95,7 +95,7 @@ public:
     void setAccelerationMode(AccelerationMode accelerationMode);
 
     QAccelerometerReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 Q_SIGNALS:
     void accelerationModeChanged(AccelerationMode accelerationMode);

@@ -121,7 +121,7 @@ bool QIRProximityFilter::filter(QSensorReading *reading)
     return filter(static_cast<QIRProximityReading*>(reading));
 }
 
-char const * const QIRProximitySensor::type("QIRProximitySensor");
+char const * const QIRProximitySensor::sensorType("QIRProximitySensor");
 
 /*!
     \class QIRProximitySensor
@@ -144,7 +144,7 @@ char const * const QIRProximitySensor::type("QIRProximitySensor");
     Construct the sensor as a child of \a parent.
 */
 QIRProximitySensor::QIRProximitySensor(QObject *parent)
-    : QSensor(QIRProximitySensor::type, parent)
+    : QSensor(QIRProximitySensor::sensorType, parent)
 {
 }
 

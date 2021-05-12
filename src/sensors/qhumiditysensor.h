@@ -79,7 +79,7 @@ public:
     ~QHumiditySensor();
 
     QHumidityReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DECLARE_PRIVATE(QHumiditySensor)

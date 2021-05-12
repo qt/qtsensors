@@ -55,8 +55,8 @@ public:
     void registerSensors() override
     {
         QString path = QString::fromLatin1(qgetenv("QT_ACCEL_FILEPATH"));
-        if (!path.isEmpty() && !QSensorManager::isBackendRegistered(QAccelerometer::type, LinuxSysAccelerometer::id))
-            QSensorManager::registerBackend(QAccelerometer::type, LinuxSysAccelerometer::id, this);
+        if (!path.isEmpty() && !QSensorManager::isBackendRegistered(QAccelerometer::sensorType, LinuxSysAccelerometer::id))
+            QSensorManager::registerBackend(QAccelerometer::sensorType, LinuxSysAccelerometer::id, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) override

@@ -131,7 +131,7 @@ bool QPressureFilter::filter(QSensorReading *reading)
     return filter(static_cast<QPressureReading*>(reading));
 }
 
-char const * const QPressureSensor::type("QPressureSensor");
+char const * const QPressureSensor::sensorType("QPressureSensor");
 
 /*!
     \class QPressureSensor
@@ -154,7 +154,7 @@ char const * const QPressureSensor::type("QPressureSensor");
     Construct the sensor as a child of \a parent.
 */
 QPressureSensor::QPressureSensor(QObject *parent)
-    : QSensor(QPressureSensor::type, parent)
+    : QSensor(QPressureSensor::sensorType, parent)
 {
 }
 

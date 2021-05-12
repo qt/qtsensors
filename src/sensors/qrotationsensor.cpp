@@ -184,7 +184,7 @@ bool QRotationFilter::filter(QSensorReading *reading)
     return filter(static_cast<QRotationReading*>(reading));
 }
 
-char const * const QRotationSensor::type("QRotationSensor");
+char const * const QRotationSensor::sensorType("QRotationSensor");
 
 /*!
     \class QRotationSensor
@@ -207,7 +207,7 @@ char const * const QRotationSensor::type("QRotationSensor");
     Construct the sensor as a child of \a parent.
 */
 QRotationSensor::QRotationSensor(QObject *parent)
-    : QSensor(QRotationSensor::type, *new QRotationSensorPrivate, parent)
+    : QSensor(QRotationSensor::sensorType, *new QRotationSensorPrivate, parent)
 {
 }
 

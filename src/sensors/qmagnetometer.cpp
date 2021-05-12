@@ -199,7 +199,7 @@ bool QMagnetometerFilter::filter(QSensorReading *reading)
     return filter(static_cast<QMagnetometerReading*>(reading));
 }
 
-char const * const QMagnetometer::type("QMagnetometer");
+char const * const QMagnetometer::sensorType("QMagnetometer");
 
 /*!
     \class QMagnetometer
@@ -222,7 +222,7 @@ char const * const QMagnetometer::type("QMagnetometer");
     Construct the sensor as a child of \a parent.
 */
 QMagnetometer::QMagnetometer(QObject *parent)
-    : QSensor(QMagnetometer::type, *new QMagnetometerPrivate, parent)
+    : QSensor(QMagnetometer::sensorType, *new QMagnetometerPrivate, parent)
 {
 }
 

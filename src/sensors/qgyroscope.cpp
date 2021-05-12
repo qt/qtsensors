@@ -153,7 +153,7 @@ bool QGyroscopeFilter::filter(QSensorReading *reading)
     return filter(static_cast<QGyroscopeReading*>(reading));
 }
 
-char const * const QGyroscope::type("QGyroscope");
+char const * const QGyroscope::sensorType("QGyroscope");
 
 /*!
     \class QGyroscope
@@ -176,7 +176,7 @@ char const * const QGyroscope::type("QGyroscope");
     Construct the sensor as a child of \a parent.
 */
 QGyroscope::QGyroscope(QObject *parent)
-    : QSensor(QGyroscope::type, parent)
+    : QSensor(QGyroscope::sensorType, parent)
 {
 }
 

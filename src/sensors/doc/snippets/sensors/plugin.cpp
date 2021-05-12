@@ -52,7 +52,7 @@ class MyPluginClass : public QObject, public QSensorPluginInterface, public QSen
 public:
     void registerSensors() override
     {
-        QSensorManager::registerBackend(QAccelerometer::type, MyBackend::id, this);
+        QSensorManager::registerBackend(QAccelerometer::sensorType, MyBackend::id, this);
     }
 
     QSensorBackend *createBackend(QSensor *sensor) override

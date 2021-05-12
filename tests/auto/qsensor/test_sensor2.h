@@ -87,10 +87,10 @@ class TestSensor2 : public QSensor
 {
     Q_OBJECT
 public:
-    explicit TestSensor2(QObject *parent = 0) : QSensor(TestSensor2::type, parent) {}
+    explicit TestSensor2(QObject *parent = 0) : QSensor(TestSensor2::sensorType, parent) {}
     virtual ~TestSensor2() {}
     TestSensor2Reading *reading() const { return static_cast<TestSensor2Reading*>(QSensor::reading()); }
-    static char const * const type;
+    static char const * const sensorType;
 };
 
 #endif

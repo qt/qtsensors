@@ -105,7 +105,7 @@ bool QLightFilter::filter(QSensorReading *reading)
     return filter(static_cast<QLightReading*>(reading));
 }
 
-char const * const QLightSensor::type("QLightSensor");
+char const * const QLightSensor::sensorType("QLightSensor");
 
 /*!
     \class QLightSensor
@@ -128,7 +128,7 @@ char const * const QLightSensor::type("QLightSensor");
     Construct the sensor as a child of \a parent.
 */
 QLightSensor::QLightSensor(QObject *parent)
-    : QSensor(QLightSensor::type, *new QLightSensorPrivate, parent)
+    : QSensor(QLightSensor::sensorType, *new QLightSensorPrivate, parent)
 {
 }
 

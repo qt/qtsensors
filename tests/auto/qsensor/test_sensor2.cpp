@@ -65,6 +65,6 @@ void TestSensor2Reading::setTest(int test)
 
 // =====================================================================
 
-char const * const TestSensor2::type("test sensor 2");
+char const * const TestSensor2::sensorType("test sensor 2");
 
 #include "moc_test_sensor2.cpp"

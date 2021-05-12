@@ -77,7 +77,7 @@ public:
     explicit QTiltSensor(QObject *parent = Q_NULLPTR);
     ~QTiltSensor();
     QTiltReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
     Q_INVOKABLE void calibrate();
 

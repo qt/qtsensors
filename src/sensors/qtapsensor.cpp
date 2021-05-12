@@ -194,7 +194,7 @@ bool QTapFilter::filter(QSensorReading *reading)
     return filter(static_cast<QTapReading*>(reading));
 }
 
-char const * const QTapSensor::type("QTapSensor");
+char const * const QTapSensor::sensorType("QTapSensor");
 
 /*!
     \class QTapSensor
@@ -217,7 +217,7 @@ char const * const QTapSensor::type("QTapSensor");
     Construct the sensor as a child of \a parent.
 */
 QTapSensor::QTapSensor(QObject *parent)
-    : QSensor(QTapSensor::type, *new QTapSensorPrivate, parent)
+    : QSensor(QTapSensor::sensorType, *new QTapSensorPrivate, parent)
 {
 }
 

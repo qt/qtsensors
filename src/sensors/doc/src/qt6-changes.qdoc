@@ -52,4 +52,13 @@
 
     The typedef for the historical, QtMobility-era, 'qtimestamp' has been
     removed. Use the actual type 'quint64' directly.
+
+    \section2 Renamed 'sensor' type string to 'sensorType'
+
+    The subclasses of QSensor implement a \e {char const*} string which defines
+    the string that identifies the base sensor. This static \e type field
+    shadowed the baseclass \l QSensor::type() method, leading to unnecessary
+    compilation errors and consequent workarounds. The \e type string has been
+    now renamed as \e sensorType.
+
 */

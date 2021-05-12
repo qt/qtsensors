@@ -96,7 +96,7 @@ public:
     explicit QTapSensor(QObject *parent = Q_NULLPTR);
     virtual ~QTapSensor();
     QTapReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
     bool returnDoubleTapEvents() const;
     void setReturnDoubleTapEvents(bool returnDoubleTapEvents);

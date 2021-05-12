@@ -79,7 +79,7 @@ public:
     explicit QRotationSensor(QObject *parent = Q_NULLPTR);
     virtual ~QRotationSensor();
     QRotationReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
     bool hasZ() const;
     void setHasZ(bool hasZ);

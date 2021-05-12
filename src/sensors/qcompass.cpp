@@ -141,7 +141,7 @@ bool QCompassFilter::filter(QSensorReading *reading)
     return filter(static_cast<QCompassReading*>(reading));
 }
 
-char const * const QCompass::type("QCompass");
+char const * const QCompass::sensorType("QCompass");
 
 /*!
     \class QCompass
@@ -164,7 +164,7 @@ char const * const QCompass::type("QCompass");
     Construct the sensor as a child of \a parent.
 */
 QCompass::QCompass(QObject *parent)
-    : QSensor(QCompass::type, parent)
+    : QSensor(QCompass::sensorType, parent)
 {
 }
 

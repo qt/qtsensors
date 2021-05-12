@@ -101,7 +101,7 @@ bool QAmbientTemperatureFilter::filter(QSensorReading *reading)
     return filter(static_cast<QAmbientTemperatureReading*>(reading));
 }
 
-char const * const QAmbientTemperatureSensor::type("QAmbientTemperatureSensor");
+char const * const QAmbientTemperatureSensor::sensorType("QAmbientTemperatureSensor");
 
 /*!
     \class QAmbientTemperatureSensor
@@ -124,7 +124,7 @@ char const * const QAmbientTemperatureSensor::type("QAmbientTemperatureSensor");
     Construct the sensor as a child of \a parent.
 */
 QAmbientTemperatureSensor::QAmbientTemperatureSensor(QObject *parent)
-    : QSensor(QAmbientTemperatureSensor::type, parent)
+    : QSensor(QAmbientTemperatureSensor::sensorType, parent)
 {
 }
 

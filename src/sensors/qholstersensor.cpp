@@ -105,7 +105,7 @@ bool QHolsterFilter::filter(QSensorReading *reading)
     return filter(static_cast<QHolsterReading*>(reading));
 }
 
-char const * const QHolsterSensor::type("QHolsterSensor");
+char const * const QHolsterSensor::sensorType("QHolsterSensor");
 
 /*!
     \class QHolsterSensor
@@ -128,7 +128,7 @@ char const * const QHolsterSensor::type("QHolsterSensor");
     Construct the sensor as a child of \a parent.
 */
 QHolsterSensor::QHolsterSensor(QObject *parent)
-    : QSensor(QHolsterSensor::type, parent)
+    : QSensor(QHolsterSensor::sensorType, parent)
 {
 }
 

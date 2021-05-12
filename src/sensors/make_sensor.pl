@@ -323,7 +323,7 @@ public:
     explicit '.$sensor.'(QObject *parent = 0);
     ~'.$sensor.'();
     '.$reading.' *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DISABLE_COPY('.$sensor.')
@@ -410,7 +410,7 @@ bool '.$filter.'::filter(QSensorReading *reading)
     return filter(static_cast<'.$reading.'*>(reading));
 }
 
-char const * const '.$sensor.'::type("'.$sensor.'");
+char const * const '.$sensor.'::sensorType("'.$sensor.'");
 
 /*!
     \class '.$sensor.'
@@ -433,7 +433,7 @@ char const * const '.$sensor.'::type("'.$sensor.'");
     Construct the sensor as a child of \a parent.
 */
 '.$sensor.'::'.$sensor.'(QObject *parent)
-    : QSensor('.$sensor.'::type, parent)
+    : QSensor('.$sensor.'::sensorType, parent)
 {
 }
 
@@ -473,4 +473,3 @@ sub get_arg
     }
     return shift(@ARGV);
 }
-

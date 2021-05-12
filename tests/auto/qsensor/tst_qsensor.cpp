@@ -123,7 +123,7 @@ private slots:
     void testTypeRegistered()
     {
         QList<QByteArray> expected;
-        expected << TestSensor::type << TestSensor2::type;
+        expected << TestSensor::sensorType << TestSensor2::sensorType;
         QList<QByteArray> actual = QSensor::sensorTypes();
         std::sort(actual.begin(), actual.end()); // The actual list is not in a defined order
         QCOMPARE(actual, expected);
@@ -133,7 +133,7 @@ private slots:
     {
         QList<QByteArray> expected;
         expected << "test sensor 2" << "test sensor 3" << testsensorimpl::id;
-        QList<QByteArray> actual = QSensor::sensorsForType(TestSensor::type);
+        QList<QByteArray> actual = QSensor::sensorsForType(TestSensor::sensorType);
         std::sort(actual.begin(), actual.end()); // The actual list is not in a defined order
         QCOMPARE(actual, expected);
     }
@@ -141,23 +141,23 @@ private slots:
     void testSensorDefault()
     {
         QByteArray expected = testsensorimpl::id;
-        QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
+        QByteArray actual = QSensor::defaultSensorForType(TestSensor::sensorType);
         QCOMPARE(actual, expected);
     }
 
     void testBadDefaultFromConfig()
     {
-        QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray("bogus id"));
+        QSensorManager::setDefaultBackend(QByteArray(TestSensor::sensorType), QByteArray("bogus id"));
         QByteArray expected = testsensorimpl::id;
-        QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
+        QByteArray actual = QSensor::defaultSensorForType(TestSensor::sensorType);
         QCOMPARE(actual, expected);
     }
 
     void testGoodDefaultFromConfig()
     {
-        QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray(testsensorimpl::id));
+        QSensorManager::setDefaultBackend(QByteArray(TestSensor::sensorType), QByteArray(testsensorimpl::id));
         QByteArray expected = testsensorimpl::id;
-        QByteArray actual = QSensor::defaultSensorForType(TestSensor::type);
+        QByteArray actual = QSensor::defaultSensorForType(TestSensor::sensorType);
         QCOMPARE(actual, expected);
     }
 
@@ -203,7 +203,7 @@ private slots:
 
     void testBadDefaultCreation()
     {
-        QSensorManager::setDefaultBackend(QByteArray(TestSensor::type), QByteArray("test sensor 2"));
+        QSensorManager::setDefaultBackend(QByteArray(TestSensor::sensorType), QByteArray("test sensor 2"));
         TestSensor sensor;
         QTest::ignoreMessage(QtWarningMsg, "Can't create backend \"test sensor 2\"");
         sensor.connectToBackend();
@@ -749,7 +749,7 @@ private slots:
         // Unregister an unknown identifier
         sensor.sensorsChangedEmitted = 0;
         QTest::ignoreMessage(QtWarningMsg, "Identifier \"a random id\" is not registered");
-        QSensorManager::unregisterBackend(TestSensor::type, "a random id");
+        QSensorManager::unregisterBackend(TestSensor::sensorType, "a random id");
         QCOMPARE(sensor.sensorsChangedEmitted, 0);
 
         // Unregister for an unknown type
@@ -760,7 +760,7 @@ private slots:
 
         // Make sure we've cleaned up the list of available types
         QList<QByteArray> expected;
-        expected << TestSensor::type << TestSensor2::type;
+        expected << TestSensor::sensorType << TestSensor2::sensorType;
         QList<QByteArray> actual = QSensor::sensorTypes();
         std::sort(actual.begin(), actual.end()); // The actual list is not in a defined order
         QCOMPARE(actual, expected);
@@ -798,11 +798,11 @@ private slots:
         bool actual;
 
         expected = true;
-        actual = QSensorManager::isBackendRegistered(TestSensor::type, testsensorimpl::id);
+        actual = QSensorManager::isBackendRegistered(TestSensor::sensorType, testsensorimpl::id);
         QCOMPARE(expected, actual);
 
         expected = false;
-        actual = QSensorManager::isBackendRegistered(TestSensor::type, "random");
+        actual = QSensorManager::isBackendRegistered(TestSensor::sensorType, "random");
         QCOMPARE(expected, actual);
 
         expected = false;

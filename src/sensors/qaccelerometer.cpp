@@ -155,7 +155,7 @@ bool QAccelerometerFilter::filter(QSensorReading *reading)
     return filter(static_cast<QAccelerometerReading*>(reading));
 }
 
-char const * const QAccelerometer::type("QAccelerometer");
+char const * const QAccelerometer::sensorType("QAccelerometer");
 
 /*!
     \enum QAccelerometer::AccelerationMode
@@ -205,7 +205,7 @@ char const * const QAccelerometer::type("QAccelerometer");
     Construct the sensor as a child of \a parent.
 */
 QAccelerometer::QAccelerometer(QObject *parent)
-    : QSensor(QAccelerometer::type, *new QAccelerometerPrivate, parent)
+    : QSensor(QAccelerometer::sensorType, *new QAccelerometerPrivate, parent)
 {
 }
 

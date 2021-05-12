@@ -74,7 +74,7 @@ public:
     explicit QLightSensor(QObject *parent = Q_NULLPTR);
     virtual ~QLightSensor();
     QLightReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
     qreal fieldOfView() const;
     void setFieldOfView(qreal fieldOfView);

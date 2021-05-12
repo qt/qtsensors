@@ -111,7 +111,7 @@ bool QDistanceFilter::filter(QSensorReading *reading)
     return filter(static_cast<QDistanceReading*>(reading));
 }
 
-char const * const QDistanceSensor::type("QDistanceSensor");
+char const * const QDistanceSensor::sensorType("QDistanceSensor");
 
 /*!
     \class QDistanceSensor
@@ -134,7 +134,7 @@ char const * const QDistanceSensor::type("QDistanceSensor");
     Construct the sensor as a child of \a parent.
 */
 QDistanceSensor::QDistanceSensor(QObject *parent)
-    : QSensor(QDistanceSensor::type, parent)
+    : QSensor(QDistanceSensor::sensorType, parent)
 {
 }
 

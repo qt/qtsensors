@@ -62,19 +62,19 @@ public:
     void registerSensors() override
     {
 #ifdef HAVE_COREMOTION
-        QSensorManager::registerBackend(QAccelerometer::type, IOSAccelerometer::id, this);
+        QSensorManager::registerBackend(QAccelerometer::sensorType, IOSAccelerometer::id, this);
         if ([QIOSMotionManager sharedManager].gyroAvailable)
-            QSensorManager::registerBackend(QGyroscope::type, IOSGyroscope::id, this);
+            QSensorManager::registerBackend(QGyroscope::sensorType, IOSGyroscope::id, this);
         if ([QIOSMotionManager sharedManager].magnetometerAvailable)
-            QSensorManager::registerBackend(QMagnetometer::type, IOSMagnetometer::id, this);
+            QSensorManager::registerBackend(QMagnetometer::sensorType, IOSMagnetometer::id, this);
 #endif
 #ifdef HAVE_COMPASS
         if ([CLLocationManager headingAvailable])
-            QSensorManager::registerBackend(QCompass::type, IOSCompass::id, this);
+            QSensorManager::registerBackend(QCompass::sensorType, IOSCompass::id, this);
 #endif
 #ifdef HAVE_UIDEVICE
         if (IOSProximitySensor::available())
-            QSensorManager::registerBackend(QProximitySensor::type, IOSProximitySensor::id, this);
+            QSensorManager::registerBackend(QProximitySensor::sensorType, IOSProximitySensor::id, this);
 #endif
     }
 

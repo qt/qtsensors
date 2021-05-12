@@ -55,19 +55,19 @@ public:
         // This is bad code. It caused a crash due to recursively calling
         // loadPlugins() in qsensormanager.cpp (because loadPlugins() did
         // not set the pluginsLoaded flag soon enough).
-        (void)QSensor::defaultSensorForType(TestSensor::type);
+        (void)QSensor::defaultSensorForType(TestSensor::sensorType);
 
-        QSensorManager::registerBackend(TestSensor::type, testsensorimpl::id, this);
-        QSensorManager::registerBackend(TestSensor::type, "test sensor 2", this);
-        QSensorManager::registerBackend(TestSensor2::type, testsensor2impl::id, this);
+        QSensorManager::registerBackend(TestSensor::sensorType, testsensorimpl::id, this);
+        QSensorManager::registerBackend(TestSensor::sensorType, "test sensor 2", this);
+        QSensorManager::registerBackend(TestSensor2::sensorType, testsensor2impl::id, this);
     }
 
     void sensorsChanged() override
     {
         // Register a new type on initial load
         // This is testing the "don't emit availableSensorsChanged() too many times" functionality.
-        if (!QSensorManager::isBackendRegistered(TestSensor::type, "test sensor 3"))
-            QSensorManager::registerBackend(TestSensor::type, "test sensor 3", this);
+        if (!QSensorManager::isBackendRegistered(TestSensor::sensorType, "test sensor 3"))
+            QSensorManager::registerBackend(TestSensor::sensorType, "test sensor 3", this);
 
         // When a sensor of type "a random type" is registered, register another sensor.
         // This is testing the "don't emit availableSensorsChanged() too many times" functionality.

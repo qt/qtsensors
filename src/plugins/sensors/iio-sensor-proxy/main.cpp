@@ -61,12 +61,12 @@ public:
     void registerSensors() override
     {
         if (QDBusConnection::systemBus().interface()->isServiceRegistered("net.hadess.SensorProxy")) {
-            if (!QSensorManager::isBackendRegistered(QOrientationSensor::type, IIOSensorProxyOrientationSensor::id))
-                QSensorManager::registerBackend(QOrientationSensor::type, IIOSensorProxyOrientationSensor::id, this);
-            if (!QSensorManager::isBackendRegistered(QLightSensor::type, IIOSensorProxyLightSensor::id))
-                QSensorManager::registerBackend(QLightSensor::type, IIOSensorProxyLightSensor::id, this);
-            if (!QSensorManager::isBackendRegistered(QCompass::type, IIOSensorProxyCompass::id))
-                QSensorManager::registerBackend(QCompass::type, IIOSensorProxyCompass::id, this);
+            if (!QSensorManager::isBackendRegistered(QOrientationSensor::sensorType, IIOSensorProxyOrientationSensor::id))
+                QSensorManager::registerBackend(QOrientationSensor::sensorType, IIOSensorProxyOrientationSensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QLightSensor::sensorType, IIOSensorProxyLightSensor::id))
+                QSensorManager::registerBackend(QLightSensor::sensorType, IIOSensorProxyLightSensor::id, this);
+            if (!QSensorManager::isBackendRegistered(QCompass::sensorType, IIOSensorProxyCompass::id))
+                QSensorManager::registerBackend(QCompass::sensorType, IIOSensorProxyCompass::id, this);
         }
     }
 

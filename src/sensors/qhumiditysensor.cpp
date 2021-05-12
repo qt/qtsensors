@@ -129,7 +129,7 @@ bool QHumidityFilter::filter(QSensorReading *reading)
     return filter(static_cast<QHumidityReading*>(reading));
 }
 
-char const * const QHumiditySensor::type("QHumiditySensor");
+char const * const QHumiditySensor::sensorType("QHumiditySensor");
 
 
 /*!
@@ -153,7 +153,7 @@ char const * const QHumiditySensor::type("QHumiditySensor");
     Construct the sensor as a child of \a parent.
 */
 QHumiditySensor::QHumiditySensor(QObject *parent)
-    : QSensor(QHumiditySensor::type, parent)
+    : QSensor(QHumiditySensor::sensorType, parent)
 {
 }
 

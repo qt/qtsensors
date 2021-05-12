@@ -71,7 +71,7 @@ public:
     explicit QIRProximitySensor(QObject *parent = Q_NULLPTR);
     virtual ~QIRProximitySensor();
     QIRProximityReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DISABLE_COPY(QIRProximitySensor)

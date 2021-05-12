@@ -70,7 +70,7 @@ public:
     explicit QAmbientTemperatureSensor(QObject *parent = Q_NULLPTR);
     ~QAmbientTemperatureSensor();
     QAmbientTemperatureReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DISABLE_COPY(QAmbientTemperatureSensor)

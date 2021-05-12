@@ -113,7 +113,7 @@ void GrueSensorReading::setChanceOfBeingEaten(int chanceOfBeingEaten)
     \endomit
 */
 
-char const * const GrueSensor::type("GrueSensor");
+char const * const GrueSensor::sensorType("GrueSensor");
 
 /*
     \omit

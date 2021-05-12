@@ -71,7 +71,7 @@ public:
     explicit QDistanceSensor(QObject *parent = Q_NULLPTR);
     ~QDistanceSensor();
     QDistanceReading *reading() const;
-    static char const * const type;
+    static char const * const sensorType;
 
 private:
     Q_DISABLE_COPY(QDistanceSensor)
