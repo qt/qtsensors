@@ -1,6 +1,8 @@
 TEMPLATE = app
 TARGET = qmlqtsensors
 QT += quick
+qtConfig(static):QT += sensors
+
 SOURCES = main.cpp
 
 RESOURCES += \
