@@ -41,7 +41,7 @@ public:
     Explorer(QWidget *parent = 0);
     ~Explorer();
 
-    bool filter(QSensorReading *reading);
+    bool filter(QSensorReading *reading) override;
 
 private slots:
     void loadSensors();
@@ -54,8 +54,8 @@ private slots:
     void loadSensorProperties();
 
 private:
-    void showEvent(QShowEvent *event);
-    void resizeEvent(QResizeEvent *event);
+    void showEvent(QShowEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
     void clearReading();
     void loadReading();
