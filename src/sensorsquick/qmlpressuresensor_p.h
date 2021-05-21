@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 Research In Motion
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -36,28 +36,69 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef QMLPRESSURESENSOR_P_H
+#define QMLPRESSURESENSOR_P_H
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QPressureSensor;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlPressureSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    QML_NAMED_ELEMENT(PressureSensor)
+    QML_ADDED_IN_VERSION(5,1)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+    explicit QmlPressureSensor(QObject *parent = 0);
+    ~QmlPressureSensor();
+
+private:
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
+
+    QPressureSensor *m_sensor;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlPressureReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal pressure READ pressure NOTIFY pressureChanged)
+    Q_PROPERTY(qreal temperature READ temperature NOTIFY temperatureChanged REVISION 1)
+    QML_NAMED_ELEMENT(PressureReading)
+    QML_UNCREATABLE("Cannot create PressureReading")
+    QML_ADDED_IN_VERSION(5,1)
+public:
+    explicit QmlPressureReading(QPressureSensor *sensor);
+    ~QmlPressureReading();
+
+    qreal pressure() const;
+    qreal temperature() const;
+
+Q_SIGNALS:
+    void pressureChanged();
+    Q_REVISION(1) void temperatureChanged();
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+
+    QPressureSensor *m_sensor;
+    qreal m_pressure;
+    qreal m_temperature;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

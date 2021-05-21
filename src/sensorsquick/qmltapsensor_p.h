@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,76 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#ifndef QMLTAPSENSOR_P_H
+#define QMLTAPSENSOR_P_H
+
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
+#include <QtSensors/QTapSensor>
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QTapSensor;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlTapSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    Q_PROPERTY(bool returnDoubleTapEvents READ returnDoubleTapEvents WRITE setReturnDoubleTapEvents NOTIFY returnDoubleTapEventsChanged)
+    QML_NAMED_ELEMENT(TapSensor)
+    QML_ADDED_IN_VERSION(5,0)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+    explicit QmlTapSensor(QObject *parent = 0);
+    ~QmlTapSensor();
+
+    bool returnDoubleTapEvents() const;
+    void setReturnDoubleTapEvents(bool ret);
+
+Q_SIGNALS:
+    void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
+
+private:
+    QSensor *sensor() const override;
+    QTapSensor *m_sensor;
+    QmlSensorReading *createReading() const override;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlTapSensorReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(QTapReading::TapDirection tapDirection READ tapDirection NOTIFY tapDirectionChanged)
+    Q_PROPERTY(bool doubleTap READ isDoubleTap NOTIFY isDoubleTapChanged)
+    QML_NAMED_ELEMENT(TapReading)
+    QML_UNCREATABLE("Cannot create TapReading")
+    QML_ADDED_IN_VERSION(5,0)
+public:
+
+    explicit QmlTapSensorReading(QTapSensor *sensor);
+    ~QmlTapSensorReading();
+
+    QTapReading::TapDirection tapDirection() const;
+    bool isDoubleTap() const;
+
+Q_SIGNALS:
+    void tapDirectionChanged();
+    void isDoubleTapChanged();
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+    QTapSensor *m_sensor;
+    QTapReading::TapDirection m_tapDirection;
+    bool m_isDoubleTap;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

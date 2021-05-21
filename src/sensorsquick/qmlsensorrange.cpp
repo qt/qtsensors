@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,52 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#include "qmlsensorrange_p.h"
 
-QT_BEGIN_NAMESPACE
-
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+QmlSensorRange::QmlSensorRange(QObject *parent)
+    : QObject(parent),
+      min(0),
+      max(0)
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
+}
 
-public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
-};
+QmlSensorRange::~QmlSensorRange()
+{
+}
 
-QT_END_NAMESPACE
+int QmlSensorRange::minimum() const
+{
+    return min;
+}
 
-#include "sensors.moc"
+int QmlSensorRange::maximum() const
+{
+    return max;
+}
+
+QmlSensorOutputRange::QmlSensorOutputRange(QObject *parent)
+    : QObject(parent),
+      min(0),
+      max(0),
+      acc(0)
+{
+}
+
+QmlSensorOutputRange::~QmlSensorOutputRange()
+{
+}
+
+qreal QmlSensorOutputRange::minimum() const
+{
+    return min;
+}
+
+qreal QmlSensorOutputRange::maximum() const
+{
+    return max;
+}
+
+qreal QmlSensorOutputRange::accuracy() const
+{
+    return acc;
+}

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,70 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#ifndef QMLTILTSENSOR_P_H
+#define QMLTILTSENSOR_P_H
+
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
+#include <QtSensors/QTiltSensor>
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QTiltSensor;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlTiltSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    QML_NAMED_ELEMENT(TiltSensor)
+    QML_ADDED_IN_VERSION(5,0)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+
+    explicit QmlTiltSensor(QObject *parent = 0);
+    ~QmlTiltSensor();
+    Q_INVOKABLE void calibrate();
+
+private:
+    QSensor *sensor() const override;
+    QTiltSensor *m_sensor;
+    QmlSensorReading *createReading() const override;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlTiltSensorReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal yRotation READ yRotation NOTIFY yRotationChanged)
+    Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged)
+    QML_NAMED_ELEMENT(TiltReading)
+    QML_UNCREATABLE("Cannot create TiltReading")
+    QML_ADDED_IN_VERSION(5,0)
+public:
+    explicit QmlTiltSensorReading(QTiltSensor *sensor);
+    ~QmlTiltSensorReading();
+
+    qreal yRotation() const;
+    qreal xRotation() const;
+
+Q_SIGNALS:
+    void yRotationChanged();
+    void xRotationChanged();
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+    QTiltSensor *m_sensor;
+    qreal m_yRotation;
+    qreal m_xRotation;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,72 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#ifndef QMLGYROSCOPE_P_H
+#define QMLGYROSCOPE_P_H
+
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QGyroscope;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlGyroscope : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    QML_NAMED_ELEMENT(Gyroscope)
+    QML_ADDED_IN_VERSION(5,0)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+    explicit QmlGyroscope(QObject *parent = 0);
+    ~QmlGyroscope();
+
+
+private:
+    QSensor *sensor() const override;
+    QGyroscope *m_sensor;
+    QmlSensorReading *createReading() const override;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlGyroscopeReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
+    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
+    Q_PROPERTY(qreal z READ z NOTIFY zChanged)
+    QML_NAMED_ELEMENT(GyroscopeReading)
+    QML_UNCREATABLE("Cannot create GyroscopeReading")
+    QML_ADDED_IN_VERSION(5,0)
+public:
+    explicit QmlGyroscopeReading(QGyroscope *sensor);
+    ~QmlGyroscopeReading();
+
+    qreal x() const;
+    qreal y() const;
+    qreal z() const;
+
+Q_SIGNALS:
+    void xChanged();
+    void yChanged();
+    void zChanged();
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+    QGyroscope *m_sensor;
+    qreal m_x;
+    qreal m_y;
+    qreal m_z;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

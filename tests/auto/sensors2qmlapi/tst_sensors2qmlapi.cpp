@@ -30,8 +30,8 @@
 #include <QtTest/QSignalSpy>
 #include <QtCore/QDebug>
 
-#include "../../../src/imports/sensors/qmlsensor.h"
-#include "../../../src/imports/sensors/qmlsensorgesture.h"
+#include "../../../src/sensorsquick/qmlsensor_p.h"
+#include "../../../src/sensorsquick/qmlsensorgesture_p.h"
 
 #include "qtemplategestureplugin.h"
 #include "qtemplaterecognizer.h"

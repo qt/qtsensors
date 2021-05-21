@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 Canonical, Ltd
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -36,28 +36,69 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef QMLLIDSENSOR_P_H
+#define QMLLIDSENSOR_P_H
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QLidSensor;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlLidSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    QML_NAMED_ELEMENT(LidSensor)
+    QML_ADDED_IN_VERSION(5,9)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+    explicit QmlLidSensor(QObject *parent = 0);
+    ~QmlLidSensor();
+
+private:
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
+
+    QLidSensor *m_sensor;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlLidReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(bool backLidChanged READ backLidChanged NOTIFY backLidChanged)
+    Q_PROPERTY(bool frontLidClosed READ frontLidClosed NOTIFY frontLidChanged)
+    QML_NAMED_ELEMENT(LidReading)
+    QML_UNCREATABLE("Cannot create LidReading")
+    QML_ADDED_IN_VERSION(5,9)
+public:
+    explicit QmlLidReading(QLidSensor *sensor);
+    ~QmlLidReading();
+
+    bool backLidChanged() const;
+    bool frontLidClosed() const;
+
+Q_SIGNALS:
+    void backLidChanged(bool closed);
+    bool frontLidChanged(bool closed);
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+
+    QLidSensor *m_sensor;
+    bool m_backClosed;
+    bool m_frontClosed;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,78 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#ifndef QMLROTATIONSENSOR_P_H
+#define QMLROTATIONSENSOR_P_H
+
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QRotationSensor;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlRotationSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    Q_PROPERTY(bool hasZ READ hasZ NOTIFY hasZChanged)
+    QML_NAMED_ELEMENT(RotationSensor)
+    QML_ADDED_IN_VERSION(5,0)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+    explicit QmlRotationSensor(QObject *parent = 0);
+    ~QmlRotationSensor();
+
+    bool hasZ() const;
+
+Q_SIGNALS:
+    void hasZChanged(bool hasZ);
+
+private:
+    QSensor *sensor() const override;
+    void _update() override;
+    QRotationSensor *m_sensor;
+    QmlSensorReading *createReading() const override;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlRotationSensorReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
+    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
+    Q_PROPERTY(qreal z READ z NOTIFY zChanged)
+    QML_NAMED_ELEMENT(RotationReading)
+    QML_UNCREATABLE("Cannot create RotationReading")
+    QML_ADDED_IN_VERSION(5,0)
+public:
+    explicit QmlRotationSensorReading(QRotationSensor *sensor);
+    ~QmlRotationSensorReading();
+
+    qreal x() const;
+    qreal y() const;
+    qreal z() const;
+
+Q_SIGNALS:
+    void xChanged();
+    void yChanged();
+    void zChanged();
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+    QRotationSensor *m_sensor;
+    qreal m_x;
+    qreal m_y;
+    qreal m_z;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

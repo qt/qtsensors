@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2021 The Qt Company Ltd.
+** Copyright (C) 2016 BlackBerry Limited. All rights reserved.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -37,27 +37,65 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#ifndef QMLDISTANCESENSOR_P_H
+#define QMLDISTANCESENSOR_P_H
+
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include "qmlsensor_p.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
+class QDistanceSensor;
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlDistanceSensor : public QmlSensor
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
-
+    QML_NAMED_ELEMENT(DistanceSensor)
+    QML_ADDED_IN_VERSION(5,4)
 public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
+    explicit QmlDistanceSensor(QObject *parent = 0);
+    ~QmlDistanceSensor();
+
+private:
+    QSensor *sensor() const override;
+    QmlSensorReading *createReading() const override;
+
+    QDistanceSensor *m_sensor;
+};
+
+class Q_SENSORSQUICK_PRIVATE_EXPORT QmlDistanceReading : public QmlSensorReading
+{
+    Q_OBJECT
+    Q_PROPERTY(qreal distance READ distance NOTIFY distanceChanged)
+    QML_NAMED_ELEMENT(DistanceReading)
+    QML_UNCREATABLE("Cannot create DistanceReading")
+    QML_ADDED_IN_VERSION(5,4)
+public:
+    explicit QmlDistanceReading(QDistanceSensor *sensor);
+    ~QmlDistanceReading();
+
+    qreal distance() const;
+
+Q_SIGNALS:
+    void distanceChanged();
+
+private:
+    QSensorReading *reading() const override;
+    void readingUpdate() override;
+
+    QDistanceSensor *m_sensor;
+    qreal m_distance;
 };
 
 QT_END_NAMESPACE
-
-#include "sensors.moc"
+#endif

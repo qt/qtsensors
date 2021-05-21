@@ -37,27 +37,38 @@
 **
 ****************************************************************************/
 
-#include <QtSensorsQuick/private/qsensorsquickglobal_p.h>
-#include <QtQml/qqmlextensionplugin.h>
-#include <QtQml/qqml.h>
+#ifndef QSENSORSQUICKGLOBALS_P_H
+#define QSENSORSQUICKGLOBALS_P_H
+
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
+
+#include <QtCore/qglobal.h>
 
 QT_BEGIN_NAMESPACE
 
-class QSensorsQuickPlugin : public QQmlExtensionPlugin
-{
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID QQmlExtensionInterface_iid)
+#if !defined(QT_STATIC)
+#  if defined(QT_BUILD_SENSORSQUICK_LIB)
+#    define Q_SENSORSQUICK_EXPORT Q_DECL_EXPORT
+#  else
+#    define Q_SENSORSQUICK_EXPORT Q_DECL_IMPORT
+#  endif
+#else
+#  define Q_SENSORSQUICK_EXPORT
+#endif
 
-public:
-    QSensorsQuickPlugin(QObject *parent = nullptr) : QQmlExtensionPlugin(parent) { }
-    void registerTypes(const char *) override
-    {
-        // Build-time generated registration function
-        volatile auto registration = &qml_register_types_QtSensors;
-        Q_UNUSED(registration);
-    }
-};
+#define Q_SENSORSQUICK_PRIVATE_EXPORT Q_SENSORSQUICK_EXPORT
 
 QT_END_NAMESPACE
 
-#include "sensors.moc"
+void Q_SENSORSQUICK_PRIVATE_EXPORT qml_register_types_QtSensors();
+
+#endif // QSENSORSQUICKGLOBALS_P_H
