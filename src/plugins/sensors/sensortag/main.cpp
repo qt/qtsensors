@@ -61,7 +61,7 @@ class SensortagSensorPlugin : public QObject, public QSensorPluginInterface, pub
 
 public:
 
-    void registerSensors()
+    void registerSensors() override
     {
         if (!QSensorManager::isBackendRegistered(QAccelerometer::sensorType, SensorTagAccelerometer::id))
             QSensorManager::registerBackend(QAccelerometer::sensorType, SensorTagAccelerometer::id, this);
@@ -88,7 +88,7 @@ public:
             QSensorManager::registerBackend(QMagnetometer::sensorType, SensorTagMagnetometer::id, this);
     }
 
-    QSensorBackend *createBackend(QSensor *sensor)
+    QSensorBackend *createBackend(QSensor *sensor) override
     {
         if (sensor->identifier() == SensorTagAccelerometer::id)
             return new SensorTagAccelerometer(sensor);
