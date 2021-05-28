@@ -51,38 +51,60 @@
 #ifndef QSEONSOREXPLORER_H
 #define QSEONSOREXPLORER_H
 
-#include <QtQml/QtQml>
-#include <QtQml/QQmlListProperty>
-#include "sensoritem.h"
+#include <QtSensors/qsensor.h>
+
+#include <QtQml/qqml.h>
+#include <QtCore/QAbstractListModel>
+#include <QtCore/QAbstractTableModel>
 
 QT_BEGIN_NAMESPACE
 
-class QSensorExplorer : public QObject
+//! [0]
+class AvailableSensorsModel: public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<QSensorItem> availableSensors READ availableSensors NOTIFY availableSensorsChanged)
-    Q_PROPERTY(QSensorItem* selectedSensorItem READ selectedSensorItem WRITE setSelectedSensorItem NOTIFY selectedSensorItemChanged)
+    QML_ELEMENT
+//! [0]
 public:
-    QSensorExplorer(QObject* parent = 0);
-    virtual ~QSensorExplorer();
+    explicit AvailableSensorsModel(QObject* parent = nullptr);
+    int rowCount(const QModelIndex & = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    Q_INVOKABLE QSensor* get(int index) const;
 
 private:
-    QQmlListProperty<QSensorItem> availableSensors();
     void loadSensors();
-    void setSelectedSensorItem(QSensorItem* selitem);
-    QSensorItem* selectedSensorItem();
+    QList<QSensor*> m_availableSensors;
+};
 
-Q_SIGNALS:
-    void availableSensorsChanged();
-    void selectedSensorItemChanged();
+class SensorPropertyModel: public QAbstractTableModel
+{
+    Q_OBJECT
+    Q_PROPERTY(QSensor* sensor READ sensor WRITE setSensor NOTIFY sensorChanged)
+    QML_ELEMENT
+
+public:
+    explicit SensorPropertyModel(QObject* parent = nullptr);
+
+    int rowCount(const QModelIndex & = QModelIndex()) const override;
+    int columnCount(const QModelIndex & = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+
+    void setSensor(QSensor* sensor);
+    QSensor* sensor() const;
+
+signals:
+    void sensorChanged();
+
+private slots:
+    void onReadingChanged();
 
 private:
-    QList<QSensorItem*> _availableSensors;
-    QSensorItem* _selectedSensorItem;
+    QSensor* m_sensor = nullptr;
+    // m_values is used to cache sensor property values to avoid
+    // full metaobject iteration on every sensor reading change
+    QList<std::tuple<QByteArray, QByteArray>> m_values;
 };
 
 QT_END_NAMESPACE
-
-QML_DECLARE_TYPE(QSensorExplorer)
 
 #endif // QSEONSOREXPLORER_H

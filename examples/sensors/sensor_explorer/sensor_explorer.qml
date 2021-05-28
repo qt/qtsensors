@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -48,181 +48,127 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.1
-import QtQuick.Window 2.1
-import QtQuick.Controls 2.0
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
 
 //! [0]
-import Explorer 1.0
+import SensorModels
 //! [0]
 
 Window {
     id: window
-    width: 320
-    height: 480
-    minimumWidth: 320
-    minimumHeight: 480
+    width: 400
+    height: 600
 
-    //! [1]
-    SensorExplorer {
-        id: explorer
+    AvailableSensorsModel {
+        id: availableSensorsModel
     }
-    //! [1]
 
-    Column {
-        anchors.fill: parent
-        anchors.margins: 8
-        spacing: 8
-
-        /* TODO Qt 6.2 FIX TableView and TableViewColumn
+    ColumnLayout {
 
         GroupBox {
+            id: availableSensorsModelGroup
             title: qsTr("Available Sensors")
-            width: parent.width
-            height: window.height * 0.4
+            Layout.preferredWidth: window.width - 4 // 4 = 2x2 margins
+            Layout.preferredHeight: window.height * 0.4
+            Layout.margins: 2
 
-
-            TableView {
-                id: sensorList
+            ListView {
+                id: sensorsView
                 anchors.fill: parent
-                //! [2]
-                model: explorer.availableSensors
-                //! [2]
-
-                TableViewColumn { role: "id"; title: qsTr("ID"); width: sensorList.width * 0.7 }
-                TableViewColumn { role: "start"; title: qsTr("Running"); width: sensorList.width * 0.3 - 5 }
-
-                onClicked: {
-                    explorer.selectedSensorItem = explorer.availableSensors[row]
-                    //! [3]
-                    propertyList.model = explorer.selectedSensorItem.properties
-                    //! [3]
-                    button.update()
-                }
-            }
-
-            Button {
-                id: button
-                anchors.margins: 4
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: sensorList.bottom
-                text: qsTr("Start")
-                enabled: explorer.selectedSensorItem !== null
-
-                function update() {
-                    text = (explorer.selectedSensorItem !== null ?
-                                (explorer.selectedSensorItem.start === true ?
-                                     qsTr("Stop") : qsTr("Start")) : qsTr("Start"))
-                }
-
-                onClicked: {
-                    if (explorer.selectedSensorItem !== null) {
-                        //! [5]
-                        if (text === "Start") {
-                            explorer.selectedSensorItem.start = true;
-                            text = "Stop";
+                currentIndex: -1 // no initial selection
+                spacing: 1
+                clip: true
+                model: availableSensorsModel
+                delegate: Item {
+                    id: sensorRow
+                    width: sensorsView.width
+                    height: 30
+                    property color rowColor: {
+                        if (sensorsView.currentIndex == index)
+                            return "lightsteelblue" // highlight
+                        return (index % 2 == 0) ? "#CCCCCC" : "#AAAAAA"
+                    }
+                    RowLayout {
+                        spacing: 1
+                        anchors.fill: parent
+                        Rectangle {
+                            color: sensorRow.rowColor
+                            Layout.preferredWidth:  sensorRow.width * 0.8
+                            Layout.preferredHeight: sensorRow.height
+                            Text {
+                                anchors.centerIn: parent
+                                text: display.type + "::" + display.identifier
+                            }
                         }
-                        else {
-                            explorer.selectedSensorItem.start = false;
-                            text = "Start";
+                        Rectangle {
+                            color: sensorRow.rowColor
+                            Layout.preferredWidth:  sensorRow.width * 0.2
+                            Layout.preferredHeight: sensorRow.height
+                            Text {
+                                anchors.centerIn: parent
+                                text: display.active ? qsTr("Active") : qsTr("Inactive")
+                            }
                         }
-                        //! [5]
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: sensorsView.currentIndex = index
                     }
                 }
             }
-
         }
+
+        //! [1]
+        SensorPropertyModel {
+            id: propertyModel
+            sensor: availableSensorsModel.get(sensorsView.currentIndex)
+        }
+        //! [1]
+
+        //! [2]
+        Button {
+            id: activateButton
+            Layout.preferredHeight: 30
+            Layout.alignment: Qt.AlignCenter
+            enabled: propertyModel.sensor
+            text: !propertyModel.sensor ? qsTr("Select sensor")
+                                        : (propertyModel.sensor.active ? qsTr("Deactivate sensor")
+                                                                       : qsTr("Activate sensor"))
+            onClicked: propertyModel.sensor.active = !propertyModel.sensor.active
+        }
+        //! [2]
 
         GroupBox {
-            title: qsTr("Properties")
-            width: parent.width
-            height: window.height * 0.55
+            title: qsTr("Selected sensor's properties")
+            Layout.preferredWidth: window.width  - 4 // 4 = 2x2 margins
+            Layout.preferredHeight: window.height * 0.55 - activateButton.height
+            Layout.margins: 2
+            enabled: sensorsView.currentIndex != -1
 
-            enabled: explorer.selectedSensorItem != null
-
+            //! [3]
             TableView {
-                id: propertyList
-                property PropertyInfo selectedItem: null
-
+                id: propertyView
                 anchors.fill: parent
-                TableViewColumn { role: "name"; title: qsTr("Name"); width: propertyList.width * 0.5 }
-                TableViewColumn { role: "value"; title: qsTr("Value"); width: propertyList.width * 0.5 - 5 }
+                model: propertyModel
+                columnSpacing: 1
+                rowSpacing: 1
+                boundsMovement: Flickable.StopAtBounds
+                clip: true
 
-                onClicked: {
-                    selectedItem = model[row]
-                }
-
-                itemDelegate: {
-                    if (selectedItem && selectedItem.isWriteable)
-                        return editableDelegate;
-                    return readOnlyDelegate;
-                }
-
-                Component {
-                    id: readOnlyDelegate
-                    Item {
-                        Text {
-                            width: parent.width
-                            anchors.margins: 4
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            elide: styleData.elideMode
-                            text: styleData.value
-                            color: propertyList.model[styleData.row].isWriteable ?
-                                       styleData.textColor : Qt.lighter(styleData.textColor)
-                        }
-                    }
-                }
-
-                Component {
-                    id: editableDelegate
-                    Item {
-                        Text {
-                            width: parent.width
-                            anchors.margins: 4
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            elide: styleData.elideMode
-                            text: styleData.value
-                            color: styleData.textColor
-                            visible: !styleData.selected || styleData.column === 0
-                        }
-                        Loader { // Initialize text editor lazily to improve performance
-                            id: loaderEditor
-                            anchors.margins: 4
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            Connections {
-                                target: loaderEditor.item
-                                onAccepted: {
-                                    //! [4]
-                                    explorer.selectedSensorItem.changePropertyValue(propertyList.selectedItem, loaderEditor.item.text);
-                                    //! [4]
-                                }
-                            }
-
-                            // Load the editor for selected 'Value' cell
-                            sourceComponent: (styleData.selected && styleData.column === 1) ? editor : null
-
-                            Component {
-                                id: editor
-                                TextInput {
-                                    id: textinput
-                                    color: styleData.textColor
-                                    text: styleData.value
-                                    MouseArea {
-                                        id: mouseArea
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        onClicked: textinput.forceActiveFocus()
-                                    }
-                                }
-                            }
-                        }
+                delegate: Rectangle {
+                    implicitHeight: 30
+                    implicitWidth: propertyView.width * 0.5
+                    color: (model.row % 2 == 0) ? "#CCCCCC" : "#AAAAAA"
+                    Text {
+                        anchors.centerIn: parent
+                        text: display
                     }
                 }
             }
+            //! [3]
         }
-    */
     }
 }
