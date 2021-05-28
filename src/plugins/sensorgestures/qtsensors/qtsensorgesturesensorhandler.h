@@ -53,7 +53,6 @@
 class QtSensorGestureSensorHandler : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(SensorGestureSensors)
 public:
     explicit QtSensorGestureSensorHandler(QObject *parent = 0);
 
@@ -64,6 +63,7 @@ public:
         IrProximity,
         Tap
     };
+    Q_ENUM(SensorGestureSensors)
     static QtSensorGestureSensorHandler *instance();
     qreal accelRange;
 

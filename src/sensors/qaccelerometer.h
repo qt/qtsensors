@@ -77,7 +77,6 @@ class QAccelerometerPrivate;
 class Q_SENSORS_EXPORT QAccelerometer : public QSensor
 {
     Q_OBJECT
-    Q_ENUMS(AccelerationMode)
     Q_PROPERTY(AccelerationMode accelerationMode READ accelerationMode WRITE setAccelerationMode
                NOTIFY accelerationModeChanged)
 public:
@@ -90,6 +89,7 @@ public:
         Gravity,
         User
     };
+    Q_ENUM(AccelerationMode)
 
     AccelerationMode accelerationMode() const;
     void setAccelerationMode(AccelerationMode accelerationMode);
@@ -108,4 +108,3 @@ private:
 QT_END_NAMESPACE
 
 #endif
-

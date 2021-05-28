@@ -60,7 +60,6 @@ class QAccelerometer;
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlAccelerometer : public QmlSensor
 {
     Q_OBJECT
-    Q_ENUMS(AccelerationMode)
     Q_PROPERTY(AccelerationMode accelerationMode READ accelerationMode WRITE setAccelerationMode
                NOTIFY accelerationModeChanged REVISION 1)
     QML_NAMED_ELEMENT(Accelerometer)
@@ -75,6 +74,7 @@ public:
         Gravity,
         User
     };
+    Q_ENUM(AccelerationMode)
 
     AccelerationMode accelerationMode() const;
     void setAccelerationMode(AccelerationMode accelerationMode);

@@ -71,7 +71,6 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensor : public QObject, public QQmlParse
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QmlSensor)
-    Q_ENUMS(AxesOrientationMode)
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(QString identifier READ identifier WRITE setIdentifier NOTIFY identifierChanged)
     Q_PROPERTY(QString type READ type NOTIFY typeChanged)
@@ -104,6 +103,7 @@ public:
         AutomaticOrientation,
         UserOrientation
     };
+    Q_ENUM(AxesOrientationMode)
 
     explicit QmlSensor(QObject *parent = 0);
     ~QmlSensor();

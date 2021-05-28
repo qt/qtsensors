@@ -72,8 +72,8 @@ class Q_SENSORS_EXPORT QSensor : public QObject
 {
     friend class QSensorBackend;
     Q_OBJECT
-    Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier)
-    Q_PROPERTY(QByteArray type READ type)
+    Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier NOTIFY identifierChanged)
+    Q_PROPERTY(QByteArray type READ type CONSTANT)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend)
     Q_PROPERTY(qrangelist availableDataRates READ availableDataRates)
     Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
@@ -203,6 +203,7 @@ Q_SIGNALS:
     void maxBufferSizeChanged(int maxBufferSize);
     void efficientBufferSizeChanged(int efficientBufferSize);
     void bufferSizeChanged(int bufferSize);
+    void identifierChanged();
 
 protected:
     explicit QSensor(const QByteArray &type, QSensorPrivate &dd, QObject* parent = Q_NULLPTR);
@@ -294,4 +295,3 @@ Q_DECLARE_METATYPE(qrangelist)
 Q_DECLARE_METATYPE(qoutputrangelist)
 
 #endif
-

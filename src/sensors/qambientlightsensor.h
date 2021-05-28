@@ -49,7 +49,6 @@ class QAmbientLightReadingPrivate;
 class Q_SENSORS_EXPORT QAmbientLightReading : public QSensorReading
 {
     Q_OBJECT
-    Q_ENUMS(LightLevel)
     Q_PROPERTY(LightLevel lightLevel READ lightLevel)
     DECLARE_READING(QAmbientLightReading)
 public:
@@ -61,6 +60,7 @@ public:
         Bright,
         Sunny
     };
+    Q_ENUM(LightLevel)
 
     LightLevel lightLevel() const;
     void setLightLevel(LightLevel lightLevel);
@@ -90,4 +90,3 @@ private:
 QT_END_NAMESPACE
 
 #endif
-

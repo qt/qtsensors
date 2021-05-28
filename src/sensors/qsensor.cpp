@@ -364,7 +364,10 @@ void QSensor::setIdentifier(const QByteArray &identifier)
         qWarning() << "ERROR: Cannot call QSensor::setIdentifier while connected to a backend!";
         return;
     }
+    if (d->identifier == identifier)
+        return;
     d->identifier = identifier;
+    emit identifierChanged();
 }
 
 /*!

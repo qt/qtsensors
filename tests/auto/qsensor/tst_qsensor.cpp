@@ -939,6 +939,34 @@ private slots:
         QVERIFY(sensor2.isActive());
     }
 
+    void testIdenfifierChanged()
+    {
+      TestSensor sensor;
+      QSignalSpy spy(&sensor, SIGNAL(identifierChanged()));
+      QCOMPARE(sensor.identifier(), "");
+
+      // Change id and verify change
+      sensor.setIdentifier("a");
+      QCOMPARE(sensor.identifier(), "a");
+      QCOMPARE(spy.count(), 1);
+
+      // Set same id and verify that no changes
+      sensor.setIdentifier("a");
+      QCOMPARE(sensor.identifier(), "a");
+      QCOMPARE(spy.count(), 1);
+
+      // Change id and verify change
+      sensor.setIdentifier(testsensorimpl::id);
+      QCOMPARE(sensor.identifier(), testsensorimpl::id);
+      QCOMPARE(spy.count(), 2);
+
+      // Identifier cant be changed after connected to backend
+      QVERIFY(sensor.connectToBackend());
+      sensor.setIdentifier("c");
+      QCOMPARE(sensor.identifier(), testsensorimpl::id);
+      QCOMPARE(spy.count(), 2);
+    }
+
     void testSupportedFeatures()
     {
         TestSensor sensor;
