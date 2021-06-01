@@ -35,11 +35,8 @@ qhp.QtSensors.subprojects.examples.selectors = fake:example
 
 tagfile                 = ../../../doc/qtsensors/qtsensors.tags
 
-headerdirs  += .. \
-                ../../imports/sensors \
-                ../../plugins/sensors
-
-sourcedirs  += .. \
+{headerdirs,sourcedirs} += .. \
+                ../../sensorsquick \
                 ../../imports/sensors \
                 ../../plugins/sensors
 
