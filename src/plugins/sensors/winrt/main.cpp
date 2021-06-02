@@ -52,6 +52,7 @@
 #include <QtSensors/QSensorBackendFactory>
 #include <QtSensors/QSensorManager>
 #include <QtSensors/QSensorPluginInterface>
+#include <wrl.h>
 
 class WinRtSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
@@ -60,8 +61,17 @@ class WinRtSensorPlugin : public QObject, public QSensorPluginInterface, public 
     Q_INTERFACES(QSensorPluginInterface)
 public:
 
+    ~WinRtSensorPlugin()
+    {
+        CoUninitialize();
+    }
+
     void registerSensors() override
     {
+        if (FAILED(CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED))) {
+            qErrnoWarning("CoInitializeEx() failed.");
+            return;
+        }
         QSensorManager::registerBackend(QAccelerometer::sensorType, QByteArrayLiteral("WinRtAccelerometer"), this);
         QSensorManager::registerBackend(QCompass::sensorType, QByteArrayLiteral("WinRtCompass"), this);
         QSensorManager::registerBackend(QGyroscope::sensorType, QByteArrayLiteral("WinRtGyroscope"), this);
