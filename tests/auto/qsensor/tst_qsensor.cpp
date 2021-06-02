@@ -122,11 +122,9 @@ private slots:
 
     void testTypeRegistered()
     {
-        QList<QByteArray> expected;
-        expected << TestSensor::sensorType << TestSensor2::sensorType;
-        QList<QByteArray> actual = QSensor::sensorTypes();
-        std::sort(actual.begin(), actual.end()); // The actual list is not in a defined order
-        QCOMPARE(actual, expected);
+        // Verify type registrations done by the test_sensorplugin
+        QVERIFY(QSensor::sensorTypes().contains(TestSensor::sensorType));
+        QVERIFY(QSensor::sensorTypes().contains(TestSensor2::sensorType));
     }
 
     void testSensorRegistered()
@@ -759,11 +757,9 @@ private slots:
         QCOMPARE(sensor.sensorsChangedEmitted, 0);
 
         // Make sure we've cleaned up the list of available types
-        QList<QByteArray> expected;
-        expected << TestSensor::sensorType << TestSensor2::sensorType;
-        QList<QByteArray> actual = QSensor::sensorTypes();
-        std::sort(actual.begin(), actual.end()); // The actual list is not in a defined order
-        QCOMPARE(actual, expected);
+        QVERIFY(!QSensor::sensorTypes().contains("a random type"));
+        QVERIFY(QSensor::sensorTypes().contains(TestSensor::sensorType));
+        QVERIFY(QSensor::sensorTypes().contains(TestSensor2::sensorType));
     }
 
     void testSetActive()

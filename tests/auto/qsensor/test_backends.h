@@ -145,6 +145,7 @@ PREPARE_SENSORINTERFACE(QTiltSensor, QTiltReading, QTiltFilter, {
 #define TEST_SENSORINTERFACE(SensorClass, ReadingClass, readingcode)\
     do {\
         SensorClass sensor;\
+        sensor.setIdentifier(#SensorClass); \
         SensorClass ## _testfilter filter;\
         sensor.addFilter(&filter);\
         sensor.start();\
