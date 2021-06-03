@@ -75,7 +75,7 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlLidReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(bool backLidChanged READ backLidChanged NOTIFY backLidChanged)
+    Q_PROPERTY(bool backLidClosed READ backLidClosed NOTIFY backLidChanged)
     Q_PROPERTY(bool frontLidClosed READ frontLidClosed NOTIFY frontLidChanged)
     QML_NAMED_ELEMENT(LidReading)
     QML_UNCREATABLE("Cannot create LidReading")
@@ -84,7 +84,7 @@ public:
     explicit QmlLidReading(QLidSensor *sensor);
     ~QmlLidReading();
 
-    bool backLidChanged() const;
+    bool backLidClosed() const;
     bool frontLidClosed() const;
 
 Q_SIGNALS:

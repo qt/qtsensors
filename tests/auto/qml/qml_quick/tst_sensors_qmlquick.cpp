@@ -1,9 +1,9 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
-** This file is part of the QtSensors module of the Qt Toolkit.
+** This file is part of the test suite of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:GPL-EXCEPT$
 ** Commercial License Usage
@@ -26,56 +26,37 @@
 **
 ****************************************************************************/
 
-#include <QList>
+#include <QtQuickTest>
+#include <QtQml/QQmlEngine>
+#include <QtQml/QQmlContext>
+#include <QtSensorsQuick/private/qmlsensor_p.h>
+#include "../../common/test_backends.h"
 
-#include "qsensorbackend.h"
-
-typedef QSensorBackend* (*CreateFunc) (QSensor *sensor);
-class Record
+class TestSetup : public QObject
 {
+    Q_OBJECT
+
 public:
-    QByteArray type;
-    CreateFunc func;
-};
-static QList<Record> records;
+    TestSetup() {}
 
-static bool registerTestBackend(const char *className, CreateFunc func)
-{
-    Record record;
-    record.type = className;
-    record.func = func;
-    records << record;
-    return true;
-}
+public slots:
+    void qmlEngineAvailable(QQmlEngine *engine) {
+        engine->rootContext()->setContextProperty("TestControl", this);
+    }
 
-#define REGISTER_TOO
-#include "test_backends.h"
-#include <QDebug>
+    void registerTestBackends() {
+        register_test_backends();
+    }
 
-class BackendFactory : public QSensorBackendFactory
-{
-    QSensorBackend *createBackend(QSensor *sensor) override
-    {
-        for (const Record &record : records) {
-            if (sensor->identifier() == record.type)
-                return record.func(sensor);
-        }
-        return 0;
+    void unregisterTestBackends() {
+        unregister_test_backends();
+    }
+
+    void setSensorReading(const QmlSensor* qmlSensor, const QJsonObject& values) {
+        set_test_backend_reading(qmlSensor->sensor(), values);
     }
 };
-static BackendFactory factory;
 
-void register_test_backends()
-{
-    for (const Record &record : records) {
-        QSensorManager::registerBackend(record.type, record.type, &factory);
-    }
-}
+QUICK_TEST_MAIN_WITH_SETUP(tst_sensors_qmlquick, TestSetup)
 
-void unregister_test_backends()
-{
-    for (const Record &record : records) {
-        QSensorManager::unregisterBackend(record.type, record.type);
-    }
-}
-
+#include "tst_sensors_qmlquick.moc"

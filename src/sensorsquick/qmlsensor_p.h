@@ -154,6 +154,8 @@ public:
     int bufferSize() const;
     void setBufferSize(int bufferSize);
 
+    virtual QSensor *sensor() const = 0;
+
 public Q_SLOTS:
     bool start();
     void stop();
@@ -180,7 +182,6 @@ Q_SIGNALS:
     Q_REVISION(1) void bufferSizeChanged(int bufferSize);
 
 protected:
-    virtual QSensor *sensor() const = 0;
     virtual QmlSensorReading *createReading() const = 0;
 
 private Q_SLOTS:
@@ -192,10 +193,10 @@ protected Q_SLOTS:
 private:
     void classBegin() override;
     virtual void _update();
-    bool m_parsed;
-    bool m_active;
+    bool m_componentComplete = false;
+    bool m_activateOnComplete = false;
     QString m_identifier;
-    QmlSensorReading *m_reading;
+    QmlSensorReading *m_reading = nullptr;
 };
 
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensorReading : public QObject

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -30,8 +30,8 @@
 #include <QtTest/QSignalSpy>
 #include <QtCore/QDebug>
 
-#include "../../../src/sensorsquick/qmlsensor_p.h"
-#include "../../../src/sensorsquick/qmlsensorgesture_p.h"
+#include <QtSensorsQuick/private/qmlsensor_p.h>
+#include <QtSensorsQuick/private/qmlsensorgesture_p.h>
 
 #include "qtemplategestureplugin.h"
 #include "qtemplaterecognizer.h"
@@ -43,7 +43,7 @@ QT_USE_NAMESPACE
 
 QT_BEGIN_NAMESPACE
 
-class tst_Sensors2QMLAPI : public QObject
+class tst_sensors_qmlcpp : public QObject
 {
     Q_OBJECT
 
@@ -53,12 +53,12 @@ private slots:
     void testSensorRanges();
 };
 
-void tst_Sensors2QMLAPI::initTestCase()
+void tst_sensors_qmlcpp::initTestCase()
 {
     qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
 }
 
-void tst_Sensors2QMLAPI::testGesture()
+void tst_sensors_qmlcpp::testGesture()
 {
     QTemplateGesturePlugin* plugin = new QTemplateGesturePlugin();
     QList <QSensorGestureRecognizer *> recognizers = plugin->createRecognizers();
@@ -235,7 +235,7 @@ private:
     QSensor *m_sensor = nullptr;
 };
 
-void tst_Sensors2QMLAPI::testSensorRanges()
+void tst_sensors_qmlcpp::testSensorRanges()
 {
     QScopedPointer<QmlDummySensor> qmlSensor(new QmlDummySensor);
     qmlSensor->componentComplete();
@@ -284,5 +284,5 @@ void tst_Sensors2QMLAPI::testSensorRanges()
 
 QT_END_NAMESPACE
 
-QTEST_MAIN(tst_Sensors2QMLAPI)
-#include "tst_sensors2qmlapi.moc"
+QTEST_MAIN(tst_sensors_qmlcpp)
+#include "tst_sensors_qmlcpp.moc"

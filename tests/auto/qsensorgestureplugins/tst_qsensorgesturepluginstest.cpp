@@ -38,7 +38,7 @@
 #include <qsensorgesturerecognizer.h>
 #include <qsensorgestureplugininterface.h>
 
-#include "test_backends.h"
+#include "../common/test_backends.h"
 
 class Tst_qsensorgesturePluginsTest : public QObject
 {

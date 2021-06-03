@@ -112,7 +112,7 @@ QmlLidReading::~QmlLidReading()
     Please see QLidReading::backLidClosed for information about this property.
 */
 
-bool QmlLidReading::backLidChanged() const
+bool QmlLidReading::backLidClosed() const
 {
     return m_backClosed;
 }

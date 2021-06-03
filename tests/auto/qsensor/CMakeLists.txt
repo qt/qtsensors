@@ -4,7 +4,7 @@
 
 qt_internal_add_test(tst_qsensor
     SOURCES
-        test_backends.cpp test_backends.h
+        ../common/test_backends.cpp ../common/test_backends.h
         test_sensor.cpp test_sensor.h test_sensor_p.h
         test_sensor2.cpp test_sensor2.h test_sensor2_p.h
         test_sensor2impl.cpp test_sensor2impl.h

@@ -39,7 +39,7 @@
 #include "test_sensor.h"
 #include "test_sensor2.h"
 #include "test_sensorimpl.h"
-#include "test_backends.h"
+#include "../common/test_backends.h"
 
 QT_BEGIN_NAMESPACE
 
