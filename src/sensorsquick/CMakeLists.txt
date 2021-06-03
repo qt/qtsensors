@@ -1,4 +1,6 @@
-qt_internal_add_module(SensorsQuick
+qt_internal_add_qml_module(SensorsQuick
+    URI "QtSensors"
+    VERSION "${PROJECT_VERSION}"
     SOURCES
         qmlaccelerometer.cpp qmlaccelerometer_p.h
         qmlaltimeter.cpp qmlaltimeter_p.h
@@ -33,13 +35,3 @@ qt_internal_add_module(SensorsQuick
     LIBRARIES
         Qt::CorePrivate
 )
-
-set_target_properties(SensorsQuick PROPERTIES
-    QT_QML_MODULE_INSTALL_QMLTYPES TRUE
-    QT_QML_MODULE_VERSION ${PROJECT_VERSION}
-    QT_QML_MODULE_URI QtSensors
-    QT_QMLTYPES_FILENAME plugins.qmltypes
-    QT_QML_MODULE_INSTALL_DIR "${INSTALL_QMLDIR}/QtSensors"
-)
-
-qt6_qml_type_registration(SensorsQuick)
