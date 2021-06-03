@@ -61,4 +61,9 @@
     compilation errors and consequent workarounds. The \e type string has been
     now renamed as \e sensorType.
 
+    \section2 Renamed LidReading::backLidChanged property to \c backLidClosed
+
+    The property name is now aligned with the \c frontLidClosed property of
+    the same QML type.
+
 */

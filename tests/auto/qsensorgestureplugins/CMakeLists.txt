@@ -4,7 +4,7 @@
 
 qt_internal_add_test(tst_qsensorgesturepluginstest
     SOURCES
-        ../qsensor/test_backends.cpp ../qsensor/test_backends.h
+        ../common/test_backends.cpp ../common/test_backends.h
         tst_qsensorgesturepluginstest.cpp
     INCLUDE_DIRECTORIES
         ../qsensor

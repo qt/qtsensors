@@ -90,9 +90,6 @@ QQmlListProperty<Item> readonlyListProperty(const QObject *o, const QList<Item *
 
 QmlSensor::QmlSensor(QObject *parent)
     : QObject(*(new QmlSensorPrivate), parent)
-    , m_parsed(false)
-    , m_active(false)
-    , m_reading(0)
 {
 }
 
@@ -114,7 +111,7 @@ QString QmlSensor::identifier() const
 
 void QmlSensor::setIdentifier(const QString &identifier)
 {
-    if (m_parsed) return;
+    if (m_componentComplete) return;
     m_identifier = identifier;
     Q_EMIT identifierChanged();
 }
@@ -162,23 +159,19 @@ bool QmlSensor::isBusy() const
 
 void QmlSensor::setActive(bool active)
 {
-    m_active = active;
-    if (!m_parsed) return; // delay (it'll get called again later)!
-    bool wasActive = sensor()->isActive();
-    if (wasActive == active) return;
-    if (active) {
-        sensor()->start();
-        m_active = sensor()->isActive();
-    } else {
-        sensor()->stop();
+    if (!m_componentComplete) {
+        m_activateOnComplete = active;
+        return;
     }
-    if (m_active != wasActive)
-        emit activeChanged();
+    if (active)
+        sensor()->start();
+    else
+        sensor()->stop();
 }
 
 bool QmlSensor::isActive() const
 {
-    return m_active;
+    return sensor()->isActive();
 }
 
 /*!
@@ -419,8 +412,7 @@ void QmlSensor::setBufferSize(int bufferSize)
 
 bool QmlSensor::start()
 {
-    setActive(true);
-    return isActive();
+    return sensor()->start();
 }
 
 /*!
@@ -442,7 +434,7 @@ void QmlSensor::classBegin()
 
 void QmlSensor::componentComplete()
 {
-    m_parsed = true;
+    m_componentComplete = true;
 
     connect(sensor(), SIGNAL(sensorError(int)), this, SIGNAL(errorChanged()));
     connect(sensor(), SIGNAL(activeChanged()), this, SIGNAL(activeChanged()));
@@ -510,10 +502,8 @@ void QmlSensor::componentComplete()
     _update();
 
     connect(sensor(), SIGNAL(readingChanged()), this, SLOT(updateReading()));
-    if (m_active) {
-        m_active = false;
+    if (m_activateOnComplete)
         start();
-    }
 }
 
 void QmlSensor::_update()

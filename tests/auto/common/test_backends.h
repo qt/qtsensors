@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2016 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -30,9 +30,11 @@
 #define TEST_BACKENDS_H
 
 #include <qsensorbackend.h>
+#include <QtCore/QJsonObject>
 
 void register_test_backends();
 void unregister_test_backends();
+void set_test_backend_reading(QSensor* sensor, const QJsonObject& values);
 
 #include <qaccelerometer.h>
 #include <qaltimeter.h>
@@ -50,6 +52,9 @@ void unregister_test_backends();
 #include <qtapsensor.h>
 #include <qirproximitysensor.h>
 #include <qtiltsensor.h>
+#include <qdistancesensor.h>
+#include <qlidsensor.h>
+#include <qhumiditysensor.h>
 
 #define PREPARE_SENSORINTERFACE_DECLS(SensorClass, ReadingClass, FilterClass, readingcode)\
     class SensorClass ## _impl : public QSensorBackend\
@@ -141,6 +146,18 @@ PREPARE_SENSORINTERFACE(QTiltSensor, QTiltReading, QTiltFilter, {
     reading->setYRotation(1.0);
     reading->setXRotation(1.0);
 })
+PREPARE_SENSORINTERFACE(QDistanceSensor, QDistanceReading, QDistanceFilter, {
+    reading->setDistance(1.0);
+})
+PREPARE_SENSORINTERFACE(QLidSensor, QLidReading, QLidFilter, {
+    reading->setBackLidClosed(true);
+    reading->setFrontLidClosed(true);
+})
+PREPARE_SENSORINTERFACE(QHumiditySensor, QHumidityReading, QHumidityFilter, {
+    reading->setRelativeHumidity(1.0);
+    reading->setAbsoluteHumidity(1.0);
+})
+
 
 #define TEST_SENSORINTERFACE(SensorClass, ReadingClass, readingcode)\
     do {\
