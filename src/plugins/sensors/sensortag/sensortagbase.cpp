@@ -59,7 +59,7 @@ void SensorTagBasePrivate::deviceSearch()
 
     connect(m_deviceDiscoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
             this, &SensorTagBasePrivate::deviceFound);
-    connect(m_deviceDiscoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::error),
+    connect(m_deviceDiscoveryAgent, &QBluetoothDeviceDiscoveryAgent::errorOccurred,
             this, &SensorTagBasePrivate::deviceScanError);
     connect(m_deviceDiscoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
             this, &SensorTagBasePrivate::scanFinished);
@@ -85,23 +85,23 @@ void SensorTagBasePrivate::deviceFound(const QBluetoothDeviceInfo &device)
         //mac uses deviceUuid
         const QUuid watchForId(idString);
 
-        bool ok;
+        bool ok(false);
 
         if ((!watchForAddress.isNull() && watchForAddress == device.address()) ||
-              (!watchForId.isNull() && watchForId == device.deviceUuid())) {
+              (!watchForId.isNull() && QBluetoothUuid(watchForId) == device.deviceUuid())) {
             ok = true;
         }
         if (ok || device.name().contains("SensorTag")) {
 
             m_deviceDiscoveryAgent->stop();
 
-            m_control = new QLowEnergyController(device.address(), this);
+            m_control = QLowEnergyController::createCentral(device, this);
 
             connect(m_control, &QLowEnergyController::discoveryFinished,
                     this, &SensorTagBasePrivate::serviceDiscoveryFinished);
             connect(m_control, &QLowEnergyController::serviceDiscovered,
                     this, &SensorTagBasePrivate::serviceDiscovered);
-            connect(m_control, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::error),
+            connect(m_control, &QLowEnergyController::errorOccurred,
                     this, &SensorTagBasePrivate::controllerError);
             connect(m_control, &QLowEnergyController::connected,
                     this, &SensorTagBasePrivate::sensortagDeviceConnected);
@@ -218,7 +218,7 @@ void SensorTagBasePrivate::doConnections(QLowEnergyService *service)
         connect(service,SIGNAL(error(QLowEnergyService::ServiceError)),
                 this,SLOT(serviceError(QLowEnergyService::ServiceError)));
 
-        if (service->state() == QLowEnergyService::DiscoveryRequired) {
+        if (service->state() == QLowEnergyService::RemoteService) {
             service->discoverDetails();
         } else if (!enabledServiceUuids.isEmpty()
                    && enabledServiceUuids.contains(service->serviceUuid())) {
@@ -229,7 +229,7 @@ void SensorTagBasePrivate::doConnections(QLowEnergyService *service)
 
 void SensorTagBasePrivate::serviceStateChanged(QLowEnergyService::ServiceState newState)
 {
-    if (newState != QLowEnergyService::ServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered)
         return;
 
     QLowEnergyService *m_service = qobject_cast<QLowEnergyService *>(sender());

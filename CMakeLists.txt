@@ -12,7 +12,7 @@ project(QtSensors
 
 find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS BuildInternals Core)
 find_package(Qt6 ${PROJECT_VERSION} CONFIG OPTIONAL_COMPONENTS
-             Xml Gui Widgets Quick Qml Svg DBus Multimedia
+             Xml Gui Widgets Quick Qml Svg DBus Multimedia Bluetooth
 )
 
 qt_build_repo()
