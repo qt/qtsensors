@@ -286,7 +286,7 @@ void Tst_qsensorgestureTest::tst_sensor_gesture_signals()
     testidList << "QtSensors.test";
     testidList << "QtSensors.test2";
 
-    Q_FOREACH (const QString &plugin, testidList) {
+    for (const QString &plugin : testidList) {
 
         QScopedPointer<QSensorGesture> thisGesture(new QSensorGesture(QStringList() << plugin));
 

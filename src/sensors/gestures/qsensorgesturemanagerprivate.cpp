@@ -68,16 +68,11 @@ QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
 {
     if (QSensorGesturePluginInterface *pInterface
             = qobject_cast<QSensorGesturePluginInterface *>(plugin)) {
-
-        Q_FOREACH (const QString &id, pInterface->supportedIds()) {
-
+        for (const QString& id : pInterface->supportedIds()) {
             if (!knownIds.contains(id))
                 knownIds.append(id);
             else
-                qWarning() << id <<"from the plugin"
-                           << pInterface->name()
-                           << "is already known.";
-
+                qWarning() << id <<"from the plugin" << pInterface->name() << "is already known.";
         }
         plugins << plugin;
     } else {
@@ -92,9 +87,9 @@ QSensorGestureManagerPrivate::~QSensorGestureManagerPrivate()
   */
 void QSensorGestureManagerPrivate::loadPlugins()
 {
-    Q_FOREACH (QObject *plugin, QPluginLoader::staticInstances()) {
+    for (QObject *plugin : QPluginLoader::staticInstances())
         initPlugin(plugin);
-    }
+
     QList<QJsonObject> meta = loader->metaData();
     for (int i = 0; i < meta.count(); i++) {
         QObject *plugin = loader->instance(i);
@@ -126,8 +121,7 @@ bool QSensorGestureManagerPrivate::loadRecognizer(const QString &recognizerId)
                     //create these recognizers
                     QList <QSensorGestureRecognizer *> recognizers = pInterface->createRecognizers();
 
-                    Q_FOREACH (QSensorGestureRecognizer *recognizer, recognizers) {
-
+                    for (QSensorGestureRecognizer *recognizer : recognizers) {
                         if (registeredSensorGestures.contains(recognizer->id())) {
                            qWarning() << "Ignoring recognizer " << recognizer->id() << "from plugin" << pInterface->name() << "because it is already registered";
                             delete recognizer;

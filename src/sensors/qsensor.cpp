@@ -313,7 +313,7 @@ QSensor::~QSensor()
 {
     Q_D(QSensor);
     stop();
-    Q_FOREACH (QSensorFilter *filter, d->filters)
+    for (QSensorFilter *filter : d->filters)
         filter->setSensor(0);
     delete d->backend;
     d->backend = 0;

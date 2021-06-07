@@ -138,10 +138,9 @@ void QWhipSensorGestureRecognizer::accelChanged(QAccelerometerReading *reading)
         zList.removeLast();
 
     qreal averageZ = 0;
-    Q_FOREACH (qreal az, zList) {
+    for (const qreal& az : qAsConst<QList<qreal>>(zList))
         averageZ += az;
-    }
-//    averageZ += z;
+
     averageZ /= zList.count();
 
     zList.insert(0,z);
@@ -212,7 +211,7 @@ void QWhipSensorGestureRecognizer::checkForWhip()
     whipOk = false;
 
     int check = 0;
-    Q_FOREACH (qreal az, zList) {
+    for (const qreal& az : qAsConst<QList<qreal>>(zList)) {
         if (az < -10)
             check++;
     }

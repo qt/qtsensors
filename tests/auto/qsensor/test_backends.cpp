@@ -56,26 +56,25 @@ class BackendFactory : public QSensorBackendFactory
 {
     QSensorBackend *createBackend(QSensor *sensor) override
     {
-        foreach (const Record &record, records) {
-            if (sensor->identifier() == record.type) {
+        for (const Record &record : records) {
+            if (sensor->identifier() == record.type)
                 return record.func(sensor);
-            }
         }
         return 0;
-    };
+    }
 };
 static BackendFactory factory;
 
 void register_test_backends()
 {
-    foreach (const Record &record, records) {
+    for (const Record &record : records) {
         QSensorManager::registerBackend(record.type, record.type, &factory);
     }
 }
 
 void unregister_test_backends()
 {
-    foreach (const Record &record, records) {
+    for (const Record &record : records) {
         QSensorManager::unregisterBackend(record.type, record.type);
     }
 }

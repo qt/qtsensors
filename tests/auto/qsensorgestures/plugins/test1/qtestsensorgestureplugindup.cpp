@@ -56,9 +56,8 @@ handled through the detected(const QString &) signal.
 QStringList QTestSensorGestureDupPlugin::gestureSignals() const
 {
     QStringList list;
-    Q_FOREACH (const QSensorGestureRecognizer* rec,recognizersList) {
+    for (const QSensorGestureRecognizer* rec : recognizersList)
         list.append(rec->gestureSignals());
-    }
     return list;
 }
 

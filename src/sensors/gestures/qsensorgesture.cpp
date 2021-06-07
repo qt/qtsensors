@@ -84,7 +84,7 @@ QSensorGesture::QSensorGesture(const QStringList &ids, QObject *parent) :
     QObject(parent)
 {
     d_ptr = new QSensorGesturePrivate();
-    Q_FOREACH (const QString &id, ids) {
+    for (const QString &id : ids) {
         QSensorGestureRecognizer * rec = QSensorGestureManager::sensorGestureRecognizer(id);
         if (rec != 0) {
             d_ptr->m_sensorRecognizers.append(rec);
@@ -101,8 +101,8 @@ QSensorGesture::QSensorGesture(const QStringList &ids, QObject *parent) :
     builder.setSuperClass(&QObject::staticMetaObject);
     builder.setClassName("QSensorGesture");
 
-    Q_FOREACH (QSensorGestureRecognizer *recognizer,  d_ptr->m_sensorRecognizers) {
-        Q_FOREACH (const QString &gesture, recognizer->gestureSignals()) {
+    for (QSensorGestureRecognizer *recognizer : d_ptr->m_sensorRecognizers) {
+        for (const QString &gesture : recognizer->gestureSignals()) {
             QMetaMethodBuilder b =  builder.addSignal(gesture.toLatin1());
             if (!d_ptr->localGestureSignals.contains(QLatin1String(b.signature())))
                 d_ptr->localGestureSignals.append(QLatin1String(b.signature()));
@@ -153,7 +153,7 @@ void QSensorGesture::startDetection()
     if (d_ptr->isActive)
         return;
 
-    Q_FOREACH (QSensorGestureRecognizer *recognizer,  d_ptr->m_sensorRecognizers) {
+    for (QSensorGestureRecognizer *recognizer : d_ptr->m_sensorRecognizers) {
 
         Q_ASSERT(recognizer !=0);
 
@@ -161,7 +161,7 @@ void QSensorGesture::startDetection()
                 this,SIGNAL(detected(QString)),Qt::UniqueConnection);
 
         //connect recognizer signals
-        Q_FOREACH (QString method, recognizer->gestureSignals()) {
+        for (QString method : recognizer->gestureSignals()) {
             method.prepend(QLatin1String("2"));
             connect(recognizer, method.toLatin1(),
                     this, method.toLatin1(), Qt::UniqueConnection);
@@ -183,11 +183,11 @@ void QSensorGesture::stopDetection()
     if (!d_ptr->isActive)
         return;
 
-    Q_FOREACH (QSensorGestureRecognizer *recognizer,  d_ptr->m_sensorRecognizers) {
+    for (QSensorGestureRecognizer *recognizer : d_ptr->m_sensorRecognizers) {
         disconnect(recognizer,SIGNAL(detected(QString)),
                    this,SIGNAL(detected(QString)));
         //disconnect recognizer signals
-        Q_FOREACH (QString method,recognizer->gestureSignals()) {
+        for (QString method : recognizer->gestureSignals()) {
             method.prepend(QLatin1String("2"));
             disconnect(recognizer, method.toLatin1(),
                        this, method.toLatin1());

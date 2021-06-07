@@ -62,9 +62,9 @@ void Explorer::loadSensors()
     // Clear out anything that's in there now
     ui.sensors->clear();
 
-    foreach (const QByteArray &type, QSensor::sensorTypes()) {
+    for (const QByteArray &type : QSensor::sensorTypes()) {
         qDebug() << "Found type" << type;
-        foreach (const QByteArray &identifier, QSensor::sensorsForType(type)) {
+        for (const QByteArray &identifier : QSensor::sensorsForType(type)) {
             qDebug() << "Found identifier" << identifier;
             // Don't put in sensors we can't connect to
             QSensor sensor(type);
@@ -231,7 +231,7 @@ void Explorer::loadSensorProperties()
         if (typeName == "qrangelist") {
             qrangelist rl = v.value<qrangelist>();
             QStringList out;
-            foreach (const qrange &r, rl) {
+            for (const qrange &r : rl) {
                 if (r.first == r.second)
                     out << QString("%1 Hz").arg(r.first);
                 else
@@ -241,9 +241,8 @@ void Explorer::loadSensorProperties()
         } else if (typeName == "qoutputrangelist") {
             qoutputrangelist rl = v.value<qoutputrangelist>();
             QStringList out;
-            foreach (const qoutputrange &r, rl) {
+            for (const qoutputrange &r : rl)
                 out << QString("(%1, %2) += %3").arg(r.minimum).arg(r.maximum).arg(r.accuracy);
-            }
             val = out.join(", ");
         } else {
             val = v.toString();

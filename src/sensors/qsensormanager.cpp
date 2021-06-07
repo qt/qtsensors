@@ -159,9 +159,8 @@ public Q_SLOTS:
         // until things stop changing.
         do {
             sensorsChanged = false;
-            Q_FOREACH (QSensorChangesInterface *changes, changeListeners) {
+            for (QSensorChangesInterface *changes : changeListeners)
                 changes->sensorsChanged();
-            }
         } while (sensorsChanged);
 
         // We're going away now so clear the flag
@@ -213,10 +212,8 @@ void QSensorManagerPrivate::loadPlugins()
 
     SENSORLOG() << "initializing static plugins";
     // Qt-style static plugins
-    Q_FOREACH (QObject *plugin, QPluginLoader::staticInstances()) {
-        initPlugin(plugin, false/*do not warn on fail*/);
-    }
-
+    for (QObject *plugin : QPluginLoader::staticInstances())
+        initPlugin(plugin, false /*do not warn on fail*/);
     if (d->loadExternalPlugins) {
         SENSORLOG() << "initializing plugins";
         QList<QJsonObject> meta = d->loader->metaData();
@@ -365,7 +362,7 @@ QSensorBackend *QSensorManager::createBackend(QSensor *sensor)
         if (backend) return backend; // Got it!
 
         // The default failed to instantiate so try any other registered sensors for this type
-        Q_FOREACH (const QByteArray &identifier, factoryByIdentifier.keys()) {
+        for (const QByteArray &identifier : factoryByIdentifier.keys()) {
             SENSORLOG() << "Trying" << identifier;
             if (identifier == defaultIdentifier) continue; // Don't do the default one again
             factory = factoryByIdentifier[identifier];

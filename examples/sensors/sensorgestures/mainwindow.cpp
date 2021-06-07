@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QSensorGestureManager manager;
 
-    Q_FOREACH (const QString &gesture, manager.gestureIds()) {
+    for (const QString &gesture : manager.gestureIds()) {
 
         QTreeWidgetItem *gestureId = new QTreeWidgetItem(ui->treeWidget);
         QStringList recognizerSignals =  manager.recognizerSignals(gesture);
