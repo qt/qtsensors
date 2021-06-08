@@ -318,21 +318,27 @@ void QSensorBackend::sensorStopped()
 }
 
 /*!
-    Inform the front end that the sensor is busy.
-    This implicitly calls sensorStopped() and
-    is typically called from start().
+    Inform the front end of the sensor's busy state according
+    to the provided \a busy parameter.
+
+    If the sensor is set \e busy this implicitly calls sensorStopped().
+    Busy indication is typically done in start().
 
     Note that the front end must call QSensor::isBusy() to see if
     the sensor is busy. If the sensor has stopped due to an error
     the sensorError() function should be called to notify the class
     of the error condition.
 */
-void QSensorBackend::sensorBusy()
+void QSensorBackend::sensorBusy(bool busy)
 {
     Q_D(QSensorBackend);
     QSensorPrivate *sensorPrivate = d->m_sensor->d_func();
-    sensorPrivate->active = false;
-    sensorPrivate->busy = true;
+    if (sensorPrivate->busy == busy)
+        return;
+    if (busy)
+        sensorPrivate->active = false;
+    sensorPrivate->busy = busy;
+    emit d->m_sensor->busyChanged();
 }
 
 /*!

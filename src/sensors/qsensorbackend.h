@@ -80,7 +80,7 @@ public:
     // used by the backend to inform us of events
     void newReadingAvailable();
     void sensorStopped();
-    void sensorBusy();
+    void sensorBusy(bool busy = true);
     void sensorError(int error);
 
 private:

@@ -35,6 +35,7 @@
 void register_test_backends();
 void unregister_test_backends();
 void set_test_backend_reading(QSensor* sensor, const QJsonObject& values);
+void set_test_backend_busy(QSensor* sensor, bool busy);
 
 #include <qaccelerometer.h>
 #include <qaltimeter.h>

@@ -42,12 +42,36 @@ TestCase {
         signalName: "readingChanged"
     }
 
+    SignalSpy {
+        id: sensorBusySpy
+        signalName: "busyChanged"
+    }
+
     function init() {
         TestControl.registerTestBackends()
     }
 
     function cleanup() {
         TestControl.unregisterTestBackends()
+    }
+
+    function test_busy() {
+        var sensor = Qt.createQmlObject("import QtSensors; Accelerometer {identifier: \"QAccelerometer\"}", testCase);
+        sensorBusySpy.target = sensor
+        compare(sensor.busy, false)
+        verify(sensor.start())
+
+        // set sensor busy and verify 'busy' property and its signaling
+        TestControl.setSensorBusy(sensor, true)
+        compare(sensorBusySpy.count, 1)
+        TestControl.setSensorBusy(sensor, false)
+        compare(sensorBusySpy.count, 2)
+        TestControl.setSensorBusy(sensor, false)
+        compare(sensorBusySpy.count, 2)
+
+        // tidy up
+        sensor.destroy()
+        sensorBusySpy.clear()
     }
 
     function test_reading(data) {
