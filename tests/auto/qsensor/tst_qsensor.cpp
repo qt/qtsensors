@@ -933,6 +933,24 @@ private slots:
         // Now we can start the second instance
         sensor2.start();
         QVERIFY(sensor2.isActive());
+
+        // test 'busy' going back and forth and verify indication to frontend
+        register_test_backends();
+        QAccelerometer accelerometer;
+        accelerometer.setIdentifier("QAccelerometer");
+        QSignalSpy busySpy(&accelerometer, SIGNAL(busyChanged()));
+        QVERIFY(accelerometer.connectToBackend());
+        QVERIFY(!accelerometer.isBusy());
+        QCOMPARE(busySpy.count(), 0);
+
+        set_test_backend_busy(&accelerometer, true);
+        QCOMPARE(busySpy.count(), 1);
+        QVERIFY(accelerometer.isBusy());
+
+        set_test_backend_busy(&accelerometer, false);
+        QCOMPARE(busySpy.count(), 2);
+        QVERIFY(!accelerometer.isBusy());
+        unregister_test_backends();
     }
 
     void testIdenfifierChanged()

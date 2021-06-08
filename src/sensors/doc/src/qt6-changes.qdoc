@@ -66,4 +66,17 @@
     The property name is now aligned with the \c frontLidClosed property of
     the same QML type.
 
+    \section2 QSensorBackend::sensorBusy() and QSensor::isBusy()
+
+    The \c QSensor::busy property and its accessor, \c QSensor::isBusy(), can be used
+    to check if the sensor is busy or not. To allow this property to better reflect the
+    sensor backend's state, QSensorBackend::sensorBusy() now accepts a boolean parameter.
+    This \c busy parameter is used to set/unset the backend busy state and notify the
+    QSensor interface attached to it.
+
+    The default value for the QSensorBackend::sensorBusy() parameter is \e true which
+    results in the original behavior (except the added signal emission). This means
+    that in most if not all cases the changes are not mandatory. Instead it is up to the
+    individual sensor backend implementations to decide if the changes are useful.
+
 */

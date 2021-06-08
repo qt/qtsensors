@@ -78,7 +78,7 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensor : public QObject, public QQmlParse
     Q_PROPERTY(QQmlListProperty<QmlSensorRange> availableDataRates READ availableDataRates NOTIFY availableDataRatesChanged)
     Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
     Q_PROPERTY(QmlSensorReading* reading READ reading NOTIFY readingChanged)
-    Q_PROPERTY(bool busy READ isBusy)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
     Q_PROPERTY(QQmlListProperty<QmlSensorOutputRange> outputRanges READ outputRanges NOTIFY outputRangesChanged)
     Q_PROPERTY(int outputRange READ outputRange WRITE setOutputRange NOTIFY outputRangeChanged)
@@ -173,6 +173,7 @@ Q_SIGNALS:
     void descriptionChanged();
     void errorChanged();
     void alwaysOnChanged();
+    void busyChanged();
     Q_REVISION(1) void skipDuplicatesChanged(bool skipDuplicates);
     Q_REVISION(1) void axesOrientationModeChanged(AxesOrientationMode axesOrientationMode);
     Q_REVISION(1) void currentOrientationChanged(int currentOrientation);

@@ -55,8 +55,16 @@ static bool registerTestBackend(const char *className, CreateFunc func)
 // the sensor reading values in the backend
 static QMap<QSensor*, QSensorBackend*> sensorToBackend;
 
+void set_test_backend_busy(QSensor* sensor, bool busy)
+{
+    Q_ASSERT(sensor->isConnectedToBackend());
+    QSensorBackend* backend = sensorToBackend.value(sensor);
+    backend->sensorBusy(busy);
+}
+
 void set_test_backend_reading(QSensor* sensor, const QJsonObject& values)
 {
+    Q_ASSERT(sensor->isConnectedToBackend());
     QSensorBackend* backend = sensorToBackend.value(sensor);
     backend->reading()->setTimestamp(values["timestamp"].toInt()); // timestamp is common to all
     if (sensor->type() == "QAccelerometer") {
@@ -182,4 +190,3 @@ void unregister_test_backends()
     for (const Record &record : records)
         QSensorManager::unregisterBackend(record.type, record.type);
 }
-

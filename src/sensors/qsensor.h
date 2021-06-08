@@ -78,7 +78,7 @@ class Q_SENSORS_EXPORT QSensor : public QObject
     Q_PROPERTY(qrangelist availableDataRates READ availableDataRates)
     Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
     Q_PROPERTY(QSensorReading* reading READ reading NOTIFY readingChanged)
-    Q_PROPERTY(bool busy READ isBusy)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
     Q_PROPERTY(qoutputrangelist outputRanges READ outputRanges)
     Q_PROPERTY(int outputRange READ outputRange WRITE setOutputRange)

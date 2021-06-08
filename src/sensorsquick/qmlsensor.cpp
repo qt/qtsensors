@@ -447,6 +447,7 @@ void QmlSensor::componentComplete()
     connect(sensor(), SIGNAL(bufferSizeChanged(int)), this, SIGNAL(bufferSizeChanged(int)));
     connect(sensor(), SIGNAL(maxBufferSizeChanged(int)), this, SIGNAL(maxBufferSizeChanged(int)));
     connect(sensor(), SIGNAL(efficientBufferSizeChanged(int)), this, SIGNAL(efficientBufferSizeChanged(int)));
+    connect(sensor(), &QSensor::busyChanged, this, &QmlSensor::busyChanged);
 
     // We need to set this on the sensor object now
     sensor()->setIdentifier(m_identifier.toLocal8Bit());
