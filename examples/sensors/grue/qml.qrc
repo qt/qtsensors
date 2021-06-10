@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/QMLGrueSensor">
         <file>grue.qml</file>
         <file>grue.png</file>
     </qresource>

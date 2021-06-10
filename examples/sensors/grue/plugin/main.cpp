@@ -63,7 +63,6 @@ class GrueSensorPlugin : public QObject, public QSensorPluginInterface, public Q
 public:
     void registerSensors() override
     {
-        qDebug() << "loaded the grue plugin";
     }
 
     void sensorsChanged() override

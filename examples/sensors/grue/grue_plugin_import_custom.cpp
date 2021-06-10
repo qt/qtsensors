@@ -1,9 +1,9 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
-** This file is part of the QtSensors module of the Qt Toolkit.
+** This file is part of the examples of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:BSD$
 ** Commercial License Usage
@@ -48,49 +48,5 @@
 **
 ****************************************************************************/
 
-#ifndef GRUESENSOR_H
-#define GRUESENSOR_H
-
-#include <qsensor.h>
-
-class GrueSensorReadingPrivate;
-
-#if defined(QT_BUILD_GRUE_LIB)
-#    define Q_GRUE_EXPORT Q_DECL_EXPORT
-#else
-#    define Q_GRUE_EXPORT Q_DECL_IMPORT
-#endif
-
-class Q_GRUE_EXPORT GrueSensorReading : public QSensorReading
-{
-    Q_OBJECT
-    Q_PROPERTY(int chanceOfBeingEaten READ chanceOfBeingEaten WRITE setChanceOfBeingEaten)
-    DECLARE_READING(GrueSensorReading)
-public:
-    int chanceOfBeingEaten() const;
-    void setChanceOfBeingEaten(int chanceOfBeingEaten);
-};
-
-// begin generated code
-
-class Q_GRUE_EXPORT GrueFilter : public QSensorFilter
-{
-public:
-    virtual bool filter(GrueSensorReading *reading) = 0;
-private:
-    bool filter(QSensorReading *reading) override { return filter(static_cast<GrueSensorReading*>(reading)); }
-};
-
-class Q_GRUE_EXPORT GrueSensor : public QSensor
-{
-    Q_OBJECT
-    Q_PROPERTY(GrueSensorReading* reading READ reading)
-public:
-    explicit GrueSensor(QObject *parent = 0) : QSensor(GrueSensor::sensorType, parent) {}
-    virtual ~GrueSensor() {}
-    GrueSensorReading *reading() const { return static_cast<GrueSensorReading*>(QSensor::reading()); }
-    static char const * const sensorType;
-};
-// end generated code
-
-#endif
+#include <QtPlugin>
+Q_IMPORT_PLUGIN(GrueSensorPlugin)

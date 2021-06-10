@@ -1,6 +1,5 @@
-# TODO Qt 6.2 enable
-# add_subdirectory(grue)
 if(TARGET Qt::Quick)
+    add_subdirectory(grue)
     add_subdirectory(maze)
 #    add_subdirectory(qmlsensorgestures)
     add_subdirectory(qmlqtsensors)

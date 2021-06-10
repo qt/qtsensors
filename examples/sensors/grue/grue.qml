@@ -50,15 +50,15 @@
 
 import QtQuick
 import QtSensors
-import Grue
+import QtQuick.Layouts
+import QMLGrueSensor
 
 Rectangle {
     id: root
-    width: 320
-    height: 480
+    anchors.fill: parent
     color: "black"
 
-    property int percent: 0
+    property int percent: -1
     property string text: ""
     property real grueOpacity: 0.0
 
@@ -86,7 +86,7 @@ Rectangle {
         }
     }
 
-    GrueSensor {
+    QMLGrueSensor {
         id: sensor
         active: true
         onReadingChanged: {
@@ -108,10 +108,7 @@ Rectangle {
 
     Text {
         id: text
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
         wrapMode: Text.WordWrap
         text: "I can't tell if you're going to be eaten by a Grue or not. You're on your own!"
         font.pixelSize: 30

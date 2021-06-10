@@ -28,48 +28,41 @@
 /*!
     \example grue
     \title Qt Sensors - Grue Sensor Example
-    \brief The Qt Sensors - Grue sensor example demonstrates all the steps from creating a new sensor to using it.
+    \brief The Qt Sensors - Grue sensor example demonstrates all the steps from
+    creating a new sensor to using it.
     \ingroup qtsensors-examples
 
     \image qtsensors-examples-grue.png
 
-    The Qt Sensors - Grue sensor example demonstrates all the steps from creating a new sensor to using it.
-
-    The sensor definition is placed in a library where client apps can access it. The actual implementation
-    lives in a plugin.
+    The sensor definition and implementation are in a new sensor plugin that client
+    apps can use for detecting Grues (imaginary monsters that live in the dark).
 
     \list
-    \li \l{Grue Sensor Definition}
-    \li \l{Grue Sensor Implementation}
+    \li \l{Grue Sensor Plugin}
     \endlist
 
-    The sensor can now be used by a C++ application, even if the application does not have access to the
-    definition.
+    The sensor plugin can be used by C++ applications as shown in the console
+    application example.
 
     \list
     \li \l{Grue Sensor Console Application}
     \endlist
 
-    To make the sensor available to a QML application an import must be created.
+    QML applications can use the new sensor by importing the QMLGrueSensor class.
 
     \list
-    \li \l{Grue Sensor QML Import}
     \li \l{Grue Sensor QML Application}
     \endlist
 
-    \section1 Grue Sensor Definition
+    \section1 Grue Sensor Plugin
 
-    The Grue sensor is defined in a library so that applications can use it.
-    The source code is available in the \c{grue/lib} subdirectory.
+    The Grue sensor is defined in a new sensor plugin that applications can use.
 
-    First up is the sensor type. This is the interface for sensors that report
-    on your likelihood of being eaten by a Grue. Such sensors are very important
-    to adventurers, particularly if they are going into dark places as this is
-    where Grues live.
-
-    The interface is a simple one. It provides only 1 piece of information, your
-    chance of being eaten. For the details on how this is property should be
-    interpreted please see the documentation in gruesensor.cpp.
+    The plugin provides the sensor reading property that describes your chance of
+    being eaten. This chance is increasing in the dark until it is 100% when
+    you are eaten by the Grue and at that point the plugin stops further processing.
+    In case of the plugin receiving light again before that happens the chance of
+    being eaten resets to 0%.
 
     This example was created using the make_sensor.pl script which can be found in
     src/sensors. As such, it contains some generated code that defines the convenience
@@ -77,8 +70,8 @@
 
     \section1 Grue Sensor Implementation
 
-    The Grue sensor implementation lives in a plugin that is loaded by the Qt Sensors
-    library. The source code is available in the \c{grue/plugin} subdirectory.
+    The Grue sensor implementation lives in the plugin that is loaded by the Qt
+    Sensors library. The source code is available in the \c{grue/plugin} subdirectory.
 
     The Grue sensor needs a backend before it can be used. The backend provided
     is rather basic and it relies on some kind of light sensor to work but it
@@ -89,8 +82,8 @@
     There are a few mandatory parts to a backend. They are the start and stop methods
     and the setReading call. The start and stop methods are used to start and stop
     any underlying hardware. In the case of this backend they start and stop a
-    light sensor. In the start method, the backend should be sure to call the
-    sensorStopped() or sensorBusy() methods if it cannot start.
+    light sensor. In the start method, the backend should call the \c{sensorStopped()}
+    or \c{sensorBusy()} methods if it cannot start.
 
     \snippet grue/plugin/gruesensorimpl.cpp start
 
@@ -111,7 +104,7 @@
     The Grue sensor backend also supplies some metadata.
 
     The backend checks 2 things, how dark it is and how long you have been in the dark.
-    It uses the readingChanged() signal to know when to check the light sensor's
+    It uses the \c{readingChanged()} signal to know when to check the light sensor's
     value. Once it is dark, it uses a timer to increase your chance of being eaten.
 
     The Grue sensor backend is delivered as a plugin. The plugin has a factory object
@@ -123,31 +116,22 @@
     The source code is available in the \c{grue/console_app} subdirectory.
 
     This is a simple commandline application. It demonstrates how to use the generic
-    access feature of Qt Sensors to avoid a link-time dependency on the Grue Sensor
-    library.
+    access feature of Qt Sensors to avoid a link-time dependency on a library.
 
-    \section1 Grue Sensor QML Import
+    \section1 Grue Sensor C++ Class Registration for QML
 
-    The Grue sensor QML import exports the GrueSensor class as a QML type.
-    The source code is available in the \c{grue/import} subdirectory.
-
-    This creates the \e {Grue 1.0} import.
+    The QMLGrueSensor class is registered for QML, so the class name can be used
+    as an import and the class properties can be accessed from QML.
 
     \section1 Grue Sensor QML Application
 
-    The Grue sensor QML application demonstrates the use of GrueSensor QML type.
+    The Grue sensor QML application demonstrates the use of QMLGrueSensor QML type.
 
     The application consists of a single QML file and an image. It is built as an
-    exucutable with C++ code that runs the QML, but it can also be launched directly
+    executable with C++ code that runs the QML, but it can also be launched directly
     using the \c qmlscene tool.
-
-    You should build the top-level 'grue' project before trying to run
-    this example or it will not be able to find its dependencies.
 
     \code
     qmlscene -I . grue.qml
     \endcode
-
-    Above, the \c{-I .} parameter adds the current directory as a module import
-    path to locate the Grue QML module.
 */
