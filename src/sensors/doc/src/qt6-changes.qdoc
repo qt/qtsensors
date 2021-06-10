@@ -79,4 +79,9 @@
     that in most if not all cases the changes are not mandatory. Instead it is up to the
     individual sensor backend implementations to decide if the changes are useful.
 
+    \section2 Sensor::type and and QSensor::type properties marked as constant
+
+    The \c type property cannot change after instantiation and is marked as constant
+    in both C++ and QML.
+
 */

@@ -31,6 +31,7 @@ import QtSensors
 
 TestCase {
     id: testCase
+    name: "SensorTest"
 
     SignalSpy {
         id: sensorActiveSpy
@@ -47,12 +48,97 @@ TestCase {
         signalName: "busyChanged"
     }
 
+    SignalSpy {
+        id: sensorIdentifierSpy
+        signalName: "identifierChanged"
+    }
+
     function init() {
         TestControl.registerTestBackends()
     }
 
     function cleanup() {
         TestControl.unregisterTestBackends()
+        sensorBusySpy.clear()
+        sensorActiveSpy.clear()
+        sensorReadingSpy.clear()
+        sensorIdentifierSpy.clear()
+    }
+
+    function test_activate() {
+
+        // create sensor without proper identifier and verify activation fails
+        var sensor = Qt.createQmlObject("import QtSensors; Accelerometer {identifier: \"nonexistent\"}",testCase);
+        sensorActiveSpy.target = sensor
+        sensorIdentifierSpy.target = sensor
+        verify(!sensor.active)
+        compare(sensor.identifier, "nonexistent")
+        sensor.active = true
+        verify(!sensor.active)
+        compare(sensorActiveSpy.count, 0)
+
+        // set proper identifier and verify activation succeeds
+        sensor.identifier = "QAccelerometer"
+        compare(sensor.identifier, "QAccelerometer")
+        compare(sensorIdentifierSpy.count, 1)
+        sensor.active = true
+        compare(sensorActiveSpy.count, 1)
+        verify(sensor.active)
+        compare(sensor.reading.x, 1.0)
+
+        // set identifier again, verify no impact
+        sensor.identifier = "QAccelerometer"
+        compare(sensor.identifier, "QAccelerometer")
+        compare(sensorIdentifierSpy.count, 1)
+
+        // set activate again, verify no impact
+        sensor.active = true
+        sensor.start()
+        compare(sensorActiveSpy.count, 1)
+        verify(sensor.active)
+
+        // deactivate
+        sensor.active = false
+        compare(sensorActiveSpy.count, 2)
+        verify(!sensor.active)
+
+        // reactivate and stop
+        sensor.active = true
+        compare(sensorActiveSpy.count, 3)
+        verify(sensor.active)
+        sensor.stop()
+        compare(sensorActiveSpy.count, 4)
+        verify(!sensor.active)
+
+        // create sensor with proper id and active 'true' on creation time
+        var sensor2 = Qt.createQmlObject("import QtSensors; Accelerometer {identifier: \"QAccelerometer\"; active: true}", testCase);
+        verify(sensor2.active)
+
+        // create sensor with nonexistent id and active 'true' on creation time
+        var sensor3 = Qt.createQmlObject("import QtSensors; Accelerometer {identifier: \"nonexistent\"; active: true}", testCase);
+        verify(!sensor3.active)
+        sensor3.identifier = "QAccelerometer"
+        sensor3.start()
+        verify(sensor3.active)
+
+        // create sensor with empty id, and check that a default is used
+        var sensor4 = Qt.createQmlObject("import QtSensors; Accelerometer {active: true}", testCase);
+        verify(sensor4.active)
+        compare(sensor4.identifier, QmlSensors.defaultSensorForType("QAccelerometer"));
+
+        // same as previous but with delayed activation
+        var sensor5 = Qt.createQmlObject("import QtSensors; Accelerometer {}", testCase);
+        verify(!sensor5.active)
+        sensor5.active = true
+        verify(sensor5.active)
+        compare(sensor5.identifier, QmlSensors.defaultSensorForType("QAccelerometer"));
+
+        // tidy up
+        sensor.destroy()
+        sensor2.destroy()
+        sensor3.destroy()
+        sensor4.destroy()
+        sensor5.destroy()
     }
 
     function test_busy() {
@@ -71,7 +157,6 @@ TestCase {
 
         // tidy up
         sensor.destroy()
-        sensorBusySpy.clear()
     }
 
     function test_reading(data) {
@@ -119,8 +204,6 @@ TestCase {
 
         // tidy up
         sensor.destroy()
-        sensorActiveSpy.clear()
-        sensorReadingSpy.clear()
     }
 
     function test_reading_data() {
