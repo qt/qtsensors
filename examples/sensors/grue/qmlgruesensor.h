@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -48,15 +48,19 @@
 **
 ****************************************************************************/
 
-#include <QGuiApplication>
-#include <QQuickView>
-#include <QLoggingCategory>
+#ifndef QMLGRUESENSOR_H
+#define QMLGRUESENSOR_H
 
-#define SENSORS_EXAMPLE_MAIN(NAME) int main(int argc, char **argv) \
-{\
-    QGuiApplication app(argc,argv);\
-    QQuickView view;\
-    view.setSource(QUrl("qrc:///" #NAME ".qml"));\
-    view.show();\
-    return app.exec();\
-}
+#include <QtQml/qqml.h>
+#include <QtSensors/qsensor.h>
+
+class QMLGrueSensor : public QSensor
+{
+    Q_OBJECT
+    QML_ELEMENT
+
+public:
+    QMLGrueSensor();
+};
+
+#endif // QMLGRUESENSOR_H

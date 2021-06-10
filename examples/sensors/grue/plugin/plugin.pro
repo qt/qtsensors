@@ -1,23 +1,20 @@
 TEMPLATE = lib
 CONFIG += plugin
-TARGET = $$qtLibraryTarget(qtsensors_grue)
+TARGET = $$qtLibraryTarget(plugins_sensors_qtsensors_grue)
 PLUGIN_TYPE = sensors
 
 QT = core sensors
 
-macos: DESTDIR = ../grue_app.app/Contents/MacOS/$$PLUGIN_TYPE
+macos:!qtConfig(static): DESTDIR = ../grue_app.app/Contents/MacOS/$$PLUGIN_TYPE
 else: DESTDIR = ../$$PLUGIN_TYPE
 
-include(../lib/lib.pri)
-
-# Shared gruesensor library will be installed in parent directory.
-# Define rpath so that this plugin will know where to look for it.
-unix:!mac: QMAKE_LFLAGS += -Wl,-rpath,\\\$\$ORIGIN/..
-
-HEADERS += gruesensorimpl.h
+HEADERS += gruesensorimpl.h \
+           gruesensor.h \
+           gruesensor_p.h
 
 SOURCES += gruesensorimpl.cpp \
-           main.cpp
+           main.cpp \
+           gruesensor.cpp
 
 
 # Install the plugin under Grue example directory

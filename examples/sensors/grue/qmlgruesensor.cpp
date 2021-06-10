@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2017 The Qt Company Ltd.
+** Copyright (C) 2021 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtSensors module of the Qt Toolkit.
@@ -48,15 +48,11 @@
 **
 ****************************************************************************/
 
-#include <QGuiApplication>
-#include <QQuickView>
-#include <QLoggingCategory>
+#include "qmlgruesensor.h"
 
-#define SENSORS_EXAMPLE_MAIN(NAME) int main(int argc, char **argv) \
-{\
-    QGuiApplication app(argc,argv);\
-    QQuickView view;\
-    view.setSource(QUrl("qrc:///" #NAME ".qml"));\
-    view.show();\
-    return app.exec();\
+
+QMLGrueSensor::QMLGrueSensor():QSensor("GrueSensor") //  QLightSensor
+{
+    connectToBackend();
+    start();
 }

@@ -8,6 +8,9 @@ DESTDIR = $$OUT_PWD/..
 
 SOURCES = main.cpp
 
+grue_plugin_base_dir = ..
+include(../use_grue_static_plugin.pri)
+
 target.path = $$[QT_INSTALL_EXAMPLES]/sensors/grue
 INSTALLS += target
 
