@@ -72,8 +72,8 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensor : public QObject, public QQmlParse
     Q_OBJECT
     Q_DECLARE_PRIVATE(QmlSensor)
     Q_INTERFACES(QQmlParserStatus)
-    Q_PROPERTY(QString identifier READ identifier WRITE setIdentifier NOTIFY identifierChanged)
-    Q_PROPERTY(QString type READ type NOTIFY typeChanged)
+    Q_PROPERTY(QByteArray identifier READ identifier WRITE setIdentifier NOTIFY identifierChanged)
+    Q_PROPERTY(QByteArray type READ type CONSTANT)
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend NOTIFY connectedToBackendChanged)
     Q_PROPERTY(QQmlListProperty<QmlSensorRange> availableDataRates READ availableDataRates NOTIFY availableDataRatesChanged)
     Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
@@ -108,10 +108,10 @@ public:
     explicit QmlSensor(QObject *parent = 0);
     ~QmlSensor();
 
-    QString identifier() const;
-    void setIdentifier(const QString &identifier);
+    QByteArray identifier() const;
+    void setIdentifier(const QByteArray &identifier);
 
-    QString type() const;
+    QByteArray type() const;
 
     bool isConnectedToBackend() const;
 
@@ -162,7 +162,6 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void identifierChanged();
-    void typeChanged();
     void connectedToBackendChanged();
     void availableDataRatesChanged();
     void dataRateChanged();
@@ -196,7 +195,6 @@ private:
     virtual void _update();
     bool m_componentComplete = false;
     bool m_activateOnComplete = false;
-    QString m_identifier;
     QmlSensorReading *m_reading = nullptr;
 };
 

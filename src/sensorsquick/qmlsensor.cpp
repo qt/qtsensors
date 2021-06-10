@@ -104,16 +104,14 @@ QmlSensor::~QmlSensor()
     Please see QSensor::identifier for information about this property.
 */
 
-QString QmlSensor::identifier() const
+QByteArray QmlSensor::identifier() const
 {
-    return m_identifier;
+    return sensor()->identifier();
 }
 
-void QmlSensor::setIdentifier(const QString &identifier)
+void QmlSensor::setIdentifier(const QByteArray &identifier)
 {
-    if (m_componentComplete) return;
-    m_identifier = identifier;
-    Q_EMIT identifierChanged();
+    sensor()->setIdentifier(identifier);
 }
 
 /*!
@@ -121,9 +119,9 @@ void QmlSensor::setIdentifier(const QString &identifier)
     This property holds the type of the sensor.
 */
 
-QString QmlSensor::type() const
+QByteArray QmlSensor::type() const
 {
-    return QString::fromLatin1(sensor()->type());
+    return sensor()->type();
 }
 
 /*!
@@ -448,26 +446,17 @@ void QmlSensor::componentComplete()
     connect(sensor(), SIGNAL(maxBufferSizeChanged(int)), this, SIGNAL(maxBufferSizeChanged(int)));
     connect(sensor(), SIGNAL(efficientBufferSizeChanged(int)), this, SIGNAL(efficientBufferSizeChanged(int)));
     connect(sensor(), &QSensor::busyChanged, this, &QmlSensor::busyChanged);
-
-    // We need to set this on the sensor object now
-    sensor()->setIdentifier(m_identifier.toLocal8Bit());
+    connect(sensor(), &QSensor::identifierChanged, this, &QmlSensor::identifierChanged);
 
     // These can change!
-    QByteArray oldIdentifier = sensor()->identifier();
     int oldDataRate = dataRate();
     int oldOutputRange = outputRange();
 
-    bool ok = sensor()->connectToBackend();
-    if (ok) {
+    if (sensor()->connectToBackend())
         Q_EMIT connectedToBackendChanged();
-        m_reading = createReading();
-        m_reading->setParent(this);
-    }
 
-    if (oldIdentifier != sensor()->identifier()) {
-        m_identifier = QString::fromLatin1(sensor()->identifier());
-        Q_EMIT identifierChanged();
-    }
+    m_reading = createReading();
+    m_reading->setParent(this);
     if (oldDataRate != dataRate())
         Q_EMIT dataRateChanged();
     if (oldOutputRange != outputRange())
