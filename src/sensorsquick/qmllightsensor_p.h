@@ -68,12 +68,12 @@ public:
     ~QmlLightSensor();
 
     qreal fieldOfView() const;
+    QSensor *sensor() const override;
 
 Q_SIGNALS:
     void fieldOfViewChanged(qreal fieldOfView);
 
 private:
-    QSensor *sensor() const override;
     QLightSensor *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -81,7 +81,8 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlLightSensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal illuminance READ illuminance NOTIFY illuminanceChanged)
+    Q_PROPERTY(qreal illuminance READ illuminance
+               NOTIFY illuminanceChanged BINDABLE bindableIlluminance)
     QML_NAMED_ELEMENT(LightReading)
     QML_UNCREATABLE("Cannot create LightReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -90,6 +91,7 @@ public:
     ~QmlLightSensorReading();
 
     qreal illuminance() const;
+    QBindable<qreal> bindableIlluminance() const;
 
 Q_SIGNALS:
     void illuminanceChanged();
@@ -98,7 +100,8 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QLightSensor *m_sensor;
-    qreal m_illuminance;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlLightSensorReading, qreal,
+                               m_illuminance, &QmlLightSensorReading::illuminanceChanged)
 };
 
 QT_END_NAMESPACE

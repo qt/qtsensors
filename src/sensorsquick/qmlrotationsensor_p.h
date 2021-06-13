@@ -68,12 +68,12 @@ public:
     ~QmlRotationSensor();
 
     bool hasZ() const;
+    QSensor *sensor() const override;
 
 Q_SIGNALS:
     void hasZChanged(bool hasZ);
 
 private:
-    QSensor *sensor() const override;
     void _update() override;
     QRotationSensor *m_sensor;
     QmlSensorReading *createReading() const override;
@@ -82,9 +82,9 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlRotationSensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
-    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
-    Q_PROPERTY(qreal z READ z NOTIFY zChanged)
+    Q_PROPERTY(qreal x READ x NOTIFY xChanged BINDABLE bindableX)
+    Q_PROPERTY(qreal y READ y NOTIFY yChanged BINDABLE bindableY)
+    Q_PROPERTY(qreal z READ z NOTIFY zChanged BINDABLE bindableZ)
     QML_NAMED_ELEMENT(RotationReading)
     QML_UNCREATABLE("Cannot create RotationReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -93,8 +93,11 @@ public:
     ~QmlRotationSensorReading();
 
     qreal x() const;
+    QBindable<qreal> bindableX() const;
     qreal y() const;
+    QBindable<qreal> bindableY() const;
     qreal z() const;
+    QBindable<qreal> bindableZ() const;
 
 Q_SIGNALS:
     void xChanged();
@@ -105,9 +108,12 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QRotationSensor *m_sensor;
-    qreal m_x;
-    qreal m_y;
-    qreal m_z;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlRotationSensorReading, qreal,
+                               m_x, &QmlRotationSensorReading::xChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlRotationSensorReading, qreal,
+                               m_y, &QmlRotationSensorReading::yChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlRotationSensorReading, qreal,
+                               m_z, &QmlRotationSensorReading::zChanged)
 };
 
 QT_END_NAMESPACE

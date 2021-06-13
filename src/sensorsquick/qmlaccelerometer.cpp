@@ -139,6 +139,11 @@ qreal QmlAccelerometerReading::x() const
     return m_x;
 }
 
+QBindable<qreal> QmlAccelerometerReading::bindableX() const
+{
+    return &m_x;
+}
+
 /*!
     \qmlproperty qreal AccelerometerReading::y
     This property holds the acceleration on the Y axis.
@@ -149,6 +154,11 @@ qreal QmlAccelerometerReading::x() const
 qreal QmlAccelerometerReading::y() const
 {
     return m_y;
+}
+
+QBindable<qreal> QmlAccelerometerReading::bindableY() const
+{
+    return &m_y;
 }
 
 /*!
@@ -163,6 +173,11 @@ qreal QmlAccelerometerReading::z() const
     return m_z;
 }
 
+QBindable<qreal> QmlAccelerometerReading::bindableZ() const
+{
+    return &m_z;
+}
+
 QSensorReading *QmlAccelerometerReading::reading() const
 {
     return m_sensor->reading();
@@ -170,19 +185,7 @@ QSensorReading *QmlAccelerometerReading::reading() const
 
 void QmlAccelerometerReading::readingUpdate()
 {
-    qreal aX = m_sensor->reading()->x();
-    if (m_x != aX) {
-        m_x = aX;
-        Q_EMIT xChanged();
-    }
-    qreal aY = m_sensor->reading()->y();
-    if (m_y != aY) {
-        m_y = aY;
-        Q_EMIT yChanged();
-    }
-    qreal aZ = m_sensor->reading()->z();
-    if (m_z != aZ) {
-        m_z = aZ;
-        Q_EMIT zChanged();
-    }
+    m_x = m_sensor->reading()->x();
+    m_y = m_sensor->reading()->y();
+    m_z = m_sensor->reading()->z();
 }

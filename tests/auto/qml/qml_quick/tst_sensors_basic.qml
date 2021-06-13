@@ -208,7 +208,7 @@ TestCase {
 
     function test_reading_data() {
         return [
-                    {tag: "Accelerometer", initialReading: {timestamp: 0, x: 1.0, y: 1.0, z: 1.0}, newReading: {timestamp: 1, x: 2.0, y: 3.0, z: 4.0}},
+                    {tag: "Accelerometer", initialReading: {timestamp: 1, x: 1.0, y: 1.0, z: 1.0}, newReading: {timestamp: 2, x: 2.0, y: 3.0, z: 4.0}},
                     {tag: "PressureSensor", initialReading: {pressure: 1.0, temperature: 1.0}, newReading: {pressure: 2.0, temperature: 3.0}},
                     {tag: "Gyroscope", initialReading: {x : 1.0, y: 1.0, z: 1.0}, newReading: {x : 2.0, y: 3.0, z: 4.0}},
                     {tag: "TapSensor", initialReading: {doubleTap: true, tapDirection: TapReading.Z_Both}, newReading: {doubleTap: false, tapDirection: TapReading.X_Both}},

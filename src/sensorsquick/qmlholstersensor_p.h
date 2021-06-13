@@ -65,8 +65,9 @@ public:
     explicit QmlHolsterSensor(QObject *parent = 0);
     ~QmlHolsterSensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QmlSensorReading *createReading() const override;
 
     QHolsterSensor *m_sensor;
@@ -75,7 +76,8 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlHolsterReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(bool holstered READ holstered NOTIFY holsteredChanged)
+    Q_PROPERTY(bool holstered READ holstered
+               NOTIFY holsteredChanged BINDABLE bindableHolstered)
     QML_NAMED_ELEMENT(HolsterReading)
     QML_UNCREATABLE("Cannot create HolsterReading")
     QML_ADDED_IN_VERSION(5,1)
@@ -84,6 +86,7 @@ public:
     ~QmlHolsterReading();
 
     bool holstered() const;
+    QBindable<bool> bindableHolstered() const;
 
 Q_SIGNALS:
     void holsteredChanged();
@@ -93,7 +96,8 @@ private:
     void readingUpdate() override;
 
     QHolsterSensor *m_sensor;
-    bool m_holstered;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlHolsterReading, bool,
+                               m_holstered, &QmlHolsterReading::holsteredChanged)
 };
 
 QT_END_NAMESPACE

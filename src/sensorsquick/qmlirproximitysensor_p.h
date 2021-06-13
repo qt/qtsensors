@@ -66,8 +66,9 @@ public:
     explicit QmlIRProximitySensor(QObject *parent = 0);
     ~QmlIRProximitySensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QIRProximitySensor *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -75,7 +76,8 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlIRProximitySensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal reflectance READ reflectance NOTIFY reflectanceChanged)
+    Q_PROPERTY(qreal reflectance READ reflectance
+               NOTIFY reflectanceChanged BINDABLE bindableReflectance)
     QML_NAMED_ELEMENT(IRProximityReading)
     QML_UNCREATABLE("Cannot create IRProximityReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -84,6 +86,7 @@ public:
     ~QmlIRProximitySensorReading();
 
     qreal reflectance() const;
+    QBindable<qreal> bindableReflectance() const;
 
 Q_SIGNALS:
     void reflectanceChanged();
@@ -92,7 +95,8 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QIRProximitySensor *m_sensor;
-    qreal m_reflectance;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlIRProximitySensorReading, qreal,
+                               m_reflectance, &QmlIRProximitySensorReading::reflectanceChanged)
 };
 
 QT_END_NAMESPACE

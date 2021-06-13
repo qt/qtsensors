@@ -68,9 +68,9 @@ public:
     explicit QmlProximitySensor(QObject *parent = 0);
     ~QmlProximitySensor();
 
+    QSensor *sensor() const override;
 
 private:
-    QSensor *sensor() const override;
     QProximitySensor *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -78,7 +78,7 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlProximitySensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(bool near READ near NOTIFY nearChanged)
+    Q_PROPERTY(bool near READ near NOTIFY nearChanged BINDABLE bindableNear)
     QML_NAMED_ELEMENT(ProximityReading)
     QML_UNCREATABLE("Cannot create ProximityReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -87,6 +87,7 @@ public:
     ~QmlProximitySensorReading();
 
     bool near() const;
+    QBindable<bool> bindableNear() const;
 
 Q_SIGNALS:
     void nearChanged();
@@ -95,7 +96,8 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QProximitySensor *m_sensor;
-    bool m_near;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlProximitySensorReading, bool,
+                               m_near, &QmlProximitySensorReading::nearChanged)
 };
 
 QT_END_NAMESPACE

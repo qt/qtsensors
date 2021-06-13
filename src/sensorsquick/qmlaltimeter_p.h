@@ -65,17 +65,18 @@ public:
     explicit QmlAltimeter(QObject *parent = 0);
     ~QmlAltimeter();
 
-private:
     QSensor *sensor() const override;
-    QmlSensorReading *createReading() const override;
 
+private:
+    QmlSensorReading *createReading() const override;
     QAltimeter *m_sensor;
 };
 
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlAltimeterReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal altitude READ altitude NOTIFY altitudeChanged)
+    Q_PROPERTY(qreal altitude READ altitude
+               NOTIFY altitudeChanged BINDABLE bindableAltitude)
     QML_NAMED_ELEMENT(AltimeterReading)
     QML_UNCREATABLE("Cannot create AltimeterReading")
     QML_ADDED_IN_VERSION(5,1)
@@ -84,6 +85,7 @@ public:
     ~QmlAltimeterReading();
 
     qreal altitude() const;
+    QBindable<qreal> bindableAltitude() const;
 
 Q_SIGNALS:
     void altitudeChanged();
@@ -93,7 +95,8 @@ private:
     void readingUpdate() override;
 
     QAltimeter *m_sensor;
-    qreal m_altitude;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlAltimeterReading, qreal,
+                               m_altitude, &QmlAltimeterReading::altitudeChanged)
 };
 
 QT_END_NAMESPACE

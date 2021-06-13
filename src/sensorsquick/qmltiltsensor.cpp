@@ -131,6 +131,11 @@ qreal QmlTiltSensorReading::yRotation() const
     return m_yRotation;
 }
 
+QBindable<qreal> QmlTiltSensorReading::bindableYRotation() const
+{
+    return &m_yRotation;
+}
+
 /*!
     \qmlproperty qreal TiltReading::xRotation
     This property holds the amount of tilt on the X axis.
@@ -143,6 +148,11 @@ qreal QmlTiltSensorReading::xRotation() const
     return m_xRotation;
 }
 
+QBindable<qreal> QmlTiltSensorReading::bindableXRotation() const
+{
+    return &m_xRotation;
+}
+
 QSensorReading *QmlTiltSensorReading::reading() const
 {
     return m_sensor->reading();
@@ -150,14 +160,6 @@ QSensorReading *QmlTiltSensorReading::reading() const
 
 void QmlTiltSensorReading::readingUpdate()
 {
-    qreal tiltY = m_sensor->reading()->yRotation();
-    if (m_yRotation != tiltY) {
-        m_yRotation = tiltY;
-        Q_EMIT yRotationChanged();
-    }
-    qreal tiltX = m_sensor->reading()->xRotation();
-    if (m_xRotation != tiltX) {
-        m_xRotation = tiltX;
-        Q_EMIT xRotationChanged();
-    }
+    m_yRotation = m_sensor->reading()->yRotation();
+    m_xRotation = m_sensor->reading()->xRotation();
 }

@@ -117,6 +117,11 @@ qreal QmlPressureReading::pressure() const
     return m_pressure;
 }
 
+QBindable<qreal> QmlPressureReading::bindablePressure() const
+{
+    return &m_pressure;
+}
+
 /*!
     \qmlproperty qreal PressureReading::temperature
     This property holds the pressure sensor's temperature value in degrees Celsius.
@@ -130,6 +135,11 @@ qreal QmlPressureReading::temperature() const
     return m_temperature;
 }
 
+QBindable<qreal> QmlPressureReading::bindableTemperature() const
+{
+    return &m_temperature;
+}
+
 QSensorReading *QmlPressureReading::reading() const
 {
     return m_sensor->reading();
@@ -137,15 +147,6 @@ QSensorReading *QmlPressureReading::reading() const
 
 void QmlPressureReading::readingUpdate()
 {
-    qreal pressure = m_sensor->reading()->pressure();
-    if (m_pressure != pressure) {
-        m_pressure = pressure;
-        Q_EMIT pressureChanged();
-    }
-
-    qreal temperature = m_sensor->reading()->temperature();
-    if (m_temperature != temperature) {
-        m_temperature = temperature;
-        Q_EMIT temperatureChanged();
-    }
+    m_pressure = m_sensor->reading()->pressure();
+    m_temperature = m_sensor->reading()->temperature();
 }

@@ -34,7 +34,7 @@
 
 void register_test_backends();
 void unregister_test_backends();
-void set_test_backend_reading(QSensor* sensor, const QJsonObject& values);
+void set_test_backend_reading(QSensor* sensor, const QVariantMap& values);
 void set_test_backend_busy(QSensor* sensor, bool busy);
 
 #include <qaccelerometer.h>
@@ -89,6 +89,7 @@ void set_test_backend_busy(QSensor* sensor, bool busy);
 #endif
 
 PREPARE_SENSORINTERFACE(QAccelerometer, QAccelerometerReading, QAccelerometerFilter, {
+    reading->setTimestamp(1);
     reading->setX(1.0);
     reading->setY(1.0);
     reading->setZ(1.0);

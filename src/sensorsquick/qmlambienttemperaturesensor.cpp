@@ -116,6 +116,11 @@ qreal QmlAmbientTemperatureReading::temperature() const
     return m_temperature;
 }
 
+QBindable<qreal> QmlAmbientTemperatureReading::bindableTemperature() const
+{
+    return &m_temperature;
+}
+
 QSensorReading *QmlAmbientTemperatureReading::reading() const
 {
     return m_sensor->reading();
@@ -123,9 +128,5 @@ QSensorReading *QmlAmbientTemperatureReading::reading() const
 
 void QmlAmbientTemperatureReading::readingUpdate()
 {
-    const qreal temperature = m_sensor->reading()->temperature();
-    if (m_temperature != temperature) {
-        m_temperature = temperature;
-        Q_EMIT temperatureChanged();
-    }
+    m_temperature = m_sensor->reading()->temperature();
 }

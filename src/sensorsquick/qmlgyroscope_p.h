@@ -66,9 +66,9 @@ public:
     explicit QmlGyroscope(QObject *parent = 0);
     ~QmlGyroscope();
 
+    QSensor *sensor() const override;
 
 private:
-    QSensor *sensor() const override;
     QGyroscope *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -76,9 +76,9 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlGyroscopeReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
-    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
-    Q_PROPERTY(qreal z READ z NOTIFY zChanged)
+    Q_PROPERTY(qreal x READ x NOTIFY xChanged BINDABLE bindableX)
+    Q_PROPERTY(qreal y READ y NOTIFY yChanged BINDABLE bindableY)
+    Q_PROPERTY(qreal z READ z NOTIFY zChanged BINDABLE bindableZ)
     QML_NAMED_ELEMENT(GyroscopeReading)
     QML_UNCREATABLE("Cannot create GyroscopeReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -87,8 +87,11 @@ public:
     ~QmlGyroscopeReading();
 
     qreal x() const;
+    QBindable<qreal> bindableX() const;
     qreal y() const;
+    QBindable<qreal> bindableY() const;
     qreal z() const;
+    QBindable<qreal> bindableZ() const;
 
 Q_SIGNALS:
     void xChanged();
@@ -99,9 +102,12 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QGyroscope *m_sensor;
-    qreal m_x;
-    qreal m_y;
-    qreal m_z;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlGyroscopeReading, qreal,
+                               m_x, &QmlGyroscopeReading::xChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlGyroscopeReading, qreal,
+                               m_y, &QmlGyroscopeReading::yChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlGyroscopeReading, qreal,
+                               m_z, &QmlGyroscopeReading::zChanged)
 };
 
 QT_END_NAMESPACE

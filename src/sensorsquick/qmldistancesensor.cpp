@@ -116,6 +116,12 @@ qreal QmlDistanceReading::distance() const
     return m_distance;
 }
 
+QBindable<qreal> QmlDistanceReading::bindableDistance() const
+{
+    return &m_distance;
+}
+
+
 QSensorReading *QmlDistanceReading::reading() const
 {
     return m_sensor->reading();
@@ -123,9 +129,5 @@ QSensorReading *QmlDistanceReading::reading() const
 
 void QmlDistanceReading::readingUpdate()
 {
-    qreal distance = m_sensor->reading()->distance();
-    if (m_distance != distance) {
-        m_distance = distance;
-        Q_EMIT distanceChanged();
-    }
+    m_distance = m_sensor->reading()->distance();
 }

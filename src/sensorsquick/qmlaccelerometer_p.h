@@ -79,11 +79,12 @@ public:
     AccelerationMode accelerationMode() const;
     void setAccelerationMode(AccelerationMode accelerationMode);
 
+    QSensor *sensor() const override;
+
 signals:
     Q_REVISION(1) void accelerationModeChanged(AccelerationMode accelerationMode);
 
 private:
-    QSensor *sensor() const override;
     QAccelerometer *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -91,9 +92,9 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlAccelerometerReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
-    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
-    Q_PROPERTY(qreal z READ z NOTIFY zChanged)
+    Q_PROPERTY(qreal x READ x NOTIFY xChanged BINDABLE bindableX)
+    Q_PROPERTY(qreal y READ y NOTIFY yChanged BINDABLE bindableY)
+    Q_PROPERTY(qreal z READ z NOTIFY zChanged BINDABLE bindableZ)
     QML_NAMED_ELEMENT(AccelerometerReading)
     QML_UNCREATABLE("Cannot create AccelerometerReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -102,8 +103,11 @@ public:
     ~QmlAccelerometerReading();
 
     qreal x() const;
+    QBindable<qreal> bindableX() const;
     qreal y() const;
+    QBindable<qreal> bindableY() const;
     qreal z() const;
+    QBindable<qreal> bindableZ() const;
 
 Q_SIGNALS:
     void xChanged();
@@ -114,9 +118,12 @@ private:
     QSensorReading *reading() const  override;
     void readingUpdate() override;
     QAccelerometer *m_sensor;
-    qreal m_x;
-    qreal m_y;
-    qreal m_z;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlAccelerometerReading, qreal,
+                               m_x, &QmlAccelerometerReading::xChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlAccelerometerReading, qreal,
+                               m_y, &QmlAccelerometerReading::yChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlAccelerometerReading, qreal,
+                               m_z, &QmlAccelerometerReading::zChanged)
 };
 
 QT_END_NAMESPACE

@@ -65,8 +65,9 @@ public:
     explicit QmlLidSensor(QObject *parent = 0);
     ~QmlLidSensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QmlSensorReading *createReading() const override;
 
     QLidSensor *m_sensor;
@@ -75,8 +76,10 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlLidReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(bool backLidClosed READ backLidClosed NOTIFY backLidChanged)
-    Q_PROPERTY(bool frontLidClosed READ frontLidClosed NOTIFY frontLidChanged)
+    Q_PROPERTY(bool backLidClosed READ backLidClosed
+               NOTIFY backLidChanged BINDABLE bindableBackLidClosed)
+    Q_PROPERTY(bool frontLidClosed READ frontLidClosed
+               NOTIFY frontLidChanged BINDABLE bindableFrontLidClosed)
     QML_NAMED_ELEMENT(LidReading)
     QML_UNCREATABLE("Cannot create LidReading")
     QML_ADDED_IN_VERSION(5,9)
@@ -85,7 +88,9 @@ public:
     ~QmlLidReading();
 
     bool backLidClosed() const;
+    QBindable<bool> bindableBackLidClosed() const;
     bool frontLidClosed() const;
+    QBindable<bool> bindableFrontLidClosed() const;
 
 Q_SIGNALS:
     void backLidChanged(bool closed);
@@ -96,8 +101,10 @@ private:
     void readingUpdate() override;
 
     QLidSensor *m_sensor;
-    bool m_backClosed;
-    bool m_frontClosed;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlLidReading, bool,
+                               m_backClosed, &QmlLidReading::backLidChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlLidReading, bool,
+                               m_frontClosed, &QmlLidReading::frontLidChanged)
 };
 
 QT_END_NAMESPACE

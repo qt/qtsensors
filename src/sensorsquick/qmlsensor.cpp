@@ -307,6 +307,11 @@ QmlSensorReading *QmlSensor::reading() const
     return m_reading;
 }
 
+QBindable<QmlSensorReading*> QmlSensor::bindableReading() const
+{
+    return &m_reading;
+}
+
 /*!
     \qmlproperty Sensor::AxesOrientationMode Sensor::axesOrientationMode
     \since QtSensors 5.1
@@ -455,7 +460,7 @@ void QmlSensor::componentComplete()
     if (sensor()->connectToBackend())
         Q_EMIT connectedToBackendChanged();
 
-    m_reading = createReading();
+    m_reading.setValueBypassingBindings(createReading());
     m_reading->setParent(this);
     if (oldDataRate != dataRate())
         Q_EMIT dataRateChanged();
@@ -504,6 +509,7 @@ void QmlSensor::updateReading()
 {
     if (m_reading) {
         m_reading->update();
+        m_reading.notify();
         Q_EMIT readingChanged();
     }
 }
@@ -524,7 +530,7 @@ void QmlSensor::updateReading()
 */
 
 QmlSensorReading::QmlSensorReading(QSensor *)
-    : QObject(0)
+    : QObject(nullptr)
 {
 }
 
@@ -544,13 +550,15 @@ quint64 QmlSensorReading::timestamp() const
     return m_timestamp;
 }
 
+QBindable<quint64> QmlSensorReading::bindableTimestamp() const
+{
+    return &m_timestamp;
+}
+
+
 void QmlSensorReading::update()
 {
-    quint64 ts = reading()->timestamp();
-    if (m_timestamp != ts) {
-        m_timestamp = ts;
-        Q_EMIT timestampChanged();
-    }
+    m_timestamp = reading()->timestamp();
     readingUpdate();
 }
 

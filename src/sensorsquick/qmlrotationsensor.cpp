@@ -135,6 +135,11 @@ qreal QmlRotationSensorReading::x() const
     return m_x;
 }
 
+QBindable<qreal> QmlRotationSensorReading::bindableX() const
+{
+    return &m_x;
+}
+
 /*!
     \qmlproperty qreal RotationReading::y
     This property holds the rotation around the y axis.
@@ -145,6 +150,11 @@ qreal QmlRotationSensorReading::x() const
 qreal QmlRotationSensorReading::y() const
 {
     return m_y;
+}
+
+QBindable<qreal> QmlRotationSensorReading::bindableY() const
+{
+    return &m_y;
 }
 
 /*!
@@ -159,6 +169,11 @@ qreal QmlRotationSensorReading::z() const
     return m_z;
 }
 
+QBindable<qreal> QmlRotationSensorReading::bindableZ() const
+{
+    return &m_z;
+}
+
 QSensorReading *QmlRotationSensorReading::reading() const
 {
     return m_sensor->reading();
@@ -166,19 +181,7 @@ QSensorReading *QmlRotationSensorReading::reading() const
 
 void QmlRotationSensorReading::readingUpdate()
 {
-    qreal rX = m_sensor->reading()->x();
-    if (m_x != rX) {
-        m_x = rX;
-        Q_EMIT xChanged();
-    }
-    qreal rY = m_sensor->reading()->y();
-    if (m_y != rY) {
-        m_y = rY;
-        Q_EMIT yChanged();
-    }
-    qreal rZ = m_sensor->reading()->z();
-    if (m_z != rZ) {
-        m_z = rZ;
-        Q_EMIT zChanged();
-    }
+    m_x = m_sensor->reading()->x();
+    m_y = m_sensor->reading()->y();
+    m_z = m_sensor->reading()->z();
 }

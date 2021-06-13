@@ -130,6 +130,11 @@ qreal QmlLightSensorReading::illuminance() const
     return m_illuminance;
 }
 
+QBindable<qreal> QmlLightSensorReading::bindableIlluminance() const
+{
+    return &m_illuminance;
+}
+
 QSensorReading *QmlLightSensorReading::reading() const
 {
     return m_sensor->reading();
@@ -137,9 +142,5 @@ QSensorReading *QmlLightSensorReading::reading() const
 
 void QmlLightSensorReading::readingUpdate()
 {
-    qreal ill = m_sensor->reading()->lux();
-    if (m_illuminance != ill) {
-        m_illuminance = ill;
-        Q_EMIT illuminanceChanged();
-    }
+    m_illuminance = m_sensor->reading()->lux();
 }

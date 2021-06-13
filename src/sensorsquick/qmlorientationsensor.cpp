@@ -126,6 +126,11 @@ QOrientationReading::Orientation QmlOrientationSensorReading::orientation() cons
     return m_orientation;
 }
 
+QBindable<QOrientationReading::Orientation> QmlOrientationSensorReading::bindableOrientation() const
+{
+    return &m_orientation;
+}
+
 QSensorReading *QmlOrientationSensorReading::reading() const
 {
     return m_sensor->reading();
@@ -133,9 +138,5 @@ QSensorReading *QmlOrientationSensorReading::reading() const
 
 void QmlOrientationSensorReading::readingUpdate()
 {
-    QOrientationReading::Orientation o = m_sensor->reading()->orientation();
-    if (m_orientation != o) {
-        m_orientation = o;
-        Q_EMIT orientationChanged();
-    }
+    m_orientation = m_sensor->reading()->orientation();
 }

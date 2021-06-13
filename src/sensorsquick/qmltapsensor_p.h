@@ -71,11 +71,12 @@ public:
     bool returnDoubleTapEvents() const;
     void setReturnDoubleTapEvents(bool ret);
 
+    QSensor *sensor() const override;
+
 Q_SIGNALS:
     void returnDoubleTapEventsChanged(bool returnDoubleTapEvents);
 
 private:
-    QSensor *sensor() const override;
     QTapSensor *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -83,8 +84,10 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlTapSensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(QTapReading::TapDirection tapDirection READ tapDirection NOTIFY tapDirectionChanged)
-    Q_PROPERTY(bool doubleTap READ isDoubleTap NOTIFY isDoubleTapChanged)
+    Q_PROPERTY(QTapReading::TapDirection tapDirection READ tapDirection
+               NOTIFY tapDirectionChanged BINDABLE bindableTapDirection)
+    Q_PROPERTY(bool doubleTap READ isDoubleTap
+               NOTIFY isDoubleTapChanged BINDABLE bindableDoubleTap)
     QML_NAMED_ELEMENT(TapReading)
     QML_UNCREATABLE("Cannot create TapReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -94,7 +97,9 @@ public:
     ~QmlTapSensorReading();
 
     QTapReading::TapDirection tapDirection() const;
+    QBindable<QTapReading::TapDirection> bindableTapDirection() const;
     bool isDoubleTap() const;
+    QBindable<bool> bindableDoubleTap() const;
 
 Q_SIGNALS:
     void tapDirectionChanged();
@@ -104,8 +109,10 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QTapSensor *m_sensor;
-    QTapReading::TapDirection m_tapDirection;
-    bool m_isDoubleTap;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlTapSensorReading, QTapReading::TapDirection,
+                               m_tapDirection, &QmlTapSensorReading::tapDirectionChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlTapSensorReading, bool,
+                               m_isDoubleTap, &QmlTapSensorReading::isDoubleTapChanged)
 };
 
 QT_END_NAMESPACE

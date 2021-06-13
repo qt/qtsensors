@@ -62,41 +62,43 @@ void set_test_backend_busy(QSensor* sensor, bool busy)
     backend->sensorBusy(busy);
 }
 
-void set_test_backend_reading(QSensor* sensor, const QJsonObject& values)
+void set_test_backend_reading(QSensor* sensor, const QVariantMap& values)
 {
     Q_ASSERT(sensor->isConnectedToBackend());
     QSensorBackend* backend = sensorToBackend.value(sensor);
-    backend->reading()->setTimestamp(values["timestamp"].toInt()); // timestamp is common to all
+    // timestamp is common to all readings
+    if (values.contains("timestamp"))
+        backend->reading()->setTimestamp(values["timestamp"].toInt());
     if (sensor->type() == "QAccelerometer") {
         QAccelerometerReading* reading = static_cast<QAccelerometerReading*>(backend->reading());
-        reading->setX(values["x"].toDouble());
-        reading->setY(values["y"].toDouble());
-        reading->setZ(values["z"].toDouble());
+        if (values.contains("x")) reading->setX(values["x"].value<qreal>());
+        if (values.contains("y")) reading->setY(values["y"].value<qreal>());
+        if (values.contains("z")) reading->setZ(values["z"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QPressureSensor") {
         QPressureReading* reading = static_cast<QPressureReading*>(backend->reading());
-        reading->setPressure(values["pressure"].toDouble());
-        reading->setTemperature(values["temperature"].toDouble());
+        if (values.contains("pressure")) reading->setPressure(values["pressure"].value<qreal>());
+        if (values.contains("temperature")) reading->setTemperature(values["temperature"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QGyroscope") {
         QGyroscopeReading* reading = static_cast<QGyroscopeReading*>(backend->reading());
-        reading->setX(values["x"].toDouble());
-        reading->setY(values["y"].toDouble());
-        reading->setZ(values["z"].toDouble());
+        if (values.contains("x")) reading->setX(values["x"].value<qreal>());
+        if (values.contains("y")) reading->setY(values["y"].value<qreal>());
+        if (values.contains("z")) reading->setZ(values["z"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QTapSensor") {
         QTapReading* reading = static_cast<QTapReading*>(backend->reading());
-        reading->setDoubleTap(values["doubleTap"].toBool());
-        reading->setTapDirection(QTapReading::TapDirection(values["tapDirection"].toInt()));
+        if (values.contains("doubleTap")) reading->setDoubleTap(values["doubleTap"].value<bool>());
+        if (values.contains("tapDirection")) reading->setTapDirection(QTapReading::TapDirection(values["tapDirection"].toInt()));
         backend->newReadingAvailable();
     } else if (sensor->type() == "QCompass") {
         QCompassReading* reading = static_cast<QCompassReading*>(backend->reading());
-        reading->setAzimuth(values["azimuth"].toDouble());
-        reading->setCalibrationLevel(values["calibrationLevel"].toDouble());
+        if (values.contains("azimuth")) reading->setAzimuth(values["azimuth"].value<qreal>());
+        if (values.contains("calibrationLevel")) reading->setCalibrationLevel(values["calibrationLevel"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QProximitySensor") {
         QProximityReading* reading = static_cast<QProximityReading*>(backend->reading());
-        reading->setClose(values["near"].toBool());
+        reading->setClose(values["near"].value<bool>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QOrientationSensor") {
         QOrientationReading* reading = static_cast<QOrientationReading*>(backend->reading());
@@ -104,7 +106,7 @@ void set_test_backend_reading(QSensor* sensor, const QJsonObject& values)
         backend->newReadingAvailable();
     } else if (sensor->type() == "QDistanceSensor") {
         QDistanceReading* reading = static_cast<QDistanceReading*>(backend->reading());
-        reading->setDistance(values["distance"].toDouble());
+        reading->setDistance(values["distance"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QAmbientLightSensor") {
         QAmbientLightReading* reading = static_cast<QAmbientLightReading*>(backend->reading());
@@ -112,49 +114,49 @@ void set_test_backend_reading(QSensor* sensor, const QJsonObject& values)
         backend->newReadingAvailable();
     } else if (sensor->type() == "QMagnetometer") {
         QMagnetometerReading* reading = static_cast<QMagnetometerReading*>(backend->reading());
-        reading->setX(values["x"].toDouble());
-        reading->setY(values["y"].toDouble());
-        reading->setZ(values["z"].toDouble());
-        reading->setCalibrationLevel(values["calibrationLevel"].toDouble());
+        if (values.contains("x")) reading->setX(values["x"].value<qreal>());
+        if (values.contains("y")) reading->setY(values["y"].value<qreal>());
+        if (values.contains("z")) reading->setZ(values["z"].value<qreal>());
+        if (values.contains("calibrationLevel")) reading->setCalibrationLevel(values["calibrationLevel"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QLidSensor") {
         QLidReading* reading = static_cast<QLidReading*>(backend->reading());
-        reading->setBackLidClosed(values["backLidClosed"].toBool());
-        reading->setFrontLidClosed(values["frontLidClosed"].toBool());
+        if (values.contains("backLidClosed")) reading->setBackLidClosed(values["backLidClosed"].value<bool>());
+        if (values.contains("frontLidClosed")) reading->setFrontLidClosed(values["frontLidClosed"].value<bool>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QTiltSensor") {
         QTiltReading* reading = static_cast<QTiltReading*>(backend->reading());
-        reading->setYRotation(values["yRotation"].toDouble());
-        reading->setXRotation(values["xRotation"].toDouble());
+        if (values.contains("yRotation")) reading->setYRotation(values["yRotation"].value<qreal>());
+        if (values.contains("xRotation")) reading->setXRotation(values["xRotation"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QRotationSensor") {
         QRotationReading* reading = static_cast<QRotationReading*>(backend->reading());
-        reading->setFromEuler(values["x"].toDouble(), values["y"].toDouble(), values["z"].toDouble());
+        reading->setFromEuler(values["x"].value<qreal>(), values["y"].value<qreal>(), values["z"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QHumiditySensor") {
         QHumidityReading* reading = static_cast<QHumidityReading*>(backend->reading());
-        reading->setRelativeHumidity(values["relativeHumidity"].toDouble());
-        reading->setAbsoluteHumidity(values["absoluteHumidity"].toDouble());
+        if (values.contains("relativeHumidity")) reading->setRelativeHumidity(values["relativeHumidity"].value<qreal>());
+        if (values.contains("absoluteHumidity")) reading->setAbsoluteHumidity(values["absoluteHumidity"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QHolsterSensor") {
         QHolsterReading* reading = static_cast<QHolsterReading*>(backend->reading());
-        reading->setHolstered(values["holstered"].toBool());
+        reading->setHolstered(values["holstered"].value<bool>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QAmbientTemperatureSensor") {
         QAmbientTemperatureReading* reading = static_cast<QAmbientTemperatureReading*>(backend->reading());
-        reading->setTemperature(values["temperature"].toDouble());
+        reading->setTemperature(values["temperature"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QLightSensor") {
         QLightReading* reading = static_cast<QLightReading*>(backend->reading());
-        reading->setLux(values["illuminance"].toDouble());
+        reading->setLux(values["illuminance"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QAltimeter") {
         QAltimeterReading* reading = static_cast<QAltimeterReading*>(backend->reading());
-        reading->setAltitude(values["altitude"].toDouble());
+        reading->setAltitude(values["altitude"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QIRProximitySensor") {
         QIRProximityReading* reading = static_cast<QIRProximityReading*>(backend->reading());
-        reading->setReflectance(values["reflectance"].toDouble());
+        reading->setReflectance(values["reflectance"].value<qreal>());
         backend->newReadingAvailable();
     } else {
         qWarning() << "Unsupported test sensor backend:" << sensor->type();
