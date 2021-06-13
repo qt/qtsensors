@@ -67,8 +67,9 @@ public:
     explicit QmlAmbientLightSensor(QObject *parent = 0);
     ~QmlAmbientLightSensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QAmbientLightSensor *m_sensor;
     QmlSensorReading *createReading() const override;
 
@@ -77,7 +78,8 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlAmbientLightSensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(QAmbientLightReading::LightLevel lightLevel READ lightLevel NOTIFY lightLevelChanged)
+    Q_PROPERTY(QAmbientLightReading::LightLevel lightLevel READ lightLevel
+               NOTIFY lightLevelChanged BINDABLE bindableLightLevel)
     QML_NAMED_ELEMENT(AmbientLightReading)
     QML_UNCREATABLE("Cannot create AmbientLightReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -87,6 +89,7 @@ public:
     ~QmlAmbientLightSensorReading();
 
     QAmbientLightReading::LightLevel lightLevel() const;
+    QBindable<QAmbientLightReading::LightLevel> bindableLightLevel() const;
 
 Q_SIGNALS:
     void lightLevelChanged();
@@ -95,7 +98,8 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QAmbientLightSensor *m_sensor;
-    QAmbientLightReading::LightLevel m_lightLevel;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlAmbientLightSensorReading, QAmbientLightReading::LightLevel,
+                               m_lightLevel, &QmlAmbientLightSensorReading::lightLevelChanged)
 };
 
 QT_END_NAMESPACE

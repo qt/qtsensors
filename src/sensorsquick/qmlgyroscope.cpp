@@ -115,6 +115,11 @@ qreal QmlGyroscopeReading::x() const
     return m_x;
 }
 
+QBindable<qreal> QmlGyroscopeReading::bindableX() const
+{
+    return &m_x;
+}
+
 /*!
     \qmlproperty qreal GyroscopeReading::y
     This property holds the angular velocity around the y axis.
@@ -125,6 +130,11 @@ qreal QmlGyroscopeReading::x() const
 qreal QmlGyroscopeReading::y() const
 {
     return m_y;
+}
+
+QBindable<qreal> QmlGyroscopeReading::bindableY() const
+{
+    return &m_y;
 }
 
 /*!
@@ -139,6 +149,11 @@ qreal QmlGyroscopeReading::z() const
     return m_z;
 }
 
+QBindable<qreal> QmlGyroscopeReading::bindableZ() const
+{
+    return &m_z;
+}
+
 QSensorReading *QmlGyroscopeReading::reading() const
 {
     return m_sensor->reading();
@@ -146,19 +161,7 @@ QSensorReading *QmlGyroscopeReading::reading() const
 
 void QmlGyroscopeReading::readingUpdate()
 {
-    qreal gx = m_sensor->reading()->x();
-    if (m_x != gx) {
-        m_x = gx;
-        Q_EMIT xChanged();
-    }
-    qreal gy = m_sensor->reading()->y();
-    if (m_y != gy) {
-        m_y = gy;
-        Q_EMIT yChanged();
-    }
-    qreal gz = m_sensor->reading()->z();
-    if (m_z != gz) {
-        m_z = gz;
-        Q_EMIT zChanged();
-    }
+    m_x = m_sensor->reading()->x();
+    m_y = m_sensor->reading()->y();
+    m_z = m_sensor->reading()->z();
 }

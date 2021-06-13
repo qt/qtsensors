@@ -137,6 +137,11 @@ qreal QmlMagnetometerReading::x() const
     return m_x;
 }
 
+QBindable<qreal> QmlMagnetometerReading::bindableX() const
+{
+    return &m_x;
+}
+
 /*!
     \qmlproperty qreal MagnetometerReading::y
     This property holds the raw magnetic flux density on the Y axis.
@@ -147,6 +152,11 @@ qreal QmlMagnetometerReading::x() const
 qreal QmlMagnetometerReading::y() const
 {
     return m_y;
+}
+
+QBindable<qreal> QmlMagnetometerReading::bindableY() const
+{
+    return &m_y;
 }
 
 /*!
@@ -161,6 +171,11 @@ qreal QmlMagnetometerReading::z() const
     return m_z;
 }
 
+QBindable<qreal> QmlMagnetometerReading::bindableZ() const
+{
+    return &m_z;
+}
+
 /*!
     \qmlproperty qreal MagnetometerReading::calibrationLevel
     This property holds the accuracy of the reading.
@@ -173,6 +188,11 @@ qreal QmlMagnetometerReading::calibrationLevel() const
     return m_calibrationLevel;
 }
 
+QBindable<qreal> QmlMagnetometerReading::bindableCalibrationLevel() const
+{
+    return &m_calibrationLevel;
+}
+
 QSensorReading *QmlMagnetometerReading::reading() const
 {
     return m_sensor->reading();
@@ -180,24 +200,8 @@ QSensorReading *QmlMagnetometerReading::reading() const
 
 void QmlMagnetometerReading::readingUpdate()
 {
-    qreal magX = m_sensor->reading()->x();
-    if (m_x != magX) {
-        m_x = magX;
-        Q_EMIT xChanged();
-    }
-    qreal magY = m_sensor->reading()->y();
-    if (m_y != magY) {
-        m_y = magY;
-        Q_EMIT yChanged();
-    }
-    qreal magZ = m_sensor->reading()->z();
-    if (m_z != magZ) {
-        m_z = magZ;
-        Q_EMIT zChanged();
-    }
-    qreal calLevel = m_sensor->reading()->calibrationLevel();
-    if (m_calibrationLevel != calLevel) {
-        m_calibrationLevel = calLevel;
-        Q_EMIT calibrationLevelChanged();
-    }
+    m_x = m_sensor->reading()->x();
+    m_y = m_sensor->reading()->y();
+    m_z = m_sensor->reading()->z();
+    m_calibrationLevel= m_sensor->reading()->calibrationLevel();
 }

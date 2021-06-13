@@ -147,6 +147,12 @@ QTapReading::TapDirection QmlTapSensorReading::tapDirection() const
     return m_tapDirection;
 }
 
+QBindable<QTapReading::TapDirection> QmlTapSensorReading::bindableTapDirection() const
+{
+    return &m_tapDirection;
+}
+
+
 /*!
     \qmlproperty bool TapReading::doubleTap
     This property holds a value indicating if there was a single or double tap.
@@ -159,6 +165,11 @@ bool QmlTapSensorReading::isDoubleTap() const
     return m_isDoubleTap;
 }
 
+QBindable<bool> QmlTapSensorReading::bindableDoubleTap() const
+{
+    return &m_isDoubleTap;
+}
+
 QSensorReading *QmlTapSensorReading::reading() const
 {
     return const_cast<QTapSensor*>(m_sensor)->reading();
@@ -166,14 +177,6 @@ QSensorReading *QmlTapSensorReading::reading() const
 
 void QmlTapSensorReading::readingUpdate()
 {
-    QTapReading::TapDirection td = m_sensor->reading()->tapDirection();
-    if (m_tapDirection != td) {
-        m_tapDirection = td;
-        Q_EMIT tapDirectionChanged();
-    }
-    bool dTap = m_sensor->reading()->isDoubleTap();
-    if (m_isDoubleTap != dTap) {
-        m_isDoubleTap = dTap;
-        Q_EMIT isDoubleTapChanged();
-    }
+    m_tapDirection = m_sensor->reading()->tapDirection();
+    m_isDoubleTap = m_sensor->reading()->isDoubleTap();
 }

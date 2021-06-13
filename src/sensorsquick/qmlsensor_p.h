@@ -77,7 +77,7 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensor : public QObject, public QQmlParse
     Q_PROPERTY(bool connectedToBackend READ isConnectedToBackend NOTIFY connectedToBackendChanged)
     Q_PROPERTY(QQmlListProperty<QmlSensorRange> availableDataRates READ availableDataRates NOTIFY availableDataRatesChanged)
     Q_PROPERTY(int dataRate READ dataRate WRITE setDataRate NOTIFY dataRateChanged)
-    Q_PROPERTY(QmlSensorReading* reading READ reading NOTIFY readingChanged)
+    Q_PROPERTY(QmlSensorReading* reading READ reading NOTIFY readingChanged BINDABLE bindableReading)
     Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     Q_PROPERTY(bool active READ isActive WRITE setActive NOTIFY activeChanged)
     Q_PROPERTY(QQmlListProperty<QmlSensorOutputRange> outputRanges READ outputRanges NOTIFY outputRangesChanged)
@@ -138,6 +138,7 @@ public:
     int error() const;
 
     QmlSensorReading *reading() const;
+    QBindable<QmlSensorReading*> bindableReading() const;
 
     AxesOrientationMode axesOrientationMode() const;
     void setAxesOrientationMode(AxesOrientationMode axesOrientationMode);
@@ -155,6 +156,8 @@ public:
     void setBufferSize(int bufferSize);
 
     virtual QSensor *sensor() const = 0;
+
+    void componentComplete() override;
 
 public Q_SLOTS:
     bool start();
@@ -187,21 +190,19 @@ protected:
 private Q_SLOTS:
     void updateReading();
 
-protected Q_SLOTS:
-    void componentComplete() override;
-
 private:
     void classBegin() override;
     virtual void _update();
     bool m_componentComplete = false;
     bool m_activateOnComplete = false;
-    QmlSensorReading *m_reading = nullptr;
+    Q_OBJECT_BINDABLE_PROPERTY_WITH_ARGS(QmlSensor, QmlSensorReading*,
+                                         m_reading, nullptr)
 };
 
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensorReading : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(quint64 timestamp READ timestamp NOTIFY timestampChanged)
+    Q_PROPERTY(quint64 timestamp READ timestamp NOTIFY timestampChanged BINDABLE bindableTimestamp)
     QML_NAMED_ELEMENT(SensorReading)
     QML_UNCREATABLE("Cannot create SensorReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -210,6 +211,8 @@ public:
     ~QmlSensorReading();
 
     quint64 timestamp() const;
+    QBindable<quint64> bindableTimestamp() const;
+
     void update();
 
 Q_SIGNALS:
@@ -218,7 +221,8 @@ Q_SIGNALS:
 private:
     virtual QSensorReading *reading() const = 0;
     virtual void readingUpdate() = 0;
-    quint64 m_timestamp;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlSensorReading, quint64,
+                               m_timestamp, &QmlSensorReading::timestampChanged)
 };
 
 QT_END_NAMESPACE

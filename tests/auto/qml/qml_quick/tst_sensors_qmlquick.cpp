@@ -52,7 +52,7 @@ public slots:
         unregister_test_backends();
     }
 
-    void setSensorReading(const QmlSensor* qmlSensor, const QJsonObject& values) {
+    void setSensorReading(const QmlSensor* qmlSensor, const QVariantMap& values) {
         set_test_backend_reading(qmlSensor->sensor(), values);
     }
 

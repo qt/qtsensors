@@ -67,8 +67,9 @@ public:
     explicit QmlHumiditySensor(QObject *parent = nullptr);
     ~QmlHumiditySensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QmlSensorReading *createReading() const override;
 
     QHumiditySensor *m_sensor;
@@ -77,8 +78,10 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlHumidityReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal relativeHumidity READ relativeHumidity NOTIFY relativeHumidityChanged)
-    Q_PROPERTY(qreal absoluteHumidity READ absoluteHumidity NOTIFY absoluteHumidityChanged)
+    Q_PROPERTY(qreal relativeHumidity READ relativeHumidity
+               NOTIFY relativeHumidityChanged BINDABLE bindableRelativeHumidity)
+    Q_PROPERTY(qreal absoluteHumidity READ absoluteHumidity
+               NOTIFY absoluteHumidityChanged BINDABLE bindableAbsoluteHumidity)
     QML_NAMED_ELEMENT(HumidityReading)
     QML_UNCREATABLE("Cannot create HumidityReading")
     QML_ADDED_IN_VERSION(5,9)
@@ -87,7 +90,9 @@ public:
     ~QmlHumidityReading();
 
     qreal relativeHumidity() const;
+    QBindable<qreal> bindableRelativeHumidity() const;
     qreal absoluteHumidity() const;
+    QBindable<qreal> bindableAbsoluteHumidity() const;
 
 Q_SIGNALS:
     void relativeHumidityChanged();
@@ -98,8 +103,10 @@ private:
     void readingUpdate() override;
 
     QHumiditySensor *m_sensor;
-    qreal m_relativeHumidity;
-    qreal m_absoluteHumidity;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlHumidityReading, qreal,
+                               m_relativeHumidity, &QmlHumidityReading::relativeHumidityChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlHumidityReading, qreal,
+                               m_absoluteHumidity, &QmlHumidityReading::absoluteHumidityChanged)
 };
 
 QT_END_NAMESPACE

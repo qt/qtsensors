@@ -118,6 +118,11 @@ qreal QmlHumidityReading::relativeHumidity() const
     return m_relativeHumidity;
 }
 
+QBindable<qreal> QmlHumidityReading::bindableRelativeHumidity() const
+{
+    return &m_relativeHumidity;
+}
+
 /*!
     \qmlproperty qreal HumidityReading::absoluteHumidity
     This property holds the absolute humidity in grams per cubic meter (g/m3).
@@ -130,6 +135,11 @@ qreal QmlHumidityReading::absoluteHumidity() const
     return m_absoluteHumidity;
 }
 
+QBindable<qreal> QmlHumidityReading::bindableAbsoluteHumidity() const
+{
+    return &m_absoluteHumidity;
+}
+
 QSensorReading *QmlHumidityReading::reading() const
 {
     return m_sensor->reading();
@@ -137,14 +147,6 @@ QSensorReading *QmlHumidityReading::reading() const
 
 void QmlHumidityReading::readingUpdate()
 {
-    qreal humidity = m_sensor->reading()->relativeHumidity();
-    if (m_relativeHumidity != humidity) {
-        m_relativeHumidity = humidity;
-        Q_EMIT relativeHumidityChanged();
-    }
-    qreal abs = m_sensor->reading()->absoluteHumidity();
-    if (m_absoluteHumidity != abs) {
-        m_absoluteHumidity = abs;
-        Q_EMIT absoluteHumidityChanged();
-    }
+    m_relativeHumidity = m_sensor->reading()->relativeHumidity();
+    m_absoluteHumidity = m_sensor->reading()->absoluteHumidity();
 }

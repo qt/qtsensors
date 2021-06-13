@@ -66,9 +66,9 @@ public:
     explicit QmlCompass(QObject *parent = 0);
     ~QmlCompass();
 
+    QSensor *sensor() const override;
 
 private:
-    QSensor *sensor() const override;
     QCompass *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -76,8 +76,9 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlCompassReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal azimuth READ azimuth NOTIFY azimuthChanged)
-    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel NOTIFY calibrationLevelChanged)
+    Q_PROPERTY(qreal azimuth READ azimuth NOTIFY azimuthChanged BINDABLE bindableAzimuth)
+    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel
+               NOTIFY calibrationLevelChanged BINDABLE bindableCalibrationLevel)
     QML_NAMED_ELEMENT(CompassReading)
     QML_UNCREATABLE("Cannot create CompassReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -86,7 +87,9 @@ public:
     ~QmlCompassReading();
 
     qreal azimuth() const;
+    QBindable<qreal> bindableAzimuth() const;
     qreal calibrationLevel() const;
+    QBindable<qreal> bindableCalibrationLevel() const;
 
 Q_SIGNALS:
     void azimuthChanged();
@@ -96,8 +99,10 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QCompass *m_sensor;
-    qreal m_azimuth;
-    qreal m_calibrationLevel;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlCompassReading, qreal,
+                               m_azimuth, &QmlCompassReading::azimuthChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlCompassReading, qreal,
+                               m_calibrationLevel, &QmlCompassReading::calibrationLevelChanged)
 };
 
 QT_END_NAMESPACE

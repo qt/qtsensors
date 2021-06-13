@@ -116,6 +116,11 @@ qreal QmlCompassReading::azimuth() const
     return m_azimuth;
 }
 
+QBindable<qreal> QmlCompassReading::bindableAzimuth() const
+{
+    return &m_azimuth;
+}
+
 /*!
     \qmlproperty qreal CompassReading::calibrationLevel
     This property holds the calibration level of the reading.
@@ -128,6 +133,11 @@ qreal QmlCompassReading::calibrationLevel() const
     return m_calibrationLevel;
 }
 
+QBindable<qreal> QmlCompassReading::bindableCalibrationLevel() const
+{
+    return &m_calibrationLevel;
+}
+
 QSensorReading *QmlCompassReading::reading() const
 {
     return m_sensor->reading();
@@ -135,14 +145,6 @@ QSensorReading *QmlCompassReading::reading() const
 
 void QmlCompassReading::readingUpdate()
 {
-    qreal azm = m_sensor->reading()->azimuth();
-    if (m_azimuth != azm) {
-        m_azimuth = azm;
-        Q_EMIT azimuthChanged();
-    }
-    qreal calLevel = m_sensor->reading()->calibrationLevel();
-    if (m_calibrationLevel != calLevel) {
-        m_calibrationLevel = calLevel;
-        Q_EMIT calibrationLevelChanged();
-    }
+    m_azimuth = m_sensor->reading()->azimuth();
+    m_calibrationLevel = m_sensor->reading()->calibrationLevel();
 }

@@ -65,8 +65,9 @@ public:
     explicit QmlPressureSensor(QObject *parent = 0);
     ~QmlPressureSensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QmlSensorReading *createReading() const override;
 
     QPressureSensor *m_sensor;
@@ -75,8 +76,9 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlPressureReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal pressure READ pressure NOTIFY pressureChanged)
-    Q_PROPERTY(qreal temperature READ temperature NOTIFY temperatureChanged REVISION 1)
+    Q_PROPERTY(qreal pressure READ pressure NOTIFY pressureChanged BINDABLE bindablePressure)
+    Q_PROPERTY(qreal temperature READ temperature
+               NOTIFY temperatureChanged REVISION 1 BINDABLE bindableTemperature)
     QML_NAMED_ELEMENT(PressureReading)
     QML_UNCREATABLE("Cannot create PressureReading")
     QML_ADDED_IN_VERSION(5,1)
@@ -85,7 +87,9 @@ public:
     ~QmlPressureReading();
 
     qreal pressure() const;
+    QBindable<qreal> bindablePressure() const;
     qreal temperature() const;
+    QBindable<qreal> bindableTemperature() const;
 
 Q_SIGNALS:
     void pressureChanged();
@@ -96,8 +100,10 @@ private:
     void readingUpdate() override;
 
     QPressureSensor *m_sensor;
-    qreal m_pressure;
-    qreal m_temperature;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlPressureReading, qreal,
+                               m_pressure, &QmlPressureReading::pressureChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlPressureReading, qreal,
+                               m_temperature, &QmlPressureReading::temperatureChanged)
 };
 
 QT_END_NAMESPACE

@@ -69,8 +69,9 @@ public:
     ~QmlTiltSensor();
     Q_INVOKABLE void calibrate();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QTiltSensor *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -78,8 +79,8 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlTiltSensorReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal yRotation READ yRotation NOTIFY yRotationChanged)
-    Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged)
+    Q_PROPERTY(qreal yRotation READ yRotation NOTIFY yRotationChanged BINDABLE bindableYRotation)
+    Q_PROPERTY(qreal xRotation READ xRotation NOTIFY xRotationChanged BINDABLE bindableXRotation)
     QML_NAMED_ELEMENT(TiltReading)
     QML_UNCREATABLE("Cannot create TiltReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -88,7 +89,9 @@ public:
     ~QmlTiltSensorReading();
 
     qreal yRotation() const;
+    QBindable<qreal> bindableYRotation() const;
     qreal xRotation() const;
+    QBindable<qreal> bindableXRotation() const;
 
 Q_SIGNALS:
     void yRotationChanged();
@@ -98,8 +101,10 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QTiltSensor *m_sensor;
-    qreal m_yRotation;
-    qreal m_xRotation;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlTiltSensorReading, qreal,
+                               m_yRotation, &QmlTiltSensorReading::yRotationChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlTiltSensorReading, qreal,
+                               m_xRotation, &QmlTiltSensorReading::xRotationChanged)
 };
 
 QT_END_NAMESPACE

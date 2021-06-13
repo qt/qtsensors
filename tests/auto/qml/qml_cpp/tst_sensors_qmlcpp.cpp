@@ -30,6 +30,7 @@
 #include <QtTest/QSignalSpy>
 #include <QtCore/QDebug>
 
+#include <QtTest/private/qpropertytesthelper_p.h>
 #include <QtSensorsQuick/private/qmlsensor_p.h>
 #include <QtSensorsQuick/private/qmlsensorgesture_p.h>
 
@@ -38,6 +39,27 @@
 #include <qsensorgesturemanager.h>
 #include <qsensorbackend.h>
 #include "qsensormanager.h"
+
+#include "../../common/test_backends.h"
+#include <QtSensorsQuick/private/qmlaccelerometer_p.h>
+#include <QtSensorsQuick/private/qmlpressuresensor_p.h>
+#include <QtSensorsQuick/private/qmlgyroscope_p.h>
+#include <QtSensorsQuick/private/qmltapsensor_p.h>
+#include <QtSensorsQuick/private/qmlcompass_p.h>
+#include <QtSensorsQuick/private/qmlproximitysensor_p.h>
+#include <QtSensorsQuick/private/qmlorientationsensor_p.h>
+#include <QtSensorsQuick/private/qmldistancesensor_p.h>
+#include <QtSensorsQuick/private/qmlambientlightsensor_p.h>
+#include <QtSensorsQuick/private/qmlmagnetometer_p.h>
+#include <QtSensorsQuick/private/qmllidsensor_p.h>
+#include <QtSensorsQuick/private/qmltiltsensor_p.h>
+#include <QtSensorsQuick/private/qmlrotationsensor_p.h>
+#include <QtSensorsQuick/private/qmlhumiditysensor_p.h>
+#include <QtSensorsQuick/private/qmlholstersensor_p.h>
+#include <QtSensorsQuick/private/qmlambienttemperaturesensor_p.h>
+#include <QtSensorsQuick/private/qmllightsensor_p.h>
+#include <QtSensorsQuick/private/qmlaltimeter_p.h>
+#include <QtSensorsQuick/private/qmlirproximitysensor_p.h>
 
 QT_USE_NAMESPACE
 
@@ -49,6 +71,7 @@ class tst_sensors_qmlcpp : public QObject
 
 private slots:
     void initTestCase();
+    void testReadingBindings();
     void testGesture();
     void testSensorRanges();
 };
@@ -56,6 +79,132 @@ private slots:
 void tst_sensors_qmlcpp::initTestCase()
 {
     qputenv("QT_SENSORS_LOAD_PLUGINS", "0"); // Do not load plugins
+}
+
+template<typename SensorClass, typename ReadingClass, typename ValueType>
+void testSensorReadings(const char* identifier, const QVariantMap& values)
+{
+    SensorClass sensor;
+    sensor.setIdentifier(identifier);
+    sensor.componentComplete();
+    sensor.start();
+
+    for (const auto& key : values.keys()) {
+        ValueType initialValue = values[key].toList()[0].value<ValueType>();
+        ValueType changedValue = values[key].toList()[1].value<ValueType>();
+        QTestPrivate::testReadOnlyPropertyBasics<ReadingClass, ValueType>(
+                    *static_cast<ReadingClass*>(sensor.reading()),
+                    initialValue, changedValue, key.toStdString().c_str(),
+                    [&](){ set_test_backend_reading(sensor.sensor(), {{key, changedValue}}); });
+        if (QTest::currentTestFailed()) {
+            qWarning() << identifier << "::" << key << "test failed.";
+            return;
+        }
+    }
+}
+
+void tst_sensors_qmlcpp::testReadingBindings()
+{
+    register_test_backends();
+
+    testSensorReadings<QmlAccelerometer, QmlAccelerometerReading, qreal>(
+                "QAccelerometer",
+                {{"x", QVariantList{1.0, 2.0}},
+                 {"y", QVariantList{1.0, 2.0}},
+                 {"z", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlAccelerometer, QmlAccelerometerReading, quint64>(
+                "QAccelerometer",
+                {{"timestamp", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlAmbientLightSensor, QmlAmbientLightSensorReading, QAmbientLightReading::LightLevel>(
+                "QAmbientLightSensor",
+                {{"lightLevel", QVariantList{QAmbientLightReading::Twilight, QAmbientLightReading::Sunny}}});
+    testSensorReadings<QmlPressureSensor, QmlPressureReading, qreal>(
+                "QPressureSensor",
+                {{"pressure", QVariantList{1.0, 2.0}},
+                 {"temperature", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlGyroscope, QmlGyroscopeReading, qreal>(
+                "QGyroscope",
+                {{"x", QVariantList{1.0, 2.0}},
+                 {"y", QVariantList{1.0, 2.0}},
+                 {"z", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlTapSensor, QmlTapSensorReading, bool>(
+                "QTapSensor",
+                {{"doubleTap", QVariantList{true, false}}});
+    testSensorReadings<QmlTapSensor, QmlTapSensorReading, QTapReading::TapDirection>(
+                "QTapSensor",
+                {{"tapDirection", QVariantList{QTapReading::Z_Both, QTapReading::X_Both}}});
+    testSensorReadings<QmlCompass, QmlCompassReading, qreal>(
+                "QCompass",
+                {{"azimuth", QVariantList{1.0, 2.0}},
+                 {"calibrationLevel", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlProximitySensor, QmlProximitySensorReading, bool>(
+                "QProximitySensor",
+                {{"near", QVariantList{true, false}}});
+    testSensorReadings<QmlOrientationSensor, QmlOrientationSensorReading, QOrientationReading::Orientation>(
+                "QOrientationSensor",
+                {{"orientation", QVariantList{QOrientationReading::LeftUp, QOrientationReading::RightUp}}});
+    testSensorReadings<QmlDistanceSensor, QmlDistanceReading, qreal>(
+                "QDistanceSensor",
+                {{"distance", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlMagnetometer, QmlMagnetometerReading, qreal>(
+                "QMagnetometer",
+                {{"x", QVariantList{1.0, 2.0}},
+                 {"y", QVariantList{1.0, 2.0}},
+                 {"z", QVariantList{1.0, 2.0}},
+                 {"calibrationLevel", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlLidSensor, QmlLidReading, bool>(
+                "QLidSensor",
+                {{"backLidClosed", QVariantList{true, false}},
+                 {"frontLidClosed", QVariantList{true, false}}});
+    testSensorReadings<QmlTiltSensor, QmlTiltSensorReading, qreal>(
+                "QTiltSensor",
+                {{"yRotation", QVariantList{1.0, 2.0}},
+                 {"xRotation", QVariantList{1.0, 2.0}}});
+    // rotation sensor properties need to be tested separately because the setter function is
+    // not symmetric with getter functions ("setFromEuler()" vs. "x() & y() & z()")
+    testSensorReadings<QmlRotationSensor, QmlRotationSensorReading, qreal>(
+                "QRotationSensor",
+                {{"x", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlRotationSensor, QmlRotationSensorReading, qreal>(
+                "QRotationSensor",
+                {{"y", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlRotationSensor, QmlRotationSensorReading, qreal>(
+                "QRotationSensor",
+                {{"z", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlHumiditySensor, QmlHumidityReading, qreal>(
+                "QHumiditySensor",
+                {{"relativeHumidity", QVariantList{1.0, 2.0}},
+                 {"absoluteHumidity", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlHolsterSensor, QmlHolsterReading, bool>(
+                "QHolsterSensor",
+                {{"holstered", QVariantList{true, false}}});
+    testSensorReadings<QmlAmbientTemperatureSensor, QmlAmbientTemperatureReading, qreal>(
+                "QAmbientTemperatureSensor",
+                {{"temperature", QVariantList{30.0, 40.0}}});
+    testSensorReadings<QmlLightSensor, QmlLightSensorReading, qreal>(
+                "QLightSensor",
+                {{"illuminance", QVariantList{1.0, 2.0}}});
+    testSensorReadings<QmlAltimeter, QmlAltimeterReading, qreal>(
+                "QAltimeter",
+                {{"altitude", QVariantList{8848, 9959}}});
+    testSensorReadings<QmlIRProximitySensor, QmlIRProximitySensorReading, qreal>(
+                "QIRProximitySensor",
+                {{"reflectance", QVariantList{0.5, 0.6}}});
+
+    // The following tests QmlSensor (the baseclass) 'readingChanged' which is
+    // emitted every time a sensor value changes. For that we instantiate a
+    // concrete sensor. The actual 'reading' value (a QObject pointer) of the
+    // 'readingChanged' property will not change, but rather the
+    // 'readingChanged' is used to indicate that the value it contains has changed.
+    QmlAccelerometer accelerometer;
+    accelerometer.setIdentifier("QAccelerometer");
+    accelerometer.componentComplete();
+    accelerometer.start();
+    QTestPrivate::testReadOnlyPropertyBasics<QmlSensor, QmlSensorReading*>(
+                accelerometer, accelerometer.reading(), accelerometer.reading(), "reading",
+                [&](){ set_test_backend_reading(accelerometer.sensor(), {{"x", 2.0}}); });
+
+    unregister_test_backends();
 }
 
 void tst_sensors_qmlcpp::testGesture()

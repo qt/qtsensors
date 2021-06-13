@@ -66,8 +66,9 @@ public:
     explicit QmlDistanceSensor(QObject *parent = 0);
     ~QmlDistanceSensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QmlSensorReading *createReading() const override;
 
     QDistanceSensor *m_sensor;
@@ -76,7 +77,7 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlDistanceReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal distance READ distance NOTIFY distanceChanged)
+    Q_PROPERTY(qreal distance READ distance NOTIFY distanceChanged BINDABLE bindableDistance)
     QML_NAMED_ELEMENT(DistanceReading)
     QML_UNCREATABLE("Cannot create DistanceReading")
     QML_ADDED_IN_VERSION(5,4)
@@ -85,6 +86,7 @@ public:
     ~QmlDistanceReading();
 
     qreal distance() const;
+    QBindable<qreal> bindableDistance() const;
 
 Q_SIGNALS:
     void distanceChanged();
@@ -94,7 +96,8 @@ private:
     void readingUpdate() override;
 
     QDistanceSensor *m_sensor;
-    qreal m_distance;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlDistanceReading, qreal,
+                               m_distance, &QmlDistanceReading::distanceChanged)
 };
 
 QT_END_NAMESPACE

@@ -116,6 +116,11 @@ bool QmlProximitySensorReading::near() const
     return m_near;
 }
 
+QBindable<bool> QmlProximitySensorReading::bindableNear() const
+{
+    return &m_near;
+}
+
 QSensorReading *QmlProximitySensorReading::reading() const
 {
     return m_sensor->reading();
@@ -123,9 +128,5 @@ QSensorReading *QmlProximitySensorReading::reading() const
 
 void QmlProximitySensorReading::readingUpdate()
 {
-    bool pNear = m_sensor->reading()->close();
-    if (m_near != pNear) {
-        m_near = pNear;
-        Q_EMIT nearChanged();
-    }
+    m_near = m_sensor->reading()->close();
 }

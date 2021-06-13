@@ -65,8 +65,9 @@ public:
     explicit QmlAmbientTemperatureSensor(QObject *parent = 0);
     ~QmlAmbientTemperatureSensor();
 
-private:
     QSensor *sensor() const override;
+
+private:
     QmlSensorReading *createReading() const override;
 
     QAmbientTemperatureSensor *m_sensor;
@@ -75,7 +76,8 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlAmbientTemperatureReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal temperature READ temperature NOTIFY temperatureChanged)
+    Q_PROPERTY(qreal temperature READ temperature
+               NOTIFY temperatureChanged BINDABLE bindableTemperature)
     QML_NAMED_ELEMENT(AmbientTemperatureReading)
     QML_UNCREATABLE("Cannot create AmbientTemperatureReading")
     QML_ADDED_IN_VERSION(5,1)
@@ -84,6 +86,7 @@ public:
     ~QmlAmbientTemperatureReading();
 
     qreal temperature() const;
+    QBindable<qreal> bindableTemperature() const;
 
 Q_SIGNALS:
     void temperatureChanged();
@@ -93,7 +96,8 @@ private:
     void readingUpdate() override;
 
     QAmbientTemperatureSensor *m_sensor;
-    qreal m_temperature;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlAmbientTemperatureReading, qreal,
+                               m_temperature, &QmlAmbientTemperatureReading::temperatureChanged)
 };
 
 QT_END_NAMESPACE

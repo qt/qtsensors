@@ -70,11 +70,12 @@ public:
     bool returnGeoValues() const;
     void setReturnGeoValues(bool geo);
 
+    QSensor *sensor() const override;
+
 Q_SIGNALS:
     void returnGeoValuesChanged(bool returnGeoValues);
 
 private:
-    QSensor *sensor() const override;
     QMagnetometer *m_sensor;
     QmlSensorReading *createReading() const override;
 };
@@ -82,10 +83,11 @@ private:
 class Q_SENSORSQUICK_PRIVATE_EXPORT QmlMagnetometerReading : public QmlSensorReading
 {
     Q_OBJECT
-    Q_PROPERTY(qreal x READ x NOTIFY xChanged)
-    Q_PROPERTY(qreal y READ y NOTIFY yChanged)
-    Q_PROPERTY(qreal z READ z NOTIFY zChanged)
-    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel NOTIFY calibrationLevelChanged)
+    Q_PROPERTY(qreal x READ x NOTIFY xChanged BINDABLE bindableX)
+    Q_PROPERTY(qreal y READ y NOTIFY yChanged BINDABLE bindableY)
+    Q_PROPERTY(qreal z READ z NOTIFY zChanged BINDABLE bindableZ)
+    Q_PROPERTY(qreal calibrationLevel READ calibrationLevel
+               NOTIFY calibrationLevelChanged BINDABLE bindableCalibrationLevel)
     QML_NAMED_ELEMENT(MagnetometerReading)
     QML_UNCREATABLE("Cannot create MagnetometerReading")
     QML_ADDED_IN_VERSION(5,0)
@@ -94,9 +96,14 @@ public:
     ~QmlMagnetometerReading();
 
     qreal x() const;
+    QBindable<qreal> bindableX() const;
     qreal y() const;
+    QBindable<qreal> bindableY() const;
     qreal z() const;
+    QBindable<qreal> bindableZ() const;
     qreal calibrationLevel() const;
+    QBindable<qreal> bindableCalibrationLevel() const;
+
 
 Q_SIGNALS:
     void xChanged();
@@ -108,10 +115,14 @@ private:
     QSensorReading *reading() const override;
     void readingUpdate() override;
     QMagnetometer *m_sensor;
-    qreal m_x;
-    qreal m_y;
-    qreal m_z;
-    qreal m_calibrationLevel;
+    Q_OBJECT_BINDABLE_PROPERTY(QmlMagnetometerReading, qreal,
+                               m_x, &QmlMagnetometerReading::xChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlMagnetometerReading, qreal,
+                               m_y, &QmlMagnetometerReading::yChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlMagnetometerReading, qreal,
+                               m_z, &QmlMagnetometerReading::zChanged)
+    Q_OBJECT_BINDABLE_PROPERTY(QmlMagnetometerReading, qreal,
+                               m_calibrationLevel, &QmlMagnetometerReading::calibrationLevelChanged)
 };
 
 QT_END_NAMESPACE

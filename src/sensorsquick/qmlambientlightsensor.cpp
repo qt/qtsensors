@@ -126,6 +126,11 @@ QAmbientLightReading::LightLevel QmlAmbientLightSensorReading::lightLevel() cons
     return m_lightLevel;
 }
 
+QBindable<QAmbientLightReading::LightLevel> QmlAmbientLightSensorReading::bindableLightLevel() const
+{
+    return &m_lightLevel;
+}
+
 QSensorReading *QmlAmbientLightSensorReading::reading() const
 {
     return m_sensor->reading();
@@ -133,9 +138,5 @@ QSensorReading *QmlAmbientLightSensorReading::reading() const
 
 void QmlAmbientLightSensorReading::readingUpdate()
 {
-    QAmbientLightReading::LightLevel ll = m_sensor->reading()->lightLevel();
-    if (m_lightLevel != ll) {
-        m_lightLevel = ll;
-        Q_EMIT lightLevelChanged();
-    }
+    m_lightLevel = m_sensor->reading()->lightLevel();
 }

@@ -117,6 +117,11 @@ bool QmlLidReading::backLidClosed() const
     return m_backClosed;
 }
 
+QBindable<bool> QmlLidReading::bindableBackLidClosed() const
+{
+    return &m_backClosed;
+}
+
 /*!
     \qmlproperty qreal LidReading::frontLidClosed
     This property holds whether the front lid is closed.
@@ -129,6 +134,11 @@ bool QmlLidReading::frontLidClosed() const
     return m_frontClosed;
 }
 
+QBindable<bool> QmlLidReading::bindableFrontLidClosed() const
+{
+    return &m_frontClosed;
+}
+
 QSensorReading *QmlLidReading::reading() const
 {
     return m_sensor->reading();
@@ -136,14 +146,6 @@ QSensorReading *QmlLidReading::reading() const
 
 void QmlLidReading::readingUpdate()
 {
-    const bool backClosed = m_sensor->reading()->backLidClosed();
-    if (m_backClosed != backClosed) {
-        m_backClosed = backClosed;
-        Q_EMIT backLidChanged(m_backClosed);
-    }
-    const bool frontClosed = m_sensor->reading()->frontLidClosed();
-    if (m_frontClosed != frontClosed) {
-        m_frontClosed = frontClosed;
-        Q_EMIT frontLidChanged(m_frontClosed);
-    }
+    m_backClosed = m_sensor->reading()->backLidClosed();
+    m_frontClosed = m_sensor->reading()->frontLidClosed();
 }

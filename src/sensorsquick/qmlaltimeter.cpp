@@ -96,7 +96,6 @@ QSensor *QmlAltimeter::sensor() const
 QmlAltimeterReading::QmlAltimeterReading(QAltimeter *sensor)
     : QmlSensorReading(sensor)
     , m_sensor(sensor)
-    , m_altitude(0)
 {
 }
 
@@ -116,6 +115,11 @@ qreal QmlAltimeterReading::altitude() const
     return m_altitude;
 }
 
+QBindable<qreal> QmlAltimeterReading::bindableAltitude() const
+{
+    return &m_altitude;
+}
+
 QSensorReading *QmlAltimeterReading::reading() const
 {
     return m_sensor->reading();
@@ -123,9 +127,5 @@ QSensorReading *QmlAltimeterReading::reading() const
 
 void QmlAltimeterReading::readingUpdate()
 {
-    qreal altitude = m_sensor->reading()->altitude();
-    if (m_altitude != altitude) {
-        m_altitude = altitude;
-        Q_EMIT altitudeChanged();
-    }
+    m_altitude = m_sensor->reading()->altitude();
 }

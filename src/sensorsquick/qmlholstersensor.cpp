@@ -116,6 +116,11 @@ bool QmlHolsterReading::holstered() const
     return m_holstered;
 }
 
+QBindable<bool> QmlHolsterReading::bindableHolstered() const
+{
+    return &m_holstered;
+}
+
 QSensorReading *QmlHolsterReading::reading() const
 {
     return m_sensor->reading();
@@ -123,9 +128,5 @@ QSensorReading *QmlHolsterReading::reading() const
 
 void QmlHolsterReading::readingUpdate()
 {
-    const bool holstered = m_sensor->reading()->holstered();
-    if (m_holstered != holstered) {
-        m_holstered = holstered;
-        Q_EMIT holsteredChanged();
-    }
+    m_holstered = m_sensor->reading()->holstered();
 }

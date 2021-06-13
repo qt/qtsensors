@@ -114,6 +114,12 @@ qreal QmlIRProximitySensorReading::reflectance() const
     return m_reflectance;
 }
 
+QBindable<qreal> QmlIRProximitySensorReading::bindableReflectance() const
+{
+    return &m_reflectance;
+}
+
+
 QSensorReading *QmlIRProximitySensorReading::reading() const
 {
     return m_sensor->reading();
@@ -121,9 +127,5 @@ QSensorReading *QmlIRProximitySensorReading::reading() const
 
 void QmlIRProximitySensorReading::readingUpdate()
 {
-    qreal fl = m_sensor->reading()->reflectance();
-    if (m_reflectance != fl) {
-        m_reflectance = fl;
-        Q_EMIT reflectanceChanged();
-    }
+    m_reflectance = m_sensor->reading()->reflectance();
 }
