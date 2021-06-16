@@ -95,8 +95,7 @@ QSensor *QmlAmbientLightSensor::sensor() const
 */
 
 QmlAmbientLightSensorReading::QmlAmbientLightSensorReading(QAmbientLightSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

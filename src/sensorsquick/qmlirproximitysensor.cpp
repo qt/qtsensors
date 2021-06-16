@@ -93,8 +93,7 @@ QSensor *QmlIRProximitySensor::sensor() const
 */
 
 QmlIRProximitySensorReading::QmlIRProximitySensorReading(QIRProximitySensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

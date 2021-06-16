@@ -110,8 +110,7 @@ bool QmlRotationSensor::hasZ() const
 */
 
 QmlRotationSensorReading::QmlRotationSensorReading(QRotationSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

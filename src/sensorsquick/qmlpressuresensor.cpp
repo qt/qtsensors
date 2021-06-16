@@ -94,8 +94,7 @@ QSensor *QmlPressureSensor::sensor() const
 */
 
 QmlPressureReading::QmlPressureReading(QPressureSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
     , m_pressure(0)
     , m_temperature(0)
 {

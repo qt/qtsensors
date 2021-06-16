@@ -94,8 +94,7 @@ QSensor *QmlHolsterSensor::sensor() const
 */
 
 QmlHolsterReading::QmlHolsterReading(QHolsterSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
     , m_holstered(false)
 {
 }

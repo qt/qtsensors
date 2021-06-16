@@ -109,8 +109,7 @@ qreal QmlLightSensor::fieldOfView() const
 */
 
 QmlLightSensorReading::QmlLightSensorReading(QLightSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

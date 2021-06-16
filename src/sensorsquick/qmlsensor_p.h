@@ -206,8 +206,8 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensorReading : public QObject
     QML_UNCREATABLE("Cannot create SensorReading")
     QML_ADDED_IN_VERSION(5,0)
 public:
-    explicit QmlSensorReading(QSensor *sensor);
-    ~QmlSensorReading();
+    explicit QmlSensorReading() = default;
+    ~QmlSensorReading() = default;
 
     quint64 timestamp() const;
     QBindable<quint64> bindableTimestamp() const;

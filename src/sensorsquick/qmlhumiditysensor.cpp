@@ -95,8 +95,7 @@ QSensor *QmlHumiditySensor::sensor() const
 */
 
 QmlHumidityReading::QmlHumidityReading(QHumiditySensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
     , m_relativeHumidity(0)
     , m_absoluteHumidity(0)
 {
