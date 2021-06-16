@@ -494,15 +494,9 @@ void QmlSensor::componentComplete()
     if (output.count())
         Q_EMIT outputRangesChanged();
 
-    _update();
-
     connect(sensor(), SIGNAL(readingChanged()), this, SLOT(updateReading()));
     if (m_activateOnComplete)
         start();
-}
-
-void QmlSensor::_update()
-{
 }
 
 void QmlSensor::updateReading()
