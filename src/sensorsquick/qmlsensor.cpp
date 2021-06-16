@@ -523,15 +523,6 @@ void QmlSensor::updateReading()
     This element cannot be directly created.
 */
 
-QmlSensorReading::QmlSensorReading(QSensor *)
-    : QObject(nullptr)
-{
-}
-
-QmlSensorReading::~QmlSensorReading()
-{
-}
-
 /*!
     \qmlproperty quint64 SensorReading::timestamp
     A timestamp for the reading.

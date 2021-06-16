@@ -351,8 +351,7 @@ class QmlDummySensorReading : public QmlSensorReading
 {
     Q_OBJECT
 public:
-    QmlDummySensorReading(QSensor *sensor) :
-        QmlSensorReading(sensor),
+    QmlDummySensorReading() :
         m_reading(new QDummySensorReading(this))
     {}
 
@@ -376,7 +375,7 @@ public:
     }
 
     QSensor *sensor() const override { return m_sensor; }
-    QmlSensorReading *createReading() const override { return new QmlDummySensorReading(m_sensor); }
+    QmlSensorReading *createReading() const override { return new QmlDummySensorReading(); }
 
     void componentComplete() override { QmlSensor::componentComplete(); }
 

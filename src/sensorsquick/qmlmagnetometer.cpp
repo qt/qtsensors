@@ -116,8 +116,7 @@ void QmlMagnetometer::setReturnGeoValues(bool geo)
 */
 
 QmlMagnetometerReading::QmlMagnetometerReading(QMagnetometer *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

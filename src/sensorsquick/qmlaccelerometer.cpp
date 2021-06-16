@@ -118,8 +118,7 @@ QSensor *QmlAccelerometer::sensor() const
 */
 
 QmlAccelerometerReading::QmlAccelerometerReading(QAccelerometer *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

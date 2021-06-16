@@ -94,8 +94,7 @@ QSensor *QmlAltimeter::sensor() const
 */
 
 QmlAltimeterReading::QmlAltimeterReading(QAltimeter *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

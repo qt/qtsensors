@@ -94,8 +94,7 @@ QSensor *QmlLidSensor::sensor() const
 */
 
 QmlLidReading::QmlLidReading(QLidSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
     , m_backClosed(false)
     , m_frontClosed(true)
 {

@@ -95,8 +95,7 @@ QSensor *QmlCompass::sensor() const
 */
 
 QmlCompassReading::QmlCompassReading(QCompass *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

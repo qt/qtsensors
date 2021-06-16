@@ -94,8 +94,7 @@ QSensor *QmlGyroscope::sensor() const
 */
 
 QmlGyroscopeReading::QmlGyroscopeReading(QGyroscope *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

@@ -94,8 +94,7 @@ QSensor *QmlDistanceSensor::sensor() const
 */
 
 QmlDistanceReading::QmlDistanceReading(QDistanceSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
     , m_distance(0.0)
 {
 }

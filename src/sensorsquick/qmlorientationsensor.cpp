@@ -95,8 +95,7 @@ QSensor *QmlOrientationSensor::sensor() const
 */
 
 QmlOrientationSensorReading::QmlOrientationSensorReading(QOrientationSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 

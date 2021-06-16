@@ -94,8 +94,7 @@ QSensor *QmlAmbientTemperatureSensor::sensor() const
 */
 
 QmlAmbientTemperatureReading::QmlAmbientTemperatureReading(QAmbientTemperatureSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
     , m_temperature(0)
 {
 }

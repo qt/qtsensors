@@ -116,8 +116,7 @@ void QmlTapSensor::setReturnDoubleTapEvents(bool ret)
 */
 
 QmlTapSensorReading::QmlTapSensorReading(QTapSensor *sensor)
-    : QmlSensorReading(sensor)
-    , m_sensor(sensor)
+    : m_sensor(sensor)
 {
 }
 
