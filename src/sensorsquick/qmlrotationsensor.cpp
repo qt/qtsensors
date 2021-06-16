@@ -81,7 +81,7 @@ QSensor *QmlRotationSensor::sensor() const
 }
 
 /*!
-    \qmlproperty qreal RotationSensor::hasZ
+    \qmlproperty bool RotationSensor::hasZ
     This property holds a value indicating if the z angle is available.
 
     Please see QRotationSensor::hasZ for information about this property.
