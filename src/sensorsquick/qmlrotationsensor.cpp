@@ -92,10 +92,6 @@ bool QmlRotationSensor::hasZ() const
     return m_sensor->hasZ();
 }
 
-void QmlRotationSensor::_update()
-{
-}
-
 /*!
     \qmltype RotationReading
     \instantiates QmlRotationSensorReading

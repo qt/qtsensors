@@ -192,7 +192,6 @@ private Q_SLOTS:
 
 private:
     void classBegin() override;
-    virtual void _update();
     bool m_componentComplete = false;
     bool m_activateOnComplete = false;
     Q_OBJECT_BINDABLE_PROPERTY_WITH_ARGS(QmlSensor, QmlSensorReading*,

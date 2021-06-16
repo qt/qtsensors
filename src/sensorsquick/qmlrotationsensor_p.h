@@ -74,7 +74,6 @@ Q_SIGNALS:
     void hasZChanged(bool hasZ);
 
 private:
-    void _update() override;
     QRotationSensor *m_sensor;
     QmlSensorReading *createReading() const override;
 };
