@@ -175,9 +175,9 @@ void Explorer::loadReading()
             index = new QTableWidgetItem(QVariant(row - 1).toString());
         QTableWidgetItem *prop = new QTableWidgetItem(mo->property(i).name());
         QString typeName = QLatin1String(mo->property(i).typeName());
-        int crap = typeName.lastIndexOf("::");
-        if (crap != -1)
-            typeName = typeName.mid(crap + 2);
+        int delimiter = typeName.lastIndexOf("::");
+        if (delimiter != -1)
+            typeName = typeName.mid(delimiter + 2);
         QTableWidgetItem *type = new QTableWidgetItem(typeName);
         QTableWidgetItem *value = new QTableWidgetItem();
 
@@ -224,9 +224,9 @@ void Explorer::loadSensorProperties()
         }
         QTableWidgetItem *prop = new QTableWidgetItem(name);
         QString typeName = QLatin1String(mo->property(i).typeName());
-        int crap = typeName.lastIndexOf("::");
-        if (crap != -1)
-            typeName = typeName.mid(crap + 2);
+        int delimiter = typeName.lastIndexOf("::");
+        if (delimiter != -1)
+            typeName = typeName.mid(delimiter + 2);
         QTableWidgetItem *type = new QTableWidgetItem(typeName);
         QVariant v = mo->property(i).read(m_sensor);
         QString val;
@@ -372,9 +372,9 @@ bool Explorer::filter(QSensorReading *reading)
     for (int i = firstProperty; i < mo->propertyCount(); ++i) {
         int row = i - firstProperty;
         QString typeName = QLatin1String(mo->property(i).typeName());
-        int crap = typeName.lastIndexOf("::");
-        if (crap != -1)
-            typeName = typeName.mid(crap + 2);
+        int delimiter = typeName.lastIndexOf("::");
+        if (delimiter != -1)
+            typeName = typeName.mid(delimiter + 2);
         QLatin1String name(mo->property(i).name());
         QTableWidgetItem *value = ui.reading->item(row, 3);
         QVariant val = mo->property(i).read(reading);
