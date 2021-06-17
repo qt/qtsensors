@@ -158,6 +158,8 @@ void Explorer::loadReading()
 {
     // Probe the reading using Qt's meta-object facilities
     QSensorReading *reading = m_sensor->reading();
+    if (!reading)
+        return;
     const QMetaObject *mo = reading->metaObject();
     int firstProperty = QSensorReading::staticMetaObject.propertyOffset();
 
