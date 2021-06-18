@@ -37,7 +37,6 @@ tagfile                 = ../../../doc/qtsensors/qtsensors.tags
 
 {headerdirs,sourcedirs} += .. \
                 ../../sensorsquick \
-                ../../imports/sensors \
                 ../../plugins/sensors
 
 exampledirs += ../../../examples/sensors \

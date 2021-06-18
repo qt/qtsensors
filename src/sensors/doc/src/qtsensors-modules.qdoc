@@ -29,6 +29,7 @@
 /*!
     \module QtSensors
     \title Qt Sensors C++ Classes
+    \qtcmakepackage Sensors
     \ingroup modules
     \qtvariable sensors
 
@@ -41,18 +42,19 @@
 */
 
 /*!
-    \qmlmodule QtSensors 5.\QtMinorVersion
+    \qmlmodule QtSensors
     \title Qt Sensors QML Types
     \ingroup qmlmodules
 
-    \brief Provides types for reading sensor data.
+    \brief Provides QML types for reading sensor data.
 
-    \section1 QML Module API
+    \section1 QML Sensors Module API
 
-    If the module is imported into a namespace, some additional methods become available.
+    QmlSensors is a module API that provides information about currently
+    available sensors types, identifiers, and the default sensors.
 
-    \qml \QtMinorVersion
-    import QtSensors 5.\1
+    \qml
+    import QtSensors
     //  ...
         Component.onCompleted: {
             var types = QmlSensors.sensorTypes();

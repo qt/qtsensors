@@ -43,23 +43,29 @@
 
     \section1 Platform notes
 
-    On Windows the Qt6 does not support the UWP (Universal Windows Platform)
-    any longer. As such the QtSensors now builds on the Win32
+    \section2 Windows
+
+    On Windows, sensors are supported in Qt installations that were built with MSVC.
+
+    \section2 sensorfw
+
+    The \l {https://git.sailfishos.org/mer-core/sensorfw}{sensorfw} does not yet have
+    a Qt 6 port and is therefore not yet supported by sensors in Qt 6.
 
     \section1 API changes
 
     \section2 Deleted typedef for qtimestamp
 
-    The typedef for the historical, QtMobility-era, 'qtimestamp' has been
-    removed. Use the actual type 'quint64' directly.
+    The typedef for the historical, QtMobility-era, \c qtimestamp has been
+    removed. Use the actual type \c quint64 directly.
 
-    \section2 Renamed 'sensor' type string to 'sensorType'
+    \section2 Renamed \c sensor type string to \c sensorType
 
-    The subclasses of QSensor implement a \e {char const*} string which defines
-    the string that identifies the base sensor. This static \e type field
+    The subclasses of QSensor implement a \c {char const*} string which defines
+    the string that identifies the base sensor. This static \c type field
     shadowed the baseclass \l QSensor::type() method, leading to unnecessary
-    compilation errors and consequent workarounds. The \e type string has been
-    now renamed as \e sensorType.
+    compilation errors and consequent workarounds. The \c type string has been
+    now renamed as \c sensorType.
 
     \section2 Renamed LidReading::backLidChanged property to \c backLidClosed
 
