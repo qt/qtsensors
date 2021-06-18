@@ -3,17 +3,22 @@
 #####################################################################
 
 # Collect test data
-list(APPEND test_data "mock_data")
-list(APPEND test_data "dataset2_mock_data")
+file(GLOB_RECURSE test_data_glob
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    mock_data/*
+    dataset2_mock_data/*)
+list(APPEND test_data ${test_data_glob})
 
 qt_internal_add_test(tst_sensorgestures_gestures
     SOURCES
         mockbackends.h
         mockcommon.cpp mockcommon.h
         tst_sensorgestures_gestures.cpp
-    DEFINES
-        SRCDIR=\\\"${CMAKE_CURRENT_SOURCE_DIR}/\\\"
     PUBLIC_LIBRARIES
         Qt::SensorsPrivate
-    TESTDATA ${test_data}
 )
+
+qt_internal_add_resource(tst_sensorgestures_gestures
+    "tst_sensorgestures_gestures_testdata"
+    PREFIX "/"
+    FILES ${test_data})
