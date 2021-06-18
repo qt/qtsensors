@@ -34,12 +34,35 @@
     The Qt Sensors API provides access to sensor hardware via QML and C++ interfaces.
     The Qt Sensors API also provides a motion gesture recognition API for devices.
 
-    Currently the API is supported on \l{Qt for Android}{Android} and
-    \l{Qt for iOS}{iOS}.
+    Currently the API is supported on \l{Qt for Android}{Android},
+    \l{Qt for iOS}{iOS}, and \l {Qt for Windows}{Windows (MSVC)}.
 
     \section1 Information for Application Writers
 
     Applications can access Qt Sensors using QML or C++.
+
+    To include the definitions of the module's classes, use the following directive:
+
+    \code
+    #include <QtSensors>
+    \endcode
+
+    To import the QML types into your application, use the following import statement
+    in your .qml file:
+
+    \qml
+    import QtSensors
+    \endqml
+
+    To link against the module:
+
+    Using cmake:
+    \include qtsensors-module-use.qdocinc cmakebuild
+
+    Using qmake:
+    \include qtsensors-module-use.qdocinc qmakebuild
+
+    Further references:
 
     \table
         \row
@@ -70,16 +93,9 @@
             \li The Qt Sensors - Grue Sensor Example demonstrates creation of a sensor backend
     \endtable
 
-    \section1 Compatibility with QtMobility Sensors API
-
-    Qt Sensors 5.0 (the initial release) is generally expected to be source compatible
-    with QtMobility Sensors 1.2.
-
-    \table
-        \row
-            \li \l {Porting Applications from QtMobility Sensors to Qt Sensors}{Porting Guide}
-            \li Information about the steps needed to port applications to the Qt Sensors API.
-    \endtable
+    \section1 Module Evolution
+    \l{Changes to Qt Sensors} lists important changes in the module API
+       and functionality that were done for the Qt 6 series of Qt.
 
     \omit
     \section1 Information for Qt SensorGestures API
@@ -115,8 +131,11 @@
         \row
             \li \l {Generic Backend}{Generic Backend}
             \li Information about the generic sensor backend.
-        \row
-            \li \l {Sensorfw Backend}{Sensorfw Backend}
-            \li Information about the Sensorfw sensor backend.
     \endtable
+
+    The Qt Sensors module is available under commercial licenses from
+    \l{The Qt Company}. In addition, it is available under free software licenses:
+       The \l{GNU Lesser General Public License, version 3}, or
+       the \l{GNU General Public License, version 2}.
+       See \l{Qt Licensing} for further details.
 */

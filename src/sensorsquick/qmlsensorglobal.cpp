@@ -51,11 +51,12 @@ QT_BEGIN_NAMESPACE
 
     The QmlSensors singleton provides the module API.
 
-    This element cannot be directly created. It can only be accessed via a namespace import.
+    This element cannot be directly created, but its functionality
+    can be accessed as a QML singleton as illustrated below:
 
     \code
-    import QtSensors 5.11
-    import QtSensors 5.11 as Sensors
+    import QtSensors
+    import QtSensors as Sensors
     ...
         Component.onCompleted: {
             var types = Sensors.QmlSensors.sensorTypes();
