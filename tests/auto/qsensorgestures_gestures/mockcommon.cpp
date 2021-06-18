@@ -61,21 +61,12 @@ void mockcommonPrivate::timerout()
 
 bool mockcommonPrivate::setFile(const QString &filename)
 {
-    if (filename.isEmpty())
-        return false;
-
-    if (pFile.isOpen()) {
+    if (pFile.isOpen())
         pFile.close();
-    }
     oldAccelTs = 0;
     firstRun = true;
-    pFile.setFileName(QCoreApplication::instance()->applicationDirPath() + "/" + filename);
-    bool ok = pFile.open(QIODevice::ReadOnly);
-    if (!ok) {
-        pFile.setFileName(SRCDIR "/" + filename);
-        ok = pFile.open(QIODevice::ReadOnly);
-    }
-    return ok;
+    pFile.setFileName(":/" + filename);
+    return pFile.open(QIODevice::ReadOnly);
 }
 
 bool mockcommonPrivate::parseData(const QString &line)
