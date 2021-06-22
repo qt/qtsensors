@@ -17,12 +17,9 @@ qt_internal_add_module(Sensors
     sensorlog_p.h
     qsensor.h
     qaccelerometer.h
-    qaltimeter.h
     qambientlightsensor.h
     qambienttemperaturesensor.h
     qcompass.h
-    qdistancesensor.h
-    qholstersensor.h
     qlightsensor.h
     qmagnetometer.h
     qorientationsensor.h
@@ -37,12 +34,9 @@ qt_internal_add_module(Sensors
     qlidsensor.h
     qsensor_p.h
     qaccelerometer_p.h
-    qaltimeter_p.h
     qambientlightsensor_p.h
     qambienttemperaturesensor_p.h
     qcompass_p.h
-    qdistancesensor_p.h
-    qholstersensor_p.h
     qlightsensor_p.h
     qmagnetometer_p.h
     qorientationsensor_p.h
@@ -57,12 +51,9 @@ qt_internal_add_module(Sensors
     qlidsensor_p.h
     qsensor.cpp
     qaccelerometer.cpp
-    qaltimeter.cpp
     qambientlightsensor.cpp
     qambienttemperaturesensor.cpp
     qcompass.cpp
-    qdistancesensor.cpp
-    qholstersensor.cpp
     qlightsensor.cpp
     qmagnetometer.cpp
     qorientationsensor.cpp

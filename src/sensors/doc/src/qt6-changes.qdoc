@@ -49,8 +49,19 @@
 
     \section2 sensorfw
 
+    \section2 sensorfw
+
     The \l {https://git.sailfishos.org/mer-core/sensorfw}{sensorfw} does not yet have
     a Qt 6 port and is therefore not yet supported by sensors in Qt 6.
+
+    \section2 Removed sensors
+
+    QAltimeter, QDistanceSensor, QHolsterSensor and their QML counterparts
+    did no longer have a backend implementation and have been removed.
+
+    QIRProximitySensor, QLidSensor, and QTapSensor have only sensorfw
+    backend, and as such they are not currently listed as supported sensor
+    types.
 
     \section1 API changes
 

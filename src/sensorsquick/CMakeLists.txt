@@ -3,13 +3,10 @@ qt_internal_add_qml_module(SensorsQuick
     VERSION "${PROJECT_VERSION}"
     SOURCES
         qmlaccelerometer.cpp qmlaccelerometer_p.h
-        qmlaltimeter.cpp qmlaltimeter_p.h
         qmlambientlightsensor.cpp qmlambientlightsensor_p.h
         qmlambienttemperaturesensor.cpp qmlambienttemperaturesensor_p.h
         qmlcompass.cpp qmlcompass_p.h
-        qmldistancesensor.cpp qmldistancesensor_p.h
         qmlgyroscope.cpp qmlgyroscope_p.h
-        qmlholstersensor.cpp qmlholstersensor_p.h
         qmlhumiditysensor.cpp qmlhumiditysensor_p.h
         qmlirproximitysensor.cpp qmlirproximitysensor_p.h
         qmllidsensor.cpp qmllidsensor_p.h

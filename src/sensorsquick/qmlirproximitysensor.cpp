@@ -48,6 +48,7 @@
     \since QtSensors 5.0
     \inherits Sensor
     \brief The IRProximitySensor element reports on infra-red reflectance values.
+    \internal
 
     This element wraps the QIRProximitySensor class. Please see the documentation for
     QIRProximitySensor for details.
@@ -83,6 +84,7 @@ QSensor *QmlIRProximitySensor::sensor() const
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The IRProximityReading element holds the most recent IR proximity reading.
+    \internal
 
     The IRProximityReading element holds the most recent IR proximity reading.
 

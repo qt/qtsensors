@@ -49,6 +49,7 @@
     \inherits Sensor
     \brief The TapSensor element reports tap and double tap events
            along the X, Y and Z axes.
+    \internal
 
     The TapSensor element reports tap and double tap events
     along the X, Y and Z axes.
@@ -106,6 +107,7 @@ void QmlTapSensor::setReturnDoubleTapEvents(bool ret)
     \since QtSensors 5.0
     \inherits SensorReading
     \brief The TapReading element holds the most recent TapSensor reading.
+    \internal
 
     The TapReading element holds the most recent TapSensor reading.
 

@@ -38,12 +38,10 @@ void set_test_backend_reading(QSensor* sensor, const QVariantMap& values);
 void set_test_backend_busy(QSensor* sensor, bool busy);
 
 #include <qaccelerometer.h>
-#include <qaltimeter.h>
 #include <qambientlightsensor.h>
 #include <qambienttemperaturesensor.h>
 #include <qcompass.h>
 #include <qgyroscope.h>
-#include <qholstersensor.h>
 #include <qlightsensor.h>
 #include <qmagnetometer.h>
 #include <qorientationsensor.h>
@@ -53,7 +51,6 @@ void set_test_backend_busy(QSensor* sensor, bool busy);
 #include <qtapsensor.h>
 #include <qirproximitysensor.h>
 #include <qtiltsensor.h>
-#include <qdistancesensor.h>
 #include <qlidsensor.h>
 #include <qhumiditysensor.h>
 
@@ -94,9 +91,6 @@ PREPARE_SENSORINTERFACE(QAccelerometer, QAccelerometerReading, QAccelerometerFil
     reading->setY(1.0);
     reading->setZ(1.0);
 })
-PREPARE_SENSORINTERFACE(QAltimeter, QAltimeterReading, QAltimeterFilter, {
-    reading->setAltitude(8848);
-})
 PREPARE_SENSORINTERFACE(QAmbientLightSensor, QAmbientLightReading, QAmbientLightFilter, {
     reading->setLightLevel(QAmbientLightReading::Twilight);
 })
@@ -111,9 +105,6 @@ PREPARE_SENSORINTERFACE(QGyroscope, QGyroscopeReading, QGyroscopeFilter, {
     reading->setX(1.0);
     reading->setY(1.0);
     reading->setZ(1.0);
-})
-PREPARE_SENSORINTERFACE(QHolsterSensor, QHolsterReading, QHolsterFilter, {
-    reading->setHolstered(true);
 })
 PREPARE_SENSORINTERFACE(QLightSensor, QLightReading, QLightFilter, {
     reading->setLux(1.0);
@@ -147,9 +138,6 @@ PREPARE_SENSORINTERFACE(QIRProximitySensor, QIRProximityReading, QIRProximityFil
 PREPARE_SENSORINTERFACE(QTiltSensor, QTiltReading, QTiltFilter, {
     reading->setYRotation(1.0);
     reading->setXRotation(1.0);
-})
-PREPARE_SENSORINTERFACE(QDistanceSensor, QDistanceReading, QDistanceFilter, {
-    reading->setDistance(1.0);
 })
 PREPARE_SENSORINTERFACE(QLidSensor, QLidReading, QLidFilter, {
     reading->setBackLidClosed(true);

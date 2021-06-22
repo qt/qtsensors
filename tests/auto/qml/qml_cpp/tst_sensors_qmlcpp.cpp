@@ -48,17 +48,14 @@
 #include <QtSensorsQuick/private/qmlcompass_p.h>
 #include <QtSensorsQuick/private/qmlproximitysensor_p.h>
 #include <QtSensorsQuick/private/qmlorientationsensor_p.h>
-#include <QtSensorsQuick/private/qmldistancesensor_p.h>
 #include <QtSensorsQuick/private/qmlambientlightsensor_p.h>
 #include <QtSensorsQuick/private/qmlmagnetometer_p.h>
 #include <QtSensorsQuick/private/qmllidsensor_p.h>
 #include <QtSensorsQuick/private/qmltiltsensor_p.h>
 #include <QtSensorsQuick/private/qmlrotationsensor_p.h>
 #include <QtSensorsQuick/private/qmlhumiditysensor_p.h>
-#include <QtSensorsQuick/private/qmlholstersensor_p.h>
 #include <QtSensorsQuick/private/qmlambienttemperaturesensor_p.h>
 #include <QtSensorsQuick/private/qmllightsensor_p.h>
-#include <QtSensorsQuick/private/qmlaltimeter_p.h>
 #include <QtSensorsQuick/private/qmlirproximitysensor_p.h>
 
 QT_USE_NAMESPACE
@@ -143,9 +140,6 @@ void tst_sensors_qmlcpp::testReadingBindings()
     testSensorReadings<QmlOrientationSensor, QmlOrientationSensorReading, QOrientationReading::Orientation>(
                 "QOrientationSensor",
                 {{"orientation", QVariantList{QOrientationReading::LeftUp, QOrientationReading::RightUp}}});
-    testSensorReadings<QmlDistanceSensor, QmlDistanceReading, qreal>(
-                "QDistanceSensor",
-                {{"distance", QVariantList{1.0, 2.0}}});
     testSensorReadings<QmlMagnetometer, QmlMagnetometerReading, qreal>(
                 "QMagnetometer",
                 {{"x", QVariantList{1.0, 2.0}},
@@ -175,18 +169,12 @@ void tst_sensors_qmlcpp::testReadingBindings()
                 "QHumiditySensor",
                 {{"relativeHumidity", QVariantList{1.0, 2.0}},
                  {"absoluteHumidity", QVariantList{1.0, 2.0}}});
-    testSensorReadings<QmlHolsterSensor, QmlHolsterReading, bool>(
-                "QHolsterSensor",
-                {{"holstered", QVariantList{true, false}}});
     testSensorReadings<QmlAmbientTemperatureSensor, QmlAmbientTemperatureReading, qreal>(
                 "QAmbientTemperatureSensor",
                 {{"temperature", QVariantList{30.0, 40.0}}});
     testSensorReadings<QmlLightSensor, QmlLightSensorReading, qreal>(
                 "QLightSensor",
                 {{"illuminance", QVariantList{1.0, 2.0}}});
-    testSensorReadings<QmlAltimeter, QmlAltimeterReading, qreal>(
-                "QAltimeter",
-                {{"altitude", QVariantList{8848, 9959}}});
     testSensorReadings<QmlIRProximitySensor, QmlIRProximitySensorReading, qreal>(
                 "QIRProximitySensor",
                 {{"reflectance", QVariantList{0.5, 0.6}}});

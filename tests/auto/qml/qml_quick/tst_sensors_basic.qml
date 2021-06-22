@@ -215,17 +215,14 @@ TestCase {
                     {tag: "Compass", initialReading: {azimuth: 1.0, calibrationLevel: 1.0}, newReading: {azimuth: 2.0, calibrationLevel: 3.0}},
                     {tag: "ProximitySensor", initialReading: {near: true}, newReading: {near: false}},
                     {tag: "OrientationSensor", initialReading: {orientation: OrientationReading.LeftUp}, newReading: {orientation: OrientationReading.RightUp}},
-                    {tag: "DistanceSensor", initialReading: {distance: 1.0}, newReading: {distance: 2.0}},
                     {tag: "AmbientLightSensor", initialReading: {lightLevel: AmbientLightReading.Twilight}, newReading: {lightLevel: AmbientLightReading.Sunny}},
                     {tag: "Magnetometer", initialReading: {x : 1.0, y: 1.0, z: 1.0, calibrationLevel: 1.0}, newReading:  {x : 2.0, y: 3.0, z: 4.0, calibrationLevel: 5.0}},
                     {tag: "LidSensor", initialReading: {backLidClosed:true, frontLidClosed: true}, newReading:  {backLidClosed:false, frontLidClosed: false}},
                     {tag: "TiltSensor", initialReading: {yRotation: 1.0, xRotation: 1.0}, newReading: {yRotation: 2.0, xRotation: 3.0}},
                     {tag: "RotationSensor", initialReading: {x: 1.0, y: 1.0, z: 1.0}, newReading: {x: 2.0, y: 3.0, z: 4.0}},
                     {tag: "HumiditySensor", initialReading: {relativeHumidity: 1.0, absoluteHumidity: 1.0}, newReading: {relativeHumidity: 2.0, absoluteHumidity: 3.0}},
-                    {tag: "HolsterSensor", initialReading: {holstered: true}, newReading: {holstered: false}},
                     {tag: "AmbientTemperatureSensor", initialReading: {temperature: 30.0}, newReading: {temperature: 40.0}},
                     {tag: "LightSensor", initialReading: {illuminance: 1.0}, newReading: {illuminance: 2.0}},
-                    {tag: "Altimeter", initialReading: {altitude: 8848}, newReading: {altitude: 9959}},
                     {tag: "IRProximitySensor", initialReading: {reflectance: 0.5}, newReading: {reflectance: 0.6}}
                ];
     }
