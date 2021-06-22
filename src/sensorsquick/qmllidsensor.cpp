@@ -47,6 +47,7 @@
     \since QtSensors 5.9
     \inherits Sensor
     \brief The LidSensor element reports on whether a device is closed.
+    \internal
 
     The LidSensor element reports on whether a device is closed.
 
@@ -84,6 +85,7 @@ QSensor *QmlLidSensor::sensor() const
     \since QtSensors 5.9
     \inherits SensorReading
     \brief The LidReading element holds the most recent LidSensor reading.
+    \internal
 
     The LidReading element holds the most recent LidSensor reading.
 

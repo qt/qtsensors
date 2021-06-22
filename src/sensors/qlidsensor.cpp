@@ -48,6 +48,7 @@ IMPLEMENT_READING(QLidReading)
     \ingroup sensors_reading
     \inmodule QtSensors
     \since 5.9
+    \internal
 
     \brief The QLidReading class holds readings from the Lid sensor.
 
@@ -110,6 +111,7 @@ void QLidReading::setFrontLidClosed(bool closed)
     \ingroup sensors_filter
     \inmodule QtSensors
     \since 5.9
+    \internal
 
     \brief The QLidFilter class is a convenience wrapper around QSensorFilter.
 
@@ -137,6 +139,7 @@ char const * const QLidSensor::sensorType("QLidSensor");
     \ingroup sensors_type
     \inmodule QtSensors
     \since 5.9
+    \internal
 
     \brief The QLidSensor class is a convenience wrapper around QSensor.
 

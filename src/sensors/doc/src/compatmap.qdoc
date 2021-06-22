@@ -40,11 +40,11 @@
     </tr>
     <tr>
         <td bgcolor="green"></td>
-        <td>The feature is fully supported.</td>
+        <td>The sensor is supported.</td>
     </tr>
     <tr>
         <td bgcolor="gray"></td>
-        <td>The feature is not supported.</td>
+        <td>The sensor is not supported.</td>
     </tr>
     </tbody>
     </table>
@@ -68,15 +68,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
-    </tr>
-    <tr>
-    <td nowrap="nowrap">Altimeter</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Ambient Light Sensor</td>
@@ -106,15 +97,6 @@
     <td bgcolor="gray"></td>
     </tr>
     <tr>
-    <td nowrap="nowrap">Distance</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    </tr>
-    <tr>
     <td nowrap="nowrap">Gyroscope</td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
@@ -124,15 +106,6 @@
     <td bgcolor="green"></td>
     </tr>
     <tr>
-    <td nowrap="nowrap">Holster Sensor</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    </tr>
-    <tr>
     <td nowrap="nowrap">Humidity Sensor</td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
@@ -140,24 +113,6 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
-    </tr>
-    <tr>
-    <td nowrap="nowrap">IR Proximity Sensor</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    </tr>
-    <tr>
-    <td nowrap="nowrap">Lid Sensor</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Light Sensor</td>
@@ -214,30 +169,12 @@
     <td bgcolor="gray"></td>
     </tr>
     <tr>
-    <td nowrap="nowrap">Tap Sensor</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    </tr>
-    <tr>
     <td nowrap="nowrap">Tilt Sensor</td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
-    </tr>
-    <tr>
-    <td nowrap="nowrap">Sensor Gestures</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     </tr>
     </table>

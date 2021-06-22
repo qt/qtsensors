@@ -816,10 +816,6 @@ private slots:
             QCOMPARE(reading->z(), 1.0);
         })
 
-        TEST_SENSORINTERFACE(QAltimeter, QAltimeterReading, {
-            QCOMPARE(reading->altitude(), 8848.0);
-        })
-
         TEST_SENSORINTERFACE(QAmbientLightSensor, QAmbientLightReading, {
             QCOMPARE(reading->lightLevel(), QAmbientLightReading::Twilight);
         })
@@ -837,10 +833,6 @@ private slots:
             QCOMPARE(reading->x(), 1.0);
             QCOMPARE(reading->y(), 1.0);
             QCOMPARE(reading->z(), 1.0);
-        })
-
-        TEST_SENSORINTERFACE(QHolsterSensor, QHolsterReading, {
-            QCOMPARE(reading->holstered(), true);
         })
 
         TEST_SENSORINTERFACE(QLightSensor, QLightReading, {

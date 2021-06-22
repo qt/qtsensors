@@ -104,10 +104,6 @@ void set_test_backend_reading(QSensor* sensor, const QVariantMap& values)
         QOrientationReading* reading = static_cast<QOrientationReading*>(backend->reading());
         reading->setOrientation(QOrientationReading::Orientation(values["orientation"].toInt()));
         backend->newReadingAvailable();
-    } else if (sensor->type() == "QDistanceSensor") {
-        QDistanceReading* reading = static_cast<QDistanceReading*>(backend->reading());
-        reading->setDistance(values["distance"].value<qreal>());
-        backend->newReadingAvailable();
     } else if (sensor->type() == "QAmbientLightSensor") {
         QAmbientLightReading* reading = static_cast<QAmbientLightReading*>(backend->reading());
         reading->setLightLevel(QAmbientLightReading::LightLevel(values["lightLevel"].toInt()));
@@ -138,10 +134,6 @@ void set_test_backend_reading(QSensor* sensor, const QVariantMap& values)
         if (values.contains("relativeHumidity")) reading->setRelativeHumidity(values["relativeHumidity"].value<qreal>());
         if (values.contains("absoluteHumidity")) reading->setAbsoluteHumidity(values["absoluteHumidity"].value<qreal>());
         backend->newReadingAvailable();
-    } else if (sensor->type() == "QHolsterSensor") {
-        QHolsterReading* reading = static_cast<QHolsterReading*>(backend->reading());
-        reading->setHolstered(values["holstered"].value<bool>());
-        backend->newReadingAvailable();
     } else if (sensor->type() == "QAmbientTemperatureSensor") {
         QAmbientTemperatureReading* reading = static_cast<QAmbientTemperatureReading*>(backend->reading());
         reading->setTemperature(values["temperature"].value<qreal>());
@@ -149,10 +141,6 @@ void set_test_backend_reading(QSensor* sensor, const QVariantMap& values)
     } else if (sensor->type() == "QLightSensor") {
         QLightReading* reading = static_cast<QLightReading*>(backend->reading());
         reading->setLux(values["illuminance"].value<qreal>());
-        backend->newReadingAvailable();
-    } else if (sensor->type() == "QAltimeter") {
-        QAltimeterReading* reading = static_cast<QAltimeterReading*>(backend->reading());
-        reading->setAltitude(values["altitude"].value<qreal>());
         backend->newReadingAvailable();
     } else if (sensor->type() == "QIRProximitySensor") {
         QIRProximityReading* reading = static_cast<QIRProximityReading*>(backend->reading());
