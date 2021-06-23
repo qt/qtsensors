@@ -82,9 +82,6 @@ if(ANDROID)
     )
 endif()
 
-#### Keys ignored in scope 1:.:.:sensors.pro:<TRUE>:
-# SENSORS = "qsensor" "qaccelerometer" "qaltimeter" "qambientlightsensor" "qambienttemperaturesensor" "qcompass" "qdistancesensor" "qholstersensor" "qlightsensor" "qmagnetometer" "qorientationsensor" "qproximitysensor" "qirproximitysensor" "qrotationsensor" "qtapsensor" "qtiltsensor" "qgyroscope" "qpressuresensor" "qhumiditysensor" "qlidsensor"
-
 ## Scopes:
 #####################################################################
 

@@ -58,7 +58,6 @@
     <td><b>iOS</b></td>
     <td><b>Windows</b></td>
     <td><b>Generic</b></td>
-    <td><b>TI Sensor Tag</b></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Accelerometer</td>
@@ -67,14 +66,12 @@
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Ambient Light Sensor</td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     </tr>
@@ -85,7 +82,6 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Compass</td>
@@ -93,7 +89,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     </tr>
     <tr>
@@ -103,16 +98,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
-    </tr>
-    <tr>
-    <td nowrap="nowrap">Humidity Sensor</td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Light Sensor</td>
@@ -121,7 +106,6 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Magnetometer</td>
@@ -130,7 +114,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Orientation Sensor</td>
@@ -139,7 +122,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Pressure Sensor</td>
@@ -148,14 +130,12 @@
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
-    <td bgcolor="green"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Proximity Sensor</td>
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="gray"></td>
     </tr>
@@ -166,7 +146,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
     </tr>
     <tr>
     <td nowrap="nowrap">Tilt Sensor</td>
@@ -175,7 +154,6 @@
     <td bgcolor="green"></td>
     <td bgcolor="gray"></td>
     <td bgcolor="green"></td>
-    <td bgcolor="gray"></td>
     </tr>
     </table>
 
@@ -190,4 +168,3 @@
     Sensor Gestures are mostly platform independent, and will run if the platform has the sensors required.
     Whether they are supported and work well or not depends on the platform.
 */
-

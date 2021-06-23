@@ -49,10 +49,12 @@
 
     \section2 sensorfw
 
-    \section2 sensorfw
-
     The \l {https://git.sailfishos.org/mer-core/sensorfw}{sensorfw} does not yet have
     a Qt 6 port and is therefore not yet supported by sensors in Qt 6.
+
+    \section2 TI Sensor Tag
+
+    Support for TI Sensor Tag has been removed.
 
     \section2 Removed sensors
 

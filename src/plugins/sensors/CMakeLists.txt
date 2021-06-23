@@ -26,14 +26,6 @@ if(LINUX AND TARGET Qt::DBus AND NOT SENSORS_PLUGINS OR "iio-sensor-proxy" IN_LI
    add_subdirectory(iio-sensor-proxy)
 endif()
 
-if(LINUX AND TARGET Qt::Bluetooth AND NOT SENSORS_PLUGINS OR "sensortag" IN_LIST SENSORS_PLUGINS)
-    if (TARGET Qt::Bluetooth)
-        add_subdirectory(sensortag)
-    else()
-        message(WARNING "You have configured for sensortag, but Qt Bluetooth module was not found.")
-    endif()
-endif()
-
 if(NOT SENSORS_PLUGINS OR "dummy" IN_LIST SENSORS_PLUGINS)
    add_subdirectory(dummy)
 endif()
