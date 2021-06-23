@@ -49,7 +49,7 @@
 ****************************************************************************/
 
 //Import the declarative plugins
-import QtQuick 2.0
+import QtQuick
 
 //Import the javascript functions for this game
 import "lib.js" as Lib

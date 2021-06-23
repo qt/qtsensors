@@ -49,7 +49,7 @@
 ****************************************************************************/
 
 //Import the declarative plugins
-import QtQuick 2.0
+import QtQuick
 
 Rectangle {
     id: appWnd
