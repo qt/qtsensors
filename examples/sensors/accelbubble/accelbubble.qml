@@ -49,11 +49,11 @@
 ****************************************************************************/
 
 
-import QtQuick 2.1
-import QtQuick.Controls 2.0
+import QtQuick
+import QtQuick.Controls
 
 //! [0]
-import QtSensors 5.0
+import QtSensors
 //! [0]
 
 

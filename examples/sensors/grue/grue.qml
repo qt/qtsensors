@@ -48,9 +48,9 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.0
-import QtSensors 5.0
-import Grue 1.0
+import QtQuick
+import QtSensors
+import Grue
 
 Rectangle {
     id: root

@@ -49,10 +49,10 @@
 ****************************************************************************/
 
 //Import the declarative plugins
-import QtQuick 2.0
+import QtQuick
 
 //! [0]
-import QtSensors 5.0
+import QtSensors
 //! [0]
 
 /* Layout

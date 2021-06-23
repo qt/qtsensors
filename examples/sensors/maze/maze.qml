@@ -79,11 +79,11 @@
 
 */
 //Import the declarative plugins
-import QtQuick 2.0
+import QtQuick
 import "components"
 
 //! [0]
-import QtSensors 5.0
+import QtSensors
 //! [0]
 
 //Import the javascript functions for this game
