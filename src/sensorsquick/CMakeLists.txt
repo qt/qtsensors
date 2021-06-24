@@ -25,6 +25,8 @@ qt_internal_add_qml_module(SensorsQuick
         qsensorsquickglobal_p.h
     DEFINES
         QT_BUILD_SENSORSQUICK_LIB
+    DEPENDENCIES
+        QtQml
     PUBLIC_LIBRARIES
         Qt::Core
         Qt::Qml
