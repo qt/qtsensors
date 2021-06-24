@@ -97,32 +97,6 @@
     \l{Changes to Qt Sensors} lists important changes in the module API
        and functionality that were done for the Qt 6 series of Qt.
 
-    \omit
-    \section1 Information for Qt SensorGestures API
-
-    Qt SensorGestures provides a motion gesture recognition API for devices.
-
-    \table
-        \row
-            \li \l {SensorGesture}{QML API}
-            \li Information about the Qt SensorGestures QML API
-        \row
-            \li \l {QtSensorGestures C++ API}{C++ API}
-            \li Information about the Qt SensorGestures C++ API
-    \endtable
-
-    \section1 Information for Qt SensorGestures Recognizer Plugin Implementors
-
-    \table
-        \row
-            \li \l {QtSensorGestures Plugins}{Plugins}
-            \li Information about the Qt SensorGestures recognizer plugins.
-        \row
-            \li \l {QtSensorGestures Emulator}{Emulator}
-            \li Information about Qt SensorGestures use in the Emulator.
-    \endtable
-    \endomit
-
     \section1 Platform-specific Information
     \table
         \row
