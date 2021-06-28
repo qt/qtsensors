@@ -85,7 +85,7 @@ endif()
 ## Scopes:
 #####################################################################
 
-qt_internal_extend_target(Sensors CONDITION NOT SENSORS_CONFIG_PATH
+qt_internal_extend_target(Sensors CONDITION SENSORS_CONFIG_PATH
     DEFINES
         QTSENSORS_CONFIG_PATH="${SENSORS_CONFIG_PATH}"
 )

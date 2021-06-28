@@ -89,9 +89,9 @@ An example follows.
 Sensors was designed so that multiple sensors could exist for a given type. Why?
 Consider this example.
 
-The N900 has an accelerometer built-in. It also features bluetooth and can pair
-with a gaming controller that features an accelerometer. To a developer writing
-a game these two devices are conceptually the same type.
+An Android device has an accelerometer built-in. It also features bluetooth and
+can pair with a gaming controller that features an accelerometer. To a developer
+writing a game these two devices are conceptually the same type.
 
 \section1 Default Sensor for a Type
 
@@ -109,21 +109,28 @@ instead.
 
 \section1 Sensors.conf
 
-The config file that determines the default sensor for a type is called Sensors.conf.
-If present, it is located in /etc/xdg/QtProject. It has the standard formatting
-of an ini file.
+The config file that determines the default sensor for a type is called
+\e Sensors.conf. The configuration file is looked for from \e QtProject
+directory under the directories given by
+QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).
+An example of a complete file path is:
+\badcode
+/etc/xdg/QtProject/Sensors.conf
+\endcode
+The first found configuration file is used.
 
+The configuration file has the standard formatting of an ini file.
 The settings live in the Default group and the general format is:
 \code
 type = identifier
 \endcode
 
-An example: Sensors.conf ensures that the N900 accelerometer is used by default,
-not considering the order in which backends were registered.
+An example: Sensors.conf ensures that the \e sensorfw accelerometer is used by
+default, ignoring the order in which backends were registered.
 
 \code
 [Default]
-QAccelerometer = n900.accelerometer
+QAccelerometer=sensorfw.accelerometer
 \endcode
 
 If Sensors.conf specifies an identifier that is not registered, the system will
