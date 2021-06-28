@@ -52,22 +52,7 @@
 //
 
 #include <QtCore/qglobal.h>
-
-QT_BEGIN_NAMESPACE
-
-#if !defined(QT_STATIC)
-#  if defined(QT_BUILD_SENSORSQUICK_LIB)
-#    define Q_SENSORSQUICK_EXPORT Q_DECL_EXPORT
-#  else
-#    define Q_SENSORSQUICK_EXPORT Q_DECL_IMPORT
-#  endif
-#else
-#  define Q_SENSORSQUICK_EXPORT
-#endif
-
-#define Q_SENSORSQUICK_PRIVATE_EXPORT Q_SENSORSQUICK_EXPORT
-
-QT_END_NAMESPACE
+#include <QtSensorsQuick/private/qtsensorsquickexports_p.h>
 
 void Q_SENSORSQUICK_PRIVATE_EXPORT qml_register_types_QtSensors();
 
