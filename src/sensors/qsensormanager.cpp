@@ -96,10 +96,12 @@ public:
         QString config = QString::fromLocal8Bit(QTSENSORS_CONFIG_PATH);
 #else
         QStringList configs = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
-        if (configs.count() == 0) return; // QStandardPaths is broken?
-        QString config = configs.at(configs.count()-1);
-        if (config.isEmpty()) return; // QStandardPaths is broken?
-        config += QLatin1String("/QtProject/Sensors.conf");
+        QString config;
+        for (const QString& c : configs) {
+            config = c + QLatin1String("/QtProject/Sensors.conf");
+            if (QFile::exists(config))
+                break;
+        }
 #endif
         qCDebug(sensorsCategory) << "Loading config from" << config;
         if (!QFile::exists(config)) {
