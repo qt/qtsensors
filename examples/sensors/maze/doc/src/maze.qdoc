@@ -35,29 +35,27 @@
     \brief The Maze example demonstrates the TiltSensor QML type.
 
 
-    To write a QML application that will use the TiltSensor QML sensors type you need to do the following steps:
+    To write a QML application that will use the TiltSensor QML sensors type
+    you need to do the following steps:
 
-    Import the QtSensors 5.x declarative plugin:
+    To import the Qt Sensors QML types into your application, use the following
+    import statement in your .qml file:
 
     \snippet maze/maze.qml 0
 
-    Add the Sensor QML types into your qml file.
+    Then, add the Sensor QML types into your qml file.
 
-    In this example we use the TiltSensor with values based in degrees and an accuracy of 5 degree:
+    In this example we use the TiltSensor:
 
     \snippet maze/maze.qml 1
 
-    Starting the sensor can be done by setting the 'enabled' property to true:
+    The mouse should move by a factor of the tilt value:
 
     \snippet maze/maze.qml 2
 
-    The mouse should move by a factor of the tilt value:
-
-    \snippet maze/maze.qml 3
-
     The walk direction of the mouse takes into account some collision detection:
 
-    \snippet maze/maze.qml 4
+    \snippet maze/maze.qml 3
 
     The rotation of the mouse image is determined according to the angle that the mouse is moving.
 
