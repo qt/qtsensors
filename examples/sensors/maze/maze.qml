@@ -91,10 +91,65 @@ import "lib.js" as Lib
 
 ApplicationWindow {
     id: mainWnd
+    property bool gameRunning: false
 
-    property Mouse mouseCtrl;
-    property LabyrinthSquare cheeseSquare;
-    property Congratulation congratulation;
+    Component.onCompleted: {
+        initializeMaze()
+        newGame()
+    }
+
+    function initializeMaze() {
+        Lib.objectArray = new Array(Lib.dimension * Lib.dimension);
+        Lib.createLabyrinth();
+        var idx = 0;
+        var component = Qt.createComponent("LabyrinthSquare.qml");
+        for (var y = 0; y < Lib.dimension; y++ ) {
+            for (var x = 0; x < Lib.dimension; x++ ) {
+                var square = component.createObject(gameRect);
+                if (!square) {
+                    console.log("error loading labyrinth square: " + component.errorString())
+                    return
+                }
+                square.x = x * square.width;
+                square.y = y * square.height;
+                square.val = Lib.labyrinth[x][y];
+                Lib.objectArray[idx] = square;
+                idx++;
+            }
+        }
+    }
+
+    function newGame() {
+        congratulation.visible = false;
+
+        // Reset game time
+        timePlayingLabel.text = "--";
+        Lib.sec = 0.0;
+
+        // Create new labyrinth
+        Lib.createLabyrinth();
+        // Update maze tiles to match the new labyrinth
+        var idx = 0;
+        for (var y = 0; y < Lib.dimension; y++ ) {
+            for (var x = 0; x < Lib.dimension; x++ ) {
+                Lib.objectArray[idx].val = Lib.labyrinth[x][y];
+                Lib.objectArray[idx].updateImage();
+                idx++;
+            }
+        }
+        // Reset mouse position and start the game
+        mouseCtrl.x = 0;
+        mouseCtrl.y = 0;
+        mainWnd.gameRunning = true;
+    }
+
+    function gameWon() {
+        // Update the cheese square at the bottom right (win animation)
+        Lib.objectArray[Lib.dimension * Lib.dimension - 1].val = 4
+        Lib.objectArray[Lib.dimension * Lib.dimension - 1].updateImage()
+        congratulation.visible = true;
+        mainWnd.gameRunning = false;
+    }
 
     Rectangle {
         id: gameRect
@@ -104,78 +159,15 @@ ApplicationWindow {
         height: Lib.dimension * Lib.cellDimension
         color: "transparent"
         border.width: 2
+    }
 
-        //timer for starting the labyrinth game
-        Timer {
-            id: startTimer
-            interval: 50; running: true; repeat: false
-            onTriggered: {
+    Mouse {
+        id: mouseCtrl
+    }
 
-                //reset game time
-                timePlayingLabel.text = "--";
-                Lib.sec = 0.0;
-                Lib.createLabyrinth();
-
-                //create labyrinth elements (only at the first time)
-                var needloadcomponent = false;
-                if (Lib.objectArray === null) {
-                    needloadcomponent = true;
-                    Lib.objectArray = new Array(Lib.dimension * Lib.dimension);
-                }
-                var idx = 0;
-                for (var y = 0; y < Lib.dimension; y++ ) {
-                    for (var x = 0; x < Lib.dimension; x++ ) {
-                        var component = null;
-
-                        //create labyrinth components (only at the first time)
-                        if (needloadcomponent) {
-                            component = Qt.createComponent("LabyrinthSquare.qml");
-                            if (component.status == Component.Ready) {
-                                var square = component.createObject(parent);
-                                square.x = x * square.width;
-                                square.y = y * square.height;
-                                square.val = Lib.labyrinth[x][y];
-                                square.updateImage();
-                                Lib.objectArray[idx] = square;
-                                if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)) {
-                                    cheeseSquare = square;
-                                    var component1 = Qt.createComponent("Congratulation.qml");
-                                    if (component1.status == Component.Ready) {
-                                        congratulation = component1.createObject(parent);
-                                        congratulation.visible = false;
-                                    }
-                                }
-                            }
-                        }
-                        else{
-                            Lib.objectArray[idx].val = Lib.labyrinth[x][y];
-                            Lib.objectArray[idx].updateImage();
-                            if (x == (Lib.dimension - 1) && y == (Lib.dimension - 1)) {
-                                cheeseSquare = Lib.objectArray[idx];
-                                congratulation.visible = false;
-                            }
-                        }
-                        idx++;
-                    }
-                }
-
-                //Lib.printLab(); //this is for debug. Labyrinth will be printed out in the console
-
-                //Create the mouse control  (only at the first time)
-                if (mouseCtrl === null) {
-                    var component = Qt.createComponent("Mouse.qml");
-                    if (component.status == Component.Ready) {
-                        mouseCtrl = component.createObject(parent);
-                    }
-                }
-                mouseCtrl.x = 0;
-                mouseCtrl.y = 0;
-                newGameButton.enabled = true;
-
-                //Start the Tilt reader timer
-                tiltTimer.running = true;
-            }
-        }
+    Congratulation {
+        id: congratulation
+        visible: false
     }
 
 //! [1]
@@ -188,77 +180,63 @@ ApplicationWindow {
     //Timer to read out the x and y rotation of the TiltSensor
     Timer {
         id: tiltTimer
-        interval: 50; running: false; repeat: true
+        interval: 50
+        repeat: true
+        running: tiltSensor.active && mainWnd.gameRunning
 
-//! [2]
         onTriggered: {
-            if (!tiltSensor.enabled)
-                tiltSensor.active = true;
-//! [2]
-
-            if (mouseCtrl === null)
-                return;
-
-            //check if already solved
-            if (Lib.won !== true) {
-                Lib.sec += 0.05;
-                timePlayingLabel.text = Math.floor(Lib.sec) + " seconds";
-
-                //check if we can move the mouse
-                var xval = -1;
-                var yval = -1;
-
-//! [3]
-                var xstep = 0;
-                xstep = tiltSensor.reading.yRotation * 0.1 //acceleration
-
-                var ystep = 0;
-                ystep = tiltSensor.reading.xRotation * 0.1 //acceleration
-//! [3]
-//! [4]
-                if (xstep < 1 && xstep > 0)
-                    xstep = 0
-                else if (xstep > -1 && xstep < 0)
-                    xstep = 0
-
-                if (ystep < 1 && ystep > 0)
-                    ystep = 0;
-                else if (ystep > -1 && ystep < 0)
-                    ystep = 0;
-
-                if ((xstep < 0 && mouseCtrl.x > 0
-                     && Lib.canMove(mouseCtrl.x + xstep,mouseCtrl.y))) {
-                    xval = mouseCtrl.x + xstep;
-
-                } else if (xstep > 0 && mouseCtrl.x < (Lib.cellDimension * (Lib.dimension - 1))
-                    && Lib.canMove(mouseCtrl.x + xstep,mouseCtrl.y)) {
-                    xval = mouseCtrl.x + xstep;
-                } else
-                    xval = mouseCtrl.x;
-
-                if (ystep < 0 && mouseCtrl.y > 0
-                     && Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)) {
-                    yval = mouseCtrl.y + ystep;
-                } else if (ystep > 0 && (mouseCtrl.y < (Lib.cellDimension * (Lib.dimension - 1)))
-                         && Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)) {
-                    yval = mouseCtrl.y + ystep;
-                } else
-                    yval = mouseCtrl.y
-
-                mouseCtrl.move(xval, yval);
-//! [4]
-
-            } else {
-                //game won, stop the tilt meter
-                mainWnd.cheeseSquare.val = 4;
-                mainWnd.cheeseSquare.updateImage();
-                mainWnd.congratulation.visible = true;
-                newGameButton.enabled = true;
-                tiltTimer.running = false;
+            // Update the maze unless game is already won
+            if (Lib.won === true) {
+                gameWon()
+                return
             }
+            Lib.sec += 0.05;
+            timePlayingLabel.text = Math.floor(Lib.sec) + " seconds";
+
+            //check if we can move the mouse
+            var xval = -1;
+            var yval = -1;
+
+//! [2]
+            var xstep = 0;
+            xstep = tiltSensor.reading.yRotation * 0.1 //acceleration
+
+            var ystep = 0;
+            ystep = tiltSensor.reading.xRotation * 0.1 //acceleration
+//! [2]
+//! [3]
+            if (xstep < 1 && xstep > 0)
+                xstep = 0
+            else if (xstep > -1 && xstep < 0)
+                xstep = 0
+
+            if (ystep < 1 && ystep > 0)
+                ystep = 0;
+            else if (ystep > -1 && ystep < 0)
+                ystep = 0;
+
+            if ((xstep < 0 && mouseCtrl.x > 0
+                 && Lib.canMove(mouseCtrl.x + xstep,mouseCtrl.y))) {
+                xval = mouseCtrl.x + xstep;
+
+            } else if (xstep > 0 && mouseCtrl.x < (Lib.cellDimension * (Lib.dimension - 1))
+                       && Lib.canMove(mouseCtrl.x + xstep,mouseCtrl.y)) {
+                xval = mouseCtrl.x + xstep;
+            } else
+                xval = mouseCtrl.x;
+
+            if (ystep < 0 && mouseCtrl.y > 0
+                    && Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)) {
+                yval = mouseCtrl.y + ystep;
+            } else if (ystep > 0 && (mouseCtrl.y < (Lib.cellDimension * (Lib.dimension - 1)))
+                       && Lib.canMove(mouseCtrl.x, mouseCtrl.y + ystep)) {
+                yval = mouseCtrl.y + ystep;
+            } else
+                yval = mouseCtrl.y
+            mouseCtrl.move(xval, yval);
+//! [3]
         }
     }
-
 
     //Button to start a new Game
     Button{
@@ -268,12 +246,8 @@ ApplicationWindow {
         anchors.topMargin: 5
         height: 30
         width: 100
-        text: "new game"
-        enabled: false;
-        onClicked: {
-            newGameButton.enabled = false;
-            startTimer.start();
-        }
+        text: qsTr("New game")
+        onClicked: newGame()
     }
     Button{
         id: calibrateButton
@@ -282,10 +256,17 @@ ApplicationWindow {
         anchors.topMargin: 5
         height: 30
         width: 100
-        text: "calibrate"
-        onClicked: {
-            tiltSensor.calibrate();
-        }
+        text: qsTr("Calibrate")
+        onClicked: tiltSensor.calibrate();
+    }
+
+    Text {
+        id: tiltSensorInfo
+        visible: tiltSensor.active
+        anchors.left: gameRect.left
+        anchors.top: calibrateButton.bottom
+        anchors.topMargin: 5
+        text: qsTr("Tilt sensor ID: ") + tiltSensor.identifier
     }
 
     //Label to print out the game time
@@ -294,6 +275,24 @@ ApplicationWindow {
         anchors.right: gameRect.right
         anchors.top: gameRect.bottom
         anchors.topMargin: 5
+    }
+
+    Rectangle {
+        id: tiltSensorMissing
+        visible: !tiltSensor.active
+        anchors.fill: parent
+        color: "#AACCCCCC" // slightly transparent
+        Text {
+            anchors.centerIn: parent
+            text: qsTr("Tilt sensor\nnot found")
+            font.pixelSize: 24
+            font.bold: true
+            color: "black"
+        }
+        MouseArea {
+            // prevent interaction with the game
+            anchors.fill: parent
+        }
     }
 }
 
