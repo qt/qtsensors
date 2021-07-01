@@ -133,7 +133,7 @@ char const * const QTiltSensor::sensorType("QTiltSensor");
 
     \brief The QTiltSensor class is a convenience wrapper around QSensor.
 
-    The only behavioural difference is that this class sets the type properly.QMetaObject::invokeMethod(backend(), "calibrate");
+    The only behavioural difference is that this class sets the type properly.
 
     This class also features a reading() function that returns a QTiltReading instead of a QSensorReading.
 
