@@ -1,6 +1,8 @@
 TEMPLATE = app
 TARGET = shakeit
-QT += quick
+QT += quick sensors
+qtConfig(static):QTPLUGIN += qtsensorgestures_plugin qtsensorgestures_shakeplugin
+
 SOURCES = main.cpp
 
 RESOURCES += \
