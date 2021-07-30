@@ -63,7 +63,8 @@ IMPLEMENT_READING(QTiltReading)
 
 /*!
     \property QTiltReading::yRotation
-    \brief  This property holds the amount of tilt on the Y axis.
+    \brief  This property holds the amount of tilt on the Y axis,
+            measured in degrees.
 */
 qreal QTiltReading::yRotation() const
 {
@@ -71,7 +72,7 @@ qreal QTiltReading::yRotation() const
 }
 
 /*!
-    Sets yRotation to \a y.
+    Sets yRotation to \a y degrees.
 */
 void QTiltReading::setYRotation(qreal y)
 {
@@ -80,7 +81,8 @@ void QTiltReading::setYRotation(qreal y)
 
 /*!
     \property QTiltReading::xRotation
-    \brief  This property holds the amount of tilt on the X axis.
+    \brief  This property holds the amount of tilt on the X axis,
+            measured in degrees.
 
 */
 qreal QTiltReading::xRotation() const
@@ -89,7 +91,7 @@ qreal QTiltReading::xRotation() const
 }
 
 /*!
-    Sets xRotation to \a x.
+    Sets xRotation to \a x degrees.
 */
 void QTiltReading::setXRotation(qreal x)
 {
@@ -174,7 +176,7 @@ QTiltReading *QTiltSensor::reading() const
 }
 
 /*!
-   Calibrates the tilt sensor. Uses the current tilt angles as 0.
+   Calibrates the tilt sensor. Uses the current tilt angles as 0 degrees.
   */
 void QTiltSensor::calibrate()
 {
