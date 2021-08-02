@@ -85,7 +85,8 @@
     The property name is now aligned with the \c frontLidClosed property of
     the same QML type.
 
-    \section2 QSensorBackend::sensorBusy() and QSensor::isBusy()
+    \section2 Added parameter to QSensorBackend::sensorBusy() to be able to also clear
+    the busy state
 
     The \c QSensor::busy property and its accessor, \c QSensor::isBusy(), can be used
     to check if the sensor is busy or not. To allow this property to better reflect the
