@@ -27,7 +27,7 @@
 
 /*!
     \example qmlsensorgestures
-    \title Qt Sensors - SensorGesture QML Type example
+    \title Qt Sensors - SensorGesture QML Type Example
     \ingroup qtsensors-examples
 
     \brief Demonstrates the use of SensorGesture QML type.
