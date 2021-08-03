@@ -8,7 +8,7 @@ qt_internal_add_plugin(LinuxSensorPlugin
     SOURCES
         linuxsysaccelerometer.cpp linuxsysaccelerometer.h
         main.cpp
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Core
         Qt::Sensors
 )

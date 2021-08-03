@@ -17,7 +17,7 @@ qt_internal_add_plugin(IIOSensorProxySensorPlugin
         net.hadess.SensorProxy.Compass.xml
     DBUS_INTERFACE_FLAGS
         "-N"
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Core
         Qt::DBus
         Qt::Sensors
