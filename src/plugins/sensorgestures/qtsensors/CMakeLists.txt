@@ -19,7 +19,7 @@ qt_internal_add_plugin(QtSensorGesturePlugin
         qturnoversensorgesturerecognizer.cpp qturnoversensorgesturerecognizer.h
         qtwistsensorgesturerecognizer.cpp qtwistsensorgesturerecognizer.h
         qwhipsensorgesturerecognizer.cpp qwhipsensorgesturerecognizer.h
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Core
         Qt::Sensors
 )

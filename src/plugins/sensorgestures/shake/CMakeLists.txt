@@ -9,7 +9,7 @@ qt_internal_add_plugin(QShakeSensorGesturePlugin
     SOURCES
         qshakerecognizer.cpp qshakerecognizer.h
         qshakesensorgestureplugin.cpp qshakesensorgestureplugin.h
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Core
         Qt::Sensors
 )
