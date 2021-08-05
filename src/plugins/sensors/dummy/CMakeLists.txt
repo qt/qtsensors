@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(dummySensorPlugin
     OUTPUT_NAME qtsensors_dummy
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         dummyaccelerometer.cpp dummyaccelerometer.h
         dummycommon.cpp dummycommon.h

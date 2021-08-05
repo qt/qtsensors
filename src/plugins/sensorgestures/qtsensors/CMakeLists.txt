@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(QtSensorGesturePlugin
     OUTPUT_NAME qtsensorgestures_plugin
-    TYPE sensorgestures
+    PLUGIN_TYPE sensorgestures
     DEFAULT_IF FALSE
     SOURCES
         qcoversensorgesturerecognizer.cpp qcoversensorgesturerecognizer.h

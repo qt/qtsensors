@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(IOSSensorPlugin
     OUTPUT_NAME qtsensors_ios
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         main.mm
     PUBLIC_LIBRARIES

@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(WinRtSensorPlugin
     OUTPUT_NAME qtsensors_winrt
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         main.cpp
         winrtaccelerometer.cpp winrtaccelerometer.h

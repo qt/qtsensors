@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(AndroidSensorPlugin
     OUTPUT_NAME qtsensors_android
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         androidaccelerometer.cpp androidaccelerometer.h
         androidcompass.cpp androidcompass.h
