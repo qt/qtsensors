@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(genericSensorPlugin
     OUTPUT_NAME qtsensors_generic
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         genericalssensor.cpp genericalssensor.h
         genericorientationsensor.cpp genericorientationsensor.h

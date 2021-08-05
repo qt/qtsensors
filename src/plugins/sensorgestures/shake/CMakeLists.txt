@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(QShakeSensorGesturePlugin
     OUTPUT_NAME qtsensorgestures_shakeplugin
-    TYPE sensorgestures
+    PLUGIN_TYPE sensorgestures
     DEFAULT_IF FALSE
     SOURCES
         qshakerecognizer.cpp qshakerecognizer.h

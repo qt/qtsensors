@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(IIOSensorProxySensorPlugin
     OUTPUT_NAME qtsensors_iio-sensor-proxy
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         iiosensorproxycompass.cpp iiosensorproxycompass.h
         iiosensorproxylightsensor.cpp iiosensorproxylightsensor.h

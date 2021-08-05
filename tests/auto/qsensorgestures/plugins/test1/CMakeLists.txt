@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(QTestSensorGestureDupPlugin
     OUTPUT_NAME qtsensorgestures_testplugin1
-    TYPE sensorgestures
+    PLUGIN_TYPE sensorgestures
     DEFAULT_IF FALSE
     SOURCES
         qtest2recognizerduo.cpp

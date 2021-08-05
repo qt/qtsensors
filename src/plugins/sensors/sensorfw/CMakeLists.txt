@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(sensorfwSensorPlugin
     OUTPUT_NAME qtsensors_sensorfw
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         main.cpp
         sensorfwaccelerometer.cpp sensorfwaccelerometer.h
