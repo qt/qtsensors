@@ -165,6 +165,4 @@
     a magnetometer might support returning geo values. See QSensor::isFeatureSupported() for
     additional details.
 
-    Sensor Gestures are mostly platform independent, and will run if the platform has the sensors required.
-    Whether they are supported and work well or not depends on the platform.
 */

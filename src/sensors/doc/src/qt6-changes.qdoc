@@ -41,6 +41,12 @@
     In this topic we summarize those changes in Qt Sensors, and provide
     guidance to handle them.
 
+    \section1 Sensor Gesture support
+
+    The Gesture support has been removed. In its current shape the gestures
+    needs rethinking to be of more use for the developers. To track this please
+    see \l {https://bugreports.qt.io/browse/QTBUG-95649}{QTBUG-95649}.
+
     \section1 Platform notes
 
     \section2 Windows

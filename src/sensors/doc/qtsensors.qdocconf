@@ -47,6 +47,17 @@ examplesinstallpath = sensors
 
 imagedirs   += images
 
+# Gestures have been disabled for the time being
+excludedirs += ../../../examples/sensors/qmlsensorgestures \
+               ../../../examples/sensors/shakeit \
+               ../../../examples/sensors/sensorgestures \
+               ../../plugins/sensorgestures \
+               ../../sensors/gestures
+
+excludefiles += ../../sensorsquick/qmlsensorgesture.cpp \
+                src/qtsensorgestures-cpp.qdoc \
+                src/qtsensorgestures-plugins.qdoc
+
 depends += qtcore qtdoc qtgui qtquick
 
 navigation.landingpage = "Qt Sensors"

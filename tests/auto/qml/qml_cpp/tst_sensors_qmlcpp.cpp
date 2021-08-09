@@ -32,7 +32,7 @@
 
 #include <QtTest/private/qpropertytesthelper_p.h>
 #include <QtSensorsQuick/private/qmlsensor_p.h>
-#include <QtSensorsQuick/private/qmlsensorgesture_p.h>
+// #include <QtSensorsQuick/private/qmlsensorgesture_p.h>
 
 #include "qtemplategestureplugin.h"
 #include "qtemplaterecognizer.h"
@@ -69,7 +69,7 @@ class tst_sensors_qmlcpp : public QObject
 private slots:
     void initTestCase();
     void testReadingBindings();
-    void testGesture();
+    // void testGesture();
     void testSensorRanges();
 };
 
@@ -195,6 +195,7 @@ void tst_sensors_qmlcpp::testReadingBindings()
     unregister_test_backends();
 }
 
+/*
 void tst_sensors_qmlcpp::testGesture()
 {
     QTemplateGesturePlugin* plugin = new QTemplateGesturePlugin();
@@ -310,6 +311,8 @@ void tst_sensors_qmlcpp::testGesture()
     gs2->componentComplete();
     QCOMPARE(spy2_detected.count(), 1);
 }
+
+*/
 
 class QDummySensorBackend : public QSensorBackend
 {
