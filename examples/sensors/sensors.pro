@@ -5,17 +5,17 @@ SUBDIRS += grue
 qtHaveModule(quick) {
     SUBDIRS += \
         maze \
-        qmlsensorgestures \
         qmlqtsensors \
-        sensor_explorer \
-        shakeit
+        sensor_explorer
+        # qmlsensorgestures \
+        # shakeit
 
      qtHaveModule(svg): SUBDIRS += \
         accelbubble
 }
 
-qtHaveModule(widgets): SUBDIRS += \
-    sensorgestures
+# qtHaveModule(widgets): SUBDIRS += \
+#    sensorgestures
 
 EXAMPLE_FILES += \
     stub.h
