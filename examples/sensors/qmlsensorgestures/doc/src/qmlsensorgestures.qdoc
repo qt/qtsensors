@@ -36,7 +36,7 @@
     To write a QML application that will use the gesture plugin, following
     steps are needed:
 
-    Import the QtSensors 5.x module:
+    Import the QtSensors module:
 
     \snippet qmlsensorgestures/GestureView.qml 0
 

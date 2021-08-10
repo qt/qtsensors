@@ -32,12 +32,12 @@
     \image qmlqtsensors.png
 
     \section2 Qt Sensors in QML
-    \brief The QtSensors - QML example demonstrates the QML sensors types in the QtSensors 5 import.
+    \brief The QtSensors - QML example demonstrates the QML sensors types in the QtSensors import.
 
 
-    To write a QML application that will use the QML sensors types in the QtSensors 5 import you need to to the following steps:
+    To write a QML application that will use the QML sensors types in the QtSensors import you need to to the following steps:
 
-    Import the QtSensors 5.x declarative plugin:
+    Import the QtSensors declarative plugin:
 
     \snippet qmlqtsensors/qmlqtsensors.qml 0
 
