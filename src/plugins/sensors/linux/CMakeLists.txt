@@ -4,7 +4,7 @@
 
 qt_internal_add_plugin(LinuxSensorPlugin
     OUTPUT_NAME qtsensors_linuxsys
-    TYPE sensors
+    PLUGIN_TYPE sensors
     SOURCES
         linuxsysaccelerometer.cpp linuxsysaccelerometer.h
         main.cpp
