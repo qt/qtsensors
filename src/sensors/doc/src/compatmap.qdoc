@@ -159,10 +159,14 @@
 
     \endraw
 
-    1) Support depends on the underlying platform
-
     In addition to the table above, each sensor type might support specific features. For example,
     a magnetometer might support returning geo values. See QSensor::isFeatureSupported() for
     additional details.
+
+    \section1 Platform specific notes
+
+    \section2 Windows
+
+    The Windows backend is supported in Qt installations that were built with MSVC.
 
 */
