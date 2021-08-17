@@ -7,7 +7,7 @@ qt_internal_add_plugin(IOSSensorPlugin
     PLUGIN_TYPE sensors
     SOURCES
         main.mm
-    PUBLIC_LIBRARIES
+    LIBRARIES
         ${FWFoundation}
         Qt::Core
         Qt::Sensors
@@ -29,7 +29,7 @@ qt_internal_extend_target(IOSSensorPlugin CONDITION IOS AND UIKIT
         ioscompass.h ioscompass.mm
     DEFINES
         HAVE_COMPASS
-    PUBLIC_LIBRARIES
+    LIBRARIES
         ${FWCoreLocation}
 )
 
@@ -41,7 +41,7 @@ qt_internal_extend_target(IOSSensorPlugin CONDITION UIKIT AND NOT TVOS
         iosmotionmanager.h iosmotionmanager.mm
     DEFINES
         HAVE_COREMOTION
-    PUBLIC_LIBRARIES
+    LIBRARIES
         ${FWCoreMotion}
 )
 
@@ -50,6 +50,6 @@ qt_internal_extend_target(IOSSensorPlugin CONDITION UIKIT AND NOT WATCHOS
         iosproximitysensor.h iosproximitysensor.mm
     DEFINES
         HAVE_UIDEVICE
-    PUBLIC_LIBRARIES
+    LIBRARIES
         ${FWUIKit}
 )
