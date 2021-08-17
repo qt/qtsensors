@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 typedef QHash<QByteArray,QSensorBackendFactory*> FactoryForIdentifierMap;
 typedef QHash<QByteArray,FactoryForIdentifierMap> BackendIdentifiersForTypeMap;
 
-static QLoggingCategory sensorsCategory("qt.sensors");
+Q_LOGGING_CATEGORY(lcSensorManager, "qt.sensors");
 
 class QSensorManagerPrivate : public QObject
 {
@@ -103,14 +103,14 @@ public:
                 break;
         }
 #endif
-        qCDebug(sensorsCategory) << "Loading config from" << config;
+        qCDebug(lcSensorManager) << "Loading config from" << config;
         if (!QFile::exists(config)) {
-            qCDebug(sensorsCategory) << "There is no config file" << config;
+            qCDebug(lcSensorManager) << "There is no config file" << config;
             return;
         }
         QFile cfgfile(config);
         if (!cfgfile.open(QFile::ReadOnly)) {
-            qCWarning(sensorsCategory) << "Can't open config file" << config;
+            qCWarning(lcSensorManager) << "Can't open config file" << config;
             return;
         }
 
@@ -177,9 +177,9 @@ Q_GLOBAL_STATIC(QSensorManagerPrivate, sensorManagerPrivate)
 
 static void initPlugin(QObject *o, bool warnOnFail = true)
 {
-    qCDebug(sensorsCategory) << "Init plugin" << o;
+    qCDebug(lcSensorManager) << "Init plugin" << o;
     if (!o) {
-        qCWarning(sensorsCategory) << "Null plugin" << o;
+        qCWarning(lcSensorManager) << "Null plugin" << o;
         return;
     }
 
@@ -187,7 +187,7 @@ static void initPlugin(QObject *o, bool warnOnFail = true)
     if (!d) return; // hardly likely but just in case...
 
     if (d->seenPlugins.contains(o)) {
-        qCDebug(sensorsCategory) << "Plugin is seen" << o;
+        qCDebug(lcSensorManager) << "Plugin is seen" << o;
         return;
     }
 
@@ -198,11 +198,11 @@ static void initPlugin(QObject *o, bool warnOnFail = true)
     QSensorPluginInterface *plugin = qobject_cast<QSensorPluginInterface*>(o);
 
     if (plugin) {
-        qCDebug(sensorsCategory) << "Register sensors for " << plugin;
+        qCDebug(lcSensorManager) << "Register sensors for " << plugin;
         d->seenPlugins.insert(o);
         plugin->registerSensors();
     } else if (warnOnFail) {
-        qCWarning(sensorsCategory) << "Can't cast to plugin" << o;
+        qCWarning(lcSensorManager) << "Can't cast to plugin" << o;
     }
 }
 
