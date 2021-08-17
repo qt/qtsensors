@@ -103,6 +103,8 @@ import QtSensors
 
 ApplicationWindow {
 
+    anchors.fill: parent
+
     // Sensor types used
     //! [1]
     TiltSensor {
