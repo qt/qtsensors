@@ -36,6 +36,6 @@ qt_internal_add_plugin(IIOSensorProxySensorPlugin
 #####################################################################
 
 qt_internal_extend_target(IIOSensorProxySensorPlugin CONDITION NOT ANDROID
-    PUBLIC_LIBRARIES
+    LIBRARIES
         rt
 )

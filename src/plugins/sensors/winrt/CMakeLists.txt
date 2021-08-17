@@ -14,15 +14,14 @@ qt_internal_add_plugin(WinRtSensorPlugin
         winrtgyroscope.cpp winrtgyroscope.h
         winrtorientationsensor.cpp winrtorientationsensor.h
         winrtrotationsensor.cpp winrtrotationsensor.h
-    PUBLIC_LIBRARIES
-        Qt::Core
-        Qt::Sensors
     LIBRARIES
+        Qt::Core
         Qt::CorePrivate
+        Qt::Sensors
 )
 
 qt_internal_extend_target(WinRtSensorPlugin CONDITION MSVC
-    PUBLIC_LIBRARIES
+    LIBRARIES
         runtimeobject.lib
 )
 

@@ -20,6 +20,6 @@ qt_internal_add_plugin(LinuxSensorPlugin
 #####################################################################
 
 qt_internal_extend_target(LinuxSensorPlugin CONDITION NOT ANDROID
-    PUBLIC_LIBRARIES
+    LIBRARIES
         rt
 )

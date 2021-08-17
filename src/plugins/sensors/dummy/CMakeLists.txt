@@ -22,6 +22,6 @@ qt_internal_add_plugin(dummySensorPlugin
 #####################################################################
 
 qt_internal_extend_target(dummySensorPlugin CONDITION UNIX AND NOT ANDROID AND NOT APPLE AND NOT OPENBSD AND NOT QNX
-    PUBLIC_LIBRARIES
+    LIBRARIES
         rt
 )
