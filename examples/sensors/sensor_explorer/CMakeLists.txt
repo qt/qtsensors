@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 project(sensor_explorer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -30,16 +30,11 @@ target_link_libraries(sensor_explorer PUBLIC
     Qt::Sensors
 )
 
-# Resources:
-set(qml_resource_files
-    "sensor_explorer.qml"
-)
-
-qt6_add_resources(sensor_explorer "qml"
-    PREFIX
-        "/"
-    FILES
-        ${qml_resource_files}
+qt_add_qml_module(sensor_explorer
+    URI SensorModels
+    VERSION 1.0
+    QML_FILES sensor_explorer.qml
+    NO_RESOURCE_TARGET_PATH
 )
 
 install(TARGETS sensor_explorer
@@ -47,10 +42,3 @@ install(TARGETS sensor_explorer
     BUNDLE DESTINATION "${INSTALL_EXAMPLEDIR}"
     LIBRARY DESTINATION "${INSTALL_EXAMPLEDIR}"
 )
-
-set_target_properties(sensor_explorer PROPERTIES
-    QT_QML_MODULE_VERSION 1.0
-    QT_QML_MODULE_URI SensorModels
-)
-
-qt_qml_type_registration(sensor_explorer)
