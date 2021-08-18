@@ -44,11 +44,10 @@
 
     \e CMake:
     \code
-    set_target_properties(sensor_explorer PROPERTIES
-        QT_QML_MODULE_VERSION 1.0
-        QT_QML_MODULE_URI SensorModels
+    qt_add_qml_module(sensor_explorer
+        URI SensorModels
+        VERSION 1.0
     )
-    qt_qml_type_registration(sensor_explorer)
     \endcode
 
     \e qmake:
@@ -58,7 +57,7 @@
     QML_IMPORT_MAJOR_VERSION = 1
     \endcode
 
-    The indvidual model elements are exposed as part of the model
+    The individual model elements are exposed as part of the model
     code by using the \c QML_ELEMENT macro as illustrated here:
     \snippet sensor_explorer/sensormodels.h 0
 
