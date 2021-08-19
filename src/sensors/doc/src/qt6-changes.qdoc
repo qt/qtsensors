@@ -71,6 +71,11 @@
     backend, and as such they are not currently listed as supported sensor
     types.
 
+    \section2 Linux
+
+    The Linux sysfs accelerometer support has been removed. The backend is
+    undocumented and has been without any real activity for almost 10 years.
+
     \section1 API changes
 
     \section2 Deleted typedef for qtimestamp

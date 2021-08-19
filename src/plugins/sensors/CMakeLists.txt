@@ -14,10 +14,6 @@ if (QT_FEATURE_winrt_sensors AND NOT SENSORS_PLUGINS OR "winrt" IN_LIST SENSORS_
     add_subdirectory(winrt)
 endif()
 
-if (LINUX AND NOT SENSORS_PLUGINS OR "linux" IN_LIST SENSORS_PLUGINS)
-    add_subdirectory(linux)
-endif()
-
 if (IOS AND NOT SENSORS_PLUGINS OR "ios" IN_LIST SENSORS_PLUGINS)
     add_subdirectory(ios)
 endif()
