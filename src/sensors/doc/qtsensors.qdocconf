@@ -14,9 +14,6 @@ qhp.QtSensors.virtualFolder       = qtsensors
 qhp.QtSensors.indexTitle          = Qt Sensors
 qhp.QtSensors.indexRoot           =
 
-qhp.QtSensors.filterAttributes    = qtsensors $QT_VERSION qtrefdoc
-qhp.QtSensors.customFilters.Qt.name = QtSensors $QT_VERSION
-qhp.QtSensors.customFilters.Qt.filterAttributes = qtsensors $QT_VERSION
 qhp.QtSensors.subprojects         = overviews classes qmltypes examples
 qhp.QtSensors.subprojects.overviews.title = Overview
 qhp.QtSensors.subprojects.overviews.indexTitle = Qt Sensors
