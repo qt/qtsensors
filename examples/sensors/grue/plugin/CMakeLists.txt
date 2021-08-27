@@ -41,7 +41,7 @@ endif()
 
 if(APPLE AND QT6_IS_SHARED_LIBS_BUILD)
     set_target_properties(qtsensors_grue PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../grue_app.app/Contents/MacOS/../sensors
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../grue_app.app/Contents/Plugins/sensors
     )
 endif()
 
