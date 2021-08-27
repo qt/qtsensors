@@ -33,7 +33,7 @@ set_target_properties(qtsensors_grue PROPERTIES
     MACOSX_BUNDLE TRUE
 )
 
-if(WIN32)
+if(WIN32 OR (UNIX AND NOT APPLE))
     set_target_properties(qtsensors_grue PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../sensors
     )
