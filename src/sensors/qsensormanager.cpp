@@ -218,7 +218,7 @@ void QSensorManagerPrivate::loadPlugins()
         initPlugin(plugin, false /*do not warn on fail*/);
     if (d->loadExternalPlugins) {
         SENSORLOG() << "initializing plugins";
-        QList<QJsonObject> meta = d->loader->metaData();
+        QList<QPluginParsedMetaData> meta = d->loader->metaData();
         for (int i = 0; i < meta.count(); i++) {
             QObject *plugin = d->loader->instance(i);
             initPlugin(plugin);
