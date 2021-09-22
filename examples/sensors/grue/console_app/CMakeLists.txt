@@ -1,6 +1,6 @@
 # Generated from console_app.pro.
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 project(detect_grue LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
