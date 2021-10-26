@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sensorsshowcase.qml</file>
+        <file>accelerometer.qml</file>
+        <file>proximity.qml</file>
+        <file>compass.qml</file>
+        <file>magnetometer.qml</file>
+        <file>gyroscope.qml</file>
+        <file>images/magnet.svg</file>
+        <file>images/compass.svg</file>
+        <file>images/qt_logo.png</file>
+    </qresource>
+</RCC>
