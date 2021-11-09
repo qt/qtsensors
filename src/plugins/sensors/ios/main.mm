@@ -47,6 +47,7 @@
 #include "iosmagnetometer.h"
 #include "ioscompass.h"
 #include "iosproximitysensor.h"
+#include "iospressure.h"
 
 #import <CoreLocation/CoreLocation.h>
 #ifdef HAVE_COREMOTION
@@ -67,6 +68,8 @@ public:
             QSensorManager::registerBackend(QGyroscope::sensorType, IOSGyroscope::id, this);
         if ([QIOSMotionManager sharedManager].magnetometerAvailable)
             QSensorManager::registerBackend(QMagnetometer::sensorType, IOSMagnetometer::id, this);
+        if ([CMAltimeter isRelativeAltitudeAvailable])
+            QSensorManager::registerBackend(QPressureSensor::sensorType, IOSPressure::id, this);
 #endif
 #ifdef HAVE_COMPASS
         if ([CLLocationManager headingAvailable])
@@ -87,6 +90,8 @@ public:
             return new IOSGyroscope(sensor);
         if (sensor->identifier() == IOSMagnetometer::id)
             return new IOSMagnetometer(sensor);
+        if (sensor->identifier() == IOSPressure::id)
+            return new IOSPressure(sensor);
 #endif
 #ifdef HAVE_COMPASS
         if (sensor->identifier() == IOSCompass::id)

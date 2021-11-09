@@ -38,6 +38,7 @@ qt_internal_extend_target(IOSSensorPlugin CONDITION UIKIT AND NOT TVOS
         iosaccelerometer.h iosaccelerometer.mm
         iosgyroscope.h iosgyroscope.mm
         iosmagnetometer.h iosmagnetometer.mm
+        iospressure.h iospressure.mm
         iosmotionmanager.h iosmotionmanager.mm
     DEFINES
         HAVE_COREMOTION
