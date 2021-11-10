@@ -42,7 +42,7 @@
 
 /*!
     \qmltype Accelerometer
-    \instantiates QmlAccelerometer
+//!    \instantiates QmlAccelerometer
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -102,7 +102,7 @@ QSensor *QmlAccelerometer::sensor() const
 
 /*!
     \qmltype AccelerometerReading
-    \instantiates QmlAccelerometerReading
+//!    \instantiates QmlAccelerometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

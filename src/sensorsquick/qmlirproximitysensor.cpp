@@ -42,7 +42,7 @@
 
 /*!
     \qmltype IRProximitySensor
-    \instantiates QmlIRProximitySensor
+//!    \instantiates QmlIRProximitySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -78,7 +78,7 @@ QSensor *QmlIRProximitySensor::sensor() const
 
 /*!
     \qmltype IRProximityReading
-    \instantiates QmlIRProximitySensorReading
+//!    \instantiates QmlIRProximitySensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

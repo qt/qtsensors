@@ -42,7 +42,7 @@
 
 /*!
     \qmltype OrientationSensor
-    \instantiates QmlOrientationSensor
+//!    \instantiates QmlOrientationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -79,7 +79,7 @@ QSensor *QmlOrientationSensor::sensor() const
 
 /*!
     \qmltype OrientationReading
-    \instantiates QmlOrientationSensorReading
+//!    \instantiates QmlOrientationSensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

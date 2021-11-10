@@ -42,7 +42,7 @@
 
 /*!
     \qmltype Compass
-    \instantiates QmlCompass
+//!    \instantiates QmlCompass
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -79,7 +79,7 @@ QSensor *QmlCompass::sensor() const
 
 /*!
     \qmltype CompassReading
-    \instantiates QmlCompassReading
+//!    \instantiates QmlCompassReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

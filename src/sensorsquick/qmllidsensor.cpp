@@ -41,7 +41,7 @@
 
 /*!
     \qmltype LidSensor
-    \instantiates QmlLidSensor
+//!    \instantiates QmlLidSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.9
@@ -79,7 +79,7 @@ QSensor *QmlLidSensor::sensor() const
 
 /*!
     \qmltype LidReading
-    \instantiates QmlLidReading
+//!    \instantiates QmlLidReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.9

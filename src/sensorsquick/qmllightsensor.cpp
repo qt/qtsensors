@@ -42,7 +42,7 @@
 
 /*!
     \qmltype LightSensor
-    \instantiates QmlLightSensor
+//!    \instantiates QmlLightSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -93,7 +93,7 @@ qreal QmlLightSensor::fieldOfView() const
 
 /*!
     \qmltype LightReading
-    \instantiates QmlLightSensorReading
+//!    \instantiates QmlLightSensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

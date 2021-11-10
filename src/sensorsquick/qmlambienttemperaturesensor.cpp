@@ -41,7 +41,7 @@
 
 /*!
     \qmltype AmbientTemperatureSensor
-    \instantiates QmlAmbientTemperatureSensor
+//!    \instantiates QmlAmbientTemperatureSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.1
@@ -78,7 +78,7 @@ QSensor *QmlAmbientTemperatureSensor::sensor() const
 
 /*!
     \qmltype AmbientTemperatureReading
-    \instantiates QmlAmbientTemperatureReading
+//!    \instantiates QmlAmbientTemperatureReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.1

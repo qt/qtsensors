@@ -41,7 +41,7 @@
 
 /*!
     \qmltype PressureSensor
-    \instantiates QmlPressureSensor
+//!    \instantiates QmlPressureSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.1
@@ -78,7 +78,7 @@ QSensor *QmlPressureSensor::sensor() const
 
 /*!
     \qmltype PressureReading
-    \instantiates QmlPressureReading
+//!    \instantiates QmlPressureReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.1
