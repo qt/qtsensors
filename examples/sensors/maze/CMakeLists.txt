@@ -22,13 +22,24 @@ set_target_properties(maze PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+if(ANDROID)
+    set_property(TARGET maze PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+        ${CMAKE_CURRENT_SOURCE_DIR}/android)
+    endif()
+if(APPLE)
+    if(IOS)
+        set_property(TARGET maze PROPERTY
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
+        )
+    endif()
+endif()
+
 target_link_libraries(maze PUBLIC
     Qt::Core
     Qt::Gui
     Qt::Quick
     Qt::Sensors
 )
-
 
 # Resources:
 set(maze_resource_files

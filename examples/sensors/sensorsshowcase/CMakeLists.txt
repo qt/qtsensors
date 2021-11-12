@@ -24,8 +24,15 @@ set_target_properties(sensorsshowcase PROPERTIES
 )
 
 if(ANDROID)
-set_property(TARGET sensorsshowcase APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-             ${CMAKE_CURRENT_SOURCE_DIR}/android)
+    set_property(TARGET sensorsshowcase PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+        ${CMAKE_CURRENT_SOURCE_DIR}/android)
+    endif()
+if(APPLE)
+    if(IOS)
+        set_property(TARGET sensorsshowcase PROPERTY
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
+        )
+    endif()
 endif()
 
 target_link_libraries(sensorsshowcase PUBLIC
