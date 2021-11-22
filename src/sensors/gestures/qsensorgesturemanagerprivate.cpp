@@ -90,7 +90,7 @@ void QSensorGestureManagerPrivate::loadPlugins()
     for (QObject *plugin : QPluginLoader::staticInstances())
         initPlugin(plugin);
 
-    QList<QJsonObject> meta = loader->metaData();
+    QList<QPluginParsedMetaData> meta = loader->metaData();
     for (int i = 0; i < meta.count(); i++) {
         QObject *plugin = loader->instance(i);
         initPlugin(plugin);
