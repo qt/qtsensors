@@ -84,11 +84,17 @@ IMPLEMENT_READING(QTapReading)
     the detected axis. Previous versions of the API did not allow this. Applications that check
     for the _Pos and _Neg flags as values should be updated so they can work with all devices.
 
-    \oldcode
+    For example, if you have code like
+
+    \code
     if (reading->tapDirection() == QTapReading::X_Pos) {
         ...
     }
-    \newcode
+    \endcode
+
+    you can rewrite it as
+
+    \code
     if (reading->tapDirection()&QTapReading::X_Pos) {
         ...
     }
