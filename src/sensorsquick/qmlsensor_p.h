@@ -54,6 +54,7 @@
 #include "qsensorsquickglobal_p.h"
 
 #include <QObject>
+#include <QProperty>
 #include <QQmlParserStatus>
 #include <QtQml/qqml.h>
 #include <QQmlListProperty>
