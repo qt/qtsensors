@@ -75,7 +75,7 @@ void IOSMagnetometer::start()
 
     if (m_returnGeoValues) {
         if (++s_deviceMotionStartCount == 1)
-            [m_motionManager startDeviceMotionUpdates];
+            [m_motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXMagneticNorthZVertical];
     } else {
         if (++s_magnetometerStartCount == 1)
             [m_motionManager startMagnetometerUpdates];
