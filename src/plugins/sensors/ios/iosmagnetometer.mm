@@ -53,7 +53,7 @@ IOSMagnetometer::IOSMagnetometer(QSensor *sensor)
     : QSensorBackend(sensor)
     , m_motionManager([QIOSMotionManager sharedManager])
     , m_timer(0)
-    , m_returnGeoValues(false)
+    , m_returnGeoValues(true)
 {
     setReading<QMagnetometerReading>(&m_reading);
     // Technical information about data rate is not found, but

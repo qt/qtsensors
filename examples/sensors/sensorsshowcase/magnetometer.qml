@@ -67,7 +67,6 @@ Rectangle {
     Magnetometer {
         id: magnetometer
         active: true
-        returnGeoValues: true
         dataRate: 25
         onReadingChanged: {
             root.magnetometerX = reading.x

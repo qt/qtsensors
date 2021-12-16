@@ -59,7 +59,7 @@ class QMagnetometerPrivate : public QSensorPrivate
 {
 public:
     QMagnetometerPrivate()
-        : returnGeoValues(false)
+        : returnGeoValues(true)
     {
     }
 
