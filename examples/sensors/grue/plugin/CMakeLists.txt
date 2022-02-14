@@ -1,22 +1,15 @@
-# Generated from plugin.pro.
-
 cmake_minimum_required(VERSION 3.16)
 project(qtsensors_grue LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/sensors/grue/sensors")
 
-find_package(Qt6 COMPONENTS Core)
-find_package(Qt6 COMPONENTS Sensors)
+find_package(Qt6 REQUIRED COMPONENTS Core Sensors)
 
 qt_add_plugin(qtsensors_grue
     PLUGIN_TYPE sensors

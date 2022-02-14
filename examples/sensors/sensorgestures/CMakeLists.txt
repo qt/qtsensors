@@ -1,28 +1,27 @@
 cmake_minimum_required(VERSION 3.16)
 project(gesture LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/sensors/sensorgestures")
 
-find_package(Qt6 COMPONENTS Core Gui Sensors Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Sensors Widgets)
 
 qt_add_executable(gesture
     main.cpp
     mainwindow.cpp mainwindow.h mainwindow.ui
 )
+
 set_target_properties(gesture PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+
 target_link_libraries(gesture PUBLIC
     Qt::Core
     Qt::Gui
