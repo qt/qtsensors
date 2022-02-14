@@ -1,19 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 project(qtsensorgestures_counterplugin LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}")
 
-find_package(Qt6 COMPONENTS Core Gui Sensors)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Sensors)
 
 qt_add_plugin(qtsensorgestures_counterplugin)
 

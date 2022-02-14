@@ -1,25 +1,20 @@
-# Generated from console_app.pro.
-
 cmake_minimum_required(VERSION 3.16)
 project(detect_grue LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/sensors/grue")
 
-find_package(Qt6 COMPONENTS Core Sensors)
+find_package(Qt6 REQUIRED COMPONENTS Core Sensors)
 
 qt_add_executable(detect_grue
     main.cpp
 )
+
 set_target_properties(detect_grue PROPERTIES
     WIN32_EXECUTABLE FALSE
     MACOSX_BUNDLE FALSE

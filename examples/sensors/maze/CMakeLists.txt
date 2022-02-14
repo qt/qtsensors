@@ -1,27 +1,25 @@
 cmake_minimum_required(VERSION 3.16)
 project(maze LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
-  set(INSTALL_EXAMPLESDIR "examples")
+    set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/sensors/maze")
 
-find_package(Qt6 COMPONENTS Core Gui Quick Sensors)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Sensors)
 
 qt_add_executable(maze
     main.cpp
 )
+
 set_target_properties(maze PROPERTIES
     WIN32_EXECUTABLE TRUE
     MACOSX_BUNDLE TRUE
 )
+
 if(ANDROID)
     set_property(TARGET maze PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
         ${CMAKE_CURRENT_SOURCE_DIR}/android)
