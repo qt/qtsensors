@@ -258,8 +258,8 @@ void QSensorManagerPrivate::loadPlugins()
 */
 void QSensorManager::registerBackend(const QByteArray &type, const QByteArray &identifier, QSensorBackendFactory *factory)
 {
-    Q_ASSERT(type.count());
-    Q_ASSERT(identifier.count());
+    Q_ASSERT(type.size());
+    Q_ASSERT(identifier.size());
     Q_ASSERT(factory);
     QSensorManagerPrivate *d = sensorManagerPrivate();
     if (!d) return; // hardly likely but just in case...
