@@ -1,4 +1,3 @@
-include($QT_INSTALL_DOCS/global/qt-html-templates-offline.qdocconf)
 include($QT_INSTALL_DOCS/global/qt-module-defaults.qdocconf)
 include($QT_INSTALL_DOCS/config/exampleurl-qtsensors.qdocconf)
 
@@ -20,18 +19,18 @@ qhp.QtSensors.customFilters.Qt.filterAttributes = qtsensors $QT_VERSION
 qhp.QtSensors.subprojects         = overviews classes qmltypes examples
 qhp.QtSensors.subprojects.overviews.title = Overview
 qhp.QtSensors.subprojects.overviews.indexTitle = Qt Sensors
-qhp.QtSensors.subprojects.overviews.selectors = fake:page,group,module
+qhp.QtSensors.subprojects.overviews.selectors = doc:page,group,module
 qhp.QtSensors.subprojects.classes.title = C++ Classes
 qhp.QtSensors.subprojects.classes.indexTitle = Qt Sensors C++ Classes
-qhp.QtSensors.subprojects.classes.selectors = class fake:headerfile
+qhp.QtSensors.subprojects.classes.selectors = class headerfile
 qhp.QtSensors.subprojects.classes.sortPages = true
 qhp.QtSensors.subprojects.qmltypes.title = QML Types
 qhp.QtSensors.subprojects.qmltypes.indexTitle = Qt Sensors QML Types
-qhp.QtSensors.subprojects.qmltypes.selectors = qmlclass
+qhp.QtSensors.subprojects.qmltypes.selectors = qmltype
 qhp.QtSensors.subprojects.qmltypes.sortPages = true
 qhp.QtSensors.subprojects.examples.title = Examples
 qhp.QtSensors.subprojects.examples.indexTitle = Qt Sensors Examples
-qhp.QtSensors.subprojects.examples.selectors = fake:example
+qhp.QtSensors.subprojects.examples.selectors = doc:example
 
 tagfile                 = ../../../doc/qtsensors/qtsensors.tags
 
@@ -58,7 +57,7 @@ excludefiles += ../../sensorsquick/qmlsensorgesture.cpp \
                 src/qtsensorgestures-cpp.qdoc \
                 src/qtsensorgestures-plugins.qdoc
 
-depends += qtcore qtdoc qtgui qtquick
+depends += qtcore qtdoc qtgui qtquick qtcmake
 
 navigation.landingpage = "Qt Sensors"
 navigation.cppclassespage = "Qt Sensors C++ Classes"
