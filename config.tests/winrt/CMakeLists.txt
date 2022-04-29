@@ -22,6 +22,6 @@ add_executable(${PROJECT_NAME}
 
 if(MSVC)
     target_link_libraries(${PROJECT_NAME} PRIVATE
-        runtimeobject.lib
+        runtimeobject
     )
 endif()
