@@ -27,7 +27,10 @@
 ****************************************************************************/
 
 #include <QtCore/QList>
+#include <QtCore/QMap>
+#include <QtCore/QVariantMap>
 #include "qsensorbackend.h"
+
 
 typedef QSensorBackend* (*CreateFunc) (QSensor *sensor);
 class Record
