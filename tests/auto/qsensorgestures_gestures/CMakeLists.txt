@@ -17,7 +17,7 @@ qt_internal_add_test(tst_sensorgestures_gestures
         mockbackends.h
         mockcommon.cpp mockcommon.h
         tst_sensorgestures_gestures.cpp
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::SensorsPrivate
 )
 

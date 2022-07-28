@@ -11,7 +11,7 @@ qt_internal_add_test(tst_qsensorgesturepluginstest
         tst_qsensorgesturepluginstest.cpp
     INCLUDE_DIRECTORIES
         ../qsensor
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Sensors
         Qt::Test
 )

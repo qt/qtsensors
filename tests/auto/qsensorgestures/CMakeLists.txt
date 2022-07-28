@@ -16,6 +16,6 @@ qt_internal_add_test(tst_qsensorgesturetest
         tst_qsensorgesturetest.cpp
     DEFINES
         QT_STATICPLUGIN
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Sensors
 )

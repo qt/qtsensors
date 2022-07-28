@@ -10,7 +10,7 @@ qt_internal_add_manual_test(tst_manual_sensor_clerk
     SOURCES
         collector.cpp collector.h
         main.cpp
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Gui
         Qt::Quick
         Qt::Sensors

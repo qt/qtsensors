@@ -10,7 +10,7 @@ qt_internal_add_manual_test(tst_manual_sensor_explorer
     SOURCES
         explorer.cpp explorer.h explorer.ui
         main.cpp
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Sensors
         Qt::Widgets
     ENABLE_AUTOGEN_TOOLS

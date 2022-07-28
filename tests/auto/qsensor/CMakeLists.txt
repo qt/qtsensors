@@ -16,7 +16,7 @@ qt_internal_add_test(tst_qsensor
         tst_qsensor.cpp
     DEFINES
         QT_STATICPLUGIN
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::CorePrivate
         Qt::SensorsPrivate
 )

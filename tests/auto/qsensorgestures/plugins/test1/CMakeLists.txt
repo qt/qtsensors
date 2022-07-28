@@ -16,7 +16,7 @@ qt_internal_add_plugin(QTestSensorGestureDupPlugin
         qtestsensorgestureplugindup.cpp qtestsensorgestureplugindup_p.h
     DEFINES
         QT_DISABLE_DEPRECATED_BEFORE=0
-    PUBLIC_LIBRARIES
+    LIBRARIES
         Qt::Core
         Qt::Gui
         Qt::Sensors
