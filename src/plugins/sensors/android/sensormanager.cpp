@@ -6,14 +6,17 @@
 
 #include <dlfcn.h>
 
+Q_DECLARE_JNI_CLASS(AndroidContext, "android/content/Context")
+Q_DECLARE_JNI_TYPE(Sensor, "Landroid/hardware/Sensor;")
+
 SensorManager::SensorManager()
 {
-    auto sensorService =  QJniObject::getStaticObjectField("android.content.Context",
-                                                           "SENSOR_SERVICE", "Ljava/lang/String;");
+    auto sensorService =
+            QJniObject::getStaticField<QtJniTypes::AndroidContext, jstring>("SENSOR_SERVICE");
+
     QJniObject context = QNativeInterface::QAndroidApplication::context();
-    m_sensorManager = context.callObjectMethod("getSystemService",
-                                               "(Ljava/lang/String;)Ljava/lang/Object;",
-                                               sensorService.object());
+    m_sensorManager = context.callMethod<jobject>("getSystemService",
+                                                  sensorService.object<jstring>());
     setObjectName("QtSensorsLooperThread");
     start();
     m_waitForStart.acquire();
@@ -27,8 +30,8 @@ SensorManager::~SensorManager()
 
 QJniObject SensorManager::javaSensor(const ASensor *sensor) const
 {
-    return m_sensorManager.callObjectMethod("getDefaultSensor", "(I)Landroid/hardware/Sensor;",
-                                            ASensor_getType(sensor));
+    return m_sensorManager.callMethod<QtJniTypes::Sensor>("getDefaultSensor",
+                                                          ASensor_getType(sensor));
 }
 
 QSharedPointer<SensorManager> &SensorManager::instance()
@@ -45,8 +48,8 @@ ALooper *SensorManager::looper() const
 static inline ASensorManager* androidManager()
 {
     QJniObject context = QNativeInterface::QAndroidApplication::context();
-    auto packageName = context.callObjectMethod("getPackageName", "()Ljava/lang/String;")
-                              .toString().toUtf8();
+    auto packageName = context.callMethod<jstring>("getPackageName").toString().toUtf8();
+
 #if __ANDROID_API__ >= 26
     return ASensorManager_getInstanceForPackage(packageName.constData());
 #else
