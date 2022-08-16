@@ -14,8 +14,6 @@ qt_internal_add_plugin(QTestSensorGestureDupPlugin
         qtest2recognizerdup.h
         qtestrecognizerdup.cpp qtestrecognizerdup.h
         qtestsensorgestureplugindup.cpp qtestsensorgestureplugindup_p.h
-    DEFINES
-        QT_DISABLE_DEPRECATED_BEFORE=0
     LIBRARIES
         Qt::Core
         Qt::Gui
