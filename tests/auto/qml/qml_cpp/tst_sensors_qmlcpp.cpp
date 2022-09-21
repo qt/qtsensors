@@ -9,9 +9,9 @@
 #include <QtSensorsQuick/private/qmlsensor_p.h>
 // #include <QtSensorsQuick/private/qmlsensorgesture_p.h>
 
-#include "qtemplategestureplugin.h"
-#include "qtemplaterecognizer.h"
-#include <qsensorgesturemanager.h>
+// #include "qtemplategestureplugin.h"
+// #include "qtemplaterecognizer.h"
+// #include <qsensorgesturemanager.h>
 #include <qsensorbackend.h>
 #include "qsensormanager.h"
 
