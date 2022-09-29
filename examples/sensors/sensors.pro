@@ -7,15 +7,10 @@ qtHaveModule(quick) {
         maze \
         qmlqtsensors \
         sensor_explorer
-        # qmlsensorgestures \
-        # shakeit
 
      qtHaveModule(svg): SUBDIRS += \
         accelbubble
 }
-
-# qtHaveModule(widgets): SUBDIRS += \
-#    sensorgestures
 
 EXAMPLE_FILES += \
     stub.h
