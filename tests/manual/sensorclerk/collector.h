@@ -43,7 +43,7 @@ private:
     QFile dataFile;
 
     bool isActive;
-    int fileCounter;
+    size_t fileCounter;
 
     Q_DISABLE_COPY(Collector)
 };

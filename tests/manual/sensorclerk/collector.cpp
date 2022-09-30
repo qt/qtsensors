@@ -110,7 +110,7 @@ void Collector::startCollecting()
 {
     if (dataFile.exists()) {
         fileCounter++;
-        for (int i = 0; i < fileCounter; i++) {
+        for (size_t i = 0; i < fileCounter; i++) {
             if (!QFileInfo(QString(QDir::tempPath()+"/sensordump_%1.dat").arg(fileCounter)).exists())
                 dataFile.setFileName(QString(QDir::tempPath()+"/sensordump_%1.dat").arg(fileCounter));
             break;
