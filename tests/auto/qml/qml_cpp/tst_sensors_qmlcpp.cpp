@@ -265,11 +265,11 @@ void tst_sensors_qmlcpp::testSensorRanges()
     QSignalSpy output2Spy(output2, SIGNAL(destroyed()));
 
     qmlSensor.reset();
-    QCOMPARE(range0Spy.count(), 1);
-    QCOMPARE(range1Spy.count(), 1);
-    QCOMPARE(output0Spy.count(), 1);
-    QCOMPARE(output1Spy.count(), 1);
-    QCOMPARE(output2Spy.count(), 1);
+    QCOMPARE(range0Spy.size(), 1);
+    QCOMPARE(range1Spy.size(), 1);
+    QCOMPARE(output0Spy.size(), 1);
+    QCOMPARE(output1Spy.size(), 1);
+    QCOMPARE(output2Spy.size(), 1);
 }
 
 QT_END_NAMESPACE

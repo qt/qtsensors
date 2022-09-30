@@ -89,7 +89,7 @@ public:
                 //read out setting line
                 line.remove(QLatin1String(" "));
                 QStringList pair = line.split(QStringLiteral("="));
-                if (pair.count() == 2)
+                if (pair.size() == 2)
                     defaultIdentifierForType.insert(pair[0].toLatin1(), pair[1].toLatin1());
             }
         }
@@ -183,7 +183,7 @@ void QSensorManagerPrivate::loadPlugins()
     if (d->loadExternalPlugins) {
         SENSORLOG() << "initializing plugins";
         QList<QPluginParsedMetaData> meta = d->loader->metaData();
-        for (int i = 0; i < meta.count(); i++) {
+        for (int i = 0; i < meta.size(); i++) {
             QObject *plugin = d->loader->instance(i);
             initPlugin(plugin);
         }
@@ -271,7 +271,7 @@ void QSensorManager::unregisterBackend(const QByteArray &type, const QByteArray 
 
     (void)factoryByIdentifier.take(identifier); // we don't own this pointer anyway
     if (d->firstIdentifierForType[type] == identifier) {
-        if (factoryByIdentifier.count()) {
+        if (factoryByIdentifier.size()) {
             d->firstIdentifierForType[type] = factoryByIdentifier.begin().key();
             if (d->firstIdentifierForType[type].startsWith("generic.")) {
                 // Don't let a generic backend be the default when some other backend exists!
@@ -287,7 +287,7 @@ void QSensorManager::unregisterBackend(const QByteArray &type, const QByteArray 
             (void)d->firstIdentifierForType.take(type);
         }
     }
-    if (!factoryByIdentifier.count())
+    if (!factoryByIdentifier.size())
         (void)d->backendsByType.take(type);
 
     // Notify the app that the available sensor list has changed.

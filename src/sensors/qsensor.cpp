@@ -814,7 +814,7 @@ void QSensor::setOutputRange(int index)
         return;
     }
     bool warn = true;
-    if (index >= 0 && index < d->outputRanges.count()) {
+    if (index >= 0 && index < d->outputRanges.size()) {
         warn = false;
         d->outputRange = index;
     }

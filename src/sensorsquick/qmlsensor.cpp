@@ -20,7 +20,7 @@ public:
 template<typename Item>
 qsizetype readonlyListCount(QQmlListProperty<Item> *p)
 {
-    return static_cast<const QList<Item *> *>(p->data)->count();
+    return static_cast<const QList<Item *> *>(p->data)->size();
 }
 
 template<typename Item>
@@ -453,9 +453,9 @@ void QmlSensor::componentComplete()
     // meta-data should become non-empty
     if (!description().isEmpty())
         Q_EMIT descriptionChanged();
-    if (available.count())
+    if (available.size())
         Q_EMIT availableDataRatesChanged();
-    if (output.count())
+    if (output.size())
         Q_EMIT outputRangesChanged();
 
     connect(sensor(), SIGNAL(readingChanged()), this, SLOT(updateReading()));

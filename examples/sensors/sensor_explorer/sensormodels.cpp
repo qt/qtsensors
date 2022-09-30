@@ -20,7 +20,7 @@ QByteArray rangelistToByteArray(const qrangelist& list)
         else
             ranges << QString("%1-%2 Hz").arg(r.first).arg(r.second);
     }
-    if (ranges.count() > 0)
+    if (ranges.size() > 0)
         return ranges.join(", ").toLatin1();
     return "-";
 }
@@ -31,7 +31,7 @@ QByteArray outputrangelistToByteArray(const qoutputrangelist& list)
     for (const qoutputrange &r : list) {
         ranges << QString("(%1, %2) += %3").arg(r.minimum).arg(r.maximum).arg(r.accuracy);
     }
-    if (ranges.count() > 0)
+    if (ranges.size() > 0)
         return ranges.join(", ").toLatin1();
     return "-";
 }
@@ -71,7 +71,7 @@ void AvailableSensorsModel::loadSensors()
 
 int AvailableSensorsModel::rowCount(const QModelIndex&) const
 {
-    return m_availableSensors.count();
+    return m_availableSensors.size();
 }
 
 //! [1]
@@ -85,7 +85,7 @@ QVariant AvailableSensorsModel::data(const QModelIndex &index, int role) const
 
 QSensor* AvailableSensorsModel::get(int index) const
 {
-    if (index < 0 || index >= m_availableSensors.count())
+    if (index < 0 || index >= m_availableSensors.size())
         return nullptr;
     return m_availableSensors[index];
 }
@@ -103,7 +103,7 @@ int SensorPropertyModel::rowCount(const QModelIndex&) const
 {
     if (!m_sensor)
         return 0;
-    return m_values.count();
+    return m_values.size();
 }
 
 int SensorPropertyModel::columnCount(const QModelIndex&) const
