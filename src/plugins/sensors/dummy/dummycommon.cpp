@@ -18,7 +18,7 @@ void dummycommon::start()
 
     int dataRate = sensor()->dataRate();
     if (dataRate == 0) {
-        if (sensor()->availableDataRates().count())
+        if (sensor()->availableDataRates().size())
             // Use the first available rate when -1 is chosen
             dataRate = sensor()->availableDataRates().first().first;
         else
