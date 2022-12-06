@@ -77,7 +77,7 @@ qt_internal_add_module(Sensors
 
 if(ANDROID)
     set_property(TARGET Sensors APPEND PROPERTY QT_ANDROID_LIB_DEPENDENCIES
-        plugins/sensors/libplugins_sensors_qtsensors_android.so
+        ${INSTALL_PLUGINSDIR}/sensors/libplugins_sensors_qtsensors_android.so
     )
 endif()
 
