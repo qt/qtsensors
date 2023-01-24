@@ -35,6 +35,7 @@ qt6_add_qml_module(grue_app
         grue.qml
     RESOURCES
         grue.png
+    RESOURCE_PREFIX /
 )
 
 add_subdirectory(plugin)
