@@ -6,38 +6,6 @@
 
 #include "qsensor.h"
 
-#undef DECLARE_READING
-#undef DECLARE_READING_D
-
-template <typename T>
-class qTypedWrapper
-{
-public:
-    qTypedWrapper(QScopedPointer<QSensorReadingPrivate> *_ptr)
-        : ptr(_ptr)
-    {
-    }
-
-    T *operator->() const
-    {
-        return static_cast<T*>(ptr->data());
-    }
-
-private:
-    QScopedPointer<QSensorReadingPrivate> *ptr;
-};
-
-#define DECLARE_READING(classname)\
-        DECLARE_READING_D(classname, classname ## Private)
-
-#define DECLARE_READING_D(classname, pclassname)\
-    public:\
-        classname(QObject *parent = 0);\
-        virtual ~classname();\
-        void copyValuesFrom(QSensorReading *other) override;\
-    private:\
-        qTypedWrapper<pclassname> d;
-
 class TestSensor2ReadingPrivate;
 
 class TestSensor2Reading : public QSensorReading

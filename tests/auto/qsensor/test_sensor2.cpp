@@ -4,28 +4,6 @@
 #include "test_sensor2.h"
 #include "test_sensor2_p.h"
 
-#undef IMPLEMENT_READING
-#undef IMPLEMENT_READING_D
-
-#define IMPLEMENT_READING(classname)\
-        IMPLEMENT_READING_D(classname, classname ## Private)
-
-#define IMPLEMENT_READING_D(classname, pclassname)\
-    classname::classname(QObject *parent)\
-        : QSensorReading(parent, new pclassname)\
-        , d(d_ptr())\
-        {}\
-    classname::~classname() {}\
-    void classname::copyValuesFrom(QSensorReading *_other)\
-    {\
-        /* No need to verify types, only called by QSensorBackend */\
-        classname *other = static_cast<classname *>(_other);\
-        pclassname *my_ptr = static_cast<pclassname*>(d_ptr()->data());\
-        pclassname *other_ptr = static_cast<pclassname*>(other->d_ptr()->data());\
-        /* Do a direct copy of the private class */\
-        *(my_ptr) = *(other_ptr);\
-    }
-
 IMPLEMENT_READING(TestSensor2Reading)
 
 int TestSensor2Reading::test() const
