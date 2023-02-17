@@ -244,7 +244,7 @@ void QSensorPrivate::init(const QByteArray &sensorType)
 
     Only use this constructor if there is no derived sensor class available. Note that all
     built-in sensors have a derived class, so using this constructor should only be necessary
-    when implementing custom sensors, like in the \l {Qt Sensors - Grue Sensor Example}{Grue sensor example}.
+    when implementing custom sensors.
 */
 QSensor::QSensor(const QByteArray &type, QObject *parent)
     : QObject(*new QSensorPrivate, parent)
