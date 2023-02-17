@@ -7,9 +7,6 @@ qtHaveModule(quick) {
         maze \
         qmlqtsensors \
         sensor_explorer
-
-     qtHaveModule(svg): SUBDIRS += \
-        accelbubble
 }
 
 EXAMPLE_FILES += \
