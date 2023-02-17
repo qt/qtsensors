@@ -6,9 +6,7 @@ import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Layouts
 
-//! [0]
 import SensorModels
-//! [0]
 
 Window {
     id: window
@@ -74,14 +72,11 @@ Window {
             }
         }
 
-        //! [1]
         SensorPropertyModel {
             id: propertyModel
             sensor: availableSensorsModel.get(sensorsView.currentIndex)
         }
-        //! [1]
 
-        //! [2]
         Button {
             id: activateButton
             Layout.preferredHeight: 30
@@ -92,7 +87,6 @@ Window {
                                                                        : qsTr("Activate sensor"))
             onClicked: propertyModel.sensor.active = !propertyModel.sensor.active
         }
-        //! [2]
 
         GroupBox {
             title: qsTr("Selected sensor's properties")
@@ -101,7 +95,6 @@ Window {
             Layout.margins: 2
             enabled: sensorsView.currentIndex != -1
 
-            //! [3]
             TableView {
                 id: propertyView
                 anchors.fill: parent
@@ -121,7 +114,6 @@ Window {
                     }
                 }
             }
-            //! [3]
         }
     }
 }

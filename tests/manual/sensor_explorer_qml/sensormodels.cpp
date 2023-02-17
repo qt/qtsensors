@@ -51,7 +51,6 @@ AvailableSensorsModel::AvailableSensorsModel(QObject* parent) : QAbstractListMod
 */
 void AvailableSensorsModel::loadSensors()
 {
-    //! [0]
     beginResetModel();
     m_availableSensors.clear();
 
@@ -66,7 +65,6 @@ void AvailableSensorsModel::loadSensors()
         }
     }
     endResetModel();
-    //! [0]
 }
 
 int AvailableSensorsModel::rowCount(const QModelIndex&) const
@@ -74,14 +72,12 @@ int AvailableSensorsModel::rowCount(const QModelIndex&) const
     return m_availableSensors.size();
 }
 
-//! [1]
 QVariant AvailableSensorsModel::data(const QModelIndex &index, int role) const
 {
     if (role != Qt::DisplayRole)
         return QVariant();
     return QVariant::fromValue<QSensor*>(m_availableSensors.at(index.row()));
 }
-//! [1]
 
 QSensor* AvailableSensorsModel::get(int index) const
 {
@@ -134,7 +130,6 @@ void SensorPropertyModel::setSensor(QSensor *sensor)
         // available sensors without knowing their properties in advance / compile-time.
 
         // 1. Read properties of the 'reading' object if available
-        //! [2]
         int firstProperty = QSensorReading::staticMetaObject.propertyOffset();
         QSensorReading *reading = m_sensor->reading();
         if (reading) {
@@ -145,7 +140,6 @@ void SensorPropertyModel::setSensor(QSensor *sensor)
                                 (name, reading->property(name).toByteArray()));
             }
         }
-        //! [2]
 
         // 2. Read properties of the 'sensor' object
         const QMetaObject *mo1 = m_sensor->metaObject();
