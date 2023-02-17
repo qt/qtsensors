@@ -17,6 +17,7 @@ qt_add_executable(sensorsdocsnippet
     main.cpp
     mybackend.h
     plugin.cpp
+    start.cpp
 )
 
 target_link_libraries(sensorsdocsnippet PUBLIC
