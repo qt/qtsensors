@@ -3,7 +3,6 @@
 
 if(TARGET Qt::Quick)
     qt_internal_add_example(grue)
-    qt_internal_add_example(qmlqtsensors)
     qt_internal_add_example(sensor_explorer)
     if(TARGET Qt::Svg)
         qt_internal_add_example(sensorsshowcase)
