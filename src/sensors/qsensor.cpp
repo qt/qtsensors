@@ -527,9 +527,6 @@ void QSensor::setSkipDuplicates(bool skipDuplicates)
     continuous range of rates.
     A discrete rate is noted by having both values the same.
 
-    See the sensor_explorer example for an example of how to interpret and use
-    this information.
-
     Note that this information is not mandatory as not all sensors have a rate at which
     they run. In such cases, the list will be empty.
 

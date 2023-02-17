@@ -12,12 +12,10 @@
 
 QT_BEGIN_NAMESPACE
 
-//! [0]
 class AvailableSensorsModel: public QAbstractListModel
 {
     Q_OBJECT
     QML_ELEMENT
-//! [0]
 public:
     explicit AvailableSensorsModel(QObject* parent = nullptr);
     int rowCount(const QModelIndex & = QModelIndex()) const override;
