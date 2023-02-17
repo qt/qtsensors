@@ -79,8 +79,18 @@ This code does not require any compile-time links to \l QAccelerometer or
 
 \snippet sensors/start.cpp Starting a sensor
 
-You can discover all of this information at runtime too. The sensor_explorer example
-shows you information about available sensors.
+You can discover all of this information at runtime too.
+
+\section1 Discovering Sensors And Reading Properties At Runtime
+
+Sometimes it may be that the available sensors are not known at development time.
+It is possible to find out which sensors are available as illustrated below:
+
+\snippet sensors/start.cpp Find sensors
+
+Furthermore it is possible to discover the reading details for these sensors, as illustrated below:
+
+\snippet sensors/start.cpp Print reading properties
 
 \section1 Front End, Back End
 
