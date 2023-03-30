@@ -14,7 +14,7 @@ using namespace Microsoft::WRL::Wrappers;
 using namespace ABI::Windows::Foundation;
 using namespace ABI::Windows::Devices::Sensors;
 
-typedef ITypedEventHandler<Gyrometer *, GyrometerReadingChangedEventArgs *> InclinometerReadingHandler;
+typedef ITypedEventHandler<Gyrometer *, GyrometerReadingChangedEventArgs *> GyrometerReadingHandler;
 
 QT_USE_NAMESPACE
 
@@ -129,8 +129,8 @@ void WinRtGyroscope::start()
     if (d->token.value)
         return;
 
-    ComPtr<InclinometerReadingHandler> callback =
-            Callback<InclinometerReadingHandler>(d, &WinRtGyroscopePrivate::readingChanged);
+    ComPtr<GyrometerReadingHandler> callback =
+            Callback<GyrometerReadingHandler>(d, &WinRtGyroscopePrivate::readingChanged);
     HRESULT hr = d->sensor->add_ReadingChanged(callback.Get(), &d->token);
 
     if (FAILED(hr)) {
