@@ -1,18 +1,16 @@
-# Copyright (C) 2022 The Qt Company Ltd.
+# Copyright (C) 2023 The Qt Company Ltd.
 # SPDX-License-Identifier: BSD-3-Clause
 
 cmake_minimum_required(VERSION 3.16)
 project(sensorsshowcase LANGUAGES CXX)
-
-set(CMAKE_AUTOMOC ON)
 
 if(NOT DEFINED INSTALL_EXAMPLESDIR)
     set(INSTALL_EXAMPLESDIR "examples")
 endif()
 
 set(INSTALL_EXAMPLEDIR "${INSTALL_EXAMPLESDIR}/sensors/sensorsshowcase")
-
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Sensors Svg)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Svg Sensors)
+qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(sensorsshowcase
     main.cpp
@@ -26,7 +24,7 @@ set_target_properties(sensorsshowcase PROPERTIES
 if(ANDROID)
     set_property(TARGET sensorsshowcase PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
         ${CMAKE_CURRENT_SOURCE_DIR}/android)
-    endif()
+endif()
 if(APPLE)
     if(IOS)
         set_property(TARGET sensorsshowcase PROPERTY
@@ -35,33 +33,36 @@ if(APPLE)
     endif()
 endif()
 
-target_link_libraries(sensorsshowcase PUBLIC
-    Qt::Core
-    Qt::Gui
-    Qt::Quick
-    Qt::Sensors
-    Qt::Svg
+# default search path for the config file is "qrc:/"
+qt_add_resources(sensorsshowcase "resources"
+        FILES qtquickcontrols2.conf)
+
+qt_add_qml_module(sensorsshowcase
+    URI SensorShowcaseModule
+    VERSION 1.0
+    QML_FILES
+        "Main.qml"
+        "Accelerometer.qml"
+        "Compass.qml"
+        "Gyroscope.qml"
+        "Magnetometer.qml"
+        "Proximity.qml"
+        "ProgressXYZBar.qml"
+    RESOURCES
+        "images/compass.svg"
+        "images/magnet.svg"
+        "images/qt_logo.png"
 )
 
-# Resources:
-set(sensorsshowcase_resource_files
-    "sensorsshowcase.qml"
-    "accelerometer.qml"
-    "proximity.qml"
-    "compass.qml"
-    "magnetometer.qml"
-    "gyroscope.qml"
-    "images/magnet.svg"
-    "images/compass.svg"
-    "images/qt_logo.png"
+target_link_libraries(sensorsshowcase
+    PRIVATE
+        Qt::Core
+        Qt::Gui
+        Qt::Quick
+        Qt::Svg
+        Qt::Sensors
 )
 
-qt6_add_resources(sensorsshowcase "sensorsshowcase"
-    PREFIX
-        "/"
-    FILES
-        ${sensorsshowcase_resource_files}
-)
 
 install(TARGETS sensorsshowcase
     RUNTIME DESTINATION "${INSTALL_EXAMPLEDIR}"
