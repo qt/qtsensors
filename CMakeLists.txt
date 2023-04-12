@@ -17,5 +17,6 @@ find_package(Qt6 ${PROJECT_VERSION} CONFIG REQUIRED COMPONENTS BuildInternals Co
 find_package(Qt6 ${PROJECT_VERSION} CONFIG OPTIONAL_COMPONENTS
              Xml Gui Widgets Quick Qml Svg DBus QuickTest
 )
+qt_internal_project_setup()
 
 qt_build_repo()
