@@ -38,6 +38,7 @@
         \li \l {Generic Backend} {Generic Backend}
         \li \l {Qt Sensors Backend}
         \li \l {Compatibility Map} {Compatibility Map}
+        \li \l {How to create your own Sensor}
     \endlist
 
     \section1 Examples
