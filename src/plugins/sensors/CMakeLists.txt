@@ -25,6 +25,6 @@ if(LINUX AND TARGET Qt::DBus AND NOT SENSORS_PLUGINS OR "iio-sensor-proxy" IN_LI
    add_subdirectory(iio-sensor-proxy)
 endif()
 
-if(NOT SENSORS_PLUGINS OR "dummy" IN_LIST SENSORS_PLUGINS)
+if("dummy" IN_LIST SENSORS_PLUGINS)
    add_subdirectory(dummy)
 endif()
