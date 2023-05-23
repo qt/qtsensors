@@ -7,9 +7,7 @@
 #define SENSORMANAGER_H
 
 #include <QtCore/qthread.h>
-#include <QtCore/qsemaphore.h>
-#include <QtCore/qmutex.h>
-#include <QtCore/qwaitcondition.h>
+#include <QtCore/private/qlatch_p.h>
 #include <QtCore/qjniobject.h>
 
 #include <android/sensor.h>
@@ -34,7 +32,7 @@ private:
 private:
     QAtomicInt m_quit{0};
     ALooper *m_looper = nullptr;
-    QSemaphore m_waitForStart;
+    QLatch m_waitForStart{1};
     QJniObject m_sensorManager;
 };
 

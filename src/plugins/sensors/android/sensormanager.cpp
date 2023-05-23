@@ -21,7 +21,7 @@ SensorManager::SensorManager()
                                                   sensorService.object<jstring>());
     setObjectName("QtSensorsLooperThread");
     start();
-    m_waitForStart.acquire();
+    m_waitForStart.wait();
 }
 
 SensorManager::~SensorManager()
@@ -100,7 +100,7 @@ double SensorManager::getMaximumRange(const ASensor *sensor) const
 void SensorManager::run()
 {
     m_looper = ALooper_prepare(0);
-    m_waitForStart.release();
+    m_waitForStart.countDown();
     do {
         // Result can be also ALOOPER_POLL_CALLBACK or identifier, those are ignored.
         int result = ALooper_pollOnce(5 /*ms*/, nullptr, nullptr, nullptr);
