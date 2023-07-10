@@ -5,7 +5,6 @@
     \group qtsensors-examples
     \title Qt Sensors Examples
     \brief Examples for the Qt Sensors module
-    \ingroup all-examples
 
     These are the Qt Sensors examples.
 
