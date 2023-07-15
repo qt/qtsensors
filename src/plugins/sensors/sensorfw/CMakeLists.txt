@@ -23,6 +23,8 @@ qt_internal_add_plugin(sensorfwSensorPlugin
         sensorfwrotationsensor.cpp sensorfwrotationsensor.h
         sensorfwsensorbase.cpp sensorfwsensorbase.h
         sensorfwtapsensor.cpp sensorfwtapsensor.h
+    DEFINES
+        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         Qt::Core
         Qt::DBus

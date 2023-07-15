@@ -17,6 +17,8 @@ qt_internal_add_plugin(WinRtSensorPlugin
         winrtgyroscope.cpp winrtgyroscope.h
         winrtorientationsensor.cpp winrtorientationsensor.h
         winrtrotationsensor.cpp winrtrotationsensor.h
+    DEFINES
+        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         Qt::Core
         Qt::CorePrivate

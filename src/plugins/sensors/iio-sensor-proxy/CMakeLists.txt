@@ -14,6 +14,8 @@ qt_internal_add_plugin(IIOSensorProxySensorPlugin
         iiosensorproxyorientationsensor.cpp iiosensorproxyorientationsensor.h
         iiosensorproxysensorbase.cpp iiosensorproxysensorbase.h
         main.cpp
+    DEFINES
+        QT_NO_CONTEXTLESS_CONNECT
     NO_UNITY_BUILD_SOURCES
         # Duplicate symbol definition between, iiosensorproxycompass.cpp, and
         # the followings

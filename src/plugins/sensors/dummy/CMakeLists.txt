@@ -13,6 +13,8 @@ qt_internal_add_plugin(dummySensorPlugin
         dummycommon.cpp dummycommon.h
         dummylightsensor.cpp dummylightsensor.h
         main.cpp
+    DEFINES
+        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         Qt::Core
         Qt::Sensors

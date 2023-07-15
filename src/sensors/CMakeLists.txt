@@ -66,6 +66,7 @@ qt_internal_add_module(Sensors
     qlidsensor.cpp
     DEFINES
         $<$<CONFIG:Debug>:ENABLE_RUNTIME_SENSORLOG>
+        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         Qt::CorePrivate
     PUBLIC_LIBRARIES

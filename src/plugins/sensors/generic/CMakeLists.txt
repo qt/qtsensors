@@ -17,6 +17,7 @@ qt_internal_add_plugin(genericSensorPlugin
         QTSENSORS_GENERICALSSENSOR
         QTSENSORS_GENERICORIENTATIONSENSOR
         QTSENSORS_GENERICTILTSENSOR
+        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         Qt::Core
         Qt::Sensors

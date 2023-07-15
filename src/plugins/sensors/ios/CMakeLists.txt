@@ -10,6 +10,8 @@ qt_internal_add_plugin(IOSSensorPlugin
     PLUGIN_TYPE sensors
     SOURCES
         main.mm
+    DEFINES
+        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         ${FWFoundation}
         Qt::Core
