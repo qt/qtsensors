@@ -5,6 +5,7 @@
 \page qtsensors-cpp.html
 \title Qt Sensors C++ Overview
 \brief Explains how to use the Qt Sensors C++ API.
+\ingroup explanation
 
 \tableofcontents
 
