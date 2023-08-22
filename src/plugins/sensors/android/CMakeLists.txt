@@ -25,7 +25,6 @@ qt_internal_add_plugin(AndroidSensorPlugin
         # STATICPLUGIN needed because there's a Q_IMPORT_PLUGIN in main.cpp
         # Yes, the plugin imports itself statically
         QT_STATICPLUGIN
-        QT_NO_CONTEXTLESS_CONNECT
     LIBRARIES
         Qt::CorePrivate
         Qt::Sensors
