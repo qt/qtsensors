@@ -7,7 +7,7 @@
 #include <dlfcn.h>
 
 Q_DECLARE_JNI_CLASS(AndroidContext, "android/content/Context")
-Q_DECLARE_JNI_TYPE(Sensor, "Landroid/hardware/Sensor;")
+Q_DECLARE_JNI_CLASS(Sensor, "android/hardware/Sensor")
 
 SensorManager::SensorManager()
 {
