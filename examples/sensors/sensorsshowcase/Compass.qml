@@ -2,17 +2,15 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import QtSensors
 
 Item {
     id: root
 
-    property alias headingFontSize: heading.font.pixelSize
-    required property StackView parentStack
     required property int fontSize
     required property int imageSize
+    property alias isActive: compass.active
 
     property real azimuth: 30
 
@@ -28,14 +26,6 @@ Item {
 
         anchors.fill: parent
         spacing: 10
-
-        Text {
-            id: heading
-            Layout.preferredWidth: parent.width
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.Wrap
-            text: "Compass"
-        }
 
         Image {
             id: arrow
@@ -66,12 +56,6 @@ Item {
             Layout.topMargin: 10
             text: "Azimuth: " + root.azimuth.toFixed(2) + "°"
             font.pixelSize: root.fontSize
-        }
-
-        Button {
-            Layout.fillWidth: true
-            onClicked: root.parentStack.pop()
-            text: "Back"
         }
     }
 }

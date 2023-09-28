@@ -2,15 +2,12 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import QtSensors
 
 Item {
     id: root
 
-    property alias headingFontSize: heading.font.pixelSize
-    required property StackView parentStack
     required property int fontSize
     required property int imageSize
 
@@ -41,15 +38,6 @@ Item {
         anchors.fill: parent
         spacing: 10
 
-        Text {
-            id: heading
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.Wrap
-            text: "Magnetometer"
-            Layout.bottomMargin: 20
-        }
-
         Image {
             id: image
 
@@ -75,12 +63,6 @@ Item {
 
             zText: "Z: " + root.magnetometerZ.toFixed(9)
             zValue: 0.5 + (root.magnetometerZ * root.barScaleFactor)
-        }
-
-        Button {
-            Layout.fillWidth: true
-            onClicked: root.parentStack.pop()
-            text: "Back"
         }
     }
 }

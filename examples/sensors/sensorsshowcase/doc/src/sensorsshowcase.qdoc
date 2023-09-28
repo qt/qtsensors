@@ -7,6 +7,7 @@
     \brief The Sensors Showcase example demonstrates sensor usage with visual examples.
     \meta tag {sensors,quick,mobile}
     \ingroup qtsensors-examples
+    \examplecategory {Mobile}
 
     \image sensorsshowcase-mainview.webp
 
@@ -18,9 +19,14 @@
 
     \section1 Main Menu
 
-    The main view shows the title with the name of the application and a button for each
-    subview laid out evenly by a \c ColumnLayout. The navigation between the subviews
-    and the main menu is managed by a \c StackView.
+    The main view shows the title with the name of the application and a button
+    for each subview laid out evenly by a \c ColumnLayout. A \c StackView
+    manages the navigation between the subviews and the main menu. The
+    application checks the availability of the sensors during startup and
+    disables the buttons for the sensors that are not available.
+
+    \note To simplify the example, the sensor availability is checked only once
+    during the startup.
 
     \section1 Accelerometer View
 
