@@ -2,15 +2,12 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import QtSensors
 
 Item {
     id: root
 
-    property alias headingFontSize: heading.font.pixelSize
-    required property StackView parentStack
     required property int imageSize
     required property int fontSize
 
@@ -26,14 +23,6 @@ Item {
 
         anchors.fill: parent
         spacing: 10
-
-        Text {
-            id: heading
-            Layout.preferredWidth: parent.width
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.Wrap
-            text: "Proximity"
-        }
 
         Image {
             id: image
@@ -57,28 +46,9 @@ Item {
         }
 
         Text {
-            id: error
-            visible: !proximity.active
-            Layout.preferredWidth: parent.width
-            horizontalAlignment: Text.AlignHCenter
-            text: "The proximity sensor is not available on this device!"
-            font.pixelSize: root.fontSize
-            font.bold: true
-            wrapMode: Text.Wrap
-            color: "red"
-        }
-
-        Text {
-            visible: proximity.active
             Layout.fillHeight: true
             font.pixelSize: root.fontSize
             text: "Near: " + root.near
-        }
-
-        Button {
-            Layout.fillWidth: true
-            onClicked: root.parentStack.pop()
-            text: "Back"
         }
     }
 }

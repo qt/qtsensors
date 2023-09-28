@@ -2,15 +2,12 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR BSD-3-Clause
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import QtSensors
 
 Item {
     id: root
 
-    property alias headingFontSize: heading.font.pixelSize
-    required property StackView parentStack
     required property int fontSize
     required property int imageSize
 
@@ -40,15 +37,6 @@ Item {
         anchors.fill: parent
         spacing: 10
 
-        Text {
-            id: heading
-
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            text: "Accelerometer"
-            wrapMode: Text.Wrap
-        }
-
         Image {
             id: image
 
@@ -77,12 +65,6 @@ Item {
             yValue: 0.5 + (accelerometer.y / 100)
             zText: "Z: " + accelerometer.z.toFixed(2)
             zValue: 0.5 + (accelerometer.z / 100)
-        }
-
-        Button {
-            Layout.fillWidth: true
-            onClicked: root.parentStack.pop()
-            text: "Back"
         }
     }
 }
