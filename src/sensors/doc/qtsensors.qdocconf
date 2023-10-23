@@ -45,6 +45,9 @@ imagedirs   += images
 
 depends += qtcore qtdoc qtgui qtquick qtcmake
 
+# Highlighted examples
+manifestmeta.highlighted.names = "QtSensors/Sensors Showcase"
+
 navigation.landingpage = "Qt Sensors"
 navigation.cppclassespage = "Qt Sensors C++ Classes"
 navigation.qmltypespage = "Qt Sensors QML Types"
