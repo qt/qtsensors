@@ -16,6 +16,7 @@ Item {
     ProximitySensor {
         id: proximity
         onReadingChanged: root.near = (reading as ProximityReading).near
+        active: true
     }
 
     ColumnLayout {
