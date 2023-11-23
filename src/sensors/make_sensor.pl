@@ -82,7 +82,7 @@ QT_BEGIN_NAMESPACE
 
 class '.$sensor.';
 
-class Q_SENSORSQUICK_PRIVATE_EXPORT '.$qmlsensor.' : public QmlSensor
+class Q_SENSORSQUICK_EXPORT '.$qmlsensor.' : public QmlSensor
 {
     Q_OBJECT
     QML_NAMED_ELEMENT('.$no_q_sensor.')
@@ -99,7 +99,7 @@ private:
     '.$sensor.' *m_sensor;
 };
 
-class Q_SENSORSQUICK_PRIVATE_EXPORT '.$qmlreading.' : public QmlSensorReading
+class Q_SENSORSQUICK_EXPORT '.$qmlreading.' : public QmlSensorReading
 {
     Q_OBJECT
     Q_PROPERTY(qreal myprop READ myprop NOTIFY mypropChanged BINDABLE bindableMyprop)
