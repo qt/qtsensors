@@ -65,7 +65,7 @@ class Q_SENSORSQUICK_PRIVATE_EXPORT QmlSensor : public QObject, public QQmlParse
     QML_ADDED_IN_VERSION(5,0)
 public:
     // Keep in sync with QSensor::Feature
-    enum Feature {
+    enum Feature : int {
         Buffering = QSensor::Buffering,
         AlwaysOn = QSensor::AlwaysOn,
         GeoValues = QSensor::GeoValues,
@@ -120,7 +120,7 @@ public:
     QmlSensorReading *reading() const;
     QBindable<QmlSensorReading*> bindableReading() const;
 
-    Q_INVOKABLE bool isFeatureSupported(Feature feature) const;
+    Q_INVOKABLE Q_REVISION(6, 7) bool isFeatureSupported(Feature feature) const;
 
     AxesOrientationMode axesOrientationMode() const;
     void setAxesOrientationMode(AxesOrientationMode axesOrientationMode);
