@@ -69,6 +69,11 @@
                 "file type" : "module and plugin",
                 "spdx"      : ["LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only"]
             },
+            "src/plugins/sensors/android/androidcompass.cpp" : {
+                "comment" : "File contains code copied from Android project",
+                "file type" : "module and plugin",
+                "spdx"      : ["Apache-2.0"]
+            },
             "tests/" : {
                 "comment" : "Default",
                 "file type" : "test",
