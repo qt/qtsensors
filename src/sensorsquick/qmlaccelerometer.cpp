@@ -6,7 +6,7 @@
 
 /*!
     \qmltype Accelerometer
-//!    \instantiates QmlAccelerometer
+//!    \nativetype QmlAccelerometer
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -66,7 +66,7 @@ QSensor *QmlAccelerometer::sensor() const
 
 /*!
     \qmltype AccelerometerReading
-//!    \instantiates QmlAccelerometerReading
+//!    \nativetype QmlAccelerometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

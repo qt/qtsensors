@@ -9,7 +9,7 @@ QT_END_NAMESPACE
 
 /*!
     \qmltype TiltSensor
-//!    \instantiates QmlTiltSensor
+//!    \nativetype QmlTiltSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -58,7 +58,7 @@ void QmlTiltSensor::calibrate()
 
 /*!
     \qmltype TiltReading
-//!    \instantiates QmlTiltSensorReading
+//!    \nativetype QmlTiltSensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

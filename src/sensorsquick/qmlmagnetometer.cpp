@@ -6,7 +6,7 @@
 
 /*!
     \qmltype Magnetometer
-//!    \instantiates QmlMagnetometer
+//!    \nativetype QmlMagnetometer
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -64,7 +64,7 @@ void QmlMagnetometer::setReturnGeoValues(bool geo)
 
 /*!
     \qmltype MagnetometerReading
-//!    \instantiates QmlMagnetometerReading
+//!    \nativetype QmlMagnetometerReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0
