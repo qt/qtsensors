@@ -52,11 +52,3 @@ precedence = "override"
 comment = "License file."
 SPDX-FileCopyrightText = "None"
 SPDX-License-Identifier = "CC0-1.0"
-
-[[annotations]]
-path = ["**/AndroidManifest.xml"]
-precedence = "override"
-SPDX-FileCopyrightText = "Copyright 2006, The Android Open Source Project"
-SPDX-License-Identifier = "Apache-2.0"
-
-
