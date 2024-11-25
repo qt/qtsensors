@@ -31,3 +31,5 @@ if (GCC AND UNIX)
         log
     )
 endif()
+
+qt_autogen_tools(sensorsdocsnippet ENABLE_AUTOGEN_TOOLS moc rcc uic)
