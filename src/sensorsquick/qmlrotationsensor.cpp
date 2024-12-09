@@ -83,7 +83,7 @@ QmlRotationSensorReading::~QmlRotationSensorReading()
 }
 
 /*!
-    \qmlproperty qreal RotationReading::x
+    \qmlproperty real RotationReading::x
     This property holds the rotation around the x axis.
 
     Please see QRotationReading::x for information about this property.
@@ -100,7 +100,7 @@ QBindable<qreal> QmlRotationSensorReading::bindableX() const
 }
 
 /*!
-    \qmlproperty qreal RotationReading::y
+    \qmlproperty real RotationReading::y
     This property holds the rotation around the y axis.
 
     Please see QRotationReading::y for information about this property.
@@ -117,7 +117,7 @@ QBindable<qreal> QmlRotationSensorReading::bindableY() const
 }
 
 /*!
-    \qmlproperty qreal RotationReading::z
+    \qmlproperty real RotationReading::z
     This property holds the rotation around the z axis.
 
     Please see QRotationReading::z for information about this property.

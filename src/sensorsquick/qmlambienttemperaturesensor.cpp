@@ -68,7 +68,7 @@ QmlAmbientTemperatureReading::~QmlAmbientTemperatureReading()
 }
 
 /*!
-    \qmlproperty qreal AmbientTemperatureReading::temperature
+    \qmlproperty real AmbientTemperatureReading::temperature
     This property holds the ambient temperature in degree Celsius.
 
     Please see QAmbientTemperatureReading::temperature for information about this property.

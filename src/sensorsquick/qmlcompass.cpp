@@ -68,7 +68,7 @@ QmlCompassReading::~QmlCompassReading()
 }
 
 /*!
-    \qmlproperty qreal CompassReading::azimuth
+    \qmlproperty real CompassReading::azimuth
     This property holds the azimuth of the device.
 
     Please see QCompassReading::azimuth for information about this property.
@@ -85,7 +85,7 @@ QBindable<qreal> QmlCompassReading::bindableAzimuth() const
 }
 
 /*!
-    \qmlproperty qreal CompassReading::calibrationLevel
+    \qmlproperty real CompassReading::calibrationLevel
     This property holds the calibration level of the reading.
 
     Please see QCompassReading::calibrationLevel for information about this property.

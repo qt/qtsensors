@@ -68,7 +68,7 @@ QmlIRProximitySensorReading::~QmlIRProximitySensorReading()
 }
 
 /*!
-    \qmlproperty qreal IRProximityReading::reflectance
+    \qmlproperty real IRProximityReading::reflectance
     This property holds the reflectance value.
 
     Please see QIRProximityReading::reflectance for information about this property.
