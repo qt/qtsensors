@@ -89,7 +89,7 @@ QmlMagnetometerReading::~QmlMagnetometerReading()
 }
 
 /*!
-    \qmlproperty qreal MagnetometerReading::x
+    \qmlproperty real MagnetometerReading::x
     This property holds the raw magnetic flux density on the X axis.
 
     Please see QMagnetometerReading::x for information about this property.
@@ -106,7 +106,7 @@ QBindable<qreal> QmlMagnetometerReading::bindableX() const
 }
 
 /*!
-    \qmlproperty qreal MagnetometerReading::y
+    \qmlproperty real MagnetometerReading::y
     This property holds the raw magnetic flux density on the Y axis.
 
     Please see QMagnetometerReading::y for information about this property.
@@ -123,7 +123,7 @@ QBindable<qreal> QmlMagnetometerReading::bindableY() const
 }
 
 /*!
-    \qmlproperty qreal MagnetometerReading::z
+    \qmlproperty real MagnetometerReading::z
     This property holds the raw magnetic flux density on the Z axis.
 
     Please see QMagnetometerReading::z for information about this property.
@@ -140,7 +140,7 @@ QBindable<qreal> QmlMagnetometerReading::bindableZ() const
 }
 
 /*!
-    \qmlproperty qreal MagnetometerReading::calibrationLevel
+    \qmlproperty real MagnetometerReading::calibrationLevel
     This property holds the accuracy of the reading.
 
     Please see QMagnetometerReading::calibrationLevel for information about this property.

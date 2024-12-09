@@ -69,7 +69,7 @@ QmlPressureReading::~QmlPressureReading()
 }
 
 /*!
-    \qmlproperty qreal PressureReading::pressure
+    \qmlproperty real PressureReading::pressure
     This property holds the atmospheric pressure value in Pascals.
 
     Please see QPressureReading::pressure for information about this property.
@@ -86,7 +86,7 @@ QBindable<qreal> QmlPressureReading::bindablePressure() const
 }
 
 /*!
-    \qmlproperty qreal PressureReading::temperature
+    \qmlproperty real PressureReading::temperature
     This property holds the pressure sensor's temperature value in degrees Celsius.
 
     Please see QPressureReading::temperature for information about this property.
