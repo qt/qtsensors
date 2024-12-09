@@ -202,7 +202,7 @@ QSensor *'.$qmlsensor.'::sensor() const
 }
 
 /*!
-    \qmlproperty qreal '.$no_q_reading.'::myprop
+    \qmlproperty real '.$no_q_reading.'::myprop
     This property holds the fubble of the device.
 
     Please see '.$reading.'::myprop for information about this property.
