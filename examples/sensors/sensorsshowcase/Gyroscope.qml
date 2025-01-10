@@ -9,8 +9,6 @@ import QtSensors
 Item {
     id: root
 
-    property alias headingFontSize: heading.font.pixelSize
-    required property StackView parentStack
     required property int fontSize
     required property int imageSize
 
@@ -61,15 +59,6 @@ Item {
 
         anchors.fill: parent
         spacing: 10
-
-        Text {
-            id: heading
-
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            text: "Gyroscope"
-            wrapMode: Text.Wrap
-        }
 
         Image {
             id: image
@@ -128,16 +117,12 @@ Item {
 
         Button {
             Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 20
             Layout.bottomMargin: 10
-            Layout.topMargin: 10
+            Layout.preferredWidth: parent.width / 2
+            Layout.preferredHeight: 60
             onClicked: root.resetRotations()
             text: "Reset rotation"
-        }
-
-        Button {
-            Layout.fillWidth: true
-            onClicked: root.parentStack.pop()
-            text: "Back"
         }
     }
 }
