@@ -12,6 +12,11 @@ qt_add_executable(sensorsdocsnippet
     myreading.cpp
 )
 
+# MyObject is defined in multiple files
+set_target_properties(sensorsdocsnippet PROPERTIES
+    UNITY_BUILD FALSE
+)
+
 target_link_libraries(sensorsdocsnippet PUBLIC
         Qt::Sensors
 )
