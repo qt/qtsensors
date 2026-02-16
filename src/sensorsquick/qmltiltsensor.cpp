@@ -46,10 +46,10 @@ QSensor *QmlTiltSensor::sensor() const
 }
 
 /*!
-    \qmlmethod TiltSensor::calibrate()
+    \qmlmethod void TiltSensor::calibrate()
     Calibrate the tilt sensor.
 
-    Please see QTiltSensor::calibrate() for information about this property.
+    \sa QTiltSensor::calibrate()
 */
 void QmlTiltSensor::calibrate()
 {
