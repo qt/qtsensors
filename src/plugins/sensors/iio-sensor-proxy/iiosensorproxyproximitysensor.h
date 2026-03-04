@@ -1,6 +1,7 @@
 // Copyright (C) 2024 The Qt Company Ltd.
 // Copyright (C) 2024 Florian Richer <florian.richer@protonmail.com>
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
+// Qt-Security score:significant reason:default
 
 #ifndef IIOSENSORPROXY_PROXIMITYSENSOR_H
 #define IIOSENSORPROXY_PROXIMITYSENSOR_H

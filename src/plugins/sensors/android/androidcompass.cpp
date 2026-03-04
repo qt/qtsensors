@@ -1,6 +1,7 @@
 // Copyright (C) 2019 BogDan Vatra <bogdan@kde.org>
 // Copyright (C) 2008 The Android Open Source Project
 // SPDX-License-Identifier: Apache-2.0
+// Qt-Security score:significant reason:default
 
 #include "androidcompass.h"
 
