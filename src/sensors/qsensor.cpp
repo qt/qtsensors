@@ -583,8 +583,8 @@ void QSensor::setDataRate(int rate)
 /*!
    Checks if a specific feature is supported by the backend.
 
-   QtSensors supports a rich API for controlling and providing information about sensors. Naturally,
-   not all of this functionality can be supported by all of the backends.
+   \l[Cpp]{QtSensors} supports a rich API for controlling and providing information about sensors.
+   Naturally, not all of this functionality can be supported by all of the backends.
 
    To check if the current backend supports the feature \a feature, call this function.
 
