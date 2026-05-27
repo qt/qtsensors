@@ -5,6 +5,8 @@
 #include "genericalssensor.h"
 #include <QDebug>
 
+QT_BEGIN_NAMESPACE
+
 char const * const genericalssensor::id("generic.als");
 
 genericalssensor::genericalssensor(QSensor *sensor)
@@ -112,4 +114,6 @@ bool genericalssensor::filter(QLightReading *reading)
 
     return false;
 }
+
+QT_END_NAMESPACE
 

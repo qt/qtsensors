@@ -10,6 +10,8 @@
 #include <QtSensors/qaccelerometer.h>
 #include <QtSensors/qmagnetometer.h>
 
+QT_BEGIN_NAMESPACE
+
 class genericrotationsensor : public QSensorBackend, public QSensorFilter
 {
 public:
@@ -26,6 +28,8 @@ private:
     QRotationReading m_reading;
     QAccelerometer *accelerometer;
 };
+
+QT_END_NAMESPACE
 
 #endif
 

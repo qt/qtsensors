@@ -9,6 +9,8 @@
 #include <QtSensors/qorientationsensor.h>
 #include <QtSensors/qaccelerometer.h>
 
+QT_BEGIN_NAMESPACE
+
 class genericorientationsensor : public QSensorBackend, public QAccelerometerFilter
 {
 public:
@@ -25,6 +27,8 @@ private:
     QOrientationReading m_reading;
     QAccelerometer *accelerometer;
 };
+
+QT_END_NAMESPACE
 
 #endif
 

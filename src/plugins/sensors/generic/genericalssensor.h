@@ -9,6 +9,8 @@
 #include <QtSensors/qlightsensor.h>
 #include <QtSensors/qambientlightsensor.h>
 
+QT_BEGIN_NAMESPACE
+
 class genericalssensor : public QSensorBackend, public QLightFilter
 {
 public:
@@ -25,6 +27,8 @@ private:
     QAmbientLightReading m_reading;
     QLightSensor *lightSensor;
 };
+
+QT_END_NAMESPACE
 
 #endif
 

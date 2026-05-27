@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <qmath.h>
 
+QT_BEGIN_NAMESPACE
+
 char const * const genericrotationsensor::id("generic.rotation");
 
 genericrotationsensor::genericrotationsensor(QSensor *sensor)
@@ -74,4 +76,6 @@ bool genericrotationsensor::filter(QSensorReading *reading)
     newReadingAvailable();
     return false;
 }
+
+QT_END_NAMESPACE
 

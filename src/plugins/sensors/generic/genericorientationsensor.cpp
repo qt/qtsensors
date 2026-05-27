@@ -5,6 +5,8 @@
 #include "genericorientationsensor.h"
 #include <QDebug>
 
+QT_BEGIN_NAMESPACE
+
 char const * const genericorientationsensor::id("generic.orientation");
 
 genericorientationsensor::genericorientationsensor(QSensor *sensor)
@@ -59,4 +61,6 @@ bool genericorientationsensor::filter(QAccelerometerReading *reading)
 
     return false;
 }
+
+QT_END_NAMESPACE
 

@@ -20,6 +20,8 @@
 #include <QFile>
 #include <QDebug>
 
+QT_BEGIN_NAMESPACE
+
 class genericSensorPlugin : public QObject, public QSensorPluginInterface, public QSensorChangesInterface, public QSensorBackendFactory
 {
     Q_OBJECT
@@ -97,5 +99,7 @@ public:
         return 0;
     }
 };
+
+QT_END_NAMESPACE
 
 #include "main.moc"
