@@ -21,6 +21,10 @@ if (IOS AND NOT SENSORS_PLUGINS OR "ios" IN_LIST SENSORS_PLUGINS)
     add_subdirectory(ios)
 endif()
 
+if((OHOS AND NOT SENSORS_PLUGINS) OR "ohos" IN_LIST SENSORS_PLUGINS)
+    add_subdirectory(ohos)
+endif()
+
 if(LINUX AND TARGET Qt::DBus AND NOT SENSORS_PLUGINS OR "iio-sensor-proxy" IN_LIST SENSORS_PLUGINS)
    add_subdirectory(iio-sensor-proxy)
 endif()
