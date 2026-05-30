@@ -23,6 +23,8 @@ IMPLEMENT_READING(QMagnetometerReading)
     The scale of the values is teslas. The axes are arranged as follows.
 
     \image sensors-coordinates2.jpg
+           {Device with positive and negative x, y, and z axes
+           extending in all six directions}
 
     The magnetometer can report on either raw magnetic flux values or geomagnetic flux values.
     By default it returns raw magnetic flux values. The QMagnetometer::returnGeoValues property
@@ -37,6 +39,9 @@ IMPLEMENT_READING(QMagnetometerReading)
     readings for a phone that is being subjected to magnetic interference.
 
     \image sensors-geo-vs-raw-magnetism.jpg
+           {Diagram comparing geomagnetic readings, with the phone axes
+           aligned to the Magnetic North Pole, against raw readings skewed
+           by a nearby magnet}
 
     The accuracy of each reading is measured as a number from 0 to 1.
     A value of 1 is the highest level that the device can support and 0 is

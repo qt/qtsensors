@@ -50,6 +50,9 @@ url.sources.rootdir     = ../../..
 
 imagedirs   += images
 
+# Report warnings for images without alt text
+reportmissingalttextforimages = true
+
 depends += qtcore qtdoc qtgui qtquick qtcmake
 
 # Highlighted examples
