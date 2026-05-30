@@ -23,6 +23,8 @@ IMPLEMENT_READING(QTapReading)
     The axes are arranged as follows.
 
     \image sensors-coordinates2.jpg
+           {Device with positive and negative x, y, and z tap axes
+           extending in all six directions}
 
     By default it returns only double tap events. The QTapSensor::returnDoubleTapEvents property
     must be set to false to return individual tap events.

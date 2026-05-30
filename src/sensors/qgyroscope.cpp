@@ -25,6 +25,8 @@ IMPLEMENT_READING(QGyroscopeReading)
     The measurements are in degrees per second.
 
     \image sensors-coordinates3.jpg
+           {Device with curved arrows showing angular velocity
+           around the x, y, and z axes}
 */
 
 /*!

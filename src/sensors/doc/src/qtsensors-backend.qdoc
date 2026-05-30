@@ -129,6 +129,8 @@ when the sensors library is first used and the registration remains in effect
 while the program runs.
 
 \image sensors-static.png
+       {Sequence diagram where QSensorPlugin registers a backend with
+       QSensorManager, which creates it through the Factory for QSensor}
 
 Statically registered backends may still exhibit some dynamic behaviour as the
 QSensorBackendFactory is free to return 0 to indicate that a backend cannot be
@@ -147,6 +149,8 @@ there would have been no unique information about the controller. Instead, the
 registration is delayed until the controller is seen.
 
 \image sensors-dynamic.png
+       {Sequence diagram where a backend is registered and unregistered after
+       startup, with QSensorManager notifying QSensor of backend changes}
 
 \section1 Suggested Registration Policy
 

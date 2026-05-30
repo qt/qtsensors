@@ -22,14 +22,20 @@ Unless specified otherwise, Qt Sensors uses the
 \l{http://en.wikipedia.org/wiki/Cartesian_coordinate_system}{Right Hand Cartesian coordinate system}.
 
 \image sensors-coordinates.jpg
+       {Device with the +x, +y, and +z axes of the right-hand
+       Cartesian coordinate system}
 
 To allow for measurements in all 6 directions, negative values are used.
 
 \image sensors-coordinates2.jpg
+       {Device with positive and negative x, y, and z axes
+       extending in all six directions}
 
 Where rotation around an axis is used, the rotation shall be expressed as a Right Hand rotation.
 
 \image sensors-coordinates3.jpg
+       {Device with curved arrows showing right-hand rotation
+       around the x, y, and z axes}
 
 In general, sensor data is oriented relative to \l QScreen::nativeOrientation,
 that is to the top of the device when the device is held in its natural orientation
@@ -39,6 +45,8 @@ the user interface orientation. A sensor may define its data as being oriented
 to the UI. This will be noted in the documentation for the sensor.
 
 \image sensors-sides2.jpg
+       {Device shown from the side, front, top, and bottom, with the device
+       top and device bottom edges labeled}
 
 \section1 Using a Sensor
 
@@ -102,6 +110,8 @@ Commands from the application are delivered through QSensor and then down to the
 device plugin. Data comes back through the QSensorReading class.
 
 \image sensors-overview.png
+       {Data flow between Application, QSensor, QSensorBackend, QSensorReading,
+       and Device Plugin}
 
 More information about the back end can be found in \l{Qt Sensors Backend}.
 

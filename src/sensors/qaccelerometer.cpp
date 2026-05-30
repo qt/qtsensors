@@ -22,6 +22,8 @@ IMPLEMENT_READING(QAccelerometerReading)
     The axes are arranged as follows.
 
     \image sensors-coordinates2.jpg
+           {Device with positive and negative x, y, and z
+           acceleration axes extending in all six directions}
 
     A monoblock device sitting at rest, face up on a desk will experience
     a force of approximately 9.8 on the Z axis (ie. towards the roof).
