@@ -26,6 +26,8 @@ IMPLEMENT_READING(QRotationReading)
     rotation with axes as defined by the right hand cartesian coordinate system.
 
     \image sensors-rotation.jpg
+           {Device rotated relative to the x, y, and z axes, with the rotated
+           y2 and y1 axes and the rotation angle marked}
 
     The three angles are applied to the device in the following order.
 
@@ -41,6 +43,8 @@ IMPLEMENT_READING(QRotationReading)
     Here is a visualization showing the order in which angles are applied.
 
     \image sensors-rotation-anim.gif
+           {Animation showing the device rotated around the z, x, and then y
+           axes in sequence}
 
     The 0 point for the z angle is defined as a fixed, external entity and
     is device-specific. While magnetic North is typically used as this
@@ -56,10 +60,14 @@ IMPLEMENT_READING(QRotationReading)
     how the x value will change with device movement.
 
     \image sensors-rotation2.jpg
+           {Device shown in side profile tilting through x angles of 30, 15,
+           0, -15, and -30 degrees}
 
     Here is an example of how the y value will change with device movement.
 
     \image sensors-rotation3.jpg
+           {Device shown end-on tilting through y angles of -30, -15, 0, 15,
+           and 30 degrees}
 
     Note that when x is 90 or -90, values for z and y achieve rotation around
     the same axis (due to the order of operations). In this case the y

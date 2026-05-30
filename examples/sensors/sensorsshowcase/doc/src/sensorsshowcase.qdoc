@@ -10,6 +10,9 @@
     \examplecategory {Mobile}
 
     \image sensorsshowcase-mainview.webp
+           {Sensors Showcase main menu with buttons for Accelerometer,
+           Proximity, Compass, Magnetometer, and Gyroscope, with Proximity
+           disabled}
 
     \section1 Overview
 
@@ -64,6 +67,8 @@
     \section1 Gyroscope View
 
     \image sensorsshowcase-gyroscope.webp
+           {Gyroscope view showing a rotated Qt logo with X, Y, and Z value
+           sliders and a Reset rotation button}
 
     The gyroscope view also shows an image that is rotated around three axes with an amount
     that is calculated from the gyroscope readings. Since the gyroscope provides relative
