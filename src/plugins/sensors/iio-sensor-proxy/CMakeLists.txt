@@ -5,6 +5,13 @@
 ## IIOSensorProxySensorPlugin Plugin:
 #####################################################################
 
+get_target_property(qt_namespace Qt6::Core QT_NAMESPACE)
+if(qt_namespace)
+    set(iio_dbus_namespace "${qt_namespace}::QtSensorsPrivate")
+else()
+    set(iio_dbus_namespace "QtSensorsPrivate")
+endif()
+
 qt_internal_add_plugin(IIOSensorProxySensorPlugin
     OUTPUT_NAME qtsensors_iio-sensor-proxy
     PLUGIN_TYPE sensors
@@ -28,7 +35,7 @@ qt_internal_add_plugin(IIOSensorProxySensorPlugin
         net.hadess.SensorProxy.Compass.xml
     DBUS_INTERFACE_FLAGS
         "-N"
-        --namespace QtSensorsPrivate
+        --namespace "${iio_dbus_namespace}"
     LIBRARIES
         Qt::Core
         Qt::DBus

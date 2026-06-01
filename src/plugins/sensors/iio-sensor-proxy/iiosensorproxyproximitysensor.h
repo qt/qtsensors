@@ -10,6 +10,8 @@
 
 #include <qproximitysensor.h>
 
+QT_BEGIN_NAMESPACE
+
 namespace QtSensorsPrivate {
 
 class NetHadessSensorProxyInterface;
@@ -38,4 +40,8 @@ private:
     QtSensorsPrivate::NetHadessSensorProxyInterface *m_sensorProxyInterface;
 };
 
+
+QT_END_NAMESPACE
+
 #endif // IIOSENSORPROXY_PROXIMITYSENSOR_H
+

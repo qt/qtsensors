@@ -18,6 +18,8 @@
 #include <QtCore/QFile>
 #include <QtCore/QDebug>
 
+QT_BEGIN_NAMESPACE
+
 class IIOSensorProxySensorPlugin : public QObject, public QSensorPluginInterface, public QSensorBackendFactory
 {
     Q_OBJECT
@@ -52,5 +54,7 @@ public:
         return 0;
     }
 };
+
+QT_END_NAMESPACE
 
 #include "main.moc"

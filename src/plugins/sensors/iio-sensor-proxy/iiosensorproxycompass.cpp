@@ -8,6 +8,8 @@
 
 #include <QtDBus/QDBusPendingReply>
 
+QT_BEGIN_NAMESPACE
+
 using namespace QtSensorsPrivate;
 
 char const * const IIOSensorProxyCompass::id("iio-sensor-proxy.compass");
@@ -65,3 +67,5 @@ void IIOSensorProxyCompass::updateAzimuth(double azimuth)
     m_reading.setTimestamp(produceTimestamp());
     newReadingAvailable();
 }
+
+QT_END_NAMESPACE

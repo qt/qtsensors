@@ -8,6 +8,8 @@
 
 #include <QtDBus/QDBusPendingReply>
 
+QT_BEGIN_NAMESPACE
+
 using namespace QtSensorsPrivate;
 
 char const * const IIOSensorProxyOrientationSensor::id("iio-sensor-proxy.orientationsensor");
@@ -75,3 +77,5 @@ void IIOSensorProxyOrientationSensor::updateOrientation(const QString &orientati
     m_reading.setTimestamp(produceTimestamp());
     newReadingAvailable();
 }
+
+QT_END_NAMESPACE

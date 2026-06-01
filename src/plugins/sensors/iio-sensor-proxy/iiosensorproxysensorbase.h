@@ -8,6 +8,8 @@
 
 #include <qsensorbackend.h>
 
+QT_BEGIN_NAMESPACE
+
 namespace QtSensorsPrivate {
 
 class OrgFreedesktopDBusPropertiesInterface;
@@ -42,4 +44,8 @@ private:
     QString m_dbusInterface;
 };
 
+
+QT_END_NAMESPACE
+
 #endif // IIOSENSORPROXY_SENSORBASE_H
+

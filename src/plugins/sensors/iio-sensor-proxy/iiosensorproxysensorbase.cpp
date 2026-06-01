@@ -13,6 +13,8 @@
 
 #include <time.h>
 
+QT_BEGIN_NAMESPACE
+
 using namespace QtSensorsPrivate;
 
 quint64 IIOSensorProxySensorBase::produceTimestamp()
@@ -78,3 +80,5 @@ void IIOSensorProxySensorBase::propertiesChanged(const QString &interface,
     if (interface == m_dbusInterface)
         updateProperties(changedProperties);
 }
+
+QT_END_NAMESPACE

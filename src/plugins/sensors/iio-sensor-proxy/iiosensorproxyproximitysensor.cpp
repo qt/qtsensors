@@ -8,6 +8,8 @@
 
 #include <QtDBus/QDBusPendingReply>
 
+QT_BEGIN_NAMESPACE
+
 using namespace QtSensorsPrivate;
 
 char const * const IIOSensorProxyProximitySensor::id("iio-sensor-proxy.proximitysensor");
@@ -64,3 +66,5 @@ void IIOSensorProxyProximitySensor::updateProximityNear(bool proximityNear)
     m_reading.setTimestamp(produceTimestamp());
     newReadingAvailable();
 }
+
+QT_END_NAMESPACE

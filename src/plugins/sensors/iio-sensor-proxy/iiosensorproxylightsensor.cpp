@@ -8,6 +8,8 @@
 
 #include <QtDBus/QDBusPendingReply>
 
+QT_BEGIN_NAMESPACE
+
 using namespace QtSensorsPrivate;
 
 char const * const IIOSensorProxyLightSensor::id("iio-sensor-proxy.lightsensor");
@@ -65,3 +67,5 @@ void IIOSensorProxyLightSensor::updateLightLevel(double lux)
     m_reading.setTimestamp(produceTimestamp());
     newReadingAvailable();
 }
+
+QT_END_NAMESPACE

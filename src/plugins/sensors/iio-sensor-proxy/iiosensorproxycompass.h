@@ -10,6 +10,8 @@
 
 #include <qcompass.h>
 
+QT_BEGIN_NAMESPACE
+
 namespace QtSensorsPrivate {
 
 class NetHadessSensorProxyCompassInterface;
@@ -38,4 +40,8 @@ private:
     QtSensorsPrivate::NetHadessSensorProxyCompassInterface *m_sensorProxyInterface;
 };
 
+
+QT_END_NAMESPACE
+
 #endif // IIOSENSORPROXY_COMPASS_H
+
