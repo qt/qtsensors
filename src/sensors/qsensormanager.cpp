@@ -60,7 +60,7 @@ public:
 #ifdef QTSENSORS_CONFIG_PATH
         QString config = QString::fromLocal8Bit(QTSENSORS_CONFIG_PATH);
 #else
-        QStringList configs = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
+        const QStringList configs = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation);
         QString config;
         for (const QString& c : configs) {
             config = c + QLatin1String("/QtProject/Sensors.conf");
@@ -126,7 +126,7 @@ public Q_SLOTS:
         // until things stop changing.
         do {
             sensorsChanged = false;
-            for (QSensorChangesInterface *changes : changeListeners)
+            for (QSensorChangesInterface *changes : std::as_const(changeListeners))
                 changes->sensorsChanged();
         } while (sensorsChanged);
 
@@ -179,7 +179,8 @@ void QSensorManagerPrivate::loadPlugins()
 
     SENSORLOG() << "initializing static plugins";
     // Qt-style static plugins
-    for (QObject *plugin : QPluginLoader::staticInstances())
+    const auto plugins = QPluginLoader::staticInstances();
+    for (QObject *plugin : plugins)
         initPlugin(plugin, false /*do not warn on fail*/);
     if (d->loadExternalPlugins) {
         SENSORLOG() << "initializing plugins";
@@ -329,7 +330,8 @@ QSensorBackend *QSensorManager::createBackend(QSensor *sensor)
         if (backend) return backend; // Got it!
 
         // The default failed to instantiate so try any other registered sensors for this type
-        for (const QByteArray &identifier : factoryByIdentifier.keys()) {
+        const auto identifiers = factoryByIdentifier.keys();
+        for (const QByteArray &identifier : identifiers) {
             SENSORLOG() << "Trying" << identifier;
             if (identifier == defaultIdentifier) continue; // Don't do the default one again
             factory = factoryByIdentifier[identifier];
