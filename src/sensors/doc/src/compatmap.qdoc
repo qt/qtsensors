@@ -275,4 +275,28 @@
 
     The Windows backend is supported in Qt installations that were built with MSVC.
 
+    \section2 Android
+
+    The sensors provided by the Android backend can be read without requesting
+    any Android permission.
+
+    The only restriction concerns the sampling rate of the accelerometer,
+    gyroscope, and magnetometer. Starting from Android 12 (API level 31),
+    reading these sensors at a rate higher than 200 Hz requires the
+    \c android.permission.HIGH_SAMPLING_RATE_SENSORS permission. This is a normal
+    permission that is granted at install time without prompting the user. If the
+    permission is not declared, the sampling rate is capped at 200 Hz.
+
+    Declare the permission for the application with \l qt_add_android_permission:
+
+    \badcode
+    qt_add_android_permission(myapp
+        NAME android.permission.HIGH_SAMPLING_RATE_SENSORS
+    )
+    \endcode
+
+    \note When using a hand-written AndroidManifest.xml, it must contain the
+    \c{<!-- %%INSERT_PERMISSIONS -->} tag for the permission to be added. See
+    \l {Qt Permissions and Features}.
+
 */
