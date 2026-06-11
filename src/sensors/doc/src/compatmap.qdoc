@@ -299,4 +299,27 @@
     \c{<!-- %%INSERT_PERMISSIONS -->} tag for the permission to be added. See
     \l {Qt Permissions and Features}.
 
+    \section2 HarmonyOS
+
+    Some sensors on HarmonyOS require a permission before their data can be read:
+
+    \list
+        \li QAccelerometer requires \c ohos.permission.ACCELEROMETER.
+        \li QGyroscope requires \c ohos.permission.GYROSCOPE.
+    \endlist
+
+    The other sensors provided by the HarmonyOS backend (the light sensor,
+    magnetometer, and rotation sensor) can be read without any permission.
+
+    Subscribing to a sensor whose permission has not been granted fails, and no
+    readings are delivered.
+
+    Declare a permission for the application with \c qt_add_harmonyos_permission:
+
+    \badcode
+    qt_add_harmonyos_permission(myapp
+        NAME ohos.permission.ACCELEROMETER
+    )
+    \endcode
+
 */
