@@ -4,7 +4,7 @@
 // Qt-Security score:critical reason:ipc
 
 #include "iiosensorproxycompass.h"
-#include "compass_interface.h"
+#include "compass_interface_p.h"
 
 #include <QtDBus/QDBusPendingReply>
 
