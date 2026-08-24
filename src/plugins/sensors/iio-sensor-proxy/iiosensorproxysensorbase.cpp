@@ -4,8 +4,8 @@
 // Qt-Security score:critical reason:ipc
 
 #include "iiosensorproxysensorbase.h"
-#include "sensorproxy_interface.h"
-#include "properties_interface.h"
+#include "sensorproxy_interface_p.h"
+#include "properties_interface_p.h"
 
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusServiceWatcher>

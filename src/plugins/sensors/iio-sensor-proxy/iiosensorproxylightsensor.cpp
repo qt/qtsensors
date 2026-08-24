@@ -4,7 +4,7 @@
 // Qt-Security score:critical reason:ipc
 
 #include "iiosensorproxylightsensor.h"
-#include "sensorproxy_interface.h"
+#include "sensorproxy_interface_p.h"
 
 #include <QtDBus/QDBusPendingReply>
 
