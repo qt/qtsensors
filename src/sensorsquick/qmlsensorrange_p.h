@@ -60,13 +60,13 @@ public:
     ~QmlSensorOutputRange();
 
     qreal minimum() const;
-    void setMinimum(int mini) { min = mini; }
+    void setMinimum(qreal mini) { min = mini; }
 
     qreal maximum() const;
-    void setMaximum(int maxi) { max = maxi; }
+    void setMaximum(qreal maxi) { max = maxi; }
 
     qreal accuracy() const;
-    void setAccuracy(int accu) { acc = accu; }
+    void setAccuracy(qreal accu) { acc = accu; }
 
 private:
     qreal min;
