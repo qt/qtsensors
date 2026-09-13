@@ -32,6 +32,8 @@ SensorManager::~SensorManager()
 
 QJniObject SensorManager::javaSensor(const ASensor *sensor) const
 {
+    if (!sensor)
+        return {};
     return m_sensorManager.callMethod<QtJniTypes::Sensor>("getDefaultSensor",
                                                           ASensor_getType(sensor));
 }
@@ -77,13 +79,22 @@ ASensorManager *SensorManager::manager() const
 
 QString SensorManager::description(const ASensor *sensor) const
 {
-    return QString::fromUtf8(ASensor_getName(sensor)) + " " + ASensor_getVendor(sensor)
-            + " v" + QString::number(javaSensor(sensor).callMethod<jint>("getVersion"));
+    if (!sensor)
+        return {};
+
+    QString description = QString::fromUtf8(ASensor_getName(sensor)) + " "
+            + ASensor_getVendor(sensor);
+    if (const QJniObject javaObject = javaSensor(sensor); javaObject.isValid())
+        description += " v" + QString::number(javaObject.callMethod<jint>("getVersion"));
+    return description;
 }
 
 double SensorManager::getMaximumRange(const ASensor *sensor) const
 {
-    return qreal(javaSensor(sensor).callMethod<jfloat>("getMaximumRange"));
+    const QJniObject javaObject = javaSensor(sensor);
+    if (!javaObject.isValid())
+        return 0.0;
+    return qreal(javaObject.callMethod<jfloat>("getMaximumRange"));
 }
 
 void SensorManager::run()
