@@ -17,7 +17,7 @@ IMPLEMENT_READING(QHumidityReading)
 
     \brief The QHumidityReading class holds readings from the humidity sensor.
 
-    \section2 QHumidityReading Units
+    \section1 QHumidityReading Units
 
     The humidity sensor returns the relative humidity as a percentage, and absolute humidity in
     grams per cubic meter (g/m3).

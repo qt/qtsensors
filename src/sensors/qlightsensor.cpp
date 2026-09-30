@@ -18,7 +18,7 @@ IMPLEMENT_READING(QLightReading)
     \brief The QLightReading class represents one reading from the
            light sensor.
 
-    \section2 QLightReading Units
+    \section1 QLightReading Units
     The light sensor returns the intensity of the light in lux.
 */
 

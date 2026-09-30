@@ -18,7 +18,7 @@ IMPLEMENT_READING(QCompassReading)
     \brief The QCompassReading class represents one reading from a
            compass.
 
-    \section2 QCompassReading Units
+    \section1 QCompassReading Units
     The compass returns the azimuth of the device as degrees from
     magnetic north in a clockwise direction based on the top of the device,
     as defined by QScreen::nativeOrientation.

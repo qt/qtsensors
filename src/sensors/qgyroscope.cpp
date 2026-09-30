@@ -18,7 +18,7 @@ IMPLEMENT_READING(QGyroscopeReading)
     \brief The QGyroscopeReading class represents one reading from the
            gyroscope sensor.
 
-    \section2 QGyroscopeReading Units
+    \section1 QGyroscopeReading Units
 
     The reading contains 3 values, measured in degrees per second that define
     the movement of the device around the x, y and z axes. Unlike QRotationReading,
