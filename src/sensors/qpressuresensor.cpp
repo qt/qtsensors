@@ -16,7 +16,7 @@ IMPLEMENT_READING(QPressureReading)
 
     \brief The QPressureReading class holds readings from the pressure sensor.
 
-    \section2 QPressureReading Units
+    \section1 QPressureReading Units
 
     The pressure sensor returns atmospheric pressure values in Pascals.
 */

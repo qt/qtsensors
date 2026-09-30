@@ -18,7 +18,7 @@ IMPLEMENT_READING(QMagnetometerReading)
     \brief The QMagnetometerReading class represents one reading from the
            magnetometer.
 
-    \section2 QMagnetometerReading Units
+    \section1 QMagnetometerReading Units
     The magnetometer returns magnetic flux density values along 3 axes.
     The scale of the values is teslas. The axes are arranged as follows.
 
@@ -47,7 +47,7 @@ IMPLEMENT_READING(QMagnetometerReading)
     A value of 1 is the highest level that the device can support and 0 is
     the worst.
 
-    \section2 Calibration
+    \section1 Calibration
     If the device is reporting low accuracy, then calibration might be needed before acceptable measurements
     can be provided.
     Basic calibration can usually be done by either rotating your device in a figure of eight, or by

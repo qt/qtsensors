@@ -25,7 +25,7 @@ IMPLEMENT_READING(QOrientationReading)
 
     This sensor is useful to detect that a particular side of the device is pointing up.
 
-    \section2 QOrientationReading Units
+    \section1 QOrientationReading Units
     The orientation sensor returns the orientation of the device using
     the pre-defined values found in the QOrientationReading::Orientation
     enum.

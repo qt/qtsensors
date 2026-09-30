@@ -18,7 +18,7 @@ IMPLEMENT_READING(QRotationReading)
     \brief The QRotationReading class represents one reading from the
            rotation sensor.
 
-    \section2 QRotationReading Units
+    \section1 QRotationReading Units
 
     The rotation reading contains 3 angles, measured in degrees that define
     the orientation of the device in three-dimensional space. These angles

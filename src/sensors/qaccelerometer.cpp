@@ -18,7 +18,7 @@ IMPLEMENT_READING(QAccelerometerReading)
     \brief The QAccelerometerReading class reports on linear acceleration
            along the X, Y and Z axes.
 
-    \section2 QAccelerometerReading Units
+    \section1 QAccelerometerReading Units
     The scale of the values is meters per second squared.
     The axes are arranged as follows.
 
