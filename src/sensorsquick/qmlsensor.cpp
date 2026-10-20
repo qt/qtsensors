@@ -40,7 +40,7 @@ QQmlListProperty<Item> readonlyListProperty(const QObject *o, const QList<Item *
 
 /*!
     \qmltype Sensor
-//!    \nativetype QmlSensor
+    \nativetype QmlSensor
     \inqmlmodule QtSensors
     \since QtSensors 5.0
     \brief The Sensor element serves as a base type for sensors.
@@ -490,7 +490,7 @@ void QmlSensor::updateReading()
 
 /*!
     \qmltype SensorReading
-//!    \nativetype QmlSensorReading
+    \nativetype QmlSensorReading
     \inqmlmodule QtSensors
     \since QtSensors 5.0
     \brief The SensorReading element serves as a base type for sensor readings.

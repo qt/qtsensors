@@ -7,7 +7,7 @@
 
 /*!
     \qmltype HumiditySensor
-//!    \nativetype QmlHumiditySensor
+    \nativetype QmlHumiditySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.9
@@ -44,7 +44,7 @@ QSensor *QmlHumiditySensor::sensor() const
 
 /*!
     \qmltype HumidityReading
-//!    \nativetype QmlHumidityReading
+    \nativetype QmlHumidityReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.9

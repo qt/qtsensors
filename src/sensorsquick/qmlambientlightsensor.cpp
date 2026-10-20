@@ -7,7 +7,7 @@
 
 /*!
     \qmltype AmbientLightSensor
-//!    \nativetype QmlAmbientLightSensor
+    \nativetype QmlAmbientLightSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -44,7 +44,7 @@ QSensor *QmlAmbientLightSensor::sensor() const
 
 /*!
     \qmltype AmbientLightReading
-//!    \nativetype QmlAmbientLightSensorReading
+    \nativetype QmlAmbientLightSensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

@@ -7,7 +7,7 @@
 
 /*!
     \qmltype ProximitySensor
-//!    \nativetype QmlProximitySensor
+    \nativetype QmlProximitySensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -44,7 +44,7 @@ QSensor *QmlProximitySensor::sensor() const
 
 /*!
     \qmltype ProximityReading
-//!    \nativetype QmlProximitySensorReading
+    \nativetype QmlProximitySensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

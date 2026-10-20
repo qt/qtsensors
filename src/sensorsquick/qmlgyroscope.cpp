@@ -7,7 +7,7 @@
 
 /*!
     \qmltype Gyroscope
-//!    \nativetype QmlGyroscope
+    \nativetype QmlGyroscope
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -43,7 +43,7 @@ QSensor *QmlGyroscope::sensor() const
 
 /*!
     \qmltype GyroscopeReading
-//!    \nativetype QmlGyroscopeReading
+    \nativetype QmlGyroscopeReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

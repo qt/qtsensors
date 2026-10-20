@@ -7,7 +7,7 @@
 
 /*!
     \qmltype RotationSensor
-//!    \nativetype QmlRotationSensor
+    \nativetype QmlRotationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -59,7 +59,7 @@ bool QmlRotationSensor::hasZ() const
 
 /*!
     \qmltype RotationReading
-//!    \nativetype QmlRotationSensorReading
+    \nativetype QmlRotationSensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

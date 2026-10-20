@@ -6,7 +6,7 @@
 
 /*!
     \qmltype LidSensor
-//!    \nativetype QmlLidSensor
+    \nativetype QmlLidSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.9
@@ -44,7 +44,7 @@ QSensor *QmlLidSensor::sensor() const
 
 /*!
     \qmltype LidReading
-//!    \nativetype QmlLidReading
+    \nativetype QmlLidReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.9

@@ -7,7 +7,7 @@
 
 /*!
     \qmltype OrientationSensor
-//!    \nativetype QmlOrientationSensor
+    \nativetype QmlOrientationSensor
     \ingroup qml-sensors_type
     \inqmlmodule QtSensors
     \since QtSensors 5.0
@@ -44,7 +44,7 @@ QSensor *QmlOrientationSensor::sensor() const
 
 /*!
     \qmltype OrientationReading
-//!    \nativetype QmlOrientationSensorReading
+    \nativetype QmlOrientationSensorReading
     \ingroup qml-sensors_reading
     \inqmlmodule QtSensors
     \since QtSensors 5.0

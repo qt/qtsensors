@@ -9,7 +9,7 @@ QT_BEGIN_NAMESPACE
 
 /*!
     \qmltype QmlSensors
-//!    \nativetype QmlSensorGlobal
+    \nativetype QmlSensorGlobal
     \inqmlmodule QtSensors
     \since QtSensors 5.0
     \brief The QmlSensors singleton provides the module API.
